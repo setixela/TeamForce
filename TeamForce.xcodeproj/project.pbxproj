@@ -10,23 +10,16 @@
 		190C1D12285D15FF00FB3518 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190C1D11285D15FF00FB3518 /* AppDelegate.swift */; };
 		190C1D14285D15FF00FB3518 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190C1D13285D15FF00FB3518 /* SceneDelegate.swift */; };
 		190C1D16285D15FF00FB3518 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190C1D15285D15FF00FB3518 /* ViewController.swift */; };
-		190C1D19285D15FF00FB3518 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 190C1D17285D15FF00FB3518 /* Main.storyboard */; };
 		190C1D1B285D160000FB3518 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 190C1D1A285D160000FB3518 /* Assets.xcassets */; };
 		190C1D1E285D160000FB3518 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 190C1D1C285D160000FB3518 /* LaunchScreen.storyboard */; };
 		190C1D29285D160000FB3518 /* TeamForceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190C1D28285D160000FB3518 /* TeamForceTests.swift */; };
-		190C1D33285D160000FB3518 /* TeamForceUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190C1D32285D160000FB3518 /* TeamForceUITests.swift */; };
-		190C1D35285D160000FB3518 /* TeamForceUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190C1D34285D160000FB3518 /* TeamForceUITestsLaunchTests.swift */; };
+		19C1E97C285E7BC300E7976D /* Communicable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C1E97B285E7BC300E7976D /* Communicable.swift */; };
+		19C1E97F285E7C1200E7976D /* InitProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C1E97E285E7C1200E7976D /* InitProtocol.swift */; };
+		19C1E981285E7C5500E7976D /* Lambda.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C1E980285E7C5500E7976D /* Lambda.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
 		190C1D25285D160000FB3518 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 190C1D06285D15FF00FB3518 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 190C1D0D285D15FF00FB3518;
-			remoteInfo = TeamForce;
-		};
-		190C1D2F285D160000FB3518 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 190C1D06285D15FF00FB3518 /* Project object */;
 			proxyType = 1;
@@ -40,15 +33,14 @@
 		190C1D11285D15FF00FB3518 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		190C1D13285D15FF00FB3518 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		190C1D15285D15FF00FB3518 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		190C1D18285D15FF00FB3518 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		190C1D1A285D160000FB3518 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		190C1D1D285D160000FB3518 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		190C1D1F285D160000FB3518 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		190C1D24285D160000FB3518 /* TeamForceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TeamForceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		190C1D28285D160000FB3518 /* TeamForceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamForceTests.swift; sourceTree = "<group>"; };
-		190C1D2E285D160000FB3518 /* TeamForceUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TeamForceUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		190C1D32285D160000FB3518 /* TeamForceUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamForceUITests.swift; sourceTree = "<group>"; };
-		190C1D34285D160000FB3518 /* TeamForceUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamForceUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		19C1E97B285E7BC300E7976D /* Communicable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Communicable.swift; sourceTree = "<group>"; };
+		19C1E97E285E7C1200E7976D /* InitProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitProtocol.swift; sourceTree = "<group>"; };
+		19C1E980285E7C5500E7976D /* Lambda.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lambda.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,13 +58,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		190C1D2B285D160000FB3518 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -81,7 +66,6 @@
 			children = (
 				190C1D10285D15FF00FB3518 /* TeamForce */,
 				190C1D27285D160000FB3518 /* TeamForceTests */,
-				190C1D31285D160000FB3518 /* TeamForceUITests */,
 				190C1D0F285D15FF00FB3518 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -91,7 +75,6 @@
 			children = (
 				190C1D0E285D15FF00FB3518 /* TeamForce.app */,
 				190C1D24285D160000FB3518 /* TeamForceTests.xctest */,
-				190C1D2E285D160000FB3518 /* TeamForceUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -99,12 +82,9 @@
 		190C1D10285D15FF00FB3518 /* TeamForce */ = {
 			isa = PBXGroup;
 			children = (
-				190C1D11285D15FF00FB3518 /* AppDelegate.swift */,
-				190C1D13285D15FF00FB3518 /* SceneDelegate.swift */,
-				190C1D15285D15FF00FB3518 /* ViewController.swift */,
-				190C1D17285D15FF00FB3518 /* Main.storyboard */,
-				190C1D1A285D160000FB3518 /* Assets.xcassets */,
-				190C1D1C285D160000FB3518 /* LaunchScreen.storyboard */,
+				19C1E97A285E7BC300E7976D /* Communicable */,
+				19C1E97D285E7BF800E7976D /* Common */,
+				190C1D41285D195800FB3518 /* Main */,
 				190C1D1F285D160000FB3518 /* Info.plist */,
 			);
 			path = TeamForce;
@@ -118,13 +98,33 @@
 			path = TeamForceTests;
 			sourceTree = "<group>";
 		};
-		190C1D31285D160000FB3518 /* TeamForceUITests */ = {
+		190C1D41285D195800FB3518 /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				190C1D32285D160000FB3518 /* TeamForceUITests.swift */,
-				190C1D34285D160000FB3518 /* TeamForceUITestsLaunchTests.swift */,
+				190C1D11285D15FF00FB3518 /* AppDelegate.swift */,
+				190C1D13285D15FF00FB3518 /* SceneDelegate.swift */,
+				190C1D15285D15FF00FB3518 /* ViewController.swift */,
+				190C1D1A285D160000FB3518 /* Assets.xcassets */,
+				190C1D1C285D160000FB3518 /* LaunchScreen.storyboard */,
 			);
-			path = TeamForceUITests;
+			path = Main;
+			sourceTree = "<group>";
+		};
+		19C1E97A285E7BC300E7976D /* Communicable */ = {
+			isa = PBXGroup;
+			children = (
+				19C1E97B285E7BC300E7976D /* Communicable.swift */,
+			);
+			path = Communicable;
+			sourceTree = "<group>";
+		};
+		19C1E97D285E7BF800E7976D /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				19C1E980285E7C5500E7976D /* Lambda.swift */,
+				19C1E97E285E7C1200E7976D /* InitProtocol.swift */,
+			);
+			path = Common;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -165,24 +165,6 @@
 			productReference = 190C1D24285D160000FB3518 /* TeamForceTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		190C1D2D285D160000FB3518 /* TeamForceUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 190C1D3E285D160000FB3518 /* Build configuration list for PBXNativeTarget "TeamForceUITests" */;
-			buildPhases = (
-				190C1D2A285D160000FB3518 /* Sources */,
-				190C1D2B285D160000FB3518 /* Frameworks */,
-				190C1D2C285D160000FB3518 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				190C1D30285D160000FB3518 /* PBXTargetDependency */,
-			);
-			name = TeamForceUITests;
-			productName = TeamForceUITests;
-			productReference = 190C1D2E285D160000FB3518 /* TeamForceUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -197,10 +179,6 @@
 						CreatedOnToolsVersion = 13.4.1;
 					};
 					190C1D23285D160000FB3518 = {
-						CreatedOnToolsVersion = 13.4.1;
-						TestTargetID = 190C1D0D285D15FF00FB3518;
-					};
-					190C1D2D285D160000FB3518 = {
 						CreatedOnToolsVersion = 13.4.1;
 						TestTargetID = 190C1D0D285D15FF00FB3518;
 					};
@@ -221,7 +199,6 @@
 			targets = (
 				190C1D0D285D15FF00FB3518 /* TeamForce */,
 				190C1D23285D160000FB3518 /* TeamForceTests */,
-				190C1D2D285D160000FB3518 /* TeamForceUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -233,18 +210,10 @@
 			files = (
 				190C1D1E285D160000FB3518 /* LaunchScreen.storyboard in Resources */,
 				190C1D1B285D160000FB3518 /* Assets.xcassets in Resources */,
-				190C1D19285D15FF00FB3518 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		190C1D22285D160000FB3518 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		190C1D2C285D160000FB3518 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -258,7 +227,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				19C1E981285E7C5500E7976D /* Lambda.swift in Sources */,
+				19C1E97C285E7BC300E7976D /* Communicable.swift in Sources */,
 				190C1D16285D15FF00FB3518 /* ViewController.swift in Sources */,
+				19C1E97F285E7C1200E7976D /* InitProtocol.swift in Sources */,
 				190C1D12285D15FF00FB3518 /* AppDelegate.swift in Sources */,
 				190C1D14285D15FF00FB3518 /* SceneDelegate.swift in Sources */,
 			);
@@ -272,15 +244,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		190C1D2A285D160000FB3518 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				190C1D33285D160000FB3518 /* TeamForceUITests.swift in Sources */,
-				190C1D35285D160000FB3518 /* TeamForceUITestsLaunchTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -289,22 +252,9 @@
 			target = 190C1D0D285D15FF00FB3518 /* TeamForce */;
 			targetProxy = 190C1D25285D160000FB3518 /* PBXContainerItemProxy */;
 		};
-		190C1D30285D160000FB3518 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 190C1D0D285D15FF00FB3518 /* TeamForce */;
-			targetProxy = 190C1D2F285D160000FB3518 /* PBXContainerItemProxy */;
-		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		190C1D17285D15FF00FB3518 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				190C1D18285D15FF00FB3518 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		190C1D1C285D160000FB3518 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -442,9 +392,10 @@
 				INFOPLIST_FILE = TeamForce/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -454,7 +405,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -470,9 +421,10 @@
 				INFOPLIST_FILE = TeamForce/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -482,7 +434,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -526,42 +478,6 @@
 			};
 			name = Release;
 		};
-		190C1D3F285D160000FB3518 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 6MKP9BQB2K;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = XYZProject.TeamForceUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = TeamForce;
-			};
-			name = Debug;
-		};
-		190C1D40285D160000FB3518 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 6MKP9BQB2K;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = XYZProject.TeamForceUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = TeamForce;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -588,15 +504,6 @@
 			buildConfigurations = (
 				190C1D3C285D160000FB3518 /* Debug */,
 				190C1D3D285D160000FB3518 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		190C1D3E285D160000FB3518 /* Build configuration list for PBXNativeTarget "TeamForceUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				190C1D3F285D160000FB3518 /* Debug */,
-				190C1D40285D160000FB3518 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
