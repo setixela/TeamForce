@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:Plays.playground">
+   </FileRef>
+   <FileRef
       location = "container:TeamForce.xcodeproj">
    </FileRef>
 </Workspace>

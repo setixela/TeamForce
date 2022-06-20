@@ -16,6 +16,12 @@
 		19C1E97C285E7BC300E7976D /* Communicable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C1E97B285E7BC300E7976D /* Communicable.swift */; };
 		19C1E97F285E7C1200E7976D /* InitProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C1E97E285E7C1200E7976D /* InitProtocol.swift */; };
 		19C1E981285E7C5500E7976D /* Lambda.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C1E980285E7C5500E7976D /* Lambda.swift */; };
+		19C1E98C285F426B00E7976D /* EndpointProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C1E985285F426B00E7976D /* EndpointProtocol.swift */; };
+		19C1E98E285F426B00E7976D /* ApiEngineProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C1E987285F426B00E7976D /* ApiEngineProtocol.swift */; };
+		19C1E98F285F426B00E7976D /* TeamForceApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C1E988285F426B00E7976D /* TeamForceApi.swift */; };
+		19C1E990285F426B00E7976D /* TeamForceEndpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C1E98A285F426B00E7976D /* TeamForceEndpoints.swift */; };
+		19C1E991285F426B00E7976D /* ApiEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C1E98B285F426B00E7976D /* ApiEngine.swift */; };
+		19C1E9942860F05F00E7976D /* PromiseKit in Frameworks */ = {isa = PBXBuildFile; productRef = 19C1E9932860F05F00E7976D /* PromiseKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,6 +47,11 @@
 		19C1E97B285E7BC300E7976D /* Communicable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Communicable.swift; sourceTree = "<group>"; };
 		19C1E97E285E7C1200E7976D /* InitProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitProtocol.swift; sourceTree = "<group>"; };
 		19C1E980285E7C5500E7976D /* Lambda.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lambda.swift; sourceTree = "<group>"; };
+		19C1E985285F426B00E7976D /* EndpointProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EndpointProtocol.swift; sourceTree = "<group>"; };
+		19C1E987285F426B00E7976D /* ApiEngineProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiEngineProtocol.swift; sourceTree = "<group>"; };
+		19C1E988285F426B00E7976D /* TeamForceApi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamForceApi.swift; sourceTree = "<group>"; };
+		19C1E98A285F426B00E7976D /* TeamForceEndpoints.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamForceEndpoints.swift; sourceTree = "<group>"; };
+		19C1E98B285F426B00E7976D /* ApiEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiEngine.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,6 +59,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				19C1E9942860F05F00E7976D /* PromiseKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -83,6 +95,8 @@
 			isa = PBXGroup;
 			children = (
 				19C1E97A285E7BC300E7976D /* Communicable */,
+				19C1E989285F426B00E7976D /* TeamForceEndpoints */,
+				19C1E983285F426B00E7976D /* Networking */,
 				19C1E97D285E7BF800E7976D /* Common */,
 				190C1D41285D195800FB3518 /* Main */,
 				190C1D1F285D160000FB3518 /* Info.plist */,
@@ -127,6 +141,33 @@
 			path = Common;
 			sourceTree = "<group>";
 		};
+		19C1E983285F426B00E7976D /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				19C1E984285F426B00E7976D /* Abstract */,
+				19C1E988285F426B00E7976D /* TeamForceApi.swift */,
+				19C1E98B285F426B00E7976D /* ApiEngine.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		19C1E984285F426B00E7976D /* Abstract */ = {
+			isa = PBXGroup;
+			children = (
+				19C1E985285F426B00E7976D /* EndpointProtocol.swift */,
+				19C1E987285F426B00E7976D /* ApiEngineProtocol.swift */,
+			);
+			path = Abstract;
+			sourceTree = "<group>";
+		};
+		19C1E989285F426B00E7976D /* TeamForceEndpoints */ = {
+			isa = PBXGroup;
+			children = (
+				19C1E98A285F426B00E7976D /* TeamForceEndpoints.swift */,
+			);
+			path = TeamForceEndpoints;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -143,6 +184,9 @@
 			dependencies = (
 			);
 			name = TeamForce;
+			packageProductDependencies = (
+				19C1E9932860F05F00E7976D /* PromiseKit */,
+			);
 			productName = TeamForce;
 			productReference = 190C1D0E285D15FF00FB3518 /* TeamForce.app */;
 			productType = "com.apple.product-type.application";
@@ -193,6 +237,9 @@
 				Base,
 			);
 			mainGroup = 190C1D05285D15FF00FB3518;
+			packageReferences = (
+				19C1E9922860F05F00E7976D /* XCRemoteSwiftPackageReference "PromiseKit" */,
+			);
 			productRefGroup = 190C1D0F285D15FF00FB3518 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -228,11 +275,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				19C1E981285E7C5500E7976D /* Lambda.swift in Sources */,
+				19C1E98F285F426B00E7976D /* TeamForceApi.swift in Sources */,
+				19C1E991285F426B00E7976D /* ApiEngine.swift in Sources */,
+				19C1E98E285F426B00E7976D /* ApiEngineProtocol.swift in Sources */,
 				19C1E97C285E7BC300E7976D /* Communicable.swift in Sources */,
 				190C1D16285D15FF00FB3518 /* ViewController.swift in Sources */,
 				19C1E97F285E7C1200E7976D /* InitProtocol.swift in Sources */,
+				19C1E990285F426B00E7976D /* TeamForceEndpoints.swift in Sources */,
 				190C1D12285D15FF00FB3518 /* AppDelegate.swift in Sources */,
 				190C1D14285D15FF00FB3518 /* SceneDelegate.swift in Sources */,
+				19C1E98C285F426B00E7976D /* EndpointProtocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -509,6 +561,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		19C1E9922860F05F00E7976D /* XCRemoteSwiftPackageReference "PromiseKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/mxcl/PromiseKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		19C1E9932860F05F00E7976D /* PromiseKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 19C1E9922860F05F00E7976D /* XCRemoteSwiftPackageReference "PromiseKit" */;
+			productName = PromiseKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 190C1D06285D15FF00FB3518 /* Project object */;
 }
