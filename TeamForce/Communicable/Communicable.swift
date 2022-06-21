@@ -13,6 +13,40 @@ protocol Communicable: AnyObject {
     var eventsStore: Events { get set }
 }
 
+protocol Stateable: AnyObject {
+    associatedtype State: InitProtocol
+
+    var state: State? { get set }
+
+    func setState(_ state: State)
+}
+
+extension Stateable {
+
+//    func setup(_ closure: GenericClosure<State>) {
+//        let new = State()
+//
+//        closure(new)
+//
+//        DispatchQueue.main.async { [weak self] in
+////        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+//            self?.state = new
+//            self?.setState(new)
+//        }
+//    }
+
+    func setup() -> State {
+        let new = State()
+        DispatchQueue.main.async { [weak self] in
+//       DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
+            self?.state = new
+            self?.setState(new)
+        }
+
+        return new
+    }
+}
+
 extension Communicable {
     @discardableResult
     func sendEvent<T>(_ event: KeyPath<Events, Event<T>?>, payload: T) -> Self {
@@ -34,7 +68,7 @@ extension Communicable {
         }
 
         lambda(())
-        
+
         return self
     }
 

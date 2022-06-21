@@ -8,3 +8,7 @@
 protocol InitProtocol {
     init()
 }
+
+class BaseClass: InitProtocol {
+    required init() {}
+}

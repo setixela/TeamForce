@@ -22,6 +22,20 @@
 		19C1E990285F426B00E7976D /* TeamForceEndpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C1E98A285F426B00E7976D /* TeamForceEndpoints.swift */; };
 		19C1E991285F426B00E7976D /* ApiEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C1E98B285F426B00E7976D /* ApiEngine.swift */; };
 		19C1E9942860F05F00E7976D /* PromiseKit in Frameworks */ = {isa = PBXBuildFile; productRef = 19C1E9932860F05F00E7976D /* PromiseKit */; };
+		19C1E99C28610E2800E7976D /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C1E99628610E2800E7976D /* Model.swift */; };
+		19C1E99D28610E2800E7976D /* RouterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C1E99728610E2800E7976D /* RouterProtocol.swift */; };
+		19C1E99E28610E2800E7976D /* BaseVCModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C1E99828610E2800E7976D /* BaseVCModel.swift */; };
+		19C1E99F28610E2800E7976D /* SceneModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C1E99928610E2800E7976D /* SceneModelProtocol.swift */; };
+		19C1E9A028610E2800E7976D /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C1E99A28610E2800E7976D /* ViewModel.swift */; };
+		19C1E9A128610E2800E7976D /* AssetProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C1E99B28610E2800E7976D /* AssetProtocol.swift */; };
+		19C1E9A328610E4E00E7976D /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C1E9A228610E4E00E7976D /* Router.swift */; };
+		19C1E9A628610EC600E7976D /* DefaultVCModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C1E9A528610EC600E7976D /* DefaultVCModel.swift */; };
+		19C1E9AB2861167E00E7976D /* Anchors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C1E9A82861167E00E7976D /* Anchors.swift */; };
+		19C1E9AC2861167E00E7976D /* SimpleAnchors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C1E9A92861167E00E7976D /* SimpleAnchors.swift */; };
+		19C1E9AD2861167E00E7976D /* ComplexAnchors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C1E9AA2861167E00E7976D /* ComplexAnchors.swift */; };
+		19ECD54128623D1F001765F6 /* LabelModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19ECD54028623D1F001765F6 /* LabelModel.swift */; };
+		19ECD54328623D30001765F6 /* StackModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19ECD54228623D30001765F6 /* StackModel.swift */; };
+		19ECD54828623D9C001765F6 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19ECD54728623D9C001765F6 /* PaddingLabel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +66,20 @@
 		19C1E988285F426B00E7976D /* TeamForceApi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamForceApi.swift; sourceTree = "<group>"; };
 		19C1E98A285F426B00E7976D /* TeamForceEndpoints.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamForceEndpoints.swift; sourceTree = "<group>"; };
 		19C1E98B285F426B00E7976D /* ApiEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiEngine.swift; sourceTree = "<group>"; };
+		19C1E99628610E2800E7976D /* Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		19C1E99728610E2800E7976D /* RouterProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouterProtocol.swift; sourceTree = "<group>"; };
+		19C1E99828610E2800E7976D /* BaseVCModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseVCModel.swift; sourceTree = "<group>"; };
+		19C1E99928610E2800E7976D /* SceneModelProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneModelProtocol.swift; sourceTree = "<group>"; };
+		19C1E99A28610E2800E7976D /* ViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
+		19C1E99B28610E2800E7976D /* AssetProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetProtocol.swift; sourceTree = "<group>"; };
+		19C1E9A228610E4E00E7976D /* Router.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
+		19C1E9A528610EC600E7976D /* DefaultVCModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultVCModel.swift; sourceTree = "<group>"; };
+		19C1E9A82861167E00E7976D /* Anchors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Anchors.swift; sourceTree = "<group>"; };
+		19C1E9A92861167E00E7976D /* SimpleAnchors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleAnchors.swift; sourceTree = "<group>"; };
+		19C1E9AA2861167E00E7976D /* ComplexAnchors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComplexAnchors.swift; sourceTree = "<group>"; };
+		19ECD54028623D1F001765F6 /* LabelModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelModel.swift; sourceTree = "<group>"; };
+		19ECD54228623D30001765F6 /* StackModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackModel.swift; sourceTree = "<group>"; };
+		19ECD54728623D9C001765F6 /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,10 +122,14 @@
 		190C1D10285D15FF00FB3518 /* TeamForce */ = {
 			isa = PBXGroup;
 			children = (
+				19C1E9A428610E6F00E7976D /* ViewModels */,
+				19ECD54628623D92001765F6 /* Views */,
+				19C1E99528610E1900E7976D /* Architecture */,
 				19C1E97A285E7BC300E7976D /* Communicable */,
 				19C1E989285F426B00E7976D /* TeamForceEndpoints */,
 				19C1E983285F426B00E7976D /* Networking */,
 				19C1E97D285E7BF800E7976D /* Common */,
+				19C1E9A72861167E00E7976D /* Anchors */,
 				190C1D41285D195800FB3518 /* Main */,
 				190C1D1F285D160000FB3518 /* Info.plist */,
 			);
@@ -166,6 +198,48 @@
 				19C1E98A285F426B00E7976D /* TeamForceEndpoints.swift */,
 			);
 			path = TeamForceEndpoints;
+			sourceTree = "<group>";
+		};
+		19C1E99528610E1900E7976D /* Architecture */ = {
+			isa = PBXGroup;
+			children = (
+				19C1E9A228610E4E00E7976D /* Router.swift */,
+				19C1E99B28610E2800E7976D /* AssetProtocol.swift */,
+				19C1E99828610E2800E7976D /* BaseVCModel.swift */,
+				19C1E99628610E2800E7976D /* Model.swift */,
+				19C1E99728610E2800E7976D /* RouterProtocol.swift */,
+				19C1E99928610E2800E7976D /* SceneModelProtocol.swift */,
+				19C1E99A28610E2800E7976D /* ViewModel.swift */,
+			);
+			path = Architecture;
+			sourceTree = "<group>";
+		};
+		19C1E9A428610E6F00E7976D /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				19C1E9A528610EC600E7976D /* DefaultVCModel.swift */,
+				19ECD54228623D30001765F6 /* StackModel.swift */,
+				19ECD54028623D1F001765F6 /* LabelModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		19C1E9A72861167E00E7976D /* Anchors */ = {
+			isa = PBXGroup;
+			children = (
+				19C1E9A82861167E00E7976D /* Anchors.swift */,
+				19C1E9A92861167E00E7976D /* SimpleAnchors.swift */,
+				19C1E9AA2861167E00E7976D /* ComplexAnchors.swift */,
+			);
+			path = Anchors;
+			sourceTree = "<group>";
+		};
+		19ECD54628623D92001765F6 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				19ECD54728623D9C001765F6 /* PaddingLabel.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -276,15 +350,29 @@
 			files = (
 				19C1E981285E7C5500E7976D /* Lambda.swift in Sources */,
 				19C1E98F285F426B00E7976D /* TeamForceApi.swift in Sources */,
+				19C1E9AB2861167E00E7976D /* Anchors.swift in Sources */,
+				19C1E99F28610E2800E7976D /* SceneModelProtocol.swift in Sources */,
 				19C1E991285F426B00E7976D /* ApiEngine.swift in Sources */,
+				19C1E9A328610E4E00E7976D /* Router.swift in Sources */,
+				19C1E99C28610E2800E7976D /* Model.swift in Sources */,
+				19C1E9AC2861167E00E7976D /* SimpleAnchors.swift in Sources */,
 				19C1E98E285F426B00E7976D /* ApiEngineProtocol.swift in Sources */,
+				19C1E9A628610EC600E7976D /* DefaultVCModel.swift in Sources */,
+				19C1E9A028610E2800E7976D /* ViewModel.swift in Sources */,
+				19ECD54828623D9C001765F6 /* PaddingLabel.swift in Sources */,
 				19C1E97C285E7BC300E7976D /* Communicable.swift in Sources */,
+				19C1E9A128610E2800E7976D /* AssetProtocol.swift in Sources */,
 				190C1D16285D15FF00FB3518 /* ViewController.swift in Sources */,
+				19C1E99E28610E2800E7976D /* BaseVCModel.swift in Sources */,
 				19C1E97F285E7C1200E7976D /* InitProtocol.swift in Sources */,
+				19ECD54128623D1F001765F6 /* LabelModel.swift in Sources */,
+				19C1E99D28610E2800E7976D /* RouterProtocol.swift in Sources */,
+				19ECD54328623D30001765F6 /* StackModel.swift in Sources */,
 				19C1E990285F426B00E7976D /* TeamForceEndpoints.swift in Sources */,
 				190C1D12285D15FF00FB3518 /* AppDelegate.swift in Sources */,
 				190C1D14285D15FF00FB3518 /* SceneDelegate.swift in Sources */,
 				19C1E98C285F426B00E7976D /* EndpointProtocol.swift in Sources */,
+				19C1E9AD2861167E00E7976D /* ComplexAnchors.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
