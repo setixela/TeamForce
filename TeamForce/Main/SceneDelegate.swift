@@ -17,7 +17,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let window = UIWindow(windowScene: windowScene)
         let nc = UINavigationController(nibName: nil, bundle: nil)
 
-      //  startDispatcher(nc)
+        startDispatcher(nc)
 
         window.rootViewController = nc
         self.window = window
@@ -32,3 +32,19 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 }
 
+private extension SceneDelegate {
+    func startDispatcher(_ nc: UINavigationController) {
+        Asset.router?
+            .onEvent(\.push) { vc in
+                //     vc.view
+                nc.pushViewController(vc, animated: true)
+            }
+            .onEvent(\.pop) {
+                nc.popViewController(animated: true)
+            }
+            .onEvent(\.popToRoot) {
+                nc.popToRootViewController(animated: true)
+            }
+            .route(\.digitalThanks, navType: .push, payload: ())
+    }
+}

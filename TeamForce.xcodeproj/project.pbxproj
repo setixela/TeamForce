@@ -15,6 +15,16 @@
 		190C1D29285D160000FB3518 /* TeamForceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190C1D28285D160000FB3518 /* TeamForceTests.swift */; };
 		1967509D286491190019A6DE /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1967509C286491190019A6DE /* Buttons.swift */; };
 		1967509F286492780019A6DE /* Labels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1967509E286492780019A6DE /* Labels.swift */; };
+		196750A22865169C0019A6DE /* DigitalThanksScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196750A12865169C0019A6DE /* DigitalThanksScene.swift */; };
+		196750A4286516E40019A6DE /* RegisterScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196750A3286516E40019A6DE /* RegisterScene.swift */; };
+		196750A6286516F40019A6DE /* LoginScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196750A5286516F40019A6DE /* LoginScene.swift */; };
+		196750A8286517070019A6DE /* VerifyCodeScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196750A7286517070019A6DE /* VerifyCodeScene.swift */; };
+		196750AA286517130019A6DE /* LoginSuccessScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196750A9286517130019A6DE /* LoginSuccessScene.swift */; };
+		196750AC2865189C0019A6DE /* TextFieldModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196750AB2865189C0019A6DE /* TextFieldModel.swift */; };
+		196750AE286518D50019A6DE /* BottomPanelViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196750AD286518D50019A6DE /* BottomPanelViewModel.swift */; };
+		196750B0286518F80019A6DE /* StackWithBottomPanelModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196750AF286518F80019A6DE /* StackWithBottomPanelModel.swift */; };
+		196750B22865190D0019A6DE /* ImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196750B12865190D0019A6DE /* ImageViewModel.swift */; };
+		196750B4286519660019A6DE /* Asset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196750B3286519660019A6DE /* Asset.swift */; };
 		199C4B6628624B4C008AD6FD /* Spacer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199C4B6528624B4C008AD6FD /* Spacer.swift */; };
 		199C4B6928632834008AD6FD /* DesignSystemProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199C4B6828632834008AD6FD /* DesignSystemProtocol.swift */; };
 		199C4B6B2863292F008AD6FD /* ButtonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199C4B6A2863292F008AD6FD /* ButtonModel.swift */; };
@@ -66,6 +76,16 @@
 		190C1D28285D160000FB3518 /* TeamForceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamForceTests.swift; sourceTree = "<group>"; };
 		1967509C286491190019A6DE /* Buttons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Buttons.swift; sourceTree = "<group>"; };
 		1967509E286492780019A6DE /* Labels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Labels.swift; sourceTree = "<group>"; };
+		196750A12865169C0019A6DE /* DigitalThanksScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigitalThanksScene.swift; sourceTree = "<group>"; };
+		196750A3286516E40019A6DE /* RegisterScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterScene.swift; sourceTree = "<group>"; };
+		196750A5286516F40019A6DE /* LoginScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginScene.swift; sourceTree = "<group>"; };
+		196750A7286517070019A6DE /* VerifyCodeScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyCodeScene.swift; sourceTree = "<group>"; };
+		196750A9286517130019A6DE /* LoginSuccessScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginSuccessScene.swift; sourceTree = "<group>"; };
+		196750AB2865189C0019A6DE /* TextFieldModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldModel.swift; sourceTree = "<group>"; };
+		196750AD286518D50019A6DE /* BottomPanelViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomPanelViewModel.swift; sourceTree = "<group>"; };
+		196750AF286518F80019A6DE /* StackWithBottomPanelModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackWithBottomPanelModel.swift; sourceTree = "<group>"; };
+		196750B12865190D0019A6DE /* ImageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewModel.swift; sourceTree = "<group>"; };
+		196750B3286519660019A6DE /* Asset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Asset.swift; sourceTree = "<group>"; };
 		199C4B6528624B4C008AD6FD /* Spacer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spacer.swift; sourceTree = "<group>"; };
 		199C4B6828632834008AD6FD /* DesignSystemProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignSystemProtocol.swift; sourceTree = "<group>"; };
 		199C4B6A2863292F008AD6FD /* ButtonModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonModel.swift; sourceTree = "<group>"; };
@@ -116,7 +136,6 @@
 		190C1D05285D15FF00FB3518 = {
 			isa = PBXGroup;
 			children = (
-				199C4B6528624B4C008AD6FD /* Spacer.swift */,
 				190C1D10285D15FF00FB3518 /* TeamForce */,
 				190C1D27285D160000FB3518 /* TeamForceTests */,
 				190C1D0F285D15FF00FB3518 /* Products */,
@@ -135,6 +154,8 @@
 		190C1D10285D15FF00FB3518 /* TeamForce */ = {
 			isa = PBXGroup;
 			children = (
+				196750B3286519660019A6DE /* Asset.swift */,
+				196750A02865168F0019A6DE /* Scenes */,
 				199C4B6728632461008AD6FD /* DesignSystem */,
 				19C1E9A428610E6F00E7976D /* ViewModels */,
 				19ECD54628623D92001765F6 /* Views */,
@@ -168,6 +189,18 @@
 				190C1D1C285D160000FB3518 /* LaunchScreen.storyboard */,
 			);
 			path = Main;
+			sourceTree = "<group>";
+		};
+		196750A02865168F0019A6DE /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				196750A12865169C0019A6DE /* DigitalThanksScene.swift */,
+				196750A3286516E40019A6DE /* RegisterScene.swift */,
+				196750A5286516F40019A6DE /* LoginScene.swift */,
+				196750A7286517070019A6DE /* VerifyCodeScene.swift */,
+				196750A9286517130019A6DE /* LoginSuccessScene.swift */,
+			);
+			path = Scenes;
 			sourceTree = "<group>";
 		};
 		199C4B6728632461008AD6FD /* DesignSystem */ = {
@@ -246,6 +279,11 @@
 				19ECD54228623D30001765F6 /* StackModel.swift */,
 				19ECD54028623D1F001765F6 /* LabelModel.swift */,
 				199C4B6A2863292F008AD6FD /* ButtonModel.swift */,
+				196750AB2865189C0019A6DE /* TextFieldModel.swift */,
+				196750AD286518D50019A6DE /* BottomPanelViewModel.swift */,
+				196750AF286518F80019A6DE /* StackWithBottomPanelModel.swift */,
+				196750B12865190D0019A6DE /* ImageViewModel.swift */,
+				199C4B6528624B4C008AD6FD /* Spacer.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -379,13 +417,18 @@
 				19C1E98F285F426B00E7976D /* TeamForceApi.swift in Sources */,
 				199C4B6928632834008AD6FD /* DesignSystemProtocol.swift in Sources */,
 				19C1E9AB2861167E00E7976D /* Anchors.swift in Sources */,
+				196750B22865190D0019A6DE /* ImageViewModel.swift in Sources */,
 				1967509D286491190019A6DE /* Buttons.swift in Sources */,
 				199C4B6628624B4C008AD6FD /* Spacer.swift in Sources */,
 				19C1E99F28610E2800E7976D /* SceneModelProtocol.swift in Sources */,
+				196750A22865169C0019A6DE /* DigitalThanksScene.swift in Sources */,
 				19C1E991285F426B00E7976D /* ApiEngine.swift in Sources */,
 				19C1E9A328610E4E00E7976D /* Router.swift in Sources */,
+				196750A4286516E40019A6DE /* RegisterScene.swift in Sources */,
 				19C1E99C28610E2800E7976D /* Model.swift in Sources */,
 				19C1E9AC2861167E00E7976D /* SimpleAnchors.swift in Sources */,
+				196750A6286516F40019A6DE /* LoginScene.swift in Sources */,
+				196750A8286517070019A6DE /* VerifyCodeScene.swift in Sources */,
 				1967509F286492780019A6DE /* Labels.swift in Sources */,
 				19C1E98E285F426B00E7976D /* ApiEngineProtocol.swift in Sources */,
 				19C1E9A628610EC600E7976D /* DefaultVCModel.swift in Sources */,
@@ -398,12 +441,17 @@
 				19C1E97F285E7C1200E7976D /* InitProtocol.swift in Sources */,
 				19ECD54128623D1F001765F6 /* LabelModel.swift in Sources */,
 				19C1E99D28610E2800E7976D /* RouterProtocol.swift in Sources */,
+				196750B0286518F80019A6DE /* StackWithBottomPanelModel.swift in Sources */,
+				196750AE286518D50019A6DE /* BottomPanelViewModel.swift in Sources */,
 				199C4B6B2863292F008AD6FD /* ButtonModel.swift in Sources */,
 				19ECD54328623D30001765F6 /* StackModel.swift in Sources */,
+				196750AA286517130019A6DE /* LoginSuccessScene.swift in Sources */,
 				19C1E990285F426B00E7976D /* TeamForceEndpoints.swift in Sources */,
 				190C1D12285D15FF00FB3518 /* AppDelegate.swift in Sources */,
 				190C1D14285D15FF00FB3518 /* SceneDelegate.swift in Sources */,
 				19C1E98C285F426B00E7976D /* EndpointProtocol.swift in Sources */,
+				196750B4286519660019A6DE /* Asset.swift in Sources */,
+				196750AC2865189C0019A6DE /* TextFieldModel.swift in Sources */,
 				19C1E9AD2861167E00E7976D /* ComplexAnchors.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
