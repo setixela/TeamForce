@@ -47,11 +47,11 @@ class BaseSceneModel<VCModel: VCModelProtocol,
         print("Needs to override start()")
     }
 
-    func makeVM<T: ViewModelProtocol>() -> T {
-        let model = T()
-        _ = model.view // Make view
-        return model
-    }
+//    func makeVM<T: ViewModelProtocol>() -> T {
+//        let model = T()
+//        _ = model.view // Make view
+//        return model
+//    }
 
     func setInput(_ value: Any? = nil) {
         _inputValue = value
@@ -67,7 +67,7 @@ extension BaseSceneModel {
     }
 
     func makeMainView() -> UIView {
-        mainViewModel.view
+        mainViewModel.uiView
     }
 }
 

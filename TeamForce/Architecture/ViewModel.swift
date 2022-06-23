@@ -23,7 +23,7 @@ protocol ViewModelProtocol: UIViewModel, ModelProtocol {
 class BaseViewModel<View: UIView>: NSObject, ViewModelProtocol {
 //    var eventsStore: Events = .init()
 
-    private weak var weakView: View?
+    private weak var weakView: View? 
 
     // will be cleaned after presenting view
     private var autostartedView: View?
@@ -34,6 +34,7 @@ class BaseViewModel<View: UIView>: NSObject, ViewModelProtocol {
         } else {
             let view = View(frame: .zero)
             weakView = view
+            autostartedView = view
             start()
             return view
         }
@@ -49,17 +50,23 @@ class BaseViewModel<View: UIView>: NSObject, ViewModelProtocol {
 
     override required init() {
         super.init()
+
+        view
     }
 
-    convenience init(autostart: Bool) {
-        self.init()
-        if autostart {
-            autostartedView = view
-            weakView = view
-        }
-    }
+//    convenience init(autostart: Bool) {
+//        self.init()
+//        if autostart {
+//            autostartedView = view
+//            weakView = view
+//        }
+//    }
 
     func start() {}
+
+    func setupView(_ closure: GenericClosure<View>) {
+        closure(view)
+    }
 }
 
 //extension BaseViewModel: Communicable {}

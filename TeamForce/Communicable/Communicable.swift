@@ -7,43 +7,62 @@
 
 import Foundation
 
+protocol Setable: AnyObject {}
+
+extension Setable {
+    @discardableResult func set<T>(_ keypath: WritableKeyPath<Self, T>, _ value: T) -> Self {
+        var slf = self
+        slf[keyPath: keypath] = value
+        //  print(keypath, value)
+        return self
+    }
+}
+
 protocol Communicable: AnyObject {
     associatedtype Events: InitProtocol
 
     var eventsStore: Events { get set }
 }
 
-protocol Stateable: AnyObject {
+protocol Stateable: AnyObject, InitProtocol {
     associatedtype State: InitProtocol
 
-    var state: State? { get set }
+    var state: State { get set }
 
-    func setState(_ state: State)
+    func applyState()
+}
+
+extension Stateable where Self: ViewModelProtocol {
+    init(state: State) {
+        self.init()
+
+        self.state = state
+        applyState()
+    }
 }
 
 extension Stateable {
+    @discardableResult
+    func setup(_ closure: GenericClosure<State>) -> Self {
+        closure(state)
+        applyState()
 
-//    func setup(_ closure: GenericClosure<State>) {
-//        let new = State()
-//
-//        closure(new)
-//
-//        DispatchQueue.main.async { [weak self] in
-////        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
-//            self?.state = new
-//            self?.setState(new)
-//        }
-//    }
+        return self
+    }
 
-    func setup() -> State {
-        let new = State()
+    var updateState: State {
         DispatchQueue.main.async { [weak self] in
-//       DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
-            self?.state = new
-            self?.setState(new)
+            self?.applyState()
         }
 
-        return new
+        return state
+    }
+
+    func setup(_ state: State) -> Self {
+        self.state = state
+        applyState()
+
+        return self
     }
 }
 
@@ -51,7 +70,7 @@ extension Communicable {
     @discardableResult
     func sendEvent<T>(_ event: KeyPath<Events, Event<T>?>, payload: T) -> Self {
         guard let lambda = eventsStore[keyPath: event] else {
-            print("Event KeyPath: \(event) did not observed!")
+            print("Event KeyPath did not observed!:\n   \(event)\n   Value: \(payload)")
             return self
         }
 
@@ -61,9 +80,15 @@ extension Communicable {
     }
 
     @discardableResult
+    func sendEvent<T>(_ event: KeyPath<Events, Event<T>?>, _ payload: T) -> Self {
+        // print("\n", event, payload, "\n")
+        return sendEvent(event, payload: payload)
+    }
+
+    @discardableResult
     func sendEvent(_ event: KeyPath<Events, Event<Void>?>) -> Self {
         guard let lambda = eventsStore[keyPath: event] else {
-            print("Void Event KeyPath: \(event) did not observed!")
+            print("Void Event KeyPath did not observed!:\n   \(event) ")
             return self
         }
 
@@ -76,6 +101,7 @@ extension Communicable {
     func onEvent<T>(_ event: WritableKeyPath<Events, Event<T>?>, _ lambda: @escaping Event<T>) -> Self {
         eventsStore[keyPath: event] = lambda
 
+        print("On event:\n   \(event)\n   Lambda: \(lambda)")
         return self
     }
 }

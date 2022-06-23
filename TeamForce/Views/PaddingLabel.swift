@@ -7,14 +7,12 @@
 
 import UIKit
 
-final class PaddingLabel: UILabel {
+protocol Marginable {
+    var padding: UIEdgeInsets? { get set }
+}
+
+final class PaddingLabel: UILabel, Marginable {
     var padding: UIEdgeInsets?
-//    {
-//        didSet {
-//            setNeedsLayout()
-//            setNeedsDisplay()
-//        }
-//    }
 
     override public func draw(_ rect: CGRect) {
         if let insets = padding {
@@ -51,5 +49,25 @@ final class PaddingLabel: UILabel {
         contentSize.width = ceil(newSize.size.width) + insetsWidth
 
         return contentSize
+    }
+}
+
+
+/// Description
+final class PaddingTextField: UITextField, Marginable {
+
+    // padding extension
+    var padding: UIEdgeInsets?
+
+    override func textRect(forBounds bounds: CGRect) -> CGRect {
+        return bounds.inset(by: padding ?? .zero)
+    }
+
+    override func placeholderRect(forBounds bounds: CGRect) -> CGRect {
+        return bounds.inset(by: padding ?? .zero)
+    }
+
+    override func editingRect(forBounds bounds: CGRect) -> CGRect {
+        return bounds.inset(by: padding ?? .zero)
     }
 }

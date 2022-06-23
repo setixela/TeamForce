@@ -9,6 +9,12 @@ protocol InitProtocol {
     init()
 }
 
+protocol BuilderProtocol: InitProtocol {
+    associatedtype Builder
+
+    var builder: Builder { get }
+}
+
 class BaseClass: InitProtocol {
     required init() {}
 }

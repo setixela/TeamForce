@@ -14,7 +14,7 @@ struct StackEvents: InitProtocol {
 
 final class StackModel: BaseViewModel<UIStackView> {
     var eventsStore: StackEvents = .init()
-    var state: StackState?
+    var state: StackState = .init()
 
     override func start() {
         weak var wS = self
@@ -31,13 +31,15 @@ final class StackModel: BaseViewModel<UIStackView> {
 }
 
 extension StackModel: Stateable {
-    typealias State = StackState
-
-    func setState(_ state: StackState) {
-        view.axis = state.axis ?? view.axis
-        view.spacing = state.spacing ?? view.spacing
-        view.distribution = state.distribution ?? view.distribution
-        view.alignment = state.alignment ?? view.alignment
+    func applyState() {
+        setupView {
+           $0.axis = state.axis ?? view.axis
+           $0.spacing = state.spacing ?? view.spacing
+           $0.distribution = state.distribution ?? view.distribution
+           $0.alignment = state.alignment ?? view.alignment
+           $0.layoutMargins = state.padding ?? view.layoutMargins
+           $0.isLayoutMarginsRelativeArrangement = true
+        }
     }
 }
 
@@ -45,29 +47,10 @@ extension StackModel: Communicable {
     typealias Events = StackEvents
 }
 
-final class StackState: BaseClass {
+final class StackState: BaseClass, Setable {
     var distribution: UIStackView.Distribution?
     var axis: NSLayoutConstraint.Axis?
     var spacing: CGFloat?
     var alignment: UIStackView.Alignment?
-
-    @discardableResult func setAxis(_ value: NSLayoutConstraint.Axis) -> Self {
-        axis = value
-        return self
-    }
-
-    @discardableResult func setSpacing(_ value: CGFloat) -> Self {
-        spacing = value
-        return self
-    }
-
-    @discardableResult func setAlignment(_ value: UIStackView.Alignment) -> Self {
-        alignment = value
-        return self
-    }
-
-    @discardableResult func setDistribution(_ value: UIStackView.Distribution) -> Self {
-        distribution = value
-        return self
-    }
+    var padding: UIEdgeInsets?
 }

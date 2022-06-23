@@ -11,17 +11,14 @@ protocol ModelProtocol: AnyObject {
     func start()
 }
 
-class BaseModel<Events: InitProtocol>: NSObject, ModelProtocol, Communicable {
+class BaseModel: NSObject, ModelProtocol {
     func start() {
         print("Needs to override start()")
     }
-
-    var eventsStore: Events = .init()
 
     override init() {
         super.init()
         start()
     }
-
 }
 
