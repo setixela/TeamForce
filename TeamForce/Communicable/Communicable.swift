@@ -58,6 +58,7 @@ extension Stateable {
         return state
     }
 
+    @discardableResult
     func setup(_ state: State) -> Self {
         self.state = state
         applyState()
@@ -101,7 +102,8 @@ extension Communicable {
     func onEvent<T>(_ event: WritableKeyPath<Events, Event<T>?>, _ lambda: @escaping Event<T>) -> Self {
         eventsStore[keyPath: event] = lambda
 
-        print("On event:\n   \(event)\n   Lambda: \(lambda)")
+        print("On event:\n   \(event)\n   Lambda: \(String(describing: lambda))")
         return self
     }
 }
+

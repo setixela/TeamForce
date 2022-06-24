@@ -15,31 +15,28 @@ final class LoginScene: BaseSceneModel<
     Asset,
     Void
 > {
-    private lazy var headerModel = DesignSystem.label.headline4.setup {
+    private lazy var headerModel = Design.label.headline4.setup {
         $0
             .set(\.padding, UIEdgeInsets(top: 0, left: 0, bottom: 24, right: 0))
             .set(\.text, "Вход")
     }
 
-    private lazy var subtitleModel = DesignSystem.label.subtitle.setup {
+    private lazy var subtitleModel = Design.label.subtitle.setup {
         $0
             .set(\.padding, UIEdgeInsets(top: 0, left: 0, bottom: 40, right: 0))
             .set(\.text, "1. Для входа нажмите ”получить код”, или смените пользователя ")
             .set(\.numberOfLines, 2)
     }
 
-    private lazy var nextButton = ButtonModel(state: DesignSystem.Setup.buttonStateBuilder.inactive)
-        .setup {
-            $0.set(\.title, "ПОЛУЧИТЬ КОД")
-        }
+    private lazy var nextButton = Design.button.inactive.setup {
+        $0.set(\.title, "ПОЛУЧИТЬ КОД")
+    }
 
-    private lazy var changeUserButton = ButtonModel(state: DesignSystem.Setup.buttonStateBuilder.transparent)
-        .setup {
-            $0.set(\.title, "СМЕНИТЬ ПОЛЬЗОВАТЕЛЯ")
-        }
+    private lazy var changeUserButton = Design.button.transparent.setup {
+        $0.set(\.title, "СМЕНИТЬ ПОЛЬЗОВАТЕЛЯ")
+    }
 
     private lazy var textFieldModel = TextFieldModel()
-
     private lazy var inputParser = TelegramNickCheckerModel()
 
     override func start() {
@@ -51,28 +48,23 @@ final class LoginScene: BaseSceneModel<
                 print("Did tap")
             }
 
-        vcModel?
-            .onEvent(\.viewDidLoad) {
-                weakSelf?.setupLoginField()
-                weakSelf?.presentModels()
-            }
-    }
-
-    private func setupLoginField() {
         textFieldModel
-            .onEvent(\.didEditingChanged) { [weak self] text in
-                self?.inputParser.sendEvent(\.request, text)
+            .onEvent(\.didEditingChanged) { text in
+                weakSelf?.inputParser.sendEvent(\.request, text)
             }
             .sendEvent(\.setPlaceholder, "@Имя пользователя")
+
         inputParser
-            .onEvent(\.response) { [weak self] text in
-                self?.textFieldModel.sendEvent(\.setText, text)
-                self?.nextButton.setup(DesignSystem.Setup.buttonStateBuilder.default)
+            .onEvent(\.response) { text in
+                weakSelf?.textFieldModel.sendEvent(\.setText, text)
+                weakSelf?.nextButton.setup(Design.State.button.default)
             }
-            .onEvent(\.error) { [weak self] text in
-                self?.textFieldModel.sendEvent(\.setText, text)
-                self?.nextButton.setup(DesignSystem.Setup.buttonStateBuilder.inactive)
+            .onEvent(\.error) { text in
+                weakSelf?.textFieldModel.sendEvent(\.setText, text)
+                weakSelf?.nextButton.setup(Design.State.button.inactive)
             }
+
+        presentModels()
     }
 
     private func presentModels() {

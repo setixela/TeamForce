@@ -27,6 +27,10 @@ struct SceneEvent<Input>: InitProtocol {
 
 protocol Assetable {
     associatedtype Asset: AssetProtocol
+
+    typealias Design = Asset.Design
+    typealias Service = Asset.Service
+    typealias Scene = Asset.Scene
 }
 
 class BaseSceneModel<VCModel: VCModelProtocol,
@@ -37,6 +41,7 @@ class BaseSceneModel<VCModel: VCModelProtocol,
     private var _inputValue: Any?
 
     lazy var mainViewModel = MainViewModel()
+    
     weak var vcModel: VCModel?
 
     var inputValue: Input? { _inputValue as? Input }
@@ -62,12 +67,14 @@ extension BaseSceneModel {
     func makeVC() -> UIViewController {
         let model = VCModel(sceneModel: self)
         vcModel = model
-        start()
+//        start()
         return model
     }
 
     func makeMainView() -> UIView {
-        mainViewModel.uiView
+        let view = mainViewModel.uiView
+        start()
+        return view
     }
 }
 

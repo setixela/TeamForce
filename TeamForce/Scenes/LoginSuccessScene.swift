@@ -15,12 +15,14 @@ final class LoginSuccessScene: BaseSceneModel<
     Asset,
     Void
 > {
+
     private lazy var checkmarkIcon = ImageViewModel().setup {
         $0
             .set(\.size, .init(width: 48, height: 48))
             .set(\.image, Icons().make(\.checkCircle))
     }
-    private lazy var headerModel = DesignSystem.label.headline4.setup {
+
+    private lazy var headerModel = Design.label.headline4.setup {
         $0
             .set(\.alignment, .center)
             .set(\.numberOfLines, 2)
@@ -28,7 +30,7 @@ final class LoginSuccessScene: BaseSceneModel<
             .set(\.text, "Вы успешно зарегистрированы")
     }
 
-    private lazy var nextButton = ButtonModel(state: DesignSystem.Setup.buttonStateBuilder.default)
+    private lazy var nextButton = ButtonModel(state: Design.State.button.default)
         .setup {
             $0.set(\.title, "ВОЙТИ")
         }

@@ -15,23 +15,22 @@ final class VerifyCodeScene: BaseSceneModel<
     Asset,
     Void
 > {
-    private lazy var headerModel = DesignSystem.label.headline4.setup {
+    private lazy var headerModel = Design.label.headline4.setup {
         $0
             .set(\.padding, UIEdgeInsets(top: 0, left: 0, bottom: 24, right: 0))
             .set(\.text, "Вход")
     }
 
-    private lazy var subtitleModel = DesignSystem.label.subtitle.setup {
+    private lazy var subtitleModel = Design.label.subtitle.setup {
         $0
             .set(\.padding, UIEdgeInsets(top: 0, left: 0, bottom: 40, right: 0))
             .set(\.text, "2. Введите код")
             .set(\.numberOfLines, 2)
     }
 
-    private lazy var nextButton = ButtonModel(state: DesignSystem.Setup.buttonStateBuilder.inactive)
-        .setup {
-            $0.set(\.title, "ВОЙТИ")
-        }
+    private lazy var nextButton = ButtonModel(state: Design.State.button.inactive).setup {
+        $0.set(\.title, "ВОЙТИ")
+    }
 
     private lazy var textFieldModel = TextFieldModel()
 
@@ -43,31 +42,25 @@ final class VerifyCodeScene: BaseSceneModel<
         nextButton
             .onEvent(\.didTap) {
                 Asset.router?.route(\.loginSuccess, navType: .push)
-                print("Did tap")
             }
 
-        vcModel?
-            .onEvent(\.viewDidLoad) {
-                weakSelf?.setupLoginField()
-                weakSelf?.presentModels()
-            }
-    }
-
-    private func setupLoginField() {
         textFieldModel
-            .onEvent(\.didEditingChanged) { [weak self] text in
-                self?.inputParser.sendEvent(\.request, text)
+            .onEvent(\.didEditingChanged) { text in
+                weakSelf?.inputParser.sendEvent(\.request, text)
             }
             .sendEvent(\.setPlaceholder, "@Имя пользователя")
+
         inputParser
-            .onEvent(\.response) { [weak self] text in
-                self?.textFieldModel.sendEvent(\.setText, text)
-                self?.nextButton.setup(DesignSystem.Setup.buttonStateBuilder.default)
+            .onEvent(\.response) { text in
+                weakSelf?.textFieldModel.sendEvent(\.setText, text)
+                weakSelf?.nextButton.setup(Design.State.button.default)
             }
-            .onEvent(\.error) { [weak self] text in
-                self?.textFieldModel.sendEvent(\.setText, text)
-                self?.nextButton.setup(DesignSystem.Setup.buttonStateBuilder.inactive)
+            .onEvent(\.error) { text in
+                weakSelf?.textFieldModel.sendEvent(\.setText, text)
+                weakSelf?.nextButton.setup(Design.State.button.inactive)
             }
+
+        presentModels()
     }
 
     private func presentModels() {

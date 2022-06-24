@@ -21,7 +21,6 @@ protocol ViewModelProtocol: UIViewModel, ModelProtocol {
 }
 
 class BaseViewModel<View: UIView>: NSObject, ViewModelProtocol {
-//    var eventsStore: Events = .init()
 
     private weak var weakView: View? 
 
@@ -68,5 +67,3 @@ class BaseViewModel<View: UIView>: NSObject, ViewModelProtocol {
         closure(view)
     }
 }
-
-//extension BaseViewModel: Communicable {}

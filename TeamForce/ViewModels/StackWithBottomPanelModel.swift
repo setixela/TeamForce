@@ -16,7 +16,7 @@ struct StackWithBottomPanelEvents: InitProtocol {
 final class StackWithBottomPanelModel: BaseViewModel<UIStackView> {
     var eventsStore: StackWithBottomPanelEvents = .init()
 
-    let stackModel = StackModel(state: DesignSystem.Setup.mainView.default)
+    let stackModel = StackModel(state: DesignSystem.State.mainView.default)
     let bottomModel = BottomPanelViewModel()
 
     override func start() {

@@ -8,7 +8,7 @@
 protocol AssetProtocol {
     associatedtype Scene: InitProtocol
     associatedtype Service: InitProtocol
-//    associatedtype DesignSystem: InitProtocol
+    associatedtype Design: DesignSystemProtocol
 
     static var router: Router<Scene>? { get set }
     static var service: Service { get }

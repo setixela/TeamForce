@@ -6,6 +6,9 @@
 //
 
 enum Asset: AssetProtocol {
+
+    typealias Design = DesignSystem
+
     static var router: Router<Scene>? = Router<Scene>()
 
     struct Scene: InitProtocol {

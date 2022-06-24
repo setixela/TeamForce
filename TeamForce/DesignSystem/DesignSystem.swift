@@ -8,7 +8,7 @@
 import UIKit
 
 struct DesignSystem: DesignSystemProtocol {
-    typealias Setup = ModelSetuper
+    typealias State = ModelSetuper
 
     typealias Button = DefaultButtonBuilder
     typealias Label = LabelBuilder
@@ -22,14 +22,14 @@ struct GlobalParameters: ParametersProtocol {
 }
 
 struct ModelSetuper: ModelSetuperProtocol {
-    typealias MainView = MainViewSetuper
+    typealias MainView = MainViewStateBuilder
     typealias Button = ButtonStateBuilder
 
     static var mainView: MainView = .init()
-    static var buttonStateBuilder: Button = .init()
+    static var button: Button = .init()
 }
 
-struct MainViewSetuper: MainViewSetuperProtocol {
+struct MainViewStateBuilder: MainViewSetuperProtocol {
     var `default`: StackState {
         let state = StackState()
         state

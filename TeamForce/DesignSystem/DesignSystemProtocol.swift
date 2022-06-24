@@ -10,7 +10,7 @@ import UIKit
 protocol DesignSystemProtocol {
     associatedtype Label: LabelBuilderProtocol
     associatedtype Button: ButtonBuilderProtocol
-    associatedtype Setup: ModelSetuperProtocol
+    associatedtype State: ModelSetuperProtocol
 
     static var button: Button { get }
     static var label: Label { get }
@@ -25,7 +25,7 @@ protocol ModelSetuperProtocol {
     associatedtype Button: ButtonStateBuilderProtocol
 
     static var mainView: MainView { get }
-    static var buttonStateBuilder: Button { get }
+    static var button: Button { get }
 }
 
 protocol MainViewSetuperProtocol: InitProtocol {

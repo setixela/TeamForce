@@ -16,7 +16,6 @@ PlaygroundPage.current.liveView = nc
 
 Asset.router?
     .onEvent(\.push) { vc in
-        //     vc.view
         nc.pushViewController(vc, animated: true)
     }
     .onEvent(\.pop) {
@@ -45,3 +44,4 @@ let api = TeamForceApi(engine: ApiEngine())
 //    .catch { error in
 //        print("Auth error: ", error)
 //    }
+
