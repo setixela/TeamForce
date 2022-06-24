@@ -31,6 +31,7 @@ protocol Assetable {
     typealias Design = Asset.Design
     typealias Service = Asset.Service
     typealias Scene = Asset.Scene
+  //  typealias Text = Asset.Text
 }
 
 class BaseSceneModel<VCModel: VCModelProtocol,
@@ -47,6 +48,10 @@ class BaseSceneModel<VCModel: VCModelProtocol,
     var inputValue: Input? { _inputValue as? Input }
 
     var eventsStore: Events = .init()
+
+    var text = Asset.Text()
+
+    var icon = Asset.Design.Icon()
 
     func start() {
         print("Needs to override start()")

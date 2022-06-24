@@ -35,7 +35,7 @@ extension LabelModel: Stateable {
     }
 }
 
-final class LabelState: BaseClass, Setable {
+final class LabelState: BaseState {
     var text: String?
     var font: UIFont?
     var color: UIColor?

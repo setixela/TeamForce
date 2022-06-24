@@ -18,19 +18,19 @@ final class RegisterScene: BaseSceneModel<
     private lazy var headerModel = Design.label.headline4.setup {
         $0
             .set(\.padding, UIEdgeInsets(top: 0, left: 0, bottom: 24, right: 0))
-            .set(\.text, "Регистрация")
+            .set(\.text, text.title.make(\.register))
     }
 
     private lazy var subtitleModel = Design.label.subtitle.setup {
         $0
             .set(\.padding, UIEdgeInsets(top: 0, left: 0, bottom: 40, right: 0))
-            .set(\.text, "1. Введите имя пользователя telegram или идентификатор")
+            .set(\.text, "1. " + text.title.make(\.enterTelegramName))
             .set(\.numberOfLines, 2)
     }
 
     private lazy var nextButton = ButtonModel(state: Design.State.button.inactive)
         .setup {
-            $0.set(\.title, "ДАЛЕЕ")
+            $0.set(\.title, text.button.nextButton)
         }
 
     private lazy var textFieldModel = TextFieldModel()
@@ -57,7 +57,7 @@ final class RegisterScene: BaseSceneModel<
             .onEvent(\.didEditingChanged) { [weak self] text in
                 self?.inputParser.sendEvent(\.request, text)
             }
-            .sendEvent(\.setPlaceholder, "@Имя пользователя")
+            .sendEvent(\.setPlaceholder, "@" + text.title.make(\.userName))
 
         inputParser
             .onEvent(\.response) { [weak self] text in

@@ -6,7 +6,8 @@
 //
 
 enum Asset: AssetProtocol {
-
+    
+    typealias Text = Texts
     typealias Design = DesignSystem
 
     static var router: Router<Scene>? = Router<Scene>()
@@ -17,6 +18,7 @@ enum Asset: AssetProtocol {
         var verifyCode: SceneModelProtocol { VerifyCodeScene() }
         var loginSuccess: SceneModelProtocol { LoginSuccessScene() }
         var register: SceneModelProtocol { RegisterScene() }
+      //  var main: SceneModelProtocol { MainScene() }
     }
 
     struct Service: InitProtocol {}

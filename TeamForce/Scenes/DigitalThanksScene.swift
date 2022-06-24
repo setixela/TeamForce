@@ -19,16 +19,16 @@ final class DigitalThanksScene: BaseSceneModel<
         $0
             .set(\.numberOfLines, 2)
             .set(\.padding, UIEdgeInsets(top: 0, left: 0, bottom: 40, right: 0))
-            .set(\.text, "Цифровое спасибо")
+            .set(\.text, text.title.make(\.digitalThanks))
             .set(\.alignment, .center)
     }
 
     private lazy var enterButton = Design.button.default.setup {
-        $0.set(\.title, "ВХОД")
+        $0.set(\.title, text.button.make(\.enterButton))
     }
 
     private lazy var registerButton = Design.button.transparent.setup {
-        $0.set(\.title, "РЕГИСТРАЦИЯ")
+        $0.set(\.title, text.button.make(\.registerButton))
     }
 
     override func start() {

@@ -8,6 +8,8 @@
 import UIKit
 
 struct DesignSystem: DesignSystemProtocol {
+    typealias Icon = Icons
+
     typealias State = ModelSetuper
 
     typealias Button = DefaultButtonBuilder

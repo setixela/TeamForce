@@ -11,10 +11,12 @@ import UIKit
 
 struct BottomPanelEvents: InitProtocol {
     var addModel: Event<UIViewModel>?
+    var addModels: Event<[UIViewModel]>?
 }
 
 final class BottomPanelViewModel: BaseViewModel<UIStackView> {
     var eventsStore: BottomPanelEvents = .init()
+    var state: StackState = .init()
 
     override func start() {
         configure()
@@ -23,6 +25,11 @@ final class BottomPanelViewModel: BaseViewModel<UIStackView> {
             let view = $0.uiView
             self?.view.addArrangedSubview(view)
             self?.view.setNeedsLayout()
+        }
+        .onEvent(\.addModels) { [weak self] in
+            $0.forEach {
+                self?.view.addArrangedSubview($0.uiView)
+            }
         }
     }
 
@@ -40,3 +47,18 @@ final class BottomPanelViewModel: BaseViewModel<UIStackView> {
 }
 
 extension BottomPanelViewModel: Communicable {}
+
+extension BottomPanelViewModel: Stateable {
+    func applyState() {
+        setupView {
+           $0.axis = state.axis ?? view.axis
+           $0.spacing = state.spacing ?? view.spacing
+           $0.distribution = state.distribution ?? view.distribution
+           $0.alignment = state.alignment ?? view.alignment
+           $0.layoutMargins = state.padding ?? view.layoutMargins
+           $0.isLayoutMarginsRelativeArrangement = true
+        }
+    }
+
+    typealias State = StackState
+}

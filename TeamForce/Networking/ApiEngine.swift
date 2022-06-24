@@ -18,7 +18,7 @@ struct ApiEngineResult {
     let response: URLResponse?
 }
 
-typealias ApiEngineCallback = GenericClosure<Swift.Result<ApiEngineResult, ApiEngineError>>
+//typealias ApiEngineCallback = GenericClosure<Swift.Result<ApiEngineResult, ApiEngineError>>
 
 final class ApiEngine: ApiEngineProtocol {
 //    func process(url: URL,

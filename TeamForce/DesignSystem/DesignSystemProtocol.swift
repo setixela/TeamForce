@@ -11,6 +11,7 @@ protocol DesignSystemProtocol {
     associatedtype Label: LabelBuilderProtocol
     associatedtype Button: ButtonBuilderProtocol
     associatedtype State: ModelSetuperProtocol
+    associatedtype Icon: IconsProtocol
 
     static var button: Button { get }
     static var label: Label { get }

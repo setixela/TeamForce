@@ -18,3 +18,7 @@ protocol BuilderProtocol: InitProtocol {
 class BaseClass: InitProtocol {
     required init() {}
 }
+
+class BaseState: BaseClass, Setable {
+    required init() {}
+}

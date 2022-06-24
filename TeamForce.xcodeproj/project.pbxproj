@@ -13,6 +13,8 @@
 		190C1D1B285D160000FB3518 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 190C1D1A285D160000FB3518 /* Assets.xcassets */; };
 		190C1D1E285D160000FB3518 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 190C1D1C285D160000FB3518 /* LaunchScreen.storyboard */; };
 		190C1D29285D160000FB3518 /* TeamForceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190C1D28285D160000FB3518 /* TeamForceTests.swift */; };
+		191B0C272865E5C1001CF3D9 /* Icons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191B0C262865E5C1001CF3D9 /* Icons.swift */; };
+		191B0C292865F119001CF3D9 /* Texts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191B0C282865F119001CF3D9 /* Texts.swift */; };
 		1967509D286491190019A6DE /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1967509C286491190019A6DE /* Buttons.swift */; };
 		1967509F286492780019A6DE /* Labels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1967509E286492780019A6DE /* Labels.swift */; };
 		196750A22865169C0019A6DE /* DigitalThanksScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196750A12865169C0019A6DE /* DigitalThanksScene.swift */; };
@@ -74,6 +76,8 @@
 		190C1D1F285D160000FB3518 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		190C1D24285D160000FB3518 /* TeamForceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TeamForceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		190C1D28285D160000FB3518 /* TeamForceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamForceTests.swift; sourceTree = "<group>"; };
+		191B0C262865E5C1001CF3D9 /* Icons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Icons.swift; sourceTree = "<group>"; };
+		191B0C282865F119001CF3D9 /* Texts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Texts.swift; sourceTree = "<group>"; };
 		1967509C286491190019A6DE /* Buttons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Buttons.swift; sourceTree = "<group>"; };
 		1967509E286492780019A6DE /* Labels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Labels.swift; sourceTree = "<group>"; };
 		196750A12865169C0019A6DE /* DigitalThanksScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigitalThanksScene.swift; sourceTree = "<group>"; };
@@ -154,6 +158,7 @@
 		190C1D10285D15FF00FB3518 /* TeamForce */ = {
 			isa = PBXGroup;
 			children = (
+				19C1E99B28610E2800E7976D /* AssetProtocol.swift */,
 				196750B3286519660019A6DE /* Asset.swift */,
 				196750A02865168F0019A6DE /* Scenes */,
 				199C4B6728632461008AD6FD /* DesignSystem */,
@@ -210,6 +215,8 @@
 				199C4B6C2863299E008AD6FD /* DesignSystem.swift */,
 				1967509C286491190019A6DE /* Buttons.swift */,
 				1967509E286492780019A6DE /* Labels.swift */,
+				191B0C262865E5C1001CF3D9 /* Icons.swift */,
+				191B0C282865F119001CF3D9 /* Texts.swift */,
 			);
 			path = DesignSystem;
 			sourceTree = "<group>";
@@ -262,7 +269,6 @@
 			isa = PBXGroup;
 			children = (
 				19C1E9A228610E4E00E7976D /* Router.swift */,
-				19C1E99B28610E2800E7976D /* AssetProtocol.swift */,
 				19C1E99828610E2800E7976D /* BaseVCModel.swift */,
 				19C1E99628610E2800E7976D /* Model.swift */,
 				19C1E99728610E2800E7976D /* RouterProtocol.swift */,
@@ -423,9 +429,11 @@
 				19C1E99F28610E2800E7976D /* SceneModelProtocol.swift in Sources */,
 				196750A22865169C0019A6DE /* DigitalThanksScene.swift in Sources */,
 				19C1E991285F426B00E7976D /* ApiEngine.swift in Sources */,
+				191B0C292865F119001CF3D9 /* Texts.swift in Sources */,
 				19C1E9A328610E4E00E7976D /* Router.swift in Sources */,
 				196750A4286516E40019A6DE /* RegisterScene.swift in Sources */,
 				19C1E99C28610E2800E7976D /* Model.swift in Sources */,
+				191B0C272865E5C1001CF3D9 /* Icons.swift in Sources */,
 				19C1E9AC2861167E00E7976D /* SimpleAnchors.swift in Sources */,
 				196750A6286516F40019A6DE /* LoginScene.swift in Sources */,
 				196750A8286517070019A6DE /* VerifyCodeScene.swift in Sources */,
