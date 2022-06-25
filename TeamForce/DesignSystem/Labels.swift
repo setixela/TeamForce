@@ -30,41 +30,35 @@ protocol LabelBuilderProtocol: LabelsProtocol,
 // MARK: - Labels
 
 struct LabelStateBuilder: LabelStateBuilderProtocol {
-    var `default`: LabelState {
-        LabelState()
-            .set(\.font, UIFont.systemFont(ofSize: 14, weight: .regular))
-            .set(\.color, .black)
-    }
+    var `default`: [LabelState] { [
+        .font(UIFont.systemFont(ofSize: 14, weight: .regular)),
+        .color(.black)
+    ] }
 
-    var headline3: LabelState {
-        LabelState()
-            .set(\.font, UIFont.systemFont(ofSize: 48, weight: .regular))
-            .set(\.color, .black)
-    }
+    var headline3: [LabelState] { [
+        .font(UIFont.systemFont(ofSize: 48, weight: .regular)),
+        .color(.black)
+    ] }
 
-    var headline4: LabelState {
-        LabelState()
-            .set(\.font, UIFont.systemFont(ofSize: 34, weight: .regular))
-            .set(\.color, .black)
-    }
+    var headline4: [LabelState] { [
+        .font(UIFont.systemFont(ofSize: 34, weight: .regular)),
+        .color(.black)
+    ] }
 
-    var headline5: LabelState {
-        LabelState()
-            .set(\.font, UIFont.systemFont(ofSize: 24, weight: .regular))
-            .set(\.color, .black)
-    }
+    var headline5: [LabelState] { [
+        .font(UIFont.systemFont(ofSize: 24, weight: .regular)),
+        .color(.black)
+    ] }
 
-    var title: LabelState {
-        LabelState()
-            .set(\.font, UIFont.systemFont(ofSize: 24, weight: .bold))
-            .set(\.color, .black)
-    }
+    var title: [LabelState] { [
+        .font(UIFont.systemFont(ofSize: 24, weight: .bold)),
+        .color(.black)
+    ] }
 
-    var subtitle: LabelState {
-        LabelState()
-            .set(\.font, UIFont.systemFont(ofSize: 16, weight: .regular))
-            .set(\.color, .black)
-    }
+    var subtitle: [LabelState] { [
+        .font(UIFont.systemFont(ofSize: 16, weight: .regular)),
+        .color(.black)
+    ] }
 
     typealias Parameters = GlobalParameters
 }
@@ -73,26 +67,26 @@ final class LabelBuilder: LabelBuilderProtocol {
     lazy var builder = LabelStateBuilder()
 
     var subtitle: LabelModel {
-        LabelModel(state: builder.subtitle)
+        .init(builder.subtitle)
     }
 
     var `default`: LabelModel {
-        LabelModel(state: builder.default)
+        .init(builder.default)
     }
 
     var headline3: LabelModel {
-        LabelModel(state: builder.headline3)
+        .init(builder.headline3)
     }
 
     var headline4: LabelModel {
-        LabelModel(state: builder.headline4)
+        .init(builder.headline4)
     }
 
     var headline5: LabelModel {
-        LabelModel(state: builder.headline5)
+        .init(builder.headline5)
     }
 
     var title: LabelModel {
-        LabelModel(state: builder.title)
+        .init(builder.title)
     }
 }

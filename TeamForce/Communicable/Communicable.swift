@@ -7,6 +7,8 @@
 
 import Foundation
 
+// MARK: - Setable
+
 protocol Setable: AnyObject {}
 
 extension Setable {
@@ -24,48 +26,111 @@ protocol Communicable: AnyObject {
     var eventsStore: Events { get set }
 }
 
-protocol Stateable: AnyObject, InitProtocol {
-    associatedtype State: InitProtocol
+// MARK: - EnumStateable
 
-    var state: State { get set }
+protocol Stateable: InitProtocol {
+    associatedtype State
 
-    func applyState()
+    func applyState(_ state: State)
 }
 
-extension Stateable where Self: ViewModelProtocol {
-    init(state: State) {
+extension Stateable where Self: ModelProtocol {
+
+    init(_ state: State) {
         self.init()
 
-        self.state = state
-        applyState()
-    }
-}
-
-extension Stateable {
-    @discardableResult
-    func setup(_ closure: GenericClosure<State>) -> Self {
-        closure(state)
-        applyState()
-
-        return self
+        applyState(state)
     }
 
-    var updateState: State {
-        DispatchQueue.main.async { [weak self] in
-            self?.applyState()
+    init(_ state: [State]) {
+        self.init()
+
+       applyStates(state)
+    }
+
+    private func applyStates(_ states: [State]) {
+        states.forEach {
+            applyState($0)
         }
+    }
 
-        return state
+//    @discardableResult
+//    func updateState(_ closure: GenericClosure<State>) -> Self {
+//        closure(state)
+//        applyState()
+//
+//        return self
+//    }
+
+//    var updateState: State {
+//        DispatchQueue.main.async { [weak self] in
+//            self?.applyState()
+//        }
+//
+//        return state
+//    }
+
+    @discardableResult
+    func `set`(_ state: State) -> Self {
+        applyState(state)
+
+        return self
     }
 
     @discardableResult
-    func setup(_ state: State) -> Self {
-        self.state = state
-        applyState()
+    func `set`(_ state: [State]) -> Self {
+        applyStates(state)
 
         return self
     }
 }
+
+// MARK: - Stateable
+
+// protocol Stateable: AnyObject, InitProtocol {
+//    associatedtype State: InitProtocol
+//
+//    var state: State { get set }
+//
+//    func applyState()
+// }
+//
+// extension Stateable where Self: ViewModelProtocol {
+//    init(state: State) {
+//        self.init()
+//
+//        self.state = state
+//        applyState()
+//    }
+// }
+//
+// extension Stateable {
+//    @discardableResult
+//    func updateState(_ closure: GenericClosure<State>) -> Self {
+//        closure(state)
+//        applyState()
+//
+//        return self
+//    }
+//
+//    var updateState: State {
+//        DispatchQueue.main.async { [weak self] in
+//            self?.applyState()
+//        }
+//
+//        return state
+//    }
+//
+//    @discardableResult
+//    func setState(_ state: State) -> Self {
+//        self.state = state
+//        applyState()
+//
+//        return self
+//    }
+// }
+
+// MARK: - Communicable
 
 extension Communicable {
     @discardableResult
@@ -106,4 +171,3 @@ extension Communicable {
         return self
     }
 }
-

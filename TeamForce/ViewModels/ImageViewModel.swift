@@ -7,13 +7,13 @@
 
 import UIKit
 
-final class ImageViewState: BaseClass, Setable {
-    var image: UIImage?
-    var size: CGSize?
+enum ImageViewState {
+    case image(UIImage)
+    case size(CGSize)
 }
 
 final class ImageViewModel: BaseViewModel<UIImageView> {
-    var state: ImageViewState = .init()
+ //   var state: ImageViewState = .init()
 
     override func start() {
 
@@ -22,12 +22,14 @@ final class ImageViewModel: BaseViewModel<UIImageView> {
 
 extension ImageViewModel: Stateable {
 
-    func applyState() {
-        view.image = state.image
-        if let size = state.size {
+    func applyState(_ state: ImageViewState) {
+        switch state {
+        case .image(let uIImage):
+            view.image = uIImage
+        case .size(let cGSize):
             view.addAnchors
-                .constWidth(size.width)
-                .constHeight(size.height)
+                .constWidth(cGSize.width)
+                .constHeight(cGSize.height)
         }
     }
 }

@@ -7,58 +7,61 @@
 
 import UIKit
 
+enum ButtonState {
+   enum State {
+      case normal
+      case selected
+      case inactive
+   }
+
+   case state(State)
+   case title(String)
+   case textColor(UIColor)
+   case backColor(UIColor)
+   case cornerRadius(CGFloat)
+   case height(CGFloat)
+}
+
 struct ButtonEvents: InitProtocol {
-    var didTap: Event<Void>?
+   var didTap: Event<Void>?
 }
 
 final class ButtonModel: BaseViewModel<UIButton> {
-    var state: ButtonState = .init()
-    var eventsStore: ButtonEvents = .init()
+   //
+   var eventsStore: ButtonEvents = .init()
 
-    override func start() {
-        view.addTarget(self, action: #selector(didTap), for: .touchUpInside)
-    }
+   private var state: ButtonState.State = .normal
 
-    @objc func didTap() {
-        print(state.state)
-        if state.state == .normal {
-            sendEvent(\.didTap)
-        }
-    }
+   override func start() {
+      view.addTarget(self, action: #selector(didTap), for: .touchUpInside)
+   }
+
+   @objc func didTap() {
+      if state == .normal {
+         sendEvent(\.didTap)
+      }
+   }
+
+   private var count = 0
 }
 
 extension ButtonModel: Communicable {}
 
 extension ButtonModel: Stateable {
-    func applyState() {
-
-        view.backgroundColor = state.backColor ?? view.backgroundColor
-        view.setTitle(state.title ?? view.title(for: .normal),
-                      for: .normal)
-        view.layer.cornerRadius = state.cornerRadius ?? view.layer.cornerRadius
-        if let height = state.height {
-            view.addAnchors.constHeight(height)
-        }
-        if let color = state.textColor {
-            view.setTitleColor(color, for: .normal)
-        }
-    }
-}
-
-final class ButtonState: BaseClass, Setable {
-    enum State {
-        case normal
-        case inactive
-    }
-
-    var state: State? {
-        didSet {
-            print("new state: ", state)
-        }
-    }
-    var title: String?
-    var textColor: UIColor?
-    var backColor: UIColor?
-    var cornerRadius: CGFloat?
-    var height: CGFloat?
+   func applyState(_ state: ButtonState) {
+      switch state {
+      case .state(let state):
+         self.state = state
+      case .title(let title):
+         view.setTitle(title, for: .normal)
+      case .textColor(let color):
+         view.setTitleColor(color, for: .normal)
+      case .backColor(let color):
+         view.backgroundColor = color
+      case .cornerRadius(let radius):
+         view.layer.cornerRadius = radius
+      case .height(let height):
+         view.addAnchors.constHeight(height)
+      }
+   }
 }

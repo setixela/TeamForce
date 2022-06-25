@@ -16,7 +16,6 @@ struct BottomPanelEvents: InitProtocol {
 
 final class BottomPanelViewModel: BaseViewModel<UIStackView> {
     var eventsStore: BottomPanelEvents = .init()
-    var state: StackState = .init()
 
     override func start() {
         configure()
@@ -49,16 +48,19 @@ final class BottomPanelViewModel: BaseViewModel<UIStackView> {
 extension BottomPanelViewModel: Communicable {}
 
 extension BottomPanelViewModel: Stateable {
-    func applyState() {
-        setupView {
-           $0.axis = state.axis ?? view.axis
-           $0.spacing = state.spacing ?? view.spacing
-           $0.distribution = state.distribution ?? view.distribution
-           $0.alignment = state.alignment ?? view.alignment
-           $0.layoutMargins = state.padding ?? view.layoutMargins
-           $0.isLayoutMarginsRelativeArrangement = true
+    func applyState(_ state: StackState) {
+        switch state {
+        case .distribution(let value):
+            view.distribution = value
+        case .axis(let value):
+            view.axis = value
+        case .spacing(let value):
+            view.spacing = value
+        case .alignment(let value):
+            view.alignment = value
+        case .padding(let value):
+            view.layoutMargins = value
+            view.isLayoutMarginsRelativeArrangement = true
         }
     }
-
-    typealias State = StackState
 }

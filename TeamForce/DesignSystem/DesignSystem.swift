@@ -32,15 +32,11 @@ struct ModelSetuper: ModelSetuperProtocol {
 }
 
 struct MainViewStateBuilder: MainViewSetuperProtocol {
-    var `default`: StackState {
-        let state = StackState()
-        state
-            .set(\.axis, .vertical)
-            .set(\.spacing, 0)
-            .set(\.alignment, .fill)
-            .set(\.distribution, .fill)
-            .set(\.padding, UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16))
-        return state
-    }
+    var `default`: [StackState] { [
+        .axis(.vertical),
+        .spacing(0),
+        .alignment(.fill),
+        .distribution(.fill),
+        .padding(UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16))
+    ] }
 }
-

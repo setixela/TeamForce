@@ -27,32 +27,29 @@ protocol ButtonBuilderProtocol: ButtonsProtocol,
 // MARK: - Buttons
 
 struct ButtonStateBuilder: ButtonStateBuilderProtocol {
-    var `default`: ButtonState {
-        ButtonState()
-            .set(\.backColor, .black)
-            .set(\.textColor, .white)
-            .set(\.cornerRadius, Parameters.cornerRadius)
-            .set(\.height, 48)
-            .set(\.state, .normal)
-    }
+    var `default`: [ButtonState] { [
+        .backColor(.black),
+        .textColor(.white),
+        .cornerRadius(Parameters.cornerRadius),
+        .height(48),
+        .state(.normal),
+    ] }
 
-    var transparent: ButtonState {
-        ButtonState()
-            .set(\.backColor, .white)
-            .set(\.cornerRadius, Parameters.cornerRadius)
-            .set(\.height, 48)
-            .set(\.textColor, .black)
-            .set(\.state, .normal)
-    }
+    var transparent: [ButtonState] { [
+        .backColor(.white),
+        .cornerRadius(Parameters.cornerRadius),
+        .height(48),
+        .textColor(.black),
+        .state(.normal),
+    ] }
 
-    var inactive: ButtonState {
-        ButtonState()
-            .set(\.backColor, .black.withAlphaComponent(0.38))
-            .set(\.cornerRadius, Parameters.cornerRadius)
-            .set(\.height, 48)
-            .set(\.textColor, .white)
-            .set(\.state, .inactive)
-    }
+    var inactive: [ButtonState] { [
+        .backColor(.black.withAlphaComponent(0.38)),
+        .cornerRadius(Parameters.cornerRadius),
+        .height(48),
+        .textColor(.white),
+        .state(.inactive),
+    ] }
 
     typealias Parameters = GlobalParameters
 }
@@ -63,14 +60,14 @@ final class DefaultButtonBuilder: ButtonBuilderProtocol {
     typealias Builder = ButtonStateBuilder
 
     var `default`: ButtonModel {
-        ButtonModel(state: builder.default)
+        .init(builder.default)
     }
 
     var transparent: ButtonModel {
-        ButtonModel(state: builder.transparent)
+        .init(builder.transparent)
     }
 
     var inactive: ButtonModel {
-        ButtonModel(state: builder.inactive)
+        .init(builder.inactive)
     }
 }

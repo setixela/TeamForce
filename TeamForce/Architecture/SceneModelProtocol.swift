@@ -31,10 +31,17 @@ protocol Assetable {
     typealias Design = Asset.Design
     typealias Service = Asset.Service
     typealias Scene = Asset.Scene
+
+
+    var text: Asset.Text { get }
+
+    var icon: Asset.Design.Icon { get }
+
   //  typealias Text = Asset.Text
 }
 
-class BaseSceneModel<VCModel: VCModelProtocol,
+class BaseSceneModel<
+    VCModel: VCModelProtocol,
     MainViewModel: ViewModelProtocol,
     Asset: AssetProtocol,
     Input>: SceneModel

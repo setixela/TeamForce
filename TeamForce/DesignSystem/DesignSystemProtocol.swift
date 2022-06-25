@@ -30,7 +30,7 @@ protocol ModelSetuperProtocol {
 }
 
 protocol MainViewSetuperProtocol: InitProtocol {
-    var `default`: StackState { get }
+    var `default`: [StackState] { get }
 }
 
 

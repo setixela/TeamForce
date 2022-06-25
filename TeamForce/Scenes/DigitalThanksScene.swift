@@ -10,51 +10,51 @@ import UIKit
 // MARK: - DigitalThanksScene
 
 final class DigitalThanksScene: BaseSceneModel<
-    DefaultVCModel,
-    StackModel,
-    Asset,
-    Void
+   DefaultVCModel,
+   StackModel,
+   Asset,
+   Void
 > {
-    private lazy var headerModel = Design.label.headline3.setup {
-        $0
-            .set(\.numberOfLines, 2)
-            .set(\.padding, UIEdgeInsets(top: 0, left: 0, bottom: 40, right: 0))
-            .set(\.text, text.title.make(\.digitalThanks))
-            .set(\.alignment, .center)
-    }
+   //
+   private lazy var headerModel = Design.label.headline3
+      .set(.numberOfLines(2))
+      .set(.padding(UIEdgeInsets(top: 0, left: 0, bottom: 40, right: 0)))
+      .set(.text(text.title.make(\.digitalThanks)))
+      .set(.alignment(.center))
 
-    private lazy var enterButton = Design.button.default.setup {
-        $0.set(\.title, text.button.make(\.enterButton))
-    }
+   private lazy var enterButton = Design.button.default
+      .set(.title(text.button.make(\.enterButton)))
 
-    private lazy var registerButton = Design.button.transparent.setup {
-        $0.set(\.title, text.button.make(\.registerButton))
-    }
+   private lazy var registerButton = Design.button.transparent
+      .set(.title(text.button.make(\.registerButton)))
 
-    override func start() {
-        mainViewModel.setup(Design.State.mainView.default)
+   // MARK: - Start
 
-        enterButton
-            .onEvent(\.didTap) {
-                Asset.router?.route(\.login, navType: .push)
-            }
+   override func start() {
+      //
+      mainViewModel.set(Design.State.mainView.default)
 
-        registerButton
-            .onEvent(\.didTap) {
-                Asset.router?.route(\.register, navType: .push)
-            }
+      enterButton
+         .onEvent(\.didTap) {
+            Asset.router?.route(\.login, navType: .push)
+         }
 
-        presentModels()
-    }
+      registerButton
+         .onEvent(\.didTap) {
+            Asset.router?.route(\.register, navType: .push)
+         }
 
-    private func presentModels() {
-        mainViewModel.sendEvent(\.addViewModels, payload: [
-            Spacer(size: 100),
-            headerModel,
-            enterButton,
-            Spacer(size: 16),
-            registerButton,
-            Spacer()
-        ])
-    }
+      presentModels()
+   }
+
+   private func presentModels() {
+      mainViewModel.sendEvent(\.addViewModels, [
+         Spacer(size: 100),
+         headerModel,
+         enterButton,
+         Spacer(size: 16),
+         registerButton,
+         Spacer()
+      ])
+   }
 }

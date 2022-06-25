@@ -8,49 +8,53 @@
 import UIKit
 
 struct StackEvents: InitProtocol {
-    var addViewModel: Event<UIViewModel>?
-    var addViewModels: Event<[UIViewModel]>?
+   var addViewModel: Event<UIViewModel>?
+   var addViewModels: Event<[UIViewModel]>?
 }
 
 final class StackModel: BaseViewModel<UIStackView> {
-    var eventsStore: StackEvents = .init()
-    var state: StackState = .init()
+   var eventsStore: StackEvents = .init()
 
-    override func start() {
-        weak var wS = self
+   override func start() {
+      weak var wS = self
 
-        onEvent(\.addViewModel) {
+      onEvent(\.addViewModel) {
+         wS?.view.addArrangedSubview($0.uiView)
+      }
+      .onEvent(\.addViewModels) {
+         $0.forEach {
             wS?.view.addArrangedSubview($0.uiView)
-        }
-        .onEvent(\.addViewModels) {
-            $0.forEach {
-                wS?.view.addArrangedSubview($0.uiView)
-            }
-        }
-    }
+         }
+      }
+   }
 }
 
 extension StackModel: Stateable {
-    func applyState() {
-        setupView {
-           $0.axis = state.axis ?? view.axis
-           $0.spacing = state.spacing ?? view.spacing
-           $0.distribution = state.distribution ?? view.distribution
-           $0.alignment = state.alignment ?? view.alignment
-           $0.layoutMargins = state.padding ?? view.layoutMargins
-           $0.isLayoutMarginsRelativeArrangement = true
-        }
-    }
+   func applyState(_ state: StackState) {
+      switch state {
+      case .distribution(let value):
+         view.distribution = value
+      case .axis(let value):
+         view.axis = value
+      case .spacing(let value):
+         view.spacing = value
+      case .alignment(let value):
+         view.alignment = value
+      case .padding(let value):
+         view.layoutMargins = value
+         view.isLayoutMarginsRelativeArrangement = true
+      }
+   }
 }
 
 extension StackModel: Communicable {
-    typealias Events = StackEvents
+   typealias Events = StackEvents
 }
 
-final class StackState: BaseClass, Setable {
-    var distribution: UIStackView.Distribution?
-    var axis: NSLayoutConstraint.Axis?
-    var spacing: CGFloat?
-    var alignment: UIStackView.Alignment?
-    var padding: UIEdgeInsets?
+enum StackState {
+   case distribution(UIStackView.Distribution)
+   case axis(NSLayoutConstraint.Axis)
+   case spacing(CGFloat)
+   case alignment(UIStackView.Alignment)
+   case padding(UIEdgeInsets)
 }
