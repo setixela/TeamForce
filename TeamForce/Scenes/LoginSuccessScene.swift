@@ -24,10 +24,10 @@ final class LoginSuccessScene: BaseSceneModel<
       .set(.alignment(.center))
       .set(.numberOfLines(2))
       .set(.padding(UIEdgeInsets(top: 24, left: 0, bottom: 24, right: 0)))
-      .set(.text("Вы успешно зарегистрированы"))
+      .set(.text(text.title.loginSuccess))
 
    private lazy var nextButton = ButtonModel(Design.State.button.default)
-      .set(.title("Войти"))
+      .set(.title(text.button.enterButton))
 
    override func start() {
       mainViewModel.stackModel.set(.alignment(.center))

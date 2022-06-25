@@ -7,26 +7,7 @@
 
 import Foundation
 
-// MARK: - Setable
-
-protocol Setable: AnyObject {}
-
-extension Setable {
-    @discardableResult func set<T>(_ keypath: WritableKeyPath<Self, T>, _ value: T) -> Self {
-        var slf = self
-        slf[keyPath: keypath] = value
-        //  print(keypath, value)
-        return self
-    }
-}
-
-protocol Communicable: AnyObject {
-    associatedtype Events: InitProtocol
-
-    var eventsStore: Events { get set }
-}
-
-// MARK: - EnumStateable
+// MARK: - Stateable
 
 protocol Stateable: InitProtocol {
     associatedtype State
@@ -35,7 +16,6 @@ protocol Stateable: InitProtocol {
 }
 
 extension Stateable where Self: ModelProtocol {
-
     init(_ state: State) {
         self.init()
 
@@ -45,94 +25,34 @@ extension Stateable where Self: ModelProtocol {
     init(_ state: [State]) {
         self.init()
 
-       applyStates(state)
+        state.forEach { applyState($0) }
     }
-
-    private func applyStates(_ states: [State]) {
-        states.forEach {
-            applyState($0)
-        }
-    }
-
-//    @discardableResult
-//    func updateState(_ closure: GenericClosure<State>) -> Self {
-//        closure(state)
-//        applyState()
-//
-//        return self
-//    }
-
-//    var updateState: State {
-//        DispatchQueue.main.async { [weak self] in
-//            self?.applyState()
-//        }
-//
-//        return state
-//    }
 
     @discardableResult
-    func `set`(_ state: State) -> Self {
+    func set(_ state: State) -> Self {
         applyState(state)
 
         return self
     }
 
     @discardableResult
-    func `set`(_ state: [State]) -> Self {
-        applyStates(state)
+    func set(_ state: [State]) -> Self {
+        state.forEach { applyState($0) }
 
         return self
     }
 }
 
-// MARK: - Stateable
-
-// protocol Stateable: AnyObject, InitProtocol {
-//    associatedtype State: InitProtocol
-//
-//    var state: State { get set }
-//
-//    func applyState()
-// }
-//
-// extension Stateable where Self: ViewModelProtocol {
-//    init(state: State) {
-//        self.init()
-//
-//        self.state = state
-//        applyState()
-//    }
-// }
-//
-// extension Stateable {
-//    @discardableResult
-//    func updateState(_ closure: GenericClosure<State>) -> Self {
-//        closure(state)
-//        applyState()
-//
-//        return self
-//    }
-//
-//    var updateState: State {
-//        DispatchQueue.main.async { [weak self] in
-//            self?.applyState()
-//        }
-//
-//        return state
-//    }
-//
-//    @discardableResult
-//    func setState(_ state: State) -> Self {
-//        self.state = state
-//        applyState()
-//
-//        return self
-//    }
-// }
-
 // MARK: - Communicable
 
+protocol Communicable: AnyObject {
+    associatedtype Events: InitProtocol
+
+    var eventsStore: Events { get set }
+}
+
 extension Communicable {
+    //
     @discardableResult
     func sendEvent<T>(_ event: KeyPath<Events, Event<T>?>, payload: T) -> Self {
         guard let lambda = eventsStore[keyPath: event] else {
@@ -147,7 +67,6 @@ extension Communicable {
 
     @discardableResult
     func sendEvent<T>(_ event: KeyPath<Events, Event<T>?>, _ payload: T) -> Self {
-        // print("\n", event, payload, "\n")
         return sendEvent(event, payload: payload)
     }
 
@@ -166,8 +85,6 @@ extension Communicable {
     @discardableResult
     func onEvent<T>(_ event: WritableKeyPath<Events, Event<T>?>, _ lambda: @escaping Event<T>) -> Self {
         eventsStore[keyPath: event] = lambda
-
-        print("On event:\n   \(event)\n   Lambda: \(String(describing: lambda))")
         return self
     }
 }

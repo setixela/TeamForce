@@ -17,11 +17,11 @@ final class VerifyCodeScene: BaseSceneModel<
 > {
    //
    private lazy var headerModel = Design.label.headline4
-      .set(.padding(UIEdgeInsets(top: 0, left: 0, bottom: 24, right: 0)))
+      .set(.padding(.init(top: 0, left: 0, bottom: 24, right: 0)))
       .set(.text("Вход"))
 
    private lazy var subtitleModel = Design.label.subtitle
-      .set(.padding(UIEdgeInsets(top: 0, left: 0, bottom: 40, right: 0)))
+      .set(.padding(.init(top: 0, left: 0, bottom: 40, right: 0)))
       .set(.text("2. Введите код"))
       .set(.numberOfLines(2))
 
@@ -41,18 +41,18 @@ final class VerifyCodeScene: BaseSceneModel<
          }
 
       textFieldModel
-         .onEvent(\.didEditingChanged) { text in
-            weakSelf?.inputParser.sendEvent(\.request, text)
+         .onEvent(\.didEditingChanged) {
+            weakSelf?.inputParser.sendEvent(\.request, $0)
          }
-         .sendEvent(\.setPlaceholder, "@Имя пользователя")
+         .sendEvent(\.setPlaceholder, "@" + text.title.userName)
 
       inputParser
-         .onEvent(\.response) { text in
-            weakSelf?.textFieldModel.sendEvent(\.setText, text)
+         .onEvent(\.response) {
+            weakSelf?.textFieldModel.sendEvent(\.setText, $0)
             weakSelf?.nextButton.set(Design.State.button.default)
          }
-         .onEvent(\.error) { text in
-            weakSelf?.textFieldModel.sendEvent(\.setText, text)
+         .onEvent(\.error) {
+            weakSelf?.textFieldModel.sendEvent(\.setText, $0)
             weakSelf?.nextButton.set(Design.State.button.inactive)
          }
 

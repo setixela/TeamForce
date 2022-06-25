@@ -13,15 +13,9 @@ final class TextFieldModel: BaseViewModel<PaddingTextField> {
     var eventsStore: Events = .init()
 
     override func start() {
-        print("\nStart TextFieldModel\n")
-        view.addAnchors.constHeight(48)
-        view.padding = .init(top: 16, left: 16, bottom: 16, right: 16)
-        view.backgroundColor = .lightGray
-        view.delegate = self
-        view.addTarget(self, action: #selector(changValue), for: .editingChanged)
-
         weak var weakSelf = self
 
+        setupView()
         onEvent(\.setText) { text in
             print("setText ", text)
             weakSelf?.view.text = text
@@ -30,6 +24,14 @@ final class TextFieldModel: BaseViewModel<PaddingTextField> {
             print("setPlaceholder ", text)
             weakSelf?.view.placeholder = text
         }
+    }
+
+    private func setupView() {
+        view.addAnchors.constHeight(48)
+        view.padding = .init(top: 16, left: 16, bottom: 16, right: 16)
+        view.backgroundColor = .lightGray
+        view.delegate = self
+        view.addTarget(self, action: #selector(changValue), for: .editingChanged)
     }
 
     @objc func changValue() {

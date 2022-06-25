@@ -17,11 +17,11 @@ final class RegisterScene: BaseSceneModel<
 > {
    //
    private lazy var headerModel = Design.label.headline4
-      .set(.padding(UIEdgeInsets(top: 0, left: 0, bottom: 24, right: 0)))
+      .set(.padding(.init(top: 0, left: 0, bottom: 24, right: 0)))
       .set(.text(text.title.make(\.register)))
 
    private lazy var subtitleModel = Design.label.subtitle
-      .set(.padding(UIEdgeInsets(top: 0, left: 0, bottom: 40, right: 0)))
+      .set(.padding(.init(top: 0, left: 0, bottom: 40, right: 0)))
       .set(.text("1. " + text.title.make(\.enterTelegramName)))
       .set(.numberOfLines(2))
 

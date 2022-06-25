@@ -17,14 +17,17 @@ final class LoginScene: BaseSceneModel<
 > {
    //
    private lazy var headerModel = Design.label.headline4
-      .set(.padding(UIEdgeInsets(top: 0, left: 0, bottom: 24, right: 0)))
+      .set(.padding(.init(top: 0, left: 0, bottom: 24, right: 0)))
       .set(.text("Вход"))
+
    private lazy var subtitleModel = Design.label.subtitle
-      .set(.padding(UIEdgeInsets(top: 0, left: 0, bottom: 40, right: 0)))
+      .set(.padding(.init(top: 0, left: 0, bottom: 40, right: 0)))
       .set(.text("1. Для входа нажмите ”получить код”, или смените пользователя "))
       .set(.numberOfLines(2))
+
    private lazy var nextButton = Design.button.inactive
       .set(.title("ПОЛУЧИТЬ КОД"))
+
    private lazy var changeUserButton = Design.button.transparent
       .set(.title("СМЕНИТЬ ПОЛЬЗОВАТЕЛЯ"))
 
@@ -37,7 +40,6 @@ final class LoginScene: BaseSceneModel<
       nextButton
          .onEvent(\.didTap) {
             Asset.router?.route(\.verifyCode, navType: .push)
-            print("Did tap")
          }
 
       textFieldModel

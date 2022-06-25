@@ -19,6 +19,6 @@ class BaseClass: InitProtocol {
     required init() {}
 }
 
-class BaseState: BaseClass, Setable {
+class BaseState: BaseClass {
     required init() {}
 }

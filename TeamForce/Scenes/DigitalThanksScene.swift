@@ -18,7 +18,7 @@ final class DigitalThanksScene: BaseSceneModel<
    //
    private lazy var headerModel = Design.label.headline3
       .set(.numberOfLines(2))
-      .set(.padding(UIEdgeInsets(top: 0, left: 0, bottom: 40, right: 0)))
+      .set(.padding(.init(top: 0, left: 0, bottom: 40, right: 0)))
       .set(.text(text.title.make(\.digitalThanks)))
       .set(.alignment(.center))
 
