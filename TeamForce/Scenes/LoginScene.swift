@@ -22,14 +22,14 @@ final class LoginScene: BaseSceneModel<
 
    private lazy var subtitleModel = Design.label.subtitle
       .set(.padding(.init(top: 0, left: 0, bottom: 40, right: 0)))
-      .set(.text("1. Для входа нажмите ”получить код”, или смените пользователя "))
+      .set(.text("1. " + text.title.make(\.pressGetCode)))
       .set(.numberOfLines(2))
 
    private lazy var nextButton = Design.button.inactive
-      .set(.title("ПОЛУЧИТЬ КОД"))
+      .set(.title(text.button.make(\.nextButton)))
 
    private lazy var changeUserButton = Design.button.transparent
-      .set(.title("СМЕНИТЬ ПОЛЬЗОВАТЕЛЯ"))
+         .set(.title(text.button.make(\.changeUserButton)))
 
    private lazy var textFieldModel = TextFieldModel()
    private lazy var inputParser = TelegramNickCheckerModel()
@@ -47,22 +47,19 @@ final class LoginScene: BaseSceneModel<
             print(loginName)
             weakSelf?.apiModel
                .onEvent(\.responseResult) { authResult in
-                  print("\n", authResult.xCode, authResult.xId)
-                  Asset.router?.route(\.verifyCode, navType: .push)
+                  Asset.router?.route(\.verifyCode, navType: .push, payload: authResult)
                }
                .onEvent(\.responseError) { error in
                   print("\n", error.localizedDescription)
                }
                .sendEvent(\.sendRequest, loginName)
-
-//            Asset.router?.route(\.verifyCode, navType: .push)
          }
 
       textFieldModel
          .onEvent(\.didEditingChanged) { text in
             weakSelf?.inputParser.sendEvent(\.request, text)
          }
-         .sendEvent(\.setPlaceholder, "@Имя пользователя")
+         .sendEvent(\.setPlaceholder, "@" + text.title.make(\.userName))
 
       inputParser
          .onEvent(\.success) { text in
@@ -95,3 +92,5 @@ final class LoginScene: BaseSceneModel<
          ])
    }
 }
+
+

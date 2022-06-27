@@ -21,16 +21,13 @@ enum TeamForceApiError: Error {
     case error(Error)
 }
 
-protocol TeamForceApiProtocol {
-}
+protocol TeamForceApiProtocol {}
 
 enum CommonError: Error {
     case error
 }
 
-
 final class TeamForceApi: TeamForceApiProtocol {
-
     func auth(loginName: String) -> Promise<AuthResult> {
         Promise { seal in
             apiEngine
@@ -59,7 +56,7 @@ final class TeamForceApi: TeamForceApiProtocol {
         Promise { seal in
             apiEngine
                 .process(endpoint: TeamForceEndpoints.VerifyEndpoint(body: ["X-ID": authResult.xId,
-                                                                            "X-Code": authResult.xCode]))
+                                                                            "X-Code": authResult.xCode], headers: ["1" : "2"]))
                 .done { result in
                     print(result)
                     seal.fulfill(VerifyResult(type: "", isSuccess: true))
@@ -69,7 +66,6 @@ final class TeamForceApi: TeamForceApiProtocol {
                 }
         }
     }
-
 
     private let apiEngine: ApiEngineProtocol
 
@@ -122,19 +118,32 @@ extension TeamForceApi {
 struct AuthResult {
     let xId: String
     let xCode: String
-    
 }
 
+struct VerifyRequest {
+    let xId: String
+    let xCode: String
+    let smsCode: String
+}
 
 struct VerifyResult {
-   let type: String //  "authresult",
-   let isSuccess: Bool //  false
+    let type: String //  "authresult",
+    let isSuccess: Bool //  false
 }
 
 
-struct VerifyResultBody {
-   let type: String //  "authresult",
-   let isSuccess: Bool //  false
+struct VerifyResultBody: Codable {
+    let type: String
+    let isSuccess: Bool
+    let token: String
+    let sessionId: String
+
+    enum CodingKeys: String, CodingKey  {
+        case sessionId = "sessionid"
+        case isSuccess = "is_success"
+        case type
+        case token
+    }
 }
 
 struct AuthResultBody: Decodable {

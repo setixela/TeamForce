@@ -91,13 +91,22 @@ extension TelegramNickCheckerModel: Communicable {}
 final class SmsCodeCheckerModel: BaseModel {
     var eventsStore: InputParserEvents = .init()
 
+    private var maxDigits: Int = 4
+
+    convenience init(maxDigits: Int) {
+        self.init()
+        self.maxDigits = maxDigits
+    }
+
     override func start() {
         onEvent(\.request) { [weak self] text in
+            guard let self = self else { return }
 
-            if text.count == 4 {
-                self?.sendEvent(\.success, text)
+            if text.count >= self.maxDigits {
+                let text = text.dropLast(text.count - self.maxDigits)
+                self.sendEvent(\.success, String(text))
             } else {
-                self?.sendEvent(\.error, text)
+                self.sendEvent(\.error, text)
             }
         }
     }

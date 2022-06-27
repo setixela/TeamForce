@@ -24,5 +24,7 @@ enum TeamForceEndpoints {
         var endPoint: String { "http://176.99.6.251:8888/verify/" }
 
         let body: [String : Any]
+
+        let headers: [String : String]
     }
 }
