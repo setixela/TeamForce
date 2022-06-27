@@ -40,7 +40,6 @@ final class BottomPanelViewModel: BaseViewModel<UIStackView> {
         view.spacing = 12
         view.layoutMargins = UIEdgeInsets(top: 16, left: 16, bottom: 48, right: 16)
         view.isLayoutMarginsRelativeArrangement = true
-        view.backgroundColor = .lightGray
     }
 }
 
@@ -60,6 +59,8 @@ extension BottomPanelViewModel: Stateable {
         case .padding(let value):
             view.layoutMargins = value
             view.isLayoutMarginsRelativeArrangement = true
+        case .backColor(let value):
+            view.backgroundColor = value
         }
     }
 }

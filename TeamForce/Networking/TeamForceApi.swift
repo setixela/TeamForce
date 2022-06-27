@@ -122,6 +122,7 @@ extension TeamForceApi {
 struct AuthResult {
     let xId: String
     let xCode: String
+    
 }
 
 

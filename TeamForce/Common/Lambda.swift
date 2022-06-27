@@ -9,7 +9,7 @@ import Foundation
 
 typealias VoidClosure = () -> Void
 typealias GenericClosure<T> = (T) -> Void
-typealias Event = GenericClosure
+typealias Event<T> = (T) -> Void
 
 protocol LambdaProtocol {
     func perform<AnyType>(_ value: AnyType)

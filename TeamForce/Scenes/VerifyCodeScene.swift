@@ -47,7 +47,7 @@ final class VerifyCodeScene: BaseSceneModel<
          .sendEvent(\.setPlaceholder, "@" + text.title.userName)
 
       inputParser
-         .onEvent(\.response) {
+         .onEvent(\.success) {
             weakSelf?.textFieldModel.sendEvent(\.setText, $0)
             weakSelf?.nextButton.set(Design.State.button.default)
          }

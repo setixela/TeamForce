@@ -59,7 +59,7 @@ extension TextFieldModel: Communicable {
 
 struct InputParserEvents: InitProtocol {
     var request: Event<String>?
-    var response: Event<String>?
+    var success: Event<String>?
     var error: Event<String>?
 }
 
@@ -76,7 +76,7 @@ final class TelegramNickCheckerModel: BaseModel {
                 resultText = "@" + resultText
             }
             if resultText.count > 3 {
-                self?.sendEvent(\.response, resultText)
+                self?.sendEvent(\.success, resultText)
             } else {
                 self?.sendEvent(\.error, resultText)
             }
@@ -95,7 +95,7 @@ final class SmsCodeCheckerModel: BaseModel {
         onEvent(\.request) { [weak self] text in
 
             if text.count == 4 {
-                self?.sendEvent(\.response, text)
+                self?.sendEvent(\.success, text)
             } else {
                 self?.sendEvent(\.error, text)
             }

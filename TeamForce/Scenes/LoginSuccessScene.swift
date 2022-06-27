@@ -36,7 +36,7 @@ final class LoginSuccessScene: BaseSceneModel<
 
       nextButton
          .onEvent(\.didTap) {
-            print("Did tap")
+            Asset.router?.route(\.main, navType: .present)
          }
 
       vcModel?

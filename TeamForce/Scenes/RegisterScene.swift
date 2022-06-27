@@ -54,7 +54,7 @@ final class RegisterScene: BaseSceneModel<
          .sendEvent(\.setPlaceholder, "@" + text.title.make(\.userName))
 
       inputParser
-         .onEvent(\.response) { [weak self] text in
+         .onEvent(\.success) { [weak self] text in
             self?.textFieldModel.sendEvent(\.setText, text)
             self?.nextButton.set(Design.State.button.default)
          }

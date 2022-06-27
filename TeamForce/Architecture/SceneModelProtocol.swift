@@ -93,3 +93,13 @@ extension BaseSceneModel {
 extension BaseSceneModel: Communicable, Assetable {
     typealias Events = SceneEvent<Input>
 }
+
+protocol ExtendedSceneProtocol {
+    associatedtype ViewModels: InitProtocol
+    associatedtype Models: InitProtocol
+    associatedtype LocalVars: InitProtocol
+
+    var viewModels: ViewModels { get }
+    var models: Models { get }
+    var localVars: LocalVars { get }
+}

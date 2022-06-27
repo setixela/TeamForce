@@ -5,16 +5,22 @@
 //  Created by Aleksandr Solovyev on 23.06.2022.
 //
 
-import Foundation
+import UIKit
+
+protocol Associated {
+    associatedtype AsType
+}
 
 // MARK: - Buttons Protocols
 
-protocol ButtonsProtocol {
-    associatedtype DesignType
+protocol ButtonsProtocol: Associated {
+    associatedtype AsType
 
-    var `default`: DesignType { get }
-    var transparent: DesignType { get }
-    var inactive: DesignType { get }
+    var `default`: AsType { get }
+    var transparent: AsType { get }
+    var inactive: AsType { get }
+
+    var tabBar: AsType { get }
 }
 
 protocol ButtonStateBuilderProtocol: ButtonsProtocol {
@@ -32,7 +38,7 @@ struct ButtonStateBuilder: ButtonStateBuilderProtocol {
         .textColor(.white),
         .cornerRadius(Parameters.cornerRadius),
         .height(48),
-        .state(.normal),
+        .enabled(true),
     ] }
 
     var transparent: [ButtonState] { [
@@ -40,7 +46,7 @@ struct ButtonStateBuilder: ButtonStateBuilderProtocol {
         .cornerRadius(Parameters.cornerRadius),
         .height(48),
         .textColor(.black),
-        .state(.normal),
+        .enabled(true),
     ] }
 
     var inactive: [ButtonState] { [
@@ -48,7 +54,18 @@ struct ButtonStateBuilder: ButtonStateBuilderProtocol {
         .cornerRadius(Parameters.cornerRadius),
         .height(48),
         .textColor(.white),
-        .state(.inactive),
+        .enabled(false),
+    ] }
+
+    var tabBar: [ButtonState] { [
+        .font(UIFont.systemFont(ofSize: 12, weight: .medium)),
+        .backColor(.black.withAlphaComponent(0.38)),
+        .cornerRadius(0),
+        .height(56),
+        .textColor(.white),
+        .enabled(true),
+        .tint(.white),
+        .vertical(true)
     ] }
 
     typealias Parameters = GlobalParameters
@@ -69,5 +86,9 @@ final class DefaultButtonBuilder: ButtonBuilderProtocol {
 
     var inactive: ButtonModel {
         .init(builder.inactive)
+    }
+
+    var tabBar: ButtonModel {
+        .init(builder.tabBar)
     }
 }

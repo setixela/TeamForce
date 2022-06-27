@@ -18,6 +18,7 @@ protocol LabelsProtocol {
     var headline5: DesignType { get }
     var title: DesignType { get }
     var subtitle: DesignType { get }
+    var caption: DesignType { get }
 }
 
 protocol LabelStateBuilderProtocol: LabelsProtocol {
@@ -60,10 +61,16 @@ struct LabelStateBuilder: LabelStateBuilderProtocol {
         .color(.black)
     ] }
 
+    var caption: [LabelState] { [
+        .font(UIFont.systemFont(ofSize: 12, weight: .regular)),
+        .color(.black)
+    ] }
+
     typealias Parameters = GlobalParameters
 }
 
 final class LabelBuilder: LabelBuilderProtocol {
+
     lazy var builder = LabelStateBuilder()
 
     var subtitle: LabelModel {
@@ -89,4 +96,9 @@ final class LabelBuilder: LabelBuilderProtocol {
     var title: LabelModel {
         .init(builder.title)
     }
+
+    var caption: LabelModel {
+        .init(builder.caption)
+    }
+
 }

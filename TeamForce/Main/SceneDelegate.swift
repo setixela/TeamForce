@@ -45,6 +45,9 @@ private extension SceneDelegate {
             .onEvent(\.popToRoot) {
                 nc.popToRootViewController(animated: true)
             }
+            .onEvent(\.present, { vc in
+                nc.viewControllers = [vc]
+            })
             .route(\.digitalThanks, navType: .push, payload: ())
     }
 }

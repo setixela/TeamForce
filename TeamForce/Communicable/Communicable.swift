@@ -7,6 +7,22 @@
 
 import Foundation
 
+// MARK: - KeyPath setable
+
+protocol KeyPathSetable {}
+
+extension KeyPathSetable {
+    @discardableResult func set<T>(_ keypath: WritableKeyPath<Self, T>, _ value: T) -> Self {
+        var slf = self
+        slf[keyPath: keypath] = value
+        return self
+    }
+
+    func get<T>(_ keypath: KeyPath<Self, T>, _ value: T) -> T {
+        self[keyPath: keypath]
+    }
+}
+
 // MARK: - Stateable
 
 protocol Stateable: InitProtocol {
@@ -15,7 +31,7 @@ protocol Stateable: InitProtocol {
     func applyState(_ state: State)
 }
 
-extension Stateable where Self: ModelProtocol {
+extension Stateable {
     init(_ state: State) {
         self.init()
 
@@ -55,12 +71,16 @@ extension Communicable {
     //
     @discardableResult
     func sendEvent<T>(_ event: KeyPath<Events, Event<T>?>, payload: T) -> Self {
-        guard let lambda = eventsStore[keyPath: event] else {
+        guard
+            let lambda = eventsStore[keyPath: event]
+        else {
             print("Event KeyPath did not observed!:\n   \(event)\n   Value: \(payload)")
             return self
         }
 
-        lambda(payload)
+        DispatchQueue.main.async {
+            lambda(payload)
+        }
 
         return self
     }
@@ -72,12 +92,16 @@ extension Communicable {
 
     @discardableResult
     func sendEvent(_ event: KeyPath<Events, Event<Void>?>) -> Self {
-        guard let lambda = eventsStore[keyPath: event] else {
+        guard
+            let lambda = eventsStore[keyPath: event]
+        else {
             print("Void Event KeyPath did not observed!:\n   \(event) ")
             return self
         }
 
-        lambda(())
+        DispatchQueue.main.async {
+            lambda(())
+        }
 
         return self
     }

@@ -43,6 +43,8 @@ extension StackModel: Stateable {
       case .padding(let value):
          view.layoutMargins = value
          view.isLayoutMarginsRelativeArrangement = true
+      case .backColor(let value):
+         view.backgroundColor = value
       }
    }
 }
@@ -57,4 +59,5 @@ enum StackState {
    case spacing(CGFloat)
    case alignment(UIStackView.Alignment)
    case padding(UIEdgeInsets)
+   case backColor(UIColor)
 }

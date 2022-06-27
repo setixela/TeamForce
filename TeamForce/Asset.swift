@@ -18,7 +18,7 @@ enum Asset: AssetProtocol {
         var verifyCode: SceneModelProtocol { VerifyCodeScene() }
         var loginSuccess: SceneModelProtocol { LoginSuccessScene() }
         var register: SceneModelProtocol { RegisterScene() }
-      //  var main: SceneModelProtocol { MainScene() }
+        var main: SceneModelProtocol { MainScene() }
     }
 
     struct Service: InitProtocol {}

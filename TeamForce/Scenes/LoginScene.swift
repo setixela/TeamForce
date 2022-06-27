@@ -33,13 +33,29 @@ final class LoginScene: BaseSceneModel<
 
    private lazy var textFieldModel = TextFieldModel()
    private lazy var inputParser = TelegramNickCheckerModel()
+   private lazy var apiModel = AuthApiModel()
+
+   private var loginName: String?
 
    override func start() {
       weak var weakSelf = self
 
       nextButton
          .onEvent(\.didTap) {
-            Asset.router?.route(\.verifyCode, navType: .push)
+            guard let loginName = weakSelf?.loginName else { return }
+
+            print(loginName)
+            weakSelf?.apiModel
+               .onEvent(\.responseResult) { authResult in
+                  print("\n", authResult.xCode, authResult.xId)
+                  Asset.router?.route(\.verifyCode, navType: .push)
+               }
+               .onEvent(\.responseError) { error in
+                  print("\n", error.localizedDescription)
+               }
+               .sendEvent(\.sendRequest, loginName)
+
+//            Asset.router?.route(\.verifyCode, navType: .push)
          }
 
       textFieldModel
@@ -49,11 +65,13 @@ final class LoginScene: BaseSceneModel<
          .sendEvent(\.setPlaceholder, "@Имя пользователя")
 
       inputParser
-         .onEvent(\.response) { text in
+         .onEvent(\.success) { text in
+            weakSelf?.loginName = String(text.dropFirst())
             weakSelf?.textFieldModel.sendEvent(\.setText, text)
             weakSelf?.nextButton.set(Design.State.button.default)
          }
          .onEvent(\.error) { text in
+            weakSelf?.loginName = nil
             weakSelf?.textFieldModel.sendEvent(\.setText, text)
             weakSelf?.nextButton.set(Design.State.button.inactive)
          }

@@ -31,6 +31,8 @@
 		199C4B6928632834008AD6FD /* DesignSystemProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199C4B6828632834008AD6FD /* DesignSystemProtocol.swift */; };
 		199C4B6B2863292F008AD6FD /* ButtonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199C4B6A2863292F008AD6FD /* ButtonModel.swift */; };
 		199C4B6D2863299E008AD6FD /* DesignSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199C4B6C2863299E008AD6FD /* DesignSystem.swift */; };
+		19AE3AEF28691B2E00A0C6E4 /* MainScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19AE3AEE28691B2E00A0C6E4 /* MainScene.swift */; };
+		19AE3AF22869230C00A0C6E4 /* AuthApiModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19AE3AF12869230C00A0C6E4 /* AuthApiModel.swift */; };
 		19C1E97C285E7BC300E7976D /* Communicable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C1E97B285E7BC300E7976D /* Communicable.swift */; };
 		19C1E97F285E7C1200E7976D /* InitProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C1E97E285E7C1200E7976D /* InitProtocol.swift */; };
 		19C1E981285E7C5500E7976D /* Lambda.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C1E980285E7C5500E7976D /* Lambda.swift */; };
@@ -94,6 +96,8 @@
 		199C4B6828632834008AD6FD /* DesignSystemProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignSystemProtocol.swift; sourceTree = "<group>"; };
 		199C4B6A2863292F008AD6FD /* ButtonModel.swift */ = {isa = PBXFileReference; indentWidth = 3; lastKnownFileType = sourcecode.swift; path = ButtonModel.swift; sourceTree = "<group>"; tabWidth = 3; };
 		199C4B6C2863299E008AD6FD /* DesignSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignSystem.swift; sourceTree = "<group>"; };
+		19AE3AEE28691B2E00A0C6E4 /* MainScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScene.swift; sourceTree = "<group>"; };
+		19AE3AF12869230C00A0C6E4 /* AuthApiModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthApiModel.swift; sourceTree = "<group>"; };
 		19C1E97B285E7BC300E7976D /* Communicable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Communicable.swift; sourceTree = "<group>"; };
 		19C1E97E285E7C1200E7976D /* InitProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitProtocol.swift; sourceTree = "<group>"; };
 		19C1E980285E7C5500E7976D /* Lambda.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lambda.swift; sourceTree = "<group>"; };
@@ -162,6 +166,7 @@
 				196750B3286519660019A6DE /* Asset.swift */,
 				196750A02865168F0019A6DE /* Scenes */,
 				199C4B6728632461008AD6FD /* DesignSystem */,
+				19AE3AF0286922FC00A0C6E4 /* Models */,
 				19C1E9A428610E6F00E7976D /* ViewModels */,
 				19ECD54628623D92001765F6 /* Views */,
 				19C1E99528610E1900E7976D /* Architecture */,
@@ -204,6 +209,7 @@
 				196750A5286516F40019A6DE /* LoginScene.swift */,
 				196750A7286517070019A6DE /* VerifyCodeScene.swift */,
 				196750A9286517130019A6DE /* LoginSuccessScene.swift */,
+				19AE3AEE28691B2E00A0C6E4 /* MainScene.swift */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -219,6 +225,14 @@
 				191B0C282865F119001CF3D9 /* Texts.swift */,
 			);
 			path = DesignSystem;
+			sourceTree = "<group>";
+		};
+		19AE3AF0286922FC00A0C6E4 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				19AE3AF12869230C00A0C6E4 /* AuthApiModel.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		19C1E97A285E7BC300E7976D /* Communicable */ = {
@@ -419,6 +433,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				199C4B6D2863299E008AD6FD /* DesignSystem.swift in Sources */,
+				19AE3AEF28691B2E00A0C6E4 /* MainScene.swift in Sources */,
 				19C1E981285E7C5500E7976D /* Lambda.swift in Sources */,
 				19C1E98F285F426B00E7976D /* TeamForceApi.swift in Sources */,
 				199C4B6928632834008AD6FD /* DesignSystemProtocol.swift in Sources */,
@@ -431,6 +446,7 @@
 				19C1E991285F426B00E7976D /* ApiEngine.swift in Sources */,
 				191B0C292865F119001CF3D9 /* Texts.swift in Sources */,
 				19C1E9A328610E4E00E7976D /* Router.swift in Sources */,
+				19AE3AF22869230C00A0C6E4 /* AuthApiModel.swift in Sources */,
 				196750A4286516E40019A6DE /* RegisterScene.swift in Sources */,
 				19C1E99C28610E2800E7976D /* Model.swift in Sources */,
 				191B0C272865E5C1001CF3D9 /* Icons.swift in Sources */,
