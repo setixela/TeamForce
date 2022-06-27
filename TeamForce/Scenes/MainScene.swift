@@ -5,13 +5,14 @@
 //  Created by Aleksandr Solovyev on 27.06.2022.
 //
 
+import PromiseKit
 import UIKit
 
 final class MainScene: BaseSceneModel<
     DefaultVCModel,
     StackWithBottomPanelModel,
     Asset,
-    Void
+    Promise<User>
 > {
     //
     private lazy var digitalThanksTitle = Design.label.headline4
@@ -47,6 +48,18 @@ final class MainScene: BaseSceneModel<
             transactButton,
             historyButton
         ])
+
+        weak var weakSelf = self
+        vcModel?.onEvent(\.viewDidLoad) {
+            guard let result = weakSelf?.inputValue?.result else { return }
+
+            switch result {
+            case .fulfilled(let user):
+                print(user)
+            case .rejected(let error):
+                print("REJECTED:\n", error)
+            }
+        }
     }
 }
 

@@ -46,13 +46,13 @@ final class VerifyCodeScene: BaseSceneModel<
 
             let verifyRequest = VerifyRequest(xId: authResult.xId, xCode: authResult.xCode, smsCode: smsCode)
             weakSelf?.verifyApi
-               .onEvent(\.responseResult, { result in
-                  Asset.router?.route(\.loginSuccess, navType: .push)
+               .onEvent(\.response, { result in
+                  Asset.router?.route(\.loginSuccess, navType: .push, payload: result.token)
                })
-               .onEvent(\.responseError, { error in
+               .onEvent(\.error, { error in
                   print(error)
                })
-               .sendEvent(\.sendRequest, verifyRequest)
+               .sendEvent(\.request, verifyRequest)
          }
 
       textFieldModel

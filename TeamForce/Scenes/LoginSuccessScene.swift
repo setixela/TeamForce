@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import PromiseKit
 
 // MARK: - LoginSuccessScene
 
@@ -13,7 +14,7 @@ final class LoginSuccessScene: BaseSceneModel<
    DefaultVCModel,
    StackWithBottomPanelModel,
    Asset,
-   Void
+   String
 > {
    //
    private lazy var checkmarkIcon = ImageViewModel()
@@ -29,6 +30,9 @@ final class LoginSuccessScene: BaseSceneModel<
    private lazy var nextButton = ButtonModel(Design.State.button.default)
       .set(.title(text.button.enterButton))
 
+   private lazy var apiModel = GetProfileApiModel()
+   private var userPromise: Promise<User>?
+
    override func start() {
       mainViewModel.stackModel.set(.alignment(.center))
 
@@ -36,12 +40,21 @@ final class LoginSuccessScene: BaseSceneModel<
 
       nextButton
          .onEvent(\.didTap) {
-            Asset.router?.route(\.main, navType: .present)
+            guard let promise = weakSelf?.userPromise else { return }
+            Asset.router?.route(\.main, navType: .present, payload: promise)
          }
 
       vcModel?
          .onEvent(\.viewDidLoad) {
             weakSelf?.presentModels()
+
+            guard let token = weakSelf?.inputValue else { return }
+
+            weakSelf?.apiModel
+               .onEvent(\.response, { promise in
+                  weakSelf?.userPromise = promise
+               })
+               .sendEvent(\.request, GetProfileRequest(token: token))
          }
    }
 

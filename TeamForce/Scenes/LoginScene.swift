@@ -46,13 +46,13 @@ final class LoginScene: BaseSceneModel<
 
             print(loginName)
             weakSelf?.apiModel
-               .onEvent(\.responseResult) { authResult in
+               .onEvent(\.response) { authResult in
                   Asset.router?.route(\.verifyCode, navType: .push, payload: authResult)
                }
-               .onEvent(\.responseError) { error in
+               .onEvent(\.error) { error in
                   print("\n", error.localizedDescription)
                }
-               .sendEvent(\.sendRequest, loginName)
+               .sendEvent(\.request, loginName)
          }
 
       textFieldModel
