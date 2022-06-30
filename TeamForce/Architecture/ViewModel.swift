@@ -21,8 +21,7 @@ protocol ViewModelProtocol: UIViewModel, ModelProtocol {
 }
 
 class BaseViewModel<View: UIView>: NSObject, ViewModelProtocol {
-
-    private weak var weakView: View? 
+    private weak var weakView: View?
 
     // will be cleaned after presenting view
     private var autostartedView: View?
@@ -65,5 +64,11 @@ class BaseViewModel<View: UIView>: NSObject, ViewModelProtocol {
 
     func setupView(_ closure: GenericClosure<View>) {
         closure(view)
+    }
+}
+
+extension UIViewModel where Self: Stateable {
+    init(state: State) {
+        self.init(state)
     }
 }

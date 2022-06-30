@@ -31,12 +31,18 @@ struct VerifyEvent: NetworkEventProtocol {
 }
 
 struct ProfileApiEvent: NetworkEventProtocol {
-    var request: Event<GetProfileRequest>?
+    var request: Event<TokenRequest>?
     var response: Event<Promise<User>>?
     var error: Event<ApiEngineError>?
 }
 
-struct GetProfileRequest {
+struct BalanceApiEvent: NetworkEventProtocol {
+    var request: Event<TokenRequest>?
+    var response: Event<Balance>?
+    var error: Event<ApiEngineError>?
+}
+
+struct TokenRequest {
     let token: String
 }
 
@@ -55,7 +61,71 @@ struct User: Codable {
         let department: String
         let tgId: String
         let tgName: String
-        let photo: String
+        let photo: String?
+        let hiredAt: String
+        let surName: String
+        let firstName: String
+        let middleName: String
+        let nickName: String
+
+        enum CodingKeys: String, CodingKey {
+            case id
+            case organization
+            case department
+            case tgId = "tg_id"
+            case tgName = "tg_name"
+            case photo
+            case hiredAt = "hired_at"
+            case surName = "surname"
+            case firstName = "first_name"
+            case middleName = "middle_name"
+            case nickName = "nickname"
+        }
+    }
+}
+
+struct Income: Decodable {
+    let amount: Int
+    let frozen: Int
+    let sended: Int
+    let received: Int
+    let cancelled: Int
+}
+
+struct Distr: Codable {
+    let amount: Int
+    let expireDate: String
+    let frozen: Int
+    let sended: Int
+    let received: Int
+    let cancelled: Int
+
+    enum CodingKeys: String, CodingKey {
+        case amount
+        case expireDate = "expire_date"
+        case frozen
+        case sended
+        case received
+        case cancelled
+    }
+}
+
+struct Balance: Codable {
+    let userName: String
+    let profile: Profile
+
+    enum CodingKeys: String, CodingKey {
+        case userName = "username"
+        case profile
+    }
+
+    struct Profile: Codable {
+        let id: Int
+        let organization: String
+        let department: String
+        let tgId: String
+        let tgName: String
+        let photo: String?
         let hiredAt: String
         let surName: String
         let firstName: String
@@ -168,6 +238,37 @@ final class GetProfileApiModel: BaseModel, Communicable {
                         seal.reject(ApiEngineError.unknown)
                     }
             })
+        }
+    }
+}
+
+final class GetBalanceApiModel: BaseModel, Communicable {
+    private let apiEngine = ApiEngine()
+
+    var eventsStore: BalanceApiEvent = .init()
+
+    override func start() {
+        onEvent(\.request) { [weak self] request in
+            self?.apiEngine
+                .process(endpoint: TeamForceEndpoints.BalanceEndpoint(headers: [
+                    "Authorization": "Token " + request.token,
+                ]))
+                .done { result in
+                    let decoder = DataToDecodableParser()
+
+                    guard
+                        let data = result.data,
+                        let balance: Balance = decoder.parse(data)
+                    else {
+                        self?.sendEvent(\.error, ApiEngineError.unknown)
+                        return
+                    }
+
+                    self?.sendEvent(\.response, balance)
+                }
+                .catch { error in
+                    self?.sendEvent(\.error, ApiEngineError.error(error))
+                }
         }
     }
 }

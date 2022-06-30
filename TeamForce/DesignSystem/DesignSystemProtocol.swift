@@ -12,9 +12,15 @@ protocol DesignSystemProtocol {
     associatedtype Button: ButtonBuilderProtocol
     associatedtype State: ModelSetuperProtocol
     associatedtype Icon: IconsProtocol
+    associatedtype Parameters: ParametersProtocol
 
-    static var button: Button { get }
     static var label: Label { get }
+    static var button: Button { get }
+}
+
+extension DesignSystemProtocol {
+    static var label: Label { .init() }
+    static var button: Button { .init() }
 }
 
 protocol ParametersProtocol {
@@ -29,8 +35,11 @@ protocol ModelSetuperProtocol {
     static var button: Button { get }
 }
 
+extension ModelSetuperProtocol {
+    static var mainView: MainView { .init() }
+    static var button: Button { .init() }
+}
+
 protocol MainViewSetuperProtocol: InitProtocol {
     var `default`: [StackState] { get }
 }
-
-

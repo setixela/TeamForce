@@ -13,7 +13,7 @@ protocol Associated {
 
 // MARK: - Buttons Protocols
 
-protocol ButtonsProtocol: Associated {
+protocol ButtonsProtocol: InitProtocol, Associated {
     associatedtype AsType
 
     var `default`: AsType { get }

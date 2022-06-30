@@ -11,27 +11,26 @@ func example(_ name: String = "", action: () -> Void) {
 }
 
 let nc = UINavigationController()
-nc.view.frame = CGRect(x: 0, y: 0, width: 360, height: 640)
+nc.view.frame = CGRect(x: 0, y: 0, width: 360, height: 800)
 PlaygroundPage.current.liveView = nc
 
-// enum Asset: AssetProtocol {
-//    typealias Text = Texts
-//
-//    typealias Design = DesignSystem
-//
-//    static var router: Router<Scene>? = Router<Scene>()
-//
-//    struct Scene: InitProtocol {
-//        var digitalThanks: SceneModelProtocol { DigitalThanksScene() }
-//        var login: SceneModelProtocol { LoginScene() }
-//        var verifyCode: SceneModelProtocol { VerifyCodeScene() }
-//        var loginSuccess: SceneModelProtocol { LoginSuccessScene() }
-//        var register: SceneModelProtocol { RegisterScene() }
-//        var main: SceneModelProtocol { MainScene() }
-//    }
-//
-//    struct Service: InitProtocol {}
-// }
+enum Asset: AssetProtocol {
+    typealias Text = Texts
+    typealias Design = DesignSystem
+
+    static var router: Router<Scene>? = Router<Scene>()
+
+    struct Scene: InitProtocol {
+        var digitalThanks: SceneModelProtocol { DigitalThanksScene() }
+        var login: SceneModelProtocol { LoginScene() }
+        var verifyCode: SceneModelProtocol { VerifyCodeScene() }
+        var loginSuccess: SceneModelProtocol { LoginSuccessScene() }
+        var register: SceneModelProtocol { RegisterScene() }
+        var main: SceneModelProtocol { MainScene() }
+    }
+
+    struct Service: InitProtocol {}
+}
 
 Asset.router?
     .onEvent(\.push) { vc in
@@ -43,59 +42,236 @@ Asset.router?
     .onEvent(\.popToRoot) {
         nc.popToRootViewController(animated: true)
     }
-    .route(\.digitalThanks, navType: .push, payload: ())
+    .route(\.main, navType: .push, payload: ())
 //    .route(\.loginSuccess, navType: .push, payload: ())
 
-let api = TeamForceApi(engine: ApiEngine())
+//let api = TeamForceApi(engine: ApiEngine())
 
-// api
-//    .auth(loginName: "setixela")
-//    .done { result in
-//        api
-//            .verify(authResult: result)
-//            .done { result in
-//                print("Verify result: ", result)
-//            }
-//            .catch { error in
-//                print("Verify error: ", error)
-//            }
-//    }
-//    .catch { error in
-//        print("Auth error: ", error)
-//
+final class MainScene: BaseSceneModel<
+    DefaultVCModel,
+    StackWithBottomPanelModel,
+    Asset,
+    Promise<User>
+> {
+    //
+    private lazy var digitalThanksTitle = Design.label.headline4
+        .set(.text(text.title.make(\.digitalThanks)))
+        .set(.numberOfLines(1))
+        .set(.alignment(.left))
+        .set(.padding(.init(top: 22, left: 0, bottom: 26, right: 0)))
 
-//struct NetworkEvent<Request, Result, Error>: InitProtocol {
-//    var sendRequest: Event<Request>?
-//    var responseResult: Event<Result>?
-//    var responseError: Event<Error>?
-//}
+    private lazy var balanceButton = Design.button.tabBar
+        .set(.title("Баланс"))
+        .set(.image(icon.make(\.coinLine)))
+
+    private lazy var transactButton = Design.button.tabBar
+        .set(.title("Новый перевод"))
+        .set(.image(icon.make(\.upload2Fill)))
+
+    private lazy var historyButton = Design.button.tabBar
+        .set(.title("История"))
+        .set(.image(icon.make(\.historyLine)))
+
+    // MARK: - Frame Cells
+
+    private lazy var frameModel = LabelIconHorizontalModel<Design>()
+        .set(.backColor(.init(red: 0.33, green: 0.33, blue: 0.33, alpha: 0.08)))
+        .set(.height(48))
+        .sendEvent(\.setText, "Выберите период")
+        .sendEvent(\.setImage, icon.make(\.calendarLine))
+
+    private lazy var frameModel2 = LabelIconHorizontalModel<Design>()
+        .set(.backColor(.init(red: 0.33, green: 0.33, blue: 0.33, alpha: 0.08)))
+        .set(.height(48))
+        .sendEvent(\.setText, "Выберите период")
+        .sendEvent(\.setImage, icon.make(\.calendarLine))
+
+    private lazy var leftFrameCell = FrameCellModel<Design>()
+        .set(.backColor(.init(red: 0.33, green: 0.33, blue: 0.33, alpha: 0.08)))
+    private lazy var rightFrameCell = FrameCellModel<Design>()
+        .set(.borderWidth(1))
+        .set(.borderColor(.init(red: 0.33, green: 0.33, blue: 0.33, alpha: 0.08)))
+
+    private lazy var frameCellStackModel = StackModel()
+        .set(.axis(.horizontal))
+        .set(.distribution(.fillEqually))
+        .set(.alignment(.center))
+        .set(.spacing(8))
+        .set(.models([
+            leftFrameCell,
+            rightFrameCell
+        ]))
+
+    // MARK: - Services
+
+    private lazy var userProfileApiModel = GetProfileApiModel()
+    private lazy var balanceApiModel = GetBalanceApiModel()
+
+    private var balance: Balance?
+
+    override func start() {
+        mainViewModel.stackModel
+            .set(.models([
+                digitalThanksTitle,
+                frameModel,
+                Spacer(size: 20),
+                frameCellStackModel,
+                Spacer(size: 8),
+                frameModel2,
+                Spacer()
+            ]))
+
+        mainViewModel.bottomModel
+            .set(.axis(.horizontal))
+            .set(.padding(.zero))
+            .set(.spacing(0))
+            .set(.backColor(.black))
+
+        mainViewModel.bottomModel
+            .set(.models([
+                balanceButton,
+                transactButton,
+                historyButton
+            ]))
+
+        weak var weakSelf = self
+
+        guard let result = weakSelf?.inputValue?.result else { return }
+
+        switch result {
+        case .fulfilled(let user):
+            print(user)
+        default:
+            print("REJECTED:\n")
+
+//            weakSelf?.userProfileApiModel
+//                .sendEvent(\.request)
+        }
+//        vcModel?.onEvent(\.viewDidLoad) {
+//            guard let result = weakSelf?.inputValue?.result else { return }
 //
-//final class AuthApiModel: BaseModel, Communicable {
-//    private let apiEngine = ApiEngine()
-//
-//    var eventsStore: NetworkEvent<String, AuthResult, ApiEngineError> = .init()
-//
-//    override func start() {
-//        onEvent(\.sendRequest) { [weak self] loginName in
-//            self?.apiEngine
-//                .process(endpoint: TeamForceEndpoints.AuthEndpoint(
-//                    body: ["type": "authorize",
-//                           "login": loginName]
-//                ))
-//                .done { result in
-//                    guard
-//                        let xId = result.response?.headerValueFor("X-ID"),
-//                        let xCode = result.response?.headerValueFor("X-Code")
-//                    else {
-//                        self?.sendEvent(\.responseError, .unknown)
-//                        return
-//                    }
-//
-//                    self?.sendEvent(\.responseResult, AuthResult(xId: xId, xCode: xCode))
-//                }
-//                .catch { error in
-//                    self?.sendEvent(\.responseError, .error(error))
-//                }
+//            switch result {
+//            case .fulfilled(let user):
+//                print(user)
+//            case .rejected(let error):
+//                print("REJECTED:\n", error)
+//            }
 //        }
-//    }
-//}
+        
+    }
+}
+
+struct FrameCellEvent: InitProtocol {
+    var setHeader: Event<String>?
+    var setText: Event<String>?
+    var setCaption: Event<String>?
+}
+
+protocol Designable {
+    associatedtype Design: DesignSystemProtocol
+}
+
+final class FrameCellModel<Design: DesignSystemProtocol>: BaseViewModel<UIStackView> {
+    var eventsStore: FrameCellEvent = .init()
+
+    private lazy var headerLabel = Design.label.body2
+        .set(.text("Мой счет"))
+    private lazy var textLabel = Design.label.counter
+        .set(.text("2300"))
+    private lazy var captionLabel = Design.label.caption
+        .set(.text("Распределено: 340"))
+
+    required init() {
+        super.init()
+    }
+
+    override func start() {
+        print("Type", type(of: headerLabel))
+        set(.axis(.vertical))
+            .set(.padding(.init(top: 12, left: 16, bottom: 12, right: 16)))
+            .set(.cornerRadius(Design.Parameters.cornerRadius))
+            .set(.models([
+                headerLabel,
+                textLabel,
+                captionLabel
+            ]))
+
+        weak var weakSelf = self
+        onEvent(\.setHeader) {
+            weakSelf?.headerLabel.set(.text($0))
+        }
+        .onEvent(\.setText) {
+            weakSelf?.textLabel.set(.text($0))
+        }
+        .onEvent(\.setCaption) {
+            weakSelf?.headerLabel.set(.text($0))
+        }
+    }
+}
+
+extension FrameCellModel: Communicable, Stateable, Designable {}
+
+struct LabelIconEvent: InitProtocol {
+    var setText: Event<String>?
+    var setImage: Event<UIImage>?
+}
+
+final class LabelIconHorizontalModel<Design: DesignSystemProtocol>: BaseViewModel<UIStackView>,
+    Communicable,
+    Stateable,
+    Designable
+{
+    var eventsStore: LabelIconEvent = .init()
+
+    lazy var label = Design.label.body2
+    lazy var icon = ImageViewModel()
+
+    required init() {
+        super.init()
+    }
+
+    override func start() {
+        set(.axis(.horizontal))
+            .set(.cornerRadius(Design.Parameters.cornerRadius))
+            .set(.distribution(.fill))
+            .set(.alignment(.fill))
+            .set(.padding(.init(top: 12, left: 16, bottom: 12, right: 16)))
+            .set(.models([
+                label,
+                Spacer(),
+                icon
+            ]))
+
+        weak var weakSelf = self
+        onEvent(\.setText) {
+            weakSelf?.label.set(.text($0))
+        }
+        .onEvent(\.setImage) {
+            weakSelf?.icon.set(.image($0))
+        }
+    }
+}
+
+public protocol TargetViewProtocol: UIView {
+    associatedtype TargetView: UIView
+
+    var targetView: TargetView { get }
+}
+
+final class TargetViewModel<TVM: ViewModelProtocol>: BaseViewModel<TVM.View> {
+    lazy var targetModel = TVM()
+
+    override func start() {}
+}
+
+final class TargetView<View: UIView>: UIView, TargetViewProtocol {
+    lazy var targetView: View = {
+        let view = View()
+        self.addSubview(view)
+        return view
+    }()
+
+    typealias TargetView = View
+}
+
+protocol ModelComposer {}

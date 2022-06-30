@@ -44,23 +44,4 @@ final class BottomPanelViewModel: BaseViewModel<UIStackView> {
 }
 
 extension BottomPanelViewModel: Communicable {}
-
-extension BottomPanelViewModel: Stateable {
-    func applyState(_ state: StackState) {
-        switch state {
-        case .distribution(let value):
-            view.distribution = value
-        case .axis(let value):
-            view.axis = value
-        case .spacing(let value):
-            view.spacing = value
-        case .alignment(let value):
-            view.alignment = value
-        case .padding(let value):
-            view.layoutMargins = value
-            view.isLayoutMarginsRelativeArrangement = true
-        case .backColor(let value):
-            view.backgroundColor = value
-        }
-    }
-}
+extension BottomPanelViewModel: Stateable {}

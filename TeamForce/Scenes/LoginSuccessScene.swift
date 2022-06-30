@@ -54,7 +54,7 @@ final class LoginSuccessScene: BaseSceneModel<
                .onEvent(\.response, { promise in
                   weakSelf?.userPromise = promise
                })
-               .sendEvent(\.request, GetProfileRequest(token: token))
+               .sendEvent(\.request, TokenRequest(token: token))
          }
    }
 

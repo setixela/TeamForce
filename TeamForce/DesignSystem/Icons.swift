@@ -14,6 +14,7 @@ protocol IconsProtocol: InitProtocol {
     var coinLine: IconType { get }
     var historyLine: IconType { get }
     var upload2Fill: IconType { get }
+    var calendarLine: IconType { get }
 }
 
 struct Icons: IconsProtocol {
@@ -21,6 +22,7 @@ struct Icons: IconsProtocol {
     var coinLine: String{ "coin-line" }
     var historyLine: String{ "history-line" }
     var checkCircle: String { "check_circle_24px" }
+    var calendarLine: String { "calendar-line" }
 }
 
 extension Icons: KeyPathMaker {

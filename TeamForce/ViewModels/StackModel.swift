@@ -29,25 +29,35 @@ final class StackModel: BaseViewModel<UIStackView> {
    }
 }
 
-extension StackModel: Stateable {
-   func applyState(_ state: StackState) {
-      switch state {
-      case .distribution(let value):
-         view.distribution = value
-      case .axis(let value):
-         view.axis = value
-      case .spacing(let value):
-         view.spacing = value
-      case .alignment(let value):
-         view.alignment = value
-      case .padding(let value):
-         view.layoutMargins = value
-         view.isLayoutMarginsRelativeArrangement = true
-      case .backColor(let value):
-         view.backgroundColor = value
-      }
-   }
-}
+extension StackModel: Stateable {}
+
+
+
+//extension StackModel: Stateable {
+//   func applyState(_ state: StackState) {
+//      switch state {
+//      case .distribution(let value):
+//         view.distribution = value
+//      case .axis(let value):
+//         view.axis = value
+//      case .spacing(let value):
+//         view.spacing = value
+//      case .alignment(let value):
+//         view.alignment = value
+//      case .padding(let value):
+//         view.layoutMargins = value
+//         view.isLayoutMarginsRelativeArrangement = true
+//      case .backColor(let value):
+//         view.backgroundColor = value
+//      case .height(let value):
+//         view.addAnchors.constHeight(value)
+//      case .models(let models):
+//         models.forEach {
+//            view.addArrangedSubview($0.uiView)
+//         }
+//      }
+//   }
+//}
 
 extension StackModel: Communicable {
    typealias Events = StackEvents
@@ -60,4 +70,9 @@ enum StackState {
    case alignment(UIStackView.Alignment)
    case padding(UIEdgeInsets)
    case backColor(UIColor)
+   case cornerRadius(CGFloat)
+   case borderWidth(CGFloat)
+   case borderColor(UIColor)
+   case height(CGFloat)
+   case models([UIViewModel])
 }

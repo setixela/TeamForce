@@ -17,8 +17,11 @@ protocol LabelsProtocol {
     var headline4: DesignType { get }
     var headline5: DesignType { get }
     var title: DesignType { get }
+    var body1: DesignType { get }
+    var body2: DesignType { get }
     var subtitle: DesignType { get }
     var caption: DesignType { get }
+    var counter: DesignType { get }
 }
 
 protocol LabelStateBuilderProtocol: LabelsProtocol {
@@ -26,7 +29,7 @@ protocol LabelStateBuilderProtocol: LabelsProtocol {
 }
 
 protocol LabelBuilderProtocol: LabelsProtocol,
-    BuilderProtocol where Builder: LabelStateBuilderProtocol {}
+                               BuilderProtocol where Builder: LabelStateBuilderProtocol, DesignType == LabelModel {}
 
 // MARK: - Labels
 
@@ -56,6 +59,16 @@ struct LabelStateBuilder: LabelStateBuilderProtocol {
         .color(.black)
     ] }
 
+    var body1: [LabelState] { [
+        .font(UIFont.systemFont(ofSize: 16, weight: .regular)),
+        .color(.black)
+    ] }
+
+    var body2: [LabelState] { [
+        .font(UIFont.systemFont(ofSize: 14, weight: .regular)),
+        .color(.black)
+    ] }
+
     var subtitle: [LabelState] { [
         .font(UIFont.systemFont(ofSize: 16, weight: .regular)),
         .color(.black)
@@ -66,39 +79,25 @@ struct LabelStateBuilder: LabelStateBuilderProtocol {
         .color(.black)
     ] }
 
+    var counter: [LabelState] { [
+        .font(UIFont.systemFont(ofSize: 48, weight: .regular)),
+        .color(.black)
+    ] }
+
     typealias Parameters = GlobalParameters
 }
 
 final class LabelBuilder: LabelBuilderProtocol {
-
     lazy var builder = LabelStateBuilder()
 
-    var subtitle: LabelModel {
-        .init(builder.subtitle)
-    }
-
-    var `default`: LabelModel {
-        .init(builder.default)
-    }
-
-    var headline3: LabelModel {
-        .init(builder.headline3)
-    }
-
-    var headline4: LabelModel {
-        .init(builder.headline4)
-    }
-
-    var headline5: LabelModel {
-        .init(builder.headline5)
-    }
-
-    var title: LabelModel {
-        .init(builder.title)
-    }
-
-    var caption: LabelModel {
-        .init(builder.caption)
-    }
-
+    var subtitle: LabelModel { .init(builder.subtitle) }
+    var `default`: LabelModel { .init(builder.default) }
+    var headline3: LabelModel { .init(builder.headline3) }
+    var headline4: LabelModel { .init(builder.headline4) }
+    var headline5: LabelModel { .init(builder.headline5) }
+    var title: LabelModel { .init(builder.title) }
+    var body1: LabelModel { .init(builder.body1) }
+    var body2: LabelModel { .init(builder.body2) }
+    var caption: LabelModel { .init(builder.caption) }
+    var counter: LabelModel { .init(builder.counter) }
 }

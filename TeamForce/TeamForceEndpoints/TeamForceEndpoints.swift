@@ -36,4 +36,13 @@ enum TeamForceEndpoints {
 
         let headers: [String : String]
     }
+
+    struct BalanceEndpoint: EndpointProtocol {
+        //
+        let method = HTTPMethod.get
+
+        var endPoint: String { "http://176.99.6.251:8888/user/balance/" }
+
+        let headers: [String : String]
+    }
 }

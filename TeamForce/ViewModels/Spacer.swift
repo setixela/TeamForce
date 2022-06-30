@@ -54,3 +54,11 @@ extension UIStackView {
         }
     }
 }
+
+extension UIStackView {
+    func addViewModels(_ models: UIViewModel...) {
+        models.forEach { model in
+            self.addArrangedSubview(model.uiView)
+        }
+    }
+}

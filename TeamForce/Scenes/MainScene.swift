@@ -32,9 +32,18 @@ final class MainScene: BaseSceneModel<
         .set(.title("История"))
         .set(.image(icon.make(\.historyLine)))
 
+    private lazy var frameModel = StackModel()
+        .set(.axis(.horizontal))
+        .set(.distribution(.fill))
+        .set(.alignment(.fill))
+        .set(.backColor(.lightGray))
+        .set(.height(48))
+
     override func start() {
         mainViewModel.stackModel.sendEvent(\.addViewModels, [
-            digitalThanksTitle
+            digitalThanksTitle,
+            frameModel,
+            Spacer()
         ])
 
         mainViewModel.bottomModel

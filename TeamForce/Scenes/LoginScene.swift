@@ -29,7 +29,7 @@ final class LoginScene: BaseSceneModel<
       .set(.title(text.button.make(\.nextButton)))
 
    private lazy var changeUserButton = Design.button.transparent
-         .set(.title(text.button.make(\.changeUserButton)))
+      .set(.title(text.button.make(\.changeUserButton)))
 
    private lazy var textFieldModel = TextFieldModel()
    private lazy var inputParser = TelegramNickCheckerModel()
@@ -78,7 +78,7 @@ final class LoginScene: BaseSceneModel<
 
    private func presentModels() {
       mainViewModel
-         .sendEvent(\.addViewModels, payload: [
+         .sendEvent(\.addViewModels, [
             Spacer(size: 100),
             headerModel,
             subtitleModel,
@@ -86,11 +86,9 @@ final class LoginScene: BaseSceneModel<
             textFieldModel,
             Spacer()
          ])
-         .bottomModel.sendEvent(\.addModels, payload: [
+         .bottomModel.sendEvent(\.addModels, [
             nextButton,
             changeUserButton
          ])
    }
 }
-
-
