@@ -114,6 +114,9 @@ final class MainScene: BaseSceneModel<
             rightFrameCell
         ]))
 
+    private lazy var menuButton = BarButtonModel()
+        .sendEvent(\.initWithImage, Design.Icon().make(\.historyLine))
+
     // MARK: - Services
 
     private lazy var userProfileApiModel = GetProfileApiModel()
@@ -145,6 +148,15 @@ final class MainScene: BaseSceneModel<
                 transactButton,
                 historyButton
             ]))
+
+
+        menuButton
+            .onEvent(\.initiated) { [weak self] item in
+                self?.vcModel?.sendEvent(\.setLeftBarItems, [item])
+            }
+            .onEvent(\.didTap) {
+                print("MENUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU")
+            }
 
         weak var weakSelf = self
 //        let realm = try? Realm()
@@ -183,6 +195,8 @@ final class MainScene: BaseSceneModel<
 //
 //        }
     }
+
+
 
     private func setBalance(_ balance: Balance) {
         setIncome(balance.income)
@@ -257,6 +271,31 @@ final class FrameCellModel<Design: DesignSystemProtocol>: BaseViewModel<UIStackV
 }
 
 extension FrameCellModel: Communicable, Stateable, Designable {}
+
+struct BarButtonEvent: InitProtocol {
+    var initWithImage: Event<UIImage>?
+    var initiated: Event<UIBarButtonItem>?
+    var didTap: Event<Void>?
+}
+
+final class BarButtonModel: BaseModel, Communicable {
+
+    var eventsStore = BarButtonEvent()
+
+    override func start() {
+        onEvent(\.initWithImage) { [weak self] image in
+            self?.startWithImage(image)
+        }
+    }
+
+    private func startWithImage(_ image: UIImage) {
+        let menuItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(didTap))
+        sendEvent(\.initiated, menuItem)
+    }
+    @objc func didTap() {
+        sendEvent(\.didTap)
+    }
+}
 
 struct LabelIconEvent: InitProtocol {
     var setText: Event<String>?

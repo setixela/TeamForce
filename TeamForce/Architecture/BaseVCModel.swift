@@ -14,6 +14,8 @@ struct VCEvent: InitProtocol {
 
     // setup
     var setTitle: Event<String>?
+    var setLeftBarItems: Event<[UIBarButtonItem]>?
+    var setRightBarItems: Event<[UIBarButtonItem]>?
 }
 
 protocol VCModelProtocol: UIViewController, Communicable where Events == VCEvent {

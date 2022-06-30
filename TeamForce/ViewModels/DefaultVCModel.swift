@@ -14,12 +14,19 @@ final class DefaultVCModel: BaseVCModel {
         onEvent(\.setTitle) { [weak self] title in
             self?.title = title
         }
+        .onEvent(\.setLeftBarItems) { [weak self] items in
+            self?.navigationItem.leftBarButtonItems = items
+        }
+        .onEvent(\.setRightBarItems) { [weak self] items in
+            self?.navigationItem.rightBarButtonItems = items
+        }
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         sendEvent(\.viewDidLoad)
+
     }
 
     override func viewWillAppear(_ animated: Bool) {
