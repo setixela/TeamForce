@@ -79,7 +79,6 @@ extension BaseSceneModel {
     func makeVC() -> UIViewController {
         let model = VCModel(sceneModel: self)
         vcModel = model
-//        start()
         return model
     }
 

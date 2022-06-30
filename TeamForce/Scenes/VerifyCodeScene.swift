@@ -7,6 +7,20 @@
 
 import UIKit
 
+import RealmSwift
+
+class Token: Object {
+   @Persisted var token: String
+
+   static let uniqueKey: String = "Token"
+
+   @Persisted var uniqueKey: String = Token.uniqueKey
+
+   override static func primaryKey() -> String? {
+      "uniqueKey"
+   }
+}
+
 // MARK: - VerifyCodeScene
 
 final class VerifyCodeScene: BaseSceneModel<
@@ -46,12 +60,22 @@ final class VerifyCodeScene: BaseSceneModel<
 
             let verifyRequest = VerifyRequest(xId: authResult.xId, xCode: authResult.xCode, smsCode: smsCode)
             weakSelf?.verifyApi
-               .onEvent(\.response, { result in
+               .onEvent(\.response) { result in
+                  let realm = try? Realm()
+                  let realmToken = Token()
+                  realmToken.token = result.token
+
+                  print("TOKEN:\n\(result.token)\n")
+//
+                  try? realm?.write {
+                     realm?.add(realmToken, update: .all)
+                  }
+                  
                   Asset.router?.route(\.loginSuccess, navType: .push, payload: result.token)
-               })
-               .onEvent(\.error, { error in
+               }
+               .onEvent(\.error) { error in
                   print(error)
-               })
+               }
                .sendEvent(\.request, verifyRequest)
          }
 

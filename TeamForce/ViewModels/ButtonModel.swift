@@ -34,8 +34,10 @@ final class ButtonModel: BaseViewModel<ButtonExtended> {
    }
 
    @objc func didTap() {
+
       if view.isEnabled {
          sendEvent(\.didTap)
+         print("Did tap")
       }
    }
 }

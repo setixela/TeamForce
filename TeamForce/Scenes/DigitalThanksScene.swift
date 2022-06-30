@@ -31,11 +31,13 @@ final class DigitalThanksScene: BaseSceneModel<
    // MARK: - Start
 
    override func start() {
+      print("start()")
       //
       mainViewModel.set(Design.State.mainView.default)
 
       enterButton
          .onEvent(\.didTap) {
+            print("WORKS!")
             Asset.router?.route(\.login, navType: .push)
          }
 

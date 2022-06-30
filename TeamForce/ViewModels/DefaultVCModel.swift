@@ -35,6 +35,6 @@ final class DefaultVCModel: BaseVCModel {
     }
 }
 
-extension DefaultVCModel: Communicable {
-    typealias Events = VCEvent
-}
+//extension DefaultVCModel: Communicable {
+//    typealias Events = VCEvent
+//}

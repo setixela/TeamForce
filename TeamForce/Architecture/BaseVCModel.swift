@@ -16,7 +16,7 @@ struct VCEvent: InitProtocol {
     var setTitle: Event<String>?
 }
 
-protocol VCModelProtocol: UIViewController {
+protocol VCModelProtocol: UIViewController, Communicable where Events == VCEvent {
     var sceneModel: SceneModelProtocol { get }
 
     init(sceneModel: SceneModelProtocol)

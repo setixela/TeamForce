@@ -32,7 +32,7 @@ struct VerifyEvent: NetworkEventProtocol {
 
 struct ProfileApiEvent: NetworkEventProtocol {
     var request: Event<TokenRequest>?
-    var response: Event<Promise<User>>?
+    var response: Event<Promise<UserData>>?
     var error: Event<ApiEngineError>?
 }
 
@@ -46,7 +46,7 @@ struct TokenRequest {
     let token: String
 }
 
-struct User: Codable {
+struct UserData: Codable {
     let userName: String
     let profile: Profile
 
@@ -110,42 +110,9 @@ struct Distr: Codable {
     }
 }
 
-struct Balance: Codable {
-    let userName: String
-    let profile: Profile
-
-    enum CodingKeys: String, CodingKey {
-        case userName = "username"
-        case profile
-    }
-
-    struct Profile: Codable {
-        let id: Int
-        let organization: String
-        let department: String
-        let tgId: String
-        let tgName: String
-        let photo: String?
-        let hiredAt: String
-        let surName: String
-        let firstName: String
-        let middleName: String
-        let nickName: String
-
-        enum CodingKeys: String, CodingKey {
-            case id
-            case organization
-            case department
-            case tgId = "tg_id"
-            case tgName = "tg_name"
-            case photo
-            case hiredAt = "hired_at"
-            case surName = "surname"
-            case firstName = "first_name"
-            case middleName = "middle_name"
-            case nickName = "nickname"
-        }
-    }
+struct Balance: Decodable {
+    let income: Income
+    let distr: Distr
 }
 
 final class AuthApiModel: BaseModel, Communicable {
@@ -227,7 +194,7 @@ final class GetProfileApiModel: BaseModel, Communicable {
 
                         guard
                             let data = result.data,
-                            let user: User = decoder.parse(data)
+                            let user: UserData = decoder.parse(data)
                         else {
                             seal.reject(ApiEngineError.unknown)
                             return

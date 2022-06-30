@@ -13,6 +13,7 @@
 		190C1D1B285D160000FB3518 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 190C1D1A285D160000FB3518 /* Assets.xcassets */; };
 		190C1D1E285D160000FB3518 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 190C1D1C285D160000FB3518 /* LaunchScreen.storyboard */; };
 		190C1D29285D160000FB3518 /* TeamForceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190C1D28285D160000FB3518 /* TeamForceTests.swift */; };
+		1913F656286E1EC80033FAB3 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 1913F655286E1EC80033FAB3 /* RealmSwift */; };
 		191B0C272865E5C1001CF3D9 /* Icons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191B0C262865E5C1001CF3D9 /* Icons.swift */; };
 		191B0C292865F119001CF3D9 /* Texts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191B0C282865F119001CF3D9 /* Texts.swift */; };
 		1967509D286491190019A6DE /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1967509C286491190019A6DE /* Buttons.swift */; };
@@ -127,6 +128,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1913F656286E1EC80033FAB3 /* RealmSwift in Frameworks */,
 				19C1E9942860F05F00E7976D /* PromiseKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -344,6 +346,7 @@
 			name = TeamForce;
 			packageProductDependencies = (
 				19C1E9932860F05F00E7976D /* PromiseKit */,
+				1913F655286E1EC80033FAB3 /* RealmSwift */,
 			);
 			productName = TeamForce;
 			productReference = 190C1D0E285D15FF00FB3518 /* TeamForce.app */;
@@ -397,6 +400,7 @@
 			mainGroup = 190C1D05285D15FF00FB3518;
 			packageReferences = (
 				19C1E9922860F05F00E7976D /* XCRemoteSwiftPackageReference "PromiseKit" */,
+				1913F654286E1EC80033FAB3 /* XCRemoteSwiftPackageReference "realm-swift" */,
 			);
 			productRefGroup = 190C1D0F285D15FF00FB3518 /* Products */;
 			projectDirPath = "";
@@ -755,6 +759,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		1913F654286E1EC80033FAB3 /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-swift";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		19C1E9922860F05F00E7976D /* XCRemoteSwiftPackageReference "PromiseKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/mxcl/PromiseKit";
@@ -766,6 +778,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		1913F655286E1EC80033FAB3 /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1913F654286E1EC80033FAB3 /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
+		};
 		19C1E9932860F05F00E7976D /* PromiseKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 19C1E9922860F05F00E7976D /* XCRemoteSwiftPackageReference "PromiseKit" */;

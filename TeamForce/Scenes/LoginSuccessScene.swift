@@ -5,8 +5,8 @@
 //  Created by Aleksandr Solovyev on 24.06.2022.
 //
 
-import UIKit
 import PromiseKit
+import UIKit
 
 // MARK: - LoginSuccessScene
 
@@ -31,9 +31,10 @@ final class LoginSuccessScene: BaseSceneModel<
       .set(.title(text.button.enterButton))
 
    private lazy var apiModel = GetProfileApiModel()
-   private var userPromise: Promise<User>?
+   private var userPromise: Promise<UserData>?
 
    override func start() {
+      print("Start jdsahdjkasfhkfh")
       mainViewModel.stackModel.set(.alignment(.center))
 
       weak var weakSelf = self
@@ -44,18 +45,15 @@ final class LoginSuccessScene: BaseSceneModel<
             Asset.router?.route(\.main, navType: .present, payload: promise)
          }
 
-      vcModel?
-         .onEvent(\.viewDidLoad) {
-            weakSelf?.presentModels()
+      presentModels()
 
-            guard let token = weakSelf?.inputValue else { return }
+      guard let token = weakSelf?.inputValue else { return }
 
-            weakSelf?.apiModel
-               .onEvent(\.response, { promise in
-                  weakSelf?.userPromise = promise
-               })
-               .sendEvent(\.request, TokenRequest(token: token))
+      apiModel
+         .onEvent(\.response) { promise in
+            weakSelf?.userPromise = promise
          }
+         .sendEvent(\.request, TokenRequest(token: token))
    }
 
    private func presentModels() {
