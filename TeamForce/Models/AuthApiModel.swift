@@ -24,24 +24,6 @@ struct AuthEvent: NetworkEventProtocol {
     var error: Event<ApiEngineError>?
 }
 
-struct VerifyEvent: NetworkEventProtocol {
-    var request: Event<VerifyRequest>?
-    var response: Event<VerifyResultBody>?
-    var error: Event<ApiEngineError>?
-}
-
-struct ProfileApiEvent: NetworkEventProtocol {
-    var request: Event<TokenRequest>?
-    var response: Event<Promise<UserData>>?
-    var error: Event<ApiEngineError>?
-}
-
-struct BalanceApiEvent: NetworkEventProtocol {
-    var request: Event<TokenRequest>?
-    var response: Event<Balance>?
-    var error: Event<ApiEngineError>?
-}
-
 struct TokenRequest {
     let token: String
 }
@@ -115,22 +97,28 @@ struct Balance: Decodable {
     let distr: Distr
 }
 
-protocol ApiModelProtocol: ModelProtocol, InitProtocol {
+protocol ApiModelProtocol: ModelProtocol,
+    InitProtocol,
+    Communicable where Events: NetworkEventProtocol
+{
     var apiEngine: ApiEngineProtocol? { get set }
 }
 
-extension ApiModelProtocol {
+class BaseApiModel<Events: NetworkEventProtocol>: BaseModel, ApiModelProtocol {
+    var apiEngine: ApiEngineProtocol?
+    var eventsStore: Events = .init()
+
     init(apiEngine: ApiEngineProtocol) {
-        self.init()
+        super.init()
         self.apiEngine = apiEngine
+    }
+
+    required init() {
+        super.init()
     }
 }
 
-final class AuthApiModel: BaseModel, Communicable, ApiModelProtocol {
-    var apiEngine: ApiEngineProtocol?
-
-    var eventsStore: AuthEvent = .init()
-
+final class AuthApiModel: BaseApiModel<AuthEvent> {
     override func start() {
         onEvent(\.request) { [weak self] loginName in
             self?.apiEngine?
@@ -151,101 +139,6 @@ final class AuthApiModel: BaseModel, Communicable, ApiModelProtocol {
                 }
                 .catch { error in
                     self?.sendEvent(\.error, .error(error))
-                }
-        }
-    }
-}
-
-final class VerifyApiModel: BaseModel, Communicable, ApiModelProtocol {
-    var apiEngine: ApiEngineProtocol?
-
-    var eventsStore: VerifyEvent = .init()
-
-    override func start() {
-        onEvent(\.request) { [weak self] verifyRequest in
-            self?.apiEngine?
-                .process(endpoint: TeamForceEndpoints.VerifyEndpoint(body: ["type": "authcode",
-                                                                            "code": verifyRequest.smsCode],
-                                                                     headers: ["X-ID": verifyRequest.xId,
-                                                                               "X-Code": verifyRequest.xCode]))
-                .done { result in
-                    let decoder = DataToDecodableParser()
-
-                    guard
-                        let data = result.data,
-                        let resultBody: VerifyResultBody = decoder.parse(data)
-                    else {
-                        self?.sendEvent(\.error, .unknown)
-                        return
-                    }
-
-                    self?.sendEvent(\.response, resultBody)
-                }
-                .catch { _ in
-                    self?.sendEvent(\.error, .unknown)
-                }
-        }
-    }
-}
-
-final class GetProfileApiModel: BaseModel, Communicable, ApiModelProtocol {
-    var apiEngine: ApiEngineProtocol?
-
-    var eventsStore: ProfileApiEvent = .init()
-
-    override func start() {
-        onEvent(\.request) { [weak self] request in
-            self?.sendEvent(\.response, Promise { seal in
-                self?.apiEngine?
-                    .process(endpoint: TeamForceEndpoints.ProfileEndpoint(headers: [
-                        "Authorization": "Token " + request.token,
-                    ]))
-                    .done { result in
-                        let decoder = DataToDecodableParser()
-
-                        guard
-                            let data = result.data,
-                            let user: UserData = decoder.parse(data)
-                        else {
-                            seal.reject(ApiEngineError.unknown)
-                            return
-                        }
-                        seal.fulfill(user)
-                    }
-                    .catch { _ in
-                        seal.reject(ApiEngineError.unknown)
-                    }
-            })
-        }
-    }
-}
-
-final class GetBalanceApiModel: BaseModel, Communicable, ApiModelProtocol {
-    var apiEngine: ApiEngineProtocol?
-
-    var eventsStore: BalanceApiEvent = .init()
-
-    override func start() {
-        onEvent(\.request) { [weak self] request in
-            self?.apiEngine?
-                .process(endpoint: TeamForceEndpoints.BalanceEndpoint(headers: [
-                    "Authorization": "Token " + request.token,
-                ]))
-                .done { result in
-                    let decoder = DataToDecodableParser()
-
-                    guard
-                        let data = result.data,
-                        let balance: Balance = decoder.parse(data)
-                    else {
-                        self?.sendEvent(\.error, ApiEngineError.unknown)
-                        return
-                    }
-
-                    self?.sendEvent(\.response, balance)
-                }
-                .catch { error in
-                    self?.sendEvent(\.error, ApiEngineError.error(error))
                 }
         }
     }

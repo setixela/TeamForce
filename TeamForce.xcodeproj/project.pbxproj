@@ -15,6 +15,9 @@
 		190C1D29285D160000FB3518 /* TeamForceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190C1D28285D160000FB3518 /* TeamForceTests.swift */; };
 		1913F656286E1EC80033FAB3 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 1913F655286E1EC80033FAB3 /* RealmSwift */; };
 		1918CC77286F67EB004373F3 /* BalanceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1918CC76286F67EB004373F3 /* BalanceViewModel.swift */; };
+		1918CC79286F6C69004373F3 /* VerifyApiModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1918CC78286F6C69004373F3 /* VerifyApiModel.swift */; };
+		1918CC7B286F6C84004373F3 /* GetProfileApiModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1918CC7A286F6C83004373F3 /* GetProfileApiModel.swift */; };
+		1918CC7D286F6CAC004373F3 /* GetBalanceApiModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1918CC7C286F6CAC004373F3 /* GetBalanceApiModel.swift */; };
 		191B0C272865E5C1001CF3D9 /* Icons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191B0C262865E5C1001CF3D9 /* Icons.swift */; };
 		191B0C292865F119001CF3D9 /* Texts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191B0C282865F119001CF3D9 /* Texts.swift */; };
 		1967509D286491190019A6DE /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1967509C286491190019A6DE /* Buttons.swift */; };
@@ -90,6 +93,9 @@
 		190C1D24285D160000FB3518 /* TeamForceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TeamForceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		190C1D28285D160000FB3518 /* TeamForceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamForceTests.swift; sourceTree = "<group>"; };
 		1918CC76286F67EB004373F3 /* BalanceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceViewModel.swift; sourceTree = "<group>"; };
+		1918CC78286F6C69004373F3 /* VerifyApiModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyApiModel.swift; sourceTree = "<group>"; };
+		1918CC7A286F6C83004373F3 /* GetProfileApiModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetProfileApiModel.swift; sourceTree = "<group>"; };
+		1918CC7C286F6CAC004373F3 /* GetBalanceApiModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetBalanceApiModel.swift; sourceTree = "<group>"; };
 		191B0C262865E5C1001CF3D9 /* Icons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Icons.swift; sourceTree = "<group>"; };
 		191B0C282865F119001CF3D9 /* Texts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Texts.swift; sourceTree = "<group>"; };
 		1967509C286491190019A6DE /* Buttons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Buttons.swift; sourceTree = "<group>"; };
@@ -255,6 +261,9 @@
 			isa = PBXGroup;
 			children = (
 				19AE3AF12869230C00A0C6E4 /* AuthApiModel.swift */,
+				1918CC7C286F6CAC004373F3 /* GetBalanceApiModel.swift */,
+				1918CC7A286F6C83004373F3 /* GetProfileApiModel.swift */,
+				1918CC78286F6C69004373F3 /* VerifyApiModel.swift */,
 				19D0835C286F428600F75E4A /* BarButtonModel.swift */,
 			);
 			path = Models;
@@ -490,6 +499,7 @@
 				191B0C272865E5C1001CF3D9 /* Icons.swift in Sources */,
 				19C1E9AC2861167E00E7976D /* SimpleAnchors.swift in Sources */,
 				196750A6286516F40019A6DE /* LoginScene.swift in Sources */,
+				1918CC7D286F6CAC004373F3 /* GetBalanceApiModel.swift in Sources */,
 				196750A8286517070019A6DE /* VerifyCodeScene.swift in Sources */,
 				19D08357286F41B200F75E4A /* DoubleLabelPairModel.swift in Sources */,
 				1967509F286492780019A6DE /* Labels.swift in Sources */,
@@ -497,6 +507,7 @@
 				1918CC77286F67EB004373F3 /* BalanceViewModel.swift in Sources */,
 				19C1E9A628610EC600E7976D /* DefaultVCModel.swift in Sources */,
 				19D08361286F430B00F75E4A /* Designable.swift in Sources */,
+				1918CC79286F6C69004373F3 /* VerifyApiModel.swift in Sources */,
 				19C1E9A028610E2800E7976D /* ViewModel.swift in Sources */,
 				19ECD54828623D9C001765F6 /* PaddingLabel.swift in Sources */,
 				19C1E97C285E7BC300E7976D /* Communicable.swift in Sources */,
@@ -518,6 +529,7 @@
 				19D08359286F41FA00F75E4A /* IconLabelHorizontalModel.swift in Sources */,
 				19C1E98C285F426B00E7976D /* EndpointProtocol.swift in Sources */,
 				196750B4286519660019A6DE /* ProductionAsset.swift in Sources */,
+				1918CC7B286F6C84004373F3 /* GetProfileApiModel.swift in Sources */,
 				19D0835D286F428600F75E4A /* BarButtonModel.swift in Sources */,
 				196750AC2865189C0019A6DE /* TextFieldModel.swift in Sources */,
 				19C1E9AD2861167E00E7976D /* ComplexAnchors.swift in Sources */,
