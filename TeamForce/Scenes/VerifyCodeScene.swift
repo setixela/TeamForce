@@ -48,6 +48,8 @@ final class VerifyCodeScene: BaseSceneModel<
    private lazy var verifyApi = VerifyApiModel()
    private var smsCode: String?
 
+   // MARK: - Start
+   
    override func start() {
       weak var weakSelf = self
 
@@ -61,17 +63,32 @@ final class VerifyCodeScene: BaseSceneModel<
             let verifyRequest = VerifyRequest(xId: authResult.xId, xCode: authResult.xCode, smsCode: smsCode)
             weakSelf?.verifyApi
                .onEvent(\.response) { result in
-                  let realm = try? Realm()
-                  let realmToken = Token()
-                  realmToken.token = result.token
+                  do {
+                     let realm = try Realm()
+                     let realmToken = Token()
+                     realmToken.token = result.token
 
-                  print("TOKEN:\n\(result.token)\n")
-//
-                  try? realm?.write {
-                     realm?.add(realmToken, update: .all)
+                     print("TOKEN:\n\(result.token)\n")
+   //
+                     try realm.write {
+                        realm.add(realmToken, update: .all)
+                     }
+
+                     Asset.router?.route(\.loginSuccess, navType: .push, payload: result.token)
+
+                  } catch {
+                     print(error)
                   }
-                  
-                  Asset.router?.route(\.loginSuccess, navType: .push, payload: result.token)
+//                  let realmToken = Token()
+//                  realmToken.token = result.token
+//
+//                  print("TOKEN:\n\(result.token)\n")
+////
+//                  try? realm?.write {
+//                     realm?.add(realmToken, update: .all)
+//                  }
+//
+//                  Asset.router?.route(\.loginSuccess, navType: .push, payload: result.token)
                }
                .onEvent(\.error) { error in
                   print(error)

@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol IconsProtocol: InitProtocol {
+protocol IconsProtocol: InitProtocol, KeyPathMaker where MakeType: UIImage, ValueType == IconType {
     associatedtype IconType
 
     var checkCircle: IconType { get }

@@ -16,11 +16,13 @@ protocol DesignSystemProtocol {
 
     static var label: Label { get }
     static var button: Button { get }
+    static var icon: Icon { get }
 }
 
 extension DesignSystemProtocol {
     static var label: Label { .init() }
     static var button: Button { .init() }
+    static var icon: Icon { .init() }
 }
 
 protocol ParametersProtocol {

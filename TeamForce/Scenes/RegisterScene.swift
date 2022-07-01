@@ -31,6 +31,8 @@ final class RegisterScene: BaseSceneModel<
    private lazy var textFieldModel = TextFieldModel()
    private lazy var inputParser = TelegramNickCheckerModel()
 
+   // MARK: - Start
+   
    override func start() {
       weak var weakSelf = self
 

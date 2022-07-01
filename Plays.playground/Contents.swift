@@ -5,6 +5,7 @@ import PromiseKit
 import RealmSwift
 @testable import TeamForce
 import UIKit
+import SwiftUI
 
 func example(_ name: String = "", action: () -> Void) {
     print("\n--- Example \(name):")
@@ -58,6 +59,8 @@ Asset.router?
 
 // import RealmSwift
 
+// MARK: - Start
+
 final class MainScene: BaseSceneModel<
     DefaultVCModel,
     StackWithBottomPanelModel,
@@ -82,6 +85,10 @@ final class MainScene: BaseSceneModel<
     private lazy var historyButton = Design.button.tabBar
         .set(.title("История"))
         .set(.image(icon.make(\.historyLine)))
+
+    // MARK: - Side bar
+
+    private lazy var sideBarModel = SideBarModel<Design>()
 
     // MARK: - Frame Cells
 
@@ -148,14 +155,15 @@ final class MainScene: BaseSceneModel<
                 transactButton,
                 historyButton
             ]))
-
+        
 
         menuButton
             .onEvent(\.initiated) { [weak self] item in
                 self?.vcModel?.sendEvent(\.setLeftBarItems, [item])
             }
-            .onEvent(\.didTap) {
-                print("MENUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU")
+            .onEvent(\.didTap) { [weak self] in
+                guard let self = self else { return }
+                self.sideBarModel.sendEvent(\.presentOnScene, self.mainViewModel.view)
             }
 
         weak var weakSelf = self
@@ -195,8 +203,6 @@ final class MainScene: BaseSceneModel<
 //
 //        }
     }
-
-
 
     private func setBalance(_ balance: Balance) {
         setIncome(balance.income)
@@ -279,7 +285,6 @@ struct BarButtonEvent: InitProtocol {
 }
 
 final class BarButtonModel: BaseModel, Communicable {
-
     var eventsStore = BarButtonEvent()
 
     override func start() {
@@ -292,6 +297,7 @@ final class BarButtonModel: BaseModel, Communicable {
         let menuItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(didTap))
         sendEvent(\.initiated, menuItem)
     }
+
     @objc func didTap() {
         sendEvent(\.didTap)
     }
@@ -337,6 +343,44 @@ final class LabelIconHorizontalModel<Design: DesignSystemProtocol>: BaseViewMode
         }
     }
 }
+
+final class IconLabelHorizontalModel<Design: DesignSystemProtocol>: BaseViewModel<UIStackView>,
+    Communicable,
+    Stateable,
+    Designable
+{
+    var eventsStore: LabelIconEvent = .init()
+
+    lazy var label = Design.label.body2
+    lazy var icon = ImageViewModel()
+
+    required init() {
+        super.init()
+    }
+
+    override func start() {
+        set(.axis(.horizontal))
+            .set(.cornerRadius(Design.Parameters.cornerRadius))
+            .set(.distribution(.fill))
+            .set(.alignment(.fill))
+            .set(.padding(.init(top: 12, left: 16, bottom: 12, right: 16)))
+            .set(.models([
+                icon,
+                Spacer(size: 20),
+                label,
+                Spacer(),
+            ]))
+
+        weak var weakSelf = self
+        onEvent(\.setText) {
+            weakSelf?.label.set(.text($0))
+        }
+        .onEvent(\.setImage) {
+            weakSelf?.icon.set(.image($0))
+        }
+    }
+}
+
 
 struct DoubleLabelEvent: InitProtocol {
     var setLeftText: Event<String>?
@@ -391,6 +435,79 @@ final class DoubleLabelModel<Design: DesignSystemProtocol>: BaseViewModel<UIStac
         }
         .onEvent(\.setRightText) {
             weakSelf?.labelRight.set(.text($0))
+        }
+    }
+}
+
+struct SideBarEvents: InitProtocol {
+    var presentOnScene: Event<UIView>?
+    var hide: Event<Void>?
+}
+
+final class SideBarModel<Design: DesignSystemProtocol>: BaseViewModel<UIStackView>,
+                                                        Communicable, Stateable, Designable {
+    var eventsStore: SideBarEvents = .init()
+
+    private var isPresented = false
+
+    private lazy var item1 = IconLabelHorizontalModel<Design>()
+        .sendEvent(\.setText, "Баланс")
+        .sendEvent(\.setImage, Design.icon.make(\.coinLine))
+    private lazy var item2 = IconLabelHorizontalModel<Design>()
+        .sendEvent(\.setText, "Баланс")
+        .sendEvent(\.setImage, Design.icon.make(\.upload2Fill))
+    private lazy var item3 = IconLabelHorizontalModel<Design>()
+        .sendEvent(\.setText, "Баланс")
+        .sendEvent(\.setImage, Design.icon.make(\.historyLine))
+
+    override func start() {
+        view.backgroundColor = .white
+        set(.axis(.vertical))
+            .set(.distribution(.fill))
+            .set(.alignment(.leading))
+            .set(.padding(.init(top: 12, left: 16, bottom: 12, right: 16)))
+            .set(.models([
+                item1,
+                item2,
+                item3,
+                Spacer()
+            ]))
+
+
+        onEvent(\.presentOnScene) { [weak self] baseView in
+            guard let self = self else { return }
+
+            guard self.isPresented == false else {
+                self.sendEvent(\.hide)
+                return
+            }
+
+            print("\nSHOW\n")
+
+            let size = baseView.frame.size
+            let origin = baseView.frame.origin
+            self.view.frame.size = CGSize(width: size.width * 0.8, height: size.height)
+            self.view.frame.origin = CGPoint(x: -size.width, y: origin.y)
+            baseView.addSubview(self.view)
+            self.isPresented = true
+            UIView.animate(withDuration: 0.5) {
+                self.view.frame.origin = origin
+            }
+        }
+        .onEvent(\.hide) { [weak self] in
+            guard let self = self else { return }
+//            let size = baseView.frame.size
+//            let origin = baseView.frame.origin
+//            self?.view.frame.size = size
+//            self?.view.frame.origin = CGPoint(x: -size.width, y: origin.y)
+            print("\nHIDE\n")
+            self.isPresented = false
+
+            UIView.animate(withDuration: 0.5) {
+                self.view.frame.origin = CGPoint(x: -self.view.frame.size.width, y: 0)
+            } completion: { _ in
+                self.view.removeFromSuperview()
+            }
         }
     }
 }

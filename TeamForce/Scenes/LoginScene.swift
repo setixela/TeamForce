@@ -37,6 +37,8 @@ final class LoginScene: BaseSceneModel<
 
    private var loginName: String?
 
+   // MARK: - Start
+   
    override func start() {
       weak var weakSelf = self
 

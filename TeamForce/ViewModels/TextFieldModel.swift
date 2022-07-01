@@ -29,7 +29,7 @@ final class TextFieldModel: BaseViewModel<PaddingTextField> {
     private func setupView() {
         view.addAnchors.constHeight(48)
         view.padding = .init(top: 16, left: 16, bottom: 16, right: 16)
-        view.backgroundColor = .lightGray
+        view.backgroundColor = .lightGray.withAlphaComponent(0.4)
         view.delegate = self
         view.addTarget(self, action: #selector(changValue), for: .editingChanged)
     }

@@ -33,6 +33,8 @@ final class LoginSuccessScene: BaseSceneModel<
    private lazy var apiModel = GetProfileApiModel()
    private var userPromise: Promise<UserData>?
 
+   // MARK: - Start
+   
    override func start() {
       print("Start jdsahdjkasfhkfh")
       mainViewModel.stackModel.set(.alignment(.center))
