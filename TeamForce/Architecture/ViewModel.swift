@@ -8,7 +8,7 @@
 import UIKit
 
 // Associatedtype View Erasing protocol
-protocol UIViewModel {
+protocol UIViewModel: ModelProtocol {
     var uiView: UIView { get }
 }
 
@@ -25,6 +25,7 @@ class BaseViewModel<View: UIView>: NSObject, ViewModelProtocol {
 
     // will be cleaned after presenting view
     private var autostartedView: View?
+    private var isAutoreleaseView = false
 
     var view: View {
         if let view = weakView {
@@ -39,7 +40,7 @@ class BaseViewModel<View: UIView>: NSObject, ViewModelProtocol {
     }
 
     var uiView: UIView {
-        if let readyView = autostartedView {
+        if isAutoreleaseView, let readyView = autostartedView {
             autostartedView = nil
             return readyView
         }
@@ -52,13 +53,10 @@ class BaseViewModel<View: UIView>: NSObject, ViewModelProtocol {
         view
     }
 
-//    convenience init(autostart: Bool) {
-//        self.init()
-//        if autostart {
-//            autostartedView = view
-//            weakView = view
-//        }
-//    }
+    convenience init(isAutoreleaseView: Bool) {
+        self.init()
+        self.isAutoreleaseView = isAutoreleaseView
+    }
 
     func start() {}
 

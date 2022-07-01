@@ -26,7 +26,7 @@ class Token: Object {
 final class VerifyCodeScene: BaseSceneModel<
    DefaultVCModel,
    StackWithBottomPanelModel,
-   Asset,
+   ProductionAsset,
    AuthResult
 > {
    //

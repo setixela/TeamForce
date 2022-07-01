@@ -15,7 +15,10 @@ protocol TextsProtocol: InitProtocol {
     var title: Title { get }
 }
 
-protocol ButtonTextsProtocol: InitProtocol, KeyPathMaker {
+protocol ButtonTextsProtocol: InitProtocol, KeyPathMaker
+    where MakeType == String,
+    ValueType == String
+{
     associatedtype TextType
 
     var enterButton: String { get }
@@ -25,7 +28,10 @@ protocol ButtonTextsProtocol: InitProtocol, KeyPathMaker {
     var changeUserButton: String { get }
 }
 
-protocol TitleTextsProtocol: InitProtocol, KeyPathMaker {
+protocol TitleTextsProtocol: InitProtocol, KeyPathMaker
+    where MakeType == String,
+    ValueType == String
+{
     associatedtype TextType
 
     var digitalThanks: String { get }
@@ -71,6 +77,6 @@ struct Texts: TextsProtocol, KeyPathMaker {
 extension KeyPathMaker where MakeType == String, ValueType == String {
     func make(_ keypath: KeyPath<Self, String>) -> String {
         // Make transformations
-       NSLocalizedString(self[keyPath: keypath], comment: "")
+        NSLocalizedString(self[keyPath: keypath], comment: "")
     }
 }

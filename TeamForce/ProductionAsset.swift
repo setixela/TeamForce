@@ -5,10 +5,10 @@
 //  Created by Aleksandr Solovyev on 24.06.2022.
 //
 
-enum Asset: AssetProtocol {
-    
+enum ProductionAsset: AssetProtocol {
     typealias Text = Texts
     typealias Design = DesignSystem
+    typealias Service = ProductionService
 
     static var router: Router<Scene>? = Router<Scene>()
 
@@ -20,6 +20,8 @@ enum Asset: AssetProtocol {
         var register: SceneModelProtocol { RegisterScene() }
         var main: SceneModelProtocol { MainScene() }
     }
+}
 
-    struct Service: InitProtocol {}
+struct ProductionService: ServiceProtocol {
+    var apiEngine: ApiEngineProtocol { ApiEngine() }
 }

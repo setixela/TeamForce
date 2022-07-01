@@ -115,14 +115,25 @@ struct Balance: Decodable {
     let distr: Distr
 }
 
-final class AuthApiModel: BaseModel, Communicable {
-    private let apiEngine = ApiEngine()
+protocol ApiModelProtocol: ModelProtocol, InitProtocol {
+    var apiEngine: ApiEngineProtocol? { get set }
+}
+
+extension ApiModelProtocol {
+    init(apiEngine: ApiEngineProtocol) {
+        self.init()
+        self.apiEngine = apiEngine
+    }
+}
+
+final class AuthApiModel: BaseModel, Communicable, ApiModelProtocol {
+    var apiEngine: ApiEngineProtocol?
 
     var eventsStore: AuthEvent = .init()
 
     override func start() {
         onEvent(\.request) { [weak self] loginName in
-            self?.apiEngine
+            self?.apiEngine?
                 .process(endpoint: TeamForceEndpoints.AuthEndpoint(
                     body: ["type": "authorize",
                            "login": loginName]
@@ -145,14 +156,14 @@ final class AuthApiModel: BaseModel, Communicable {
     }
 }
 
-final class VerifyApiModel: BaseModel, Communicable {
-    private let apiEngine = ApiEngine()
+final class VerifyApiModel: BaseModel, Communicable, ApiModelProtocol {
+    var apiEngine: ApiEngineProtocol?
 
     var eventsStore: VerifyEvent = .init()
 
     override func start() {
         onEvent(\.request) { [weak self] verifyRequest in
-            self?.apiEngine
+            self?.apiEngine?
                 .process(endpoint: TeamForceEndpoints.VerifyEndpoint(body: ["type": "authcode",
                                                                             "code": verifyRequest.smsCode],
                                                                      headers: ["X-ID": verifyRequest.xId,
@@ -177,15 +188,15 @@ final class VerifyApiModel: BaseModel, Communicable {
     }
 }
 
-final class GetProfileApiModel: BaseModel, Communicable {
-    private let apiEngine = ApiEngine()
+final class GetProfileApiModel: BaseModel, Communicable, ApiModelProtocol {
+    var apiEngine: ApiEngineProtocol?
 
     var eventsStore: ProfileApiEvent = .init()
 
     override func start() {
         onEvent(\.request) { [weak self] request in
             self?.sendEvent(\.response, Promise { seal in
-                self?.apiEngine
+                self?.apiEngine?
                     .process(endpoint: TeamForceEndpoints.ProfileEndpoint(headers: [
                         "Authorization": "Token " + request.token,
                     ]))
@@ -209,14 +220,14 @@ final class GetProfileApiModel: BaseModel, Communicable {
     }
 }
 
-final class GetBalanceApiModel: BaseModel, Communicable {
-    private let apiEngine = ApiEngine()
+final class GetBalanceApiModel: BaseModel, Communicable, ApiModelProtocol {
+    var apiEngine: ApiEngineProtocol?
 
     var eventsStore: BalanceApiEvent = .init()
 
     override func start() {
         onEvent(\.request) { [weak self] request in
-            self?.apiEngine
+            self?.apiEngine?
                 .process(endpoint: TeamForceEndpoints.BalanceEndpoint(headers: [
                     "Authorization": "Token " + request.token,
                 ]))

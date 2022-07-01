@@ -12,7 +12,7 @@ import UIKit
 final class LoginScene: BaseSceneModel<
    DefaultVCModel,
    StackWithBottomPanelModel,
-   Asset,
+   ProductionAsset,
    Void
 > {
    //

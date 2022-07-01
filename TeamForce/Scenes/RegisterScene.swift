@@ -12,7 +12,7 @@ import UIKit
 final class RegisterScene: BaseSceneModel<
    DefaultVCModel,
    StackWithBottomPanelModel,
-   Asset,
+   ProductionAsset,
    Void
 > {
    //

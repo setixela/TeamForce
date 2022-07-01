@@ -12,7 +12,7 @@ import UIKit
 final class DigitalThanksScene: BaseSceneModel<
    DefaultVCModel,
    StackModel,
-   Asset,
+   ProductionAsset,
    Void
 > {
    //

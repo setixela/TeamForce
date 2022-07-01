@@ -13,9 +13,12 @@ protocol LabelsProtocol {
     associatedtype DesignType
 
     var `default`: DesignType { get }
+
     var headline3: DesignType { get }
     var headline4: DesignType { get }
     var headline5: DesignType { get }
+    var headline6: DesignType { get }
+
     var title: DesignType { get }
     var body1: DesignType { get }
     var body2: DesignType { get }
@@ -51,6 +54,11 @@ struct LabelStateBuilder: LabelStateBuilderProtocol {
 
     var headline5: [LabelState] { [
         .font(UIFont.systemFont(ofSize: 24, weight: .regular)),
+        .color(.black)
+    ] }
+
+    var headline6: [LabelState] { [
+        .font(UIFont.systemFont(ofSize: 20, weight: .regular)),
         .color(.black)
     ] }
 
@@ -92,9 +100,12 @@ final class LabelBuilder: LabelBuilderProtocol {
 
     var subtitle: LabelModel { .init(builder.subtitle) }
     var `default`: LabelModel { .init(builder.default) }
+
     var headline3: LabelModel { .init(builder.headline3) }
     var headline4: LabelModel { .init(builder.headline4) }
     var headline5: LabelModel { .init(builder.headline5) }
+    var headline6: LabelModel { .init(builder.headline6) }
+
     var title: LabelModel { .init(builder.title) }
     var body1: LabelModel { .init(builder.body1) }
     var body2: LabelModel { .init(builder.body2) }

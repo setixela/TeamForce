@@ -7,7 +7,7 @@
 
 import UIKit
 
-struct DesignSystem: DesignSystemProtocol {
+struct DesignSystem: DesignProtocol {
     typealias Parameters = GlobalParameters
     typealias Icon = Icons
     typealias State = ModelSetuper
@@ -17,6 +17,7 @@ struct DesignSystem: DesignSystemProtocol {
 
 struct GlobalParameters: ParametersProtocol {
     static let cornerRadius: CGFloat = 6
+    static var contentPadding: UIEdgeInsets { .init(top: 12, left: 16, bottom: 12, right: 16) }
 }
 
 struct ModelSetuper: ModelSetuperProtocol {

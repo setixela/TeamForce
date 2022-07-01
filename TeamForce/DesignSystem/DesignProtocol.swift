@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol DesignSystemProtocol {
+protocol DesignProtocol {
     associatedtype Label: LabelBuilderProtocol
     associatedtype Button: ButtonBuilderProtocol
     associatedtype State: ModelSetuperProtocol
@@ -19,7 +19,7 @@ protocol DesignSystemProtocol {
     static var icon: Icon { get }
 }
 
-extension DesignSystemProtocol {
+extension DesignProtocol {
     static var label: Label { .init() }
     static var button: Button { .init() }
     static var icon: Icon { .init() }
@@ -27,6 +27,7 @@ extension DesignSystemProtocol {
 
 protocol ParametersProtocol {
     static var cornerRadius: CGFloat { get }
+    static var contentPadding: UIEdgeInsets { get }
 }
 
 protocol ModelSetuperProtocol {

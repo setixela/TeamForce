@@ -34,7 +34,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 private extension SceneDelegate {
     func startDispatcher(_ nc: UINavigationController) {
-        Asset.router?
+        ProductionAsset.router?
             .onEvent(\.push) { vc in
                 //     vc.view
                 nc.pushViewController(vc, animated: true)
