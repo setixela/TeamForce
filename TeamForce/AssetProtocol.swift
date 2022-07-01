@@ -10,7 +10,7 @@ protocol ServiceProtocol: InitProtocol {
 }
 
 protocol AssetProtocol {
-    associatedtype Scene: InitProtocol
+    associatedtype Scene: ScenesProtocol
     associatedtype Service: ServiceProtocol
     associatedtype Design: DesignProtocol
     associatedtype Text: TextsProtocol
@@ -24,3 +24,14 @@ protocol AssetProtocol {
 extension AssetProtocol {
     static var service: Service { Service() }
 }
+
+protocol ScenesProtocol: InitProtocol {
+    var digitalThanks: SceneModelProtocol { get }
+    var login: SceneModelProtocol { get }
+    var verifyCode: SceneModelProtocol { get }
+    var loginSuccess: SceneModelProtocol { get }
+    var register: SceneModelProtocol { get }
+    var main: SceneModelProtocol { get }
+}
+
+

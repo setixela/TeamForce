@@ -23,10 +23,10 @@ class Token: Object {
 
 // MARK: - VerifyCodeScene
 
-final class VerifyCodeScene: BaseSceneModel<
+final class VerifyCodeScene<Asset: AssetProtocol>: BaseSceneModel<
    DefaultVCModel,
    StackWithBottomPanelModel,
-   ProductionAsset,
+   Asset,
    AuthResult
 > {
    //

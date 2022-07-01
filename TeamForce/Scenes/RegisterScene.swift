@@ -9,10 +9,10 @@ import UIKit
 
 // MARK: - RegisterScene
 
-final class RegisterScene: BaseSceneModel<
+final class RegisterScene<Asset: AssetProtocol>: BaseSceneModel<
    DefaultVCModel,
    StackWithBottomPanelModel,
-   ProductionAsset,
+   Asset,
    Void
 > {
    //

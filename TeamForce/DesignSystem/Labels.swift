@@ -32,7 +32,7 @@ protocol LabelStateBuilderProtocol: LabelsProtocol {
 }
 
 protocol LabelBuilderProtocol: LabelsProtocol,
-                               BuilderProtocol where Builder: LabelStateBuilderProtocol, DesignType == LabelModel {}
+                               StateBuilderProtocol where StateBuilder: LabelStateBuilderProtocol, DesignType == LabelModel {}
 
 // MARK: - Labels
 

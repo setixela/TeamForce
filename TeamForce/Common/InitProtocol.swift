@@ -9,10 +9,10 @@ protocol InitProtocol {
     init()
 }
 
-protocol BuilderProtocol: InitProtocol {
-    associatedtype Builder
+protocol StateBuilderProtocol: InitProtocol {
+    associatedtype StateBuilder
 
-    var builder: Builder { get }
+    var builder: StateBuilder { get }
 }
 
 class BaseClass: InitProtocol {

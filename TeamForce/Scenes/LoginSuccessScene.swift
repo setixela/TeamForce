@@ -10,10 +10,10 @@ import UIKit
 
 // MARK: - LoginSuccessScene
 
-final class LoginSuccessScene: BaseSceneModel<
+final class LoginSuccessScene<Asset: AssetProtocol>: BaseSceneModel<
    DefaultVCModel,
    StackWithBottomPanelModel,
-   ProductionAsset,
+   Asset,
    String
 > {
    //

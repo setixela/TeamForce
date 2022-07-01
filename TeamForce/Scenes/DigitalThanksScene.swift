@@ -9,10 +9,10 @@ import UIKit
 
 // MARK: - DigitalThanksScene
 
-final class DigitalThanksScene: BaseSceneModel<
+final class DigitalThanksScene<Asset: AssetProtocol>: BaseSceneModel<
    DefaultVCModel,
    StackModel,
-   ProductionAsset,
+   Asset,
    Void
 > {
    //

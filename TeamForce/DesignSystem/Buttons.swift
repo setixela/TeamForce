@@ -23,12 +23,13 @@ protocol ButtonsProtocol: InitProtocol, Associated {
     var tabBar: AsType { get }
 }
 
-protocol ButtonStateBuilderProtocol: ButtonsProtocol {
+protocol ButtonStateBuilderProtocol: ButtonsProtocol where AsType == [ButtonState] {
     associatedtype Parameters: ParametersProtocol
 }
 
-protocol ButtonBuilderProtocol: ButtonsProtocol,
-    BuilderProtocol where Builder: ButtonStateBuilderProtocol {}
+protocol ButtonBuilderProtocol: ButtonsProtocol, StateBuilderProtocol
+    where StateBuilder: ButtonStateBuilderProtocol, AsType == ButtonModel
+{}
 
 // MARK: - Buttons
 
@@ -72,9 +73,7 @@ struct ButtonStateBuilder: ButtonStateBuilderProtocol {
 }
 
 final class DefaultButtonBuilder: ButtonBuilderProtocol {
-    lazy var builder: Builder = .init()
-
-    typealias Builder = ButtonStateBuilder
+    lazy var builder: ButtonStateBuilder = .init()
 
     var `default`: ButtonModel {
         .init(builder.default)

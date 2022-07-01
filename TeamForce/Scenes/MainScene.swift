@@ -9,10 +9,10 @@ import PromiseKit
 import RealmSwift
 import UIKit
 
-final class MainScene: BaseSceneModel<
+final class MainScene<Asset: AssetProtocol>: BaseSceneModel<
     DefaultVCModel,
     StackWithBottomPanelModel,
-    ProductionAsset,
+    Asset,
     Promise<UserData>
 > {
     // MARK: - Balance View Model
