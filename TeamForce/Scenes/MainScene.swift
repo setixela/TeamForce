@@ -17,7 +17,7 @@ final class MainScene<Asset: AssetProtocol>: BaseSceneModel<
 > {
     // MARK: - Balance View Model
 
-    private lazy var balanceViewModel = BalanceViewModel<ProductionAsset>()
+    private lazy var balanceViewModel = BalanceViewModel<Asset>()
     private lazy var transactViewModel = ImageViewModel() // TODO:
     private lazy var historyViewModel = ImageViewModel() // TODO:
 
@@ -76,22 +76,12 @@ final class MainScene<Asset: AssetProtocol>: BaseSceneModel<
 
                 self.sideBarModel.sendEvent(\.presentOnScene, self.mainViewModel.view)
             }
-
-        guard
-            let realm = try? Realm(),
-            let token = realm.objects(Token.self).first
-        else {
-            return
-        }
-
-        print(token.token)
     }
 }
 
 extension MainScene {
     private func presentModel(_ model: UIViewModel?) {
         guard let model = model else { return }
-        //  model.start()
 
         mainViewModel.stackModel
             .set(.models([

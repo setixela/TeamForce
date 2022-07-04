@@ -52,7 +52,7 @@ final class LoginSuccessScene<Asset: AssetProtocol>: BaseSceneModel<
       guard let token = weakSelf?.inputValue else { return }
 
       apiModel
-         .onEvent(\.response) { promise in
+         .onEvent(\.success) { promise in
             weakSelf?.userPromise = promise
          }
          .sendEvent(\.request, TokenRequest(token: token))

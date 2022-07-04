@@ -9,7 +9,7 @@ import Foundation
 
 struct BalanceApiEvent: NetworkEventProtocol {
     var request: Event<TokenRequest>?
-    var response: Event<Balance>?
+    var success: Event<Balance>?
     var error: Event<ApiEngineError>?
 }
 
@@ -32,7 +32,7 @@ final class GetBalanceApiModel: BaseApiModel<BalanceApiEvent> {
                         return
                     }
 
-                    self?.sendEvent(\.response, balance)
+                    self?.sendEvent(\.success, balance)
                 }
                 .catch { error in
                     self?.sendEvent(\.error, ApiEngineError.error(error))

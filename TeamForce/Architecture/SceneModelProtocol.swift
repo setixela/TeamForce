@@ -32,7 +32,6 @@ protocol Assetable {
     typealias Service = Asset.Service
     typealias Scene = Asset.Scene
 
-
     var text: Asset.Text { get }
 
     var icon: Asset.Design.Icon { get }

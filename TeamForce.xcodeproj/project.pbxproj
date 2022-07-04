@@ -252,7 +252,6 @@
 				191B0C262865E5C1001CF3D9 /* Icons.swift */,
 				191B0C282865F119001CF3D9 /* Texts.swift */,
 				19D08360286F430B00F75E4A /* Designable.swift */,
-				1918CC76286F67EB004373F3 /* BalanceViewModel.swift */,
 			);
 			path = DesignSystem;
 			sourceTree = "<group>";
@@ -329,6 +328,7 @@
 		19C1E9A428610E6F00E7976D /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				1918CC76286F67EB004373F3 /* BalanceViewModel.swift */,
 				19C1E9A528610EC600E7976D /* DefaultVCModel.swift */,
 				19ECD54228623D30001765F6 /* StackModel.swift */,
 				19ECD54028623D1F001765F6 /* LabelModel.swift */,

@@ -62,7 +62,7 @@ final class VerifyCodeScene<Asset: AssetProtocol>: BaseSceneModel<
 
             let verifyRequest = VerifyRequest(xId: authResult.xId, xCode: authResult.xCode, smsCode: smsCode)
             weakSelf?.verifyApi
-               .onEvent(\.response) { result in
+               .onEvent(\.success) { result in
                   do {
                      let realm = try Realm()
                      let realmToken = Token()

@@ -27,17 +27,9 @@ enum Asset: AssetProtocol {
     typealias Text = Texts
     typealias Design = DesignSystem
     typealias Service = ProductionService
+    typealias Scene = Scenes
 
     static var router: Router<Scene>? = Router<Scene>()
-
-    struct Scene: InitProtocol {
-        var digitalThanks: SceneModelProtocol { DigitalThanksScene() }
-        var login: SceneModelProtocol { LoginScene() }
-        var verifyCode: SceneModelProtocol { VerifyCodeScene() }
-        var loginSuccess: SceneModelProtocol { LoginSuccessScene() }
-        var register: SceneModelProtocol { RegisterScene() }
-        var main: SceneModelProtocol { MainScene() }
-    }
 }
 
 Asset.router?
@@ -54,16 +46,16 @@ Asset.router?
     .route(\.main, navType: .push, payload: ())
 //    .route(\.loginSuccess, navType: .push, payload: ())
 
-final class MainScene: BaseSceneModel<
+final class MainScene<Asset: AssetProtocol>: BaseSceneModel<
     DefaultVCModel,
     StackWithBottomPanelModel,
-    ProductionAsset,
+    Asset,
     Promise<UserData>
 > {
     // MARK: - Balance View Model
 
     private lazy var balanceViewModel = BalanceViewModel<Asset>()
-    private lazy var transactViewModel = ImageViewModel() // TODO:
+    private lazy var transactViewModel = TransactViewModel<Asset>() // TODO:
     private lazy var historyViewModel = ImageViewModel() // TODO:
 
     private lazy var balanceButton = Design.button.tabBar
@@ -121,22 +113,12 @@ final class MainScene: BaseSceneModel<
 
                 self.sideBarModel.sendEvent(\.presentOnScene, self.mainViewModel.view)
             }
-
-        guard
-            let realm = try? Realm(),
-            let token = realm.objects(Token.self).first
-        else {
-            return
-        }
-
-        print(token.token)
     }
 }
 
 extension MainScene {
     private func presentModel(_ model: UIViewModel?) {
         guard let model = model else { return }
-        //  model.start()
 
         mainViewModel.stackModel
             .set(.models([
@@ -153,7 +135,6 @@ final class BalanceViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
     Assetable
 {
     var text: Asset.Text = .init()
-
     var icon: Asset.Design.Icon = .init()
 
     var eventsStore: BalanceViewEvent = .init()
@@ -166,10 +147,10 @@ final class BalanceViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
         .set(.alignment(.left))
         .set(.padding(.init(top: 22, left: 0, bottom: 26, right: 0)))
 
-    private lazy var frameModel = LabelIconHorizontalModel<Design>()
+    private lazy var selectPeriodViewModel = LabelIconHorizontalModel<Design>()
         .set(.backColor(.init(red: 0.33, green: 0.33, blue: 0.33, alpha: 0.08)))
         .set(.height(48))
-        .sendEvent(\.setText, "Выберите период")
+        .sendEvent(\.setText, text.title.make(\.selectPeriod))
         .sendEvent(\.setImage, Design.icon.make(\.calendarLine))
 
     private lazy var frameModel2 = DoubleLabelPairModel<Design>()
@@ -178,10 +159,10 @@ final class BalanceViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
 
     private lazy var leftFrameCell = FrameCellModel<Design>()
         .set(.backColor(.init(red: 0.33, green: 0.33, blue: 0.33, alpha: 0.08)))
-        .sendEvent(\.setHeader, "Мой счет")
+        .sendEvent(\.setHeader, text.title.make(\.myAccount))
 
     private lazy var rightFrameCell = FrameCellModel<Design>()
-        .sendEvent(\.setHeader, "Осталось раздать")
+        .sendEvent(\.setHeader, text.title.make(\.leftToSend))
         .set(.borderWidth(1))
         .set(.borderColor(.init(red: 0.33, green: 0.33, blue: 0.33, alpha: 0.08)))
 
@@ -211,7 +192,7 @@ final class BalanceViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
             .set(.alignment(.fill))
             .set(.models([
                 digitalThanksTitle,
-                frameModel,
+                selectPeriodViewModel,
                 Spacer(size: 20),
                 frameCellStackModel,
                 Spacer(size: 8),
@@ -230,7 +211,7 @@ final class BalanceViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
 
         print(token.token)
         balanceApiModel
-            .onEvent(\.response) { balance in
+            .onEvent(\.success) { balance in
                 weakSelf?.setBalance(balance)
             }
             .onEvent(\.error) {
@@ -248,23 +229,54 @@ extension BalanceViewModel {
         let frozenSum = balance.income.frozen + balance.distr.frozen
         let cancelledSum = balance.income.cancelled + balance.distr.cancelled
         frameModel2.doubleLabelLeft
-            .sendEvent(\.setLeftText, "На согласовании: ")
+            .sendEvent(\.setLeftText, "\(text.title.make(\.onAgreement)): ")
             .sendEvent(\.setRightText, "\(frozenSum)")
         frameModel2.doubleLabelRight
-            .sendEvent(\.setLeftText, "Аннулировано: ")
+            .sendEvent(\.setLeftText, "\(text.title.make(\.canceled)): ")
             .sendEvent(\.setRightText, "\(cancelledSum)")
     }
 
     private func setIncome(_ income: Income) {
         leftFrameCell
             .sendEvent(\.setText, String(income.amount))
-            .sendEvent(\.setCaption, "Распределено: \(income.sended)")
+            .sendEvent(\.setCaption, "\(text.title.make(\.sended)): \(income.sended)")
     }
 
     private func setDistr(_ distr: Distr) {
         rightFrameCell
             .sendEvent(\.setText, String(distr.amount))
-            .sendEvent(\.setCaption, "Распределено: \(distr.sended)")
+            .sendEvent(\.setCaption, "\(text.title.make(\.sended)): \(distr.sended)")
+    }
+}
+
+final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
+    Assetable,
+    Stateable
+{
+    var text: Asset.Text = .init()
+    var icon: Asset.Design.Icon = .init()
+
+    private lazy var digitalThanksTitle = Design.label.headline4
+        .set(.text(text.title.make(\.digitalThanks)))
+        .set(.numberOfLines(1))
+        .set(.alignment(.left))
+        .set(.padding(.init(top: 22, left: 0, bottom: 26, right: 0)))
+
+    private lazy var selectPeriodViewModel = LabelIconHorizontalModel<Design>()
+        .set(.backColor(.init(red: 0.33, green: 0.33, blue: 0.33, alpha: 0.08)))
+        .set(.height(48))
+        .sendEvent(\.setText, text.title.make(\.selectPeriod))
+        .sendEvent(\.setImage, Design.icon.make(\.calendarLine))
+
+    override func start() {
+        set(.axis(.vertical))
+            .set(.distribution(.fill))
+            .set(.alignment(.fill))
+            .set(.models([
+                digitalThanksTitle,
+                selectPeriodViewModel,
+                Spacer()
+            ]))
     }
 }
 

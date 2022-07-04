@@ -9,7 +9,7 @@ import Foundation
 
 struct VerifyEvent: NetworkEventProtocol {
     var request: Event<VerifyRequest>?
-    var response: Event<VerifyResultBody>?
+    var success: Event<VerifyResultBody>?
     var error: Event<ApiEngineError>?
 }
 
@@ -36,7 +36,7 @@ final class VerifyApiModel: BaseModel, Communicable, ApiModelProtocol {
                         return
                     }
 
-                    self?.sendEvent(\.response, resultBody)
+                    self?.sendEvent(\.success, resultBody)
                 }
                 .catch { _ in
                     self?.sendEvent(\.error, .unknown)

@@ -15,12 +15,12 @@ protocol TextsProtocol: InitProtocol {
     var title: Title { get }
 }
 
+// MARK: - Button texts
+
 protocol ButtonTextsProtocol: InitProtocol, KeyPathMaker
     where MakeType == String,
     ValueType == String
 {
-    associatedtype TextType
-
     var enterButton: String { get }
     var nextButton: String { get }
     var registerButton: String { get }
@@ -28,12 +28,13 @@ protocol ButtonTextsProtocol: InitProtocol, KeyPathMaker
     var changeUserButton: String { get }
 }
 
+// MARK: - Title texts
+
 protocol TitleTextsProtocol: InitProtocol, KeyPathMaker
     where MakeType == String,
     ValueType == String
 {
-    associatedtype TextType
-
+    // main
     var digitalThanks: String { get }
     var enter: String { get }
     var register: String { get }
@@ -43,11 +44,19 @@ protocol TitleTextsProtocol: InitProtocol, KeyPathMaker
     var userName: String { get }
     var smsCode: String { get }
     var loginSuccess: String { get }
+
+    // balance
+    var selectPeriod: String { get }
+    var myAccount: String { get }
+    var leftToSend: String { get }
+    var onAgreement: String { get }
+    var canceled: String { get }
+    var sended: String { get }
 }
 
-struct ButtonTexts: ButtonTextsProtocol {
-    typealias TextType = String
+// MARK: - Button texts implements
 
+struct ButtonTexts: ButtonTextsProtocol {
     var enterButton: String { "ВХОД" }
     var nextButton: String { "ДАЛЕЕ" }
     var registerButton: String { "РЕГИСТРАЦИЯ" }
@@ -56,8 +65,7 @@ struct ButtonTexts: ButtonTextsProtocol {
 }
 
 struct TitleTexts: TitleTextsProtocol {
-    typealias TextType = String
-
+    // main
     var digitalThanks: String { "Цифровое спасибо" }
     var enter: String { "Вход" }
     var register: String { "Регистрация" }
@@ -67,6 +75,14 @@ struct TitleTexts: TitleTextsProtocol {
     var userName: String { "Имя пользователя" }
     var smsCode: String { "Код подтверждения" }
     var loginSuccess: String { "Вы успешно зарегистрированы" }
+
+    // balance
+    var selectPeriod: String { "Выберите период" }
+    var myAccount: String { "Мой счет" }
+    var leftToSend: String { "Осталось раздать" }
+    var onAgreement: String { "На согласовании" }
+    var canceled: String { "Аннулировано" }
+    var sended: String { "Распределено" }
 }
 
 struct Texts: TextsProtocol, KeyPathMaker {

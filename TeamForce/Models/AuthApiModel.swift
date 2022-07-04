@@ -14,13 +14,13 @@ protocol NetworkEventProtocol: InitProtocol {
     associatedtype Error
 
     var request: Event<Request>? { get set }
-    var response: Event<Result>? { get set }
+    var success: Event<Result>? { get set }
     var error: Event<Error>? { get set }
 }
 
 struct AuthEvent: NetworkEventProtocol {
     var request: Event<String>?
-    var response: Event<AuthResult>?
+    var success: Event<AuthResult>?
     var error: Event<ApiEngineError>?
 }
 
@@ -135,7 +135,7 @@ final class AuthApiModel: BaseApiModel<AuthEvent> {
                         return
                     }
 
-                    self?.sendEvent(\.response, AuthResult(xId: xId, xCode: xCode))
+                    self?.sendEvent(\.success, AuthResult(xId: xId, xCode: xCode))
                 }
                 .catch { error in
                     self?.sendEvent(\.error, .error(error))

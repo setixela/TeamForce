@@ -48,7 +48,7 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
 
             print(loginName)
             weakSelf?.apiModel
-               .onEvent(\.response) { authResult in
+               .onEvent(\.success) { authResult in
                   Asset.router?.route(\.verifyCode, navType: .push, payload: authResult)
                }
                .onEvent(\.error) { error in

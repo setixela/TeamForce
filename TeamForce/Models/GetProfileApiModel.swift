@@ -10,14 +10,14 @@ import PromiseKit
 
 struct ProfileApiEvent: NetworkEventProtocol {
     var request: Event<TokenRequest>?
-    var response: Event<Promise<UserData>>?
+    var success: Event<Promise<UserData>>?
     var error: Event<ApiEngineError>?
 }
 
 final class GetProfileApiModel: BaseApiModel<ProfileApiEvent> {
     override func start() {
         onEvent(\.request) { [weak self] request in
-            self?.sendEvent(\.response, Promise { seal in
+            self?.sendEvent(\.success, Promise { seal in
                 self?.apiEngine?
                     .process(endpoint: TeamForceEndpoints.ProfileEndpoint(headers: [
                         "Authorization": "Token " + request.token,

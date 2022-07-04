@@ -16,7 +16,6 @@ final class BalanceViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
     Assetable
 {
     var text: Asset.Text = .init()
-
     var icon: Asset.Design.Icon = .init()
 
     var eventsStore: BalanceViewEvent = .init()
@@ -32,7 +31,7 @@ final class BalanceViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
     private lazy var frameModel = LabelIconHorizontalModel<Design>()
         .set(.backColor(.init(red: 0.33, green: 0.33, blue: 0.33, alpha: 0.08)))
         .set(.height(48))
-        .sendEvent(\.setText, "Выберите период")
+        .sendEvent(\.setText, text.title.make(\.selectPeriod))
         .sendEvent(\.setImage, Design.icon.make(\.calendarLine))
 
     private lazy var frameModel2 = DoubleLabelPairModel<Design>()
@@ -41,10 +40,10 @@ final class BalanceViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
 
     private lazy var leftFrameCell = FrameCellModel<Design>()
         .set(.backColor(.init(red: 0.33, green: 0.33, blue: 0.33, alpha: 0.08)))
-        .sendEvent(\.setHeader, "Мой счет")
+        .sendEvent(\.setHeader, text.title.make(\.myAccount))
 
     private lazy var rightFrameCell = FrameCellModel<Design>()
-        .sendEvent(\.setHeader, "Осталось раздать")
+        .sendEvent(\.setHeader, text.title.make(\.leftToSend))
         .set(.borderWidth(1))
         .set(.borderColor(.init(red: 0.33, green: 0.33, blue: 0.33, alpha: 0.08)))
 
@@ -93,7 +92,7 @@ final class BalanceViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
 
         print(token.token)
         balanceApiModel
-            .onEvent(\.response) { balance in
+            .onEvent(\.success) { balance in
                 weakSelf?.setBalance(balance)
             }
             .onEvent(\.error) {
@@ -111,22 +110,22 @@ extension BalanceViewModel {
         let frozenSum = balance.income.frozen + balance.distr.frozen
         let cancelledSum = balance.income.cancelled + balance.distr.cancelled
         frameModel2.doubleLabelLeft
-            .sendEvent(\.setLeftText, "На согласовании: ")
+            .sendEvent(\.setLeftText, "\(text.title.make(\.onAgreement)): ")
             .sendEvent(\.setRightText, "\(frozenSum)")
         frameModel2.doubleLabelRight
-            .sendEvent(\.setLeftText, "Аннулировано: ")
+            .sendEvent(\.setLeftText, "\(text.title.make(\.canceled)): ")
             .sendEvent(\.setRightText, "\(cancelledSum)")
     }
 
     private func setIncome(_ income: Income) {
         leftFrameCell
             .sendEvent(\.setText, String(income.amount))
-            .sendEvent(\.setCaption, "Распределено: \(income.sended)")
+            .sendEvent(\.setCaption, "\(text.title.make(\.sended)): \(income.sended)")
     }
 
     private func setDistr(_ distr: Distr) {
         rightFrameCell
             .sendEvent(\.setText, String(distr.amount))
-            .sendEvent(\.setCaption, "Распределено: \(distr.sended)")
+            .sendEvent(\.setCaption, "\(text.title.make(\.sended)): \(distr.sended)")
     }
 }
