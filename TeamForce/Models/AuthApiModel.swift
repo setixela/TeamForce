@@ -108,13 +108,13 @@ class BaseApiModel<Events: NetworkEventProtocol>: BaseModel, ApiModelProtocol {
     var apiEngine: ApiEngineProtocol?
     var eventsStore: Events = .init()
 
-    init(apiEngine: ApiEngineProtocol) {
+    required init(apiEngine: ApiEngineProtocol) {
         super.init()
         self.apiEngine = apiEngine
     }
 
     required init() {
-        super.init()
+        fatalError()
     }
 }
 

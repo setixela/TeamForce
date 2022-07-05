@@ -18,7 +18,7 @@ final class MainScene<Asset: AssetProtocol>: BaseSceneModel<
     // MARK: - Balance View Model
 
     private lazy var balanceViewModel = BalanceViewModel<Asset>()
-    private lazy var transactViewModel = ImageViewModel() // TODO:
+    private lazy var transactViewModel = TransactViewModel<Asset>() // TODO:
     private lazy var historyViewModel = ImageViewModel() // TODO:
 
     private lazy var balanceButton = Design.button.tabBar
@@ -50,6 +50,7 @@ final class MainScene<Asset: AssetProtocol>: BaseSceneModel<
         .sendEvent(\.initWithImage, Design.icon.make(\.sideMenu))
 
     override func start() {
+        print("LKDFJAHSLKFJLKSAFJLKASJLKFJ LAKS FJLKASJ FLAKJSFLKJF ")
         presentModel(balanceViewModel)
 
         mainViewModel.bottomModel
@@ -89,5 +90,4 @@ extension MainScene {
             ]))
     }
 }
-
 

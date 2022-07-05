@@ -8,12 +8,8 @@
 import UIKit
 
 final class DoubleLabelModel<Design: DesignProtocol>: BaseViewModel<UIStackView>,
-    Communicable,
-    Stateable,
     Designable
 {
-    var eventsStore: DoubleLabelEvent = .init()
-
     lazy var labelLeft = Design.label.body2
     lazy var labelRight = Design.label.body2
 
@@ -28,13 +24,7 @@ final class DoubleLabelModel<Design: DesignProtocol>: BaseViewModel<UIStackView>
                 labelRight,
                 Spacer()
             ]))
-
-        weak var weakSelf = self
-        onEvent(\.setLeftText) {
-            weakSelf?.labelLeft.set(.text($0))
-        }
-        .onEvent(\.setRightText) {
-            weakSelf?.labelRight.set(.text($0))
-        }
     }
 }
+
+extension DoubleLabelModel: Stateable {}

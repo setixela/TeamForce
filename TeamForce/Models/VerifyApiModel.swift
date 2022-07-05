@@ -13,10 +13,7 @@ struct VerifyEvent: NetworkEventProtocol {
     var error: Event<ApiEngineError>?
 }
 
-final class VerifyApiModel: BaseModel, Communicable, ApiModelProtocol {
-    var apiEngine: ApiEngineProtocol?
-
-    var eventsStore: VerifyEvent = .init()
+final class VerifyApiModel: BaseApiModel<VerifyEvent> {
 
     override func start() {
         onEvent(\.request) { [weak self] verifyRequest in

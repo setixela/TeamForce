@@ -12,15 +12,26 @@ struct LabelIconEvent: InitProtocol {
     var setImage: Event<UIImage>?
 }
 
-final class LabelIconHorizontalModel<Design: DesignProtocol>: BaseViewModel<UIStackView>,
-    Communicable,
-    Stateable,
-    Designable
-{
-    var eventsStore: LabelIconEvent = .init()
+struct TappableEvent: InitProtocol {
+    var startTapRecognizer: Event<Void>?
+    var didTap: Event<Void>?
+}
 
-    lazy var label = Design.label.body2
-    lazy var icon = ImageViewModel()
+enum LabelIconState {
+    case text(String)
+    case image(UIImage)
+}
+
+final class LabelIconHorizontalModel<Design: DesignProtocol>: BaseViewModel<UIStackView>,
+    Designable,
+    Communicable
+{
+    typealias State = StackState
+
+    var eventsStore: TappableEvent = .init()
+
+    let label = Design.label.body2
+    let iconModel = ImageViewModel()
 
     required init() {
         super.init()
@@ -28,22 +39,37 @@ final class LabelIconHorizontalModel<Design: DesignProtocol>: BaseViewModel<UISt
 
     override func start() {
         set(.axis(.horizontal))
-            .set(.cornerRadius(Design.Parameters.cornerRadius))
-            .set(.distribution(.fill))
-            .set(.alignment(.fill))
-            .set(.padding(.init(top: 12, left: 16, bottom: 12, right: 16)))
-            .set(.models([
-                label,
-                Spacer(),
-                icon
-            ]))
+        set(.cornerRadius(Design.Parameters.cornerRadius))
+        set(.distribution(.fill))
+        set(.alignment(.fill))
+        set(.padding(.init(top: 12, left: 16, bottom: 12, right: 16)))
+        set(.models([
+            label,
+            Spacer(),
+            iconModel
+        ]))
 
-        weak var weakSelf = self
-        onEvent(\.setText) {
-            weakSelf?.label.set(.text($0))
+        onEvent(\.startTapRecognizer) { [weak self] in
+            guard let self = self else { return }
+
+            self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.didTap)))
         }
-        .onEvent(\.setImage) {
-            weakSelf?.icon.set(.image($0))
+    }
+
+    @objc func didTap() {
+        sendEvent(\.didTap)
+    }
+}
+
+extension LabelIconHorizontalModel: Stateable2 {
+
+    func applyState(_ state: LabelIconState) {
+        switch state {
+        case .text(let string):
+            label.set(.text(string))
+        case .image(let uIImage):
+            iconModel.set(.image(uIImage))
         }
     }
 }
+

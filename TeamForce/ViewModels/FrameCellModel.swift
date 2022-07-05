@@ -7,18 +7,24 @@
 
 import UIKit
 
-struct FrameCellEvent: InitProtocol {
-    var setHeader: Event<String>?
-    var setText: Event<String>?
-    var setCaption: Event<String>?
+// struct FrameCellEvent: InitProtocol {
+//    var setHeader: Event<String>?
+//    var setText: Event<String>?
+//    var setCaption: Event<String>?
+// }
+
+enum FrameCellState {
+    case text(String)
+    case header(String)
+    case caption(String)
 }
 
 final class FrameCellModel<Design: DesignProtocol>: BaseViewModel<UIStackView>,
-    Communicable,
-    Stateable,
     Designable
 {
-    var eventsStore: FrameCellEvent = .init()
+    typealias State = StackState
+
+   // var eventsStore: FrameCellEvent = .init()
 
     private lazy var headerLabel = Design.label.body2
     private lazy var textLabel = Design.label.counter
@@ -38,16 +44,18 @@ final class FrameCellModel<Design: DesignProtocol>: BaseViewModel<UIStackView>,
                 textLabel,
                 captionLabel
             ]))
+    }
+}
 
-        weak var weakSelf = self
-        onEvent(\.setHeader) {
-            weakSelf?.headerLabel.set(.text($0))
-        }
-        .onEvent(\.setText) {
-            weakSelf?.textLabel.set(.text($0))
-        }
-        .onEvent(\.setCaption) {
-            weakSelf?.captionLabel.set(.text($0))
+extension FrameCellModel: Stateable2 {
+    func applyState(_ state: FrameCellState) {
+        switch state {
+        case .text(let string):
+            textLabel.set(.text(string))
+        case .header(let string):
+            headerLabel.set(.text(string))
+        case .caption(let string):
+            captionLabel.set(.text(string))
         }
     }
 }

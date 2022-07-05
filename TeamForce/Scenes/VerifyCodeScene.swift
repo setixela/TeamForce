@@ -45,7 +45,7 @@ final class VerifyCodeScene<Asset: AssetProtocol>: BaseSceneModel<
    private lazy var textFieldModel = TextFieldModel()
    private lazy var inputParser = SmsCodeCheckerModel()
 
-   private lazy var verifyApi = VerifyApiModel()
+   private lazy var verifyApi = VerifyApiModel(apiEngine: Asset.service.apiEngine)
    private var smsCode: String?
 
    // MARK: - Start

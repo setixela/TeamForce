@@ -35,6 +35,11 @@ extension StackModel: Communicable {
    typealias Events = StackEvents
 }
 
+enum TextState {
+   case text(String)
+   case font(UIFont)
+}
+
 enum StackState {
    case distribution(UIStackView.Distribution)
    case axis(NSLayoutConstraint.Axis)

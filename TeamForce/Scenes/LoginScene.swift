@@ -33,7 +33,7 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
 
    private lazy var textFieldModel = TextFieldModel()
    private lazy var inputParser = TelegramNickCheckerModel()
-   private lazy var apiModel = AuthApiModel()
+   private lazy var apiModel = AuthApiModel(apiEngine: Asset.service.apiEngine)
 
    private var loginName: String?
 

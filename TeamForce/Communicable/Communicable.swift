@@ -25,6 +25,46 @@ extension KeyPathSetable {
 
 // MARK: - Stateable
 
+protocol Stateable2: Stateable {
+    associatedtype State2
+
+    func applyState(_ state: State2)
+}
+
+extension Stateable2 {
+    @discardableResult
+    func set(_ state: State2) -> Self {
+        applyState(state)
+
+        return self
+    }
+
+    @discardableResult
+    func set(_ state: [State2]) -> Self {
+        state.forEach { applyState($0) }
+
+        return self
+    }
+}
+
+protocol Stateable3: Stateable2 {
+    associatedtype State3
+
+    func applyState(_ state: State3)
+}
+
+protocol Stateable4: Stateable3 {
+    associatedtype State4
+
+    func applyState(_ state: State4)
+}
+
+protocol Stateable5: Stateable4 {
+    associatedtype State5
+
+    func applyState(_ state: State5)
+}
+
 protocol Stateable: InitProtocol {
     associatedtype State
 
