@@ -7,6 +7,7 @@
 
 protocol ServiceProtocol: InitProtocol {
     var apiEngine: ApiEngineProtocol { get }
+    var tokenStorage: StringStorageProtocol { get }
 }
 
 protocol AssetProtocol {

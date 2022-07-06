@@ -9,7 +9,9 @@ import UIKit
 
 // MARK: - TextFieldModel
 
-final class TextFieldModel: BaseViewModel<PaddingTextField> {
+final class TextFieldModel: BaseViewModel<PaddingTextField>, Stateable {
+    typealias State = ViewState
+
     var eventsStore: Events = .init()
 
     override func start() {

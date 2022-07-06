@@ -285,13 +285,13 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
     override func start() {
 
         set(.axis(.vertical))
-            .set(.distribution(.equalSpacing))
+            .set(.distribution(.fill))
             .set(.alignment(.fill))
             .set(.models([
                 digitalThanksTitle,
                 selectPeriodViewModel,
                 pickerModel,
-           //     Spacer()
+                Spacer()
             ]))
 
         selectPeriodViewModel
@@ -330,12 +330,13 @@ extension Stateable where Self: ViewModelProtocol, View: UIView {
 
 final class PickerViewModel: BaseViewModel<UIPickerView> {
     override func start() {
+        set(.height(200))
         view.dataSource = self
         view.delegate = self
         view.backgroundColor = .lightGray
-    
+
       //  view.addAnchors.constWidth(200)
-        set(.height(200))
+
 //        view.translatesAutoresizingMaskIntoConstraints = false
 //
 //        set(.height(100))

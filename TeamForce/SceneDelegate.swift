@@ -36,7 +36,6 @@ private extension SceneDelegate {
     func startDispatcher(_ nc: UINavigationController) {
         ProductionAsset.router?
             .onEvent(\.push) { vc in
-                //     vc.view
                 nc.pushViewController(vc, animated: true)
             }
             .onEvent(\.pop) {
@@ -48,6 +47,6 @@ private extension SceneDelegate {
             .onEvent(\.present, { vc in
                 nc.viewControllers = [vc]
             })
-            .route(\.digitalThanks, navType: .push, payload: ())
+            .route(\.main, navType: .push, payload: ())
     }
 }

@@ -19,7 +19,7 @@ final class GetBalanceApiModel: BaseApiModel<BalanceApiEvent> {
         onEvent(\.request) { [weak self] request in
             self?.apiEngine?
                 .process(endpoint: TeamForceEndpoints.BalanceEndpoint(headers: [
-                    "Authorization": "Token " + request.token,
+                    "Authorization": request.token,
                 ]))
                 .done { result in
                     let decoder = DataToDecodableParser()

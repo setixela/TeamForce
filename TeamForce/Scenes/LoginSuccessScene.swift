@@ -44,6 +44,7 @@ final class LoginSuccessScene<Asset: AssetProtocol>: BaseSceneModel<
       nextButton
          .onEvent(\.didTap) {
             guard let promise = weakSelf?.userPromise else { return }
+
             Asset.router?.route(\.main, navType: .present, payload: promise)
          }
 

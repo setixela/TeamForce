@@ -74,77 +74,13 @@ final class TeamForceApi: TeamForceApiProtocol {
     }
 }
 
-extension TeamForceApi {
-//    private func processEndpoint<T: Decodable>(_ endpoint: EndpointProtocol) -> Promise<TeamForceApiResult<T>>
-//    {
-//        guard let url = URL(string: endpoint.endPoint) else {
-//            completion(Swift.Result.failure(.wrongEndpoint))
-//            return
-//        }
-//
-//        apiEngine.process(
-//            url: url,
-//            method: endpoint.method,
-//            headers: endpoint.headers,
-//            jsonBody: endpoint.body,
-//            completion: { result in
-//
-//                switch result {
-//                case let .success(apiResult):
-//                    let decoder = JSONDecoder()
-//
-//                    guard
-//                        let data = apiResult.data,
-//                        let result = try? decoder.decode(T.self, from: data)
-//                    else {
-//                        print(apiResult)
-//
-//                        completion(Swift.Result.failure(.jsonParsing))
-//
-//                        return
-//                    }
-//
-//                    completion(.success(ApiResult(data: result, response: apiResult.response)))
-//
-//                case let .failure(error):
-//
-//                    completion(.failure(.error(error)))
-//                }
-//            }
-//        )
-//    }
-}
 
 struct AuthResult {
     let xId: String
     let xCode: String
 }
 
-struct VerifyRequest {
-    let xId: String
-    let xCode: String
-    let smsCode: String
-}
 
-struct VerifyResult {
-    let type: String //  "authresult",
-    let isSuccess: Bool //  false
-}
-
-
-struct VerifyResultBody: Codable {
-    let type: String
-    let isSuccess: Bool
-    let token: String
-    let sessionId: String
-
-    enum CodingKeys: String, CodingKey  {
-        case sessionId = "sessionid"
-        case isSuccess = "is_success"
-        case type
-        case token
-    }
-}
 
 struct AuthResultBody: Decodable {
     let type: String?

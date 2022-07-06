@@ -48,8 +48,10 @@ final class VerifyCodeScene<Asset: AssetProtocol>: BaseSceneModel<
    private lazy var verifyApi = VerifyApiModel(apiEngine: Asset.service.apiEngine)
    private var smsCode: String?
 
+   //  private lazy var tokenStoreModel = TokenStoreModel(engine: Asset.service.storage)
+
    // MARK: - Start
-   
+
    override func start() {
       weak var weakSelf = self
 
@@ -64,16 +66,6 @@ final class VerifyCodeScene<Asset: AssetProtocol>: BaseSceneModel<
             weakSelf?.verifyApi
                .onEvent(\.success) { result in
                   do {
-                     let realm = try Realm()
-                     let realmToken = Token()
-                     realmToken.token = result.token
-
-                     print("TOKEN:\n\(result.token)\n")
-   //
-                     try realm.write {
-                        realm.add(realmToken, update: .all)
-                     }
-
                      Asset.router?.route(\.loginSuccess, navType: .push, payload: result.token)
 
                   } catch {
@@ -83,7 +75,7 @@ final class VerifyCodeScene<Asset: AssetProtocol>: BaseSceneModel<
 //                  realmToken.token = result.token
 //
 //                  print("TOKEN:\n\(result.token)\n")
-////
+                  ////
 //                  try? realm?.write {
 //                     realm?.add(realmToken, update: .all)
 //                  }
@@ -130,3 +122,88 @@ final class VerifyCodeScene<Asset: AssetProtocol>: BaseSceneModel<
          .sendEvent(\.addBottomPanelModel, nextButton)
    }
 }
+
+protocol StorageEventProtocol: InitProtocol, Associated {
+   var saveValue: Event<AsType>? { get set }
+   var requestValue: Event<Void>? { get set }
+   var responseValue: Event<AsType>? { get set }
+}
+
+struct StorageStringEvent: StorageEventProtocol {
+   typealias AsType = String
+
+   var saveValue: Event<AsType>?
+   var requestValue: Event<Void>?
+   var responseValue: Event<AsType>?
+}
+
+final class TokenStorageModel: BaseModel, Communicable {
+   var eventsStore = StorageStringEvent()
+
+   private var storageEngine: StringStorageProtocol?
+
+   convenience init(engine: StringStorageProtocol) {
+      self.init()
+
+      storageEngine = engine
+   }
+
+   override func start() {
+      onEvent(\.requestValue) { [weak self] in
+
+         guard let token = self?.storageEngine?.getString() else {
+            print("\nNo token!\n")
+            return
+         }
+
+         self?.sendEvent(\.responseValue, token)
+      }
+      onEvent(\.saveValue) { [weak self] value in
+         self?.storageEngine?.saveString(value)
+      }
+   }
+}
+
+protocol StringStorageProtocol {
+   func saveString(_ value: String)
+   func getString() -> String?
+}
+
+struct TokenRealmStorage: StringStorageProtocol {
+   func saveString(_ value: String) {
+      let realm = try? Realm()
+      let realmToken = Token()
+      realmToken.token = "Token " + value
+
+      print("TOKEN:\n\(value)\n")
+
+      try? realm?.write {
+         realm?.add(realmToken, update: .all)
+      }
+   }
+
+   func getString() -> String? {
+      guard
+          let realm = try? Realm(),
+          let token = realm.objects(Token.self).first
+      else {
+          return nil
+      }
+
+      return token.token
+   }
+}
+
+// struct DataBaseEngine {
+//   func save() {
+//      let realm = try Realm()
+//      let realmToken = Token()
+//      realmToken.token = "Token " + result.token
+//
+//      print("TOKEN:\n\(result.token)\n")
+//
+//      try realm.write {
+//         realm.add(realmToken, update: .all)
+//      }
+//   }
+// }

@@ -148,91 +148,113 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
         .set(.height(48))
         .set(.text(text.title.make(\.selectPeriod)))
         .set(.image(Design.icon.make(\.calendarLine)))
+        .set(.hidden(false))
         .sendEvent(\.startTapRecognizer)
 
+    private lazy var userSearchModel = TextFieldModel()
+        .set(.backColor(.init(red: 0.33, green: 0.33, blue: 0.33, alpha: 0.08)))
+        .set(.height(48))
+        .set(.hidden(true))
+        .onEvent(\.didEditingChanged) { [weak self] text in
+
+            self?.tokenStorage
+                .onEvent(\.responseValue) { token in
+                    self?.apiModel
+                        .onEvent(\.success) { result in
+                            print(result)
+                        }
+                        .sendEvent(\.request, SearchUserRequest(data: text, token: token))
+                }
+                .sendEvent(\.requestValue)
+        }
+
+    // .sendEvent(\.startTapRecognizer)
+
     private lazy var pickerModel = PickerViewModel()
-       // .set(.height(100))
+        .set(.borderColor(.gray))
+        .set(.borderWidth(1))
+        .set(.cornerRadius(Design.Parameters.cornerRadius))
+        .set(.height(200))
+
+    private lazy var apiModel = SearchUserApiModel(apiEngine: Asset.service.apiEngine)
+    private lazy var tokenStorage = TokenStorageModel(engine: Asset.service.tokenStorage)
 
     override func start() {
-
         set(.axis(.vertical))
-            .set(.distribution(.fill))
-            .set(.alignment(.fill))
-            .set(.models([
-                digitalThanksTitle,
-                selectPeriodViewModel,
-                pickerModel,
-                Spacer()
-            ]))
+        set(.distribution(.fill))
+        set(.alignment(.fill))
+        set(.spacing(8))
+        set(.models([
+            digitalThanksTitle,
+            selectPeriodViewModel,
+            userSearchModel,
+            pickerModel,
+            Spacer()
+        ]))
 
+        weak var wS = self
         selectPeriodViewModel
             .onEvent(\.didTap) {
+                wS?.selectPeriodViewModel.set(.hidden(true))
+                wS?.userSearchModel.set(.hidden(false))
                 print("selectPeriodViewModel")
             }
     }
 }
 
-enum ViewState {
-    case backColor(UIColor)
-    case cornerRadius(CGFloat)
-    case borderWidth(CGFloat)
-    case borderColor(UIColor)
-    case height(CGFloat)
+struct PickerViewEvent: InitProtocol {
+    var didSelectRow: Event<Int>?
 }
 
-// MARK: -  Stateable extensions
-
-extension Stateable where Self: ViewModelProtocol {
-    func applyState(_ state: ViewState) {
-        switch state {
-        case .backColor(let value):
-            view.backgroundColor = value
-        case .height(let value):
-            view.addAnchors.constHeight(value)
-        case .cornerRadius(let value):
-            view.layer.cornerRadius = value
-        case .borderColor(let value):
-            view.layer.borderColor = value.cgColor
-        case .borderWidth(let value):
-            view.layer.borderWidth = value
-        }
-    }
+enum PickerViewState {
+    case items([String])
 }
 
 final class PickerViewModel: BaseViewModel<UIPickerView> {
+    var eventsStore = PickerViewEvent()
+
+    private var items: [String] = []
+
     override func start() {
         view.dataSource = self
         view.delegate = self
-        view.backgroundColor = .lightGray
-
-      //  view.addAnchors.constWidth(200)
-        set(.height(200))
-//        view.translatesAutoresizingMaskIntoConstraints = false
-//
-//        set(.height(100))
     }
 }
 
+extension PickerViewModel: Communicable {}
+
 extension PickerViewModel: UIPickerViewDelegate {
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        "First \(row)"
+        items[row]
     }
 
-    func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
-        return 30
+//    func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
+//        return 30
+//    }
+
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        sendEvent(\.didSelectRow, row)
     }
 }
 
 extension PickerViewModel: UIPickerViewDataSource {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
+        1
     }
 
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        10
+        items.count
     }
 }
 
-extension PickerViewModel: Stateable {
+extension PickerViewModel: Stateable2 {
+    func applyState(_ state: PickerViewState) {
+        switch state {
+        case .items(let array):
+            items = array
+        }
+    }
+
     typealias State = ViewState
+    typealias State2 = PickerViewState
 }

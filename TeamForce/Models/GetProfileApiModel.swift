@@ -20,7 +20,7 @@ final class GetProfileApiModel: BaseApiModel<ProfileApiEvent> {
             self?.sendEvent(\.success, Promise { seal in
                 self?.apiEngine?
                     .process(endpoint: TeamForceEndpoints.ProfileEndpoint(headers: [
-                        "Authorization": "Token " + request.token,
+                        "Authorization": request.token,
                     ]))
                     .done { result in
                         let decoder = DataToDecodableParser()
