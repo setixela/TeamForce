@@ -25,6 +25,6 @@ struct Scenes: ScenesProtocol {
 
 struct ProductionService: ServiceProtocol {
     var apiEngine: ApiEngineProtocol { ApiEngine() }
-    var tokenStorage: StringStorageProtocol { TokenRealmStorage() }
+    var safeStringStorage: StringStorage { KeyChainStore() }
 }
 

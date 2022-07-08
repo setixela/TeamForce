@@ -48,5 +48,6 @@ private extension SceneDelegate {
                 nc.viewControllers = [vc]
             })
             .route(\.main, navType: .push, payload: ())
+//            .route(\.digitalThanks, navType: .push, payload: ())
     }
 }

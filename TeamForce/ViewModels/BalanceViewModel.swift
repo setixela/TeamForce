@@ -157,18 +157,16 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
         .set(.hidden(true))
         .onEvent(\.didEditingChanged) { [weak self] text in
 
-            self?.tokenStorage
+            self?.safeStringStorage
                 .onEvent(\.responseValue) { token in
-                    self?.apiModel
-                        .onEvent(\.success) { result in
-                            print(result)
+                    self?.safeStringStorage
+                        .onEvent(\.responseValue) { csrf in
+                            self?.searchUser(SearchUserRequest(data: text, token: token, csrfToken: csrf))
                         }
-                        .sendEvent(\.request, SearchUserRequest(data: text, token: token))
+                        .sendEvent(\.requestValue, "csrftoken")
                 }
-                .sendEvent(\.requestValue)
+                .sendEvent(\.requestValue, "token")
         }
-
-    // .sendEvent(\.startTapRecognizer)
 
     private lazy var pickerModel = PickerViewModel()
         .set(.borderColor(.gray))
@@ -177,7 +175,7 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
         .set(.height(200))
 
     private lazy var apiModel = SearchUserApiModel(apiEngine: Asset.service.apiEngine)
-    private lazy var tokenStorage = TokenStorageModel(engine: Asset.service.tokenStorage)
+    private lazy var safeStringStorage = TokenStorageModel(engine: Asset.service.safeStringStorage)
 
     override func start() {
         set(.axis(.vertical))
@@ -199,6 +197,16 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
                 wS?.userSearchModel.set(.hidden(false))
                 print("selectPeriodViewModel")
             }
+    }
+}
+
+extension TransactViewModel {
+    func searchUser(_ request: SearchUserRequest) {
+        apiModel
+            .onEvent(\.success) { result in
+                print(result)
+            }
+            .sendEvent(\.request, request)
     }
 }
 

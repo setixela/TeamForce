@@ -9,7 +9,7 @@ import UIKit
 
 import RealmSwift
 
-class Token: Object {
+class Token: Object, SingleObject {
    @Persisted var token: String
 
    static let uniqueKey: String = "Token"
@@ -17,6 +17,18 @@ class Token: Object {
    @Persisted var uniqueKey: String = Token.uniqueKey
 
    override static func primaryKey() -> String? {
+      "uniqueKey"
+   }
+}
+
+protocol SingleObject: Object {
+   static var uniqueKey: String  { get }
+}
+
+extension SingleObject {
+   var uniqueKey: Persisted<String> { Persisted(wrappedValue: Self.uniqueKey) }
+
+   static func primaryKey() -> String? {
       "uniqueKey"
    }
 }
@@ -48,7 +60,7 @@ final class VerifyCodeScene<Asset: AssetProtocol>: BaseSceneModel<
    private lazy var verifyApi = VerifyApiModel(apiEngine: Asset.service.apiEngine)
    private var smsCode: String?
 
-   //  private lazy var tokenStoreModel = TokenStoreModel(engine: Asset.service.storage)
+   private lazy var safeStringStorage = TokenStorageModel(engine: Asset.service.safeStringStorage)
 
    // MARK: - Start
 
@@ -65,22 +77,12 @@ final class VerifyCodeScene<Asset: AssetProtocol>: BaseSceneModel<
             let verifyRequest = VerifyRequest(xId: authResult.xId, xCode: authResult.xCode, smsCode: smsCode)
             weakSelf?.verifyApi
                .onEvent(\.success) { result in
-                  do {
-                     Asset.router?.route(\.loginSuccess, navType: .push, payload: result.token)
+                  let fullToken = "Token " + result.token
+                  let csrfToken = result.sessionId
 
-                  } catch {
-                     print(error)
-                  }
-//                  let realmToken = Token()
-//                  realmToken.token = result.token
-//
-//                  print("TOKEN:\n\(result.token)\n")
-                  ////
-//                  try? realm?.write {
-//                     realm?.add(realmToken, update: .all)
-//                  }
-//
-//                  Asset.router?.route(\.loginSuccess, navType: .push, payload: result.token)
+                  weakSelf?.safeStringStorage.sendEvent(\.saveValue, (value: fullToken, key: "token"))
+                  weakSelf?.safeStringStorage.sendEvent(\.saveValue, (value: csrfToken, key: "csrftoken"))
+                  Asset.router?.route(\.loginSuccess, navType: .push, payload: fullToken)
                }
                .onEvent(\.error) { error in
                   print(error)
@@ -129,37 +131,35 @@ protocol StorageEventProtocol: InitProtocol, Associated {
    var responseValue: Event<AsType>? { get set }
 }
 
-struct StorageStringEvent: StorageEventProtocol {
-   typealias AsType = String
-
-   var saveValue: Event<AsType>?
-   var requestValue: Event<Void>?
-   var responseValue: Event<AsType>?
+struct StorageStringEvent: InitProtocol {
+   var saveValue: Event<(value: String, key: String)>?
+   var requestValue: Event<String>?
+   var responseValue: Event<String>?
 }
 
 final class TokenStorageModel: BaseModel, Communicable {
    var eventsStore = StorageStringEvent()
 
-   private var storageEngine: StringStorageProtocol?
+   private var storageEngine: StringStorage?
 
-   convenience init(engine: StringStorageProtocol) {
+   convenience init(engine: StringStorage) {
       self.init()
 
       storageEngine = engine
    }
 
    override func start() {
-      onEvent(\.requestValue) { [weak self] in
+      onEvent(\.requestValue) { [weak self] key in
 
-         guard let token = self?.storageEngine?.getString() else {
-            print("\nNo token!\n")
+         guard let token = self?.storageEngine?.load(forKey: key) else {
+            print("\nNo value for key: \(key)\n")
             return
          }
 
          self?.sendEvent(\.responseValue, token)
       }
-      onEvent(\.saveValue) { [weak self] value in
-         self?.storageEngine?.saveString(value)
+      onEvent(\.saveValue) { [weak self] keyValue in
+         self?.storageEngine?.save(keyValue.value, forKey: keyValue.key)
       }
    }
 }
@@ -169,11 +169,28 @@ protocol StringStorageProtocol {
    func getString() -> String?
 }
 
+protocol StringStorage {
+   func save(_ value: String, forKey key: String)
+   func load(forKey key: String) -> String?
+}
+
+import SwiftKeychainWrapper
+
+struct KeyChainStore: StringStorage {
+   func save(_ value: String, forKey key: String) {
+      KeychainWrapper.standard.set(value, forKey: key)
+   }
+
+   func load(forKey key: String) -> String? {
+      KeychainWrapper.standard.string(forKey: key)
+   }
+}
+
 struct TokenRealmStorage: StringStorageProtocol {
    func saveString(_ value: String) {
       let realm = try? Realm()
       let realmToken = Token()
-      realmToken.token = "Token " + value
+      realmToken.token = value
 
       print("TOKEN:\n\(value)\n")
 
@@ -184,10 +201,10 @@ struct TokenRealmStorage: StringStorageProtocol {
 
    func getString() -> String? {
       guard
-          let realm = try? Realm(),
-          let token = realm.objects(Token.self).first
+         let realm = try? Realm(),
+         let token = realm.objects(Token.self).first
       else {
-          return nil
+         return nil
       }
 
       return token.token

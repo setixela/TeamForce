@@ -42,10 +42,11 @@ final class VerifyApiModel: BaseApiModel<VerifyEvent> {
     override func start() {
         onEvent(\.request) { [weak self] verifyRequest in
             self?.apiEngine?
-                .process(endpoint: TeamForceEndpoints.VerifyEndpoint(body: ["type": "authcode",
-                                                                            "code": verifyRequest.smsCode],
-                                                                     headers: ["X-ID": verifyRequest.xId,
-                                                                               "X-Code": verifyRequest.xCode]))
+                .process(endpoint: TeamForceEndpoints.VerifyEndpoint(
+                    body: ["type": "authcode",
+                           "code": verifyRequest.smsCode],
+                    headers: ["X-ID": verifyRequest.xId,
+                              "X-Code": verifyRequest.xCode]))
                 .done { result in
                     let decoder = DataToDecodableParser()
 
@@ -68,22 +69,23 @@ final class VerifyApiModel: BaseApiModel<VerifyEvent> {
 
 struct SearchUserApiEvent: NetworkEventProtocol {
     var request: Event<SearchUserRequest>?
-    var success: Event<[SearchUserResultBody]>?
+    var success: Event<[FoundUser]>?
     var error: Event<ApiEngineError>?
 }
 
 struct SearchUserRequest {
     let data: String
     let token: String
+    let csrfToken: String
 }
 
 struct SearchUserResult {
-    let users: [SearchUserResultBody]
+    let users: [FoundUser]
 }
 
-struct SearchUserResultBody: Codable {
-    let userId: String
-    let tgName: Bool
+struct FoundUser: Codable {
+    let userId: Int
+    let tgName: String
     let name: String
     let surname: String
 
@@ -95,21 +97,38 @@ struct SearchUserResultBody: Codable {
     }
 }
 
-final class SearchUserApiModel: BaseApiModel<SearchUserApiEvent> {
+struct SearchUserResponse: Decodable {
+    var foundUsers: [FoundUser]
 
+    init(from decoder: Decoder) throws {
+        var container = try decoder.unkeyedContainer()
+        foundUsers = try container.decode([FoundUser].self) // Decode just first element
+    }
+}
+
+final class SearchUserApiModel: BaseApiModel<SearchUserApiEvent> {
     override func start() {
         onEvent(\.request) { [weak self] searchRequest in
+            print(searchRequest)
+            let cookieName = "csrftoken"
+            guard let cookie = HTTPCookieStorage.shared.cookies?.first(where: { $0.name == cookieName }) else {
+                print("No csrf cookie")
+                return
+            }
+
             self?.apiEngine?
-                .process(endpoint: TeamForceEndpoints.SearchUser(body: ["data": searchRequest.data],
-                                                                     headers: [
-                                                                         "Authorization": searchRequest.token
-                                                                     ]))
+                .process(endpoint: TeamForceEndpoints.SearchUser(
+                    body: ["data": searchRequest.data],
+                    headers: [
+                        "Authorization": searchRequest.token,
+                        "X-CSRFToken": cookie.value
+                    ]))
                 .done { result in
                     let decoder = DataToDecodableParser()
 
                     guard
                         let data = result.data,
-                        let resultBody: [SearchUserResultBody] = decoder.parse(data)
+                        let resultBody: [FoundUser] = decoder.parse(data)
                     else {
                         self?.sendEvent(\.error, .unknown)
                         return
