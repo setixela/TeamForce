@@ -9,29 +9,25 @@ import UIKit
 
 // MARK: - TextFieldModel
 
-final class TextFieldModel: BaseViewModel<PaddingTextField>, Stateable {
-    typealias State = ViewState
+enum TextFieldState {
+    case text(String)
+    case placeholder(String)
+}
 
-    var eventsStore: Events = .init()
+struct TextFieldEvents: InitProtocol {
+    var didEditingChanged: Event<String>?
+    var setText: Event<String>?
+    var setPlaceholder: Event<String>?
+}
+
+final class TextFieldModel: BaseViewModel<PaddingTextField> {
+    var eventsStore: TextFieldEvents = .init()
 
     override func start() {
-        weak var weakSelf = self
-
-        setupView()
-        onEvent(\.setText) { text in
-            print("setText ", text)
-            weakSelf?.view.text = text
-        }
-        .onEvent(\.setPlaceholder) { text in
-            print("setPlaceholder ", text)
-            weakSelf?.view.placeholder = text
-        }
-    }
-
-    private func setupView() {
-        view.addAnchors.constHeight(48)
+        set(.height(48))
+        set(.backColor(.lightGray.withAlphaComponent(0.4)))
+        view.clearButtonMode = .whileEditing
         view.padding = .init(top: 16, left: 16, bottom: 16, right: 16)
-        view.backgroundColor = .lightGray.withAlphaComponent(0.4)
         view.delegate = self
         view.addTarget(self, action: #selector(changValue), for: .editingChanged)
     }
@@ -43,19 +39,26 @@ final class TextFieldModel: BaseViewModel<PaddingTextField>, Stateable {
     }
 }
 
+extension TextFieldModel: Stateable2 {
+    typealias State = ViewState
+
+    func applyState(_ state: TextFieldState) {
+        switch state {
+        case .text(let string):
+            view.text = string
+        case .placeholder(let string):
+            view.placeholder = string
+        }
+    }
+}
+
 extension TextFieldModel: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
         // view.becomeFirstResponder()
     }
 }
 
-extension TextFieldModel: Communicable {
-    struct Events: InitProtocol {
-        var didEditingChanged: Event<String>?
-        var setText: Event<String>?
-        var setPlaceholder: Event<String>?
-    }
-}
+extension TextFieldModel: Communicable {}
 
 // MARK: - InputParserEvents
 
@@ -72,7 +75,6 @@ final class TelegramNickCheckerModel: BaseModel {
 
     override func start() {
         onEvent(\.request) { [weak self] text in
-
             var resultText = text == "" ? "@" : text
             if !resultText.hasPrefix("@") {
                 resultText = "@" + resultText

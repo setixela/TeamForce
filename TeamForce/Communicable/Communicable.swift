@@ -92,8 +92,15 @@ extension Stateable {
     }
 
     @discardableResult
-    func set(_ state: [State]) -> Self {
-        state.forEach { applyState($0) }
+    func set(_ states: [State]) -> Self {
+        states.forEach { applyState($0) }
+
+        return self
+    }
+
+    @discardableResult
+    func set(_ states: State...) -> Self {
+        states.forEach { applyState($0) }
 
         return self
     }

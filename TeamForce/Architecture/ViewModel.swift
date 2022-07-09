@@ -12,7 +12,7 @@ protocol UIViewModel: ModelProtocol {
     var uiView: UIView { get }
 }
 
-protocol ViewModelProtocol: UIViewModel, ModelProtocol {
+protocol ViewModelProtocol: UIViewModel {
     associatedtype View: UIView
 
     var view: View { get }
@@ -49,8 +49,8 @@ class BaseViewModel<View: UIView>: NSObject, ViewModelProtocol {
 
     override required init() {
         super.init()
-
-        view
+//
+//        view
     }
 
     convenience init(isAutoreleaseView: Bool) {

@@ -52,6 +52,9 @@ protocol TitleTextsProtocol: InitProtocol, KeyPathMaker
     var onAgreement: String { get }
     var canceled: String { get }
     var sended: String { get }
+
+    // transact
+    var chooseRecipient: String { get }
 }
 
 // MARK: - Button texts implements
@@ -83,6 +86,9 @@ struct TitleTexts: TitleTextsProtocol {
     var onAgreement: String { "На согласовании" }
     var canceled: String { "Аннулировано" }
     var sended: String { "Распределено" }
+
+    // transact
+    var chooseRecipient: String { "Выберите получателя" }
 }
 
 struct Texts: TextsProtocol, KeyPathMaker {

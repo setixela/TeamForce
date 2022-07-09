@@ -7,7 +7,9 @@
 
 import UIKit
 
-protocol IconsProtocol: InitProtocol, KeyPathMaker where MakeType: UIImage, ValueType == IconType {
+protocol IconsProtocol: InitProtocol,
+                        KeyPathMaker where MakeType: UIImage, ValueType == IconType {
+
     associatedtype IconType
 
     var checkCircle: IconType { get }
@@ -19,6 +21,9 @@ protocol IconsProtocol: InitProtocol, KeyPathMaker where MakeType: UIImage, Valu
     var avatarPlaceholder: IconType { get }
 
     var sideMenu: IconType { get }
+
+    var arrowDropDownLine: IconType { get }
+    var arrowDropUpLine: IconType { get }
 }
 
 struct Icons: IconsProtocol {
@@ -31,6 +36,9 @@ struct Icons: IconsProtocol {
     var avatarPlaceholder: String { "avatarPlaceholder" }
 
     var sideMenu: String { "menu_24px" }
+
+    var arrowDropDownLine: String { "arrow-drop-down-line" }
+    var arrowDropUpLine: String { "arrow-drop-up-line" }
 }
 
 extension Icons: KeyPathMaker {
