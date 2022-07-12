@@ -26,9 +26,11 @@ final class RegisterScene<Asset: AssetProtocol>: BaseSceneModel<
       .set(.numberOfLines(2))
 
    private lazy var nextButton = ButtonModel(Design.State.button.inactive)
-      .set(.title(text.button.nextButton))
+      .set(.title(text.button.make(\.nextButton)))
 
    private lazy var textFieldModel = TextFieldModel()
+      .set(.placeholder(text.title.make(\.userName)))
+
    private lazy var inputParser = TelegramNickCheckerModel()
 
    // MARK: - Start
@@ -53,15 +55,14 @@ final class RegisterScene<Asset: AssetProtocol>: BaseSceneModel<
          .onEvent(\.didEditingChanged) { [weak self] text in
             self?.inputParser.sendEvent(\.request, text)
          }
-         .sendEvent(\.setPlaceholder, "@" + text.title.make(\.userName))
 
       inputParser
          .onEvent(\.success) { [weak self] text in
-            self?.textFieldModel.sendEvent(\.setText, text)
+            self?.textFieldModel.set(.text(text))
             self?.nextButton.set(Design.State.button.default)
          }
          .onEvent(\.error) { [weak self] text in
-            self?.textFieldModel.sendEvent(\.setText, text)
+            self?.textFieldModel.set(.text(text))
             self?.nextButton.set(Design.State.button.inactive)
          }
    }

@@ -120,12 +120,12 @@ extension BalanceViewModel {
     private func setIncome(_ income: Income) {
         leftFrameCell
             .set(.text(String(income.amount)))
-            .set(.caption("\(text.title.make(\.sended)): \(income.sended)"))
+            .set(.caption("\(text.title.make(\.sended)): \(income.sent)"))
     }
 
     private func setDistr(_ distr: Distr) {
         rightFrameCell
             .set(.text(String(distr.amount)))
-            .set(.caption("\(text.title.make(\.sended)): \(distr.sended)"))
+            .set(.caption("\(text.title.make(\.sended)): \(distr.sent)"))
     }
 }

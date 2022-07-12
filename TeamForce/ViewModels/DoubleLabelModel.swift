@@ -21,8 +21,8 @@ final class DoubleLabelModel<Design: DesignProtocol>: BaseViewModel<UIStackView>
             .set(.padding(.init(top: 12, left: 16, bottom: 12, right: 16)))
             .set(.models([
                 labelLeft,
-                labelRight,
-                Spacer()
+                Spacer(),
+                labelRight
             ]))
     }
 }

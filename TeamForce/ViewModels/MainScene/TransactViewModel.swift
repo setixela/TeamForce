@@ -25,6 +25,7 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
         .set(.height(48))
         .set(.placeholder(text.title.make(\.chooseRecipient)))
         .set(.hidden(true))
+        .set(.padding(.init(top: 0, left: 16, bottom: 0, right: 16)))
 
     private lazy var pickerModel = PickerViewModel()
         .set(.borderColor(.gray))
@@ -33,14 +34,16 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
         .set(.height(200))
         .set(.hidden(true))
 
-    private lazy var transactInputViewModel = TransactInputViewModel()
+    private lazy var transactInputViewModel = TransactInputViewModel<Design>()
+        .set(.leftCaptionText(text.title.make(\.sendThanks)))
+        .set(.rightCaptionText(text.title.make(\.availableThanks)))
         .set(.hidden(true))
 
     private lazy var apiModel = SearchUserApiModel(apiEngine: Asset.service.apiEngine)
-    private lazy var safeStringStorage = TokenStorageModel(engine: Asset.service.safeStringStorage)
+    private lazy var safeStringStorage = StringStorageModel(engine: Asset.service.safeStringStorage)
 
     private lazy var foundUsers: [String] = []
-    private lazy var tokens: (token: String, csrf: String) = ("","")
+    private lazy var tokens: (token: String, csrf: String) = ("", "")
 
     override func start() {
         set(.axis(.vertical))
@@ -79,9 +82,9 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
                         wS?.tokens = (token, csrf)
                         wS?.userSearchModel.set(.hidden(false))
                     }
-                    .sendEvent(\.requestValue, "csrftoken")
+                    .sendEvent(\.requestValueForKey, "csrftoken")
             }
-            .sendEvent(\.requestValue, "token")
+            .sendEvent(\.requestValueForKey, "token")
 
         pickerModel.onEvent(\.didSelectRow) { index in
             guard let self = wS else { return }
@@ -106,15 +109,47 @@ extension TransactViewModel {
     }
 }
 
-final class TransactInputViewModel: BaseViewModel<UIStackView> {
+enum TransactInputState {
+    case leftCaptionText(String)
+    case rightCaptionText(String)
+}
+
+final class TransactInputViewModel<Design: DesignProtocol>: BaseViewModel<UIStackView>,
+    Designable
+{
+    private lazy var doubleLabel = DoubleLabelModel<Design>()
+
+    private lazy var textField = TextFieldModel()
+        .set(.clearButtonMode(.never))
+        .set(.font(Design.font.headline2))
+        .set(.height(72))
+        .set(.placeholder("0"))
+        .set(.padding(.init(top: 0, left: 16, bottom: 0, right: 16)))
+        .set(.backColor(Design.color.background1))
+
     override func start() {
         set(.alignment(.fill),
             .distribution(.fill),
             .axis(.vertical),
             .spacing(0),
             .height(118),
-            .backColor(.init(red: 0.33, green: 0.33, blue: 0.33, alpha: 0.08)))
+            .backColor(Design.color.background1),
+            .models([
+                doubleLabel,
+                textField
+            ]))
     }
 }
 
-extension TransactInputViewModel: Stateable {}
+extension TransactInputViewModel: Stateable2 {
+    typealias State = StackState
+
+    func applyState(_ state: TransactInputState) {
+        switch state {
+        case .leftCaptionText(let string):
+            doubleLabel.labelLeft.set(.text(string))
+        case .rightCaptionText(let string):
+            doubleLabel.labelRight.set(.text(string))
+        }
+    }
+}

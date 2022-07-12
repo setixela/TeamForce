@@ -8,11 +8,13 @@
 import UIKit
 
 struct DesignSystem: DesignProtocol {
+    typealias Font = FontBuilder
     typealias Parameters = GlobalParameters
     typealias Icon = Icons
     typealias State = ModelSetuper
     typealias Button = DefaultButtonBuilder
     typealias Label = LabelBuilder
+    typealias Color = Colors
 }
 
 struct GlobalParameters: ParametersProtocol {

@@ -22,7 +22,7 @@ class Token: Object, SingleObject {
 }
 
 protocol SingleObject: Object {
-   static var uniqueKey: String  { get }
+   static var uniqueKey: String { get }
 }
 
 extension SingleObject {
@@ -55,12 +55,15 @@ final class VerifyCodeScene<Asset: AssetProtocol>: BaseSceneModel<
       .set(.title(text.button.make(\.enterButton)))
 
    private lazy var textFieldModel = TextFieldModel()
+      .set(.padding(.init(top: 16, left: 16, bottom: 16, right: 16)))
+      .set(.placeholder(text.title.make(\.smsCode)))
+   
    private lazy var inputParser = SmsCodeCheckerModel()
 
    private lazy var verifyApi = VerifyApiModel(apiEngine: Asset.service.apiEngine)
    private var smsCode: String?
 
-   private lazy var safeStringStorage = TokenStorageModel(engine: Asset.service.safeStringStorage)
+   private lazy var safeStringStorage = StringStorageModel(engine: Asset.service.safeStringStorage)
 
    // MARK: - Start
 
@@ -80,8 +83,8 @@ final class VerifyCodeScene<Asset: AssetProtocol>: BaseSceneModel<
                   let fullToken = "Token " + result.token
                   let csrfToken = result.sessionId
 
-                  weakSelf?.safeStringStorage.sendEvent(\.saveValue, (value: fullToken, key: "token"))
-                  weakSelf?.safeStringStorage.sendEvent(\.saveValue, (value: csrfToken, key: "csrftoken"))
+                  weakSelf?.safeStringStorage.sendEvent(\.saveValueForKey, (value: fullToken, key: "token"))
+                  weakSelf?.safeStringStorage.sendEvent(\.saveValueForKey, (value: csrfToken, key: "csrftoken"))
                   Asset.router?.route(\.loginSuccess, navType: .push, payload: fullToken)
                }
                .onEvent(\.error) { error in
@@ -94,17 +97,16 @@ final class VerifyCodeScene<Asset: AssetProtocol>: BaseSceneModel<
          .onEvent(\.didEditingChanged) {
             weakSelf?.inputParser.sendEvent(\.request, $0)
          }
-         .sendEvent(\.setPlaceholder, text.title.make(\.smsCode))
 
       inputParser
          .onEvent(\.success) {
             weakSelf?.smsCode = $0
-            weakSelf?.textFieldModel.sendEvent(\.setText, $0)
+            weakSelf?.textFieldModel.set(.text($0))
             weakSelf?.nextButton.set(Design.State.button.default)
          }
          .onEvent(\.error) {
             weakSelf?.smsCode = nil
-            weakSelf?.textFieldModel.sendEvent(\.setText, $0)
+            weakSelf?.textFieldModel.set(.text($0))
             weakSelf?.nextButton.set(Design.State.button.inactive)
          }
 
@@ -124,103 +126,3 @@ final class VerifyCodeScene<Asset: AssetProtocol>: BaseSceneModel<
          .sendEvent(\.addBottomPanelModel, nextButton)
    }
 }
-
-protocol StorageEventProtocol: InitProtocol, Associated {
-   var saveValue: Event<AsType>? { get set }
-   var requestValue: Event<Void>? { get set }
-   var responseValue: Event<AsType>? { get set }
-}
-
-struct StorageStringEvent: InitProtocol {
-   var saveValue: Event<(value: String, key: String)>?
-   var requestValue: Event<String>?
-   var responseValue: Event<String>?
-}
-
-final class TokenStorageModel: BaseModel, Communicable {
-   var eventsStore = StorageStringEvent()
-
-   private var storageEngine: StringStorage?
-
-   convenience init(engine: StringStorage) {
-      self.init()
-
-      storageEngine = engine
-   }
-
-   override func start() {
-      onEvent(\.requestValue) { [weak self] key in
-
-         guard let token = self?.storageEngine?.load(forKey: key) else {
-            print("\nNo value for key: \(key)\n")
-            return
-         }
-
-         self?.sendEvent(\.responseValue, token)
-      }
-      onEvent(\.saveValue) { [weak self] keyValue in
-         self?.storageEngine?.save(keyValue.value, forKey: keyValue.key)
-      }
-   }
-}
-
-protocol StringStorageProtocol {
-   func saveString(_ value: String)
-   func getString() -> String?
-}
-
-protocol StringStorage {
-   func save(_ value: String, forKey key: String)
-   func load(forKey key: String) -> String?
-}
-
-import SwiftKeychainWrapper
-
-struct KeyChainStore: StringStorage {
-   func save(_ value: String, forKey key: String) {
-      KeychainWrapper.standard.set(value, forKey: key)
-   }
-
-   func load(forKey key: String) -> String? {
-      KeychainWrapper.standard.string(forKey: key)
-   }
-}
-
-struct TokenRealmStorage: StringStorageProtocol {
-   func saveString(_ value: String) {
-      let realm = try? Realm()
-      let realmToken = Token()
-      realmToken.token = value
-
-      print("TOKEN:\n\(value)\n")
-
-      try? realm?.write {
-         realm?.add(realmToken, update: .all)
-      }
-   }
-
-   func getString() -> String? {
-      guard
-         let realm = try? Realm(),
-         let token = realm.objects(Token.self).first
-      else {
-         return nil
-      }
-
-      return token.token
-   }
-}
-
-// struct DataBaseEngine {
-//   func save() {
-//      let realm = try Realm()
-//      let realmToken = Token()
-//      realmToken.token = "Token " + result.token
-//
-//      print("TOKEN:\n\(result.token)\n")
-//
-//      try realm.write {
-//         realm.add(realmToken, update: .all)
-//      }
-//   }
-// }

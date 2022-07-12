@@ -69,7 +69,7 @@ struct UserData: Codable {
 struct Income: Decodable {
     let amount: Int
     let frozen: Int
-    let sended: Int
+    let sent: Int
     let received: Int
     let cancelled: Int
 }
@@ -78,7 +78,7 @@ struct Distr: Codable {
     let amount: Int
     let expireDate: String
     let frozen: Int
-    let sended: Int
+    let sent: Int
     let received: Int
     let cancelled: Int
 
@@ -86,7 +86,7 @@ struct Distr: Codable {
         case amount
         case expireDate = "expire_date"
         case frozen
-        case sended
+        case sent
         case received
         case cancelled
     }

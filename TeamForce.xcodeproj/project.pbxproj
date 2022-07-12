@@ -25,6 +25,9 @@
 		1953DE812879FC55000DC537 /* SearchUserApiModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1953DE802879FC55000DC537 /* SearchUserApiModel.swift */; };
 		1953DE842879FDE3000DC537 /* TransactViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1953DE832879FDE3000DC537 /* TransactViewModel.swift */; };
 		1953DE862879FE30000DC537 /* PickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1953DE852879FE30000DC537 /* PickerViewModel.swift */; };
+		1953DE88287B4574000DC537 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1953DE87287B4574000DC537 /* Fonts.swift */; };
+		1953DE8A287B4624000DC537 /* LabelStateBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1953DE89287B4624000DC537 /* LabelStateBuilder.swift */; };
+		1953DE8D287B4752000DC537 /* Typography.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1953DE8C287B4752000DC537 /* Typography.swift */; };
 		1967509D286491190019A6DE /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1967509C286491190019A6DE /* Buttons.swift */; };
 		1967509F286492780019A6DE /* Labels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1967509E286492780019A6DE /* Labels.swift */; };
 		196750A22865169C0019A6DE /* DigitalThanksScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196750A12865169C0019A6DE /* DigitalThanksScene.swift */; };
@@ -75,6 +78,8 @@
 		19ECD54128623D1F001765F6 /* LabelModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19ECD54028623D1F001765F6 /* LabelModel.swift */; };
 		19ECD54328623D30001765F6 /* StackModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19ECD54228623D30001765F6 /* StackModel.swift */; };
 		19ECD54828623D9C001765F6 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19ECD54728623D9C001765F6 /* PaddingLabel.swift */; };
+		19EF32AB287CE80B0078F53D /* StringStorageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19EF32AA287CE80B0078F53D /* StringStorageModel.swift */; };
+		19EF32AE287E08F80078F53D /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19EF32AD287E08F80078F53D /* Colors.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -107,6 +112,9 @@
 		1953DE802879FC55000DC537 /* SearchUserApiModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchUserApiModel.swift; sourceTree = "<group>"; };
 		1953DE832879FDE3000DC537 /* TransactViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactViewModel.swift; sourceTree = "<group>"; };
 		1953DE852879FE30000DC537 /* PickerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerViewModel.swift; sourceTree = "<group>"; };
+		1953DE87287B4574000DC537 /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
+		1953DE89287B4624000DC537 /* LabelStateBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelStateBuilder.swift; sourceTree = "<group>"; };
+		1953DE8C287B4752000DC537 /* Typography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Typography.swift; sourceTree = "<group>"; };
 		1967509C286491190019A6DE /* Buttons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Buttons.swift; sourceTree = "<group>"; };
 		1967509E286492780019A6DE /* Labels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Labels.swift; sourceTree = "<group>"; };
 		196750A12865169C0019A6DE /* DigitalThanksScene.swift */ = {isa = PBXFileReference; indentWidth = 3; lastKnownFileType = sourcecode.swift; path = DigitalThanksScene.swift; sourceTree = "<group>"; tabWidth = 3; };
@@ -156,6 +164,8 @@
 		19ECD54028623D1F001765F6 /* LabelModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelModel.swift; sourceTree = "<group>"; };
 		19ECD54228623D30001765F6 /* StackModel.swift */ = {isa = PBXFileReference; indentWidth = 3; lastKnownFileType = sourcecode.swift; path = StackModel.swift; sourceTree = "<group>"; tabWidth = 3; };
 		19ECD54728623D9C001765F6 /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
+		19EF32AA287CE80B0078F53D /* StringStorageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringStorageModel.swift; sourceTree = "<group>"; };
+		19EF32AD287E08F80078F53D /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -248,6 +258,17 @@
 			path = MainScene;
 			sourceTree = "<group>";
 		};
+		1953DE8B287B4649000DC537 /* Typography */ = {
+			isa = PBXGroup;
+			children = (
+				1953DE8C287B4752000DC537 /* Typography.swift */,
+				1953DE87287B4574000DC537 /* Fonts.swift */,
+				1953DE89287B4624000DC537 /* LabelStateBuilder.swift */,
+				1967509E286492780019A6DE /* Labels.swift */,
+			);
+			path = Typography;
+			sourceTree = "<group>";
+		};
 		196750A02865168F0019A6DE /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
@@ -264,12 +285,13 @@
 		199C4B6728632461008AD6FD /* DesignSystem */ = {
 			isa = PBXGroup;
 			children = (
+				1953DE8B287B4649000DC537 /* Typography */,
 				199C4B6828632834008AD6FD /* DesignProtocol.swift */,
 				199C4B6C2863299E008AD6FD /* DesignSystem.swift */,
 				1967509C286491190019A6DE /* Buttons.swift */,
-				1967509E286492780019A6DE /* Labels.swift */,
 				191B0C262865E5C1001CF3D9 /* Icons.swift */,
 				191B0C282865F119001CF3D9 /* Texts.swift */,
+				19EF32AD287E08F80078F53D /* Colors.swift */,
 				19D08360286F430B00F75E4A /* Designable.swift */,
 			);
 			path = DesignSystem;
@@ -278,11 +300,8 @@
 		19AE3AF0286922FC00A0C6E4 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				19AE3AF12869230C00A0C6E4 /* AuthApiModel.swift */,
-				1918CC7C286F6CAC004373F3 /* GetBalanceApiModel.swift */,
-				1918CC7A286F6C83004373F3 /* GetProfileApiModel.swift */,
-				1918CC78286F6C69004373F3 /* VerifyApiModel.swift */,
-				1953DE802879FC55000DC537 /* SearchUserApiModel.swift */,
+				19EF32AC287CE8140078F53D /* ApiModels */,
+				19EF32AA287CE80B0078F53D /* StringStorageModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -379,6 +398,18 @@
 				19ECD54728623D9C001765F6 /* PaddingLabel.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		19EF32AC287CE8140078F53D /* ApiModels */ = {
+			isa = PBXGroup;
+			children = (
+				19AE3AF12869230C00A0C6E4 /* AuthApiModel.swift */,
+				1918CC7C286F6CAC004373F3 /* GetBalanceApiModel.swift */,
+				1918CC7A286F6C83004373F3 /* GetProfileApiModel.swift */,
+				1918CC78286F6C69004373F3 /* VerifyApiModel.swift */,
+				1953DE802879FC55000DC537 /* SearchUserApiModel.swift */,
+			);
+			path = ApiModels;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -498,6 +529,7 @@
 				19C1E98F285F426B00E7976D /* TeamForceApi.swift in Sources */,
 				199C4B6928632834008AD6FD /* DesignProtocol.swift in Sources */,
 				19C1E9AB2861167E00E7976D /* Anchors.swift in Sources */,
+				1953DE88287B4574000DC537 /* Fonts.swift in Sources */,
 				19D0835B286F424000F75E4A /* LabelIconHorizontalModel.swift in Sources */,
 				196750B22865190D0019A6DE /* ImageViewModel.swift in Sources */,
 				1967509D286491190019A6DE /* Buttons.swift in Sources */,
@@ -514,8 +546,10 @@
 				196750A4286516E40019A6DE /* RegisterScene.swift in Sources */,
 				19C1E99C28610E2800E7976D /* Model.swift in Sources */,
 				191B0C272865E5C1001CF3D9 /* Icons.swift in Sources */,
+				19EF32AB287CE80B0078F53D /* StringStorageModel.swift in Sources */,
 				19C1E9AC2861167E00E7976D /* SimpleAnchors.swift in Sources */,
 				196750A6286516F40019A6DE /* LoginScene.swift in Sources */,
+				1953DE8A287B4624000DC537 /* LabelStateBuilder.swift in Sources */,
 				1918CC7D286F6CAC004373F3 /* GetBalanceApiModel.swift in Sources */,
 				196750A8286517070019A6DE /* VerifyCodeScene.swift in Sources */,
 				19D08357286F41B200F75E4A /* DoubleLabelPairModel.swift in Sources */,
@@ -545,8 +579,10 @@
 				190C1D12285D15FF00FB3518 /* AppDelegate.swift in Sources */,
 				190C1D14285D15FF00FB3518 /* SceneDelegate.swift in Sources */,
 				1953DE812879FC55000DC537 /* SearchUserApiModel.swift in Sources */,
+				19EF32AE287E08F80078F53D /* Colors.swift in Sources */,
 				19D08353286F403400F75E4A /* SideBarModel.swift in Sources */,
 				19D08359286F41FA00F75E4A /* IconLabelHorizontalModel.swift in Sources */,
+				1953DE8D287B4752000DC537 /* Typography.swift in Sources */,
 				19C1E98C285F426B00E7976D /* EndpointProtocol.swift in Sources */,
 				196750B4286519660019A6DE /* ProductionAsset.swift in Sources */,
 				1918CC7B286F6C84004373F3 /* GetProfileApiModel.swift in Sources */,

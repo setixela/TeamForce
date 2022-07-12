@@ -55,6 +55,8 @@ protocol TitleTextsProtocol: InitProtocol, KeyPathMaker
 
     // transact
     var chooseRecipient: String { get }
+    var sendThanks: String { get }
+    var availableThanks: String { get }
 }
 
 // MARK: - Button texts implements
@@ -89,6 +91,8 @@ struct TitleTexts: TitleTextsProtocol {
 
     // transact
     var chooseRecipient: String { "Выберите получателя" }
+    var sendThanks: String { "Перевести спасибок" }
+    var availableThanks: String { "Доступно" }
 }
 
 struct Texts: TextsProtocol, KeyPathMaker {

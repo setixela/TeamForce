@@ -12,22 +12,22 @@ import UIKit
 enum TextFieldState {
     case text(String)
     case placeholder(String)
+    case font(UIFont)
+    case clearButtonMode(UITextField.ViewMode)
+    case padding(UIEdgeInsets)
 }
 
 struct TextFieldEvents: InitProtocol {
     var didEditingChanged: Event<String>?
-    var setText: Event<String>?
-    var setPlaceholder: Event<String>?
 }
 
 final class TextFieldModel: BaseViewModel<PaddingTextField> {
     var eventsStore: TextFieldEvents = .init()
 
     override func start() {
-        set(.height(48))
-        set(.backColor(.lightGray.withAlphaComponent(0.4)))
-        view.clearButtonMode = .whileEditing
-        view.padding = .init(top: 16, left: 16, bottom: 16, right: 16)
+        set(.backColor(.lightGray.withAlphaComponent(0.3)))
+        set(.clearButtonMode(.whileEditing))
+    //    view.padding = .init(top: 0, left: 16, bottom: 0, right: 16)
         view.delegate = self
         view.addTarget(self, action: #selector(changValue), for: .editingChanged)
     }
@@ -48,6 +48,12 @@ extension TextFieldModel: Stateable2 {
             view.text = string
         case .placeholder(let string):
             view.placeholder = string
+        case .font(let font):
+            view.font = font
+        case .clearButtonMode(let value):
+            view.clearButtonMode = value
+        case .padding(let value):
+            view.padding = value
         }
     }
 }
