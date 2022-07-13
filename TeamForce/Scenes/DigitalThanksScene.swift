@@ -31,13 +31,11 @@ final class DigitalThanksScene<Asset: AssetProtocol>: BaseSceneModel<
    // MARK: - Start
 
    override func start() {
-      print("start()")
       //
       mainViewModel.set(Design.State.mainView.default)
 
       enterButton
          .onEvent(\.didTap) {
-            print("WORKS!")
             Asset.router?.route(\.login, navType: .push)
          }
 
@@ -46,17 +44,19 @@ final class DigitalThanksScene<Asset: AssetProtocol>: BaseSceneModel<
             Asset.router?.route(\.register, navType: .push)
          }
 
-      presentModels()
+      configure()
    }
 
-   private func presentModels() {
-      mainViewModel.sendEvent(\.addViewModels, [
-         Spacer(size: 100),
-         headerModel,
-         enterButton,
-         Spacer(size: 16),
-         registerButton,
-         Spacer()
-      ])
+   private func configure() {
+      mainViewModel
+         .set(Design.State.mainView.default)
+         .set(.models([
+            Spacer(size: 100),
+            headerModel,
+            enterButton,
+            Spacer(size: 16),
+            registerButton,
+            Spacer()
+         ]))
    }
 }

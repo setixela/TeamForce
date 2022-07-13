@@ -41,7 +41,3 @@ final class DefaultVCModel: BaseVCModel {
         sendEvent(\.viewWillDissappear)
     }
 }
-
-//extension DefaultVCModel: Communicable {
-//    typealias Events = VCEvent
-//}

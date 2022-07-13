@@ -85,6 +85,7 @@ extension MainScene {
         guard let model = model else { return }
 
         mainViewModel.stackModel
+            .set(Design.State.mainView.default)
             .set(.models([
                 model
             ]))

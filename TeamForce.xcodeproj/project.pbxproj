@@ -273,8 +273,8 @@
 			isa = PBXGroup;
 			children = (
 				196750A12865169C0019A6DE /* DigitalThanksScene.swift */,
-				196750A3286516E40019A6DE /* RegisterScene.swift */,
 				196750A5286516F40019A6DE /* LoginScene.swift */,
+				196750A3286516E40019A6DE /* RegisterScene.swift */,
 				196750A7286517070019A6DE /* VerifyCodeScene.swift */,
 				196750A9286517130019A6DE /* LoginSuccessScene.swift */,
 				19AE3AEE28691B2E00A0C6E4 /* MainScene.swift */,

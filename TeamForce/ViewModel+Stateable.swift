@@ -73,9 +73,6 @@ extension ViewModelProtocol where Self: Stateable, View: UIStackView {
         case .height(let value):
             view.addAnchors.constHeight(value)
         case .models(let models):
-            view.subviews.forEach {
-                $0.removeFromSuperview()
-            }
             models.forEach {
                 view.addArrangedSubview($0.uiView)
             }

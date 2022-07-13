@@ -7,33 +7,9 @@
 
 import UIKit
 
-struct StackEvents: InitProtocol {
-   var addViewModel: Event<UIViewModel>?
-   var addViewModels: Event<[UIViewModel]>?
-}
-
-final class StackModel: BaseViewModel<UIStackView> {
-   var eventsStore: StackEvents = .init()
-
-   override func start() {
-      weak var wS = self
-
-      onEvent(\.addViewModel) {
-         wS?.view.addArrangedSubview($0.uiView)
-      }
-      .onEvent(\.addViewModels) {
-         $0.forEach {
-            wS?.view.addArrangedSubview($0.uiView)
-         }
-      }
-   }
-}
+final class StackModel: BaseViewModel<UIStackView> {}
 
 extension StackModel: Stateable {}
-
-extension StackModel: Communicable {
-   typealias Events = StackEvents
-}
 
 enum TextState {
    case text(String)

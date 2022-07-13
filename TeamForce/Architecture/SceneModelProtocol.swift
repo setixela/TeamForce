@@ -63,12 +63,6 @@ class BaseSceneModel<
         print("Needs to override start()")
     }
 
-//    func makeVM<T: ViewModelProtocol>() -> T {
-//        let model = T()
-//        _ = model.view // Make view
-//        return model
-//    }
-
     func setInput(_ value: Any? = nil) {
         _inputValue = value
     }

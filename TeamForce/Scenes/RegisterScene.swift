@@ -34,8 +34,11 @@ final class RegisterScene<Asset: AssetProtocol>: BaseSceneModel<
    private lazy var inputParser = TelegramNickCheckerModel()
 
    // MARK: - Start
-   
+
    override func start() {
+      //
+      mainViewModel.set(Design.State.mainView.default)
+
       weak var weakSelf = self
 
       nextButton
@@ -46,7 +49,7 @@ final class RegisterScene<Asset: AssetProtocol>: BaseSceneModel<
       vcModel?
          .onEvent(\.viewDidLoad) {
             weakSelf?.setupLoginField()
-            weakSelf?.presentModels()
+            weakSelf?.configure()
          }
    }
 
@@ -67,16 +70,18 @@ final class RegisterScene<Asset: AssetProtocol>: BaseSceneModel<
          }
    }
 
-   private func presentModels() {
+   private func configure() {
       mainViewModel
-         .sendEvent(\.addViewModels, payload: [
+         .set(.topModels([
             Spacer(size: 100),
             headerModel,
             subtitleModel,
             Spacer(size: 16),
             textFieldModel,
             Spacer()
-         ])
-         .sendEvent(\.addBottomPanelModel, payload: nextButton)
+         ]))
+         .set(.bottomModels([
+            nextButton
+         ]))
    }
 }

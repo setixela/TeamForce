@@ -41,7 +41,7 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
    private var loginName: String?
 
    // MARK: - Start
-   
+
    override func start() {
       weak var weakSelf = self
 
@@ -49,7 +49,6 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
          .onEvent(\.didTap) {
             guard let loginName = weakSelf?.loginName else { return }
 
-            print(loginName)
             weakSelf?.apiModel
                .onEvent(\.success) { authResult in
                   Asset.router?.route(\.verifyCode, navType: .push, payload: authResult)
@@ -77,22 +76,25 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
             weakSelf?.nextButton.set(Design.State.button.inactive)
          }
 
-      presentModels()
+      configure()
    }
 
-   private func presentModels() {
+   private func configure() {
       mainViewModel
-         .sendEvent(\.addViewModels, [
+         .set(Design.State.mainView.default)
+         .set(.topModels([
             Spacer(size: 100),
             headerModel,
             subtitleModel,
             Spacer(size: 16),
             textFieldModel,
             Spacer()
-         ])
-         .bottomModel.sendEvent(\.addModels, [
+         ]))
+         .bottomModel
+         // .set(Design.State.mainView.default)
+         .set(.viewModels([
             nextButton,
             changeUserButton
-         ])
+         ]))
    }
 }

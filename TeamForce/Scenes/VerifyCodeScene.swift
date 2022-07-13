@@ -51,13 +51,13 @@ final class VerifyCodeScene<Asset: AssetProtocol>: BaseSceneModel<
       .set(.text("2. " + text.title.make(\.enterSmsCode)))
       .set(.numberOfLines(2))
 
-   private lazy var nextButton = ButtonModel(Design.State.button.inactive)
+   private lazy var enterButton = ButtonModel(Design.State.button.inactive)
       .set(.title(text.button.make(\.enterButton)))
 
    private lazy var textFieldModel = TextFieldModel()
       .set(.padding(.init(top: 16, left: 16, bottom: 16, right: 16)))
       .set(.placeholder(text.title.make(\.smsCode)))
-   
+
    private lazy var inputParser = SmsCodeCheckerModel()
 
    private lazy var verifyApi = VerifyApiModel(apiEngine: Asset.service.apiEngine)
@@ -68,9 +68,11 @@ final class VerifyCodeScene<Asset: AssetProtocol>: BaseSceneModel<
    // MARK: - Start
 
    override func start() {
+      configure()
+
       weak var weakSelf = self
 
-      nextButton
+      enterButton
          .onEvent(\.didTap) {
             guard
                let authResult = weakSelf?.inputValue,
@@ -102,27 +104,28 @@ final class VerifyCodeScene<Asset: AssetProtocol>: BaseSceneModel<
          .onEvent(\.success) {
             weakSelf?.smsCode = $0
             weakSelf?.textFieldModel.set(.text($0))
-            weakSelf?.nextButton.set(Design.State.button.default)
+            weakSelf?.enterButton.set(Design.State.button.default)
          }
          .onEvent(\.error) {
             weakSelf?.smsCode = nil
             weakSelf?.textFieldModel.set(.text($0))
-            weakSelf?.nextButton.set(Design.State.button.inactive)
+            weakSelf?.enterButton.set(Design.State.button.inactive)
          }
-
-      presentModels()
    }
 
-   private func presentModels() {
+   private func configure() {
       mainViewModel
-         .sendEvent(\.addViewModels, [
+         .set(Design.State.mainView.default)
+         .set(.topModels([
             Spacer(size: 100),
             headerModel,
             subtitleModel,
             Spacer(size: 16),
             textFieldModel,
             Spacer()
-         ])
-         .sendEvent(\.addBottomPanelModel, nextButton)
+         ]))
+         .set(.bottomModels([
+            enterButton
+         ]))
    }
 }

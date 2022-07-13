@@ -34,7 +34,7 @@ final class LoginSuccessScene<Asset: AssetProtocol>: BaseSceneModel<
    private var userPromise: Promise<UserData>?
 
    // MARK: - Start
-   
+
    override func start() {
       print("Start jdsahdjkasfhkfh")
       mainViewModel.stackModel.set(.alignment(.center))
@@ -48,7 +48,7 @@ final class LoginSuccessScene<Asset: AssetProtocol>: BaseSceneModel<
             Asset.router?.route(\.main, navType: .present, payload: promise)
          }
 
-      presentModels()
+      configure()
 
       guard let token = weakSelf?.inputValue else { return }
 
@@ -59,15 +59,18 @@ final class LoginSuccessScene<Asset: AssetProtocol>: BaseSceneModel<
          .sendEvent(\.request, TokenRequest(token: token))
    }
 
-   private func presentModels() {
+   private func configure() {
       mainViewModel
-         .sendEvent(\.addViewModels, [
+         .set(Design.State.mainView.default)
+         .set(.models([
             Spacer(size: 100),
             checkmarkIcon,
             headerModel,
             Spacer(size: 16),
             Spacer()
-         ])
-         .sendEvent(\.addBottomPanelModel, nextButton)
+         ]))
+         .set(.bottomModels([
+            nextButton
+         ]))
    }
 }

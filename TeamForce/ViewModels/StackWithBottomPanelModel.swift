@@ -7,44 +7,36 @@
 
 import UIKit
 
-struct StackWithBottomPanelEvents: InitProtocol {
-    var addViewModel: Event<UIViewModel>?
-    var addViewModels: Event<[UIViewModel]>?
-    var addBottomPanelModel: Event<UIViewModel>?
+enum StackWithBottomPanelState {
+    case topModels([UIViewModel])
+    case bottomModels([UIViewModel])
 }
 
 final class StackWithBottomPanelModel: BaseViewModel<UIStackView> {
-    var eventsStore: StackWithBottomPanelEvents = .init()
-
-    let stackModel = StackModel(DesignSystem.State.mainView.default)
+    let stackModel = StackModel(.axis(.vertical),
+                                .alignment(.fill),
+                                .distribution(.fill))
     let bottomModel = BottomPanelViewModel()
 
     override func start() {
-        configure()
+        view.axis = .vertical
+        view.alignment = .fill
+        view.distribution = .fill
 
-        weak var wS = self
-
-        onEvent(\.addViewModel) {
-            wS?.stackModel.sendEvent(\.addViewModel, payload: $0)
-        }
-        .onEvent(\.addViewModels) {
-            wS?.stackModel.sendEvent(\.addViewModels, payload: $0)
-        }
-        .onEvent(\.addBottomPanelModel) {
-            wS?.bottomModel.sendEvent(\.addModel, payload: $0)
-        }
-    }
-
-    private func configure() {
-        setupView {
-            $0.axis = .vertical
-            $0.alignment = .fill
-            $0.distribution = .fill
-
-            $0.addArrangedSubview(stackModel.uiView)
-            $0.addArrangedSubview(bottomModel.uiView)
-        }
+        view.addArrangedSubview(stackModel.uiView)
+        view.addArrangedSubview(bottomModel.uiView)
     }
 }
 
-extension StackWithBottomPanelModel: Communicable {}
+extension StackWithBottomPanelModel: Stateable2 {
+    typealias State = StackState
+
+    func applyState(_ state: StackWithBottomPanelState) {
+        switch state {
+        case .topModels(let viewModels):
+            stackModel.set(.models(viewModels))
+        case .bottomModels(let viewModels):
+            bottomModel.set(.models(viewModels))
+        }
+    }
+}
