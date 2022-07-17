@@ -7,32 +7,6 @@
 
 import UIKit
 
-import RealmSwift
-
-class Token: Object, SingleObject {
-   @Persisted var token: String
-
-   static let uniqueKey: String = "Token"
-
-   @Persisted var uniqueKey: String = Token.uniqueKey
-
-   override static func primaryKey() -> String? {
-      "uniqueKey"
-   }
-}
-
-protocol SingleObject: Object {
-   static var uniqueKey: String { get }
-}
-
-extension SingleObject {
-   var uniqueKey: Persisted<String> { Persisted(wrappedValue: Self.uniqueKey) }
-
-   static func primaryKey() -> String? {
-      "uniqueKey"
-   }
-}
-
 // MARK: - VerifyCodeScene
 
 final class VerifyCodeScene<Asset: AssetProtocol>: BaseSceneModel<

@@ -7,18 +7,24 @@
 
 import Foundation
 
+enum StorageError: Error {
+   case noValue
+}
+
 protocol StorageEventProtocol: InitProtocol {
    associatedtype AsType
 
    var saveValueForKey: Event<(value: AsType, key: String)>? { get set }
    var requestValueForKey: Event<String>? { get set }
    var responseValue: Event<AsType>? { get set }
+   var error: Event<StorageError>? { get set }
 }
 
 struct StorageStringEvent: StorageEventProtocol {
    var saveValueForKey: Event<(value: String, key: String)>?
    var requestValueForKey: Event<String>?
    var responseValue: Event<String>?
+   var error: Event<StorageError>?
 }
 
 final class StringStorageModel: BaseModel, Communicable {
@@ -35,13 +41,15 @@ final class StringStorageModel: BaseModel, Communicable {
    override func start() {
       onEvent(\.requestValueForKey) { [weak self] key in
 
-         guard let token = self?.storageEngine?.load(forKey: key) else {
+         guard let value = self?.storageEngine?.load(forKey: key) else {
             print("\nNo value for key: \(key)\n")
+            self?.sendEvent(\.error, .noValue)
             return
          }
 
-         self?.sendEvent(\.responseValue, token)
+         self?.sendEvent(\.responseValue, value)
       }
+
       onEvent(\.saveValueForKey) { [weak self] keyValue in
          self?.storageEngine?.save(keyValue.value, forKey: keyValue.key)
       }

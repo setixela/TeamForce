@@ -164,7 +164,7 @@
 		19ECD54028623D1F001765F6 /* LabelModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelModel.swift; sourceTree = "<group>"; };
 		19ECD54228623D30001765F6 /* StackModel.swift */ = {isa = PBXFileReference; indentWidth = 3; lastKnownFileType = sourcecode.swift; path = StackModel.swift; sourceTree = "<group>"; tabWidth = 3; };
 		19ECD54728623D9C001765F6 /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
-		19EF32AA287CE80B0078F53D /* StringStorageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringStorageModel.swift; sourceTree = "<group>"; };
+		19EF32AA287CE80B0078F53D /* StringStorageModel.swift */ = {isa = PBXFileReference; indentWidth = 3; lastKnownFileType = sourcecode.swift; path = StringStorageModel.swift; sourceTree = "<group>"; tabWidth = 3; };
 		19EF32AD287E08F80078F53D /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
