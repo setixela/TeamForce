@@ -20,6 +20,7 @@ final class LoginSuccessScene<Asset: AssetProtocol>: BaseSceneModel<
    private lazy var checkmarkIcon = ImageViewModel()
       .set(.size(.init(width: 48, height: 48)))
       .set(.image(Icons().make(\.checkCircle)))
+      .set(.contentMode(.scaleAspectFit))
 
    private lazy var headerModel = Design.label.headline4
       .set(.alignment(.center))
@@ -62,8 +63,8 @@ final class LoginSuccessScene<Asset: AssetProtocol>: BaseSceneModel<
    private func configure() {
       mainViewModel
          .set(Design.State.mainView.default)
-         .set(.models([
-            Spacer(size: 100),
+         .set(.topModels([
+            Spacer(size: 200),
             checkmarkIcon,
             headerModel,
             Spacer(size: 16),

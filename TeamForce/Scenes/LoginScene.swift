@@ -34,7 +34,7 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
    private lazy var textFieldModel = TextFieldModel()
       .set(.padding(.init(top: 16, left: 16, bottom: 16, right: 16)))
       .set(.placeholder("@" + text.title.make(\.userName)))
-
+   
    private lazy var inputParser = TelegramNickCheckerModel()
    private lazy var apiModel = AuthApiModel(apiEngine: Asset.service.apiEngine)
 

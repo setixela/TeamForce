@@ -47,7 +47,7 @@ private extension SceneDelegate {
             .onEvent(\.present, { vc in
                 nc.viewControllers = [vc]
             })
-            .route(\.main, navType: .push, payload: ())
-//            .route(\.digitalThanks, navType: .push, payload: ())
+//            .route(\.main, navType: .push, payload: ())
+            .route(\.digitalThanks, navType: .push, payload: ())
     }
 }

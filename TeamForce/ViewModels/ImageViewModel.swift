@@ -10,6 +10,7 @@ import UIKit
 enum ImageViewState {
     case image(UIImage)
     case size(CGSize)
+    case contentMode(UIView.ContentMode)
 }
 
 final class ImageViewModel: BaseViewModel<UIImageView> {
@@ -30,6 +31,8 @@ extension ImageViewModel: Stateable {
             view.addAnchors
                 .constWidth(cGSize.width)
                 .constHeight(cGSize.height)
+        case .contentMode(let mode):
+            view.contentMode = mode
         }
     }
 }
