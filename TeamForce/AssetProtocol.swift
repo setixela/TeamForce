@@ -34,5 +34,3 @@ protocol ScenesProtocol: InitProtocol {
     var register: SceneModelProtocol { get }
     var main: SceneModelProtocol { get }
 }
-
-

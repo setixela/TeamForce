@@ -90,7 +90,9 @@ final class VerifyCodeScene<Asset: AssetProtocol>: BaseSceneModel<
    private func configure() {
       mainViewModel
          .set(Design.State.mainView.default)
-         .set(.topModels([
+
+      mainViewModel.topStackModel
+         .set(.models([
             Spacer(size: 100),
             headerModel,
             subtitleModel,
@@ -98,7 +100,9 @@ final class VerifyCodeScene<Asset: AssetProtocol>: BaseSceneModel<
             textFieldModel,
             Spacer()
          ]))
-         .set(.bottomModels([
+      
+      mainViewModel.bottomStackModel
+         .set(.models([
             enterButton
          ]))
    }

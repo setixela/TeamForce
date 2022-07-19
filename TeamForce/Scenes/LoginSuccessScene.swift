@@ -36,8 +36,7 @@ final class LoginSuccessScene<Asset: AssetProtocol>: BaseSceneModel<
    // MARK: - Start
 
    override func start() {
-      print("Start jdsahdjkasfhkfh")
-      mainViewModel.stackModel.set(.alignment(.center))
+      mainViewModel.topStackModel.set(.alignment(.center))
 
       weak var weakSelf = self
 
@@ -62,6 +61,8 @@ final class LoginSuccessScene<Asset: AssetProtocol>: BaseSceneModel<
    private func configure() {
       mainViewModel
          .set(Design.State.mainView.default)
+
+      mainViewModel.topStackModel
          .set(.models([
             Spacer(size: 100),
             checkmarkIcon,
@@ -69,7 +70,9 @@ final class LoginSuccessScene<Asset: AssetProtocol>: BaseSceneModel<
             Spacer(size: 16),
             Spacer()
          ]))
-         .set(.bottomModels([
+
+      mainViewModel.bottomStackModel
+         .set(.models([
             nextButton
          ]))
    }

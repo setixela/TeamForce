@@ -14,6 +14,8 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
     var text: Asset.Text = .init() // Move to self.design.text......
     var icon: Asset.Design.Icon = .init()
 
+    // MARK: - View Models
+
     private lazy var digitalThanksTitle = Design.label.headline4
         .set(.text(text.title.make(\.digitalThanks)))
         .set(.numberOfLines(1))
@@ -27,23 +29,33 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
         .set(.hidden(true))
         .set(.padding(.init(top: 0, left: 16, bottom: 0, right: 16)))
 
-    private lazy var pickerModel = PickerViewModel()
-        .set(.borderColor(.gray))
-        .set(.borderWidth(1))
-        .set(.cornerRadius(Design.Parameters.cornerRadius))
-        .set(.height(200))
-        .set(.hidden(true))
+//    private lazy var pickerModel = PickerViewModel()
+//        .set(.borderColor(.gray))
+//        .set(.borderWidth(1))
+//        .set(.cornerRadius(Design.Parameters.cornerRadius))
+//        .set(.height(200))
+//        .set(.hidden(true))
 
     private lazy var transactInputViewModel = TransactInputViewModel<Design>()
         .set(.leftCaptionText(text.title.make(\.sendThanks)))
         .set(.rightCaptionText(text.title.make(\.availableThanks)))
         .set(.hidden(true))
 
+    private lazy var tableModel = TableViewModel()
+        .set(.borderColor(.gray))
+        .set(.borderWidth(1))
+        .set(.cornerRadius(Design.Parameters.cornerRadius))
+        .set(.hidden(true))
+
+    // MARK: - Services
+
     private lazy var apiModel = SearchUserApiModel(apiEngine: Asset.service.apiEngine)
     private lazy var safeStringStorage = StringStorageModel(engine: Asset.service.safeStringStorage)
 
     private lazy var foundUsers: [String] = []
     private lazy var tokens: (token: String, csrf: String) = ("", "")
+
+    // MARK: - Start
 
     override func start() {
         set(.axis(.vertical))
@@ -54,8 +66,9 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
             digitalThanksTitle,
             //    selectPeriodViewModel,
             userSearchModel,
-            pickerModel,
+           // pickerModel,
             transactInputViewModel,
+            tableModel,
             Spacer()
         ]))
 
@@ -63,10 +76,10 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
 
         userSearchModel.onEvent(\.didEditingChanged) { text in
             guard let self = wS else { return }
-            wS?.transactInputViewModel.set(.hidden(true))
+            self.transactInputViewModel.set(.hidden(true))
 
             guard !text.isEmpty else {
-                self.pickerModel.set(.hidden(true))
+                self.tableModel.set(.hidden(true))
                 return
             }
 
@@ -86,13 +99,20 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
             }
             .sendEvent(\.requestValueForKey, "token")
 
-        pickerModel.onEvent(\.didSelectRow) { index in
+        tableModel.onEvent(\.didSelectRow) { index in
             guard let self = wS else { return }
 
             self.userSearchModel.set(.text(self.foundUsers[index]))
-            self.pickerModel.set(.hidden(true))
+            self.tableModel.set(.hidden(true))
             self.transactInputViewModel.set(.hidden(false))
         }
+
+        let cellModels = (0 ... 100).map { index -> LabelCellModel in
+            let cellModel = LabelCellModel()
+            cellModel.set(.text(String(index)))
+            return cellModel
+        }
+        tableModel.set(.models(cellModels))
     }
 }
 
@@ -102,8 +122,13 @@ extension TransactViewModel {
             .onEvent(\.success) { [weak self] result in
                 let found = result.map { $0.name + " " + $0.surname }
                 self?.foundUsers = found
-                self?.pickerModel.set(.items(found))
-                self?.pickerModel.set(.hidden(found.isEmpty ? true : false))
+                let cellModels = found.map { name -> LabelCellModel in
+                    let cellModel = LabelCellModel()
+                    cellModel.set(.text(name))
+                    return cellModel
+                }
+                self?.tableModel.set(.models(cellModels))
+                self?.tableModel.set(.hidden(found.isEmpty ? true : false))
             }
             .sendEvent(\.request, request)
     }
@@ -136,7 +161,7 @@ final class TransactInputViewModel<Design: DesignProtocol>: BaseViewModel<UIStac
             .backColor(Design.color.background1),
             .models([
                 doubleLabel,
-                textField
+                textField,
             ]))
     }
 }

@@ -71,8 +71,8 @@ final class RegisterScene<Asset: AssetProtocol>: BaseSceneModel<
    }
 
    private func configure() {
-      mainViewModel
-         .set(.topModels([
+      mainViewModel.topStackModel
+         .set(.models([
             Spacer(size: 100),
             headerModel,
             subtitleModel,
@@ -80,7 +80,9 @@ final class RegisterScene<Asset: AssetProtocol>: BaseSceneModel<
             textFieldModel,
             Spacer()
          ]))
-         .set(.bottomModels([
+
+      mainViewModel.bottomStackModel
+         .set(.models([
             nextButton
          ]))
    }

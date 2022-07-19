@@ -44,22 +44,24 @@ final class MainScene<Asset: AssetProtocol>: BaseSceneModel<
 
     // MARK: - Side bar
 
-    private lazy var sideBarModel = SideBarModel<Design>()
+    private let sideBarModel = SideBarModel<Design>()
 
-    private lazy var menuButton = BarButtonModel()
+    private let menuButton = BarButtonModel()
         .sendEvent(\.initWithImage, Design.icon.make(\.sideMenu))
 
+    // MARK: - Start
+
     override func start() {
-        print("LKDFJAHSLKFJLKSAFJLKASJLKFJ LAKS FJLKASJ FLAKJSFLKJF ")
+        sideBarModel.start()
         presentModel(balanceViewModel)
 
-        mainViewModel.bottomModel
+        mainViewModel.bottomStackModel
             .set(.axis(.horizontal))
             .set(.padding(.zero))
             .set(.spacing(0))
             .set(.backColor(.black))
 
-        mainViewModel.bottomModel
+        mainViewModel.bottomStackModel
             .set(.models([
                 balanceButton,
                 transactButton,
@@ -84,7 +86,7 @@ extension MainScene {
     private func presentModel(_ model: UIViewModel?) {
         guard let model = model else { return }
 
-        mainViewModel.stackModel
+        mainViewModel.topStackModel
             .set(Design.State.mainView.default)
             .set(.models([
                 model

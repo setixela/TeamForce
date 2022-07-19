@@ -82,7 +82,9 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
    private func configure() {
       mainViewModel
          .set(Design.State.mainView.default)
-         .set(.topModels([
+
+      mainViewModel.topStackModel
+         .set(.models([
             Spacer(size: 100),
             headerModel,
             subtitleModel,
@@ -90,9 +92,9 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
             textFieldModel,
             Spacer()
          ]))
-         .bottomModel
-         // .set(Design.State.mainView.default)
-         .set(.viewModels([
+      
+      mainViewModel.bottomStackModel
+         .set(.models([
             nextButton,
             changeUserButton
          ]))

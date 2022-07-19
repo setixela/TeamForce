@@ -36,7 +36,6 @@
 		196750A8286517070019A6DE /* VerifyCodeScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196750A7286517070019A6DE /* VerifyCodeScene.swift */; };
 		196750AA286517130019A6DE /* LoginSuccessScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196750A9286517130019A6DE /* LoginSuccessScene.swift */; };
 		196750AC2865189C0019A6DE /* TextFieldModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196750AB2865189C0019A6DE /* TextFieldModel.swift */; };
-		196750AE286518D50019A6DE /* BottomPanelViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196750AD286518D50019A6DE /* BottomPanelViewModel.swift */; };
 		196750B0286518F80019A6DE /* StackWithBottomPanelModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196750AF286518F80019A6DE /* StackWithBottomPanelModel.swift */; };
 		196750B22865190D0019A6DE /* ImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196750B12865190D0019A6DE /* ImageViewModel.swift */; };
 		196750B4286519660019A6DE /* ProductionAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196750B3286519660019A6DE /* ProductionAsset.swift */; };
@@ -75,11 +74,13 @@
 		19D0835D286F428600F75E4A /* BarButtonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D0835C286F428600F75E4A /* BarButtonModel.swift */; };
 		19D0835F286F42C000F75E4A /* FrameCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D0835E286F42C000F75E4A /* FrameCellModel.swift */; };
 		19D08361286F430B00F75E4A /* Designable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D08360286F430B00F75E4A /* Designable.swift */; };
+		19DD3D95288766860085CDA8 /* LabelCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19DD3D94288766860085CDA8 /* LabelCellModel.swift */; };
 		19ECD54128623D1F001765F6 /* LabelModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19ECD54028623D1F001765F6 /* LabelModel.swift */; };
 		19ECD54328623D30001765F6 /* StackModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19ECD54228623D30001765F6 /* StackModel.swift */; };
 		19ECD54828623D9C001765F6 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19ECD54728623D9C001765F6 /* PaddingLabel.swift */; };
 		19EF32AB287CE80B0078F53D /* StringStorageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19EF32AA287CE80B0078F53D /* StringStorageModel.swift */; };
 		19EF32AE287E08F80078F53D /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19EF32AD287E08F80078F53D /* Colors.swift */; };
+		19EF32B02884B6C80078F53D /* TableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19EF32AF2884B6C80078F53D /* TableViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -123,7 +124,6 @@
 		196750A7286517070019A6DE /* VerifyCodeScene.swift */ = {isa = PBXFileReference; indentWidth = 3; lastKnownFileType = sourcecode.swift; path = VerifyCodeScene.swift; sourceTree = "<group>"; tabWidth = 3; };
 		196750A9286517130019A6DE /* LoginSuccessScene.swift */ = {isa = PBXFileReference; indentWidth = 3; lastKnownFileType = sourcecode.swift; path = LoginSuccessScene.swift; sourceTree = "<group>"; tabWidth = 3; };
 		196750AB2865189C0019A6DE /* TextFieldModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldModel.swift; sourceTree = "<group>"; };
-		196750AD286518D50019A6DE /* BottomPanelViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomPanelViewModel.swift; sourceTree = "<group>"; };
 		196750AF286518F80019A6DE /* StackWithBottomPanelModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackWithBottomPanelModel.swift; sourceTree = "<group>"; };
 		196750B12865190D0019A6DE /* ImageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewModel.swift; sourceTree = "<group>"; };
 		196750B3286519660019A6DE /* ProductionAsset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductionAsset.swift; sourceTree = "<group>"; };
@@ -161,11 +161,13 @@
 		19D0835C286F428600F75E4A /* BarButtonModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarButtonModel.swift; sourceTree = "<group>"; };
 		19D0835E286F42C000F75E4A /* FrameCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameCellModel.swift; sourceTree = "<group>"; };
 		19D08360286F430B00F75E4A /* Designable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Designable.swift; sourceTree = "<group>"; };
+		19DD3D94288766860085CDA8 /* LabelCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelCellModel.swift; sourceTree = "<group>"; };
 		19ECD54028623D1F001765F6 /* LabelModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelModel.swift; sourceTree = "<group>"; };
 		19ECD54228623D30001765F6 /* StackModel.swift */ = {isa = PBXFileReference; indentWidth = 3; lastKnownFileType = sourcecode.swift; path = StackModel.swift; sourceTree = "<group>"; tabWidth = 3; };
 		19ECD54728623D9C001765F6 /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
 		19EF32AA287CE80B0078F53D /* StringStorageModel.swift */ = {isa = PBXFileReference; indentWidth = 3; lastKnownFileType = sourcecode.swift; path = StringStorageModel.swift; sourceTree = "<group>"; tabWidth = 3; };
-		19EF32AD287E08F80078F53D /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		19EF32AD287E08F80078F53D /* Colors.swift */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; tabWidth = 4; };
+		19EF32AF2884B6C80078F53D /* TableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -359,6 +361,7 @@
 		19C1E9A428610E6F00E7976D /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				19DD3D93288766770085CDA8 /* TableModels */,
 				1953DE822879FDB3000DC537 /* MainScene */,
 				19D0835C286F428600F75E4A /* BarButtonModel.swift */,
 				19C1E9A528610EC600E7976D /* DefaultVCModel.swift */,
@@ -366,7 +369,6 @@
 				19ECD54028623D1F001765F6 /* LabelModel.swift */,
 				199C4B6A2863292F008AD6FD /* ButtonModel.swift */,
 				196750AB2865189C0019A6DE /* TextFieldModel.swift */,
-				196750AD286518D50019A6DE /* BottomPanelViewModel.swift */,
 				196750AF286518F80019A6DE /* StackWithBottomPanelModel.swift */,
 				196750B12865190D0019A6DE /* ImageViewModel.swift */,
 				199C4B6528624B4C008AD6FD /* Spacer.swift */,
@@ -378,6 +380,7 @@
 				19D0835A286F424000F75E4A /* LabelIconHorizontalModel.swift */,
 				19D0835E286F42C000F75E4A /* FrameCellModel.swift */,
 				1953DE852879FE30000DC537 /* PickerViewModel.swift */,
+				19EF32AF2884B6C80078F53D /* TableViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -390,6 +393,14 @@
 				19C1E9AA2861167E00E7976D /* ComplexAnchors.swift */,
 			);
 			path = Anchors;
+			sourceTree = "<group>";
+		};
+		19DD3D93288766770085CDA8 /* TableModels */ = {
+			isa = PBXGroup;
+			children = (
+				19DD3D94288766860085CDA8 /* LabelCellModel.swift */,
+			);
+			path = TableModels;
 			sourceTree = "<group>";
 		};
 		19ECD54628623D92001765F6 /* Views */ = {
@@ -537,6 +548,7 @@
 				19C1E99F28610E2800E7976D /* SceneModelProtocol.swift in Sources */,
 				196750A22865169C0019A6DE /* DigitalThanksScene.swift in Sources */,
 				19C1E991285F426B00E7976D /* ApiEngine.swift in Sources */,
+				19EF32B02884B6C80078F53D /* TableViewModel.swift in Sources */,
 				191B0C292865F119001CF3D9 /* Texts.swift in Sources */,
 				19D08355286F405500F75E4A /* DoubleLabelModel.swift in Sources */,
 				19C1E9A328610E4E00E7976D /* Router.swift in Sources */,
@@ -553,6 +565,7 @@
 				1918CC7D286F6CAC004373F3 /* GetBalanceApiModel.swift in Sources */,
 				196750A8286517070019A6DE /* VerifyCodeScene.swift in Sources */,
 				19D08357286F41B200F75E4A /* DoubleLabelPairModel.swift in Sources */,
+				19DD3D95288766860085CDA8 /* LabelCellModel.swift in Sources */,
 				1967509F286492780019A6DE /* Labels.swift in Sources */,
 				19C1E98E285F426B00E7976D /* ApiEngineProtocol.swift in Sources */,
 				1918CC77286F67EB004373F3 /* BalanceViewModel.swift in Sources */,
@@ -570,7 +583,6 @@
 				19ECD54128623D1F001765F6 /* LabelModel.swift in Sources */,
 				19C1E99D28610E2800E7976D /* RouterProtocol.swift in Sources */,
 				196750B0286518F80019A6DE /* StackWithBottomPanelModel.swift in Sources */,
-				196750AE286518D50019A6DE /* BottomPanelViewModel.swift in Sources */,
 				199C4B6B2863292F008AD6FD /* ButtonModel.swift in Sources */,
 				19ECD54328623D30001765F6 /* StackModel.swift in Sources */,
 				196750AA286517130019A6DE /* LoginSuccessScene.swift in Sources */,
