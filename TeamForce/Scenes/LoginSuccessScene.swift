@@ -48,8 +48,11 @@ final class LoginSuccessScene<Asset: AssetProtocol>: BaseSceneModel<
 
             Asset.router?.route(\.main, navType: .present, payload: promise)
          }
-
-      configure()
+      
+      vcModel?
+         .onEvent(\.viewDidLoad) {
+            weakSelf?.configure()
+         }
 
       guard let token = weakSelf?.inputValue else { return }
 
@@ -63,6 +66,7 @@ final class LoginSuccessScene<Asset: AssetProtocol>: BaseSceneModel<
    private func configure() {
       mainViewModel
          .set(Design.State.mainView.default)
+         .set(.backColor(Design.color.background2))
          .set(.topModels([
             Spacer(size: 200),
             checkmarkIcon,

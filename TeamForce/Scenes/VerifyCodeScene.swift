@@ -42,10 +42,15 @@ final class VerifyCodeScene<Asset: AssetProtocol>: BaseSceneModel<
    // MARK: - Start
 
    override func start() {
-      configure()
+//      configure()
 
       weak var weakSelf = self
 
+      vcModel?
+         .onEvent(\.viewDidLoad) {
+            weakSelf?.configure()
+         }
+      
       enterButton
          .onEvent(\.didTap) {
             guard
@@ -89,6 +94,7 @@ final class VerifyCodeScene<Asset: AssetProtocol>: BaseSceneModel<
 
    private func configure() {
       mainViewModel
+         .set(.backColor(Design.color.background2))
          .set(Design.State.mainView.default)
          .set(.topModels([
             Spacer(size: 100),

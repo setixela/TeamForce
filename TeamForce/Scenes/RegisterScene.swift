@@ -31,7 +31,7 @@ final class RegisterScene<Asset: AssetProtocol>: BaseSceneModel<
    private lazy var textFieldModel = TextFieldModel()
       .set(.padding(.init(top: 16, left: 16, bottom: 16, right: 16)))
       .set(.placeholder("@" + text.title.make(\.userName)))
-      .set(.cornerRadius(GlobalParameters.cornerRadius))
+//      .set(.cornerRadius(GlobalParameters.cornerRadius))
 
    private lazy var inputParser = TelegramNickCheckerModel()
 
@@ -39,7 +39,7 @@ final class RegisterScene<Asset: AssetProtocol>: BaseSceneModel<
 
    override func start() {
       //
-      mainViewModel.set(Design.State.mainView.default)
+//      mainViewModel.set(Design.State.mainView.default)
 
       weak var weakSelf = self
 
@@ -74,6 +74,8 @@ final class RegisterScene<Asset: AssetProtocol>: BaseSceneModel<
 
    private func configure() {
       mainViewModel
+         .set(Design.State.mainView.default)
+         .set(.backColor(Design.color.background2))
          .set(.topModels([
             Spacer(size: 100),
             headerModel,
