@@ -64,9 +64,7 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
         set(.spacing(8))
         set(.models([
             digitalThanksTitle,
-            //    selectPeriodViewModel,
             userSearchModel,
-           // pickerModel,
             transactInputViewModel,
             tableModel,
             Spacer()

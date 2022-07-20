@@ -8,8 +8,8 @@
 import UIKit
 
 protocol IconsProtocol: InitProtocol,
-                        KeyPathMaker where MakeType: UIImage, ValueType == IconType {
-
+    KeyPathMaker where MakeType: UIImage, ValueType == IconType
+{
     associatedtype IconType
 
     var checkCircle: IconType { get }
@@ -24,6 +24,12 @@ protocol IconsProtocol: InitProtocol,
 
     var arrowDropDownLine: IconType { get }
     var arrowDropUpLine: IconType { get }
+
+    var logo: IconType { get }
+    var clapHands: IconType { get }
+    var digitalThanksLogo: IconType { get }
+
+    var loginBackground: IconType { get }
 }
 
 struct Icons: IconsProtocol {
@@ -39,10 +45,12 @@ struct Icons: IconsProtocol {
 
     var arrowDropDownLine: String { "arrow-drop-down-line" }
     var arrowDropUpLine: String { "arrow-drop-up-line" }
-    
-    var logo: String {"logo"}
-    var clapHands: String {"clap_hands"}
-    var digitalThanksLogo: String {"digital_thanks_logo"}
+
+    var logo: String { "logo" }
+    var clapHands: String { "clap_hands" }
+    var digitalThanksLogo: String { "digital_thanks_logo" }
+
+    var loginBackground: String { "background_vector.png" }
 }
 
 extension Icons: KeyPathMaker {

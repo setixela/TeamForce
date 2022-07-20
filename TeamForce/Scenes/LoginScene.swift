@@ -16,12 +16,12 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
    Void
 > {
    //
-   
+
    private lazy var clapHandsImage = ImageViewModel()
       .set(.size(.init(width: 242, height: 290)))
       .set(.image(Icons().make(\.clapHands)))
       .set(.contentMode(.scaleAspectFit))
-   
+
    private lazy var headerModel = Design.label.headline4
       .set(.padding(.init(top: 0, left: 0, bottom: 24, right: 0)))
       .set(.text("Вход"))
@@ -43,7 +43,7 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
       .set(.backColor(UIColor.clear))
       .set(.borderColor(.lightGray.withAlphaComponent(0.4)))
       .set(.borderWidth(1.0))
-   
+
    private lazy var inputParser = TelegramNickCheckerModel()
    private lazy var apiModel = AuthApiModel(apiEngine: Asset.service.apiEngine)
 
@@ -52,15 +52,13 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
    // MARK: - Start
 
    override func start() {
-//      mainViewModel.set(Design.State.mainView.default)
-      
       weak var weakSelf = self
 
       vcModel?
          .onEvent(\.viewDidLoad) {
             weakSelf?.configure()
          }
-      
+
       nextButton
          .onEvent(\.didTap) {
             guard let loginName = weakSelf?.loginName else { return }
@@ -94,11 +92,12 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
    }
 
    private func configure() {
-      mainViewModel.setupBackgroundImage(name: "background_vector.png")
-      
       mainViewModel
          .set(Design.State.mainView.default)
          .set(.backColor(Design.color.background2))
+         .set(.backView(makeBackgroundView(),
+                        inset: .init(top: 0, left: 0, bottom: UIScreen.main.bounds.height * 0.4, right: 0)))
+
       mainViewModel.topStackModel
          .set(.models([
             Spacer(size: 50),
@@ -109,12 +108,17 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
             textFieldModel,
             Spacer()
          ]))
-      
+
       mainViewModel.bottomStackModel
          .set(.models([
             nextButton,
             changeUserButton
          ]))
-         
+   }
+}
+
+private extension LoginScene {
+   func makeBackgroundView() -> UIView {
+      return UIImageView(image: Design.icon.make(\.loginBackground))
    }
 }

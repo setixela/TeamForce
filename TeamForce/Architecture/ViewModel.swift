@@ -68,20 +68,3 @@ extension UIViewModel where Self: Stateable {
       self.init(state)
    }
 }
-
-extension UIViewModel {
-    func setupBackgroundImage(name: String) {
-        let backgroundImage = UIImageView()
-        
-        let screenSize: CGRect = UIScreen.main.bounds
-        backgroundImage.frame = CGRect(x: 0,
-                                       y: 0,
-                                       width: screenSize.width,
-                                       height: screenSize.height * 0.7)
-        backgroundImage.image = UIImage(named: name)
-        backgroundImage.contentMode = .scaleAspectFit
-        
-        uiView.insertSubview(backgroundImage, at: 0)
-        
-    }
-}

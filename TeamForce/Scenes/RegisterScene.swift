@@ -75,6 +75,7 @@ final class RegisterScene<Asset: AssetProtocol>: BaseSceneModel<
       mainViewModel
          .set(Design.State.mainView.default)
          .set(.backColor(Design.color.background2))
+      
       mainViewModel.topStackModel
          .set(.models([
             Spacer(size: 100),

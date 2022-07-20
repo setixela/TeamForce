@@ -29,6 +29,7 @@ enum StackState {
     case height(CGFloat)
     case models([UIViewModel])
     case hidden(Bool)
+    case backView(UIView, inset: UIEdgeInsets = .zero)
 }
 
 // MARK: -  Stateable extensions
@@ -87,6 +88,9 @@ extension ViewModelProtocol where Self: Stateable, View: UIStackView {
             view.layer.borderWidth = value
         case .hidden(let value):
             view.isHidden = value
+        case .backView(let backView, let inset):
+            view.insertSubview(backView, at: 0)
+            backView.addAnchors.fitToViewInsetted(view, inset)
         }
     }
 }

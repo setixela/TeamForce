@@ -101,7 +101,7 @@ final class VerifyCodeScene<Asset: AssetProtocol>: BaseSceneModel<
    }
 
    private func configure() {
-      mainViewModel.setupBackgroundImage(name: "background_vector_1.png")
+   //   mainViewModel.setupBackgroundImage(name: "background_vector_1.png")
       
       mainViewModel
          .set(.backColor(Design.color.background2))
