@@ -16,6 +16,11 @@ final class VerifyCodeScene<Asset: AssetProtocol>: BaseSceneModel<
    AuthResult
 > {
    //
+   private lazy var logoImage = ImageViewModel()
+      .set(.size(.init(width: 65, height: 65)))
+      .set(.image(Icons().make(\.digitalThanksLogo)))
+      .set(.contentMode(.scaleAspectFit))
+   
    private lazy var headerModel = Design.label.headline4
       .set(.padding(.init(top: 0, left: 0, bottom: 24, right: 0)))
       .set(.text(text.title.make(\.enter)))
@@ -96,11 +101,15 @@ final class VerifyCodeScene<Asset: AssetProtocol>: BaseSceneModel<
    }
 
    private func configure() {
+      mainViewModel.setupBackgroundImage(name: "background_vector_1.png")
+      
       mainViewModel
          .set(.backColor(Design.color.background2))
          .set(Design.State.mainView.default)
          .set(.topModels([
             Spacer(size: 100),
+            logoImage,
+            Spacer(size: 300),
             headerModel,
             subtitleModel,
             Spacer(size: 16),

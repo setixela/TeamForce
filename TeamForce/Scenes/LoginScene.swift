@@ -92,18 +92,9 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
             weakSelf?.nextButton.set(Design.State.button.inactive)
          }
    }
-   
-   private func setBackgroundImage() {
-      let backgroundImage = UIImageView()
-      let screenSize: CGRect = UIScreen.main.bounds
-      backgroundImage.frame = CGRect(x: 0, y: 0, width: screenSize.width, height: screenSize.height * 0.7)
-      backgroundImage.image = UIImage(named: "background_vector.png")
-      backgroundImage.contentMode = .scaleAspectFit
-      mainViewModel.uiView.insertSubview(backgroundImage, at: 0)
-   }
 
    private func configure() {
-      setBackgroundImage()
+      mainViewModel.setupBackgroundImage(name: "background_vector.png")
       
       mainViewModel
          .set(Design.State.mainView.default)

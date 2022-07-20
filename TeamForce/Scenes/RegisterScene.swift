@@ -31,9 +31,6 @@ final class RegisterScene<Asset: AssetProtocol>: BaseSceneModel<
    private lazy var textFieldModel = TextFieldModel()
       .set(.padding(.init(top: 16, left: 16, bottom: 16, right: 16)))
       .set(.placeholder("@" + text.title.make(\.userName)))
-      .set(.backColor(UIColor.clear))
-      .set(.borderColor(.lightGray.withAlphaComponent(0.4)))
-      .set(.borderWidth(1.0))
 
    private lazy var inputParser = TelegramNickCheckerModel()
 
