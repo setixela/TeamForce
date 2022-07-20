@@ -380,7 +380,6 @@
 				19D0835A286F424000F75E4A /* LabelIconHorizontalModel.swift */,
 				19D0835E286F42C000F75E4A /* FrameCellModel.swift */,
 				1953DE852879FE30000DC537 /* PickerViewModel.swift */,
-				19EF32AF2884B6C80078F53D /* TableViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -398,6 +397,7 @@
 		19DD3D93288766770085CDA8 /* TableModels */ = {
 			isa = PBXGroup;
 			children = (
+				19EF32AF2884B6C80078F53D /* TableViewModel.swift */,
 				19DD3D94288766860085CDA8 /* LabelCellModel.swift */,
 			);
 			path = TableModels;

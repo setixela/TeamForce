@@ -13,8 +13,6 @@ enum ImageViewState {
 }
 
 final class ImageViewModel: BaseViewModel<UIImageView> {
- //   var state: ImageViewState = .init()
-
     override func start() {
 
     }
