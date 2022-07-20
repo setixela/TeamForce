@@ -16,10 +16,6 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
    Void
 > {
    //
-//   private lazy var logoIcon = ImageViewModel()
-//      .set(.size(.init(width: 30, height: 30)))
-//      .set(.image(Icons().make(\.logo)))
-//      .set(.contentMode(.scaleAspectFit))
    
    private lazy var clapHandsImage = ImageViewModel()
       .set(.size(.init(width: 242, height: 290)))
@@ -44,6 +40,9 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
    private lazy var textFieldModel = TextFieldModel()
       .set(.padding(.init(top: 16, left: 16, bottom: 16, right: 16)))
       .set(.placeholder("@" + text.title.make(\.userName)))
+      .set(.backColor(UIColor.clear))
+      .set(.borderColor(.lightGray.withAlphaComponent(0.4)))
+      .set(.borderWidth(1.0))
    
    private lazy var inputParser = TelegramNickCheckerModel()
    private lazy var apiModel = AuthApiModel(apiEngine: Asset.service.apiEngine)
@@ -92,11 +91,20 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
             weakSelf?.textFieldModel.set(.text(text))
             weakSelf?.nextButton.set(Design.State.button.inactive)
          }
-
-//      configure()
+   }
+   
+   private func setBackgroundImage() {
+      let backgroundImage = UIImageView()
+      let screenSize: CGRect = UIScreen.main.bounds
+      backgroundImage.frame = CGRect(x: 0, y: 0, width: screenSize.width, height: screenSize.height * 0.7)
+      backgroundImage.image = UIImage(named: "background_vector.png")
+      backgroundImage.contentMode = .scaleAspectFit
+      mainViewModel.uiView.insertSubview(backgroundImage, at: 0)
    }
 
    private func configure() {
+      setBackgroundImage()
+      
       mainViewModel
          .set(Design.State.mainView.default)
          .set(.backColor(Design.color.background2))
