@@ -18,24 +18,24 @@ final class VerifyCodeScene<Asset: AssetProtocol>: BaseSceneModel<
    //
    private lazy var logoImage = ImageViewModel()
       .set(.size(.init(width: 65, height: 65)))
-      .set(.image(Icons().make(\.digitalThanksLogo)))
+      .set(.image(Design.icon.make(\.digitalThanksLogo)))
       .set(.contentMode(.scaleAspectFit))
    
    private lazy var headerModel = Design.label.headline4
       .set(.padding(.init(top: 0, left: 0, bottom: 24, right: 0)))
-      .set(.text(text.title.make(\.enter)))
+      .set(.text(Text.title.make(\.enter)))
 
    private lazy var subtitleModel = Design.label.subtitle
       .set(.padding(.init(top: 0, left: 0, bottom: 40, right: 0)))
-      .set(.text("2. " + text.title.make(\.enterSmsCode)))
+      .set(.text("2. " + Text.title.make(\.enterSmsCode)))
       .set(.numberOfLines(2))
 
    private lazy var enterButton = ButtonModel(Design.State.button.inactive)
-      .set(.title(text.button.make(\.enterButton)))
+      .set(.title(Text.button.make(\.enterButton)))
 
    private lazy var textFieldModel = TextFieldModel()
       .set(.padding(.init(top: 16, left: 16, bottom: 16, right: 16)))
-      .set(.placeholder(text.title.make(\.smsCode)))
+      .set(.placeholder(Text.title.make(\.smsCode)))
       .set(.backColor(UIColor.clear))
       .set(.borderColor(.lightGray.withAlphaComponent(0.4)))
       .set(.borderWidth(1.0))

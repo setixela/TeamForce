@@ -26,10 +26,10 @@ final class LoginSuccessScene<Asset: AssetProtocol>: BaseSceneModel<
       .set(.alignment(.center))
       .set(.numberOfLines(2))
       .set(.padding(UIEdgeInsets(top: 24, left: 0, bottom: 24, right: 0)))
-      .set(.text(text.title.loginSuccess))
+      .set(.text(Text.title.loginSuccess))
 
    private lazy var nextButton = ButtonModel(Design.State.button.default)
-      .set(.title(text.button.enterButton))
+      .set(.title(Text.button.enterButton))
 
    private lazy var apiModel = GetProfileApiModel(apiEngine: Asset.service.apiEngine)
    private var userPromise: Promise<UserData>?

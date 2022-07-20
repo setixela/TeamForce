@@ -19,14 +19,14 @@ final class DigitalThanksScene<Asset: AssetProtocol>: BaseSceneModel<
    private lazy var headerModel = Design.label.headline3
       .set(.numberOfLines(2))
       .set(.padding(.init(top: 0, left: 0, bottom: 40, right: 0)))
-      .set(.text(text.title.make(\.digitalThanks)))
+      .set(.text(Text.title.make(\.digitalThanks)))
       .set(.alignment(.center))
 
    private lazy var enterButton = Design.button.default
-      .set(.title(text.button.make(\.enterButton)))
+      .set(.title(Text.button.make(\.enterButton)))
 
    private lazy var registerButton = Design.button.transparent
-      .set(.title(text.button.make(\.registerButton)))
+      .set(.title(Text.button.make(\.registerButton)))
 
    // MARK: - Start
 

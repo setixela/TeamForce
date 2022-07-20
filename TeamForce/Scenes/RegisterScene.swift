@@ -18,27 +18,25 @@ final class RegisterScene<Asset: AssetProtocol>: BaseSceneModel<
    //
    private lazy var headerModel = Design.label.headline4
       .set(.padding(.init(top: 0, left: 0, bottom: 24, right: 0)))
-      .set(.text(text.title.make(\.register)))
+      .set(.text(Text.title.make(\.register)))
 
    private lazy var subtitleModel = Design.label.subtitle
       .set(.padding(.init(top: 0, left: 0, bottom: 40, right: 0)))
-      .set(.text("1. " + text.title.make(\.enterTelegramName)))
+      .set(.text("1. " + Text.title.make(\.enterTelegramName)))
       .set(.numberOfLines(2))
 
    private lazy var nextButton = ButtonModel(Design.State.button.inactive)
-      .set(.title(text.button.make(\.nextButton)))
+      .set(.title(Text.button.make(\.nextButton)))
 
    private lazy var textFieldModel = TextFieldModel()
       .set(.padding(.init(top: 16, left: 16, bottom: 16, right: 16)))
-      .set(.placeholder("@" + text.title.make(\.userName)))
+      .set(.placeholder("@" + Text.title.make(\.userName)))
 
    private lazy var inputParser = TelegramNickCheckerModel()
 
    // MARK: - Start
 
    override func start() {
-      //
-//      mainViewModel.set(Design.State.mainView.default)
 
       weak var weakSelf = self
 

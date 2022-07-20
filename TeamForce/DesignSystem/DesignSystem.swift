@@ -33,6 +33,6 @@ struct MainViewStateBuilder: MainViewSetuperProtocol {
         .spacing(0),
         .alignment(.fill),
         .distribution(.fill),
-        .padding(UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16))
+        .padding(UIEdgeInsets(top: 0, left: 16, bottom: 16, right: 16))
     ] }
 }

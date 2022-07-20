@@ -9,26 +9,21 @@ import UIKit
 
 enum ImageViewState {
     case image(UIImage)
-    case size(CGSize)
     case contentMode(UIView.ContentMode)
 }
 
 final class ImageViewModel: BaseViewModel<UIImageView> {
-    override func start() {
-
-    }
+    override func start() {}
 }
 
-extension ImageViewModel: Stateable {
+extension ImageViewModel: Stateable2 {
+
+    typealias State = ViewState
 
     func applyState(_ state: ImageViewState) {
         switch state {
         case .image(let uIImage):
             view.image = uIImage
-        case .size(let cGSize):
-            view.addAnchors
-                .constWidth(cGSize.width)
-                .constHeight(cGSize.height)
         case .contentMode(let mode):
             view.contentMode = mode
         }

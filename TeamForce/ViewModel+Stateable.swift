@@ -12,6 +12,7 @@ enum ViewState {
     case cornerRadius(CGFloat)
     case borderWidth(CGFloat)
     case borderColor(UIColor)
+    case size(CGSize)
     case height(CGFloat)
     case hidden(Bool)
 }
@@ -30,6 +31,7 @@ enum StackState {
     case models([UIViewModel])
     case hidden(Bool)
     case backView(UIView, inset: UIEdgeInsets = .zero)
+    case backImage(UIImage)
 }
 
 // MARK: -  Stateable extensions
@@ -49,6 +51,10 @@ extension ViewModelProtocol where Self: Stateable {
             view.layer.borderWidth = value
         case .hidden(let value):
             view.isHidden = value
+        case .size(let size):
+            view.addAnchors
+                .constWidth(size.width)
+                .constHeight(size.height)
         }
     }
 }
@@ -91,6 +97,8 @@ extension ViewModelProtocol where Self: Stateable, View: UIStackView {
         case .backView(let backView, let inset):
             view.insertSubview(backView, at: 0)
             backView.addAnchors.fitToViewInsetted(view, inset)
+        case .backImage(let image):
+            applyState(.backView(UIImageView(image: image)))
         }
     }
 }

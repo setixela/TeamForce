@@ -44,7 +44,7 @@ final class MainScene<Asset: AssetProtocol>: BaseSceneModel<
 
     // MARK: - Side bar
 
-    private let sideBarModel = SideBarModel<Design>()
+    private let sideBarModel = SideBarModel<Asset>()
 
     private let menuButton = BarButtonModel()
         .sendEvent(\.initWithImage, Design.icon.make(\.sideMenu))

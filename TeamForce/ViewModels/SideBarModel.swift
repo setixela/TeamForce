@@ -12,10 +12,10 @@ struct SideBarEvents: InitProtocol {
     var hide: Event<Void>?
 }
 
-final class SideBarModel<Design: DesignProtocol>: BaseViewModel<UIStackView>,
+final class SideBarModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
     Communicable,
     Stateable,
-    Designable
+    Assetable
 {
     var eventsStore: SideBarEvents = .init()
 
@@ -23,20 +23,20 @@ final class SideBarModel<Design: DesignProtocol>: BaseViewModel<UIStackView>,
 
     private lazy var userModel = SideBarUserModel<Design>()
 
-    private lazy var item1 = IconLabelHorizontalModel<Design>()
+    private lazy var item1 = IconLabelHorizontalModel<Asset>()
         .set(.padding(Design.Parameters.contentPadding))
-        .sendEvent(\.setText, "Баланс")
-        .sendEvent(\.setImage, Design.icon.make(\.coinLine))
+        .set(.text("Баланс"))
+        .set(.icon(Design.icon.make(\.coinLine)))
 
-    private lazy var item2 = IconLabelHorizontalModel<Design>()
+    private lazy var item2 = IconLabelHorizontalModel<Asset>()
         .set(.padding(Design.Parameters.contentPadding))
-        .sendEvent(\.setText, "Новый перевод")
-        .sendEvent(\.setImage, Design.icon.make(\.upload2Fill))
+        .set(.text("Новый перевод"))
+        .set(.icon(Design.icon.make(\.upload2Fill)))
 
-    private lazy var item3 = IconLabelHorizontalModel<Design>()
+    private lazy var item3 = IconLabelHorizontalModel<Asset>()
         .set(.padding(Design.Parameters.contentPadding))
-        .sendEvent(\.setText, "История")
-        .sendEvent(\.setImage, Design.icon.make(\.historyLine))
+        .set(.text("История"))
+        .set(.icon(Design.icon.make(\.historyLine)))
 
     override func start() {
         view.backgroundColor = .white

@@ -31,10 +31,12 @@ protocol Assetable {
     typealias Design = Asset.Design
     typealias Service = Asset.Service
     typealias Scene = Asset.Scene
+    typealias Text = Asset.Text
+    typealias Icon = Design.Icon
 
-    var text: Asset.Text { get }
-
-    var icon: Asset.Design.Icon { get }
+//    var text: Asset.Text { get }
+//
+//    var icon: Asset.Design.Icon { get }
 
   //  typealias Text = Asset.Text
 }
@@ -84,14 +86,4 @@ extension BaseSceneModel {
 
 extension BaseSceneModel: Communicable, Assetable {
     typealias Events = SceneEvent<Input>
-}
-
-protocol ExtendedSceneProtocol {
-    associatedtype ViewModels: InitProtocol
-    associatedtype Models: InitProtocol
-    associatedtype LocalVars: InitProtocol
-
-    var viewModels: ViewModels { get }
-    var models: Models { get }
-    var localVars: LocalVars { get }
 }

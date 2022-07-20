@@ -15,49 +15,42 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
    Asset,
    Void
 > {
-   //
+   // MARK: - View Models
 
-   private lazy var clapHandsImage = ImageViewModel()
-      .set(.size(.init(width: 242, height: 290)))
-      .set(.image(Icons().make(\.clapHands)))
-      .set(.contentMode(.scaleAspectFit))
+   private let coverViewModel = CoverViewModel<Asset>()
 
-   private lazy var headerModel = Design.label.headline4
+   private let headerModel = Design.label.headline4
       .set(.padding(.init(top: 0, left: 0, bottom: 24, right: 0)))
       .set(.text("Вход"))
 
-   private lazy var subtitleModel = Design.label.subtitle
-      .set(.padding(.init(top: 0, left: 0, bottom: 40, right: 0)))
-      .set(.text("1. " + text.title.make(\.pressGetCode)))
+   private let subtitleModel = Design.label.subtitle
+      .set(.padding(.init(top: 0, left: 0, bottom: 32, right: 0)))
+      .set(.text(Text.title.make(\.enterTelegramName)))
       .set(.numberOfLines(2))
 
-   private lazy var nextButton = Design.button.inactive
-      .set(.title(text.button.make(\.nextButton)))
+   private let nextButton = Design.button.inactive
+      .set(.title(Text.button.make(\.getCodeButton)))
 
-   private lazy var changeUserButton = Design.button.transparent
-      .set(.title(text.button.make(\.changeUserButton)))
-
-   private lazy var textFieldModel = TextFieldModel()
+   private let textFieldModel = TextFieldModel()
       .set(.padding(.init(top: 16, left: 16, bottom: 16, right: 16)))
-      .set(.placeholder("@" + text.title.make(\.userName)))
+      .set(.placeholder("@" + Text.title.make(\.userName)))
       .set(.backColor(UIColor.clear))
       .set(.borderColor(.lightGray.withAlphaComponent(0.4)))
       .set(.borderWidth(1.0))
 
-   private lazy var inputParser = TelegramNickCheckerModel()
-   private lazy var apiModel = AuthApiModel(apiEngine: Asset.service.apiEngine)
+   // MARK: - Services
+
+   private let inputParser = TelegramNickCheckerModel()
+   private let apiModel = AuthApiModel(apiEngine: Asset.service.apiEngine)
 
    private var loginName: String?
 
    // MARK: - Start
 
    override func start() {
-      weak var weakSelf = self
+      configure()
 
-      vcModel?
-         .onEvent(\.viewDidLoad) {
-            weakSelf?.configure()
-         }
+      weak var weakSelf = self
 
       nextButton
          .onEvent(\.didTap) {
@@ -100,19 +93,17 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
 
       mainViewModel.topStackModel
          .set(.models([
-            Spacer(size: 50),
-            clapHandsImage,
+            coverViewModel,
+            Spacer(size: 16),
             headerModel,
             subtitleModel,
-            Spacer(size: 16),
             textFieldModel,
             Spacer()
          ]))
 
       mainViewModel.bottomStackModel
          .set(.models([
-            nextButton,
-            changeUserButton
+            nextButton
          ]))
    }
 }
@@ -122,3 +113,33 @@ private extension LoginScene {
       return UIImageView(image: Design.icon.make(\.loginBackground))
    }
 }
+
+// MARK: - Digital Thanks Cover
+
+final class CoverViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>, Assetable {
+   private let titleModel = IconLabelHorizontalModel<Asset>()
+      .set(.icon(Design.icon.make(\.logo)))
+      .set(.text(Text.title.make(\.digitalThanks)))
+
+   private let illustrationModel = ImageViewModel()
+      .set(.size(.init(width: 242, height: 242)))
+      .set(.image(Design.icon.make(\.clapHands)))
+
+   override func start() {
+      set(.distribution(.equalSpacing))
+      set(.alignment(.center))
+      set(.axis(.vertical))
+      set(.models([
+         titleModel,
+         illustrationModel
+      ]))
+
+      titleModel.icon
+         .set(.size(.init(width: 48, height: 48)))
+
+      titleModel.label
+         .set(.font(Design.font.headline5))
+   }
+}
+
+extension CoverViewModel: Stateable {}

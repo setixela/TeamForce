@@ -7,15 +7,16 @@
 
 import UIKit
 
-final class IconLabelHorizontalModel<Design: DesignProtocol>: BaseViewModel<UIStackView>,
-    Communicable,
-    Stateable,
-    Designable
-{
-    var eventsStore: LabelIconEvent = .init()
+enum IconLabelState {
+    case icon(UIImage)
+    case text(String)
+}
 
-    lazy var label = Design.label.body2
-    lazy var icon = ImageViewModel()
+final class IconLabelHorizontalModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
+    Assetable
+{
+    let label = Design.label.body2
+    let icon = ImageViewModel()
 
     required init() {
         super.init()
@@ -23,22 +24,26 @@ final class IconLabelHorizontalModel<Design: DesignProtocol>: BaseViewModel<UISt
 
     override func start() {
         set(.axis(.horizontal))
-            .set(.cornerRadius(Design.Parameters.cornerRadius))
-            .set(.distribution(.fill))
-            .set(.alignment(.fill))
-            .set(.models([
-                icon,
-                Spacer(size: 20),
-                label,
-                Spacer()
-            ]))
+        set(.distribution(.fill))
+        set(.alignment(.center))
+        set(.models([
+            icon,
+            Spacer(size: 20),
+            label,
+            Spacer()
+        ]))
+    }
+}
 
-        weak var weakSelf = self
-        onEvent(\.setText) {
-            weakSelf?.label.set(.text($0))
-        }
-        .onEvent(\.setImage) {
-            weakSelf?.icon.set(.image($0))
+extension IconLabelHorizontalModel: Stateable2 {
+    typealias State = StackState
+
+    func applyState(_ state: IconLabelState) {
+        switch state {
+        case .icon(let uIImage):
+            icon.set(.image(uIImage))
+        case .text(let string):
+            label.set(.text(string))
         }
     }
 }

@@ -11,8 +11,8 @@ protocol TextsProtocol: InitProtocol {
     associatedtype Button: ButtonTextsProtocol
     associatedtype Title: TitleTextsProtocol
 
-    var button: Button { get }
-    var title: Title { get }
+    static var button: Button { get }
+    static var title: Title { get }
 }
 
 // MARK: - Button texts
@@ -66,15 +66,15 @@ struct ButtonTexts: ButtonTextsProtocol {
     var nextButton: String { "ДАЛЕЕ" }
     var registerButton: String { "РЕГИСТРАЦИЯ" }
     var getCodeButton: String { "ПОЛУЧИТЬ КОД" }
-    var changeUserButton: String { "ПОЛУЧИТЬ КОД" }
+    var changeUserButton: String { "СМЕНИТЬ ПОЛЬЗОВАТЕЛЯ" }
 }
 
 struct TitleTexts: TitleTextsProtocol {
     // main
-    var digitalThanks: String { "Цифровое спасибо" }
+    var digitalThanks: String { "Digital Thanks" }
     var enter: String { "Вход" }
     var register: String { "Регистрация" }
-    var enterTelegramName: String { "Введите имя пользователя telegram или идентификатор" }
+    var enterTelegramName: String { "Для входа введите имя пользователя" }
     var enterSmsCode: String { "Введите код" }
     var pressGetCode: String { "Для входа нажмите ”получить код”, или смените пользователя" }
     var userName: String { "Имя пользователя" }
@@ -96,13 +96,12 @@ struct TitleTexts: TitleTextsProtocol {
 }
 
 struct Texts: TextsProtocol, KeyPathMaker {
-    let button = ButtonTexts()
-    let title = TitleTexts()
+    static var button: ButtonTexts { .init() }
+    static var title: TitleTexts { .init() }
 }
 
 extension KeyPathMaker where MakeType == String, ValueType == String {
     func make(_ keypath: KeyPath<Self, String>) -> String {
-        // Make transformations
         NSLocalizedString(self[keyPath: keypath], comment: "")
     }
 }

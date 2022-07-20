@@ -11,13 +11,10 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
     Assetable,
     Stateable
 {
-    var text: Asset.Text = .init() // Move to self.design.text......
-    var icon: Asset.Design.Icon = .init()
-
     // MARK: - View Models
 
     private lazy var digitalThanksTitle = Design.label.headline4
-        .set(.text(text.title.make(\.digitalThanks)))
+        .set(.text(Text.title.make(\.digitalThanks)))
         .set(.numberOfLines(1))
         .set(.alignment(.left))
         .set(.padding(.init(top: 22, left: 0, bottom: 26, right: 0)))
@@ -25,7 +22,7 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
     private lazy var userSearchModel = TextFieldModel()
         .set(.backColor(.init(red: 0.33, green: 0.33, blue: 0.33, alpha: 0.08)))
         .set(.height(48))
-        .set(.placeholder(text.title.make(\.chooseRecipient)))
+        .set(.placeholder(Text.title.make(\.chooseRecipient)))
         .set(.hidden(true))
         .set(.padding(.init(top: 0, left: 16, bottom: 0, right: 16)))
 
@@ -37,8 +34,8 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
 //        .set(.hidden(true))
 
     private lazy var transactInputViewModel = TransactInputViewModel<Design>()
-        .set(.leftCaptionText(text.title.make(\.sendThanks)))
-        .set(.rightCaptionText(text.title.make(\.availableThanks)))
+        .set(.leftCaptionText(Text.title.make(\.sendThanks)))
+        .set(.rightCaptionText(Text.title.make(\.availableThanks)))
         .set(.hidden(true))
 
     private lazy var tableModel = TableViewModel()

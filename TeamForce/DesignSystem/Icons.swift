@@ -47,10 +47,10 @@ struct Icons: IconsProtocol {
     var arrowDropUpLine: String { "arrow-drop-up-line" }
 
     var logo: String { "logo" }
-    var clapHands: String { "clap_hands" }
+    var clapHands: String { "bloom_woman_and_man_clapped_their_hands_1" }
     var digitalThanksLogo: String { "digital_thanks_logo" }
 
-    var loginBackground: String { "background_vector.png" }
+    var loginBackground: String { "background_vector" }
 }
 
 extension Icons: KeyPathMaker {
