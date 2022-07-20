@@ -16,6 +16,11 @@ final class VerifyCodeScene<Asset: AssetProtocol>: BaseSceneModel<
    AuthResult
 > {
    //
+   private lazy var logoImage = ImageViewModel()
+      .set(.size(.init(width: 65, height: 65)))
+      .set(.image(Icons().make(\.digitalThanksLogo)))
+      .set(.contentMode(.scaleAspectFit))
+   
    private lazy var headerModel = Design.label.headline4
       .set(.padding(.init(top: 0, left: 0, bottom: 24, right: 0)))
       .set(.text(text.title.make(\.enter)))
@@ -31,6 +36,9 @@ final class VerifyCodeScene<Asset: AssetProtocol>: BaseSceneModel<
    private lazy var textFieldModel = TextFieldModel()
       .set(.padding(.init(top: 16, left: 16, bottom: 16, right: 16)))
       .set(.placeholder(text.title.make(\.smsCode)))
+      .set(.backColor(UIColor.clear))
+      .set(.borderColor(.lightGray.withAlphaComponent(0.4)))
+      .set(.borderWidth(1.0))
 
    private lazy var inputParser = SmsCodeCheckerModel()
 
@@ -42,10 +50,15 @@ final class VerifyCodeScene<Asset: AssetProtocol>: BaseSceneModel<
    // MARK: - Start
 
    override func start() {
-      configure()
+//      configure()
 
       weak var weakSelf = self
 
+      vcModel?
+         .onEvent(\.viewDidLoad) {
+            weakSelf?.configure()
+         }
+      
       enterButton
          .onEvent(\.didTap) {
             guard
@@ -88,12 +101,17 @@ final class VerifyCodeScene<Asset: AssetProtocol>: BaseSceneModel<
    }
 
    private func configure() {
+      mainViewModel.setupBackgroundImage(name: "background_vector_1.png")
+      
       mainViewModel
+         .set(.backColor(Design.color.background2))
          .set(Design.State.mainView.default)
 
       mainViewModel.topStackModel
          .set(.models([
             Spacer(size: 100),
+            logoImage,
+            Spacer(size: 300),
             headerModel,
             subtitleModel,
             Spacer(size: 16),

@@ -35,7 +35,7 @@ protocol ButtonBuilderProtocol: ButtonsProtocol, StateBuilderProtocol
 
 struct ButtonStateBuilder: ButtonStateBuilderProtocol {
     var `default`: [ButtonState] { [
-        .backColor(.black),
+        .backColor(UIColor(hex: "#7F39BFFF")!),
         .textColor(.white),
         .cornerRadius(Parameters.cornerRadius),
         .height(48),
@@ -51,7 +51,7 @@ struct ButtonStateBuilder: ButtonStateBuilderProtocol {
     ] }
 
     var inactive: [ButtonState] { [
-        .backColor(.black.withAlphaComponent(0.38)),
+        .backColor(UIColor(hex: "#E9D5FEFF")!),
         .cornerRadius(Parameters.cornerRadius),
         .height(48),
         .textColor(.white),

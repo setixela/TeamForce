@@ -39,6 +39,10 @@ struct Icons: IconsProtocol {
 
     var arrowDropDownLine: String { "arrow-drop-down-line" }
     var arrowDropUpLine: String { "arrow-drop-up-line" }
+    
+    var logo: String {"logo"}
+    var clapHands: String {"clap_hands"}
+    var digitalThanksLogo: String {"digital_thanks_logo"}
 }
 
 extension Icons: KeyPathMaker {

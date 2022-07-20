@@ -34,6 +34,13 @@ final class DigitalThanksScene<Asset: AssetProtocol>: BaseSceneModel<
       //
       mainViewModel.set(Design.State.mainView.default)
 
+      weak var weakSelf = self
+      
+      vcModel?
+         .onEvent(\.viewDidLoad) {
+            weakSelf?.configure()
+         }
+      
       enterButton
          .onEvent(\.didTap) {
             Asset.router?.route(\.login, navType: .push)
@@ -44,12 +51,15 @@ final class DigitalThanksScene<Asset: AssetProtocol>: BaseSceneModel<
             Asset.router?.route(\.register, navType: .push)
          }
 
-      configure()
+//      configure()
    }
 
    private func configure() {
+      
+      
       mainViewModel
          .set(Design.State.mainView.default)
+         .set(.backColor(Design.color.background2))
          .set(.models([
             Spacer(size: 100),
             headerModel,
@@ -58,5 +68,7 @@ final class DigitalThanksScene<Asset: AssetProtocol>: BaseSceneModel<
             registerButton,
             Spacer()
          ]))
+      
+//      mainViewModel.setupBackgroundImage(name: "background_vector_1.png")
    }
 }

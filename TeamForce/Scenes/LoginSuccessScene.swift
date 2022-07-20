@@ -20,6 +20,7 @@ final class LoginSuccessScene<Asset: AssetProtocol>: BaseSceneModel<
    private lazy var checkmarkIcon = ImageViewModel()
       .set(.size(.init(width: 48, height: 48)))
       .set(.image(Icons().make(\.checkCircle)))
+      .set(.contentMode(.scaleAspectFit))
 
    private lazy var headerModel = Design.label.headline4
       .set(.alignment(.center))
@@ -46,8 +47,11 @@ final class LoginSuccessScene<Asset: AssetProtocol>: BaseSceneModel<
 
             Asset.router?.route(\.main, navType: .present, payload: promise)
          }
-
-      configure()
+      
+      vcModel?
+         .onEvent(\.viewDidLoad) {
+            weakSelf?.configure()
+         }
 
       guard let token = weakSelf?.inputValue else { return }
 
@@ -61,10 +65,11 @@ final class LoginSuccessScene<Asset: AssetProtocol>: BaseSceneModel<
    private func configure() {
       mainViewModel
          .set(Design.State.mainView.default)
+         .set(.backColor(Design.color.background2))
 
       mainViewModel.topStackModel
          .set(.models([
-            Spacer(size: 100),
+            Spacer(size: 200),
             checkmarkIcon,
             headerModel,
             Spacer(size: 16),

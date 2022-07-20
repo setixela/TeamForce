@@ -27,6 +27,7 @@ final class TextFieldModel: BaseViewModel<PaddingTextField> {
     override func start() {
         set(.backColor(.lightGray.withAlphaComponent(0.3)))
         set(.clearButtonMode(.whileEditing))
+        set(.cornerRadius(GlobalParameters.cornerRadius))
     //    view.padding = .init(top: 0, left: 16, bottom: 0, right: 16)
         view.delegate = self
         view.addTarget(self, action: #selector(changValue), for: .editingChanged)
