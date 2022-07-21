@@ -30,14 +30,15 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
 
    private let nextButton = Design.button.inactive
       .set(.title(Text.button.make(\.getCodeButton)))
+//
+//   private let textFieldModel = TextFieldModel()
+//      .set(.padding(.init(top: 16, left: 16, bottom: 16, right: 16)))
+//      .set(.placeholder("@" + Text.title.make(\.userName)))
+//      .set(.backColor(UIColor.clear))
+//      .set(.borderColor(.lightGray.withAlphaComponent(0.4)))
+//      .set(.borderWidth(1.0))
 
-   private let textFieldModel = TextFieldModel()
-      .set(.padding(.init(top: 16, left: 16, bottom: 16, right: 16)))
-      .set(.placeholder("@" + Text.title.make(\.userName)))
-      .set(.backColor(UIColor.clear))
-      .set(.borderColor(.lightGray.withAlphaComponent(0.4)))
-      .set(.borderWidth(1.0))
-
+   private let badgeModel = BadgeModel<Asset>()
    // MARK: - Services
 
    private let inputParser = TelegramNickCheckerModel()
@@ -66,7 +67,7 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
                .sendEvent(\.request, loginName)
          }
 
-      textFieldModel
+      badgeModel.textFieldModel
          .onEvent(\.didEditingChanged) { text in
             weakSelf?.inputParser.sendEvent(\.request, text)
          }
@@ -74,12 +75,12 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
       inputParser
          .onEvent(\.success) { text in
             weakSelf?.loginName = String(text.dropFirst())
-            weakSelf?.textFieldModel.set(.text(text))
+            weakSelf?.badgeModel.textFieldModel.set(.text(text))
             weakSelf?.nextButton.set(Design.State.button.default)
          }
          .onEvent(\.error) { text in
             weakSelf?.loginName = nil
-            weakSelf?.textFieldModel.set(.text(text))
+            weakSelf?.badgeModel.textFieldModel.set(.text(text))
             weakSelf?.nextButton.set(Design.State.button.inactive)
          }
    }
@@ -97,13 +98,14 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
             Spacer(size: 16),
             headerModel,
             subtitleModel,
-            textFieldModel,
+//            textFieldModel,
+            badgeModel,
             Spacer()
          ]))
 
       mainViewModel.bottomStackModel
          .set(.models([
-            nextButton
+            nextButton,
          ]))
    }
 }

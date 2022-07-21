@@ -15,6 +15,8 @@ enum TextFieldState {
     case font(UIFont)
     case clearButtonMode(UITextField.ViewMode)
     case padding(UIEdgeInsets)
+    case height(CGFloat)
+    case widht(CGFloat)
 }
 
 struct TextFieldEvents: InitProtocol {
@@ -55,6 +57,10 @@ extension TextFieldModel: Stateable2 {
             view.clearButtonMode = value
         case .padding(let value):
             view.padding = value
+        case .height(let value):
+            view.addAnchors.constHeight(value)
+        case .widht(let value):
+            view.addAnchors.constWidth(value)
         }
     }
 }

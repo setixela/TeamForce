@@ -81,6 +81,7 @@
 		19EF32AB287CE80B0078F53D /* StringStorageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19EF32AA287CE80B0078F53D /* StringStorageModel.swift */; };
 		19EF32AE287E08F80078F53D /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19EF32AD287E08F80078F53D /* Colors.swift */; };
 		19EF32B02884B6C80078F53D /* TableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19EF32AF2884B6C80078F53D /* TableViewModel.swift */; };
+		63E1916D2889519E000FD312 /* BadgeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E1916C2889519E000FD312 /* BadgeModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -168,6 +169,7 @@
 		19EF32AA287CE80B0078F53D /* StringStorageModel.swift */ = {isa = PBXFileReference; indentWidth = 3; lastKnownFileType = sourcecode.swift; path = StringStorageModel.swift; sourceTree = "<group>"; tabWidth = 3; };
 		19EF32AD287E08F80078F53D /* Colors.swift */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; tabWidth = 4; };
 		19EF32AF2884B6C80078F53D /* TableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewModel.swift; sourceTree = "<group>"; };
+		63E1916C2889519E000FD312 /* BadgeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -380,6 +382,7 @@
 				19D0835A286F424000F75E4A /* LabelIconHorizontalModel.swift */,
 				19D0835E286F42C000F75E4A /* FrameCellModel.swift */,
 				1953DE852879FE30000DC537 /* PickerViewModel.swift */,
+				63E1916C2889519E000FD312 /* BadgeModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -551,6 +554,7 @@
 				19EF32B02884B6C80078F53D /* TableViewModel.swift in Sources */,
 				191B0C292865F119001CF3D9 /* Texts.swift in Sources */,
 				19D08355286F405500F75E4A /* DoubleLabelModel.swift in Sources */,
+				63E1916D2889519E000FD312 /* BadgeModel.swift in Sources */,
 				19C1E9A328610E4E00E7976D /* Router.swift in Sources */,
 				19AE3AF22869230C00A0C6E4 /* AuthApiModel.swift in Sources */,
 				19D08351286F401000F75E4A /* SideBarUserModel.swift in Sources */,
