@@ -16,12 +16,17 @@ class BadgeModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>, Assetable {
        .set(.borderColor(.lightGray.withAlphaComponent(0.4)))
        .set(.borderWidth(1.0))
     
-    private let titleLabel = LabelModel()
+    internal let titleLabel = LabelModel()
         .set(.text(Text.title.make(\.userName)))
         .set(.numberOfLines(1))
+        .set(.font(Design.font.caption))
+        .set(.isHidden(true))
     
-    private let errorLabel = LabelModel()
+    internal let errorLabel = LabelModel()
         .set(.text(Text.title.make(\.wrongUsername)))
+        .set(.font(Design.font.caption))
+        .set(.isHidden(true))
+    
     override func start() {
         set(.distribution(.fill))
         set(.alignment(.fill))
@@ -32,10 +37,8 @@ class BadgeModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>, Assetable {
            errorLabel
         ]))
         
-        titleLabel
-           .set(.font(Design.font.caption))
-        errorLabel
-            .set(.font(Design.font.caption))
+        
+        
     }
 }
 

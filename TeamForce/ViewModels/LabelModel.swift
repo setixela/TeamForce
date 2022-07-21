@@ -24,6 +24,8 @@ extension LabelModel: Stateable {
             view.textAlignment = value
         case .padding(let value):
             view.padding = value
+        case .isHidden(let value):
+            view.isHidden = value
         }
     }
 }
@@ -35,4 +37,5 @@ enum LabelState {
     case numberOfLines(Int)
     case alignment(NSTextAlignment)
     case padding(UIEdgeInsets)
+    case isHidden(Bool)
 }

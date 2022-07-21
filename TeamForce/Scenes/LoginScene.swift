@@ -63,6 +63,7 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
                }
                .onEvent(\.error) { error in
                   print("\n", error.localizedDescription)
+                  weakSelf?.badgeModel.errorLabel.set(.isHidden(false))
                }
                .sendEvent(\.request, loginName)
          }
@@ -71,12 +72,16 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
          .onEvent(\.didEditingChanged) { text in
             weakSelf?.inputParser.sendEvent(\.request, text)
          }
+         .onEvent(\.didTap) {
+            weakSelf?.badgeModel.titleLabel.set(.isHidden(false))
+         }
 
       inputParser
          .onEvent(\.success) { text in
             weakSelf?.loginName = String(text.dropFirst())
             weakSelf?.badgeModel.textFieldModel.set(.text(text))
             weakSelf?.nextButton.set(Design.State.button.default)
+            weakSelf?.badgeModel.errorLabel.set(.isHidden(true))
          }
          .onEvent(\.error) { text in
             weakSelf?.loginName = nil

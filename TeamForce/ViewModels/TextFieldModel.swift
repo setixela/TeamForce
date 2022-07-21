@@ -21,6 +21,7 @@ enum TextFieldState {
 
 struct TextFieldEvents: InitProtocol {
     var didEditingChanged: Event<String>?
+    var didTap: Event<Void>?
 }
 
 final class TextFieldModel: BaseViewModel<PaddingTextField> {
@@ -33,12 +34,18 @@ final class TextFieldModel: BaseViewModel<PaddingTextField> {
     //    view.padding = .init(top: 0, left: 16, bottom: 0, right: 16)
         view.delegate = self
         view.addTarget(self, action: #selector(changValue), for: .editingChanged)
+        view.addTarget(self, action: #selector(didTap), for: .touchDown)
     }
 
     @objc func changValue() {
         guard let text = view.text else { return }
 
         sendEvent(\.didEditingChanged, text)
+    }
+    
+    @objc func didTap() {
+        sendEvent(\.didTap)
+        print("Did tap textfield")
     }
 }
 
