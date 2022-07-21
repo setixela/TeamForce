@@ -62,8 +62,12 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
                   Asset.router?.route(\.verifyCode, navType: .push, payload: authResult)
                }
                .onEvent(\.error) { error in
+                  //FIX: create state for Badge, and change from Badge itself
                   print("\n", error.localizedDescription)
                   weakSelf?.badgeModel.errorLabel.set(.isHidden(false))
+                  weakSelf?.badgeModel.errorLabel.set(.color(Design.color.errorRed))
+                  weakSelf?.badgeModel.titleLabel.set(.color(Design.color.errorRed))
+                  weakSelf?.badgeModel.textFieldModel.set(.borderColor(Design.color.errorRed))
                }
                .sendEvent(\.request, loginName)
          }
@@ -72,10 +76,7 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
          .onEvent(\.didEditingChanged) { text in
             weakSelf?.inputParser.sendEvent(\.request, text)
          }
-         .onEvent(\.didTap) {
-            weakSelf?.badgeModel.titleLabel.set(.isHidden(false))
-         }
-
+      
       inputParser
          .onEvent(\.success) { text in
             weakSelf?.loginName = String(text.dropFirst())

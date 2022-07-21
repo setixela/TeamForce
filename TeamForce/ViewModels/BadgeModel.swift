@@ -37,8 +37,10 @@ class BadgeModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>, Assetable {
            errorLabel
         ]))
         
-        
-        
+        textFieldModel
+           .onEvent(\.didTap) {
+               self.titleLabel.set(.isHidden(false))
+           }
     }
 }
 

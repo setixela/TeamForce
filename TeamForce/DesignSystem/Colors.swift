@@ -12,6 +12,7 @@ protocol ColorsProtocol: InitProtocol {
     var background: UIColor { get }
     var background1: UIColor { get }
     var background2: UIColor { get }
+    var errorRed: UIColor { get }
 }
 
 struct Colors: ColorsProtocol {
@@ -19,6 +20,7 @@ struct Colors: ColorsProtocol {
     var background1: UIColor { .init(white: 0.93, alpha: 1) }
     var background2: UIColor = UIColor(hex: "#F3EAFCFF")!
     var inactiveButton: UIColor = UIColor(hex: "#E9D5FEFF")!
+    var errorRed: UIColor = UIColor(hex: "#F0260BFF")!
 }
 
 extension UIColor {
