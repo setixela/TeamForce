@@ -18,7 +18,7 @@ struct DesignSystem: DesignProtocol {
 }
 
 struct GlobalParameters: ParametersProtocol {
-    static let cornerRadius: CGFloat = 6
+    static let cornerRadius: CGFloat = 10
     static var contentPadding: UIEdgeInsets { .init(top: 12, left: 16, bottom: 12, right: 16) }
 }
 

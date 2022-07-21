@@ -18,10 +18,11 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
    // MARK: - View Models
 
    private let coverViewModel = CoverViewModel<Asset>()
+      .set(.backImage(Design.icon.make(\.loginBackground)))
 
    private let headerModel = Design.label.headline4
-      .set(.padding(.init(top: 0, left: 0, bottom: 24, right: 0)))
-      .set(.text("Вход"))
+      .set(.padding(.init(top: 12, left: 0, bottom: 24, right: 0)))
+      .set(.text(Text.title.make(\.enter)))
 
    private let subtitleModel = Design.label.subtitle
       .set(.padding(.init(top: 0, left: 0, bottom: 32, right: 0)))
@@ -86,60 +87,21 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
 
    private func configure() {
       mainViewModel
-         .set(Design.State.mainView.default)
          .set(.backColor(Design.color.background2))
-         .set(.backView(makeBackgroundView(),
-                        inset: .init(top: 0, left: 0, bottom: UIScreen.main.bounds.height * 0.4, right: 0)))
 
       mainViewModel.topStackModel
          .set(.models([
-            coverViewModel,
-            Spacer(size: 16),
-            headerModel,
-            subtitleModel,
-            textFieldModel,
-            Spacer()
+            coverViewModel
          ]))
 
       mainViewModel.bottomStackModel
+         .set(Design.State.mainView.default)
          .set(.models([
+            headerModel,
+            subtitleModel,
+            textFieldModel,
+            Spacer(),
             nextButton
          ]))
    }
 }
-
-private extension LoginScene {
-   func makeBackgroundView() -> UIView {
-      return UIImageView(image: Design.icon.make(\.loginBackground))
-   }
-}
-
-// MARK: - Digital Thanks Cover
-
-final class CoverViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>, Assetable {
-   private let titleModel = IconLabelHorizontalModel<Asset>()
-      .set(.icon(Design.icon.make(\.logo)))
-      .set(.text(Text.title.make(\.digitalThanks)))
-
-   private let illustrationModel = ImageViewModel()
-      .set(.size(.init(width: 242, height: 242)))
-      .set(.image(Design.icon.make(\.clapHands)))
-
-   override func start() {
-      set(.distribution(.equalSpacing))
-      set(.alignment(.center))
-      set(.axis(.vertical))
-      set(.models([
-         titleModel,
-         illustrationModel
-      ]))
-
-      titleModel.icon
-         .set(.size(.init(width: 48, height: 48)))
-
-      titleModel.label
-         .set(.font(Design.font.headline5))
-   }
-}
-
-extension CoverViewModel: Stateable {}

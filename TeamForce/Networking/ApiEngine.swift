@@ -46,7 +46,7 @@ final class ApiEngine: ApiEngineProtocol {
                 .data(using: .utf8)
 
             let task = URLSession.shared.dataTask(with: request) { data, response, error in
-                print("\nResponse:\n\(response)\n\nData:\n\(data)\n\nError:\n\(error))")
+                print("\nResponse:\n\(String(describing: response))\n\nData:\n\(String(describing: data))\n\nError:\n\(String(describing: error)))")
                 guard let data = data else {
                     guard let error = error else {
                         seal.reject(ApiEngineError.unknown)

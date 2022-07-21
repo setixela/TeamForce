@@ -72,7 +72,7 @@ struct ButtonTexts: ButtonTextsProtocol {
 struct TitleTexts: TitleTextsProtocol {
     // main
     var digitalThanks: String { "Digital Thanks" }
-    var enter: String { "Вход" }
+    var enter: String { "Войти" }
     var register: String { "Регистрация" }
     var enterTelegramName: String { "Для входа введите имя пользователя" }
     var enterSmsCode: String { "Введите код" }

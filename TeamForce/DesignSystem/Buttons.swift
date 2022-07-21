@@ -35,7 +35,7 @@ protocol ButtonBuilderProtocol: ButtonsProtocol, StateBuilderProtocol
 
 struct ButtonStateBuilder: ButtonStateBuilderProtocol {
     var `default`: [ButtonState] { [
-        .backColor(UIColor(hex: "#7F39BFFF")!),
+        .backColor(UIColor(hex: 0x7F39BFFF)),
         .textColor(.white),
         .cornerRadius(Parameters.cornerRadius),
         .height(48),
@@ -51,7 +51,7 @@ struct ButtonStateBuilder: ButtonStateBuilderProtocol {
     ] }
 
     var inactive: [ButtonState] { [
-        .backColor(UIColor(hex: "#E9D5FEFF")!),
+        .backColor(UIColor(hex: 0xE9D5FEFF)),
         .cornerRadius(Parameters.cornerRadius),
         .height(48),
         .textColor(.white),
@@ -66,7 +66,7 @@ struct ButtonStateBuilder: ButtonStateBuilderProtocol {
         .textColor(.white),
         .enabled(true),
         .tint(.white),
-        .vertical(true)
+        .vertical(true),
     ] }
 
     typealias Parameters = GlobalParameters

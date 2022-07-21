@@ -39,7 +39,6 @@ class BaseVCModel: UIViewController, VCModelProtocol {
 
     override func loadView() {
         view = baseView
-        view.backgroundColor = .white
     }
 
     @available(*, unavailable)

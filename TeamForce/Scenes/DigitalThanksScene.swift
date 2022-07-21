@@ -32,6 +32,8 @@ final class DigitalThanksScene<Asset: AssetProtocol>: BaseSceneModel<
 
    override func start() {
       //
+      configure()
+
       mainViewModel.set(Design.State.mainView.default)
 
       weak var weakSelf = self
@@ -43,19 +45,16 @@ final class DigitalThanksScene<Asset: AssetProtocol>: BaseSceneModel<
       
       enterButton
          .onEvent(\.didTap) {
-            Asset.router?.route(\.login, navType: .push)
+            Asset.router?.route(\.login, navType: .present)
          }
 
       registerButton
          .onEvent(\.didTap) {
             Asset.router?.route(\.register, navType: .push)
          }
-
-//      configure()
    }
 
    private func configure() {
-      
       
       mainViewModel
          .set(Design.State.mainView.default)
@@ -68,7 +67,5 @@ final class DigitalThanksScene<Asset: AssetProtocol>: BaseSceneModel<
             registerButton,
             Spacer()
          ]))
-      
-//      mainViewModel.setupBackgroundImage(name: "background_vector_1.png")
    }
 }

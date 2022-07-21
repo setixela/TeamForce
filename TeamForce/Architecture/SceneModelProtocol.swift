@@ -33,12 +33,6 @@ protocol Assetable {
     typealias Scene = Asset.Scene
     typealias Text = Asset.Text
     typealias Icon = Design.Icon
-
-//    var text: Asset.Text { get }
-//
-//    var icon: Asset.Design.Icon { get }
-
-  //  typealias Text = Asset.Text
 }
 
 class BaseSceneModel<

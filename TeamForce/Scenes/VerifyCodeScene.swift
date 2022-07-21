@@ -50,14 +50,9 @@ final class VerifyCodeScene<Asset: AssetProtocol>: BaseSceneModel<
    // MARK: - Start
 
    override func start() {
-//      configure()
+      configure()
 
       weak var weakSelf = self
-
-      vcModel?
-         .onEvent(\.viewDidLoad) {
-            weakSelf?.configure()
-         }
       
       enterButton
          .onEvent(\.didTap) {
@@ -74,6 +69,7 @@ final class VerifyCodeScene<Asset: AssetProtocol>: BaseSceneModel<
 
                   weakSelf?.safeStringStorage.sendEvent(\.saveValueForKey, (value: fullToken, key: "token"))
                   weakSelf?.safeStringStorage.sendEvent(\.saveValueForKey, (value: csrfToken, key: "csrftoken"))
+
                   Asset.router?.route(\.loginSuccess, navType: .push, payload: fullToken)
                }
                .onEvent(\.error) { error in
@@ -101,7 +97,6 @@ final class VerifyCodeScene<Asset: AssetProtocol>: BaseSceneModel<
    }
 
    private func configure() {
-   //   mainViewModel.setupBackgroundImage(name: "background_vector_1.png")
       
       mainViewModel
          .set(.backColor(Design.color.background2))
@@ -110,8 +105,6 @@ final class VerifyCodeScene<Asset: AssetProtocol>: BaseSceneModel<
       mainViewModel.topStackModel
          .set(.models([
             Spacer(size: 100),
-            logoImage,
-            Spacer(size: 300),
             headerModel,
             subtitleModel,
             Spacer(size: 16),
