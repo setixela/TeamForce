@@ -18,20 +18,24 @@ class BadgeModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>, Assetable {
     
     private let titleLabel = LabelModel()
         .set(.text(Text.title.make(\.userName)))
-        .set(.font(UIFont.systemFont(ofSize: 1)))
         .set(.numberOfLines(1))
     
+    private let errorLabel = LabelModel()
+        .set(.text(Text.title.make(\.wrongUsername)))
     override func start() {
         set(.distribution(.fill))
         set(.alignment(.fill))
         set(.axis(.vertical))
         set(.models([
            titleLabel,
-           textFieldModel
+           textFieldModel,
+           errorLabel
         ]))
         
         titleLabel
-           .set(.font(Design.font.headline5))
+           .set(.font(Design.font.caption))
+        errorLabel
+            .set(.font(Design.font.caption))
     }
 }
 
