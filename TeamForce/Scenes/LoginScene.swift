@@ -64,10 +64,10 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
                .onEvent(\.error) { error in
                   //FIX: create state for Badge, and change from Badge itself
                   print("\n", error.localizedDescription)
-                  weakSelf?.badgeModel.errorLabel.set(.isHidden(false))
-                  weakSelf?.badgeModel.errorLabel.set(.color(Design.color.errorRed))
-                  weakSelf?.badgeModel.titleLabel.set(.color(Design.color.errorRed))
-                  weakSelf?.badgeModel.textFieldModel.set(.borderColor(Design.color.errorRed))
+                  weakSelf?.badgeModel.errorLabel.set(.hidden(false))
+                  weakSelf?.badgeModel.errorLabel.set(.color(Design.color.errorColor))
+                  weakSelf?.badgeModel.titleLabel.set(.color(Design.color.errorColor))
+                  weakSelf?.badgeModel.textFieldModel.set(.borderColor(Design.color.errorColor))
                }
                .sendEvent(\.request, loginName)
          }
@@ -82,7 +82,7 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
             weakSelf?.loginName = String(text.dropFirst())
             weakSelf?.badgeModel.textFieldModel.set(.text(text))
             weakSelf?.nextButton.set(Design.State.button.default)
-            weakSelf?.badgeModel.errorLabel.set(.isHidden(true))
+            weakSelf?.badgeModel.errorLabel.set(.hidden(true))
          }
          .onEvent(\.error) { text in
             weakSelf?.loginName = nil

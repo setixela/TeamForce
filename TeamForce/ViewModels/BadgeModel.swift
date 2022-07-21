@@ -20,12 +20,12 @@ class BadgeModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>, Assetable {
         .set(.text(Text.title.make(\.userName)))
         .set(.numberOfLines(1))
         .set(.font(Design.font.caption))
-        .set(.isHidden(true))
+        .set(.hidden(true))
     
     internal let errorLabel = LabelModel()
         .set(.text(Text.title.make(\.wrongUsername)))
         .set(.font(Design.font.caption))
-        .set(.isHidden(true))
+        .set(.hidden(true))
     
     override func start() {
         set(.distribution(.fill))
@@ -39,7 +39,7 @@ class BadgeModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>, Assetable {
         
         textFieldModel
            .onEvent(\.didTap) {
-               self.titleLabel.set(.isHidden(false))
+               self.titleLabel.set(.hidden(false))
            }
     }
 }
