@@ -12,8 +12,7 @@ enum BadgeState {
     case error
 }
 
-class BadgeModel: BaseViewModel<UIStackView>, Assetable {
-    typealias Asset = ProductionAsset
+class BadgeModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>, Assetable {
     
     internal var textFieldModel = TextFieldModel()
        .set(.padding(.init(top: 16, left: 16, bottom: 16, right: 16)))
