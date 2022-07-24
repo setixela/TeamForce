@@ -16,19 +16,18 @@ class BadgeModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>, Assetable {
     
     internal var textFieldModel = TextFieldModel()
        .set(.padding(.init(top: 16, left: 16, bottom: 16, right: 16)))
-       .set(.placeholder("@" + Text.title.make(\.userName)))
+       .set(.placeholder("Placeholder"))
        .set(.backColor(UIColor.clear))
        .set(.borderColor(.lightGray.withAlphaComponent(0.4)))
        .set(.borderWidth(1.0))
     
     internal let titleLabel = LabelModel()
-        .set(.text(Text.title.make(\.userName)))
-        .set(.numberOfLines(1))
+        .set(.text("Title label"))
         .set(.font(Design.font.caption))
         .set(.hidden(true))
     
     internal let errorLabel = LabelModel()
-        .set(.text(Text.title.make(\.wrongUsername)))
+        .set(.text("Error label"))
         .set(.font(Design.font.caption))
         .set(.hidden(true))
     
@@ -46,6 +45,12 @@ class BadgeModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>, Assetable {
            .onEvent(\.didTap) {
                self.titleLabel.set(.hidden(false))
            }
+    }
+    
+    func setLabels(title: String, placeholder: String, error: String) {
+        textFieldModel.set(.placeholder(placeholder))
+        titleLabel.set(.text(title))
+        errorLabel.set(.text(error))
     }
     
     func changeState(to badgeState: BadgeState) {

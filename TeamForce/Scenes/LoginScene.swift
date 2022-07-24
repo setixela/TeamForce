@@ -43,6 +43,9 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
 
    override func start() {
       configure()
+      badgeModel.setLabels(title: Text.title.make(\.userName),
+                           placeholder: "@" + Text.title.make(\.userName),
+                           error: Text.title.make(\.wrongUsername))
 
       weak var weakSelf = self
 
