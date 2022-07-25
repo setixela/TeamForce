@@ -86,8 +86,8 @@ final class SideBarModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
     }
     
     private func setProfileLabels(profile: UserData) {
-        userModel.userName.set(.text(profile.userName))
-        userModel.nickName.set(.text(profile.profile.nickName))
+        userModel.userName.set(.text(profile.profile.tgName))
+        userModel.nickName.set(.text(profile.profile.tgId))
     }
 }
 
