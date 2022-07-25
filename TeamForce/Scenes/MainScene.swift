@@ -47,12 +47,16 @@ final class MainScene<Asset: AssetProtocol>: BaseSceneModel<
     private let sideBarModel = SideBarModel<Asset>()
 
     private let menuButton = BarButtonModel()
-        .sendEvent(\.initWithImage, Design.icon.make(\.sideMenu))
+//        .sendEvent(\.initWithImage, Design.icon.make(\.sideMenu))
 
     // MARK: - Start
 
     override func start() {
         sideBarModel.start()
+        
+        menuButton
+            .sendEvent(\.initWithImage, Design.icon.make(\.sideMenu))
+        
         presentModel(balanceViewModel)
 
         mainViewModel.bottomStackModel
