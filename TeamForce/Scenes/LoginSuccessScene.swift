@@ -33,6 +33,7 @@ final class LoginSuccessScene<Asset: AssetProtocol>: BaseSceneModel<
 
    private lazy var apiModel = GetProfileApiModel(apiEngine: Asset.service.apiEngine)
    private var userPromise: Promise<UserData>?
+   private var userData: UserData?
 
    // MARK: - Start
 
@@ -43,9 +44,9 @@ final class LoginSuccessScene<Asset: AssetProtocol>: BaseSceneModel<
 
       nextButton
          .onEvent(\.didTap) {
-            guard let promise = weakSelf?.userPromise else { return }
+            guard let userData = weakSelf?.userData else { return }
 
-            Asset.router?.route(\.main, navType: .present, payload: promise)
+            Asset.router?.route(\.main, navType: .present, payload: userData)
          }
       
       vcModel?
@@ -56,8 +57,8 @@ final class LoginSuccessScene<Asset: AssetProtocol>: BaseSceneModel<
       guard let token = weakSelf?.inputValue else { return }
 
       apiModel
-         .onEvent(\.success) { promise in
-            weakSelf?.userPromise = promise
+         .onEvent(\.success) { userData in
+            weakSelf?.userData = userData
          }
          .sendEvent(\.request, TokenRequest(token: token))
    }

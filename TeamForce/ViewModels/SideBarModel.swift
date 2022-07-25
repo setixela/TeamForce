@@ -38,12 +38,15 @@ final class SideBarModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
         .set(.text("История"))
         .set(.icon(Design.icon.make(\.historyLine)))
 
+    private lazy var userProfileApiModel = GetProfileApiModel(apiEngine: Asset.service.apiEngine)
+    private lazy var safeStringStorage = StringStorageModel(engine: Asset.service.safeStringStorage)
+    
     override func start() {
         view.backgroundColor = .white
 
         userModel.avatar.set(.image(Design.icon.make(\.avatarPlaceholder)))
-        userModel.userName.set(.text("Jonny777"))
-        userModel.nickName.set(.text("id 93248723984798"))
+//        userModel.userName.set(.text("Jonny777"))
+//        userModel.nickName.set(.text("id 93248723984798"))
 
         set(.axis(.vertical))
             .set(.distribution(.fill))
@@ -62,6 +65,29 @@ final class SideBarModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
         .onEvent(\.hide) { [weak self] in
             self?.hide()
         }
+        
+        weak var weakSelf = self
+        
+        safeStringStorage
+           .onEvent(\.responseValue) { token in
+              weakSelf?.userProfileApiModel
+                 .onEvent(\.success) { profile in
+                     self.setProfileLabels(profile: profile)
+                 }
+                 .onEvent(\.error) {
+                    print($0)
+                 }
+                 .sendEvent(\.request, TokenRequest(token: token))
+           }
+           .onEvent(\.error) {
+              print($0)
+           }
+           .sendEvent(\.requestValueForKey, "token")
+    }
+    
+    private func setProfileLabels(profile: UserData) {
+        userModel.userName.set(.text(profile.userName))
+        userModel.nickName.set(.text(profile.profile.nickName))
     }
 }
 
