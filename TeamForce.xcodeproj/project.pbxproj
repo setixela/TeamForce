@@ -81,6 +81,7 @@
 		19EF32AB287CE80B0078F53D /* StringStorageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19EF32AA287CE80B0078F53D /* StringStorageModel.swift */; };
 		19EF32AE287E08F80078F53D /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19EF32AD287E08F80078F53D /* Colors.swift */; };
 		19EF32B02884B6C80078F53D /* TableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19EF32AF2884B6C80078F53D /* TableViewModel.swift */; };
+		634F4333288F4EE9003B2256 /* LogoutApiModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634F4332288F4EE9003B2256 /* LogoutApiModel.swift */; };
 		63E1916D2889519E000FD312 /* BadgeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E1916C2889519E000FD312 /* BadgeModel.swift */; };
 /* End PBXBuildFile section */
 
@@ -169,6 +170,7 @@
 		19EF32AA287CE80B0078F53D /* StringStorageModel.swift */ = {isa = PBXFileReference; indentWidth = 3; lastKnownFileType = sourcecode.swift; path = StringStorageModel.swift; sourceTree = "<group>"; tabWidth = 3; };
 		19EF32AD287E08F80078F53D /* Colors.swift */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; tabWidth = 4; };
 		19EF32AF2884B6C80078F53D /* TableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewModel.swift; sourceTree = "<group>"; };
+		634F4332288F4EE9003B2256 /* LogoutApiModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutApiModel.swift; sourceTree = "<group>"; };
 		63E1916C2889519E000FD312 /* BadgeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -422,6 +424,7 @@
 				1918CC7A286F6C83004373F3 /* GetProfileApiModel.swift */,
 				1918CC78286F6C69004373F3 /* VerifyApiModel.swift */,
 				1953DE802879FC55000DC537 /* SearchUserApiModel.swift */,
+				634F4332288F4EE9003B2256 /* LogoutApiModel.swift */,
 			);
 			path = ApiModels;
 			sourceTree = "<group>";
@@ -580,6 +583,7 @@
 				1953DE842879FDE3000DC537 /* TransactViewModel.swift in Sources */,
 				19ECD54828623D9C001765F6 /* PaddingLabel.swift in Sources */,
 				19C1E97C285E7BC300E7976D /* Communicable.swift in Sources */,
+				634F4333288F4EE9003B2256 /* LogoutApiModel.swift in Sources */,
 				19C1E9A128610E2800E7976D /* AssetProtocol.swift in Sources */,
 				190C1D16285D15FF00FB3518 /* ViewController.swift in Sources */,
 				19C1E99E28610E2800E7976D /* BaseVCModel.swift in Sources */,

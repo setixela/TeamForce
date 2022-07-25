@@ -37,9 +37,14 @@ final class SideBarModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
         .set(.padding(Design.Parameters.contentPadding))
         .set(.text("История"))
         .set(.icon(Design.icon.make(\.historyLine)))
+    
+    private lazy var item4 = IconLabelHorizontalModel<Asset>()
+        .set(.padding(Design.Parameters.contentPadding))
+        .set(.text("Выход"))
 
     private lazy var userProfileApiModel = GetProfileApiModel(apiEngine: Asset.service.apiEngine)
     private lazy var safeStringStorage = StringStorageModel(engine: Asset.service.safeStringStorage)
+    private lazy var logoutApiModel = LogoutApiModel(apiEngine: Asset.service.apiEngine)
     
     override func start() {
         view.backgroundColor = .white
@@ -56,6 +61,7 @@ final class SideBarModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
                 item1,
                 item2,
                 item3,
+                item4,
                 Spacer()
             ]))
 
@@ -83,6 +89,27 @@ final class SideBarModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
               print($0)
            }
            .sendEvent(\.requestValueForKey, "token")
+        
+        //logout item
+        item4
+            .onEvent(\.didTap) {
+                self.safeStringStorage
+                   .onEvent(\.responseValue) { token in
+                      weakSelf?.logoutApiModel
+                         .onEvent(\.success) { _ in
+                             ProductionAsset.router?
+                                 .route(\.digitalThanks, navType: .push, payload: ())
+                         }
+                         .onEvent(\.error) {
+                            print($0)
+                         }
+                         .sendEvent(\.request, TokenRequest(token: token))
+                   }
+                   .onEvent(\.error) {
+                      print($0)
+                   }
+                   .sendEvent(\.requestValueForKey, "token")
+            }
     }
     
     private func setProfileLabels(profile: UserData) {
