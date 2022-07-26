@@ -53,7 +53,7 @@ final class MainScene<Asset: AssetProtocol>: BaseSceneModel<
     // MARK: - Start
 
     override func start() {
-        sideBarModel.delegate = self
+//        sideBarModel.delegate = self
         sideBarModel.start()
         
         menuButton
@@ -85,6 +85,27 @@ final class MainScene<Asset: AssetProtocol>: BaseSceneModel<
 
                 self.sideBarModel.sendEvent(\.presentOnScene, self.mainViewModel.view)
             }
+        configureSideBarItemsEvents(weakSelf: weakSelf)
+    }
+    
+    private func configureSideBarItemsEvents(weakSelf: MainScene<Asset>?) {
+        sideBarModel.item1
+            .onEvent(\.didTap) {
+                self.sideBarModel.sendEvent(\.hide)
+                self.presentModel(weakSelf?.balanceViewModel)
+            }
+        
+        sideBarModel.item2
+            .onEvent(\.didTap) {
+                self.sideBarModel.sendEvent(\.hide)
+                self.presentModel(weakSelf?.transactViewModel)
+            }
+        
+        sideBarModel.item3
+            .onEvent(\.didTap) {
+                self.sideBarModel.sendEvent(\.hide)
+                self.presentModel(weakSelf?.historyViewModel)
+            }
     }
 }
 
@@ -100,20 +121,20 @@ extension MainScene {
     }
 }
 
-protocol MainSceneDelegate: AnyObject {
-    func presentModelAfterHide(_ model: MainSceneViewModel)
-}
-
-extension MainScene: MainSceneDelegate {
-    func presentModelAfterHide(_ model: MainSceneViewModel) {
-        switch model {
-        case .history:
-            presentModel(historyViewModel)
-        case .transact:
-            presentModel(transactViewModel)
-        case .balance:
-            presentModel(balanceViewModel)
-        }
-    }
-}
+//protocol MainSceneDelegate: AnyObject {
+//    func presentModelAfterHide(_ model: MainSceneViewModel)
+//}
+//
+//extension MainScene: MainSceneDelegate {
+//    func presentModelAfterHide(_ model: MainSceneViewModel) {
+//        switch model {
+//        case .history:
+//            presentModel(historyViewModel)
+//        case .transact:
+//            presentModel(transactViewModel)
+//        case .balance:
+//            presentModel(balanceViewModel)
+//        }
+//    }
+//}
 

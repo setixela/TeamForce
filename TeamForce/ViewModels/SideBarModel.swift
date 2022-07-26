@@ -7,12 +7,6 @@
 
 import UIKit
 
-enum MainSceneViewModel {
-    case balance
-    case transact
-    case history
-}
-
 struct SideBarEvents: InitProtocol {
     var presentOnScene: Event<UIView>?
     var hide: Event<Void>?
@@ -29,17 +23,17 @@ final class SideBarModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
 
     private lazy var userModel = SideBarUserModel<Design>()
 
-    private lazy var item1 = IconLabelHorizontalModel<Asset>()
+    internal lazy var item1 = IconLabelHorizontalModel<Asset>()
         .set(.padding(Design.Parameters.contentPadding))
         .set(.text("Баланс"))
         .set(.icon(Design.icon.make(\.coinLine)))
 
-    private lazy var item2 = IconLabelHorizontalModel<Asset>()
+    internal lazy var item2 = IconLabelHorizontalModel<Asset>()
         .set(.padding(Design.Parameters.contentPadding))
         .set(.text("Новый перевод"))
         .set(.icon(Design.icon.make(\.upload2Fill)))
 
-    private lazy var item3 = IconLabelHorizontalModel<Asset>()
+    internal lazy var item3 = IconLabelHorizontalModel<Asset>()
         .set(.padding(Design.Parameters.contentPadding))
         .set(.text("История"))
         .set(.icon(Design.icon.make(\.historyLine)))
@@ -52,7 +46,6 @@ final class SideBarModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
     private lazy var safeStringStorage = StringStorageModel(engine: Asset.service.safeStringStorage)
     private lazy var logoutApiModel = LogoutApiModel(apiEngine: Asset.service.apiEngine)
     
-    weak var delegate: MainSceneDelegate?
     
     override func start() {
         view.backgroundColor = .white
@@ -77,13 +70,12 @@ final class SideBarModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
             self?.show(baseView: baseView)
         }
         .onEvent(\.hide) { [weak self] in
-            self?.hide(thenPresent: nil)
+            self?.hide()
         }
         
         weak var weakSelf = self
         configureProfile(weakSelf)
         configureLogout(weakSelf)
-        configureItems()
     }
     
     private func configureProfile(_ weakSelf: SideBarModel<Asset>?) {
@@ -102,23 +94,6 @@ final class SideBarModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
               print($0)
            }
            .sendEvent(\.requestValueForKey, "token")
-    }
-    
-    private func configureItems() {
-        item1
-            .onEvent(\.didTap) {
-                self.hide(thenPresent: MainSceneViewModel.balance)
-            }
-        
-        item2
-            .onEvent(\.didTap) {
-                self.hide(thenPresent: MainSceneViewModel.transact)
-            }
-        
-        item3
-            .onEvent(\.didTap) {
-                self.hide(thenPresent: MainSceneViewModel.history)
-            }
     }
     
     private func configureLogout(_ weakSelf: SideBarModel<Asset>?) {
@@ -171,14 +146,12 @@ extension SideBarModel {
         }
     }
 
-    private func hide(thenPresent vm: MainSceneViewModel? = nil) {
+    private func hide() {
         print("\nHIDE\n")
         isPresented = false
 
         UIView.animate(withDuration: 0.25) {
             self.view.frame.origin = CGPoint(x: -self.view.frame.size.width, y: 0)
         }
-        guard let vm = vm else { return }
-        self.delegate?.presentModelAfterHide(vm)
     }
 }
