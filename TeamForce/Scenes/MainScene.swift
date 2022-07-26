@@ -13,7 +13,8 @@ final class MainScene<Asset: AssetProtocol>: BaseSceneModel<
     DefaultVCModel,
     StackWithBottomPanelModel,
     Asset,
-    Promise<UserData>
+    Void
+    //Promise<UserData>
 > {
     // MARK: - Balance View Model
 
@@ -52,6 +53,7 @@ final class MainScene<Asset: AssetProtocol>: BaseSceneModel<
     // MARK: - Start
 
     override func start() {
+        sideBarModel.delegate = self
         sideBarModel.start()
         
         menuButton
@@ -95,6 +97,23 @@ extension MainScene {
             .set(.models([
                 model
             ]))
+    }
+}
+
+protocol MainSceneDelegate: AnyObject {
+    func presentModelAfterHide(_ model: MainSceneViewModel)
+}
+
+extension MainScene: MainSceneDelegate {
+    func presentModelAfterHide(_ model: MainSceneViewModel) {
+        switch model {
+        case .history:
+            presentModel(historyViewModel)
+        case .transact:
+            presentModel(transactViewModel)
+        case .balance:
+            presentModel(balanceViewModel)
+        }
     }
 }
 
