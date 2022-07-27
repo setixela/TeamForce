@@ -49,6 +49,7 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
         .set(.hidden(true))
     
     private lazy var sendButton = Design.button.default
+        .set(Design.State.button.inactive)
         .set(.title(Text.button.make(\.sendButton)))
         .set(.hidden(true))
     //FIX: change to UITextView
@@ -70,6 +71,12 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
     private lazy var foundUsers: [FoundUser] = []
     private lazy var tokens: (token: String, csrf: String) = ("", "")
     private lazy var recipientID: Int = 0
+    
+    private lazy var coinInputParser = CoinCheckerModel()
+    private lazy var reasonInputParser = ReasonCheckerModel()
+    
+    private lazy var correctCoinInput: Bool = false
+    private lazy var correctReasonInput: Bool = false
 
     // MARK: - Start
 
@@ -144,6 +151,44 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
             return cellModel
         }
         tableModel.set(.models(cellModels))
+        
+        transactInputViewModel.textField
+            .onEvent(\.didEditingChanged) { [weak self] text in
+                self?.coinInputParser.sendEvent(\.request, text)
+            }
+        
+        coinInputParser
+           .onEvent(\.success) {
+               wS?.transactInputViewModel.textField.set(.text($0))
+               wS?.correctCoinInput = true
+               if wS?.correctReasonInput == true {
+                   wS?.sendButton.set(Design.State.button.default)
+               }
+           }
+           .onEvent(\.error) {_ in
+               wS?.correctCoinInput = false
+               wS?.transactInputViewModel.textField.set(.text(""))
+               wS?.sendButton.set(Design.State.button.inactive)
+           }
+        
+        reasonTextField
+            .onEvent(\.didEditingChanged) { [weak self] text in
+                self?.reasonInputParser.sendEvent(\.request, text)
+            }
+        
+        reasonInputParser
+           .onEvent(\.success) {
+               wS?.reasonTextField.set(.text($0))
+               wS?.correctReasonInput = true
+               if wS?.correctCoinInput == true {
+                   wS?.sendButton.set(Design.State.button.default)
+               }
+           }
+           .onEvent(\.error) {
+               wS?.reasonTextField.set(.text($0))
+               wS?.correctReasonInput = false
+               wS?.sendButton.set(Design.State.button.inactive)
+           }
     }
     
     func configure() {
