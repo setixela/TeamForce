@@ -51,6 +51,15 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
     private lazy var sendButton = Design.button.default
         .set(.title(Text.button.make(\.sendButton)))
         .set(.hidden(true))
+    //FIX: change to UITextView
+    private lazy var reasonTextField = TextFieldModel()
+        .set(.padding(.init(top: 16, left: 16, bottom: 16, right: 16)))
+        .set(.placeholder("Обоснование"))
+        .set(.backColor(UIColor.clear))
+        .set(.borderColor(.lightGray.withAlphaComponent(0.4)))
+        .set(.borderWidth(1.0))
+        .set(.hidden(true))
+        .set(.clearButtonMode(UITextField.ViewMode.never))
 
     // MARK: - Services
 
@@ -99,6 +108,7 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
             self.tableModel.set(.hidden(true))
             self.transactInputViewModel.set(.hidden(false))
             self.sendButton.set(.hidden(false))
+            self.reasonTextField.set(.hidden(false))
         }
 
         let cellModels = (0 ... 100).map { index -> LabelCellModel in
@@ -118,6 +128,7 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
                     digitalThanksTitle,
                     userSearchModel,
                     transactInputViewModel,
+                    reasonTextField,
                     sendButton,
                     tableModel,
                     Spacer()
