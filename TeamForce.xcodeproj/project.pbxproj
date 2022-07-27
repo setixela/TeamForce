@@ -85,6 +85,7 @@
 		6368D8222891508C0049EEAB /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6368D8212891508C0049EEAB /* ProfileViewModel.swift */; };
 		6368D824289168740049EEAB /* CustomCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6368D823289168740049EEAB /* CustomCellModel.swift */; };
 		6368D826289187B50049EEAB /* SendCoinApiModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6368D825289187B50049EEAB /* SendCoinApiModel.swift */; };
+		6368D8282891E7C40049EEAB /* UserDefault+helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6368D8272891E7C30049EEAB /* UserDefault+helpers.swift */; };
 		63E1916D2889519E000FD312 /* BadgeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E1916C2889519E000FD312 /* BadgeModel.swift */; };
 /* End PBXBuildFile section */
 
@@ -177,6 +178,7 @@
 		6368D8212891508C0049EEAB /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		6368D823289168740049EEAB /* CustomCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCellModel.swift; sourceTree = "<group>"; };
 		6368D825289187B50049EEAB /* SendCoinApiModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendCoinApiModel.swift; sourceTree = "<group>"; };
+		6368D8272891E7C30049EEAB /* UserDefault+helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefault+helpers.swift"; sourceTree = "<group>"; };
 		63E1916C2889519E000FD312 /* BadgeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -226,6 +228,7 @@
 				19C1E99B28610E2800E7976D /* AssetProtocol.swift */,
 				196750B3286519660019A6DE /* ProductionAsset.swift */,
 				194C095528759FD900D88D5B /* ViewModel+Stateable.swift */,
+				6368D8272891E7C30049EEAB /* UserDefault+helpers.swift */,
 				196750A02865168F0019A6DE /* Scenes */,
 				199C4B6728632461008AD6FD /* DesignSystem */,
 				19AE3AF0286922FC00A0C6E4 /* Models */,
@@ -566,6 +569,7 @@
 				19EF32B02884B6C80078F53D /* TableViewModel.swift in Sources */,
 				191B0C292865F119001CF3D9 /* Texts.swift in Sources */,
 				19D08355286F405500F75E4A /* DoubleLabelModel.swift in Sources */,
+				6368D8282891E7C40049EEAB /* UserDefault+helpers.swift in Sources */,
 				63E1916D2889519E000FD312 /* BadgeModel.swift in Sources */,
 				19C1E9A328610E4E00E7976D /* Router.swift in Sources */,
 				19AE3AF22869230C00A0C6E4 /* AuthApiModel.swift in Sources */,

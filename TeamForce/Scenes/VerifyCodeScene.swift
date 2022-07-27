@@ -73,6 +73,8 @@ final class VerifyCodeScene<Asset: AssetProtocol>: BaseSceneModel<
                   weakSelf?.safeStringStorage.sendEvent(\.saveValueForKey, (value: fullToken, key: "token"))
                   weakSelf?.safeStringStorage.sendEvent(\.saveValueForKey, (value: csrfToken, key: "csrftoken"))
                   Asset.router?.route(\.loginSuccess, navType: .push, payload: fullToken)
+                  
+                  UserDefaults.standard.setIsLoggedIn(value: true)
                }
                .onEvent(\.error) { error in
                   print(error)

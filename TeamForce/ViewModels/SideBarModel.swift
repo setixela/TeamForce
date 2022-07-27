@@ -109,8 +109,8 @@ final class SideBarModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
                    .onEvent(\.responseValue) { token in
                       weakSelf?.logoutApiModel
                          .onEvent(\.success) { _ in
-                             ProductionAsset.router?
-                                 .route(\.digitalThanks, navType: .push, payload: ())
+                             UserDefaults.standard.setIsLoggedIn(value: false)
+                             Asset.router?.route(\.digitalThanks, navType: .present, payload: ())
                          }
                          .onEvent(\.error) {
                             print($0)
