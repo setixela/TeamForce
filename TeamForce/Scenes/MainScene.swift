@@ -121,20 +121,4 @@ extension MainScene {
     }
 }
 
-//protocol MainSceneDelegate: AnyObject {
-//    func presentModelAfterHide(_ model: MainSceneViewModel)
-//}
-//
-//extension MainScene: MainSceneDelegate {
-//    func presentModelAfterHide(_ model: MainSceneViewModel) {
-//        switch model {
-//        case .history:
-//            presentModel(historyViewModel)
-//        case .transact:
-//            presentModel(transactViewModel)
-//        case .balance:
-//            presentModel(balanceViewModel)
-//        }
-//    }
-//}
 

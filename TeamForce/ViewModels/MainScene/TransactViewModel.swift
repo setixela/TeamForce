@@ -7,10 +7,14 @@
 
 import UIKit
 
+struct TransactViewEvent: InitProtocol {}
+
 final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
-    Assetable,
-    Stateable
+    Communicable,
+    Stateable,
+    Assetable
 {
+    var eventsStore: TransactViewEvent = .init()
     // MARK: - View Models
 
     private lazy var digitalThanksTitle = Design.label.headline4
@@ -43,6 +47,10 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
         .set(.borderWidth(1))
         .set(.cornerRadius(Design.Parameters.cornerRadius))
         .set(.hidden(true))
+    
+    private lazy var sendButton = Design.button.default
+        .set(.title(Text.button.make(\.sendButton)))
+        .set(.hidden(true))
 
     // MARK: - Services
 
@@ -55,20 +63,10 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
     // MARK: - Start
 
     override func start() {
-        set(.axis(.vertical))
-        set(.distribution(.fill))
-        set(.alignment(.fill))
-        set(.spacing(8))
-        set(.models([
-            digitalThanksTitle,
-            userSearchModel,
-            transactInputViewModel,
-            tableModel,
-            Spacer()
-        ]))
-
+        configure()
+        
         weak var wS = self
-
+        
         userSearchModel.onEvent(\.didEditingChanged) { text in
             guard let self = wS else { return }
             self.transactInputViewModel.set(.hidden(true))
@@ -100,6 +98,7 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
             self.userSearchModel.set(.text(self.foundUsers[index]))
             self.tableModel.set(.hidden(true))
             self.transactInputViewModel.set(.hidden(false))
+            self.sendButton.set(.hidden(false))
         }
 
         let cellModels = (0 ... 100).map { index -> LabelCellModel in
@@ -108,6 +107,21 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
             return cellModel
         }
         tableModel.set(.models(cellModels))
+    }
+    
+    func configure() {
+        set(.axis(.vertical))
+                set(.distribution(.fill))
+                set(.alignment(.fill))
+                set(.spacing(8))
+                set(.models([
+                    digitalThanksTitle,
+                    userSearchModel,
+                    transactInputViewModel,
+                    sendButton,
+                    tableModel,
+                    Spacer()
+                ]))
     }
 }
 
