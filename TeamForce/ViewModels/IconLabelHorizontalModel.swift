@@ -12,9 +12,15 @@ enum IconLabelState {
     case text(String)
 }
 
+struct IconLabelHorizontalModelEvents: InitProtocol {
+   var didTap: Event<Void>?
+}
+
 final class IconLabelHorizontalModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
-    Assetable
+    Assetable, Communicable
 {
+    var eventsStore: IconLabelHorizontalModelEvents = .init()
+    
     let label = Design.label.body2
     let icon = ImageViewModel()
 
@@ -32,6 +38,14 @@ final class IconLabelHorizontalModel<Asset: AssetProtocol>: BaseViewModel<UIStac
             label,
             Spacer()
         ]))
+        
+        let gesture = UITapGestureRecognizer(target: self, action:  #selector(self.clickAction(sender:)))
+        view.addGestureRecognizer(gesture)
+    }
+    
+    @objc func clickAction(sender : UITapGestureRecognizer) {
+        sendEvent(\.didTap)
+        print("Did tap1")
     }
 }
 

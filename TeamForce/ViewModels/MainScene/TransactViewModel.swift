@@ -7,10 +7,14 @@
 
 import UIKit
 
+struct TransactViewEvent: InitProtocol {}
+
 final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
-    Assetable,
-    Stateable
+    Communicable,
+    Stateable,
+    Assetable
 {
+    var eventsStore: TransactViewEvent = .init()
     // MARK: - View Models
 
     private lazy var digitalThanksTitle = Design.label.headline4
@@ -43,35 +47,42 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
         .set(.borderWidth(1))
         .set(.cornerRadius(Design.Parameters.cornerRadius))
         .set(.hidden(true))
+    
+    private lazy var sendButton = Design.button.default
+        .set(.title(Text.button.make(\.sendButton)))
+        .set(.hidden(true))
+    //FIX: change to UITextView
+    private lazy var reasonTextField = TextFieldModel()
+        .set(.padding(.init(top: 16, left: 16, bottom: 16, right: 16)))
+        .set(.placeholder("Обоснование"))
+        .set(.backColor(UIColor.clear))
+        .set(.borderColor(.lightGray.withAlphaComponent(0.4)))
+        .set(.borderWidth(1.0))
+        .set(.hidden(true))
+        .set(.clearButtonMode(UITextField.ViewMode.never))
 
     // MARK: - Services
 
     private lazy var apiModel = SearchUserApiModel(apiEngine: Asset.service.apiEngine)
     private lazy var safeStringStorage = StringStorageModel(engine: Asset.service.safeStringStorage)
+    private lazy var sendCoinApiModel = SendCoinApiModel(apiEngine: Asset.service.apiEngine)
 
-    private lazy var foundUsers: [String] = []
+    private lazy var foundUsers: [FoundUser] = []
     private lazy var tokens: (token: String, csrf: String) = ("", "")
+    private lazy var recipientID: Int = 0
 
     // MARK: - Start
 
     override func start() {
-        set(.axis(.vertical))
-        set(.distribution(.fill))
-        set(.alignment(.fill))
-        set(.spacing(8))
-        set(.models([
-            digitalThanksTitle,
-            userSearchModel,
-            transactInputViewModel,
-            tableModel,
-            Spacer()
-        ]))
-
+        configure()
+        
         weak var wS = self
-
+        
         userSearchModel.onEvent(\.didEditingChanged) { text in
             guard let self = wS else { return }
             self.transactInputViewModel.set(.hidden(true))
+            self.sendButton.set(.hidden(true))
+            self.reasonTextField.set(.hidden(true))
 
             guard !text.isEmpty else {
                 self.tableModel.set(.hidden(true))
@@ -82,6 +93,28 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
                                              token: self.tokens.token,
                                              csrfToken: self.tokens.csrf))
         }
+        
+        sendButton
+            .onEvent(\.didTap) {
+                wS?.sendCoinApiModel
+                    .onEvent(\.success) { _ in
+                        wS?.userSearchModel.set(.text(""))
+                        wS?.transactInputViewModel.set(.hidden(true))
+                        wS?.transactInputViewModel.textField.set(.text(""))
+                        wS?.sendButton.set(.hidden(true))
+                        wS?.reasonTextField.set(.text(""))
+                        wS?.reasonTextField.set(.hidden(true))
+                    }
+                    .onEvent(\.error) {
+                       print("coin sending error: ")
+                       print($0)
+                    }
+                    .sendEvent(\.request, SendCoinRequest(token: self.tokens.token,
+                                                          csrfToken: self.tokens.csrf,
+                                                          recipient: self.recipientID,
+                                                          amount: self.transactInputViewModel.textField.view.text ?? "0",
+                                                          reason: self.reasonTextField.view.text ?? "thanks"))
+            }
 
         safeStringStorage
             .onEvent(\.responseValue) { token in
@@ -96,10 +129,13 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
 
         tableModel.onEvent(\.didSelectRow) { index in
             guard let self = wS else { return }
-
-            self.userSearchModel.set(.text(self.foundUsers[index]))
+            self.recipientID = self.foundUsers[index].userId
+            let fullName = self.foundUsers[index].name + " " + self.foundUsers[index].surname
+            self.userSearchModel.set(.text(fullName))
             self.tableModel.set(.hidden(true))
             self.transactInputViewModel.set(.hidden(false))
+            self.sendButton.set(.hidden(false))
+            self.reasonTextField.set(.hidden(false))
         }
 
         let cellModels = (0 ... 100).map { index -> LabelCellModel in
@@ -109,6 +145,22 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
         }
         tableModel.set(.models(cellModels))
     }
+    
+    func configure() {
+        set(.axis(.vertical))
+                set(.distribution(.fill))
+                set(.alignment(.fill))
+                set(.spacing(8))
+                set(.models([
+                    digitalThanksTitle,
+                    userSearchModel,
+                    transactInputViewModel,
+                    reasonTextField,
+                    sendButton,
+                    tableModel,
+                    Spacer()
+                ]))
+    }
 }
 
 extension TransactViewModel {
@@ -116,7 +168,7 @@ extension TransactViewModel {
         apiModel
             .onEvent(\.success) { [weak self] result in
                 let found = result.map { $0.name + " " + $0.surname }
-                self?.foundUsers = found
+                self?.foundUsers = result
                 let cellModels = found.map { name -> LabelCellModel in
                     let cellModel = LabelCellModel()
                     cellModel.set(.text(name))
@@ -139,7 +191,7 @@ final class TransactInputViewModel<Design: DesignProtocol>: BaseViewModel<UIStac
 {
     private lazy var doubleLabel = DoubleLabelModel<Design>()
 
-    private lazy var textField = TextFieldModel()
+    internal lazy var textField = TextFieldModel()
         .set(.clearButtonMode(.never))
         .set(.font(Design.font.headline2))
         .set(.height(72))

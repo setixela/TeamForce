@@ -23,27 +23,34 @@ final class SideBarModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
 
     private lazy var userModel = SideBarUserModel<Design>()
 
-    private lazy var item1 = IconLabelHorizontalModel<Asset>()
+    internal lazy var item1 = IconLabelHorizontalModel<Asset>()
         .set(.padding(Design.Parameters.contentPadding))
         .set(.text("Баланс"))
         .set(.icon(Design.icon.make(\.coinLine)))
 
-    private lazy var item2 = IconLabelHorizontalModel<Asset>()
+    internal lazy var item2 = IconLabelHorizontalModel<Asset>()
         .set(.padding(Design.Parameters.contentPadding))
         .set(.text("Новый перевод"))
         .set(.icon(Design.icon.make(\.upload2Fill)))
 
-    private lazy var item3 = IconLabelHorizontalModel<Asset>()
+    internal lazy var item3 = IconLabelHorizontalModel<Asset>()
         .set(.padding(Design.Parameters.contentPadding))
         .set(.text("История"))
         .set(.icon(Design.icon.make(\.historyLine)))
+    
+    private lazy var item4 = IconLabelHorizontalModel<Asset>()
+        .set(.padding(Design.Parameters.contentPadding))
+        .set(.text("Выход"))
 
+    private lazy var userProfileApiModel = GetProfileApiModel(apiEngine: Asset.service.apiEngine)
+    private lazy var safeStringStorage = StringStorageModel(engine: Asset.service.safeStringStorage)
+    private lazy var logoutApiModel = LogoutApiModel(apiEngine: Asset.service.apiEngine)
+    
+    
     override func start() {
         view.backgroundColor = .white
 
         userModel.avatar.set(.image(Design.icon.make(\.avatarPlaceholder)))
-        userModel.userName.set(.text("Jonny777"))
-        userModel.nickName.set(.text("id 93248723984798"))
 
         set(.axis(.vertical))
             .set(.distribution(.fill))
@@ -53,6 +60,7 @@ final class SideBarModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
                 item1,
                 item2,
                 item3,
+                item4,
                 Spacer()
             ]))
 
@@ -62,6 +70,63 @@ final class SideBarModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
         .onEvent(\.hide) { [weak self] in
             self?.hide()
         }
+        
+        weak var weakSelf = self
+        configureProfile(weakSelf)
+        configureLogout(weakSelf)
+        
+        userModel
+            .onEvent(\.didTap) {
+                print("User model did tap")
+                ProductionAsset.router?
+                    .route(\.profile, navType: .push, payload: ())
+                
+            }
+    }
+    
+    private func configureProfile(_ weakSelf: SideBarModel<Asset>?) {
+        safeStringStorage
+           .onEvent(\.responseValue) { token in
+              weakSelf?.userProfileApiModel
+                 .onEvent(\.success) { profile in
+                     self.setProfileLabels(profile: profile)
+                 }
+                 .onEvent(\.error) {
+                    print($0)
+                 }
+                 .sendEvent(\.request, TokenRequest(token: token))
+           }
+           .onEvent(\.error) {
+              print($0)
+           }
+           .sendEvent(\.requestValueForKey, "token")
+    }
+    
+    private func configureLogout(_ weakSelf: SideBarModel<Asset>?) {
+        item4
+            .onEvent(\.didTap) {
+                self.safeStringStorage
+                   .onEvent(\.responseValue) { token in
+                      weakSelf?.logoutApiModel
+                         .onEvent(\.success) { _ in
+                             UserDefaults.standard.setIsLoggedIn(value: false)
+                             Asset.router?.route(\.digitalThanks, navType: .present, payload: ())
+                         }
+                         .onEvent(\.error) {
+                            print($0)
+                         }
+                         .sendEvent(\.request, TokenRequest(token: token))
+                   }
+                   .onEvent(\.error) {
+                      print($0)
+                   }
+                   .sendEvent(\.requestValueForKey, "token")
+            }
+    }
+    
+    private func setProfileLabels(profile: UserData) {
+        userModel.userName.set(.text(profile.profile.tgName))
+        userModel.nickName.set(.text(profile.profile.tgId))
     }
 }
 

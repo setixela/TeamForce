@@ -47,7 +47,13 @@ private extension SceneDelegate {
             .onEvent(\.present, { vc in
                 nc.viewControllers = [vc]
             })
-//            .route(\.main, navType: .push, payload: ())
-            .route(\.digitalThanks, navType: .push, payload: ())
+        
+        if UserDefaults.standard.isLoggedIn() {
+            ProductionAsset.router?
+                .route(\.main, navType: .push, payload: ())
+        } else {
+            ProductionAsset.router?
+                .route(\.digitalThanks, navType: .push, payload: ())
+        }
     }
 }

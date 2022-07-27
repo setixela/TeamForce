@@ -15,10 +15,13 @@ enum TextFieldState {
     case font(UIFont)
     case clearButtonMode(UITextField.ViewMode)
     case padding(UIEdgeInsets)
+    case height(CGFloat)
+    case widht(CGFloat)
 }
 
 struct TextFieldEvents: InitProtocol {
     var didEditingChanged: Event<String>?
+    var didTap: Event<Void>?
 }
 
 final class TextFieldModel: BaseViewModel<PaddingTextField> {
@@ -31,12 +34,18 @@ final class TextFieldModel: BaseViewModel<PaddingTextField> {
     //    view.padding = .init(top: 0, left: 16, bottom: 0, right: 16)
         view.delegate = self
         view.addTarget(self, action: #selector(changValue), for: .editingChanged)
+        view.addTarget(self, action: #selector(didTap), for: .touchDown)
     }
 
     @objc func changValue() {
         guard let text = view.text else { return }
 
         sendEvent(\.didEditingChanged, text)
+    }
+    
+    @objc func didTap() {
+        sendEvent(\.didTap)
+        print("Did tap textfield")
     }
 }
 
@@ -55,6 +64,10 @@ extension TextFieldModel: Stateable2 {
             view.clearButtonMode = value
         case .padding(let value):
             view.padding = value
+        case .height(let value):
+            view.addAnchors.constHeight(value)
+        case .widht(let value):
+            view.addAnchors.constWidth(value)
         }
     }
 }

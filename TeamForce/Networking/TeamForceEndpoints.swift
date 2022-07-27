@@ -57,4 +57,23 @@ enum TeamForceEndpoints {
 
         let headers: [String: String]
     }
+    
+    struct Logout: EndpointProtocol {
+        //
+        let method = HTTPMethod.get
+        
+        var endPoint: String { urlBase + "/logout/" }
+    }
+    
+    struct SendCoin: EndpointProtocol {
+        //
+        let method = HTTPMethod.post
+        
+        var endPoint: String { urlBase + "/send-coins/" }
+        
+        let body: [String : Any]
+        
+        let headers: [String : String]
+        
+    }
 }
