@@ -84,6 +84,7 @@
 		634F4333288F4EE9003B2256 /* LogoutApiModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634F4332288F4EE9003B2256 /* LogoutApiModel.swift */; };
 		6368D8222891508C0049EEAB /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6368D8212891508C0049EEAB /* ProfileViewModel.swift */; };
 		6368D824289168740049EEAB /* CustomCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6368D823289168740049EEAB /* CustomCellModel.swift */; };
+		6368D826289187B50049EEAB /* SendCoinApiModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6368D825289187B50049EEAB /* SendCoinApiModel.swift */; };
 		63E1916D2889519E000FD312 /* BadgeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E1916C2889519E000FD312 /* BadgeModel.swift */; };
 /* End PBXBuildFile section */
 
@@ -175,6 +176,7 @@
 		634F4332288F4EE9003B2256 /* LogoutApiModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutApiModel.swift; sourceTree = "<group>"; };
 		6368D8212891508C0049EEAB /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		6368D823289168740049EEAB /* CustomCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCellModel.swift; sourceTree = "<group>"; };
+		6368D825289187B50049EEAB /* SendCoinApiModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendCoinApiModel.swift; sourceTree = "<group>"; };
 		63E1916C2889519E000FD312 /* BadgeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -431,6 +433,7 @@
 				1918CC78286F6C69004373F3 /* VerifyApiModel.swift */,
 				1953DE802879FC55000DC537 /* SearchUserApiModel.swift */,
 				634F4332288F4EE9003B2256 /* LogoutApiModel.swift */,
+				6368D825289187B50049EEAB /* SendCoinApiModel.swift */,
 			);
 			path = ApiModels;
 			sourceTree = "<group>";
@@ -575,6 +578,7 @@
 				19C1E9AC2861167E00E7976D /* SimpleAnchors.swift in Sources */,
 				196750A6286516F40019A6DE /* LoginScene.swift in Sources */,
 				1953DE8A287B4624000DC537 /* LabelStateBuilder.swift in Sources */,
+				6368D826289187B50049EEAB /* SendCoinApiModel.swift in Sources */,
 				1918CC7D286F6CAC004373F3 /* GetBalanceApiModel.swift in Sources */,
 				196750A8286517070019A6DE /* VerifyCodeScene.swift in Sources */,
 				19D08357286F41B200F75E4A /* DoubleLabelPairModel.swift in Sources */,
