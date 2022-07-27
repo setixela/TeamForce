@@ -51,8 +51,6 @@ final class SideBarModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
         view.backgroundColor = .white
 
         userModel.avatar.set(.image(Design.icon.make(\.avatarPlaceholder)))
-//        userModel.userName.set(.text("Jonny777"))
-//        userModel.nickName.set(.text("id 93248723984798"))
 
         set(.axis(.vertical))
             .set(.distribution(.fill))
@@ -76,6 +74,14 @@ final class SideBarModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
         weak var weakSelf = self
         configureProfile(weakSelf)
         configureLogout(weakSelf)
+        
+        userModel
+            .onEvent(\.didTap) {
+                print("User model did tap")
+                ProductionAsset.router?
+                    .route(\.profile, navType: .push, payload: ())
+                
+            }
     }
     
     private func configureProfile(_ weakSelf: SideBarModel<Asset>?) {

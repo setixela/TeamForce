@@ -44,7 +44,6 @@ final class IconLabelHorizontalModel<Asset: AssetProtocol>: BaseViewModel<UIStac
     }
     
     @objc func clickAction(sender : UITapGestureRecognizer) {
-        // Do what you want
         sendEvent(\.didTap)
         print("Did tap1")
     }
