@@ -80,8 +80,6 @@ struct AuthResult {
     let xCode: String
 }
 
-
-
 struct AuthResultBody: Decodable {
     let type: String?
     let status: String?

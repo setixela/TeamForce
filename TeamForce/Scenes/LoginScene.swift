@@ -32,13 +32,7 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
    private let nextButton = Design.button.inactive
       .set(.title(Text.button.make(\.getCodeButton)))
 
-   private let textFieldModel = TextFieldModel()
-      .set(.padding(.init(top: 16, left: 16, bottom: 16, right: 16)))
-      .set(.placeholder("@" + Text.title.make(\.userName)))
-      .set(.backColor(UIColor.clear))
-      .set(.borderColor(.lightGray.withAlphaComponent(0.4)))
-      .set(.borderWidth(1.0))
-
+   private let badgeModel = BadgeModel<Asset>()
    // MARK: - Services
 
    private let inputParser = TelegramNickCheckerModel()
@@ -50,6 +44,9 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
 
    override func start() {
       configure()
+      badgeModel.setLabels(title: Text.title.make(\.userName),
+                           placeholder: "@" + Text.title.make(\.userName),
+                           error: Text.title.make(\.wrongUsername))
 
       weak var weakSelf = self
 
@@ -63,24 +60,27 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
                }
                .onEvent(\.error) { error in
                   print("\n", error.localizedDescription)
+                  weakSelf?.badgeModel.changeState(to: BadgeState.error)
                }
                .sendEvent(\.request, loginName)
          }
 
-      textFieldModel
+      badgeModel.textFieldModel
          .onEvent(\.didEditingChanged) { text in
             weakSelf?.inputParser.sendEvent(\.request, text)
+            weakSelf?.badgeModel.changeState(to: BadgeState.default)
          }
-
+      
       inputParser
          .onEvent(\.success) { text in
             weakSelf?.loginName = String(text.dropFirst())
-            weakSelf?.textFieldModel.set(.text(text))
+            weakSelf?.badgeModel.textFieldModel.set(.text(text))
             weakSelf?.nextButton.set(Design.State.button.default)
+            weakSelf?.badgeModel.changeState(to: BadgeState.default)
          }
          .onEvent(\.error) { text in
             weakSelf?.loginName = nil
-            weakSelf?.textFieldModel.set(.text(text))
+            weakSelf?.badgeModel.textFieldModel.set(.text(text))
             weakSelf?.nextButton.set(Design.State.button.inactive)
          }
    }

@@ -33,12 +33,7 @@ final class VerifyCodeScene<Asset: AssetProtocol>: BaseSceneModel<
    private lazy var enterButton = ButtonModel(Design.State.button.inactive)
       .set(.title(Text.button.make(\.enterButton)))
 
-   private lazy var textFieldModel = TextFieldModel()
-      .set(.padding(.init(top: 16, left: 16, bottom: 16, right: 16)))
-      .set(.placeholder(Text.title.make(\.smsCode)))
-      .set(.backColor(UIColor.clear))
-      .set(.borderColor(.lightGray.withAlphaComponent(0.4)))
-      .set(.borderWidth(1.0))
+   private let badgeModel = BadgeModel<Asset>()
 
    private lazy var inputParser = SmsCodeCheckerModel()
 
@@ -52,6 +47,10 @@ final class VerifyCodeScene<Asset: AssetProtocol>: BaseSceneModel<
    override func start() {
       configure()
 
+      badgeModel.setLabels(title: Text.title.make(\.smsCode),
+                           placeholder: Text.title.make(\.smsCode),
+                           error: Text.title.make(\.wrongCode))
+      
       weak var weakSelf = self
       
       enterButton
@@ -71,27 +70,31 @@ final class VerifyCodeScene<Asset: AssetProtocol>: BaseSceneModel<
                   weakSelf?.safeStringStorage.sendEvent(\.saveValueForKey, (value: csrfToken, key: "csrftoken"))
 
                   Asset.router?.route(\.loginSuccess, navType: .push, payload: fullToken)
+                  
+                  UserDefaults.standard.setIsLoggedIn(value: true)
                }
                .onEvent(\.error) { error in
                   print(error)
+                  weakSelf?.badgeModel.changeState(to: BadgeState.error)
                }
                .sendEvent(\.request, verifyRequest)
          }
 
-      textFieldModel
+      badgeModel.textFieldModel
          .onEvent(\.didEditingChanged) {
             weakSelf?.inputParser.sendEvent(\.request, $0)
+            weakSelf?.badgeModel.changeState(to: BadgeState.default)
          }
 
       inputParser
          .onEvent(\.success) {
             weakSelf?.smsCode = $0
-            weakSelf?.textFieldModel.set(.text($0))
+            weakSelf?.badgeModel.textFieldModel.set(.text($0))
             weakSelf?.enterButton.set(Design.State.button.default)
          }
          .onEvent(\.error) {
             weakSelf?.smsCode = nil
-            weakSelf?.textFieldModel.set(.text($0))
+            weakSelf?.badgeModel.textFieldModel.set(.text($0))
             weakSelf?.enterButton.set(Design.State.button.inactive)
          }
    }
@@ -108,7 +111,7 @@ final class VerifyCodeScene<Asset: AssetProtocol>: BaseSceneModel<
             headerModel,
             subtitleModel,
             Spacer(size: 16),
-            textFieldModel,
+            badgeModel,
             Spacer()
          ]))
       

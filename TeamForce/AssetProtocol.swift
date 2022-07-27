@@ -33,4 +33,5 @@ protocol ScenesProtocol: InitProtocol {
     var loginSuccess: SceneModelProtocol { get }
     var register: SceneModelProtocol { get }
     var main: SceneModelProtocol { get }
+    var profile: SceneModelProtocol { get }
 }

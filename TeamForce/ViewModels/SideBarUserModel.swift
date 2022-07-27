@@ -7,12 +7,16 @@
 
 import UIKit
 
+struct SideBarUserModelEvent: InitProtocol {
+    var didTap: Event<Void>?
+}
+
 final class SideBarUserModel<Design: DesignProtocol>: BaseViewModel<UIStackView>,
     Communicable,
     Stateable,
     Designable
 {
-    var eventsStore: SideBarEvents = .init()
+    var eventsStore: SideBarUserModelEvent = .init()
 
     lazy var avatar = ImageViewModel()
         .set(.size(.init(width: 64, height: 64)))
@@ -32,5 +36,12 @@ final class SideBarUserModel<Design: DesignProtocol>: BaseViewModel<UIStackView>
                 Spacer(size: 4),
                 nickName
             ]))
+        
+        let gesture = UITapGestureRecognizer(target: self, action:  #selector(self.clickAction(sender:)))
+        view.addGestureRecognizer(gesture)
+    }
+    
+    @objc func clickAction(sender : UITapGestureRecognizer) {
+        sendEvent(\.didTap)
     }
 }

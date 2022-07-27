@@ -19,6 +19,7 @@ enum ButtonState: KeyPathSetable {
    case image(UIImage)
    case tint(UIColor)
    case vertical(Bool)
+   case hidden(Bool)
 }
 
 struct ButtonEvents: InitProtocol {
@@ -68,6 +69,8 @@ extension ButtonModel: Stateable {
          view.imageView?.tintColor = value
       case .vertical(let value):
          view.isVertical = value
+      case .hidden(let value):
+         view.isHidden = value
       }
    }
 }

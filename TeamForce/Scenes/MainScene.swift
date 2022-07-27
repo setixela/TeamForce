@@ -13,7 +13,8 @@ final class MainScene<Asset: AssetProtocol>: BaseSceneModel<
     DefaultVCModel,
     StackWithBottomPanelModel,
     Asset,
-    Promise<UserData>
+    Void
+    //Promise<UserData>
 > {
     // MARK: - Balance View Model
 
@@ -47,12 +48,17 @@ final class MainScene<Asset: AssetProtocol>: BaseSceneModel<
     private let sideBarModel = SideBarModel<Asset>()
 
     private let menuButton = BarButtonModel()
-        .sendEvent(\.initWithImage, Design.icon.make(\.sideMenu))
+//        .sendEvent(\.initWithImage, Design.icon.make(\.sideMenu))
 
     // MARK: - Start
 
     override func start() {
+//        sideBarModel.delegate = self
         sideBarModel.start()
+        
+        menuButton
+            .sendEvent(\.initWithImage, Design.icon.make(\.sideMenu))
+        
         presentModel(balanceViewModel)
 
         mainViewModel.bottomStackModel
@@ -79,13 +85,34 @@ final class MainScene<Asset: AssetProtocol>: BaseSceneModel<
 
                 self.sideBarModel.sendEvent(\.presentOnScene, self.mainViewModel.view)
             }
+        configureSideBarItemsEvents(weakSelf: weakSelf)
+    }
+    
+    private func configureSideBarItemsEvents(weakSelf: MainScene<Asset>?) {
+        sideBarModel.item1
+            .onEvent(\.didTap) {
+                self.sideBarModel.sendEvent(\.hide)
+                self.presentModel(weakSelf?.balanceViewModel)
+            }
+        
+        sideBarModel.item2
+            .onEvent(\.didTap) {
+                self.sideBarModel.sendEvent(\.hide)
+                self.presentModel(weakSelf?.transactViewModel)
+            }
+        
+        sideBarModel.item3
+            .onEvent(\.didTap) {
+                self.sideBarModel.sendEvent(\.hide)
+                self.presentModel(weakSelf?.historyViewModel)
+            }
     }
 }
 
 extension MainScene {
     private func presentModel(_ model: UIViewModel?) {
         guard let model = model else { return }
-
+        model.start()
         mainViewModel.topStackModel
             .set(Design.State.mainView.default)
             .set(.models([
@@ -93,4 +120,5 @@ extension MainScene {
             ]))
     }
 }
+
 

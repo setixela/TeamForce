@@ -26,6 +26,7 @@ protocol ButtonTextsProtocol: InitProtocol, KeyPathMaker
     var registerButton: String { get }
     var getCodeButton: String { get }
     var changeUserButton: String { get }
+    var sendButton: String { get }
 }
 
 // MARK: - Title texts
@@ -57,6 +58,10 @@ protocol TitleTextsProtocol: InitProtocol, KeyPathMaker
     var chooseRecipient: String { get }
     var sendThanks: String { get }
     var availableThanks: String { get }
+    
+    // errors
+    var wrongUsername: String { get }
+    var wrongCode: String { get }
 }
 
 // MARK: - Button texts implements
@@ -67,6 +72,7 @@ struct ButtonTexts: ButtonTextsProtocol {
     var registerButton: String { "РЕГИСТРАЦИЯ" }
     var getCodeButton: String { "ПОЛУЧИТЬ КОД" }
     var changeUserButton: String { "СМЕНИТЬ ПОЛЬЗОВАТЕЛЯ" }
+    var sendButton: String { "ОТПРАВИТЬ" }
 }
 
 struct TitleTexts: TitleTextsProtocol {
@@ -93,6 +99,10 @@ struct TitleTexts: TitleTextsProtocol {
     var chooseRecipient: String { "Выберите получателя" }
     var sendThanks: String { "Перевести спасибок" }
     var availableThanks: String { "Доступно" }
+    
+    // errors
+    var wrongUsername: String { "Ошибка. Пользователь не найден" }
+    var wrongCode: String { "Ошибка. Неверный код" }
 }
 
 struct Texts: TextsProtocol, KeyPathMaker {

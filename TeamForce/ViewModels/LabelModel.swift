@@ -28,6 +28,10 @@ extension LabelModel: Stateable {
     }
 }
 
+extension LabelModel: Stateable2 {
+    typealias State2 = ViewState
+}
+
 enum LabelState {
     case text(String)
     case font(UIFont)
