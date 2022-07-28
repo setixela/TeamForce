@@ -99,7 +99,7 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
          .set(.models([
             headerModel,
             subtitleModel,
-            textFieldModel,
+            badgeModel,
             Spacer(),
             nextButton
          ]))

@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 
+// Протокол Фабрики цветов
 protocol ColorsProtocol: InitProtocol {
     var background: UIColor { get }
     var background1: UIColor { get }
@@ -16,12 +17,13 @@ protocol ColorsProtocol: InitProtocol {
     var errorColor: UIColor { get }
 }
 
+// Фабрика цветов
 struct Colors: ColorsProtocol {
     var background: UIColor { .white }
     var background1: UIColor { .init(white: 0.93, alpha: 1) }
-    let background2 = UIColor(hex: 0xf3eafcff)
-    let inactiveButton = UIColor(hex: 0xe9d5feff)
-    var errorColor: UIColor = UIColor(hex: "#F0260BFF")!
+    var background2: UIColor { .init(hex: 0xf3eafcff) }
+    var inactiveButton: UIColor { .init(hex: 0xe9d5feff) }
+    var errorColor: UIColor { .init(hex: 0xf0260bff) }
 }
 
 extension UIColor {
