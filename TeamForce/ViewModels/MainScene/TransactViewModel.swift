@@ -52,15 +52,17 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
         .set(Design.State.button.inactive)
         .set(.title(Text.button.make(\.sendButton)))
         .set(.hidden(true))
-    //FIX: change to UITextView
-    private lazy var reasonTextField = TextFieldModel()
+    
+    private lazy var reasonTextView = TextViewModel()
         .set(.padding(.init(top: 16, left: 16, bottom: 16, right: 16)))
-        .set(.placeholder("Обоснование"))
+        .set(.placeholder(Texts.title.reasonPlaceholder))
         .set(.backColor(UIColor.clear))
         .set(.borderColor(.lightGray.withAlphaComponent(0.4)))
         .set(.borderWidth(1.0))
+        .set(.font(Design.font.body1))
         .set(.hidden(true))
-        .set(.clearButtonMode(UITextField.ViewMode.never))
+        .set(.height(200))
+    
 
     // MARK: - Services
 
@@ -85,7 +87,7 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
         configure()
         
         weak var wS = self
-        configureInputParser(wS: wS)
+        configureInputParsers(wS: wS)
         configureSendButton(wS: wS)
         configureUserSearchModel(wS: wS)
     }
@@ -99,14 +101,24 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
                     digitalThanksTitle,
                     userSearchModel,
                     transactInputViewModel,
-                    reasonTextField,
+                    reasonTextView,
                     sendButton,
                     tableModel,
                     Spacer()
                 ]))
     }
     
-    func configureInputParser(wS: TransactViewModel<Asset>?) {
+    func configureInputParsers(wS: TransactViewModel<Asset>?) {
+        wS?.balanceApiModel
+            .onEvent(\.success) { balance in
+                wS?.transactInputViewModel
+                    .set(.rightCaptionText(Text.title.availableThanks + ": " + String(balance.distr.amount)))
+            }
+            .onEvent(\.error) {
+                print($0)
+            }
+            .sendEvent(\.request, TokenRequest(token: tokens.token))
+        
         transactInputViewModel.textField
             .onEvent(\.didEditingChanged) { [weak self] text in
                 self?.coinInputParser.sendEvent(\.request, text)
@@ -125,22 +137,23 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
                wS?.transactInputViewModel.textField.set(.text($0))
                wS?.sendButton.set(Design.State.button.inactive)
            }
-
-        reasonTextField
+        
+        reasonTextView
             .onEvent(\.didEditingChanged) { [weak self] text in
                 self?.reasonInputParser.sendEvent(\.request, text)
+                
             }
 
         reasonInputParser
            .onEvent(\.success) {
-               wS?.reasonTextField.set(.text($0))
+               wS?.reasonTextView.set(.text($0))
                wS?.correctReasonInput = true
                if wS?.correctCoinInput == true {
                    wS?.sendButton.set(Design.State.button.default)
                }
            }
            .onEvent(\.error) {
-               wS?.reasonTextField.set(.text($0))
+               wS?.reasonTextView.set(.text($0))
                wS?.correctReasonInput = false
                wS?.sendButton.set(Design.State.button.inactive)
            }
@@ -151,7 +164,7 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
             guard let self = wS else { return }
             self.transactInputViewModel.set(.hidden(true))
             self.sendButton.set(.hidden(true))
-            self.reasonTextField.set(.hidden(true))
+            self.reasonTextView.set(.hidden(true))
 
             guard !text.isEmpty else {
                 self.tableModel.set(.hidden(true))
@@ -181,7 +194,7 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
             self.tableModel.set(.hidden(true))
             self.transactInputViewModel.set(.hidden(false))
             self.sendButton.set(.hidden(false))
-            self.reasonTextField.set(.hidden(false))
+            self.reasonTextView.set(.hidden(false))
         }
 
         let cellModels = (0 ... 100).map { index -> LabelCellModel in
@@ -215,8 +228,8 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
                     .sendEvent(\.request, SendCoinRequest(token: self.tokens.token,
                                                           csrfToken: self.tokens.csrf,
                                                           recipient: self.recipientID,
-                                                          amount: self.transactInputViewModel.textField.view.text ?? "0",
-                                                          reason: self.reasonTextField.view.text ?? "thanks"))
+                                                          amount: self.transactInputViewModel.textField.view.text!,
+                                                          reason: self.reasonTextView.view.text!))
             }
     }
     
@@ -225,8 +238,8 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
         wS?.transactInputViewModel.set(.hidden(true))
         wS?.transactInputViewModel.textField.set(.text(""))
         wS?.sendButton.set(.hidden(true))
-        wS?.reasonTextField.set(.text(""))
-        wS?.reasonTextField.set(.hidden(true))
+        wS?.reasonTextView.set(.text(""))
+        wS?.reasonTextView.set(.hidden(true))
         wS?.sendButton.set(Design.State.button.inactive)
         wS?.correctCoinInput = false
         wS?.correctReasonInput = false

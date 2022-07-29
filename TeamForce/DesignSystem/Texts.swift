@@ -99,6 +99,7 @@ struct TitleTexts: TitleTextsProtocol {
     var chooseRecipient: String { "Выберите получателя" }
     var sendThanks: String { "Перевести спасибок" }
     var availableThanks: String { "Доступно" }
+    var reasonPlaceholder: String { "Обоснование" }
     
     // errors
     var wrongUsername: String { "Ошибка. Пользователь не найден" }
