@@ -87,6 +87,7 @@
 		6368D824289168740049EEAB /* CustomCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6368D823289168740049EEAB /* CustomCellModel.swift */; };
 		6368D826289187B50049EEAB /* SendCoinApiModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6368D825289187B50049EEAB /* SendCoinApiModel.swift */; };
 		6368D8282891E7C40049EEAB /* UserDefault+helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6368D8272891E7C30049EEAB /* UserDefault+helpers.swift */; };
+		6368D82A2894091B0049EEAB /* TransactInputViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6368D8292894091B0049EEAB /* TransactInputViewModel.swift */; };
 		63E1916D2889519E000FD312 /* BadgeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E1916C2889519E000FD312 /* BadgeModel.swift */; };
 /* End PBXBuildFile section */
 
@@ -181,6 +182,7 @@
 		6368D823289168740049EEAB /* CustomCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCellModel.swift; sourceTree = "<group>"; };
 		6368D825289187B50049EEAB /* SendCoinApiModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendCoinApiModel.swift; sourceTree = "<group>"; };
 		6368D8272891E7C30049EEAB /* UserDefault+helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefault+helpers.swift"; sourceTree = "<group>"; };
+		6368D8292894091B0049EEAB /* TransactInputViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactInputViewModel.swift; sourceTree = "<group>"; };
 		63E1916C2889519E000FD312 /* BadgeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -398,6 +400,7 @@
 				1953DE852879FE30000DC537 /* PickerViewModel.swift */,
 				19DD3D96288A0A8C0085CDA8 /* CoverViewModel.swift */,
 				63E1916C2889519E000FD312 /* BadgeModel.swift */,
+				6368D8292894091B0049EEAB /* TransactInputViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -597,6 +600,7 @@
 				1918CC77286F67EB004373F3 /* BalanceViewModel.swift in Sources */,
 				19C1E9A628610EC600E7976D /* DefaultVCModel.swift in Sources */,
 				19D08361286F430B00F75E4A /* Designable.swift in Sources */,
+				6368D82A2894091B0049EEAB /* TransactInputViewModel.swift in Sources */,
 				1918CC79286F6C69004373F3 /* VerifyApiModel.swift in Sources */,
 				19C1E9A028610E2800E7976D /* ViewModel.swift in Sources */,
 				1953DE842879FDE3000DC537 /* TransactViewModel.swift in Sources */,
