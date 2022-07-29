@@ -111,6 +111,9 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
                         wS?.sendButton.set(.hidden(true))
                         wS?.reasonTextField.set(.text(""))
                         wS?.reasonTextField.set(.hidden(true))
+                        wS?.sendButton.set(Design.State.button.inactive)
+                        wS?.correctCoinInput = false
+                        wS?.correctReasonInput = false
                     }
                     .onEvent(\.error) {
                         print("coin sending error: ")
