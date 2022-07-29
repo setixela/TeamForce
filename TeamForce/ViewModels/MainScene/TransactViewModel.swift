@@ -67,6 +67,7 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
     private lazy var apiModel = SearchUserApiModel(apiEngine: Asset.service.apiEngine)
     private lazy var safeStringStorage = StringStorageModel(engine: Asset.service.safeStringStorage)
     private lazy var sendCoinApiModel = SendCoinApiModel(apiEngine: Asset.service.apiEngine)
+    private lazy var balanceApiModel = GetBalanceApiModel(apiEngine: Asset.service.apiEngine)
 
     private lazy var foundUsers: [FoundUser] = []
     private lazy var tokens: (token: String, csrf: String) = ("", "")
@@ -84,86 +85,28 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
         configure()
         
         weak var wS = self
-        
-        userSearchModel.onEvent(\.didEditingChanged) { text in
-            guard let self = wS else { return }
-            self.transactInputViewModel.set(.hidden(true))
-            self.sendButton.set(.hidden(true))
-            self.reasonTextField.set(.hidden(true))
-
-            guard !text.isEmpty else {
-                self.tableModel.set(.hidden(true))
-                return
-            }
-
-            wS?.searchUser(SearchUserRequest(data: text,
-                                             token: self.tokens.token,
-                                             csrfToken: self.tokens.csrf))
-        }
-        
-        sendButton
-            .onEvent(\.didTap) {
-                wS?.sendCoinApiModel
-                    .onEvent(\.success) { _ in
-                        wS?.userSearchModel.set(.text(""))
-                        wS?.transactInputViewModel.set(.hidden(true))
-                        wS?.transactInputViewModel.textField.set(.text(""))
-                        wS?.sendButton.set(.hidden(true))
-                        wS?.reasonTextField.set(.text(""))
-                        wS?.reasonTextField.set(.hidden(true))
-                        wS?.sendButton.set(Design.State.button.inactive)
-                        wS?.correctCoinInput = false
-                        wS?.correctReasonInput = false
-                    }
-                    .onEvent(\.error) {
-                        print("coin sending error: ")
-                        let alert = UIAlertController(title: "Ошибка",
-                                                      message: $0,
-                                                      preferredStyle: .alert)
-
-                        alert.addAction(UIAlertAction(title: NSLocalizedString("OK",
-                                                                               comment: "Default action"),
-                                                      style: .default))
-
-                        UIApplication.shared.keyWindow?.rootViewController?
-                            .present(alert, animated: true, completion: nil)
-                    }
-                    .sendEvent(\.request, SendCoinRequest(token: self.tokens.token,
-                                                          csrfToken: self.tokens.csrf,
-                                                          recipient: self.recipientID,
-                                                          amount: self.transactInputViewModel.textField.view.text ?? "0",
-                                                          reason: self.reasonTextField.view.text ?? "thanks"))
-            }
-
-        safeStringStorage
-            .onEvent(\.responseValue) { token in
-                wS?.safeStringStorage
-                    .onEvent(\.responseValue) { csrf in
-                        wS?.tokens = (token, csrf)
-                        wS?.userSearchModel.set(.hidden(false))
-                    }
-                    .sendEvent(\.requestValueForKey, "csrftoken")
-            }
-            .sendEvent(\.requestValueForKey, "token")
-
-        tableModel.onEvent(\.didSelectRow) { index in
-            guard let self = wS else { return }
-            self.recipientID = self.foundUsers[index].userId
-            let fullName = self.foundUsers[index].name + " " + self.foundUsers[index].surname
-            self.userSearchModel.set(.text(fullName))
-            self.tableModel.set(.hidden(true))
-            self.transactInputViewModel.set(.hidden(false))
-            self.sendButton.set(.hidden(false))
-            self.reasonTextField.set(.hidden(false))
-        }
-
-        let cellModels = (0 ... 100).map { index -> LabelCellModel in
-            let cellModel = LabelCellModel()
-            cellModel.set(.text(String(index)))
-            return cellModel
-        }
-        tableModel.set(.models(cellModels))
-        
+        configureInputParser(wS: wS)
+        configureSendButton(wS: wS)
+        configureUserSearchModel(wS: wS)
+    }
+    
+    func configure() {
+        set(.axis(.vertical))
+                set(.distribution(.fill))
+                set(.alignment(.fill))
+                set(.spacing(8))
+                set(.models([
+                    digitalThanksTitle,
+                    userSearchModel,
+                    transactInputViewModel,
+                    reasonTextField,
+                    sendButton,
+                    tableModel,
+                    Spacer()
+                ]))
+    }
+    
+    func configureInputParser(wS: TransactViewModel<Asset>?) {
         transactInputViewModel.textField
             .onEvent(\.didEditingChanged) { [weak self] text in
                 self?.coinInputParser.sendEvent(\.request, text)
@@ -203,20 +146,90 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
            }
     }
     
-    func configure() {
-        set(.axis(.vertical))
-                set(.distribution(.fill))
-                set(.alignment(.fill))
-                set(.spacing(8))
-                set(.models([
-                    digitalThanksTitle,
-                    userSearchModel,
-                    transactInputViewModel,
-                    reasonTextField,
-                    sendButton,
-                    tableModel,
-                    Spacer()
-                ]))
+    private func configureUserSearchModel(wS: TransactViewModel<Asset>?) {
+        userSearchModel.onEvent(\.didEditingChanged) { text in
+            guard let self = wS else { return }
+            self.transactInputViewModel.set(.hidden(true))
+            self.sendButton.set(.hidden(true))
+            self.reasonTextField.set(.hidden(true))
+
+            guard !text.isEmpty else {
+                self.tableModel.set(.hidden(true))
+                return
+            }
+
+            wS?.searchUser(SearchUserRequest(data: text,
+                                             token: self.tokens.token,
+                                             csrfToken: self.tokens.csrf))
+        }
+        safeStringStorage
+            .onEvent(\.responseValue) { token in
+                wS?.safeStringStorage
+                    .onEvent(\.responseValue) { csrf in
+                        wS?.tokens = (token, csrf)
+                        wS?.userSearchModel.set(.hidden(false))
+                    }
+                    .sendEvent(\.requestValueForKey, "csrftoken")
+            }
+            .sendEvent(\.requestValueForKey, "token")
+
+        tableModel.onEvent(\.didSelectRow) { index in
+            guard let self = wS else { return }
+            self.recipientID = self.foundUsers[index].userId
+            let fullName = self.foundUsers[index].name + " " + self.foundUsers[index].surname
+            self.userSearchModel.set(.text(fullName))
+            self.tableModel.set(.hidden(true))
+            self.transactInputViewModel.set(.hidden(false))
+            self.sendButton.set(.hidden(false))
+            self.reasonTextField.set(.hidden(false))
+        }
+
+        let cellModels = (0 ... 100).map { index -> LabelCellModel in
+            let cellModel = LabelCellModel()
+            cellModel.set(.text(String(index)))
+            return cellModel
+        }
+        tableModel.set(.models(cellModels))
+    }
+    
+    private func configureSendButton(wS: TransactViewModel<Asset>?) {
+        sendButton
+            .onEvent(\.didTap) {
+                wS?.sendCoinApiModel
+                    .onEvent(\.success) { _ in
+                        self.setInitialStateOfView(wS: wS)
+                    }
+                    .onEvent(\.error) {
+                        print("coin sending error: ")
+                        let alert = UIAlertController(title: "Ошибка",
+                                                      message: $0,
+                                                      preferredStyle: .alert)
+
+                        alert.addAction(UIAlertAction(title: NSLocalizedString("OK",
+                                                                               comment: "Default action"),
+                                                      style: .default))
+
+                        UIApplication.shared.keyWindow?.rootViewController?
+                            .present(alert, animated: true, completion: nil)
+                    }
+                    .sendEvent(\.request, SendCoinRequest(token: self.tokens.token,
+                                                          csrfToken: self.tokens.csrf,
+                                                          recipient: self.recipientID,
+                                                          amount: self.transactInputViewModel.textField.view.text ?? "0",
+                                                          reason: self.reasonTextField.view.text ?? "thanks"))
+            }
+    }
+    
+    private func setInitialStateOfView(wS: TransactViewModel<Asset>?) {
+        wS?.userSearchModel.set(.text(""))
+        wS?.transactInputViewModel.set(.hidden(true))
+        wS?.transactInputViewModel.textField.set(.text(""))
+        wS?.sendButton.set(.hidden(true))
+        wS?.reasonTextField.set(.text(""))
+        wS?.reasonTextField.set(.hidden(true))
+        wS?.sendButton.set(Design.State.button.inactive)
+        wS?.correctCoinInput = false
+        wS?.correctReasonInput = false
     }
 }
 
