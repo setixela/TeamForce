@@ -111,10 +111,22 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
                         wS?.sendButton.set(.hidden(true))
                         wS?.reasonTextField.set(.text(""))
                         wS?.reasonTextField.set(.hidden(true))
+                        wS?.sendButton.set(Design.State.button.inactive)
+                        wS?.correctCoinInput = false
+                        wS?.correctReasonInput = false
                     }
                     .onEvent(\.error) {
-                       print("coin sending error: ")
-                       print($0)
+                        print("coin sending error: ")
+                        let alert = UIAlertController(title: "Ошибка",
+                                                      message: $0,
+                                                      preferredStyle: .alert)
+
+                        alert.addAction(UIAlertAction(title: NSLocalizedString("OK",
+                                                                               comment: "Default action"),
+                                                      style: .default))
+
+                        UIApplication.shared.keyWindow?.rootViewController?
+                            .present(alert, animated: true, completion: nil)
                     }
                     .sendEvent(\.request, SendCoinRequest(token: self.tokens.token,
                                                           csrfToken: self.tokens.csrf,
