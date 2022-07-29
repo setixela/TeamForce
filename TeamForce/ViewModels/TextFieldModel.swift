@@ -137,3 +137,61 @@ final class SmsCodeCheckerModel: BaseModel {
 }
 
 extension SmsCodeCheckerModel: Communicable {}
+
+// MARK: - CoinInputCheckerModel
+
+final class CoinCheckerModel: BaseModel {
+    var eventsStore: InputParserEvents = .init()
+
+    private var maxDigits: Int = 8
+
+    convenience init(maxDigits: Int) {
+        self.init()
+        self.maxDigits = maxDigits
+    }
+
+    override func start() {
+        onEvent(\.request) { [weak self] text in
+            guard let self = self else { return }
+
+            if text.count > 0 {
+                var textToSend = text
+                if text.count >= self.maxDigits {
+                    textToSend = String(text.dropLast(text.count - self.maxDigits))
+                }
+                self.sendEvent(\.success, textToSend)
+            } else {
+                self.sendEvent(\.error, text)
+            }
+        }
+    }
+}
+
+extension CoinCheckerModel: Communicable {}
+
+// MARK: - ReasonCheckerModel
+
+final class ReasonCheckerModel: BaseModel {
+    var eventsStore: InputParserEvents = .init()
+
+    private var maxDigits: Int = 8
+
+    convenience init(maxDigits: Int) {
+        self.init()
+        self.maxDigits = maxDigits
+    }
+
+    override func start() {
+        onEvent(\.request) { [weak self] text in
+            guard let self = self else { return }
+
+            if text.count > 0 {
+                self.sendEvent(\.success, text)
+            } else {
+                self.sendEvent(\.error, text)
+            }
+        }
+    }
+}
+
+extension ReasonCheckerModel: Communicable {}
