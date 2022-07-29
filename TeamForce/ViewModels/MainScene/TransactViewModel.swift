@@ -177,9 +177,9 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
                    wS?.sendButton.set(Design.State.button.default)
                }
            }
-           .onEvent(\.error) {_ in
+           .onEvent(\.error) {
                wS?.correctCoinInput = false
-               wS?.transactInputViewModel.textField.set(.text(""))
+               wS?.transactInputViewModel.textField.set(.text($0))
                wS?.sendButton.set(Design.State.button.inactive)
            }
 

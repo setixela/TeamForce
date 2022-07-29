@@ -159,7 +159,10 @@ final class CoinCheckerModel: BaseModel {
                 if text.count >= self.maxDigits {
                     textToSend = String(text.dropLast(text.count - self.maxDigits))
                 }
-                self.sendEvent(\.success, textToSend)
+                
+                !text.isNumber ?
+                    self.sendEvent(\.error, text) :
+                    self.sendEvent(\.success, textToSend)
             } else {
                 self.sendEvent(\.error, text)
             }
@@ -195,3 +198,9 @@ final class ReasonCheckerModel: BaseModel {
 }
 
 extension ReasonCheckerModel: Communicable {}
+
+extension String  {
+    var isNumber: Bool {
+        return !isEmpty && rangeOfCharacter(from: CharacterSet.decimalDigits.inverted) == nil
+    }
+}
