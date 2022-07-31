@@ -15,6 +15,7 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
     Assetable
 {
     var eventsStore: TransactViewEvent = .init()
+
     // MARK: - View Models
 
     private lazy var digitalThanksTitle = Design.label.headline4
@@ -47,11 +48,11 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
         .set(.borderWidth(1))
         .set(.cornerRadius(Design.Parameters.cornerRadius))
         .set(.hidden(true))
-    
+
     private lazy var sendButton = Design.button.default
         .set(.title(Text.button.make(\.sendButton)))
         .set(.hidden(true))
-    //FIX: change to UITextView
+    // FIX: change to UITextView
     private lazy var reasonTextField = TextFieldModel()
         .set(.padding(.init(top: 16, left: 16, bottom: 16, right: 16)))
         .set(.placeholder("Обоснование"))
@@ -75,25 +76,26 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
 
     override func start() {
         configure()
-        
-        weak var wS = self
-        
-        userSearchModel.onEvent(\.didEditingChanged) { text in
-            guard let self = wS else { return }
-            self.transactInputViewModel.set(.hidden(true))
-            self.sendButton.set(.hidden(true))
-            self.reasonTextField.set(.hidden(true))
 
-            guard !text.isEmpty else {
-                self.tableModel.set(.hidden(true))
-                return
+        weak var wS = self
+
+        userSearchModel
+            .onEvent(\.didEditingChanged) { text in
+                guard let self = wS else { return }
+                self.transactInputViewModel.set(.hidden(true))
+                self.sendButton.set(.hidden(true))
+                self.reasonTextField.set(.hidden(true))
+
+                guard !text.isEmpty else {
+                    self.tableModel.set(.hidden(true))
+                    return
+                }
+
+                wS?.searchUser(SearchUserRequest(data: text,
+                                                 token: self.tokens.token,
+                                                 csrfToken: self.tokens.csrf))
             }
 
-            wS?.searchUser(SearchUserRequest(data: text,
-                                             token: self.tokens.token,
-                                             csrfToken: self.tokens.csrf))
-        }
-        
         sendButton
             .onEvent(\.didTap) {
                 wS?.sendCoinApiModel
@@ -106,8 +108,8 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
                         wS?.reasonTextField.set(.hidden(true))
                     }
                     .onEvent(\.error) {
-                       print("coin sending error: ")
-                       print($0)
+                        print("coin sending error: ")
+                        print($0)
                     }
                     .sendEvent(\.request, SendCoinRequest(token: self.tokens.token,
                                                           csrfToken: self.tokens.csrf,
@@ -117,15 +119,21 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
             }
 
         safeStringStorage
-            .onEvent(\.responseValue) { token in
-                wS?.safeStringStorage
-                    .onEvent(\.responseValue) { csrf in
-                        wS?.tokens = (token, csrf)
-                        wS?.userSearchModel.set(.hidden(false))
-                    }
-                    .sendEvent(\.requestValueForKey, "csrftoken")
+            .doAsync("token")
+            .onSuccess {
+                wS?.tokens.token = $0
             }
-            .sendEvent(\.requestValueForKey, "token")
+            .onFail {
+                print("token load failed")
+            }
+            .doAsync(worker: safeStringStorage, input: "csrftoken")
+            .onSuccess {
+                wS?.tokens.csrf = $0
+                wS?.userSearchModel.set(.hidden(false))
+            }
+            .onFail {
+                print("csrftoken load failed")
+            }
 
         tableModel.onEvent(\.didSelectRow) { index in
             guard let self = wS else { return }
@@ -145,28 +153,29 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
         }
         tableModel.set(.models(cellModels))
     }
-    
+
     func configure() {
         set(.axis(.vertical))
-                set(.distribution(.fill))
-                set(.alignment(.fill))
-                set(.spacing(8))
-                set(.models([
-                    digitalThanksTitle,
-                    userSearchModel,
-                    transactInputViewModel,
-                    reasonTextField,
-                    sendButton,
-                    tableModel,
-                    Spacer()
-                ]))
+        set(.distribution(.fill))
+        set(.alignment(.fill))
+        set(.spacing(8))
+        set(.models([
+            digitalThanksTitle,
+            userSearchModel,
+            transactInputViewModel,
+            reasonTextField,
+            sendButton,
+            tableModel,
+            Spacer(),
+        ]))
     }
 }
 
 extension TransactViewModel {
     func searchUser(_ request: SearchUserRequest) {
         apiModel
-            .onEvent(\.success) { [weak self] result in
+            .doAsync(request)
+            .onSuccess { [weak self] result in
                 let found = result.map { $0.name + " " + $0.surname }
                 self?.foundUsers = result
                 let cellModels = found.map { name -> LabelCellModel in
@@ -176,8 +185,9 @@ extension TransactViewModel {
                 }
                 self?.tableModel.set(.models(cellModels))
                 self?.tableModel.set(.hidden(found.isEmpty ? true : false))
+            }.onFail {
+                print("Seracrh user API Error")
             }
-            .sendEvent(\.request, request)
     }
 }
 

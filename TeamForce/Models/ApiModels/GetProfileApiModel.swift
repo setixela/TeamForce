@@ -6,60 +6,29 @@
 //
 
 import Foundation
-import PromiseKit
 
-struct ProfileApiEvent: NetworkEventProtocol {
-    var request: Event<TokenRequest>?
-//    var success: Event<Promise<UserData>>?
-    var success: Event<UserData>?
-    var error: Event<ApiEngineError>?
-}
+final class GetProfileApiModel: BaseApiAsyncModel<TokenRequest, UserData> {
+    override func doAsync(work: AsyncWork<TokenRequest, UserData>) {
+        guard let request = work.input else { return }
 
-final class GetProfileApiModel: BaseApiModel<ProfileApiEvent> {
-    override func start() {
-//        onEvent(\.request) { [weak self] request in
-//            self?.sendEvent(\.success, Promise { seal in
-//                self?.apiEngine?
-//                    .process(endpoint: TeamForceEndpoints.ProfileEndpoint(headers: [
-//                        "Authorization": request.token,
-//                    ]))
-//                    .done { result in
-//                        let decoder = DataToDecodableParser()
-//
-//                        guard
-//                            let data = result.data,
-//                            let user: UserData = decoder.parse(data)
-//                        else {
-//                            seal.reject(ApiEngineError.unknown)
-//                            return
-//                        }
-//                        seal.fulfill(user)
-//                    }
-//                    .catch { _ in
-//                        seal.reject(ApiEngineError.unknown)
-//                    }
-//            })
-//        }
-        onEvent(\.request) { [weak self] request in
-            self?.apiEngine?
-                .process(endpoint: TeamForceEndpoints.ProfileEndpoint(headers: [
-                    "Authorization": request.token,
-                ]))
-                .done { result in
-                    let decoder = DataToDecodableParser()
+        apiEngine?
+            .process(endpoint: TeamForceEndpoints.ProfileEndpoint(headers: [
+                "Authorization": request.token,
+            ]))
+            .done { result in
+                let decoder = DataToDecodableParser()
 
-                    guard
-                        let data = result.data,
-                        let user: UserData = decoder.parse(data)
-                    else {
-                        self?.sendEvent(\.error, ApiEngineError.unknown)
-                        return
-                    }
-                    self?.sendEvent(\.success, user)
+                guard
+                    let data = result.data,
+                    let user: UserData = decoder.parse(data)
+                else {
+                    work.fail(())
+                    return
                 }
-                .catch { error in
-                    self?.sendEvent(\.error, ApiEngineError.error(error))
-                }
-        }
+                work.success(result: user)
+            }
+            .catch { error in
+                work.fail(())
+            }
     }
 }

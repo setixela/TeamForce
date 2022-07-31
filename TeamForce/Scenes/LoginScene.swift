@@ -9,6 +9,32 @@ import UIKit
 
 // MARK: - LoginScene
 
+// protocol LoginUseCase {}
+
+//class LoginUseCases<Asset: AssetProtocol> {
+//
+//   private let inputParser = TelegramNickCheckerModel()
+//   private let apiModel = AuthApiModel(apiEngine: Asset.service.apiEngine)
+//
+//   private var loginName: String?
+//
+//   func onNextButtonTryLogin() {
+//      nextButton
+//         .onEvent(\.didTap) {
+//            guard let loginName = self.loginName else { return }
+//
+//            self.apiModel
+//               .doAsync(loginName)
+//               .onSuccess {
+//                  Asset.router?.route(\.verifyCode, navType: .push, payload: $0)
+//               }
+//               .onFail {
+//                  self.badgeModel.changeState(to: BadgeState.error)
+//               }
+//         }
+//   }
+//}
+
 final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
    DefaultVCModel,
    StackWithBottomPanelModel,
@@ -33,6 +59,7 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
       .set(.title(Text.button.make(\.getCodeButton)))
 
    private let badgeModel = BadgeModel<Asset>()
+
    // MARK: - Services
 
    private let inputParser = TelegramNickCheckerModel()
@@ -48,40 +75,36 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
                            placeholder: "@" + Text.title.make(\.userName),
                            error: Text.title.make(\.wrongUsername))
 
-      weak var weakSelf = self
-
       nextButton
-         .onEvent(\.didTap) {
-            guard let loginName = weakSelf?.loginName else { return }
+         .onEvent(\.didTap) { [weak self] in
+            guard let loginName = self?.loginName else { return }
 
-            weakSelf?.apiModel
-               .onEvent(\.success) { authResult in
-                  Asset.router?.route(\.verifyCode, navType: .push, payload: authResult)
+            self?.apiModel
+               .doAsync(loginName)
+               .onSuccess {
+                  Asset.router?.route(\.verifyCode, navType: .push, payload: $0)
                }
-               .onEvent(\.error) { error in
-                  print("\n", error.localizedDescription)
-                  weakSelf?.badgeModel.changeState(to: BadgeState.error)
+               .onFail {
+                  self?.badgeModel.changeState(to: BadgeState.error)
                }
-               .sendEvent(\.request, loginName)
          }
 
       badgeModel.textFieldModel
-         .onEvent(\.didEditingChanged) { text in
-            weakSelf?.inputParser.sendEvent(\.request, text)
-            weakSelf?.badgeModel.changeState(to: BadgeState.default)
-         }
-      
-      inputParser
-         .onEvent(\.success) { text in
-            weakSelf?.loginName = String(text.dropFirst())
-            weakSelf?.badgeModel.textFieldModel.set(.text(text))
-            weakSelf?.nextButton.set(Design.State.button.default)
-            weakSelf?.badgeModel.changeState(to: BadgeState.default)
-         }
-         .onEvent(\.error) { text in
-            weakSelf?.loginName = nil
-            weakSelf?.badgeModel.textFieldModel.set(.text(text))
-            weakSelf?.nextButton.set(Design.State.button.inactive)
+         .onEvent(\.didEditingChanged) { [weak self] text in
+            self?.inputParser
+               .doAsync(text)
+               .onSuccess { text in
+                  self?.loginName = String(text.dropFirst())
+                  self?.badgeModel.textFieldModel.set(.text(text))
+                  self?.nextButton.set(Design.State.button.default)
+                  self?.badgeModel.changeState(to: BadgeState.default)
+               }
+               .onFail { (text: String) in
+                  self?.loginName = nil
+                  self?.badgeModel.textFieldModel.set(.text(text))
+                  self?.nextButton.set(Design.State.button.inactive)
+                  self?.badgeModel.changeState(to: BadgeState.default)
+               }
          }
    }
 

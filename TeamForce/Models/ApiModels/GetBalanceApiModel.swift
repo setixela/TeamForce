@@ -13,30 +13,27 @@ struct BalanceApiEvent: NetworkEventProtocol {
     var error: Event<ApiEngineError>?
 }
 
-final class GetBalanceApiModel: BaseApiModel<BalanceApiEvent> {
+final class GetBalanceApiModel: BaseApiAsyncModel<String, Balance> {
+    override func doAsync(work: Work) {
+        apiEngine?
+            .process(endpoint: TeamForceEndpoints.BalanceEndpoint(headers: [
+                "Authorization": work.input ?? "",
+            ]))
+            .done { result in
+                let decoder = DataToDecodableParser()
 
-    override func start() {
-        onEvent(\.request) { [weak self] request in
-            self?.apiEngine?
-                .process(endpoint: TeamForceEndpoints.BalanceEndpoint(headers: [
-                    "Authorization": request.token,
-                ]))
-                .done { result in
-                    let decoder = DataToDecodableParser()
-
-                    guard
-                        let data = result.data,
-                        let balance: Balance = decoder.parse(data)
-                    else {
-                        self?.sendEvent(\.error, ApiEngineError.unknown)
-                        return
-                    }
-
-                    self?.sendEvent(\.success, balance)
+                guard
+                    let data = result.data,
+                    let balance: Balance = decoder.parse(data)
+                else {
+                    work.fail(())
+                    return
                 }
-                .catch { error in
-                    self?.sendEvent(\.error, ApiEngineError.error(error))
-                }
-        }
+
+                work.success(result: balance)
+            }
+            .catch { _ in
+                work.fail(())
+            }
     }
 }

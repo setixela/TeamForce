@@ -31,7 +31,6 @@ final class TextFieldModel: BaseViewModel<PaddingTextField> {
         set(.backColor(.lightGray.withAlphaComponent(0.3)))
         set(.clearButtonMode(.whileEditing))
         set(.cornerRadius(GlobalParameters.cornerRadius))
-    //    view.padding = .init(top: 0, left: 16, bottom: 0, right: 16)
         view.delegate = self
         view.addTarget(self, action: #selector(changValue), for: .editingChanged)
         view.addTarget(self, action: #selector(didTap), for: .touchDown)
@@ -42,7 +41,7 @@ final class TextFieldModel: BaseViewModel<PaddingTextField> {
 
         sendEvent(\.didEditingChanged, text)
     }
-    
+
     @objc func didTap() {
         sendEvent(\.didTap)
         print("Did tap textfield")
@@ -80,60 +79,47 @@ extension TextFieldModel: UITextFieldDelegate {
 
 extension TextFieldModel: Communicable {}
 
-// MARK: - InputParserEvents
-
-struct InputParserEvents: InitProtocol {
-    var request: Event<String>?
-    var success: Event<String>?
-    var error: Event<String>?
-}
-
 // MARK: - TelegramNickCheckerModel
 
-final class TelegramNickCheckerModel: BaseModel {
-    var eventsStore: InputParserEvents = .init()
+final class TelegramNickCheckerModel: BaseModel {}
 
-    override func start() {
-        onEvent(\.request) { [weak self] text in
-            var resultText = text == "" ? "@" : text
-            if !resultText.hasPrefix("@") {
-                resultText = "@" + resultText
-            }
-            if resultText.count > 3 {
-                self?.sendEvent(\.success, resultText)
-            } else {
-                self?.sendEvent(\.error, resultText)
-            }
+extension TelegramNickCheckerModel: Asyncable {
+    func doAsync(work: AsyncWork<String, String>) {
+        guard let text = work.input else { return }
+
+        var resultText = text == "" ? "@" : text
+        if !resultText.hasPrefix("@") {
+            resultText = "@" + resultText
+        }
+        if resultText.count > 3 {
+            work.success(result: resultText)
+        } else {
+            work.fail(resultText)
         }
     }
 }
 
-extension TelegramNickCheckerModel: Communicable {}
-
 // MARK: - SmsCodeCheckerModel
 
 final class SmsCodeCheckerModel: BaseModel {
-    var eventsStore: InputParserEvents = .init()
-
     private var maxDigits: Int = 4
 
     convenience init(maxDigits: Int) {
         self.init()
         self.maxDigits = maxDigits
     }
+}
 
-    override func start() {
-        onEvent(\.request) { [weak self] text in
-            guard let self = self else { return }
+extension SmsCodeCheckerModel: Asyncable {
+    //
+    func doAsync(work: AsyncWork<String, String>) {
+        guard let text = work.input else { return }
 
-            if text.count >= self.maxDigits {
-                let text = text.dropLast(text.count - self.maxDigits)
-                self.sendEvent(\.success, String(text))
-            } else {
-                self.sendEvent(\.error, text)
-            }
+        if text.count >= maxDigits {
+            let text = text.dropLast(text.count - maxDigits)
+            work.success(result: String(text))
+        } else {
+            work.fail(text)
         }
     }
 }
-
-extension SmsCodeCheckerModel: Communicable {}

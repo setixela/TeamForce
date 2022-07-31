@@ -20,7 +20,7 @@ final class VerifyCodeScene<Asset: AssetProtocol>: BaseSceneModel<
       .set(.size(.init(width: 65, height: 65)))
       .set(.image(Design.icon.make(\.digitalThanksLogo)))
       .set(.contentMode(.scaleAspectFit))
-
+   
    private lazy var headerModel = Design.label.headline4
       .set(.padding(.init(top: 0, left: 0, bottom: 24, right: 0)))
       .set(.text(Text.title.make(\.enter)))
@@ -33,7 +33,12 @@ final class VerifyCodeScene<Asset: AssetProtocol>: BaseSceneModel<
    private lazy var enterButton = ButtonModel(Design.State.button.inactive)
       .set(.title(Text.button.make(\.enterButton)))
 
-   private let badgeModel = BadgeModel<Asset>()
+   private lazy var textFieldModel = TextFieldModel()
+      .set(.padding(.init(top: 16, left: 16, bottom: 16, right: 16)))
+      .set(.placeholder(Text.title.make(\.smsCode)))
+      .set(.backColor(UIColor.clear))
+      .set(.borderColor(.lightGray.withAlphaComponent(0.4)))
+      .set(.borderWidth(1.0))
 
    private lazy var inputParser = SmsCodeCheckerModel()
 
@@ -47,12 +52,8 @@ final class VerifyCodeScene<Asset: AssetProtocol>: BaseSceneModel<
    override func start() {
       configure()
 
-      badgeModel.setLabels(title: Text.title.make(\.smsCode),
-                           placeholder: Text.title.make(\.smsCode),
-                           error: Text.title.make(\.wrongCode))
-
       weak var weakSelf = self
-
+      
       enterButton
          .onEvent(\.didTap) {
             guard
@@ -61,44 +62,42 @@ final class VerifyCodeScene<Asset: AssetProtocol>: BaseSceneModel<
             else { return }
 
             let verifyRequest = VerifyRequest(xId: authResult.xId, xCode: authResult.xCode, smsCode: smsCode)
-
             weakSelf?.verifyApi
-               .doAsync(verifyRequest)
-               .onSuccess { result in
+               .onEvent(\.success) { result in
                   let fullToken = "Token " + result.token
                   let csrfToken = result.sessionId
 
-                  weakSelf?.safeStringStorage
-                     .set(.saveValueForKey((value: fullToken, key: "token")))
-                     .set(.saveValueForKey((value: csrfToken, key: "csrftoken")))
+                  weakSelf?.safeStringStorage.sendEvent(\.saveValueForKey, (value: fullToken, key: "token"))
+                  weakSelf?.safeStringStorage.sendEvent(\.saveValueForKey, (value: csrfToken, key: "csrftoken"))
 
                   Asset.router?.route(\.loginSuccess, navType: .push, payload: fullToken)
-
-                  UserDefaults.standard.setIsLoggedIn(value: true)
-               }.onFail {
-                  print("Verify api error")
-                  weakSelf?.badgeModel.changeState(to: BadgeState.error)
                }
+               .onEvent(\.error) { error in
+                  print(error)
+               }
+               .sendEvent(\.request, verifyRequest)
          }
 
-      weakSelf?.badgeModel.changeState(to: BadgeState.default)
-      badgeModel.textFieldModel
+      textFieldModel
          .onEvent(\.didEditingChanged) {
-            weakSelf?.inputParser
-               .doAsync($0)
-               .onSuccess {
-                  weakSelf?.smsCode = $0
-                  weakSelf?.badgeModel.textFieldModel.set(.text($0))
-                  weakSelf?.enterButton.set(Design.State.button.default)
-               }.onFail { (text: String) in
-                  weakSelf?.smsCode = nil
-                  weakSelf?.badgeModel.textFieldModel.set(.text(text))
-                  weakSelf?.enterButton.set(Design.State.button.inactive)
-               }
+            weakSelf?.inputParser.sendEvent(\.request, $0)
+         }
+
+      inputParser
+         .onEvent(\.success) {
+            weakSelf?.smsCode = $0
+            weakSelf?.textFieldModel.set(.text($0))
+            weakSelf?.enterButton.set(Design.State.button.default)
+         }
+         .onEvent(\.error) {
+            weakSelf?.smsCode = nil
+            weakSelf?.textFieldModel.set(.text($0))
+            weakSelf?.enterButton.set(Design.State.button.inactive)
          }
    }
 
    private func configure() {
+      
       mainViewModel
          .set(.backColor(Design.color.background2))
          .set(Design.State.mainView.default)
@@ -109,10 +108,10 @@ final class VerifyCodeScene<Asset: AssetProtocol>: BaseSceneModel<
             headerModel,
             subtitleModel,
             Spacer(size: 16),
-            badgeModel,
+            textFieldModel,
             Spacer()
          ]))
-
+      
       mainViewModel.bottomStackModel
          .set(.models([
             enterButton

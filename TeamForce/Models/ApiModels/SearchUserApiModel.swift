@@ -7,80 +7,76 @@
 
 import Foundation
 
-struct SearchUserApiEvent: NetworkEventProtocol {
-    var request: Event<SearchUserRequest>?
-    var success: Event<[FoundUser]>?
-    var error: Event<ApiEngineError>?
-}
-
 struct SearchUserRequest {
-    let data: String
-    let token: String
-    let csrfToken: String
+  let data: String
+  let token: String
+  let csrfToken: String
 }
 
 struct SearchUserResult {
-    let users: [FoundUser]
+  let users: [FoundUser]
 }
 
 struct FoundUser: Codable {
-    let userId: Int
-    let tgName: String
-    let name: String
-    let surname: String
+  let userId: Int
+  let tgName: String
+  let name: String
+  let surname: String
 
-    enum CodingKeys: String, CodingKey {
-        case userId = "user_id"
-        case tgName = "tg_name"
-        case name
-        case surname
-    }
+  enum CodingKeys: String, CodingKey {
+    case userId = "user_id"
+    case tgName = "tg_name"
+    case name
+    case surname
+  }
 }
 
 struct SearchUserResponse: Decodable {
-    var foundUsers: [FoundUser]
+  var foundUsers: [FoundUser]
 
-    init(from decoder: Decoder) throws {
-        var container = try decoder.unkeyedContainer()
-        foundUsers = try container.decode([FoundUser].self) // Decode just first element
-    }
+  init(from decoder: Decoder) throws {
+    var container = try decoder.unkeyedContainer()
+    foundUsers = try container.decode([FoundUser].self) // Decode just first element
+  }
 }
 
-final class SearchUserApiModel: BaseApiModel<SearchUserApiEvent> {
-    //
-    override func start() {
-        onEvent(\.request) { [weak self] searchRequest in
-            print(searchRequest)
-            let cookieName = "csrftoken"
-            guard let cookie = HTTPCookieStorage.shared.cookies?.first(where: { $0.name == cookieName }) else {
-                print("No csrf cookie")
-                return
-            }
+final class SearchUserApiModel: BaseApiAsyncModel<SearchUserRequest, [FoundUser]> {
+  //
+  override func doAsync(work: AsyncWork<SearchUserRequest, [FoundUser]>) {
+    let cookieName = "csrftoken"
 
-            self?.apiEngine?
-                .process(endpoint: TeamForceEndpoints.SearchUser(
-                    body: ["data": searchRequest.data],
-                    headers: [
-                        "Authorization": searchRequest.token,
-                        "X-CSRFToken": cookie.value
-                    ]))
-                .done { result in
-                    let decoder = DataToDecodableParser()
-
-                    guard
-                        let data = result.data,
-                        let resultBody: [FoundUser] = decoder.parse(data)
-                    else {
-                        self?.sendEvent(\.error, .unknown)
-                        return
-                    }
-
-                    print(resultBody)
-                    self?.sendEvent(\.success, resultBody)
-                }
-                .catch { _ in
-                    self?.sendEvent(\.error, .unknown)
-                }
-        }
+    guard
+      let searchRequest = work.input,
+      let cookie = HTTPCookieStorage.shared.cookies?.first(where: { $0.name == cookieName })
+    else {
+      print("No csrf cookie")
+      return
     }
+
+    apiEngine?
+      .process(endpoint:
+        TeamForceEndpoints.SearchUser(
+          body: ["data": searchRequest.data],
+          headers: [
+            "Authorization": searchRequest.token,
+            "X-CSRFToken": cookie.value
+          ]))
+      .done { result in
+        let decoder = DataToDecodableParser()
+
+        guard
+          let data = result.data,
+          let resultBody: [FoundUser] = decoder.parse(data)
+        else {
+          work.fail(())
+          return
+        }
+
+        print(resultBody)
+        work.success(result: resultBody)
+      }
+      .catch { _ in
+        work.fail(())
+      }
+  }
 }

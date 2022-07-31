@@ -18,12 +18,6 @@ protocol NetworkEventProtocol: InitProtocol {
     var error: Event<Error>? { get set }
 }
 
-struct AuthEvent: NetworkEventProtocol {
-    var request: Event<String>?
-    var success: Event<AuthResult>?
-    var error: Event<ApiEngineError>?
-}
-
 struct TokenRequest {
     let token: String
 }
@@ -98,13 +92,15 @@ struct Balance: Decodable {
 }
 
 protocol ApiModelProtocol: ModelProtocol,
-    InitProtocol,
-    Communicable where Events: NetworkEventProtocol
+    InitProtocol
 {
     var apiEngine: ApiEngineProtocol? { get set }
 }
 
-class BaseApiModel<Events: NetworkEventProtocol>: BaseModel, ApiModelProtocol {
+protocol ApiCommunicableModelProtocol: ApiModelProtocol, Communicable  where Events: NetworkEventProtocol {
+}
+
+class BaseApiModel<Events: NetworkEventProtocol>: BaseModel, ApiCommunicableModelProtocol {
     var apiEngine: ApiEngineProtocol?
     var eventsStore: Events = .init()
 
@@ -118,29 +114,46 @@ class BaseApiModel<Events: NetworkEventProtocol>: BaseModel, ApiModelProtocol {
     }
 }
 
-final class AuthApiModel: BaseApiModel<AuthEvent> {
-    override func start() {
-        onEvent(\.request) { [weak self] loginName in
-            self?.apiEngine?
-                .process(endpoint: TeamForceEndpoints.AuthEndpoint(
-                    body: ["type": "authorize",
-                           "login": loginName]
-                ))
-                .done { result in
-                    guard
-                        let xId = result.response?.headerValueFor("X-ID"),
-                        let xCode = result.response?.headerValueFor("X-Code")
-                    else {
-                        self?.sendEvent(\.error, .unknown)
-                        return
-                    }
+class BaseApiAsyncModel<In, Out>: BaseModel, ApiModelProtocol, Asyncable {
+    func doAsync(work: AsyncWork<In, Out>) {
+        fatalError()
+    }
 
-                    self?.sendEvent(\.success, AuthResult(xId: xId, xCode: xCode))
+    var apiEngine: ApiEngineProtocol?
+
+    required init(apiEngine: ApiEngineProtocol) {
+        super.init()
+        self.apiEngine = apiEngine
+    }
+
+    required init() {
+        fatalError()
+    }
+}
+
+final class AuthApiModel: BaseApiAsyncModel<String, AuthResult> {
+    override func doAsync(work: AsyncWork<String, AuthResult>) {
+        guard let loginName = work.input else { return }
+
+        apiEngine?
+            .process(endpoint: TeamForceEndpoints.AuthEndpoint(
+                body: ["type": "authorize",
+                       "login": loginName]
+            ))
+            .done { result in
+                guard
+                    let xId = result.response?.headerValueFor("X-ID"),
+                    let xCode = result.response?.headerValueFor("X-Code")
+                else {
+                    work.fail(())
+                    return
                 }
-                .catch { error in
-                    self?.sendEvent(\.error, .error(error))
-                }
-        }
+
+                work.success(result: AuthResult(xId: xId, xCode: xCode))
+            }
+            .catch { error in
+                work.fail(())
+            }
     }
 }
 

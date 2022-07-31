@@ -64,7 +64,6 @@ extension Stateable {
     }
 }
 
-
 protocol Stateable2: Stateable {
     associatedtype State2
 
@@ -87,23 +86,23 @@ extension Stateable2 {
     }
 }
 
-//protocol Stateable3: Stateable2 {
+// protocol Stateable3: Stateable2 {
 //    associatedtype State3
 //
 //    func applyState(_ state: State3)
-//}
+// }
 //
-//protocol Stateable4: Stateable3 {
+// protocol Stateable4: Stateable3 {
 //    associatedtype State4
 //
 //    func applyState(_ state: State4)
-//}
+// }
 //
-//protocol Stateable5: Stateable4 {
+// protocol Stateable5: Stateable4 {
 //    associatedtype State5
 //
 //    func applyState(_ state: State5)
-//}
+// }
 
 // MARK: - Communicable
 

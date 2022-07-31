@@ -38,7 +38,10 @@ final class LoginSuccessScene<Asset: AssetProtocol>: BaseSceneModel<
    // MARK: - Start
 
    override func start() {
+
       mainViewModel.topStackModel.set(.alignment(.center))
+
+      configure()
 
       weak var weakSelf = self
 
@@ -48,19 +51,14 @@ final class LoginSuccessScene<Asset: AssetProtocol>: BaseSceneModel<
 
             Asset.router?.route(\.main, navType: .present, payload: userData)
          }
-      
-      vcModel?
-         .onEvent(\.viewDidLoad) {
-            weakSelf?.configure()
-         }
 
-      guard let token = weakSelf?.inputValue else { return }
+      guard let token = inputValue else { return }
 
       apiModel
-         .onEvent(\.success) { userData in
+         .doAsync(TokenRequest(token: token))
+         .onSuccess({ userData in
             weakSelf?.userData = userData
-         }
-         .sendEvent(\.request, TokenRequest(token: token))
+         })
    }
 
    private func configure() {
