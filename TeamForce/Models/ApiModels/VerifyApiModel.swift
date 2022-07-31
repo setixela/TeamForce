@@ -33,7 +33,7 @@ struct VerifyResultBody: Codable {
 }
 
 final class VerifyApiModel: BaseApiAsyncModel<VerifyRequest, VerifyResultBody> {
-    override func doAsync(work: AsyncWork<VerifyRequest, VerifyResultBody>) {
+    override func doAsync(work: Work<VerifyRequest, VerifyResultBody>) {
         guard let verifyRequest = work.input else { return }
 
         apiEngine?

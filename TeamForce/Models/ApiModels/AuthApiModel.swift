@@ -115,7 +115,7 @@ class BaseApiModel<Events: NetworkEventProtocol>: BaseModel, ApiCommunicableMode
 }
 
 class BaseApiAsyncModel<In, Out>: BaseModel, ApiModelProtocol, Asyncable {
-    func doAsync(work: AsyncWork<In, Out>) {
+    func doAsync(work: Work<In, Out>) {
         fatalError()
     }
 
@@ -132,7 +132,7 @@ class BaseApiAsyncModel<In, Out>: BaseModel, ApiModelProtocol, Asyncable {
 }
 
 final class AuthApiModel: BaseApiAsyncModel<String, AuthResult> {
-    override func doAsync(work: AsyncWork<String, AuthResult>) {
+    override func doAsync(work: Work<String, AuthResult>) {
         guard let loginName = work.input else { return }
 
         apiEngine?

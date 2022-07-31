@@ -38,7 +38,7 @@ final class StringStorageModel: BaseModel {
 }
 
 extension StringStorageModel: Asyncable {
-   func doAsync(work: AsyncWork<String, String>) {
+   func doAsync(work: Work<String, String>) {
       guard
          let input = work.input,
          let value = storageEngine?.load(forKey: input)

@@ -8,7 +8,7 @@
 import Foundation
 
 final class GetProfileApiModel: BaseApiAsyncModel<TokenRequest, UserData> {
-    override func doAsync(work: AsyncWork<TokenRequest, UserData>) {
+    override func doAsync(work: Work<TokenRequest, UserData>) {
         guard let request = work.input else { return }
 
         apiEngine?

@@ -84,7 +84,7 @@ extension TextFieldModel: Communicable {}
 final class TelegramNickCheckerModel: BaseModel {}
 
 extension TelegramNickCheckerModel: Asyncable {
-    func doAsync(work: AsyncWork<String, String>) {
+    func doAsync(work: Work<String, String>) {
         guard let text = work.input else { return }
 
         var resultText = text == "" ? "@" : text
@@ -112,7 +112,7 @@ final class SmsCodeCheckerModel: BaseModel {
 
 extension SmsCodeCheckerModel: Asyncable {
     //
-    func doAsync(work: AsyncWork<String, String>) {
+    func doAsync(work: Work<String, String>) {
         guard let text = work.input else { return }
 
         if text.count >= maxDigits {

@@ -7,6 +7,61 @@
 
 import UIKit
 
+protocol SideBarUseCaseProtocol {
+   func loadProfile() -> Work<Void, UserData>
+   func logout() -> Work<Void, Void>
+}
+
+struct SideBarUseCase: SideBarUseCaseProtocol {
+   let safeStringStorage: StringStorageModel
+   let userProfileApiModel: GetProfileApiModel
+   let logoutApiModel: LogoutApiModel
+
+   func loadProfile() -> Work<Void, UserData> {
+      let work = Work<Void, UserData>()
+      safeStringStorage
+         .doAsync("token")
+         .onFail {
+            print("token not found")
+            work.fail(())
+         }.doMap {
+            TokenRequest(token: $0)
+         }
+         .doAsync(worker: userProfileApiModel)
+         .onSuccess { userData in
+            work.success(result: userData)
+         }
+         .onFail {
+            work.fail(())
+         }
+
+      return work
+   }
+
+   func logout() -> Work<Void, Void> {
+      let work = Work<Void, Void>()
+      safeStringStorage
+         .doAsync("token")
+         .onFail {
+            work.fail(())
+            print("token not found")
+         }
+         .doMap {
+            TokenRequest(token: $0)
+         }
+         .doAsync(worker: logoutApiModel)
+         .onSuccess {
+            work.success(result: ())
+         }
+         .onFail {
+            work.fail(())
+            print("logout api failed")
+         }
+
+      return work
+   }
+}
+
 struct SideBarEvents: InitProtocol {
    var presentOnScene: Event<UIView>?
    var hide: Event<Void>?
@@ -42,9 +97,11 @@ final class SideBarModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
       .set(.padding(Design.Parameters.contentPadding))
       .set(.text("Выход"))
 
-   private lazy var userProfileApiModel = GetProfileApiModel(apiEngine: Asset.service.apiEngine)
-   private lazy var safeStringStorage = StringStorageModel(engine: Asset.service.safeStringStorage)
-   private lazy var logoutApiModel = LogoutApiModel(apiEngine: Asset.service.apiEngine)
+   private lazy var useCases = SideBarUseCase(
+      safeStringStorage: StringStorageModel(engine: Asset.service.safeStringStorage),
+      userProfileApiModel: GetProfileApiModel(apiEngine: Asset.service.apiEngine),
+      logoutApiModel: LogoutApiModel(apiEngine: Asset.service.apiEngine)
+   )
 
    override func start() {
       view.backgroundColor = .white
@@ -70,64 +127,42 @@ final class SideBarModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
          self?.hide()
       }
 
-      configureProfile()
-      configureLogout()
+      configureLoadProfileUseCase()
+      configureLogoutUseCase()
 
       userModel
          .onEvent(\.didTap) {
             print("User model did tap")
-            ProductionAsset.router?
-               .route(\.profile, navType: .push, payload: ())
+            ProductionAsset.router?.route(\.profile, navType: .push, payload: ())
          }
    }
+}
 
-   private func configureProfile() {
-      safeStringStorage
-         .doAsync("token")
+// MARK: - Configure use cases
+
+extension SideBarModel {
+   private func configureLoadProfileUseCase() {
+      useCases.loadProfile()
+         .onSuccess { [weak self] user in
+            self?.userModel.userName.set(.text(user.profile.tgName))
+            self?.userModel.nickName.set(.text(user.profile.tgId))
+         }
          .onFail {
-            print("token not found")
-         }
-         .doMap {
-            TokenRequest(token: $0)
-         }
-         .doAsync(worker: userProfileApiModel)
-         .onSuccess {
-            self.setProfileLabels(profile: $0)
-         }.onFail {
             print("profile loading error")
          }
    }
 
-   private func configureLogout() {
+   private func configureLogoutUseCase() {
       item4
          .onEvent(\.didTap) { [weak self] in
-            guard let self = self else { return }
-
-            self.safeStringStorage
-               .doAsync("token")
-               .onSuccess { token in
-                  print(token)
-               }
-               .onFail {
-                  print("token not found")
-               }
-               .doMap {
-                  TokenRequest(token: $0)
-               }
-               .doAsync(worker: self.logoutApiModel)
+            self?.useCases.logout()
                .onSuccess {
                   UserDefaults.standard.setIsLoggedIn(value: false)
                   Asset.router?.route(\.digitalThanks, navType: .present, payload: ())
-               }
-               .onFail {
+               }.onFail {
                   print("logout api failed")
                }
          }
-   }
-
-   private func setProfileLabels(profile: UserData) {
-      userModel.userName.set(.text(profile.profile.tgName))
-      userModel.nickName.set(.text(profile.profile.tgId))
    }
 }
 

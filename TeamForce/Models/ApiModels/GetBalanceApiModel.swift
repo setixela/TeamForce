@@ -14,7 +14,7 @@ struct BalanceApiEvent: NetworkEventProtocol {
 }
 
 final class GetBalanceApiModel: BaseApiAsyncModel<String, Balance> {
-    override func doAsync(work: Work) {
+    override func doAsync(work: W) {
         apiEngine?
             .process(endpoint: TeamForceEndpoints.BalanceEndpoint(headers: [
                 "Authorization": work.input ?? "",
