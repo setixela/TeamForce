@@ -11,7 +11,7 @@ import UIKit
 
 // protocol LoginUseCase {}
 
-//class LoginUseCases<Asset: AssetProtocol> {
+// class LoginUseCases<Asset: AssetProtocol> {
 //
 //   private let inputParser = TelegramNickCheckerModel()
 //   private let apiModel = AuthApiModel(apiEngine: Asset.service.apiEngine)
@@ -33,7 +33,7 @@ import UIKit
 //               }
 //         }
 //   }
-//}
+// }
 
 final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
    DefaultVCModel,
@@ -76,35 +76,34 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
                            error: Text.title.make(\.wrongUsername))
 
       nextButton
-         .onEvent(\.didTap) { [weak self] in
-            guard let loginName = self?.loginName else { return }
-
-            self?.apiModel
-               .doAsync(loginName)
-               .onSuccess {
-                  Asset.router?.route(\.verifyCode, navType: .push, payload: $0)
-               }
-               .onFail {
-                  self?.badgeModel.changeState(to: BadgeState.error)
-               }
+         .onEvent(\.didTap)
+         .doInput(loginName)
+         .onFail {
+            print("var loginName is nil")
+         }
+         .doAsync(worker: apiModel)
+         .onSuccess {
+            Asset.router?.route(\.verifyCode, navType: .push, payload: $0)
+         }
+         .onFail { [weak self] in
+            self?.badgeModel.changeState(to: BadgeState.error)
          }
 
+
       badgeModel.textFieldModel
-         .onEvent(\.didEditingChanged) { [weak self] text in
-            self?.inputParser
-               .doAsync(text)
-               .onSuccess { text in
-                  self?.loginName = String(text.dropFirst())
-                  self?.badgeModel.textFieldModel.set(.text(text))
-                  self?.nextButton.set(Design.State.button.default)
-                  self?.badgeModel.changeState(to: BadgeState.default)
-               }
-               .onFail { (text: String) in
-                  self?.loginName = nil
-                  self?.badgeModel.textFieldModel.set(.text(text))
-                  self?.nextButton.set(Design.State.button.inactive)
-                  self?.badgeModel.changeState(to: BadgeState.default)
-               }
+         .onEvent(\.didEditingChanged)
+         .doAsync(worker: inputParser)
+         .onSuccess { [weak self] text in
+            self?.loginName = String(text.dropFirst())
+            self?.badgeModel.textFieldModel.set(.text(text))
+            self?.nextButton.set(Design.State.button.default)
+            self?.badgeModel.changeState(to: BadgeState.default)
+         }
+         .onFail { [weak self] (text: String) in
+            self?.loginName = nil
+            self?.badgeModel.textFieldModel.set(.text(text))
+            self?.nextButton.set(Design.State.button.inactive)
+            self?.badgeModel.changeState(to: BadgeState.default)
          }
    }
 

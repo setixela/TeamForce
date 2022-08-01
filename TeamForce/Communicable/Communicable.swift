@@ -12,78 +12,78 @@ import Foundation
 protocol KeyPathSetable {}
 
 extension KeyPathSetable {
-    @discardableResult func set<T>(_ keypath: WritableKeyPath<Self, T>, _ value: T) -> Self {
-        var slf = self
-        slf[keyPath: keypath] = value
-        return self
-    }
+   @discardableResult func set<T>(_ keypath: WritableKeyPath<Self, T>, _ value: T) -> Self {
+      var slf = self
+      slf[keyPath: keypath] = value
+      return self
+   }
 
-    func get<T>(_ keypath: KeyPath<Self, T>, _ value: T) -> T {
-        self[keyPath: keypath]
-    }
+   func get<T>(_ keypath: KeyPath<Self, T>, _ value: T) -> T {
+      self[keyPath: keypath]
+   }
 }
 
 // MARK: - Stateable
 
 protocol Stateable: InitProtocol {
-    associatedtype State
+   associatedtype State
 
-    func applyState(_ state: State)
+   func applyState(_ state: State)
 }
 
 extension Stateable {
-    init(_ states: State...) {
-        self.init(states)
-    }
+   init(_ states: State...) {
+      self.init(states)
+   }
 
-    init(_ states: [State]) {
-        self.init()
+   init(_ states: [State]) {
+      self.init()
 
-        states.forEach { applyState($0) }
-    }
+      states.forEach { applyState($0) }
+   }
 
-    @discardableResult
-    func set(_ state: State) -> Self {
-        applyState(state)
+   @discardableResult
+   func set(_ state: State) -> Self {
+      applyState(state)
 
-        return self
-    }
+      return self
+   }
 
-    @discardableResult
-    func set(_ states: [State]) -> Self {
-        states.forEach { applyState($0) }
+   @discardableResult
+   func set(_ states: [State]) -> Self {
+      states.forEach { applyState($0) }
 
-        return self
-    }
+      return self
+   }
 
-    @discardableResult
-    func set(_ states: State...) -> Self {
-        states.forEach { applyState($0) }
+   @discardableResult
+   func set(_ states: State...) -> Self {
+      states.forEach { applyState($0) }
 
-        return self
-    }
+      return self
+   }
 }
 
 protocol Stateable2: Stateable {
-    associatedtype State2
+   associatedtype State2
 
-    func applyState(_ state: State2)
+   func applyState(_ state: State2)
 }
 
 extension Stateable2 {
-    @discardableResult
-    func set(_ state: State2) -> Self {
-        applyState(state)
+   @discardableResult
+   func set(_ state: State2) -> Self {
+      applyState(state)
 
-        return self
-    }
+      return self
+   }
 
-    @discardableResult
-    func set(_ state: [State2]) -> Self {
-        state.forEach { applyState($0) }
+   @discardableResult
+   func set(_ state: [State2]) -> Self {
+      state.forEach { applyState($0) }
 
-        return self
-    }
+      return self
+   }
 }
 
 // protocol Stateable3: Stateable2 {
@@ -107,53 +107,63 @@ extension Stateable2 {
 // MARK: - Communicable
 
 protocol Communicable: AnyObject {
-    associatedtype Events: InitProtocol
+   associatedtype Events: InitProtocol
 
-    var eventsStore: Events { get set }
+   var eventsStore: Events { get set }
 }
 
 extension Communicable {
-    //
-    @discardableResult
-    func sendEvent<T>(_ event: KeyPath<Events, Event<T>?>, payload: T) -> Self {
-        guard
-            let lambda = eventsStore[keyPath: event]
-        else {
-            print("Event KeyPath did not observed!:\n   \(event)\n   Value: \(payload)")
-            return self
-        }
+   //
+   @discardableResult
+   func sendEvent<T>(_ event: KeyPath<Events, Event<T>?>, payload: T) -> Self {
+      guard
+         let lambda = eventsStore[keyPath: event]
+      else {
+         print("Event KeyPath did not observed!:\n   \(event)\n   Value: \(payload)")
+         return self
+      }
 
-        DispatchQueue.main.async {
-            lambda(payload)
-        }
+      DispatchQueue.main.async {
+         lambda(payload)
+      }
 
-        return self
-    }
+      return self
+   }
 
-    @discardableResult
-    func sendEvent<T>(_ event: KeyPath<Events, Event<T>?>, _ payload: T) -> Self {
-        return sendEvent(event, payload: payload)
-    }
+   @discardableResult
+   func sendEvent<T>(_ event: KeyPath<Events, Event<T>?>, _ payload: T) -> Self {
+      return sendEvent(event, payload: payload)
+   }
 
-    @discardableResult
-    func sendEvent(_ event: KeyPath<Events, Event<Void>?>) -> Self {
-        guard
-            let lambda = eventsStore[keyPath: event]
-        else {
-            print("Void Event KeyPath did not observed!:\n   \(event) ")
-            return self
-        }
+   @discardableResult
+   func sendEvent(_ event: KeyPath<Events, Event<Void>?>) -> Self {
+      guard
+         let lambda = eventsStore[keyPath: event]
+      else {
+         print("Void Event KeyPath did not observed!:\n   \(event) ")
+         return self
+      }
 
-        DispatchQueue.main.async {
-            lambda(())
-        }
+      DispatchQueue.main.async {
+         lambda(())
+      }
 
-        return self
-    }
+      return self
+   }
 
-    @discardableResult
-    func onEvent<T>(_ event: WritableKeyPath<Events, Event<T>?>, _ lambda: @escaping Event<T>) -> Self {
-        eventsStore[keyPath: event] = lambda
-        return self
-    }
+   @discardableResult
+   func onEvent<T>(_ event: WritableKeyPath<Events, Event<T>?>, _ lambda: @escaping Event<T>) -> Self {
+      eventsStore[keyPath: event] = lambda
+      return self
+   }
+
+   @discardableResult
+   func onEvent<T>(_ event: WritableKeyPath<Events, Event<T>?>) -> Work<Void, T> {
+      let work = Work<Void, T>()
+      let lambda: Event<T> = { value in
+         work.success(result: value)
+      }
+      eventsStore[keyPath: event] = lambda
+      return work
+   }
 }

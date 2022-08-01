@@ -26,6 +26,7 @@ protocol WorkProtocol: AnyObject {
 
    func success(result: Out)
 
+   func doAsync<Out2>(work: Work<Out, Out2>) -> Work<Out, Out2>
    func doAsync<Out2>(_ closure: @escaping WorkClosure<Out, Out2>) -> Work<Out, Out2>
    func doAsync<Worker>(worker: Worker, input: Worker.In?) -> Work<Worker.In, Worker.Out> where Worker: Asyncable, Out == Worker.In
 
@@ -44,11 +45,12 @@ final class Work<In, Out>: WorkProtocol {
    var closure: WorkClosure<In, Out>?
 
    private var finisher: ((Out) -> Void)?
-   private var nextWork: WorkWrappperProtocol?
+
    private var genericFail: LambdaProtocol?
 
-   //  private var mapper: ((Out) -> Any)?
+   private var nextWork: WorkWrappperProtocol?
    private var mapperWork: WorkWrappperProtocol?
+   private var inputWork: WorkWrappperProtocol?
 
    init(input: In?, _ closure: @escaping WorkClosure<In, Out>) {
       self.input = input
@@ -63,11 +65,13 @@ final class Work<In, Out>: WorkProtocol {
       self.result = result
 
       finisher?(result)
-      if let mapper = mapperWork {
-         mapper.perform(result)
+      inputWork?.perform(())
+      if let mapperWork = mapperWork {
+         mapperWork.perform(result)
       } else {
          nextWork?.perform(result)
       }
+      
       clean()
    }
 
@@ -80,6 +84,13 @@ final class Work<In, Out>: WorkProtocol {
 
 // exte
 extension Work {
+   @discardableResult
+   func doAsync<Out2>(work: Work<Out, Out2>) -> Work<Out, Out2> {
+      nextWork = WorkWrappper<Out, Out2>(work: work)
+
+      return work
+   }
+
    @discardableResult
    func doAsync<Out2>(_ closure: @escaping WorkClosure<Out, Out2>) -> Work<Out, Out2> {
       let newWork = Work<Out, Out2>(input: nil, closure)
@@ -114,11 +125,43 @@ extension Work {
    @discardableResult func doMap<T>(_ mapper: @escaping MapClosure<Out, T>) -> Work<Out, T> {
       let work = Work<Out, T>()
       work.closure = { work in
-         guard let input = work.input else { return }
+         guard let input = work.input else {
+            work.fail(())
+            return
+         }
 
          work.success(result: mapper(input))
       }
       mapperWork = WorkWrappper(work: work)
+
+      return work
+   }
+
+   @discardableResult func doInput<T>(_ input: T?) -> Work<Out, T> {
+      let work = Work<Out, T>()
+      work.closure = {
+         guard let input = input else {
+            $0.fail(())
+            return
+         }
+
+         $0.success(result: input)
+      }
+      inputWork = WorkWrappper(work: work)
+
+      return work
+   }
+
+   @discardableResult func doInput<T>(_ input: @escaping () -> T?) -> Work<Out, T> {
+      let work = Work<Out, T>()
+      work.closure = {
+         guard let input = input() else {
+            $0.fail(())
+            return
+         }
+         $0.success(result: input)
+      }
+      inputWork = WorkWrappper(work: work)
 
       return work
    }
@@ -130,6 +173,7 @@ extension Work {
       nextWork = nil
       genericFail = nil
       mapperWork = nil
+      inputWork = nil
    }
 }
 

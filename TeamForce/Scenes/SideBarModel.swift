@@ -97,6 +97,7 @@ final class SideBarModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
       .set(.padding(Design.Parameters.contentPadding))
       .set(.text("Выход"))
 
+   //
    private lazy var useCases = SideBarUseCase(
       safeStringStorage: StringStorageModel(engine: Asset.service.safeStringStorage),
       userProfileApiModel: GetProfileApiModel(apiEngine: Asset.service.apiEngine),
@@ -154,14 +155,13 @@ extension SideBarModel {
 
    private func configureLogoutUseCase() {
       item4
-         .onEvent(\.didTap) { [weak self] in
-            self?.useCases.logout()
-               .onSuccess {
-                  UserDefaults.standard.setIsLoggedIn(value: false)
-                  Asset.router?.route(\.digitalThanks, navType: .present, payload: ())
-               }.onFail {
-                  print("logout api failed")
-               }
+         .onEvent(\.didTap)
+         .doAsync(work: useCases.logout())
+         .onSuccess {
+            UserDefaults.standard.setIsLoggedIn(value: false)
+            Asset.router?.route(\.digitalThanks, navType: .present, payload: ())
+         }.onFail {
+            print("logout api failed")
          }
    }
 }

@@ -24,6 +24,7 @@ final class ProfileViewModel<Asset: AssetProtocol>: BaseSceneModel<
     private lazy var safeStringStorageModel = StringStorageModel(engine: Asset.service.safeStringStorage)
 
     private var balance: Balance?
+   
     override func start() {
         configure()
         configureProfile()

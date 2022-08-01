@@ -16,6 +16,7 @@ final class LogoutApiModel: BaseApiAsyncModel<TokenRequest, Void> {
             work.success(result: ())
          }
          .catch { _ in
+            print("Logout failed")
             work.fail(())
          }
    }

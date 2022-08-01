@@ -50,51 +50,48 @@ final class VerifyCodeScene<Asset: AssetProtocol>: BaseSceneModel<
       badgeModel.setLabels(title: Text.title.make(\.smsCode),
                            placeholder: Text.title.make(\.smsCode),
                            error: Text.title.make(\.wrongCode))
+      badgeModel.changeState(to: BadgeState.default)
 
       weak var weakSelf = self
 
       enterButton
-         .onEvent(\.didTap) {
+         .onEvent(\.didTap)
+         .doInput {
             guard
                let authResult = weakSelf?.inputValue,
                let smsCode = weakSelf?.smsCode
-            else { return }
+            else { return nil }
 
-            let verifyRequest = VerifyRequest(xId: authResult.xId, xCode: authResult.xCode, smsCode: smsCode)
+            return VerifyRequest(xId: authResult.xId, xCode: authResult.xCode, smsCode: smsCode)
+         }
+         .doAsync(worker: verifyApi)
+         .onSuccess { result in
+            let fullToken = "Token " + result.token
+            let csrfToken = result.sessionId
 
-            weakSelf?.verifyApi
-               .doAsync(verifyRequest)
-               .onSuccess { result in
-                  let fullToken = "Token " + result.token
-                  let csrfToken = result.sessionId
+            weakSelf?.safeStringStorage
+               .set(.saveValueForKey((value: fullToken, key: "token")))
+               .set(.saveValueForKey((value: csrfToken, key: "csrftoken")))
 
-                  weakSelf?.safeStringStorage
-                     .set(.saveValueForKey((value: fullToken, key: "token")))
-                     .set(.saveValueForKey((value: csrfToken, key: "csrftoken")))
+            Asset.router?.route(\.loginSuccess, navType: .push, payload: fullToken)
 
-                  Asset.router?.route(\.loginSuccess, navType: .push, payload: fullToken)
-
-                  UserDefaults.standard.setIsLoggedIn(value: true)
-               }.onFail {
-                  print("Verify api error")
-                  weakSelf?.badgeModel.changeState(to: BadgeState.error)
-               }
+            UserDefaults.standard.setIsLoggedIn(value: true)
+         }.onFail {
+            print("Verify api error")
+            weakSelf?.badgeModel.changeState(to: BadgeState.error)
          }
 
-      weakSelf?.badgeModel.changeState(to: BadgeState.default)
       badgeModel.textFieldModel
-         .onEvent(\.didEditingChanged) {
-            weakSelf?.inputParser
-               .doAsync($0)
-               .onSuccess {
-                  weakSelf?.smsCode = $0
-                  weakSelf?.badgeModel.textFieldModel.set(.text($0))
-                  weakSelf?.enterButton.set(Design.State.button.default)
-               }.onFail { (text: String) in
-                  weakSelf?.smsCode = nil
-                  weakSelf?.badgeModel.textFieldModel.set(.text(text))
-                  weakSelf?.enterButton.set(Design.State.button.inactive)
-               }
+         .onEvent(\.didEditingChanged)
+         .doAsync(worker: inputParser)
+         .onSuccess {
+            weakSelf?.smsCode = $0
+            weakSelf?.badgeModel.textFieldModel.set(.text($0))
+            weakSelf?.enterButton.set(Design.State.button.default)
+         }.onFail { (text: String) in
+            weakSelf?.smsCode = nil
+            weakSelf?.badgeModel.textFieldModel.set(.text(text))
+            weakSelf?.enterButton.set(Design.State.button.inactive)
          }
    }
 
