@@ -27,7 +27,7 @@ struct StorageStringEvent: StorageEventProtocol {
    var error: Event<StorageError>?
 }
 
-final class StringStorageModel: BaseModel {
+final class StringStorageWorker: BaseModel {
    private var storageEngine: StringStorageProtocol?
 
    convenience init(engine: StringStorageProtocol) {
@@ -37,7 +37,7 @@ final class StringStorageModel: BaseModel {
    }
 }
 
-extension StringStorageModel: Asyncable {
+extension StringStorageWorker: WorkerProtocol {
    func doAsync(work: Work<String, String>) {
       guard
          let input = work.input,
@@ -53,7 +53,7 @@ extension StringStorageModel: Asyncable {
    }
 }
 
-extension StringStorageModel: Stateable {
+extension StringStorageWorker: Stateable {
    enum State {
       case saveValueForKey((value: String, key: String))
    }

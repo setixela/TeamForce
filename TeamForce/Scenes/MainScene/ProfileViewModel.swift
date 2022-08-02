@@ -20,8 +20,8 @@ final class ProfileViewModel<Asset: AssetProtocol>: BaseSceneModel<
 
     // MARK: - Services
 
-    private lazy var userProfileApiModel = GetProfileApiModel(apiEngine: Asset.service.apiEngine)
-    private lazy var safeStringStorageModel = StringStorageModel(engine: Asset.service.safeStringStorage)
+    private lazy var userProfileApiModel = ProfileApiWorker(apiEngine: Asset.service.apiEngine)
+    private lazy var safeStringStorageModel = StringStorageWorker(engine: Asset.service.safeStringStorage)
 
     private var balance: Balance?
    
@@ -54,7 +54,7 @@ final class ProfileViewModel<Asset: AssetProtocol>: BaseSceneModel<
             .doMap {
                 TokenRequest(token: $0)
             }
-            .doAsync(worker: userProfileApiModel)
+            .doNext(worker: userProfileApiModel)
             .onSuccess { [weak self] userData in
                 self?.setUserModelLabels(userData: userData)
                 self?.setProfileCells(userData: userData)

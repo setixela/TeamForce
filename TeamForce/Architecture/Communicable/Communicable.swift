@@ -160,9 +160,13 @@ extension Communicable {
    @discardableResult
    func onEvent<T>(_ event: WritableKeyPath<Events, Event<T>?>) -> Work<Void, T> {
       let work = Work<Void, T>()
+      print("\n### WORK     \(work)\n")
+      //
       let lambda: Event<T> = { value in
          work.success(result: value)
+         print("\n### WORK     \(work)\n")
       }
+      //
       eventsStore[keyPath: event] = lambda
       return work
    }

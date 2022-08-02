@@ -31,7 +31,7 @@ final class LoginSuccessScene<Asset: AssetProtocol>: BaseSceneModel<
    private lazy var nextButton = ButtonModel(Design.State.button.default)
       .set(.title(Text.button.enterButton))
 
-   private lazy var apiModel = GetProfileApiModel(apiEngine: Asset.service.apiEngine)
+   private lazy var apiModel = ProfileApiWorker(apiEngine: Asset.service.apiEngine)
    private var userPromise: Promise<UserData>?
    private var userData: UserData?
 

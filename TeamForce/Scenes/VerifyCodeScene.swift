@@ -40,7 +40,7 @@ final class VerifyCodeScene<Asset: AssetProtocol>: BaseSceneModel<
    private lazy var verifyApi = VerifyApiModel(apiEngine: Asset.service.apiEngine)
    private var smsCode: String?
 
-   private lazy var safeStringStorage = StringStorageModel(engine: Asset.service.safeStringStorage)
+   private lazy var safeStringStorage = StringStorageWorker(engine: Asset.service.safeStringStorage)
 
    // MARK: - Start
 
@@ -57,25 +57,14 @@ final class VerifyCodeScene<Asset: AssetProtocol>: BaseSceneModel<
       enterButton
          .onEvent(\.didTap)
          .doInput {
-            guard
-               let authResult = weakSelf?.inputValue,
-               let smsCode = weakSelf?.smsCode
-            else { return nil }
-
-            return VerifyRequest(xId: authResult.xId, xCode: authResult.xCode, smsCode: smsCode)
+            weakSelf?.makeVerifyRequest()
          }
-         .doAsync(worker: verifyApi)
+         .onFail {
+            print("VerifyRequest init error")
+         }
+         .doNext(worker: verifyApi)
          .onSuccess { result in
-            let fullToken = "Token " + result.token
-            let csrfToken = result.sessionId
-
-            weakSelf?.safeStringStorage
-               .set(.saveValueForKey((value: fullToken, key: "token")))
-               .set(.saveValueForKey((value: csrfToken, key: "csrftoken")))
-
-            Asset.router?.route(\.loginSuccess, navType: .push, payload: fullToken)
-
-            UserDefaults.standard.setIsLoggedIn(value: true)
+            weakSelf?.completeVerify(result: result)
          }.onFail {
             print("Verify api error")
             weakSelf?.badgeModel.changeState(to: BadgeState.error)
@@ -83,7 +72,7 @@ final class VerifyCodeScene<Asset: AssetProtocol>: BaseSceneModel<
 
       badgeModel.textFieldModel
          .onEvent(\.didEditingChanged)
-         .doAsync(worker: inputParser)
+         .doNext(worker: inputParser)
          .onSuccess {
             weakSelf?.smsCode = $0
             weakSelf?.badgeModel.textFieldModel.set(.text($0))
@@ -114,5 +103,29 @@ final class VerifyCodeScene<Asset: AssetProtocol>: BaseSceneModel<
          .set(.models([
             enterButton
          ]))
+   }
+}
+
+private extension VerifyCodeScene {
+   func makeVerifyRequest() -> VerifyRequest? {
+      guard
+         let authResult = inputValue,
+         let smsCode = smsCode
+      else { return nil }
+
+      return VerifyRequest(xId: authResult.xId, xCode: authResult.xCode, smsCode: smsCode)
+   }
+
+   func completeVerify(result: VerifyResultBody) {
+      let fullToken = "Token " + result.token
+      let csrfToken = result.sessionId
+
+      safeStringStorage
+         .set(.saveValueForKey((value: fullToken, key: "token")))
+         .set(.saveValueForKey((value: csrfToken, key: "csrftoken")))
+
+      Asset.router?.route(\.loginSuccess, navType: .push, payload: fullToken)
+
+      UserDefaults.standard.setIsLoggedIn(value: true)
    }
 }

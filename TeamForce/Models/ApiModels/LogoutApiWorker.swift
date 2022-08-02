@@ -7,8 +7,8 @@
 
 import Foundation
 
-final class LogoutApiModel: BaseApiAsyncModel<TokenRequest, Void> {
-   override func doAsync(work: W) {
+final class LogoutApiWorker: BaseApiAsyncModel<TokenRequest, Void> {
+   override func doAsync(work: Wrk) {
       apiEngine?
          .process(endpoint: TeamForceEndpoints.Logout())
          .done { _ in // result in

@@ -9,32 +9,6 @@ import UIKit
 
 // MARK: - LoginScene
 
-// protocol LoginUseCase {}
-
-// class LoginUseCases<Asset: AssetProtocol> {
-//
-//   private let inputParser = TelegramNickCheckerModel()
-//   private let apiModel = AuthApiModel(apiEngine: Asset.service.apiEngine)
-//
-//   private var loginName: String?
-//
-//   func onNextButtonTryLogin() {
-//      nextButton
-//         .onEvent(\.didTap) {
-//            guard let loginName = self.loginName else { return }
-//
-//            self.apiModel
-//               .doAsync(loginName)
-//               .onSuccess {
-//                  Asset.router?.route(\.verifyCode, navType: .push, payload: $0)
-//               }
-//               .onFail {
-//                  self.badgeModel.changeState(to: BadgeState.error)
-//               }
-//         }
-//   }
-// }
-
 final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
    DefaultVCModel,
    StackWithBottomPanelModel,
@@ -60,39 +34,46 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
 
    private let badgeModel = BadgeModel<Asset>()
 
-   // MARK: - Services
+   // MARK: - Use Cases
 
-   private let inputParser = TelegramNickCheckerModel()
-   private let apiModel = AuthApiModel(apiEngine: Asset.service.apiEngine)
+   private lazy var useCase = Asset.apiUseCase
 
+   // MARK: - Private
+
+   private let telegramNickParser = TelegramNickCheckerModel()
    private var loginName: String?
 
    // MARK: - Start
 
    override func start() {
       configure()
-      badgeModel.setLabels(title: Text.title.make(\.userName),
-                           placeholder: "@" + Text.title.make(\.userName),
-                           error: Text.title.make(\.wrongUsername))
+
+      weak var weakSelf = self
+
+      badgeModel
+         .setLabels(title: Text.title.make(\.userName),
+                    placeholder: "@" + Text.title.make(\.userName),
+                    error: Text.title.make(\.wrongUsername))
 
       nextButton
          .onEvent(\.didTap)
-         .doInput(loginName)
-         .onFail {
-            print("var loginName is nil")
+         .doInput {
+            weakSelf?.loginName
          }
-         .doAsync(worker: apiModel)
+         .onFail {
+            print("login name is nil")
+         }
+         .doNext(usecase: useCase.login)
          .onSuccess {
             Asset.router?.route(\.verifyCode, navType: .push, payload: $0)
          }
-         .onFail { [weak self] in
-            self?.badgeModel.changeState(to: BadgeState.error)
+         .onFail {
+            weakSelf?.badgeModel.changeState(to: BadgeState.error)
          }
-
 
       badgeModel.textFieldModel
          .onEvent(\.didEditingChanged)
-         .doAsync(worker: inputParser)
+         .doNext(worker: telegramNickParser)
          .onSuccess { [weak self] text in
             self?.loginName = String(text.dropFirst())
             self?.badgeModel.textFieldModel.set(.text(text))
@@ -100,6 +81,7 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
             self?.badgeModel.changeState(to: BadgeState.default)
          }
          .onFail { [weak self] (text: String) in
+            print("\n### text     \(text)\n")
             self?.loginName = nil
             self?.badgeModel.textFieldModel.set(.text(text))
             self?.nextButton.set(Design.State.button.inactive)

@@ -27,8 +27,8 @@ protocol ButtonStateBuilderProtocol: ButtonsProtocol where AsType == [ButtonStat
     associatedtype Parameters: ParametersProtocol
 }
 
-protocol ButtonBuilderProtocol: ButtonsProtocol, StateBuilderProtocol
-    where StateBuilder: ButtonStateBuilderProtocol, AsType == ButtonModel
+protocol ButtonBuilderProtocol: ButtonsProtocol, BuilderProtocol
+    where Builder: ButtonStateBuilderProtocol, AsType == ButtonModel
 {}
 
 // MARK: - Buttons

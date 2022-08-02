@@ -10,7 +10,7 @@ import UIKit
 // MARK: - Labels Protocol
 
 protocol LabelBuilderProtocol: TypographyProtocol,
-    StateBuilderProtocol where StateBuilder: LabelStateBuilderProtocol, DesignType == LabelModel {}
+    BuilderProtocol where Builder: LabelStateBuilderProtocol, DesignType == LabelModel {}
 
 // MARK: - Labels
 

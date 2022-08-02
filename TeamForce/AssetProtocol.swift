@@ -6,32 +6,33 @@
 //
 
 protocol ServiceProtocol: InitProtocol {
-    var apiEngine: ApiEngineProtocol { get }
-    var safeStringStorage: StringStorageProtocol { get }
+   var apiEngine: ApiEngineProtocol { get }
+   var safeStringStorage: StringStorageProtocol { get }
 }
 
 protocol AssetProtocol {
-    associatedtype Scene: ScenesProtocol
-    associatedtype Service: ServiceProtocol
-    associatedtype Design: DesignProtocol
-    associatedtype Text: TextsProtocol
+   associatedtype Scene: ScenesProtocol
+   associatedtype Service: ServiceProtocol
+   associatedtype Design: DesignProtocol
+   associatedtype Text: TextsProtocol
 
-    static var router: Router<Scene>? { get set }
-    static var service: Service { get }
+   static var router: Router<Scene>? { get set }
+   static var service: Service { get }
+   static var apiUseCase: ApiUseCase { get }
 
-    typealias Asset = Self
+   typealias Asset = Self
 }
 
 extension AssetProtocol {
-    static var service: Service { Service() }
+   static var service: Service { Service() }
 }
 
 protocol ScenesProtocol: InitProtocol {
-    var digitalThanks: SceneModelProtocol { get }
-    var login: SceneModelProtocol { get }
-    var verifyCode: SceneModelProtocol { get }
-    var loginSuccess: SceneModelProtocol { get }
-    var register: SceneModelProtocol { get }
-    var main: SceneModelProtocol { get }
-    var profile: SceneModelProtocol { get }
+   var digitalThanks: SceneModelProtocol { get }
+   var login: SceneModelProtocol { get }
+   var verifyCode: SceneModelProtocol { get }
+   var loginSuccess: SceneModelProtocol { get }
+   var register: SceneModelProtocol { get }
+   var main: SceneModelProtocol { get }
+   var profile: SceneModelProtocol { get }
 }

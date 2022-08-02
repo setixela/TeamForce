@@ -7,61 +7,6 @@
 
 import UIKit
 
-protocol SideBarUseCaseProtocol {
-   func loadProfile() -> Work<Void, UserData>
-   func logout() -> Work<Void, Void>
-}
-
-struct SideBarUseCase: SideBarUseCaseProtocol {
-   let safeStringStorage: StringStorageModel
-   let userProfileApiModel: GetProfileApiModel
-   let logoutApiModel: LogoutApiModel
-
-   func loadProfile() -> Work<Void, UserData> {
-      let work = Work<Void, UserData>()
-      safeStringStorage
-         .doAsync("token")
-         .onFail {
-            print("token not found")
-            work.fail(())
-         }.doMap {
-            TokenRequest(token: $0)
-         }
-         .doAsync(worker: userProfileApiModel)
-         .onSuccess { userData in
-            work.success(result: userData)
-         }
-         .onFail {
-            work.fail(())
-         }
-
-      return work
-   }
-
-   func logout() -> Work<Void, Void> {
-      let work = Work<Void, Void>()
-      safeStringStorage
-         .doAsync("token")
-         .onFail {
-            work.fail(())
-            print("token not found")
-         }
-         .doMap {
-            TokenRequest(token: $0)
-         }
-         .doAsync(worker: logoutApiModel)
-         .onSuccess {
-            work.success(result: ())
-         }
-         .onFail {
-            work.fail(())
-            print("logout api failed")
-         }
-
-      return work
-   }
-}
-
 struct SideBarEvents: InitProtocol {
    var presentOnScene: Event<UIView>?
    var hide: Event<Void>?
@@ -97,12 +42,9 @@ final class SideBarModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
       .set(.padding(Design.Parameters.contentPadding))
       .set(.text("Выход"))
 
-   //
-   private lazy var useCases = SideBarUseCase(
-      safeStringStorage: StringStorageModel(engine: Asset.service.safeStringStorage),
-      userProfileApiModel: GetProfileApiModel(apiEngine: Asset.service.apiEngine),
-      logoutApiModel: LogoutApiModel(apiEngine: Asset.service.apiEngine)
-   )
+   // MARK: - Use Cases
+
+   private lazy var useCase = Asset.apiUseCase
 
    override func start() {
       view.backgroundColor = .white
@@ -143,7 +85,8 @@ final class SideBarModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
 
 extension SideBarModel {
    private func configureLoadProfileUseCase() {
-      useCases.loadProfile()
+      useCase.loadProfile
+         .work()
          .onSuccess { [weak self] user in
             self?.userModel.userName.set(.text(user.profile.tgName))
             self?.userModel.nickName.set(.text(user.profile.tgId))
@@ -156,7 +99,7 @@ extension SideBarModel {
    private func configureLogoutUseCase() {
       item4
          .onEvent(\.didTap)
-         .doAsync(work: useCases.logout())
+         .doNext(usecase: useCase.logout)
          .onSuccess {
             UserDefaults.standard.setIsLoggedIn(value: false)
             Asset.router?.route(\.digitalThanks, navType: .present, payload: ())

@@ -83,7 +83,7 @@ extension TextFieldModel: Communicable {}
 
 final class TelegramNickCheckerModel: BaseModel {}
 
-extension TelegramNickCheckerModel: Asyncable {
+extension TelegramNickCheckerModel: WorkerProtocol {
     func doAsync(work: Work<String, String>) {
         guard let text = work.input else { return }
 
@@ -110,7 +110,7 @@ final class SmsCodeCheckerModel: BaseModel {
     }
 }
 
-extension SmsCodeCheckerModel: Asyncable {
+extension SmsCodeCheckerModel: WorkerProtocol {
     //
     func doAsync(work: Work<String, String>) {
         guard let text = work.input else { return }
