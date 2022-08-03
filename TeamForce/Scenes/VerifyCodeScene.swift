@@ -35,6 +35,8 @@ final class VerifyCodeScene<Asset: AssetProtocol>: BaseSceneModel<
 
    private let badgeModel = BadgeModel<Asset>()
 
+   // MARK: - Workers
+
    private lazy var inputParser = SmsCodeCheckerModel()
 
    private lazy var verifyApi = VerifyApiModel(apiEngine: Asset.service.apiEngine)
@@ -125,7 +127,6 @@ private extension VerifyCodeScene {
          .set(.saveValueForKey((value: csrfToken, key: "csrftoken")))
 
       Asset.router?.route(\.loginSuccess, navType: .push, payload: fullToken)
-
       UserDefaults.standard.setIsLoggedIn(value: true)
    }
 }

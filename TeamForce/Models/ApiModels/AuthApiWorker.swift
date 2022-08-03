@@ -91,7 +91,7 @@ struct Balance: Decodable {
    let distr: Distr
 }
 
-protocol ApiCommunicableModelProtocol: ApiModelProtocol, Communicable where Events: NetworkEventProtocol {}
+protocol ApiCommunicableModelProtocol: ApiWorkerProtocol, Communicable where Events: NetworkEventProtocol {}
 
 class BaseApiModel<Events: NetworkEventProtocol>: BaseModel, ApiCommunicableModelProtocol {
    var apiEngine: ApiEngineProtocol?
@@ -107,11 +107,11 @@ class BaseApiModel<Events: NetworkEventProtocol>: BaseModel, ApiCommunicableMode
    }
 }
 
-protocol ApiModelProtocol {
+protocol ApiWorkerProtocol {
    var apiEngine: ApiEngineProtocol? { get set }
 }
 
-class BaseApiAsyncModel<In, Out>: ApiModelProtocol, WorkerProtocol {
+class BaseApiWorker<In, Out>: ApiWorkerProtocol, WorkerProtocol {
    func doAsync(work: Work<In, Out>) {
       fatalError()
    }
@@ -123,7 +123,7 @@ class BaseApiAsyncModel<In, Out>: ApiModelProtocol, WorkerProtocol {
    }
 }
 
-final class AuthApiWorker: BaseApiAsyncModel<String, AuthResult> {
+final class AuthApiWorker: BaseApiWorker<String, AuthResult> {
    override func doAsync(work: Work<String, AuthResult>) {
       guard let loginName = work.input else { return }
 

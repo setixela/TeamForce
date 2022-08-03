@@ -40,7 +40,7 @@ struct SearchUserResponse: Decodable {
   }
 }
 
-final class SearchUserApiWorker: BaseApiAsyncModel<SearchUserRequest, [FoundUser]> {
+final class SearchUserApiWorker: BaseApiWorker<SearchUserRequest, [FoundUser]> {
   //
   override func doAsync(work: Work<SearchUserRequest, [FoundUser]>) {
     let cookieName = "csrftoken"

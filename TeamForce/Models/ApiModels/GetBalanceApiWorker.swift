@@ -13,7 +13,7 @@ struct BalanceApiEvent: NetworkEventProtocol {
     var error: Event<ApiEngineError>?
 }
 
-final class GetBalanceApiWorker: BaseApiAsyncModel<String, Balance> {
+final class GetBalanceApiWorker: BaseApiWorker<String, Balance> {
     override func doAsync(work: Wrk) {
         apiEngine?
             .process(endpoint: TeamForceEndpoints.BalanceEndpoint(headers: [

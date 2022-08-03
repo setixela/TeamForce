@@ -78,13 +78,12 @@ final class Work<In, Out> {
       self.result = result
 
       finisher?(result)
-
       nextWork?.perform(result)
    }
 
    func failThenNext<T>(_ value: T) {
       genericFail?.perform(value)
-      nextWork?.perform(result)
+      nextWork?.perform(value)
    }
 
    func fail<T>(_ value: T) {
