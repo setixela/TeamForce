@@ -18,7 +18,7 @@ struct SendCoinRequest {
 struct SendCoinEvent: NetworkEventProtocol {
     var request: Event<SendCoinRequest>?
     var success: Event<Any?>?
-    var error: Event<ApiEngineError>?
+    var error: Event<String>?
 }
 
 final class SendCoinApiModel: BaseApiModel<SendCoinEvent> {
@@ -40,21 +40,20 @@ final class SendCoinApiModel: BaseApiModel<SendCoinEvent> {
                     headers: ["Authorization": sendCoinRequest.token,
                               "X-CSRFToken": cookie.value]))
                 .done { result in
+                    if let response = result.response as? HTTPURLResponse{
+                        if response.statusCode == 400 {
+                            print("400 happened")
+                            let errorArray = try JSONSerialization.jsonObject(with: result.data!) as! [String]
+                            self?.sendEvent(\.error, errorArray[0])
+                            return
+                        }
+                    }
                     self?.sendEvent(\.success, nil)
                 }
-                .catch { _ in
-                    self?.sendEvent(\.error, .unknown)
+                .catch { error in
+                    print("error coin sending: \(error)")
+                    self?.sendEvent(\.error, ".error(error)")
                 }
         }
-    }
-}
-
-extension Data {
-    var prettyPrintedJSONString: NSString? { /// NSString gives us a nice sanitized debugDescription
-        guard let object = try? JSONSerialization.jsonObject(with: self, options: []),
-              let data = try? JSONSerialization.data(withJSONObject: object, options: [.prettyPrinted]),
-              let prettyPrintedString = NSString(data: data, encoding: String.Encoding.utf8.rawValue) else { return nil }
-
-        return prettyPrintedString
     }
 }
