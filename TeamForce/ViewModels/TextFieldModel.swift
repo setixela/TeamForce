@@ -81,7 +81,7 @@ extension TextFieldModel: Communicable {}
 
 // MARK: - TelegramNickCheckerModel
 
-final class TelegramNickCheckerModel: BaseModel {}
+final class TelegramNickCheckerModel {}
 
 extension TelegramNickCheckerModel: WorkerProtocol {
     func doAsync(work: Work<String, String>) {
@@ -101,7 +101,7 @@ extension TelegramNickCheckerModel: WorkerProtocol {
 
 // MARK: - SmsCodeCheckerModel
 
-final class SmsCodeCheckerModel: BaseModel {
+final class SmsCodeCheckerModel {
     private var maxDigits: Int = 4
 
     convenience init(maxDigits: Int) {
@@ -125,7 +125,7 @@ extension SmsCodeCheckerModel: WorkerProtocol {
 }
 
 //MARK: - CoinInputCheckerModel
-final class CoinInputCheckerModel: BaseModel {
+final class CoinInputCheckerModel {
     private var maxDigits: Int = 8
 
     convenience init(maxDigits: Int) {
@@ -153,7 +153,7 @@ extension CoinInputCheckerModel: WorkerProtocol {
 }
 
 // MARK: - ReasonCheckerModel
-final class ReasonCheckerModel: BaseModel {
+final class ReasonCheckerModel {
 
     private var maxDigits: Int = 8
 
