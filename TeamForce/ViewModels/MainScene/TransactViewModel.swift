@@ -63,7 +63,8 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
         .set(.hidden(true))
         .set(.height(200))
     
-
+    private lazy var transactionStatusView = TransactionStatusViewModel<Asset>()
+        .set(.cornerRadius(GlobalParameters.cornerRadius))
     // MARK: - Services
 
     private lazy var apiModel = SearchUserApiModel(apiEngine: Asset.service.apiEngine)
@@ -210,6 +211,10 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
             .onEvent(\.didTap) {
                 wS?.sendCoinApiModel
                     .onEvent(\.success) { _ in
+//                        Asset.router?.route(\.transactionStatus, navType: .present, payload: nil)
+//                        Asset.router?.route(\.transactionStatus, navType: .present, payload: ())
+                        self.transactionStatusView.start()
+                        self.transactionStatusView.sendEvent(\.presentOnScene, self.view.superview!.superview!)
                         self.setInitialStateOfView(wS: wS)
                     }
                     .onEvent(\.error) {

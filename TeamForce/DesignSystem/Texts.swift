@@ -58,6 +58,7 @@ protocol TitleTextsProtocol: InitProtocol, KeyPathMaker
     var chooseRecipient: String { get }
     var sendThanks: String { get }
     var availableThanks: String { get }
+    var thanksWereSend: String { get }
     
     // errors
     var wrongUsername: String { get }
@@ -100,6 +101,7 @@ struct TitleTexts: TitleTextsProtocol {
     var sendThanks: String { "Перевести спасибок" }
     var availableThanks: String { "Доступно" }
     var reasonPlaceholder: String { "Обоснование" }
+    var thanksWereSend: String { "Спасибо отправлено" }
     
     // errors
     var wrongUsername: String { "Ошибка. Пользователь не найден" }
