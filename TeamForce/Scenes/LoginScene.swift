@@ -33,55 +33,59 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
       .set(.title(Text.button.make(\.getCodeButton)))
 
    private let badgeModel = BadgeModel<Asset>()
-   // MARK: - Services
 
-   private let inputParser = TelegramNickCheckerModel()
-   private let apiModel = AuthApiModel(apiEngine: Asset.service.apiEngine)
+   // MARK: - Use Cases
 
+   private lazy var useCase = Asset.apiUseCase
+
+   // MARK: - Private
+
+   private let telegramNickParser = TelegramNickCheckerModel()
    private var loginName: String?
 
    // MARK: - Start
 
    override func start() {
       configure()
-      badgeModel.setLabels(title: Text.title.make(\.userName),
-                           placeholder: "@" + Text.title.make(\.userName),
-                           error: Text.title.make(\.wrongUsername))
 
       weak var weakSelf = self
 
-      nextButton
-         .onEvent(\.didTap) {
-            guard let loginName = weakSelf?.loginName else { return }
+      badgeModel
+         .setLabels(title: Text.title.make(\.userName),
+                    placeholder: "@" + Text.title.make(\.userName),
+                    error: Text.title.make(\.wrongUsername))
 
-            weakSelf?.apiModel
-               .onEvent(\.success) { authResult in
-                  Asset.router?.route(\.verifyCode, navType: .push, payload: authResult)
-               }
-               .onEvent(\.error) { error in
-                  print("\n", error.localizedDescription)
-                  weakSelf?.badgeModel.changeState(to: BadgeState.error)
-               }
-               .sendEvent(\.request, loginName)
+      nextButton
+         .onEvent(\.didTap)
+         .doInput {
+            weakSelf?.loginName
+         }
+         .onFail {
+            print("login name is nil")
+         }
+         .doNext(usecase: useCase.login)
+         .onSuccess {
+            Asset.router?.route(\.verifyCode, navType: .push, payload: $0)
+         }
+         .onFail {
+            weakSelf?.badgeModel.changeState(to: BadgeState.error)
          }
 
       badgeModel.textFieldModel
-         .onEvent(\.didEditingChanged) { text in
-            weakSelf?.inputParser.sendEvent(\.request, text)
-            weakSelf?.badgeModel.changeState(to: BadgeState.default)
+         .onEvent(\.didEditingChanged)
+         .doNext(worker: telegramNickParser)
+         .onSuccess { [weak self] text in
+            self?.loginName = String(text.dropFirst())
+            self?.badgeModel.textFieldModel.set(.text(text))
+            self?.nextButton.set(Design.State.button.default)
+            self?.badgeModel.changeState(to: BadgeState.default)
          }
-      
-      inputParser
-         .onEvent(\.success) { text in
-            weakSelf?.loginName = String(text.dropFirst())
-            weakSelf?.badgeModel.textFieldModel.set(.text(text))
-            weakSelf?.nextButton.set(Design.State.button.default)
-            weakSelf?.badgeModel.changeState(to: BadgeState.default)
-         }
-         .onEvent(\.error) { text in
-            weakSelf?.loginName = nil
-            weakSelf?.badgeModel.textFieldModel.set(.text(text))
-            weakSelf?.nextButton.set(Design.State.button.inactive)
+         .onFail { [weak self] (text: String) in
+            print("\n### text     \(text)\n")
+            self?.loginName = nil
+            self?.badgeModel.textFieldModel.set(.text(text))
+            self?.nextButton.set(Design.State.button.inactive)
+            self?.badgeModel.changeState(to: BadgeState.default)
          }
    }
 

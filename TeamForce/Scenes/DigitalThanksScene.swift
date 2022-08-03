@@ -35,13 +35,6 @@ final class DigitalThanksScene<Asset: AssetProtocol>: BaseSceneModel<
       configure()
 
       mainViewModel.set(Design.State.mainView.default)
-
-      weak var weakSelf = self
-      
-      vcModel?
-         .onEvent(\.viewDidLoad) {
-            weakSelf?.configure()
-         }
       
       enterButton
          .onEvent(\.didTap) {

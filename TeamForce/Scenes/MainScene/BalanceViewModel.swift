@@ -5,17 +5,19 @@
 //  Created by Aleksandr Solovyev on 01.07.2022.
 //
 
+import CoreFoundation
 import RealmSwift
 import UIKit
 
 struct BalanceViewEvent: InitProtocol {}
+
+///////// """ STATEABLE -> PARAMETRIC """
 
 final class BalanceViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
    Communicable,
    Stateable,
    Assetable
 {
-
    var eventsStore: BalanceViewEvent = .init()
 
    // MARK: - Frame Cells
@@ -60,9 +62,7 @@ final class BalanceViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
 
    // MARK: - Services
 
-   private lazy var userProfileApiModel = GetProfileApiModel(apiEngine: Asset.service.apiEngine)
-   private lazy var balanceApiModel = GetBalanceApiModel(apiEngine: Asset.service.apiEngine)
-   private lazy var safeStringStorage = StringStorageModel(engine: Asset.service.safeStringStorage)
+   private lazy var loadBalanceUseCase = Asset.apiUseCase.loadBalance.work()
 
    private var balance: Balance?
 
@@ -80,23 +80,14 @@ final class BalanceViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
          Spacer()
       ]))
 
-      weak var weakSelf = self
-
-      safeStringStorage
-         .onEvent(\.responseValue) { token in
-            weakSelf?.balanceApiModel
-               .onEvent(\.success) { balance in
-                  weakSelf?.setBalance(balance)
-               }
-               .onEvent(\.error) {
-                  print($0)
-               }
-               .sendEvent(\.request, TokenRequest(token: token))
+      loadBalanceUseCase
+         .doAsync()
+         .onSuccess { [weak self] balance in
+            self?.setBalance(balance)
          }
-         .onEvent(\.error) {
-            print($0)
+         .onFail {
+            print("balance not loaded")
          }
-         .sendEvent(\.requestValueForKey, "token")
    }
 }
 
@@ -127,3 +118,5 @@ extension BalanceViewModel {
          .set(.caption("\(Text.title.make(\.sended)): \(distr.sent)"))
    }
 }
+
+///////// """ STATEABLE -> PARAMETRIC """

@@ -7,12 +7,6 @@
 
 import Foundation
 
-struct VerifyEvent: NetworkEventProtocol {
-    var request: Event<VerifyRequest>?
-    var success: Event<VerifyResultBody>?
-    var error: Event<ApiEngineError>?
-}
-
 struct VerifyRequest {
     let xId: String
     let xCode: String
@@ -38,33 +32,31 @@ struct VerifyResultBody: Codable {
     }
 }
 
-final class VerifyApiModel: BaseApiModel<VerifyEvent> {
-    override func start() {
-        onEvent(\.request) { [weak self] verifyRequest in
-            self?.apiEngine?
-                .process(endpoint: TeamForceEndpoints.VerifyEndpoint(
-                    body: ["type": "authcode",
-                           "code": verifyRequest.smsCode],
-                    headers: ["X-ID": verifyRequest.xId,
-                              "X-Code": verifyRequest.xCode]))
-                .done { result in
-                    let decoder = DataToDecodableParser()
+final class VerifyApiModel: BaseApiWorker<VerifyRequest, VerifyResultBody> {
+    override func doAsync(work: Work<VerifyRequest, VerifyResultBody>) {
+        guard let verifyRequest = work.input else { return }
 
-                    guard
-                        let data = result.data,
-                        let resultBody: VerifyResultBody = decoder.parse(data)
-                    else {
-                        self?.sendEvent(\.error, .unknown)
-                        return
-                    }
+        apiEngine?
+            .process(endpoint: TeamForceEndpoints.VerifyEndpoint(
+                body: ["type": "authcode",
+                       "code": verifyRequest.smsCode],
+                headers: ["X-ID": verifyRequest.xId,
+                          "X-Code": verifyRequest.xCode]))
+            .done { result in
+                let decoder = DataToDecodableParser()
 
-                    self?.sendEvent(\.success, resultBody)
+                guard
+                    let data = result.data,
+                    let resultBody: VerifyResultBody = decoder.parse(data)
+                else {
+                    work.fail(())
+                    return
                 }
-                .catch { _ in
-                    self?.sendEvent(\.error, .unknown)
-                }
-        }
+
+                work.success(result: resultBody)
+            }
+            .catch { _ in
+                work.fail(())
+            }
     }
 }
-
-

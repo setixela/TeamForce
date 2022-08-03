@@ -31,14 +31,17 @@ final class LoginSuccessScene<Asset: AssetProtocol>: BaseSceneModel<
    private lazy var nextButton = ButtonModel(Design.State.button.default)
       .set(.title(Text.button.enterButton))
 
-   private lazy var apiModel = GetProfileApiModel(apiEngine: Asset.service.apiEngine)
+   private lazy var apiModel = ProfileApiWorker(apiEngine: Asset.service.apiEngine)
    private var userPromise: Promise<UserData>?
    private var userData: UserData?
 
    // MARK: - Start
 
    override func start() {
+
       mainViewModel.topStackModel.set(.alignment(.center))
+
+      configure()
 
       weak var weakSelf = self
 
@@ -48,19 +51,14 @@ final class LoginSuccessScene<Asset: AssetProtocol>: BaseSceneModel<
 
             Asset.router?.route(\.main, navType: .present, payload: userData)
          }
-      
-      vcModel?
-         .onEvent(\.viewDidLoad) {
-            weakSelf?.configure()
-         }
 
-      guard let token = weakSelf?.inputValue else { return }
+      guard let token = inputValue else { return }
 
       apiModel
-         .onEvent(\.success) { userData in
+         .doAsync(TokenRequest(token: token))
+         .onSuccess({ userData in
             weakSelf?.userData = userData
-         }
-         .sendEvent(\.request, TokenRequest(token: token))
+         })
    }
 
    private func configure() {

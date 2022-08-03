@@ -38,42 +38,37 @@ final class RegisterScene<Asset: AssetProtocol>: BaseSceneModel<
 
    override func start() {
 
-      weak var weakSelf = self
+      setupLoginField()
+      configure()
 
       nextButton
          .onEvent(\.didTap) {
             print("Did tap")
          }
-
-      vcModel?
-         .onEvent(\.viewDidLoad) {
-            weakSelf?.setupLoginField()
-            weakSelf?.configure()
-         }
    }
 
    private func setupLoginField() {
-      textFieldModel
-         .onEvent(\.didEditingChanged) { [weak self] text in
-            self?.inputParser.sendEvent(\.request, text)
-         }
-
-      inputParser
-         .onEvent(\.success) { [weak self] text in
-            self?.textFieldModel.set(.text(text))
-            self?.nextButton.set(Design.State.button.default)
-         }
-         .onEvent(\.error) { [weak self] text in
-            self?.textFieldModel.set(.text(text))
-            self?.nextButton.set(Design.State.button.inactive)
-         }
+//      textFieldModel
+//         .onEvent(\.didEditingChanged) { [weak self] text in
+//            self?.inputParser.sendEvent(\.request, text)
+//         }
+//
+//      inputParser
+//         .onEvent(\.success) { [weak self] text in
+//            self?.textFieldModel.set(.text(text))
+//            self?.nextButton.set(Design.State.button.default)
+//         }
+//         .onEvent(\.error) { [weak self] text in
+//            self?.textFieldModel.set(.text(text))
+//            self?.nextButton.set(Design.State.button.inactive)
+//         }
    }
 
    private func configure() {
       mainViewModel
          .set(Design.State.mainView.default)
          .set(.backColor(Design.color.background2))
-      
+
       mainViewModel.topStackModel
          .set(.models([
             Spacer(size: 100),

@@ -27,9 +27,7 @@ struct StorageStringEvent: StorageEventProtocol {
    var error: Event<StorageError>?
 }
 
-final class StringStorageModel: BaseModel, Communicable {
-   var eventsStore = StorageStringEvent()
-
+final class StringStorageWorker: BaseModel {
    private var storageEngine: StringStorageProtocol?
 
    convenience init(engine: StringStorageProtocol) {
@@ -37,21 +35,33 @@ final class StringStorageModel: BaseModel, Communicable {
 
       storageEngine = engine
    }
+}
 
-   override func start() {
-      onEvent(\.requestValueForKey) { [weak self] key in
+extension StringStorageWorker: WorkerProtocol {
+   func doAsync(work: Work<String, String>) {
+      guard
+         let input = work.input,
+         let value = storageEngine?.load(forKey: input)
+      else {
+         print("\nNo value for key: \(String(describing: work.input))\n")
 
-         guard let value = self?.storageEngine?.load(forKey: key) else {
-            print("\nNo value for key: \(key)\n")
-            self?.sendEvent(\.error, .noValue)
-            return
-         }
-
-         self?.sendEvent(\.responseValue, value)
+         work.fail(())
+         return
       }
 
-      onEvent(\.saveValueForKey) { [weak self] keyValue in
-         self?.storageEngine?.save(keyValue.value, forKey: keyValue.key)
+      work.success(result: value)
+   }
+}
+
+extension StringStorageWorker: Stateable {
+   enum State {
+      case saveValueForKey((value: String, key: String))
+   }
+
+   func applyState(_ state: State) {
+      switch state {
+      case .saveValueForKey(let keyValue):
+         storageEngine?.save(keyValue.value, forKey: keyValue.key)
       }
    }
 }

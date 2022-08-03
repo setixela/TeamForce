@@ -93,20 +93,20 @@ final class MainScene<Asset: AssetProtocol>: BaseSceneModel<
 
     sideBarModel.item1
       .onEvent(\.didTap) {
-        self.sideBarModel.sendEvent(\.hide)
-        self.presentModel(weakSelf?.balanceViewModel)
+        weakSelf?.sideBarModel.sendEvent(\.hide)
+        weakSelf?.presentModel(weakSelf?.balanceViewModel)
       }
 
     sideBarModel.item2
       .onEvent(\.didTap) {
-        self.sideBarModel.sendEvent(\.hide)
-        self.presentModel(weakSelf?.transactViewModel)
+        weakSelf?.sideBarModel.sendEvent(\.hide)
+        weakSelf?.presentModel(weakSelf?.transactViewModel)
       }
 
     sideBarModel.item3
       .onEvent(\.didTap) {
-        self.sideBarModel.sendEvent(\.hide)
-        self.presentModel(weakSelf?.historyViewModel)
+        weakSelf?.sideBarModel.sendEvent(\.hide)
+        weakSelf?.presentModel(weakSelf?.historyViewModel)
       }
   }
 }
