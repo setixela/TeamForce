@@ -38,7 +38,6 @@ final class VerifyCodeScene<Asset: AssetProtocol>: BaseSceneModel<
    // MARK: - Workers
 
    private lazy var inputParser = SmsCodeCheckerModel()
-
    private lazy var verifyApi = VerifyApiModel(apiEngine: Asset.service.apiEngine)
    private var smsCode: String?
 

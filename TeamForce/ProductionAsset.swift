@@ -19,7 +19,8 @@ enum ProductionAsset: AssetProtocol {
          loginApiModel: AuthApiWorker(apiEngine: service.apiEngine),
          logoutApiModel: LogoutApiWorker(apiEngine: service.apiEngine),
          balanceApiModel: GetBalanceApiWorker(apiEngine: service.apiEngine),
-         searchUserApiWorker: SearchUserApiWorker(apiEngine: service.apiEngine)
+         searchUserApiWorker: SearchUserApiWorker(apiEngine: service.apiEngine),
+         sendCoinApiWorker: SendCoinApiWorker(apiEngine: service.apiEngine)
       )
    }
 }

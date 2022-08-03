@@ -33,6 +33,11 @@ struct ApiUseCase: ApiUseCaseRegistry {
    var userSearch: UserSearchUseCase {
       .init(searchUserApiModel: searchUserApiWorker)
    }
+    //
+    
+    var sendCoin: SendCoinUseCase {
+        .init(sendCoinApiModel: sendCoinApiWorker)
+    }
 
    // MARK: - Dependencies
 
@@ -44,4 +49,5 @@ struct ApiUseCase: ApiUseCaseRegistry {
    let balanceApiModel: GetBalanceApiWorker
 
    let searchUserApiWorker: SearchUserApiWorker
+   let sendCoinApiWorker: SendCoinApiWorker
 }

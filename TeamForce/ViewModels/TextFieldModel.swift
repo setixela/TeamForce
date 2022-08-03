@@ -123,3 +123,61 @@ extension SmsCodeCheckerModel: WorkerProtocol {
         }
     }
 }
+
+//MARK: - CoinInputCheckerModel
+final class CoinInputCheckerModel: BaseModel {
+    private var maxDigits: Int = 8
+
+    convenience init(maxDigits: Int) {
+        self.init()
+        self.maxDigits = maxDigits
+    }
+}
+
+extension CoinInputCheckerModel: WorkerProtocol {
+    //
+    func doAsync(work: Work<String, String>) {
+        guard let text = work.input else { return }
+        
+        if text.count > 0 {
+            var textToSend = text
+            if text.count >= self.maxDigits {
+                textToSend = String(text.dropLast(text.count - self.maxDigits))
+            }
+
+            !text.isNumber ? work.fail(text) : work.success(result: textToSend)
+        } else {
+            work.fail(text)
+        }
+    }
+}
+
+// MARK: - ReasonCheckerModel
+final class ReasonCheckerModel: BaseModel {
+
+    private var maxDigits: Int = 8
+
+    convenience init(maxDigits: Int) {
+        self.init()
+        self.maxDigits = maxDigits
+    }
+}
+extension ReasonCheckerModel: WorkerProtocol {
+    
+    func doAsync(work: Work<String, String>) {
+        guard let text = work.input else { return }
+        
+        if text.count > 0 {
+            work.success(result: text)
+        } else {
+            work.fail(text)
+        }
+    }
+}
+
+extension String  {
+    var isNumber: Bool {
+        return !isEmpty && rangeOfCharacter(from: CharacterSet.decimalDigits.inverted) == nil
+    }
+}
+

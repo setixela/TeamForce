@@ -43,27 +43,35 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
       .set(.hidden(true))
 
    private lazy var sendButton = Design.button.default
+      .set(Design.State.button.inactive)
       .set(.title(Text.button.make(\.sendButton)))
       .set(.hidden(true))
    // FIX: change to UITextView
-   private lazy var reasonTextField = TextFieldModel()
+   private lazy var reasonTextView = TextViewModel()
       .set(.padding(.init(top: 16, left: 16, bottom: 16, right: 16)))
-      .set(.placeholder("Обоснование"))
+      .set(.placeholder(Texts.title.reasonPlaceholder))
       .set(.backColor(UIColor.clear))
       .set(.borderColor(.lightGray.withAlphaComponent(0.4)))
       .set(.borderWidth(1.0))
+      .set(.font(Design.font.body1))
+      .set(.height(200))
       .set(.hidden(true))
-      .set(.clearButtonMode(UITextField.ViewMode.never))
+    
 
    // MARK: - Services
-
+    
    private lazy var apiModel = SearchUserApiWorker(apiEngine: Asset.service.apiEngine)
    private lazy var safeStringStorage = StringStorageWorker(engine: Asset.service.safeStringStorage)
-   private lazy var sendCoinApiModel = SendCoinApiModel(apiEngine: Asset.service.apiEngine)
+   private lazy var sendCoinApiModel = SendCoinApiWorker(apiEngine: Asset.service.apiEngine)
 
    private lazy var foundUsers: [FoundUser] = []
    private lazy var tokens: (token: String, csrf: String) = ("", "")
    private lazy var recipientID: Int = 0
+    
+   private lazy var coinInputParser = CoinInputCheckerModel()
+   private lazy var reasonInputParser = ReasonCheckerModel()
+   private lazy var correctCoinInput: Bool = false
+   private lazy var correctReasonInput: Bool = false
 
    // MARK: - Start
 
@@ -99,25 +107,18 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
          }
 
       sendButton
-         .onEvent(\.didTap) {
-            wS?.sendCoinApiModel
-               .onEvent(\.success) { _ in
-                  wS?.userSearchModel.set(.text(""))
-                  wS?.transactInputViewModel.set(.hidden(true))
-                  wS?.transactInputViewModel.textField.set(.text(""))
-                  wS?.sendButton.set(.hidden(true))
-                  wS?.reasonTextField.set(.text(""))
-                  wS?.reasonTextField.set(.hidden(true))
-               }
-               .onEvent(\.error) {
-                  print("coin sending error: ")
-                  print($0)
-               }
-               .sendEvent(\.request, SendCoinRequest(token: self.tokens.token,
-                                                     csrfToken: self.tokens.csrf,
-                                                     recipient: self.recipientID,
-                                                     amount: self.transactInputViewModel.textField.view.text ?? "0",
-                                                     reason: self.reasonTextField.view.text ?? "thanks"))
+         .onEvent(\.didTap)
+         .doInput {
+             wS?.makeSendCoinRequest()
+         }
+         .onFail {
+            print("SendCointRequest init error")
+         }
+         .doNext(worker: sendCoinApiModel)
+         .onSuccess {
+             wS?.setToInitialCondition()
+         }.onFail { (text: String) in
+             wS?.presentAlert(text: text)
          }
 
       safeStringStorage
@@ -147,8 +148,40 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
          self.tableModel.set(.hidden(true))
          self.transactInputViewModel.set(.hidden(false))
          self.sendButton.set(.hidden(false))
-         self.reasonTextField.set(.hidden(false))
+         self.reasonTextView.set(.hidden(false))
       }
+
+       transactInputViewModel.textField
+           .onEvent(\.didEditingChanged)
+           .doNext(worker: coinInputParser)
+           .onSuccess {
+               wS?.transactInputViewModel.textField.set(.text($0))
+               wS?.correctCoinInput = true
+               if wS?.correctReasonInput == true {
+                   wS?.sendButton.set(Design.State.button.default)
+               }
+           }
+           .onFail { (text: String) in
+               wS?.correctCoinInput = false
+               wS?.transactInputViewModel.textField.set(.text(text))
+               wS?.sendButton.set(Design.State.button.inactive)
+           }
+       
+       reasonTextView
+            .onEvent(\.didEditingChanged)
+            .doNext(worker: reasonInputParser)
+            .onSuccess {
+                wS?.reasonTextView.set(.text($0))
+                wS?.correctReasonInput = true
+                if wS?.correctCoinInput == true {
+                    wS?.sendButton.set(Design.State.button.default)
+                }
+            }
+            .onFail { (text: String) in
+                wS?.reasonTextView.set(.text(text))
+                wS?.correctReasonInput = false
+                wS?.sendButton.set(Design.State.button.inactive)
+            }
    }
 
    func configure() {
@@ -160,19 +193,53 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
          digitalThanksTitle,
          userSearchModel,
          transactInputViewModel,
-         reasonTextField,
+         reasonTextView,
          sendButton,
          tableModel,
          Spacer(),
       ]))
    }
+    
+    private func setToInitialCondition() {
+        userSearchModel.set(.text(""))
+        transactInputViewModel.set(.hidden(true))
+        transactInputViewModel.textField.set(.text(""))
+        sendButton.set(.hidden(true))
+        reasonTextView.set(.text(""))
+        reasonTextView.set(.hidden(true))
+        correctCoinInput = false
+        correctReasonInput = false
+    }
+    
+    private func presentAlert(text: String) {
+        let alert = UIAlertController(title: "Ошибка",
+                                      message: text,
+                                      preferredStyle: .alert)
+
+        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"),
+                                      style: .default))
+
+        UIApplication.shared.keyWindow?.rootViewController?
+            .present(alert, animated: true, completion: nil)
+    }
+    
+    func makeSendCoinRequest() -> SendCoinRequest? {
+        guard
+           let amount = self.transactInputViewModel.textField.view.text
+        else { return nil }
+        return SendCoinRequest(token: self.tokens.token,
+                        csrfToken: self.tokens.csrf,
+                        recipient: self.recipientID,
+                        amount:  amount,
+                        reason: self.reasonTextView.view.text)
+    }
 }
 
 private extension TransactViewModel {
    func hideHUD() {
       transactInputViewModel.set(.hidden(true))
       sendButton.set(.hidden(true))
-      reasonTextField.set(.hidden(true))
+      reasonTextView.set(.hidden(true))
    }
 
    func presentFoundUsers(users: [FoundUser]) {
@@ -185,50 +252,5 @@ private extension TransactViewModel {
       }
       tableModel.set(.models(cellModels))
       tableModel.set(.hidden(found.isEmpty ? true : false))
-   }
-}
-
-enum TransactInputState {
-   case leftCaptionText(String)
-   case rightCaptionText(String)
-}
-
-final class TransactInputViewModel<Design: DesignProtocol>: BaseViewModel<UIStackView>,
-   Designable
-{
-   private lazy var doubleLabel = DoubleLabelModel<Design>()
-
-   internal lazy var textField = TextFieldModel()
-      .set(.clearButtonMode(.never))
-      .set(.font(Design.font.headline2))
-      .set(.height(72))
-      .set(.placeholder("0"))
-      .set(.padding(.init(top: 0, left: 16, bottom: 0, right: 16)))
-      .set(.backColor(Design.color.background1))
-
-   override func start() {
-      set(.alignment(.fill),
-          .distribution(.fill),
-          .axis(.vertical),
-          .spacing(0),
-          .height(118),
-          .backColor(Design.color.background1),
-          .models([
-             doubleLabel,
-             textField,
-          ]))
-   }
-}
-
-extension TransactInputViewModel: Stateable2 {
-   typealias State = StackState
-
-   func applyState(_ state: TransactInputState) {
-      switch state {
-      case .leftCaptionText(let string):
-         doubleLabel.labelLeft.set(.text(string))
-      case .rightCaptionText(let string):
-         doubleLabel.labelRight.set(.text(string))
-      }
    }
 }

@@ -15,46 +15,39 @@ struct SendCoinRequest {
     let reason: String
 }
 
-struct SendCoinEvent: NetworkEventProtocol {
-    var request: Event<SendCoinRequest>?
-    var success: Event<Any?>?
-    var error: Event<ApiEngineError>?
-}
+final class SendCoinApiWorker: BaseApiWorker<SendCoinRequest, Void> {
+    override func doAsync(work: Work<SendCoinRequest, Void>) {
+        let cookieName = "csrftoken"
 
-final class SendCoinApiModel: BaseApiModel<SendCoinEvent> {
-    override func start() {
-        
-        onEvent(\.request) { [weak self] sendCoinRequest in
-            print(sendCoinRequest)
-            let cookieName = "csrftoken"
-            guard let cookie = HTTPCookieStorage.shared.cookies?.first(where: { $0.name == cookieName }) else {
-                print("No csrf cookie")
-                return
-            }
-            
-            self?.apiEngine?
-                .process(endpoint: TeamForceEndpoints.SendCoin(
-                    body: ["recipient": sendCoinRequest.recipient,
-                           "amount": sendCoinRequest.amount,
-                           "reason": sendCoinRequest.reason],
-                    headers: ["Authorization": sendCoinRequest.token,
-                              "X-CSRFToken": cookie.value]))
-                .done { result in
-                    self?.sendEvent(\.success, nil)
-                }
-                .catch { _ in
-                    self?.sendEvent(\.error, .unknown)
-                }
+        guard
+            let sendCoinRequest = work.input,
+            let cookie = HTTPCookieStorage.shared.cookies?.first(where: { $0.name == cookieName })
+        else {
+            print("No csrf cookie")
+            return
         }
-    }
-}
-
-extension Data {
-    var prettyPrintedJSONString: NSString? { /// NSString gives us a nice sanitized debugDescription
-        guard let object = try? JSONSerialization.jsonObject(with: self, options: []),
-              let data = try? JSONSerialization.data(withJSONObject: object, options: [.prettyPrinted]),
-              let prettyPrintedString = NSString(data: data, encoding: String.Encoding.utf8.rawValue) else { return nil }
-
-        return prettyPrintedString
+            
+        apiEngine?
+            .process(endpoint: TeamForceEndpoints.SendCoin(
+                body: ["recipient": sendCoinRequest.recipient,
+                       "amount": sendCoinRequest.amount,
+                       "reason": sendCoinRequest.reason],
+                headers: ["Authorization": sendCoinRequest.token,
+                          "X-CSRFToken": cookie.value]))
+            .done { result in
+                if let response = result.response as? HTTPURLResponse{
+                    if response.statusCode == 400 {
+                        print("400 happened")
+                        let errorArray = try JSONSerialization.jsonObject(with: result.data!) as! [String]
+                        work.fail(errorArray.first)
+                        return
+                    }
+                }
+                work.success(result: ())
+            }
+            .catch { error in
+                print("error coin sending: \(error)")
+                work.fail(error)
+            }
     }
 }

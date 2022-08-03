@@ -16,6 +16,9 @@ protocol ApiUseCaseRegistry {
    var logout: LogoutUseCase { get }
    //
    var userSearch: UserSearchUseCase { get }
+   //
+   var sendCoin: SendCoinUseCase { get }
+   
 }
 
 struct UserSearchUseCase: UseCaseProtocol {
@@ -26,4 +29,7 @@ struct UserSearchUseCase: UseCaseProtocol {
       searchUserApiModel.work
    }
 }
+
+
+
 
