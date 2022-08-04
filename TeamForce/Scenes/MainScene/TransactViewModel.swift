@@ -63,6 +63,7 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
    private lazy var apiModel = SearchUserApiWorker(apiEngine: Asset.service.apiEngine)
    private lazy var safeStringStorage = StringStorageWorker(engine: Asset.service.safeStringStorage)
    private lazy var sendCoinApiModel = SendCoinApiWorker(apiEngine: Asset.service.apiEngine)
+   private lazy var loadBalanceUseCase = Asset.apiUseCase.loadBalance.work()
 
    private lazy var foundUsers: [FoundUser] = []
    private lazy var tokens: (token: String, csrf: String) = ("", "")
@@ -80,6 +81,17 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
       configure()
 
       weak var wS = self
+       
+      loadBalanceUseCase
+        .doAsync()
+        .onSuccess { balance in
+            wS?.transactInputViewModel
+                .set(.rightCaptionText(Text.title.make(\.availableThanks) + " " +
+                                       String(balance.distr.amount))) 
+        }
+        .onFail {
+            print("balance not loaded")
+        }
 
       userSearchModel
          .onEvent(\.didEditingChanged)
@@ -150,38 +162,7 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
          self.sendButton.set(.hidden(false))
          self.reasonTextView.set(.hidden(false))
       }
-
-       transactInputViewModel.textField
-           .onEvent(\.didEditingChanged)
-           .doNext(worker: coinInputParser)
-           .onSuccess {
-               wS?.transactInputViewModel.textField.set(.text($0))
-               wS?.correctCoinInput = true
-               if wS?.correctReasonInput == true {
-                   wS?.sendButton.set(Design.State.button.default)
-               }
-           }
-           .onFail { (text: String) in
-               wS?.correctCoinInput = false
-               wS?.transactInputViewModel.textField.set(.text(text))
-               wS?.sendButton.set(Design.State.button.inactive)
-           }
-       
-       reasonTextView
-            .onEvent(\.didEditingChanged)
-            .doNext(worker: reasonInputParser)
-            .onSuccess {
-                wS?.reasonTextView.set(.text($0))
-                wS?.correctReasonInput = true
-                if wS?.correctCoinInput == true {
-                    wS?.sendButton.set(Design.State.button.default)
-                }
-            }
-            .onFail { (text: String) in
-                wS?.reasonTextView.set(.text(text))
-                wS?.correctReasonInput = false
-                wS?.sendButton.set(Design.State.button.inactive)
-            }
+       configureInputParsers(wS: wS)
    }
 
    func configure() {
@@ -253,4 +234,40 @@ private extension TransactViewModel {
       tableModel.set(.models(cellModels))
       tableModel.set(.hidden(found.isEmpty ? true : false))
    }
+}
+
+private extension TransactViewModel {
+    func configureInputParsers(wS: TransactViewModel<Asset>?) {
+        transactInputViewModel.textField
+            .onEvent(\.didEditingChanged)
+            .doNext(worker: coinInputParser)
+            .onSuccess {
+                wS?.transactInputViewModel.textField.set(.text($0))
+                wS?.correctCoinInput = true
+                if wS?.correctReasonInput == true {
+                    wS?.sendButton.set(Design.State.button.default)
+                }
+            }
+            .onFail { (text: String) in
+                wS?.correctCoinInput = false
+                wS?.transactInputViewModel.textField.set(.text(text))
+                wS?.sendButton.set(Design.State.button.inactive)
+            }
+        
+        reasonTextView
+             .onEvent(\.didEditingChanged)
+             .doNext(worker: reasonInputParser)
+             .onSuccess {
+                 wS?.reasonTextView.set(.text($0))
+                 wS?.correctReasonInput = true
+                 if wS?.correctCoinInput == true {
+                     wS?.sendButton.set(Design.State.button.default)
+                 }
+             }
+             .onFail { (text: String) in
+                 wS?.reasonTextView.set(.text(text))
+                 wS?.correctReasonInput = false
+                 wS?.sendButton.set(Design.State.button.inactive)
+             }
+    }
 }
