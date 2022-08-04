@@ -30,6 +30,8 @@ protocol IconsProtocol: InitProtocol,
     var digitalThanksLogo: IconType { get }
 
     var loginBackground: IconType { get }
+    
+    var girlOnSkateboard: IconType { get }
 }
 
 struct Icons: IconsProtocol {
@@ -51,6 +53,8 @@ struct Icons: IconsProtocol {
     var digitalThanksLogo: String { "digital_thanks_logo" }
 
     var loginBackground: String { "background_vector" }
+    
+    var girlOnSkateboard: String { "girl_on_skateboard" }
 }
 
 extension Icons: KeyPathMaker {

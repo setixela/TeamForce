@@ -15,6 +15,7 @@ protocol ColorsProtocol: InitProtocol {
     var background2: UIColor { get }
     var inactiveButton: UIColor { get }
     var errorColor: UIColor { get }
+    var activeButtonColor: UIColor { get }
 }
 
 // Фабрика цветов
@@ -24,6 +25,7 @@ struct Colors: ColorsProtocol {
     var background2: UIColor { .init(hex: 0xf3eafcff) }
     var inactiveButton: UIColor { .init(hex: 0xe9d5feff) }
     var errorColor: UIColor { .init(hex: 0xf0260bff) }
+    var activeButtonColor: UIColor { .init(hex: 0x7F39BFFF) }
 }
 
 extension UIColor {

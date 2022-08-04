@@ -46,7 +46,7 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
       .set(Design.State.button.inactive)
       .set(.title(Text.button.make(\.sendButton)))
       .set(.hidden(true))
-   // FIX: change to UITextView
+   
    private lazy var reasonTextView = TextViewModel()
       .set(.padding(.init(top: 16, left: 16, bottom: 16, right: 16)))
       .set(.placeholder(Texts.title.reasonPlaceholder))
@@ -56,6 +56,8 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
       .set(.font(Design.font.body1))
       .set(.height(200))
       .set(.hidden(true))
+    
+    private lazy var transactionStatusView = TransactionStatusViewModel<Asset>()
     
 
    // MARK: - Services
@@ -68,6 +70,7 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
    private lazy var foundUsers: [FoundUser] = []
    private lazy var tokens: (token: String, csrf: String) = ("", "")
    private lazy var recipientID: Int = 0
+   private lazy var recipientUsername: String = ""
     
    private lazy var coinInputParser = CoinInputCheckerModel()
    private lazy var reasonInputParser = ReasonCheckerModel()
@@ -128,6 +131,18 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
          }
          .doNext(worker: sendCoinApiModel)
          .onSuccess {
+             wS?.transactionStatusView.start()
+             //FIX: super puper view :)
+             guard
+                let superview = wS?.view.superview?.superview?.superview?.superview?.superview,
+                let username = wS?.recipientUsername,
+                let info = wS?.makeSendCoinRequest()
+             else { return }
+             let input = StatusViewInput(baseView: superview,
+                                         sendCoinInfo: info,
+                                         username: username)
+             
+             wS?.transactionStatusView.sendEvent(\.presentOnScene, input)
              wS?.setToInitialCondition()
          }.onFail { (text: String) in
              wS?.presentAlert(text: text)
@@ -154,6 +169,7 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
       tableModel.onEvent(\.didSelectRow) { index in
          guard let self = wS else { return }
          //
+         self.recipientUsername = self.foundUsers[index].tgName
          self.recipientID = self.foundUsers[index].userId
          let fullName = self.foundUsers[index].name + " " + self.foundUsers[index].surname
          self.userSearchModel.set(.text(fullName))
