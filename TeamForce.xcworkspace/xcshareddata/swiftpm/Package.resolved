@@ -1,6 +1,15 @@
 {
   "pins" : [
     {
+      "identity" : "anchorage",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/setixela/Anchorage.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "e834415c765fcd9d2189f64fe906b7de5e026415"
+      }
+    },
+    {
       "identity" : "promisekit",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/mxcl/PromiseKit",

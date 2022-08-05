@@ -7,6 +7,7 @@
 
 import UIKit
 import ReactiveWorks
+import Anchorage
 
 final class Spacer: BaseViewModel<SpacerView> {
     convenience init(size: CGFloat = .zero) {

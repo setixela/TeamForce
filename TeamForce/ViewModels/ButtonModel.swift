@@ -7,6 +7,7 @@
 
 import UIKit
 import ReactiveWorks
+import Anchorage
 
 enum ButtonState: KeyPathSetable {
    case enabled(Bool)
