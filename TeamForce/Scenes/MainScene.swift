@@ -48,7 +48,6 @@ final class MainScene<Asset: AssetProtocol>: BaseSceneModel<
   private let sideBarModel = SideBarModel<Asset>()
 
   private let menuButton = BarButtonModel()
-//        .sendEvent(\.initWithImage, Design.icon.make(\.sideMenu))
 
   // MARK: - Start
 
@@ -62,6 +61,7 @@ final class MainScene<Asset: AssetProtocol>: BaseSceneModel<
 
     mainViewModel
       .set(.backColor(Design.color.background))
+
     mainViewModel.bottomStackModel
       .set(.axis(.horizontal))
       .set(.padding(.zero))

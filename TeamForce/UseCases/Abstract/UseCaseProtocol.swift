@@ -17,11 +17,7 @@ protocol UseCaseProtocol {
 
 extension UseCaseProtocol {
 
-   func work(_ input: In? = nil) -> Work<In, Out> {
+   func work(_ input: In?) -> Work<In, Out> {
       fatalError()
    }
-
-//   func work() -> Work<In, Out> {
-//      fatalError()
-//   }
 }

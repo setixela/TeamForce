@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol DesignProtocol {
+protocol DesignProtocol: InitProtocol {
     associatedtype Font: FontBuilderProtocol
     associatedtype Label: LabelBuilderProtocol
     associatedtype Button: ButtonBuilderProtocol

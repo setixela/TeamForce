@@ -15,6 +15,10 @@ struct SendCoinRequest {
     let reason: String
 }
 
+protocol Failuring {
+   associatedtype Failure: Error
+}
+
 final class SendCoinApiWorker: BaseApiWorker<SendCoinRequest, Void> {
     override func doAsync(work: Work<SendCoinRequest, Void>) {
         let cookieName = "csrftoken"
@@ -24,6 +28,7 @@ final class SendCoinApiWorker: BaseApiWorker<SendCoinRequest, Void> {
             let cookie = HTTPCookieStorage.shared.cookies?.first(where: { $0.name == cookieName })
         else {
             print("No csrf cookie")
+            work.fail(())
             return
         }
             
@@ -51,3 +56,10 @@ final class SendCoinApiWorker: BaseApiWorker<SendCoinRequest, Void> {
             }
     }
 }
+
+extension SendCoinApiWorker: Failuring {
+   enum Failure: Error {
+      case noCookie
+   }
+}
+

@@ -41,7 +41,7 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
    // MARK: - Private
 
    private let telegramNickParser = TelegramNickCheckerModel()
-   private var loginName: String?
+   //private var loginName: String?
 
    // MARK: - Start
 
@@ -49,6 +49,8 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
       configure()
 
       weak var weakSelf = self
+
+      var loginName: String?
 
       badgeModel
          .setLabels(title: Text.title.make(\.userName),
@@ -58,7 +60,7 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
       nextButton
          .onEvent(\.didTap)
          .doInput {
-            weakSelf?.loginName
+            loginName
          }
          .onFail {
             print("login name is nil")
@@ -73,16 +75,16 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
 
       badgeModel.textFieldModel
          .onEvent(\.didEditingChanged)
-         .doNext(worker: telegramNickParser)
+         .doNext(worker: TelegramNickCheckerModel())
          .onSuccess { [weak self] text in
-            self?.loginName = String(text.dropFirst())
+            loginName = String(text.dropFirst())
             self?.badgeModel.textFieldModel.set(.text(text))
             self?.nextButton.set(Design.State.button.default)
             self?.badgeModel.changeState(to: BadgeState.default)
          }
          .onFail { [weak self] (text: String) in
             print("\n### text     \(text)\n")
-            self?.loginName = nil
+            loginName = nil
             self?.badgeModel.textFieldModel.set(.text(text))
             self?.nextButton.set(Design.State.button.inactive)
             self?.badgeModel.changeState(to: BadgeState.default)

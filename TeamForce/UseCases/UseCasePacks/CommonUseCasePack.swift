@@ -18,8 +18,6 @@ struct ApiUseCase: ApiUseCaseRegistry {
       .init(safeStringStorage: safeStringStorage, balanceApiModel: balanceApiModel)
    }
 
-   //
-
    var login: LoginUseCase {
       .init(authApiWorker: loginApiModel)
    }
@@ -28,16 +26,13 @@ struct ApiUseCase: ApiUseCaseRegistry {
       .init(safeStringStorage: safeStringStorage, logoutApiModel: logoutApiModel)
    }
 
-   //
-
    var userSearch: UserSearchUseCase {
       .init(searchUserApiModel: searchUserApiWorker)
    }
-    //
-    
-    var sendCoin: SendCoinUseCase {
-        .init(sendCoinApiModel: sendCoinApiWorker)
-    }
+
+   var sendCoin: SendCoinUseCase {
+      .init(sendCoinApiModel: sendCoinApiWorker)
+   }
 
    // MARK: - Dependencies
 

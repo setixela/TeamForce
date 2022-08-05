@@ -10,21 +10,32 @@ protocol ServiceProtocol: InitProtocol {
    var safeStringStorage: StringStorageProtocol { get }
 }
 
-protocol AssetProtocol {
-   associatedtype Scene: ScenesProtocol
-   associatedtype Service: ServiceProtocol
-   associatedtype Design: DesignProtocol
-   associatedtype Text: TextsProtocol
-
+protocol AssetProtocol: AssetRoot
+   where
+   Scene: ScenesProtocol,
+   Service: ServiceProtocol,
+   Design: DesignProtocol,
+   Text: TextsProtocol
+{
    static var router: Router<Scene>? { get set }
-   static var service: Service { get }
+
    static var apiUseCase: ApiUseCase { get }
 
    typealias Asset = Self
 }
 
 extension AssetProtocol {
-   static var service: Service { Service() }
+   static var apiUseCase: ApiUseCase {
+      .init(
+         safeStringStorage: StringStorageWorker(engine: service.safeStringStorage),
+         userProfileApiModel: ProfileApiWorker(apiEngine: service.apiEngine),
+         loginApiModel: AuthApiWorker(apiEngine: service.apiEngine),
+         logoutApiModel: LogoutApiWorker(apiEngine: service.apiEngine),
+         balanceApiModel: GetBalanceApiWorker(apiEngine: service.apiEngine),
+         searchUserApiWorker: SearchUserApiWorker(apiEngine: service.apiEngine),
+         sendCoinApiWorker: SendCoinApiWorker(apiEngine: service.apiEngine)
+      )
+   }
 }
 
 protocol ScenesProtocol: InitProtocol {

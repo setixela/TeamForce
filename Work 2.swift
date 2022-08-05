@@ -230,11 +230,6 @@ extension Work {
    }
 }
 
-
-extension Work {
-   
-}
-
 extension Work {
    private func clean() {
       finisher = nil
@@ -269,4 +264,3 @@ struct WorkWrappper<T, U>: WorkWrappperProtocol where T: Any, U: Any {
 
    let work: Work<T, U>
 }
-

@@ -51,6 +51,7 @@
 		199C4B6D2863299E008AD6FD /* DesignSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199C4B6C2863299E008AD6FD /* DesignSystem.swift */; };
 		19AE3AEF28691B2E00A0C6E4 /* MainScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19AE3AEE28691B2E00A0C6E4 /* MainScene.swift */; };
 		19AE3AF22869230C00A0C6E4 /* AuthApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19AE3AF12869230C00A0C6E4 /* AuthApiWorker.swift */; };
+		19B4BFFE289B288900D46120 /* AssetRoot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B4BFFD289B288900D46120 /* AssetRoot.swift */; };
 		19C1E97C285E7BC300E7976D /* Communicable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C1E97B285E7BC300E7976D /* Communicable.swift */; };
 		19C1E97F285E7C1200E7976D /* InitProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C1E97E285E7C1200E7976D /* InitProtocol.swift */; };
 		19C1E981285E7C5500E7976D /* Lambda.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C1E980285E7C5500E7976D /* Lambda.swift */; };
@@ -161,6 +162,7 @@
 		199C4B6C2863299E008AD6FD /* DesignSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignSystem.swift; sourceTree = "<group>"; };
 		19AE3AEE28691B2E00A0C6E4 /* MainScene.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = MainScene.swift; sourceTree = "<group>"; tabWidth = 2; };
 		19AE3AF12869230C00A0C6E4 /* AuthApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthApiWorker.swift; sourceTree = "<group>"; };
+		19B4BFFD289B288900D46120 /* AssetRoot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetRoot.swift; sourceTree = "<group>"; };
 		19C1E97B285E7BC300E7976D /* Communicable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Communicable.swift; sourceTree = "<group>"; };
 		19C1E97E285E7C1200E7976D /* InitProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitProtocol.swift; sourceTree = "<group>"; };
 		19C1E980285E7C5500E7976D /* Lambda.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lambda.swift; sourceTree = "<group>"; };
@@ -266,9 +268,10 @@
 				19F153812899646900ECF000 /* UseCases */,
 				19AE3AF0286922FC00A0C6E4 /* Models */,
 				19C1E9A428610E6F00E7976D /* ViewModels */,
-				199C4B6728632461008AD6FD /* DesignSystem */,
 				19ECD54628623D92001765F6 /* Views */,
+				199C4B6728632461008AD6FD /* DesignSystem */,
 				19C1E99528610E1900E7976D /* Architecture */,
+				19C1E983285F426B00E7976D /* Networking */,
 				190C1D41285D195800FB3518 /* Main */,
 				190C1D1F285D160000FB3518 /* Info.plist */,
 			);
@@ -294,13 +297,13 @@
 			path = Main;
 			sourceTree = "<group>";
 		};
-		194B6178289546BF007F0B60 /* AsyncWorking */ = {
+		194B6178289546BF007F0B60 /* Works */ = {
 			isa = PBXGroup;
 			children = (
 				194B6179289546C9007F0B60 /* Work.swift */,
 				194B617B28954BEC007F0B60 /* WorkerProtocol.swift */,
 			);
-			name = AsyncWorking;
+			name = Works;
 			path = ../..;
 			sourceTree = "<group>";
 		};
@@ -414,16 +417,17 @@
 			isa = PBXGroup;
 			children = (
 				19C1E97A285E7BC300E7976D /* Communicable */,
-				19C1E983285F426B00E7976D /* Networking */,
-				194B6178289546BF007F0B60 /* AsyncWorking */,
+				194B6178289546BF007F0B60 /* Works */,
 				19C1E97D285E7BF800E7976D /* Common */,
 				19C1E9A72861167E00E7976D /* Anchors */,
 				19C1E9A228610E4E00E7976D /* Router.swift */,
+				19C1E9A528610EC600E7976D /* DefaultVCModel.swift */,
 				19C1E99828610E2800E7976D /* BaseVCModel.swift */,
 				19C1E99628610E2800E7976D /* Model.swift */,
 				19C1E99728610E2800E7976D /* RouterProtocol.swift */,
 				19C1E99928610E2800E7976D /* SceneModelProtocol.swift */,
 				19C1E99A28610E2800E7976D /* ViewModel.swift */,
+				19B4BFFD289B288900D46120 /* AssetRoot.swift */,
 			);
 			path = Architecture;
 			sourceTree = "<group>";
@@ -433,7 +437,6 @@
 			children = (
 				19DD3D93288766770085CDA8 /* TableModels */,
 				19D0835C286F428600F75E4A /* BarButtonModel.swift */,
-				19C1E9A528610EC600E7976D /* DefaultVCModel.swift */,
 				19ECD54228623D30001765F6 /* StackModel.swift */,
 				19ECD54028623D1F001765F6 /* LabelModel.swift */,
 				199C4B6A2863292F008AD6FD /* ButtonModel.swift */,
@@ -713,6 +716,7 @@
 				19C1E97F285E7C1200E7976D /* InitProtocol.swift in Sources */,
 				19ECD54128623D1F001765F6 /* LabelModel.swift in Sources */,
 				19C1E99D28610E2800E7976D /* RouterProtocol.swift in Sources */,
+				19B4BFFE289B288900D46120 /* AssetRoot.swift in Sources */,
 				194B617A289546C9007F0B60 /* Work.swift in Sources */,
 				196750B0286518F80019A6DE /* StackWithBottomPanelModel.swift in Sources */,
 				198FE1CC28999A2600BAF1A5 /* NilBlocker.swift in Sources */,
