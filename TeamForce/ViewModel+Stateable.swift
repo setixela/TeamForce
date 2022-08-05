@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import ReactiveWorks
 
 enum ViewState {
    case backColor(UIColor)

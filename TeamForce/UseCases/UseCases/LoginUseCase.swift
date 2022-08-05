@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import ReactiveWorks
 
 struct LoginUseCase: UseCaseProtocol {
    let authApiWorker: AuthApiWorker

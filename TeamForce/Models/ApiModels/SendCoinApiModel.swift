@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import ReactiveWorks
 
 struct SendCoinRequest {
     let token: String

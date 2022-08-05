@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import ReactiveWorks
 
 final class DoubleLabelModel<Design: DesignProtocol>: BaseViewModel<UIStackView>,
     Designable

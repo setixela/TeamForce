@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import ReactiveWorks
 
 final class LabelModel: BaseViewModel<PaddingLabel> {}
 

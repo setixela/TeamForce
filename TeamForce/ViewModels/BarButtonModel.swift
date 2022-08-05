@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import ReactiveWorks
 
 struct BarButtonEvent: InitProtocol {
     var initWithImage: Event<UIImage>?

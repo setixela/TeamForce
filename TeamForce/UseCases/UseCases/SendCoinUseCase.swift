@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import ReactiveWorks
 
 struct SendCoinUseCase: UseCaseProtocol {
    let sendCoinApiModel: SendCoinApiWorker

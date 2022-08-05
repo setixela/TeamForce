@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import ReactiveWorks
 
 final class NilBlocker<T>: WorkerProtocol {
    func doAsync(work: Work<T,T>) {

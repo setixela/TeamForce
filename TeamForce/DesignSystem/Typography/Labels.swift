@@ -5,7 +5,7 @@
 //  Created by Aleksandr Solovyev on 23.06.2022.
 //
 
-import UIKit
+import ReactiveWorks
 
 // MARK: - Labels Protocol
 

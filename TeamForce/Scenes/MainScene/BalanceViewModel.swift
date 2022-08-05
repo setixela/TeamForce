@@ -6,7 +6,7 @@
 //
 
 import CoreFoundation
-import RealmSwift
+import ReactiveWorks
 import UIKit
 
 struct BalanceViewEvent: InitProtocol {}

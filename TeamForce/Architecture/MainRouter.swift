@@ -7,6 +7,8 @@
 
 import UIKit
 
+import ReactiveWorks
+
 enum NavType {
     case push
     case present
@@ -14,7 +16,9 @@ enum NavType {
     case popToRoot
 }
 
-final class Router<Scene: InitProtocol>: RouterProtocol, Communicable {
+protocol RouterProtocol: InitProtocol {}
+
+final class MainRouter<Scene: InitProtocol>: RouterProtocol, Communicable {
     var eventsStore: Events = .init()
 
     func start() {}

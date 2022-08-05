@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import ReactiveWorks
 
 struct SideBarUserModelEvent: InitProtocol {
     var didTap: Event<Void>?

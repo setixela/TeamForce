@@ -7,6 +7,7 @@
 
 import Foundation
 import PromiseKit
+import ReactiveWorks
 
 protocol NetworkEventProtocol: InitProtocol {
    associatedtype Request

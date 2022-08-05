@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import ReactiveWorks
 
 enum FrameCellState {
    case text(String)

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import ReactiveWorks
 
 struct PickerViewEvent: InitProtocol {
     var didSelectRow: Event<Int>?

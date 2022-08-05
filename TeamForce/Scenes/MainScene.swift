@@ -6,7 +6,7 @@
 //
 
 import PromiseKit
-import RealmSwift
+import ReactiveWorks
 import UIKit
 
 final class MainScene<Asset: AssetProtocol>: BaseSceneModel<
@@ -24,21 +24,21 @@ final class MainScene<Asset: AssetProtocol>: BaseSceneModel<
 
   private lazy var balanceButton = Design.button.tabBar
     .set(.title("Баланс"))
-    .set(.image(icon.make(\.coinLine)))
+    .set(.image(Design.icon.make(\.coinLine)))
     .onEvent(\.didTap) { [weak self] in
       self?.presentModel(self?.balanceViewModel)
     }
 
   private lazy var transactButton = Design.button.tabBar
     .set(.title("Новый перевод"))
-    .set(.image(icon.make(\.upload2Fill)))
+    .set(.image(Design.icon.make(\.upload2Fill)))
     .onEvent(\.didTap) { [weak self] in
       self?.presentModel(self?.transactViewModel)
     }
 
   private lazy var historyButton = Design.button.tabBar
     .set(.title("История"))
-    .set(.image(icon.make(\.historyLine)))
+    .set(.image(Design.icon.make(\.historyLine)))
     .onEvent(\.didTap) { [weak self] in
       self?.presentModel(self?.historyViewModel)
     }

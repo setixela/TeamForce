@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+import ReactiveWorks
 
 enum DoubleLabelPairState {
     case leftPair(text1: String, text2: String)

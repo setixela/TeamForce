@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import ReactiveWorks
 
 final class Spacer: BaseViewModel<SpacerView> {
     convenience init(size: CGFloat = .zero) {

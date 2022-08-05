@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import ReactiveWorks
 
 enum LabelCellState {
     case text(String)

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import ReactiveWorks
 
 struct SideBarEvents: InitProtocol {
    var presentOnScene: Event<UIView>?
@@ -95,6 +96,9 @@ extension SideBarModel {
             print("profile loading error")
          }
    }
+
+
+
 
    private func configureLogoutUseCase() {
       item4

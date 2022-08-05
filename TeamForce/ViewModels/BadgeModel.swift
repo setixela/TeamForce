@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import ReactiveWorks
 
 enum BadgeState {
     case `default`

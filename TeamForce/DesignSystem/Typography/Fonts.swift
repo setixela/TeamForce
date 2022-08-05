@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import ReactiveWorks
 
 protocol FontBuilderProtocol: InitProtocol, TypographyProtocol where DesignType == UIFont {}
 

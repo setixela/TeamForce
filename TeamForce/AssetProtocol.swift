@@ -5,6 +5,8 @@
 //  Created by Aleksandr Solovyev on 03.06.2022.
 //
 
+import ReactiveWorks
+
 protocol ServiceProtocol: InitProtocol {
    var apiEngine: ApiEngineProtocol { get }
    var safeStringStorage: StringStorageProtocol { get }
@@ -17,7 +19,7 @@ protocol AssetProtocol: AssetRoot
    Design: DesignProtocol,
    Text: TextsProtocol
 {
-   static var router: Router<Scene>? { get set }
+   static var router: MainRouter<Scene>? { get set }
 
    static var apiUseCase: ApiUseCase { get }
 

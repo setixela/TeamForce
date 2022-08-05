@@ -5,13 +5,16 @@
 //  Created by Aleksandr Solovyev on 24.06.2022.
 //
 
+import ReactiveWorks
+
 enum ProductionAsset: AssetProtocol {
+   typealias Router = MainRouter<Scene>
    typealias Text = Texts
    typealias Design = DesignSystem
    typealias Service = ProductionService
    typealias Scene = Scenes
 
-   static var router: Router<Scene>? = Router<Scene>()
+   static var router: MainRouter<Scene>? = MainRouter<Scene>()
 }
 
 struct Scenes: ScenesProtocol {

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import ReactiveWorks
 
 struct BalanceApiEvent: NetworkEventProtocol {
     var request: Event<TokenRequest>?

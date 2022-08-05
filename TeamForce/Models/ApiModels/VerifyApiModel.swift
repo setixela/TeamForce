@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import ReactiveWorks
 
 struct VerifyRequest {
     let xId: String

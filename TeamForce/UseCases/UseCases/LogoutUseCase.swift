@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import ReactiveWorks
 
 struct LogoutUseCase: UseCaseProtocol {
    let safeStringStorage: StringStorageWorker

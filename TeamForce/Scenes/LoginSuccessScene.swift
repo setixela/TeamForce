@@ -5,8 +5,8 @@
 //  Created by Aleksandr Solovyev on 24.06.2022.
 //
 
-import PromiseKit
 import UIKit
+import ReactiveWorks
 
 // MARK: - LoginSuccessScene
 
@@ -32,7 +32,6 @@ final class LoginSuccessScene<Asset: AssetProtocol>: BaseSceneModel<
       .set(.title(Text.button.enterButton))
 
    private lazy var apiModel = ProfileApiWorker(apiEngine: Asset.service.apiEngine)
-   private var userPromise: Promise<UserData>?
    private var userData: UserData?
 
    // MARK: - Start

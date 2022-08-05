@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import ReactiveWorks
 
 final class ProfileApiWorker: BaseApiWorker<TokenRequest, UserData> {
     override func doAsync(work: Work<TokenRequest, UserData>) {

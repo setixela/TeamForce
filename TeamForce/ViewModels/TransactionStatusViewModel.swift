@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import ReactiveWorks
 
 struct TransactionStatusViewEvents: InitProtocol {
     var presentOnScene: Event<UIView>?

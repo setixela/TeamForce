@@ -5,6 +5,7 @@
 //  Created by Aleksandr Solovyev on 24.06.2022.
 //
 
+import ReactiveWorks
 import Foundation
 
 protocol TextsProtocol: InitProtocol {

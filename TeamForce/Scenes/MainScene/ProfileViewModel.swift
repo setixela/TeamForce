@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import ReactiveWorks
 
 final class ProfileViewModel<Asset: AssetProtocol>: BaseSceneModel<
     DefaultVCModel,

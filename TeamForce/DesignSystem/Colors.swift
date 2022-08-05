@@ -5,7 +5,7 @@
 //  Created by Aleksandr Solovyev on 12.07.2022.
 //
 
-import Foundation
+import ReactiveWorks
 import UIKit
 
 // Протокол Фабрики цветов

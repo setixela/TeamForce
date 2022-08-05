@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import ReactiveWorks
 
 struct LoadProfileUseCase: UseCaseProtocol {
    let safeStringStorage: StringStorageWorker

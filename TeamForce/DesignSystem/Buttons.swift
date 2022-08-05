@@ -5,6 +5,7 @@
 //  Created by Aleksandr Solovyev on 23.06.2022.
 //
 
+import ReactiveWorks
 import UIKit
 
 protocol Associated {

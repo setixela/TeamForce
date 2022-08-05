@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import ReactiveWorks
 
 final class StackWithBottomPanelModel: BaseViewModel<UIStackView> {
     let topStackModel = StackModel(.axis(.vertical),

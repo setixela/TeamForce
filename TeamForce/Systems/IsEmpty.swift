@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import ReactiveWorks
 
 final class IsEmpty<T: Collection>: UseCaseProtocol {
    typealias In = T

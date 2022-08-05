@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import ReactiveWorks
 
 protocol ApiUseCaseRegistry {
    //
