@@ -38,4 +38,6 @@ final class CoverViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>, As
    }
 }
 
-extension CoverViewModel: Stateable {}
+extension CoverViewModel: Stateable {
+   typealias State = StackState
+}

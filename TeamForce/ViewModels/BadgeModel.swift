@@ -77,5 +77,6 @@ class BadgeModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>, Assetable {
 }
 
 extension BadgeModel: Stateable {
+   typealias State = StackState
 }
 

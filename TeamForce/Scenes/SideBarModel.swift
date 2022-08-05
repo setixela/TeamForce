@@ -18,6 +18,7 @@ final class SideBarModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
    Stateable,
    Assetable
 {
+   typealias State = StackState
    var eventsStore: SideBarEvents = .init()
 
    private var isPresented = false

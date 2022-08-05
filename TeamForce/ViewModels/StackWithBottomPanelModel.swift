@@ -28,4 +28,6 @@ final class StackWithBottomPanelModel: BaseViewModel<UIStackView> {
     }
 }
 
-extension StackWithBottomPanelModel: Stateable {}
+extension StackWithBottomPanelModel: Stateable {
+   typealias State = StackState
+}

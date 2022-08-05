@@ -36,7 +36,8 @@ final class DoubleLabelPairModel<Design: DesignProtocol>: BaseViewModel<UIStackV
 }
 
 extension DoubleLabelPairModel: Stateable2 {
-    func applyState(_ state: DoubleLabelPairState) {
+
+   func applyState(_ state: DoubleLabelPairState) {
         switch state {
         case .leftPair(text1: let text1, text2: let text2):
             doubleLabelLeft.labelLeft.set(.text(text1))

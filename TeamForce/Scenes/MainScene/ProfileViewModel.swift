@@ -15,7 +15,7 @@ final class ProfileViewModel<Asset: AssetProtocol>: BaseSceneModel<
     Void
 > {
     private lazy var userModel = SideBarUserModel<Design>()
-        .set(.backColor(.lightGray.withAlphaComponent(0.5)))
+        .set(.backColor(UIColor.lightGray.withAlphaComponent(0.5)))
 
     private lazy var infoTableModel = TableViewModel()
 

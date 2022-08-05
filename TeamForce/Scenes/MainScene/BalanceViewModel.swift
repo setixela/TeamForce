@@ -18,6 +18,7 @@ final class BalanceViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
    Stateable,
    Assetable
 {
+   typealias State = StackState
    var eventsStore: BalanceViewEvent = .init()
 
    // MARK: - Frame Cells

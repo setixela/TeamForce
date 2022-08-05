@@ -10,11 +10,8 @@ import UIKit
 
 final class StackModel: BaseViewModel<UIStackView> {}
 
-extension StackModel: Stateable {}
-
-enum TextState {
-   case text(String)
-   case font(UIFont)
+extension StackModel: Stateable {
+   typealias State = StackState
 }
 
 extension UIStackView {

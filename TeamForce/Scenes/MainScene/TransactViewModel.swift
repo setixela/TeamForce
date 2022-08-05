@@ -15,6 +15,7 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
    Stateable,
    Assetable
 {
+   typealias State = StackState
    var eventsStore: TransactViewEvent = .init()
 
    // MARK: - View Models
