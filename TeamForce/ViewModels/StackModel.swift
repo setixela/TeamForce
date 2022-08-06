@@ -8,7 +8,11 @@
 import ReactiveWorks
 import UIKit
 
-final class StackModel: BaseViewModel<UIStackView> {}
+final class StackModel: BaseViewModel<UIStackView> {
+   override func start() {
+      set(.axis(.vertical))
+   }
+}
 
 extension StackModel: Stateable {
    typealias State = StackState

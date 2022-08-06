@@ -8,26 +8,6 @@
 import Foundation
 import ReactiveWorks
 
-enum StorageError: Error {
-   case noValue
-}
-
-protocol StorageEventProtocol: InitProtocol {
-   associatedtype AsType
-
-   var saveValueForKey: Event<(value: AsType, key: String)>? { get set }
-   var requestValueForKey: Event<String>? { get set }
-   var responseValue: Event<AsType>? { get set }
-   var error: Event<StorageError>? { get set }
-}
-
-struct StorageStringEvent: StorageEventProtocol {
-   var saveValueForKey: Event<(value: String, key: String)>?
-   var requestValueForKey: Event<String>?
-   var responseValue: Event<String>?
-   var error: Event<StorageError>?
-}
-
 final class StringStorageWorker: BaseModel {
    private var storageEngine: StringStorageProtocol?
 

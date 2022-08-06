@@ -17,6 +17,8 @@ enum ViewState {
    case size(CGSize)
    case height(CGFloat)
    case hidden(Bool)
+   case zPosition(CGFloat)
+   case placing(CGPoint)
 }
 
 // MARK: -  Stateable extensions
@@ -40,6 +42,12 @@ extension ViewModelProtocol where Self: Stateable {
          view.addAnchors
             .constWidth(size.width)
             .constHeight(size.height)
+      case .zPosition(let value):
+         view.layer.masksToBounds = false
+         view.layer.zPosition = value
+         view.setNeedsLayout()
+      case .placing(let value):
+         view.center = value
       }
    }
 }
