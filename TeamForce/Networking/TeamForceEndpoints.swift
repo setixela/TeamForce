@@ -76,4 +76,13 @@ enum TeamForceEndpoints {
         let headers: [String : String]
         
     }
+    
+    struct GetTransactions: EndpointProtocol {
+        //
+        let method = HTTPMethod.get
+        
+        var endPoint: String { urlBase + "/user/transactions/"}
+        
+        let headers: [String : String]
+    }
 }

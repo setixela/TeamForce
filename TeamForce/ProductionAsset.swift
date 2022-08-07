@@ -15,6 +15,18 @@ enum ProductionAsset: AssetProtocol {
    typealias Scene = Scenes
 
    static var router: MainRouter<Scene>? = MainRouter<Scene>()
+   static var apiUseCase: ApiUseCase {
+      .init(
+         safeStringStorage: StringStorageWorker(engine: service.safeStringStorage),
+         userProfileApiModel: ProfileApiWorker(apiEngine: service.apiEngine),
+         loginApiModel: AuthApiWorker(apiEngine: service.apiEngine),
+         logoutApiModel: LogoutApiWorker(apiEngine: service.apiEngine),
+         balanceApiModel: GetBalanceApiWorker(apiEngine: service.apiEngine),
+         searchUserApiWorker: SearchUserApiWorker(apiEngine: service.apiEngine),
+         sendCoinApiWorker: SendCoinApiWorker(apiEngine: service.apiEngine),
+         getTransactionsApiWorker: GetTransactionsApiWorker(apiEngine: service.apiEngine)
+      )
+   }
 }
 
 struct Scenes: ScenesProtocol {

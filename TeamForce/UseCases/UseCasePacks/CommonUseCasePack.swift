@@ -29,6 +29,10 @@ struct ApiUseCase: ApiUseCaseRegistry {
    var userSearch: UserSearchUseCase {
       .init(searchUserApiModel: searchUserApiWorker)
    }
+    
+    var getTransactions: GetTransactionsUseCase {
+        .init(safeStringStorage: safeStringStorage, getTransactionsApiWorker: getTransactionsApiWorker)
+    }
 
    var sendCoin: SendCoinUseCase {
       .init(sendCoinApiModel: sendCoinApiWorker)
@@ -45,4 +49,5 @@ struct ApiUseCase: ApiUseCaseRegistry {
 
    let searchUserApiWorker: SearchUserApiWorker
    let sendCoinApiWorker: SendCoinApiWorker
+   let getTransactionsApiWorker: GetTransactionsApiWorker
 }

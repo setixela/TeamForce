@@ -20,7 +20,7 @@ final class MainScene<Asset: AssetProtocol>: BaseSceneModel<
 
   private lazy var balanceViewModel = BalanceViewModel<Asset>()
   private lazy var transactViewModel = TransactViewModel<Asset>() // TODO:
-  private lazy var historyViewModel = ImageViewModel() // TODO:
+  private lazy var historyViewModel = HistoryViewModel<Asset>() // TODO:
 
   private lazy var balanceButton = Design.button.tabBar
     .set(.title("Баланс"))
