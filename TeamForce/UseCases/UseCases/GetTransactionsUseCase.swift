@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import ReactiveWorks
+
 
 struct GetTransactionsUseCase: UseCaseProtocol {
    let safeStringStorage: StringStorageWorker

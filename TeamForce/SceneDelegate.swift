@@ -47,15 +47,15 @@ private extension SceneDelegate {
             nc.viewControllers = [vc]
          }
 
-      ProductionAsset.router?
-         .route(\.playground, navType: .push, payload: ())
-//
-//        if UserDefaults.standard.isLoggedIn() {
-//            ProductionAsset.router?
-//                .route(\.main, navType: .push, payload: ())
-//        } else {
-//            ProductionAsset.router?
-//                .route(\.digitalThanks, navType: .push, payload: ())
-//        }
+//      ProductionAsset.router?
+//         .route(\.playground, navType: .push, payload: ())
+
+        if UserDefaults.standard.isLoggedIn() {
+            ProductionAsset.router?
+                .route(\.main, navType: .push, payload: ())
+        } else {
+            ProductionAsset.router?
+                .route(\.digitalThanks, navType: .push, payload: ())
+        }
    }
 }

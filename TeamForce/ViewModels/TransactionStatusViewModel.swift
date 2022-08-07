@@ -74,7 +74,7 @@ final class TransactionStatusViewModel<Asset: AssetProtocol>: BaseViewModel<UISt
 //        set(.distribution(.fill))
         
         set(.models([
-            Spacer(size: 20),
+            Spacer(20),
             image,
             statusLabel,
             amountLabel,

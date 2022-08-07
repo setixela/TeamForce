@@ -35,7 +35,8 @@ extension AssetProtocol {
          logoutApiModel: LogoutApiWorker(apiEngine: service.apiEngine),
          balanceApiModel: GetBalanceApiWorker(apiEngine: service.apiEngine),
          searchUserApiWorker: SearchUserApiWorker(apiEngine: service.apiEngine),
-         sendCoinApiWorker: SendCoinApiWorker(apiEngine: service.apiEngine)
+         sendCoinApiWorker: SendCoinApiWorker(apiEngine: service.apiEngine),
+         getTransactionsApiWorker: GetTransactionsApiWorker(apiEngine: service.apiEngine)
       )
    }
 }
