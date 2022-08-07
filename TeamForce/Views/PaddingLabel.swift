@@ -8,66 +8,55 @@
 import UIKit
 
 protocol Marginable {
-    var padding: UIEdgeInsets? { get set }
+   var padding: UIEdgeInsets { get set }
 }
 
 final class PaddingLabel: UILabel, Marginable {
-    var padding: UIEdgeInsets?
+   var padding: UIEdgeInsets = .init()
 
-    override public func draw(_ rect: CGRect) {
-        if let insets = padding {
-            drawText(in: rect.inset(by: insets))
-        } else {
-            drawText(in: rect)
-        }
-    }
+   override public func draw(_ rect: CGRect) {
+      drawText(in: rect.inset(by: padding))
+   }
 
-    override var intrinsicContentSize: CGSize {
-        guard let text = text else { return super.intrinsicContentSize }
+   override var intrinsicContentSize: CGSize {
+      guard let text = text else { return super.intrinsicContentSize }
 
-        var contentSize = super.intrinsicContentSize
-        var textWidth: CGFloat = contentSize.width
-        var insetsHeight: CGFloat = 0.0
-        var insetsWidth: CGFloat = 0.0
+      var contentSize = super.intrinsicContentSize
+      var textWidth: CGFloat = contentSize.width
+      var insetsHeight: CGFloat = 0.0
+      var insetsWidth: CGFloat = 0.0
 
-        if let insets = padding {
-            insetsWidth += insets.left + insets.right
-            insetsHeight += insets.top + insets.bottom
-            print()
-            print(contentSize)
-            print(textWidth)
-            print(insetsWidth)
-            textWidth -= insetsWidth
-        }
+      insetsWidth += padding.left + padding.right
+      insetsHeight += padding.top + padding.bottom
 
-        let newSize = text.boundingRect(with: CGSize(width: textWidth, height: .greatestFiniteMagnitude),
-                                        options: [.usesLineFragmentOrigin],
-                                        attributes: [NSAttributedString.Key.font: font!],
-                                        context: nil)
+      textWidth -= insetsWidth
 
-        contentSize.height = ceil(newSize.size.height) + insetsHeight
-        contentSize.width = ceil(newSize.size.width) + insetsWidth
+      let newSize = text.boundingRect(with: CGSize(width: textWidth, height: .greatestFiniteMagnitude),
+                                      options: [.usesLineFragmentOrigin],
+                                      attributes: [NSAttributedString.Key.font: font!],
+                                      context: nil)
 
-        return contentSize
-    }
+      contentSize.height = ceil(newSize.size.height) + insetsHeight
+      contentSize.width = ceil(newSize.size.width) + insetsWidth
+
+      return contentSize
+   }
 }
-
 
 /// Description
 final class PaddingTextField: UITextField, Marginable {
+   // padding extension
+   var padding: UIEdgeInsets = .init()
 
-    // padding extension
-    var padding: UIEdgeInsets?
+   override func textRect(forBounds bounds: CGRect) -> CGRect {
+      return bounds.inset(by: padding)
+   }
 
-    override func textRect(forBounds bounds: CGRect) -> CGRect {
-        return bounds.inset(by: padding ?? .zero)
-    }
+   override func placeholderRect(forBounds bounds: CGRect) -> CGRect {
+      return bounds.inset(by: padding)
+   }
 
-    override func placeholderRect(forBounds bounds: CGRect) -> CGRect {
-        return bounds.inset(by: padding ?? .zero)
-    }
-
-    override func editingRect(forBounds bounds: CGRect) -> CGRect {
-        return bounds.inset(by: padding ?? .zero)
-    }
+   override func editingRect(forBounds bounds: CGRect) -> CGRect {
+      return bounds.inset(by: padding)
+   }
 }

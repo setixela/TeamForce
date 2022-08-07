@@ -25,8 +25,8 @@ final class PlaygroundScene<Asset: AssetProtocol>: BaseSceneModel<
       let titleSubtitle = TitleSubtitleModel()
          .set(.text("Hello"))
          .set(.backColor(.random))
-         .setDown { subtitle in
-            subtitle
+         .setDown {
+            $0
                .set(.text("World"))
                .set(.backColor(.random))
          }
@@ -34,12 +34,12 @@ final class PlaygroundScene<Asset: AssetProtocol>: BaseSceneModel<
       let logoTitleSubtitle = LogoTitleSubtitleModel()
          .set(.image(Design.icon.make(\.logo)))
          .set(.backColor(.random))
-         .setRight { titleSubtitle in
-            titleSubtitle
+         .setRight {
+            $0
                .set(.text("Hello"))
                .set(.backColor(.random))
-               .setDown { subtitle in
-                  subtitle
+               .setDown {
+                  $0
                      .set(.text("World"))
                      .set(.backColor(.random))
                }
@@ -75,7 +75,7 @@ final class VizitkaDemo: BaseViewModel<UIView>, Stateable {
       .set(.image(ProductionAsset.Design.icon.make(\.logo)))
 
    let topModel = LabelModel()
-      .set(.padding(.init(top: 0, left: 16, bottom: 0, right: 16)))
+      .set(.padLeft(64))
       .set(.numberOfLines(0))
       .set(.text("Full name and biography\nAnd many texts here"))
       .set(.backColor(.green))
