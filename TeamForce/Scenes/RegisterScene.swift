@@ -72,10 +72,10 @@ final class RegisterScene<Asset: AssetProtocol>: BaseSceneModel<
 
       mainViewModel.topStackModel
          .set(.models([
-            Spacer(size: 100),
+            Spacer(100),
             headerModel,
             subtitleModel,
-            Spacer(size: 16),
+            Spacer(16),
             textFieldModel,
             Spacer()
          ]))

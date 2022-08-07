@@ -24,7 +24,7 @@ final class CoverViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>, As
       set(.alignment(.center))
       set(.axis(.vertical))
       set(.models([
-         Spacer(size: 28),
+         Spacer(28),
          titleModel,
          illustrationModel,
          Spacer()

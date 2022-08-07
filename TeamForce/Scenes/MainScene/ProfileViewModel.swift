@@ -39,7 +39,7 @@ final class ProfileViewModel<Asset: AssetProtocol>: BaseSceneModel<
         mainViewModel
             .set(.models([
                 userModel,
-                Spacer(size: 16),
+                Spacer(16),
                 infoTableModel,
                 Spacer()
             ]))

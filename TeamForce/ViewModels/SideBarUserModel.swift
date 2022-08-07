@@ -33,9 +33,9 @@ final class SideBarUserModel<Design: DesignProtocol>: BaseViewModel<UIStackView>
          .set(.padding(.init(top: 12, left: 16, bottom: 12, right: 16)))
          .set(.models([
             self.avatar,
-            Spacer(size: 30),
+            Spacer(30),
             self.userName,
-            Spacer(size: 4),
+            Spacer(4),
             self.nickName
          ]))
 

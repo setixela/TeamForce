@@ -53,7 +53,6 @@ struct Icons: IconsProtocol {
 
     var loginBackground: String { "background_vector" }
 }
-
 extension Icons: KeyPathMaker {
     func make(_ keypath: KeyPath<Self, IconType>) -> UIImage {
         let name = self[keyPath: keypath]

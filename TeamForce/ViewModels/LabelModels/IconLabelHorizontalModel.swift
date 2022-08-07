@@ -35,7 +35,7 @@ final class IconLabelHorizontalModel<Asset: AssetProtocol>: BaseViewModel<UIStac
         set(.alignment(.center))
         set(.models([
             icon,
-            Spacer(size: 20),
+            Spacer(20),
             label,
             Spacer()
         ]))

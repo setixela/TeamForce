@@ -67,10 +67,10 @@ final class LoginSuccessScene<Asset: AssetProtocol>: BaseSceneModel<
 
       mainViewModel.topStackModel
          .set(.models([
-            Spacer(size: 200),
+            Spacer(200),
             checkmarkIcon,
             headerModel,
-            Spacer(size: 16),
+            Spacer(16),
             Spacer()
          ]))
 

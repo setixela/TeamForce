@@ -5,9 +5,9 @@
 //  Created by Aleksandr Solovyev on 06.07.2022.
 //
 
-import UIKit
-import ReactiveWorks
 import Anchorage
+import ReactiveWorks
+import UIKit
 
 enum ViewState {
    case backColor(UIColor)
@@ -142,6 +142,22 @@ extension ViewModelProtocol where Self: Stateable, View: PaddingLabel {
          view.textAlignment = value
       case .padding(let value):
          view.padding = value
+      }
+   }
+}
+
+enum ImageViewState {
+   case image(UIImage)
+   case contentMode(UIView.ContentMode)
+}
+
+extension ViewModelProtocol where Self: Stateable, View: UIImageView {
+   func applyState(_ state: ImageViewState) {
+      switch state {
+      case .image(let uIImage):
+         view.image = uIImage
+      case .contentMode(let mode):
+         view.contentMode = mode
       }
    }
 }

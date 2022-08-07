@@ -54,10 +54,10 @@ final class DigitalThanksScene<Asset: AssetProtocol>: BaseSceneModel<
          .set(Design.State.mainView.default)
          .set(.backColor(Design.color.background2))
          .set(.models([
-            Spacer(size: 100),
+            Spacer(100),
             headerModel,
             enterButton,
-            Spacer(size: 16),
+            Spacer(16),
             registerButton,
             Spacer()
          ]))

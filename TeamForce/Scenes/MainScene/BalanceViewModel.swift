@@ -74,9 +74,9 @@ final class BalanceViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
       set(.models([
          digitalThanksTitle,
          frameModel,
-         Spacer(size: 20),
+         Spacer(20),
          frameCellStackModel,
-         Spacer(size: 8),
+         Spacer(8),
          frameModel2,
          Spacer()
       ]))

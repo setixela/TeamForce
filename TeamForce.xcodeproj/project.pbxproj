@@ -21,6 +21,7 @@
 		1918CC7D286F6CAC004373F3 /* GetBalanceApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1918CC7C286F6CAC004373F3 /* GetBalanceApiWorker.swift */; };
 		191B0C272865E5C1001CF3D9 /* Icons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191B0C262865E5C1001CF3D9 /* Icons.swift */; };
 		191B0C292865F119001CF3D9 /* Texts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191B0C282865F119001CF3D9 /* Texts.swift */; };
+		19466E01289FE28C0052F0AB /* TitleSubtitleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19466E00289FE28C0052F0AB /* TitleSubtitleModel.swift */; };
 		194C095628759FD900D88D5B /* ViewModel+Stateable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 194C095528759FD900D88D5B /* ViewModel+Stateable.swift */; };
 		1953DE7F2878BCB5000DC537 /* SwiftKeychainWrapper in Frameworks */ = {isa = PBXBuildFile; productRef = 1953DE7E2878BCB5000DC537 /* SwiftKeychainWrapper */; };
 		1953DE812879FC55000DC537 /* SearchUserApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1953DE802879FC55000DC537 /* SearchUserApiWorker.swift */; };
@@ -120,6 +121,7 @@
 		1918CC7C286F6CAC004373F3 /* GetBalanceApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetBalanceApiWorker.swift; sourceTree = "<group>"; };
 		191B0C262865E5C1001CF3D9 /* Icons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Icons.swift; sourceTree = "<group>"; };
 		191B0C282865F119001CF3D9 /* Texts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Texts.swift; sourceTree = "<group>"; };
+		19466E00289FE28C0052F0AB /* TitleSubtitleModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleSubtitleModel.swift; sourceTree = "<group>"; };
 		194C095528759FD900D88D5B /* ViewModel+Stateable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewModel+Stateable.swift"; sourceTree = "<group>"; };
 		1953DE802879FC55000DC537 /* SearchUserApiWorker.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = SearchUserApiWorker.swift; sourceTree = "<group>"; tabWidth = 2; };
 		1953DE832879FDE3000DC537 /* TransactViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactViewModel.swift; sourceTree = "<group>"; };
@@ -271,6 +273,19 @@
 			path = Main;
 			sourceTree = "<group>";
 		};
+		19466DFF289FE0B20052F0AB /* LabelModels */ = {
+			isa = PBXGroup;
+			children = (
+				19D08354286F405500F75E4A /* DoubleLabelModel.swift */,
+				19D08356286F41B200F75E4A /* DoubleLabelPairModel.swift */,
+				19D08358286F41FA00F75E4A /* IconLabelHorizontalModel.swift */,
+				19D0835A286F424000F75E4A /* LabelIconHorizontalModel.swift */,
+				19ECD54028623D1F001765F6 /* LabelModel.swift */,
+				19466E00289FE28C0052F0AB /* TitleSubtitleModel.swift */,
+			);
+			path = LabelModels;
+			sourceTree = "<group>";
+		};
 		1953DE822879FDB3000DC537 /* MainScene */ = {
 			isa = PBXGroup;
 			children = (
@@ -372,20 +387,16 @@
 		19C1E9A428610E6F00E7976D /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				19466DFF289FE0B20052F0AB /* LabelModels */,
 				19DD3D93288766770085CDA8 /* TableModels */,
 				19D0835C286F428600F75E4A /* BarButtonModel.swift */,
 				19ECD54228623D30001765F6 /* StackModel.swift */,
-				19ECD54028623D1F001765F6 /* LabelModel.swift */,
 				199C4B6A2863292F008AD6FD /* ButtonModel.swift */,
 				196750AB2865189C0019A6DE /* TextFieldModel.swift */,
 				196750AF286518F80019A6DE /* StackWithBottomPanelModel.swift */,
 				196750B12865190D0019A6DE /* ImageViewModel.swift */,
 				199C4B6528624B4C008AD6FD /* Spacer.swift */,
 				19D08350286F401000F75E4A /* SideBarUserModel.swift */,
-				19D08354286F405500F75E4A /* DoubleLabelModel.swift */,
-				19D08356286F41B200F75E4A /* DoubleLabelPairModel.swift */,
-				19D08358286F41FA00F75E4A /* IconLabelHorizontalModel.swift */,
-				19D0835A286F424000F75E4A /* LabelIconHorizontalModel.swift */,
 				19D0835E286F42C000F75E4A /* FrameCellModel.swift */,
 				1953DE852879FE30000DC537 /* PickerViewModel.swift */,
 				19DD3D96288A0A8C0085CDA8 /* CoverViewModel.swift */,
@@ -599,6 +610,7 @@
 				19AE3AF22869230C00A0C6E4 /* AuthApiWorker.swift in Sources */,
 				19D08351286F401000F75E4A /* SideBarUserModel.swift in Sources */,
 				19D0835F286F42C000F75E4A /* FrameCellModel.swift in Sources */,
+				19466E01289FE28C0052F0AB /* TitleSubtitleModel.swift in Sources */,
 				196750A4286516E40019A6DE /* RegisterScene.swift in Sources */,
 				191B0C272865E5C1001CF3D9 /* Icons.swift in Sources */,
 				19EF32AB287CE80B0078F53D /* StringStorageWorker.swift in Sources */,

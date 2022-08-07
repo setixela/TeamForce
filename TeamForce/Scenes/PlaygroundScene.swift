@@ -15,17 +15,46 @@ final class PlaygroundScene<Asset: AssetProtocol>: BaseSceneModel<
    Void
 > {
    override func start() {
-
       let viewModel = VizitkaDemo()
          .set(.size(.init(width: 150, height: 100)))
 
+      let title = LabelModel()
+         .set(.text("Hello"))
+         .set(.backColor(.init(hue: .random(in: 0...1), saturation: 0.3, brightness: 0.8, alpha: 1)))
+      let titleSubtitle = TitleSubtitleModel()
+         .set(.text("Hello"))
+         .set(.backColor(.init(hue: .random(in: 0...1), saturation: 0.3, brightness: 0.8, alpha: 1)))
+         .setDown { subtitle in
+            subtitle
+               .set(.text("World"))
+               .set(.backColor(.init(hue: .random(in: 0...1), saturation: 0.3, brightness: 0.8, alpha: 1)))
+         }
+      let logoTitleSubtitle = LogoTitleSubtitleModel()
+         .set(.image(Design.icon.make(\.logo)))
+         .set(.backColor(.init(hue: .random(in: 0...1), saturation: 0.3, brightness: 0.8, alpha: 1)))
+         .setRight { titleSubtitle in
+            titleSubtitle
+               .set(.text("Hello"))
+               .set(.backColor(.init(hue: .random(in: 0...1), saturation: 0.3, brightness: 0.8, alpha: 1)))
+               .setDown { subtitle in
+                  subtitle
+                     .set(.text("World"))
+                     .set(.backColor(.init(hue: .random(in: 0...1), saturation: 0.3, brightness: 0.8, alpha: 1)))
+               }
+         }
+
       mainViewModel
-         .set(.distribution(.equalCentering))
-         .set(.alignment(.fill))
+         .set(.alignment(.leading))
          .set(.axis(.vertical))
          .set(.models([
-            Spacer(size: 300),
+            Spacer(150),
             viewModel.set(.backColor(.white)),
+            Spacer(32),
+            title,
+            Spacer(32),
+            titleSubtitle,
+            Spacer(32),
+            logoTitleSubtitle,
             Spacer()
          ]))
    }
@@ -63,3 +92,5 @@ final class ViewModel: BaseViewModel<UIView> {}
 extension ViewModel: Stateable {
    typealias State = ViewState
 }
+
+protocol Cobinator {}

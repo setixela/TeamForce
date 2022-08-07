@@ -47,11 +47,11 @@ final class TransactionStatusViewModel<Asset: AssetProtocol>: BaseViewModel<UISt
 
       set(.models([
          statusLabel,
-         Spacer(size: 16),
+         Spacer(16),
          amountLabel,
-         Spacer(size: 16),
+         Spacer(16),
          reasonLabel,
-         Spacer(size: 16),
+         Spacer(16),
          button,
          Spacer()
       ]))

@@ -38,7 +38,7 @@ class VC: UIViewController {
       stackModel
          .set(.alignment(.leading))
          .set(.models([
-            Spacer(size: 300),
+            Spacer(300),
            // BadgeModel()
             //   .set(.placing(.init(x: 0, y: -10))),
             viewModel

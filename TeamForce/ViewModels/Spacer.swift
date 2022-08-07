@@ -10,7 +10,7 @@ import ReactiveWorks
 import Anchorage
 
 final class Spacer: BaseViewModel<SpacerView> {
-    convenience init(size: CGFloat = .zero) {
+    convenience init(_ size: CGFloat = .zero) {
         self.init()
 
         if size != 0 {
@@ -24,7 +24,7 @@ final class Spacer: BaseViewModel<SpacerView> {
 }
 
 final class SpacerView: UIView {
-    convenience init(size: CGFloat = .zero) {
+    convenience init(_ size: CGFloat = .zero) {
         self.init(frame: CGRect(x: 0, y: 0, width: size, height: size))
         if size != 0 {
             addAnchors
@@ -40,7 +40,7 @@ final class SpacerView: UIView {
     }
 
     convenience init() {
-        self.init(size: .zero)
+        self.init(.zero)
     }
 
     @available(*, unavailable)
