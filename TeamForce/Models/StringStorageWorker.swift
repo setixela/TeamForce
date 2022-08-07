@@ -47,7 +47,7 @@ extension StringStorageWorker: Stateable {
    }
 }
 
-// MARK: - StringStorageProtocol
+// MARK: - StringStorageProtocol---
 
 protocol StringStorageProtocol {
    func save(_ value: String, forKey key: String)

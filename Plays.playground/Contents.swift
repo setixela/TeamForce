@@ -15,49 +15,46 @@ PlaygroundPage.current.liveView = nc
 
 ///////// """ STATEABLE -> PARAMETRIC """
 
+///// MARK: - СДЕЛАТЬ АНИМАЦИЮ ПОЯВЛЕНИЯ БЛОКОВ
+
 let work1 = Work<Int, Int>(input: 0)
+
+//   .setLeft {
+//      $0
+//         .set(.backColor(.blue))
+//         .set(.size(.init(width: 100, height: 100)))
+//   }
 
 class VC: UIViewController {
    override func loadView() {
-      let viewModel = ViewModel()
+      let viewModel = DoubleViewModel()
          .set(.size(.init(width: 100, height: 100)))
-         .set(rightModel: {
-            $0.set(.backColor(.yellow))
-         })
-         .set(leftModel: {
-            $0.set(.backColor(.blue))
-         })
+         .setRight {
+            $0
+               .set(.backColor(.yellow))
+               .set(.size(.init(width: 100, height: 100)))
+         }
       let stackModel = StackModel()
-      stackModel.set(.models([
-         Spacer(size: 300),
-         BadgeModel()
-            .set(.placing(.init(x: 0, y: -10))),
-         viewModel
-            .set(.height(50))
-            .set(.backColor(.lightGray)),
-         BadgeModel(),
-         Spacer()
-      ]))
+      stackModel
+         .set(.alignment(.leading))
+         .set(.models([
+            Spacer(size: 300),
+           // BadgeModel()
+            //   .set(.placing(.init(x: 0, y: -10))),
+            viewModel
+               // .set(.height(50))
+               .set(.backColor(.lightGray)),
+           // BadgeModel(),
+            Spacer()
+         ]))
 
       view = stackModel.view
+      view.backgroundColor = .red
    }
 }
 
-nc.viewControllers = [VC()]
-
-final class ViewModel: BaseViewModel<UIView>, Stateable {
-   typealias State = ViewState
-
-   let leftModel = ViewModel()
-   let rightModel = ViewModel()
-
-   override func start() {
-      view.clipsToBounds = false
-      view.layer.masksToBounds = false
-   }
-}
-
-extension ViewModel: RightExtender, LeftExtender {}
+let vc = VC()
+nc.viewControllers = [vc]
 
 final class BadgeModel: BaseViewModel<PaddingLabel> {
    override func start() {
@@ -77,41 +74,37 @@ extension BadgeModel: Stateable2 {
    typealias State2 = ViewState
 }
 
-protocol LeftExtender {
-   associatedtype LeftModel: ViewModelProtocol
+//public protocol Combo {}
+//
+//public extension Combo {
+//   var mainModel: Self { self }
+//}
+//
+//public protocol ComboRight: Combo {
+//   associatedtype RightModel: ViewModelProtocol
+//
+//   var rightModel: RightModel { get }
+//}
+//
+//public extension ComboRight {
+//   func setRight(_ closure: (RightModel) -> Void) -> Self {
+//      closure(rightModel)
+//      return self
+//   }
+//}
+//
+//public extension ViewModelProtocol where Self: ComboRight {
+//   var uiView: UIView {
+//      print("uiview")
+//      let stackView = UIStackView()
+//      stackView.axis = .horizontal
+//      stackView.addArrangedSubview(view)
+//      stackView.addArrangedSubview(rightModel.uiView)
+//      return stackView
+//   }
+//}
 
-   var leftModel: LeftModel { get }
-}
 
-extension LeftExtender {
-   func set(leftModel: (LeftModel) -> Void) -> Self {
-      leftModel(self.leftModel)
-      return self
-   }
-}
-
-protocol RightExtender {
-   associatedtype RightModel: ViewModelProtocol
-
-   var rightModel: RightModel { get }
-}
-
-extension RightExtender {
-   func set(rightModel: (RightModel) -> Void) -> Self {
-      rightModel(self.rightModel)
-      return self
-   }
-}
-
-extension ViewModelProtocol where Self: LeftExtender {
-   init(all: Void) {
-      self.init()
-   }
-}
-
-extension ViewModelProtocol where Self: RightExtender {}
-
-extension ViewModelProtocol where Self: RightExtender, Self: LeftExtender {}
 // protocol ExtendableViewModel {
 //   enum Side {
 //      case left
@@ -121,40 +114,74 @@ extension ViewModelProtocol where Self: RightExtender, Self: LeftExtender {}
 //   }
 //   func extendSide(_ side: Side, by model: UIViewModel)
 // }
-protocol HashableExtra: Hashable {}
+// protocol HashableExtra: Hashable {}
+//
+// extension HashableExtra {
+//   var caseName: String {
+//      Mirror(reflecting: self).children.first?.label ?? String(describing: self)
+//   }
+//
+//   func hash(into hasher: inout Hasher) {
+//      hasher.combine(self.caseName)
+//   }
+// }
+//
+// extension HashableExtra {
+//   static func == (lhs: Self, rhs: Self) -> Bool {
+//      lhs.hashValue == rhs.hashValue
+//   }
+// }
+//
+// enum States: HashableExtra {
+//   case normal
+//   case selected
+// }
+//
+// struct NormalStates<State> {
+//   let normal: [State]
+//   let selected: [State]
+// }
+//
+// protocol StateMachine {
+//   associatedtype State
+//
+//   var currentState: State { get }
+//
+//   func setState(_ state: State) -> Self
+// }
 
-extension HashableExtra {
-
-   var caseName: String {
-      Mirror(reflecting: self).children.first?.label ?? String(describing: self)
-   }
-
-   func hash(into hasher: inout Hasher) {
-      hasher.combine(caseName)
-   }
-}
-
-extension HashableExtra {
-   static func == (lhs: Self, rhs: Self) -> Bool {
-      lhs.hashValue == rhs.hashValue
-   }
-}
 
 
+//final class TripleViewModel: BaseViewModel<UIView>, Stateable {
+//   typealias State = ViewState
+//
+////   var currentState: ViewState = .backColor(.red)
+//
+//   let leftModel = ViewModel()
+//   let rightModel = ViewModel()
+//}
+//
+//extension TripleViewModel: RightExtender, LeftExtender {
+//
+//}
 
-enum States: HashableExtra {
-   case normal
-   case selected
-}
-protocol Changer {
-   associatedtype State
+//final class LogoUserNameModel: BaseViewModel<UIView>, Stateable {
+//   typealias State = ViewState
+//
+////   var currentState: ViewState = .backColor(.red)
+//
+//   let rightModel = ViewModel()
+//}
+//
+//extension LogoUserNameModel: RightExtender {}
 
-   var states: [
-      [State]
-   ] { get }
-}
+// extension TripleViewModel: StateMachine {
+//   func setState(_ state: ViewState) -> Self {
+//      return self
+//   }
+// }
 
-extension
+
 
 // MARK: - Todo
 

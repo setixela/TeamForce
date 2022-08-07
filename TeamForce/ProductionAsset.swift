@@ -18,6 +18,8 @@ enum ProductionAsset: AssetProtocol {
 }
 
 struct Scenes: ScenesProtocol {
+   var playground: SceneModelProtocol { PlaygroundScene<ProductionAsset>()}
+   //
    var digitalThanks: SceneModelProtocol { DigitalThanksScene<ProductionAsset>() }
    var login: SceneModelProtocol { LoginScene<ProductionAsset>() }
    var verifyCode: SceneModelProtocol { VerifyCodeScene<ProductionAsset>() }

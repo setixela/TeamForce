@@ -48,4 +48,7 @@ protocol ScenesProtocol: InitProtocol {
    var register: SceneModelProtocol { get }
    var main: SceneModelProtocol { get }
    var profile: SceneModelProtocol { get }
+
+   // plays
+   var playground: SceneModelProtocol { get }
 }

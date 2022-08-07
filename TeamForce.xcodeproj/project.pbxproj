@@ -14,6 +14,7 @@
 		190C1D1E285D160000FB3518 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 190C1D1C285D160000FB3518 /* LaunchScreen.storyboard */; };
 		190C1D29285D160000FB3518 /* TeamForceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190C1D28285D160000FB3518 /* TeamForceTests.swift */; };
 		1913F656286E1EC80033FAB3 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 1913F655286E1EC80033FAB3 /* RealmSwift */; };
+		191571D1289F12350061510F /* PlaygroundScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191571D0289F12350061510F /* PlaygroundScene.swift */; };
 		1918CC77286F67EB004373F3 /* BalanceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1918CC76286F67EB004373F3 /* BalanceViewModel.swift */; };
 		1918CC79286F6C69004373F3 /* VerifyApiModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1918CC78286F6C69004373F3 /* VerifyApiModel.swift */; };
 		1918CC7B286F6C84004373F3 /* ProfileApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1918CC7A286F6C83004373F3 /* ProfileApiWorker.swift */; };
@@ -112,6 +113,7 @@
 		190C1D1F285D160000FB3518 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		190C1D24285D160000FB3518 /* TeamForceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TeamForceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		190C1D28285D160000FB3518 /* TeamForceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamForceTests.swift; sourceTree = "<group>"; };
+		191571D0289F12350061510F /* PlaygroundScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundScene.swift; sourceTree = "<group>"; };
 		1918CC76286F67EB004373F3 /* BalanceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceViewModel.swift; sourceTree = "<group>"; };
 		1918CC78286F6C69004373F3 /* VerifyApiModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyApiModel.swift; sourceTree = "<group>"; };
 		1918CC7A286F6C83004373F3 /* ProfileApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileApiWorker.swift; sourceTree = "<group>"; };
@@ -301,6 +303,7 @@
 				196750A9286517130019A6DE /* LoginSuccessScene.swift */,
 				19AE3AEE28691B2E00A0C6E4 /* MainScene.swift */,
 				19D08352286F403400F75E4A /* SideBarModel.swift */,
+				191571D0289F12350061510F /* PlaygroundScene.swift */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -581,6 +584,7 @@
 				198FE1CE2899BB8E00BAF1A5 /* LoadBalanceUseCase.swift in Sources */,
 				196750B22865190D0019A6DE /* ImageViewModel.swift in Sources */,
 				1967509D286491190019A6DE /* Buttons.swift in Sources */,
+				191571D1289F12350061510F /* PlaygroundScene.swift in Sources */,
 				199C4B6628624B4C008AD6FD /* Spacer.swift in Sources */,
 				196750A22865169C0019A6DE /* DigitalThanksScene.swift in Sources */,
 				19C1E991285F426B00E7976D /* ApiEngine.swift in Sources */,

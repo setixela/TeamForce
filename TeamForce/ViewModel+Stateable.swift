@@ -16,6 +16,7 @@ enum ViewState {
    case borderColor(UIColor)
    case size(CGSize)
    case height(CGFloat)
+   case width(CGFloat)
    case hidden(Bool)
    case zPosition(CGFloat)
    case placing(CGPoint)
@@ -48,6 +49,8 @@ extension ViewModelProtocol where Self: Stateable {
          view.setNeedsLayout()
       case .placing(let value):
          view.center = value
+      case .width(let value):
+         view.addAnchors.constWidth(value)
       }
    }
 }
@@ -94,6 +97,8 @@ extension ViewModelProtocol where Self: Stateable, View: UIStackView {
             $0.removeFromSuperview()
          }
          models.forEach {
+            let subview = $0.uiView
+            print(subview)
             view.addArrangedSubview($0.uiView)
          }
       case .cornerRadius(let value):
