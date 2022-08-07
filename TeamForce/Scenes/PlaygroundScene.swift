@@ -20,26 +20,28 @@ final class PlaygroundScene<Asset: AssetProtocol>: BaseSceneModel<
 
       let title = LabelModel()
          .set(.text("Hello"))
-         .set(.backColor(.init(hue: .random(in: 0...1), saturation: 0.3, brightness: 0.8, alpha: 1)))
+         .set(.backColor(.random))
+
       let titleSubtitle = TitleSubtitleModel()
          .set(.text("Hello"))
-         .set(.backColor(.init(hue: .random(in: 0...1), saturation: 0.3, brightness: 0.8, alpha: 1)))
+         .set(.backColor(.random))
          .setDown { subtitle in
             subtitle
                .set(.text("World"))
-               .set(.backColor(.init(hue: .random(in: 0...1), saturation: 0.3, brightness: 0.8, alpha: 1)))
+               .set(.backColor(.random))
          }
+
       let logoTitleSubtitle = LogoTitleSubtitleModel()
          .set(.image(Design.icon.make(\.logo)))
-         .set(.backColor(.init(hue: .random(in: 0...1), saturation: 0.3, brightness: 0.8, alpha: 1)))
+         .set(.backColor(.random))
          .setRight { titleSubtitle in
             titleSubtitle
                .set(.text("Hello"))
-               .set(.backColor(.init(hue: .random(in: 0...1), saturation: 0.3, brightness: 0.8, alpha: 1)))
+               .set(.backColor(.random))
                .setDown { subtitle in
                   subtitle
                      .set(.text("World"))
-                     .set(.backColor(.init(hue: .random(in: 0...1), saturation: 0.3, brightness: 0.8, alpha: 1)))
+                     .set(.backColor(.random))
                }
          }
 
@@ -94,3 +96,9 @@ extension ViewModel: Stateable {
 }
 
 protocol Cobinator {}
+
+extension UIColor {
+   static var random: UIColor {
+      .init(hue: .random(in: 0 ... 1), saturation: 0.3, brightness: 0.8, alpha: 1)
+   }
+}
