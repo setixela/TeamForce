@@ -5,8 +5,8 @@
 //  Created by Aleksandr Solovyev on 24.06.2022.
 //
 
-import UIKit
 import ReactiveWorks
+import UIKit
 
 // MARK: - LoginScene
 
@@ -42,7 +42,7 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
    // MARK: - Private
 
    private let telegramNickParser = TelegramNickCheckerModel()
-   //private var loginName: String?
+   // private var loginName: String?
 
    // MARK: - Start
 
@@ -76,19 +76,19 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
 
       badgeModel.textFieldModel
          .onEvent(\.didEditingChanged)
-         .doNext(worker: TelegramNickCheckerModel())
-         .onSuccess { [weak self] text in
-            loginName = String(text.dropFirst())
-            self?.badgeModel.textFieldModel.set(.text(text))
-            self?.nextButton.set(Design.State.button.default)
-            self?.badgeModel.changeState(to: BadgeState.default)
+         .doNext {
+            weakSelf?.badgeModel.changeState(to: BadgeState.default)
          }
-         .onFail { [weak self] (text: String) in
-            print("\n### text     \(text)\n")
+         .doNext(worker: TelegramNickCheckerModel())
+         .onSuccess { text in
+            loginName = String(text.dropFirst())
+            weakSelf?.badgeModel.textFieldModel.set(.text(text))
+            weakSelf?.nextButton.set(Design.State.button.default)
+         }
+         .onFail { (text: String) in
             loginName = nil
-            self?.badgeModel.textFieldModel.set(.text(text))
-            self?.nextButton.set(Design.State.button.inactive)
-            self?.badgeModel.changeState(to: BadgeState.default)
+            weakSelf?.badgeModel.textFieldModel.set(.text(text))
+            weakSelf?.nextButton.set(Design.State.button.inactive)
          }
    }
 
@@ -98,6 +98,7 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
 
       mainViewModel.topStackModel
          .set(.models([
+            Spacer(48),
             coverViewModel
          ]))
 
