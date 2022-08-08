@@ -60,3 +60,25 @@ final class PaddingTextField: UITextField, Marginable {
       return bounds.inset(by: padding)
    }
 }
+
+final class PaddingImageView: UIImageView, Marginable {
+   var padding: UIEdgeInsets = .init()
+
+   override var alignmentRectInsets: UIEdgeInsets {
+      return .init(top: -padding.top,
+                   left: -padding.left,
+                   bottom: -padding.bottom,
+                   right: -padding.right)
+   }
+}
+
+final class PaddingView: UIView, Marginable {
+   var padding: UIEdgeInsets = .init()
+
+   override var alignmentRectInsets: UIEdgeInsets {
+      return .init(top: -padding.top,
+                   left: -padding.left,
+                   bottom: -padding.bottom,
+                   right: -padding.right)
+   }
+}

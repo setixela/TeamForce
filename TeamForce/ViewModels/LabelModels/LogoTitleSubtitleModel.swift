@@ -5,4 +5,19 @@
 //  Created by Aleksandr Solovyev on 07.08.2022.
 //
 
-import Foundation
+import UIKit
+import ReactiveWorks
+
+// MARK: - LogoTitleSubtitleModel
+
+final class LogoTitleSubtitleModel: BaseViewModel<PaddingImageView>, Stateable2 {
+   typealias State = ViewState
+   typealias State2 = ImageViewState
+   //
+   let rightModel: TitleSubtitleModel = .init()
+   //
+}
+
+extension LogoTitleSubtitleModel: ComboRight {
+   typealias RightModel = TitleSubtitleModel
+}

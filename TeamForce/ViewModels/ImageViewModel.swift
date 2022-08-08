@@ -8,7 +8,7 @@
 import ReactiveWorks
 import UIKit
 
-final class ImageViewModel: BaseViewModel<UIImageView> {
+final class ImageViewModel: BaseViewModel<PaddingImageView> {
    override func start() {}
 }
 

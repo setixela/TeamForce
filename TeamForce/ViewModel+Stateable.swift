@@ -15,6 +15,7 @@ enum ViewState {
    case borderWidth(CGFloat)
    case borderColor(UIColor)
    case size(CGSize)
+   case padding(UIEdgeInsets)
    case height(CGFloat)
    case width(CGFloat)
    case hidden(Bool)
@@ -43,6 +44,8 @@ extension ViewModelProtocol where Self: Stateable {
          view.addAnchors
             .constWidth(size.width)
             .constHeight(size.height)
+      case .padding(let padding):
+         view.layoutMargins = padding
       case .zPosition(let value):
          view.layer.masksToBounds = false
          view.layer.zPosition = value
@@ -52,6 +55,12 @@ extension ViewModelProtocol where Self: Stateable {
       case .width(let value):
          view.addAnchors.constWidth(value)
       }
+   }
+}
+
+extension UIView {
+   func setPadding(_ insets: UIEdgeInsets) {
+
    }
 }
 
@@ -113,7 +122,7 @@ extension ViewModelProtocol where Self: Stateable, View: UIStackView {
          view.insertSubview(backView, at: 0)
          backView.addAnchors.fitToViewInsetted(view, inset)
       case .backImage(let image):
-         applyState(.backView(UIImageView(image: image)))
+         applyState(.backView(PaddingImageView(image: image)))
       }
    }
 }
@@ -162,15 +171,18 @@ extension ViewModelProtocol where Self: Stateable, View: PaddingLabel {
 enum ImageViewState {
    case image(UIImage)
    case contentMode(UIView.ContentMode)
+   case padding(UIEdgeInsets)
 }
 
-extension ViewModelProtocol where Self: Stateable, View: UIImageView {
+extension ViewModelProtocol where Self: Stateable, View: PaddingImageView {
    func applyState(_ state: ImageViewState) {
       switch state {
       case .image(let uIImage):
          view.image = uIImage
       case .contentMode(let mode):
          view.contentMode = mode
+      case .padding(let value):
+         view.padding = value
       }
    }
 }
