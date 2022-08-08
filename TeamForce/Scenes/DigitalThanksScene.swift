@@ -39,7 +39,7 @@ final class DigitalThanksScene<Asset: AssetProtocol>: BaseSceneModel<
       
       enterButton
          .onEvent(\.didTap) {
-            Asset.router?.route(\.login, navType: .present)
+            Asset.router?.route(\.login, navType: .push)
          }
 
       registerButton

@@ -21,17 +21,3 @@ final class TitleSubtitleModel: BaseViewModel<PaddingLabel>, Stateable2 {
 extension TitleSubtitleModel: ComboDown {
    typealias DownModel = LabelModel
 }
-
-// MARK: - LogoTitleSubtitleModel
-
-final class LogoTitleSubtitleModel: BaseViewModel<UIImageView>, Stateable2 {
-   typealias State = ViewState
-   typealias State2 = ImageViewState
-   //
-   let rightModel: TitleSubtitleModel = .init()
-   //
-}
-
-extension LogoTitleSubtitleModel: ComboRight {
-   typealias RightModel = TitleSubtitleModel
-}
