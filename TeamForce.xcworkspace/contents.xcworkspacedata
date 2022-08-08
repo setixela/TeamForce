@@ -2,12 +2,12 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:../ReactiveWorks">
-   </FileRef>
-   <FileRef
       location = "group:Plays.playground">
    </FileRef>
    <FileRef
       location = "container:TeamForce.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:../ReactiveWorks">
    </FileRef>
 </Workspace>
