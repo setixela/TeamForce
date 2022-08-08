@@ -45,13 +45,19 @@ final class PlaygroundScene<Asset: AssetProtocol>: BaseSceneModel<
                }
          }
 
-//      let combo = ComboM<ViewModel>()
-//         .add(right: ViewModel())
-//         .setMain {
-//
-//         }
-        // .add(down: ViewModel())
-        // .add(down2: ViewModel())
+      let combo = ComboM(mainModel: ViewModel()
+         .set(.size(.init(width: 30, height: 30)))
+         .set(.backColor(.white))
+      )
+      .add(right: ViewModel())
+      .add(right2: ViewModel())
+      .setRight { rm in
+         rm
+            .set(.size(.square(30)))
+      }
+
+      // .add(down: ViewModel())
+      // .add(down2: ViewModel())
 //         .setDown { model in
 //            model
 //               .set(.size(.init(width: 30, height: 30)))
@@ -87,7 +93,7 @@ final class PlaygroundScene<Asset: AssetProtocol>: BaseSceneModel<
             Spacer(32),
             logoTitleSubtitle,
             Spacer(32),
-//            combo,
+            combo,
             Spacer()
          ]))
    }
@@ -115,10 +121,11 @@ final class VizitkaDemo: BaseViewModel<UIView>, Stateable {
       .set(.height(33))
       .set(.backColor(.blue))
 }
+
 //
-//extension Combo {
+// extension Combo {
 //   static func make() {}
-//}
+// }
 
 extension VizitkaDemo: ComboRight {} // try to off this
 extension VizitkaDemo: ComboLeft {} // or this
@@ -158,5 +165,11 @@ final class Combinator<Main: InitProtocol
 extension UIColor {
    static var random: UIColor {
       .init(hue: .random(in: 0 ... 1), saturation: 0.3, brightness: 0.8, alpha: 1)
+   }
+}
+
+extension CGSize {
+   static func square(_ size: CGFloat) -> CGSize {
+      .init(width: size, height: size)
    }
 }
