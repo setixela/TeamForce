@@ -17,8 +17,6 @@ PlaygroundPage.current.liveView = nc
 
 ///// MARK: - СДЕЛАТЬ АНИМАЦИЮ ПОЯВЛЕНИЯ БЛОКОВ
 
-let work1 = Work<Int, Int>(input: 0)
-
 //   .setLeft {
 //      $0
 //         .set(.backColor(.blue))
@@ -27,28 +25,7 @@ let work1 = Work<Int, Int>(input: 0)
 
 class VC: UIViewController {
    override func loadView() {
-      let viewModel = DoubleViewModel()
-         .set(.size(.init(width: 100, height: 100)))
-         .setRight {
-            $0
-               .set(.backColor(.yellow))
-               .set(.size(.init(width: 100, height: 100)))
-         }
-      let stackModel = StackModel()
-      stackModel
-         .set(.alignment(.leading))
-         .set(.models([
-            Spacer(300),
-           // BadgeModel()
-            //   .set(.placing(.init(x: 0, y: -10))),
-            viewModel
-               // .set(.height(50))
-               .set(.backColor(.lightGray)),
-           // BadgeModel(),
-            Spacer()
-         ]))
-
-      view = stackModel.view
+      view = historyModel.view
       view.backgroundColor = .red
    }
 }
@@ -73,114 +50,58 @@ extension BadgeModel: Stateable2 {
    typealias State = LabelState
    typealias State2 = ViewState
 }
+struct HistoryViewEvent: InitProtocol {}
 
-//public protocol Combo {}
-//
-//public extension Combo {
-//   var mainModel: Self { self }
-//}
-//
-//public protocol ComboRight: Combo {
-//   associatedtype RightModel: ViewModelProtocol
-//
-//   var rightModel: RightModel { get }
-//}
-//
-//public extension ComboRight {
-//   func setRight(_ closure: (RightModel) -> Void) -> Self {
-//      closure(rightModel)
-//      return self
-//   }
-//}
-//
-//public extension ViewModelProtocol where Self: ComboRight {
-//   var uiView: UIView {
-//      print("uiview")
-//      let stackView = UIStackView()
-//      stackView.axis = .horizontal
-//      stackView.addArrangedSubview(view)
-//      stackView.addArrangedSubview(rightModel.uiView)
-//      return stackView
-//   }
-//}
+let historyModel = HistoryViewModel<ProductionAsset>()
+final class HistoryViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
+   Communicable,
+   Stateable,
+   Assetable
+{
+   typealias State = StackState
 
+   var eventsStore: HistoryViewEvent = .init()
 
-// protocol ExtendableViewModel {
-//   enum Side {
-//      case left
-//      case top
-//      case right
-//      case bottom
-//   }
-//   func extendSide(_ side: Side, by model: UIViewModel)
-// }
-// protocol HashableExtra: Hashable {}
-//
-// extension HashableExtra {
-//   var caseName: String {
-//      Mirror(reflecting: self).children.first?.label ?? String(describing: self)
-//   }
-//
-//   func hash(into hasher: inout Hasher) {
-//      hasher.combine(self.caseName)
-//   }
-// }
-//
-// extension HashableExtra {
-//   static func == (lhs: Self, rhs: Self) -> Bool {
-//      lhs.hashValue == rhs.hashValue
-//   }
-// }
-//
-// enum States: HashableExtra {
-//   case normal
-//   case selected
-// }
-//
-// struct NormalStates<State> {
-//   let normal: [State]
-//   let selected: [State]
-// }
-//
-// protocol StateMachine {
-//   associatedtype State
-//
-//   var currentState: State { get }
-//
-//   func setState(_ state: State) -> Self
-// }
+   // MARK: - View Models
 
+   private lazy var tableModel = TableViewModel()
+      .set(.borderColor(.gray))
+      .set(.borderWidth(1))
+      .set(.cornerRadius(Design.Parameters.cornerRadius))
 
+   // MARK: - Frame Cells
 
-//final class TripleViewModel: BaseViewModel<UIView>, Stateable {
-//   typealias State = ViewState
-//
-////   var currentState: ViewState = .backColor(.red)
-//
-//   let leftModel = ViewModel()
-//   let rightModel = ViewModel()
-//}
-//
-//extension TripleViewModel: RightExtender, LeftExtender {
-//
-//}
+   // MARK: - Services
 
-//final class LogoUserNameModel: BaseViewModel<UIView>, Stateable {
-//   typealias State = ViewState
-//
-////   var currentState: ViewState = .backColor(.red)
-//
-//   let rightModel = ViewModel()
-//}
-//
-//extension LogoUserNameModel: RightExtender {}
+   private lazy var getTransactionsUseCase = Asset.apiUseCase.getTransactions.work()
 
-// extension TripleViewModel: StateMachine {
-//   func setState(_ state: ViewState) -> Self {
-//      return self
-//   }
-// }
+   override func start() {
+      set(.models([tableModel]))
 
+      let models = (0 ..< 100).map { index in
+         LogoTitleSubtitleModel()
+            .set(.image(Design.icon.make(\.checkCircle)))
+            .rightModel
+                  .set(.text(String(index)))
+                  .downModel
+                     .set(.text("Helllo"))
+      }
+
+      tableModel
+         .set(.backColor(.gray))
+         .set(.models(models))
+
+      print("transactions started")
+      getTransactionsUseCase
+         .doAsync()
+         .onSuccess { transactions in
+            print(transactions)
+         }
+         .onFail {
+            print("transactions not loaded")
+         }
+   }
+}
 
 
 // MARK: - Todo

@@ -72,19 +72,19 @@ final class PlaygroundScene<Asset: AssetProtocol>: BaseSceneModel<
 
         */
 
-      let step = Step0()
-         .setMain { (logo: ImageViewModel) in
-
-         }
-         .setRight { (title: ViewModel) in
-
-         }
-         .setDown { (subtitle: ViewModel) in
-
-         }
-         .setDown2 { (caption: ViewModel) in
-            
-         }
+//      let step = Step0()
+//         .setMain { (logo: ImageViewModel) in
+//
+//         }
+//         .setRight { (title: ViewModel) in
+//
+//         }
+//         .setDown { (subtitle: ViewModel) in
+//
+//         }
+//         .setDown2 { (caption: ViewModel) in
+//            
+//         }
 
 //      let comboModel = ComboFullModel<<#Main: ViewModelProtocol#>,
 //                                      <#RightModel: ViewModelProtocol#>,
@@ -188,24 +188,24 @@ struct Start {
    }
 }
 
-extension ComboMainModel {
-
-   @discardableResult
-   func setRight<T: VMP>(_ closure: (T) -> Void) -> Step2R {
-      let value = T()
-      closure(value)
-
-      return Step2R(m: m, r: value)
-   }
-
-   @discardableResult
-   func setDown<T: VMP>(_ closure: (T) -> Void) -> Step2D {
-      let value = T()
-      closure(value)
-
-      return Step2D(m: m, d: value)
-   }
-}
+//extension ComboMainModel {
+//
+//   @discardableResult
+//   func setRight<T: VMP>(_ closure: (T) -> Void) -> Step2R {
+//      let value = T()
+//      closure(value)
+//
+//      return Step2R(m: m, r: value)
+//   }
+//
+//   @discardableResult
+//   func setDown<T: VMP>(_ closure: (T) -> Void) -> Step2D {
+//      let value = T()
+//      closure(value)
+//
+//      return Step2D(m: m, d: value)
+//   }
+//}
 
 struct Step2R {
    let m: Any

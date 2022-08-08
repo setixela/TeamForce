@@ -5,8 +5,8 @@
 //  Created by Aleksandr Solovyev on 09.07.2022.
 //
 
-import UIKit
 import ReactiveWorks
+import UIKit
 
 struct TransactViewEvent: InitProtocol {}
 
@@ -48,7 +48,7 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
       .set(Design.State.button.inactive)
       .set(.title(Text.button.make(\.sendButton)))
       .set(.hidden(true))
-   
+
    private lazy var reasonTextView = TextViewModel()
       .set(.padding(.init(top: 16, left: 16, bottom: 16, right: 16)))
       .set(.placeholder(Texts.title.reasonPlaceholder))
@@ -58,12 +58,11 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
       .set(.font(Design.font.body1))
       .set(.height(200))
       .set(.hidden(true))
-    
-    private lazy var transactionStatusView = TransactionStatusViewModel<Asset>()
-    
+
+   private lazy var transactionStatusView = TransactionStatusViewModel<Asset>()
 
    // MARK: - Services
-    
+
    private lazy var apiModel = SearchUserApiWorker(apiEngine: Asset.service.apiEngine)
    private lazy var safeStringStorage = StringStorageWorker(engine: Asset.service.safeStringStorage)
    private lazy var sendCoinApiModel = SendCoinApiWorker(apiEngine: Asset.service.apiEngine)
@@ -73,7 +72,7 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
    private lazy var tokens: (token: String, csrf: String) = ("", "")
    private lazy var recipientID: Int = 0
    private lazy var recipientUsername: String = ""
-    
+
    private lazy var coinInputParser = CoinInputCheckerModel()
    private lazy var reasonInputParser = ReasonCheckerModel()
    private lazy var correctCoinInput: Bool = false
@@ -82,21 +81,20 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
    // MARK: - Start
 
    override func start() {
-
       configure()
 
       weak var wS = self
-       
+
       loadBalanceUseCase
-        .doAsync()
-        .onSuccess { balance in
+         .doAsync()
+         .onSuccess { balance in
             wS?.transactInputViewModel
-                .set(.rightCaptionText(Text.title.make(\.availableThanks) + " " +
-                                       String(balance.distr.amount))) 
-        }
-        .onFail {
+               .set(.rightCaptionText(Text.title.make(\.availableThanks) + " " +
+                     String(balance.distr.amount)))
+         }
+         .onFail {
             print("balance not loaded")
-        }
+         }
 
       userSearchModel
          .onEvent(\.didEditingChanged)
@@ -126,28 +124,28 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
       sendButton
          .onEvent(\.didTap)
          .doInput {
-             wS?.makeSendCoinRequest()
+            wS?.makeSendCoinRequest()
          }
          .onFail {
             print("SendCointRequest init error")
          }
          .doNext(worker: sendCoinApiModel)
          .onSuccess {
-             wS?.transactionStatusView.start()
-             //FIX: super puper view :)
-             guard
-                let superview = wS?.view.superview?.superview?.superview?.superview?.superview,
-                let username = wS?.recipientUsername,
-                let info = wS?.makeSendCoinRequest()
-             else { return }
-             let input = StatusViewInput(baseView: superview,
-                                         sendCoinInfo: info,
-                                         username: username)
-             
-             wS?.transactionStatusView.sendEvent(\.presentOnScene, input)
-             wS?.setToInitialCondition()
+            wS?.transactionStatusView.start()
+            // FIX: super puper view :)
+            guard
+               let superview = wS?.view.superview?.superview?.superview?.superview?.superview,
+               let username = wS?.recipientUsername,
+               let info = wS?.makeSendCoinRequest()
+            else { return }
+            let input = StatusViewInput(baseView: superview,
+                                        sendCoinInfo: info,
+                                        username: username)
+
+            wS?.transactionStatusView.sendEvent(\.presentOnScene, input)
+            wS?.setToInitialCondition()
          }.onFail { (text: String) in
-             wS?.presentAlert(text: text)
+            wS?.presentAlert(text: text)
          }
 
       safeStringStorage
@@ -168,19 +166,23 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
             print("csrftoken load failed")
          }
 
-      tableModel.onEvent(\.didSelectRow) { index in
-         guard let self = wS else { return }
-         //
-         self.recipientUsername = self.foundUsers[index].tgName
-         self.recipientID = self.foundUsers[index].userId
-         let fullName = self.foundUsers[index].name + " " + self.foundUsers[index].surname
-         self.userSearchModel.set(.text(fullName))
-         self.tableModel.set(.hidden(true))
-         self.transactInputViewModel.set(.hidden(false))
-         self.sendButton.set(.hidden(false))
-         self.reasonTextView.set(.hidden(false))
-      }
-       configureInputParsers(wS: wS)
+      tableModel
+         .onEvent(\.didSelectRow)
+         .doMap { index in
+            wS?.foundUsers[index]
+         }.onSuccess { foundUser in
+            let fullName = foundUser.name + " " + foundUser.surname
+            wS?.recipientUsername = foundUser.tgName
+            wS?.recipientID = foundUser.userId
+
+            wS?.userSearchModel.set(.text(fullName))
+            wS?.tableModel.set(.hidden(true))
+            wS?.transactInputViewModel.set(.hidden(false))
+            wS?.sendButton.set(.hidden(false))
+            wS?.reasonTextView.set(.hidden(false))
+         }
+
+      configureInputParsers()
    }
 
    func configure() {
@@ -198,40 +200,40 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
          Spacer(),
       ]))
    }
-    
-    private func setToInitialCondition() {
-        userSearchModel.set(.text(""))
-        transactInputViewModel.set(.hidden(true))
-        transactInputViewModel.textField.set(.text(""))
-        sendButton.set(.hidden(true))
-        reasonTextView.set(.text(""))
-        reasonTextView.set(.hidden(true))
-        correctCoinInput = false
-        correctReasonInput = false
-    }
-    
-    private func presentAlert(text: String) {
-        let alert = UIAlertController(title: "Ошибка",
-                                      message: text,
-                                      preferredStyle: .alert)
 
-        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"),
-                                      style: .default))
+   private func setToInitialCondition() {
+      userSearchModel.set(.text(""))
+      transactInputViewModel.set(.hidden(true))
+      transactInputViewModel.textField.set(.text(""))
+      sendButton.set(.hidden(true))
+      reasonTextView.set(.text(""))
+      reasonTextView.set(.hidden(true))
+      correctCoinInput = false
+      correctReasonInput = false
+   }
 
-        UIApplication.shared.keyWindow?.rootViewController?
-            .present(alert, animated: true, completion: nil)
-    }
-    
-    func makeSendCoinRequest() -> SendCoinRequest? {
-        guard
-           let amount = self.transactInputViewModel.textField.view.text
-        else { return nil }
-        return SendCoinRequest(token: self.tokens.token,
-                        csrfToken: self.tokens.csrf,
-                        recipient: self.recipientID,
-                        amount:  amount,
-                        reason: self.reasonTextView.view.text)
-    }
+   private func presentAlert(text: String) {
+      let alert = UIAlertController(title: "Ошибка",
+                                    message: text,
+                                    preferredStyle: .alert)
+
+      alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"),
+                                    style: .default))
+
+      UIApplication.shared.keyWindow?.rootViewController?
+         .present(alert, animated: true, completion: nil)
+   }
+
+   func makeSendCoinRequest() -> SendCoinRequest? {
+      guard
+         let amount = transactInputViewModel.textField.view.text
+      else { return nil }
+      return SendCoinRequest(token: tokens.token,
+                             csrfToken: tokens.csrf,
+                             recipient: recipientID,
+                             amount: amount,
+                             reason: reasonTextView.view.text)
+   }
 }
 
 private extension TransactViewModel {
@@ -255,37 +257,39 @@ private extension TransactViewModel {
 }
 
 private extension TransactViewModel {
-    func configureInputParsers(wS: TransactViewModel<Asset>?) {
-        transactInputViewModel.textField
-            .onEvent(\.didEditingChanged)
-            .doNext(worker: coinInputParser)
-            .onSuccess {
-                wS?.transactInputViewModel.textField.set(.text($0))
-                wS?.correctCoinInput = true
-                if wS?.correctReasonInput == true {
-                    wS?.sendButton.set(Design.State.button.default)
-                }
+   func configureInputParsers() {
+      weak var wS = self
+
+      transactInputViewModel.textField
+         .onEvent(\.didEditingChanged)
+         .doNext(worker: coinInputParser)
+         .onSuccess {
+            wS?.transactInputViewModel.textField.set(.text($0))
+            wS?.correctCoinInput = true
+            if wS?.correctReasonInput == true {
+               wS?.sendButton.set(Design.State.button.default)
             }
-            .onFail { (text: String) in
-                wS?.correctCoinInput = false
-                wS?.transactInputViewModel.textField.set(.text(text))
-                wS?.sendButton.set(Design.State.button.inactive)
+         }
+         .onFail { (text: String) in
+            wS?.correctCoinInput = false
+            wS?.transactInputViewModel.textField.set(.text(text))
+            wS?.sendButton.set(Design.State.button.inactive)
+         }
+
+      reasonTextView
+         .onEvent(\.didEditingChanged)
+         .doNext(worker: reasonInputParser)
+         .onSuccess {
+            wS?.reasonTextView.set(.text($0))
+            wS?.correctReasonInput = true
+            if wS?.correctCoinInput == true {
+               wS?.sendButton.set(Design.State.button.default)
             }
-        
-        reasonTextView
-             .onEvent(\.didEditingChanged)
-             .doNext(worker: reasonInputParser)
-             .onSuccess {
-                 wS?.reasonTextView.set(.text($0))
-                 wS?.correctReasonInput = true
-                 if wS?.correctCoinInput == true {
-                     wS?.sendButton.set(Design.State.button.default)
-                 }
-             }
-             .onFail { (text: String) in
-                 wS?.reasonTextView.set(.text(text))
-                 wS?.correctReasonInput = false
-                 wS?.sendButton.set(Design.State.button.inactive)
-             }
-    }
+         }
+         .onFail { (text: String) in
+            wS?.reasonTextView.set(.text(text))
+            wS?.correctReasonInput = false
+            wS?.sendButton.set(Design.State.button.inactive)
+         }
+   }
 }
