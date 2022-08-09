@@ -18,7 +18,7 @@ final class HistoryViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
    typealias State = StackState
 
    var eventsStore: HistoryViewEvent = .init()
-   private var sections: [TransactionSection] = []
+   private var sections: [TableSection] = []
     
    // MARK: - View Models
    private lazy var tableModel = TableViewModel()
@@ -78,8 +78,8 @@ final class HistoryViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
    }
     
     private func configureTableModel(cells: [Transaction], selectedSegmentIndex: Int) {
-        var models: [LogoTitleSubtitleModel] = []
-        var sections: [TransactionSection] = []
+        var models: [UIViewModel] = []
+        var sections: [TableSection] = []
         
         var isSendingCoin: Bool = false
         var prevDay: String = ""
@@ -89,8 +89,8 @@ final class HistoryViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
             
             if prevDay != currentDay {
                 if models.count > 0 {
-                    sections.append(TransactionSection(date: prevDay,
-                                                       transactions: models))
+                    sections.append(TableSection(title: prevDay,
+                                                       models: models))
                     models = []
                 }
             }
@@ -126,8 +126,8 @@ final class HistoryViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
             prevDay = currentDay
         }
         if !models.isEmpty {
-            sections.append(TransactionSection(date: prevDay,
-                                               transactions: models))
+            sections.append(TableSection(title: prevDay,
+                                               models: models))
             models = []
         }
         print("sections count")
@@ -153,12 +153,6 @@ extension UIEdgeInsets {
    static func outline(_ width: CGFloat) -> UIEdgeInsets {
       .init(top: width, left: width, bottom: width, right: width)
    }
-}
-
-
-struct TransactionSection {
-    let date: String
-    let transactions: [LogoTitleSubtitleModel]
 }
 
 

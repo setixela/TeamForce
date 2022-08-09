@@ -8,9 +8,14 @@
 import ReactiveWorks
 import UIKit
 
+struct TableSection {
+    let title: String
+    let models: [UIViewModel]
+}
+
 enum TableViewState {
    case models([UIViewModel])
-   case sections([TransactionSection])
+   case sections([TableSection])
 }
 
 struct TableViewEvents: InitProtocol {
@@ -22,7 +27,7 @@ final class TableViewModel: BaseViewModel<UITableView> {
    var eventsStore: TableViewEvents = .init()
 
    private var models: [UIViewModel] = []
-   private var sections: [TransactionSection] = []
+   private var sections: [TableSection] = []
    private var isMultiSection: Bool = false
 
    override func start() {
@@ -65,15 +70,15 @@ extension TableViewModel: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        isMultiSection ? self.sections[section].date : nil
+        isMultiSection ? self.sections[section].title : nil
     }
     
    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-       isMultiSection ? sections[section].transactions.count : models.count
+       isMultiSection ? sections[section].models.count : models.count
    }
 
    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-      let model = isMultiSection ? sections[indexPath.section].transactions[indexPath.row] : models[indexPath.row]
+      let model = isMultiSection ? sections[indexPath.section].models[indexPath.row] : models[indexPath.row]
       let cell = tableView.dequeueReusableCell(withIdentifier: "cell") ?? UITableViewCell()
       let modelView = model.uiView
       cell.contentView.subviews.forEach { $0.removeFromSuperview() }
