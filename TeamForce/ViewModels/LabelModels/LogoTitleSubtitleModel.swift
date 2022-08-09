@@ -19,5 +19,5 @@ final class LogoTitleSubtitleModel: BaseViewModel<PaddingImageView>, Stateable2 
 }
 
 extension LogoTitleSubtitleModel: ComboRight {
-   typealias RightModel = TitleSubtitleModel
+   typealias R = TitleSubtitleModel
 }

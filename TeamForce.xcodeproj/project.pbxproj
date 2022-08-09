@@ -43,6 +43,7 @@
 		196750B22865190D0019A6DE /* ImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196750B12865190D0019A6DE /* ImageViewModel.swift */; };
 		196750B4286519660019A6DE /* ProductionAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196750B3286519660019A6DE /* ProductionAsset.swift */; };
 		1969A314289D519000D44A6A /* ReactiveWorks in Frameworks */ = {isa = PBXBuildFile; productRef = 1969A313289D519000D44A6A /* ReactiveWorks */; };
+		1981D27728A175BC007BC248 /* ReactiveWorks in Frameworks */ = {isa = PBXBuildFile; productRef = 1981D27628A175BC007BC248 /* ReactiveWorks */; };
 		198FE1C92899994A00BAF1A5 /* LoginUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198FE1C82899994A00BAF1A5 /* LoginUseCase.swift */; };
 		198FE1CC28999A2600BAF1A5 /* NilBlocker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198FE1CB28999A2600BAF1A5 /* NilBlocker.swift */; };
 		198FE1CE2899BB8E00BAF1A5 /* LoadBalanceUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198FE1CD2899BB8E00BAF1A5 /* LoadBalanceUseCase.swift */; };
@@ -207,6 +208,7 @@
 				19D5DC3A289D682700ACC440 /* Anchorage in Frameworks */,
 				19C1E9942860F05F00E7976D /* PromiseKit in Frameworks */,
 				1969A314289D519000D44A6A /* ReactiveWorks in Frameworks */,
+				1981D27728A175BC007BC248 /* ReactiveWorks in Frameworks */,
 				1953DE7F2878BCB5000DC537 /* SwiftKeychainWrapper in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -504,6 +506,7 @@
 				1953DE7E2878BCB5000DC537 /* SwiftKeychainWrapper */,
 				1969A313289D519000D44A6A /* ReactiveWorks */,
 				19D5DC39289D682700ACC440 /* Anchorage */,
+				1981D27628A175BC007BC248 /* ReactiveWorks */,
 			);
 			productName = TeamForce;
 			productReference = 190C1D0E285D15FF00FB3518 /* TeamForce.app */;
@@ -561,6 +564,7 @@
 				1953DE7D2878BCB5000DC537 /* XCRemoteSwiftPackageReference "SwiftKeychainWrapper" */,
 				1969A312289D519000D44A6A /* XCRemoteSwiftPackageReference "ReactiveWorks" */,
 				19D5DC38289D682700ACC440 /* XCRemoteSwiftPackageReference "Anchorage" */,
+				1981D27528A175BC007BC248 /* XCRemoteSwiftPackageReference "ReactiveWorks" */,
 			);
 			productRefGroup = 190C1D0F285D15FF00FB3518 /* Products */;
 			projectDirPath = "";
@@ -625,7 +629,6 @@
 				19466E01289FE28C0052F0AB /* TitleSubtitleModel.swift in Sources */,
 				196750A4286516E40019A6DE /* RegisterScene.swift in Sources */,
 				63CFA198289C3FB6000E4D1E /* GetTransactionsUseCase.swift in Sources */,
-				19C1E99C28610E2800E7976D /* Model.swift in Sources */,
 				191B0C272865E5C1001CF3D9 /* Icons.swift in Sources */,
 				19EF32AB287CE80B0078F53D /* StringStorageWorker.swift in Sources */,
 				196750A6286516F40019A6DE /* LoginScene.swift in Sources */,
@@ -982,6 +985,14 @@
 				kind = branch;
 			};
 		};
+		1981D27528A175BC007BC248 /* XCRemoteSwiftPackageReference "ReactiveWorks" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/setixela/ReactiveWorks.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		19C1E9922860F05F00E7976D /* XCRemoteSwiftPackageReference "PromiseKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/mxcl/PromiseKit";
@@ -1012,6 +1023,11 @@
 			productName = SwiftKeychainWrapper;
 		};
 		1969A313289D519000D44A6A /* ReactiveWorks */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1969A312289D519000D44A6A /* XCRemoteSwiftPackageReference "ReactiveWorks" */;
+			productName = ReactiveWorks;
+		};
+		1981D27628A175BC007BC248 /* ReactiveWorks */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 1969A312289D519000D44A6A /* XCRemoteSwiftPackageReference "ReactiveWorks" */;
 			productName = ReactiveWorks;
