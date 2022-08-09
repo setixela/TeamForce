@@ -19,5 +19,5 @@ final class TitleSubtitleModel: BaseViewModel<PaddingLabel>, Stateable2 {
 }
 
 extension TitleSubtitleModel: ComboDown {
-   typealias DownModel = LabelModel
+   typealias D = LabelModel
 }

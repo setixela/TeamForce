@@ -45,40 +45,28 @@ final class PlaygroundScene<Asset: AssetProtocol>: BaseSceneModel<
                }
          }
 
-      let combo = ComboM(mainModel: ViewModel()
-         .set(.size(.init(width: 30, height: 30)))
-         .set(.backColor(.white))
-      )
-      .add(right: ViewModel())
-      .add(right2: ViewModel())
-      .setRight { rm in
-         rm
-            .set(.size(.square(30)))
-      }
-
-      // .add(down: ViewModel())
-      // .add(down2: ViewModel())
-//         .setDown { model in
-//            model
-//               .set(.size(.init(width: 30, height: 30)))
-//               .set(.backColor(.random))
-//         }
-//         .setRight { model in
-//            model
-//               .set(.size(.init(width: 30, height: 30)))
-//               .set(.backColor(.random))
-//         }
-//         .setDown2 { model in
-//            model
-//               .set(.size(.init(width: 30, height: 30)))
-//               .set(.backColor(.random))
+//      let sCombo = SComboMR(main: ViewModel(), right: ViewModel())
+//      let comboClass = ComboClass(models: sCombo)
+//         .setMain { vm in
+//            print(vm)
+//         } setRight: { vm in
+//            print(vm)
 //         }
 
-      typealias VM1 = ViewModel
-      typealias VM2 = ViewModel
-      typealias VM3 = ViewModel
-      typealias VM4 = ViewModel
-      typealias VM5 = ViewModel
+      let comboC =
+         ComboClass { (model: ViewModel) in
+            model
+               .set(.size(.square(60)))
+               .set(.backColor(.random))
+         } setRight: { (model: ViewModel) in
+            model
+               .set(.size(.square(30)))
+               .set(.backColor(.random))
+         } setDown: { (model: ViewModel) in
+            model
+               .set(.size(.square(30)))
+               .set(.backColor(.random))
+         }
 
       mainViewModel
          .set(.alignment(.leading))
@@ -93,7 +81,7 @@ final class PlaygroundScene<Asset: AssetProtocol>: BaseSceneModel<
             Spacer(32),
             logoTitleSubtitle,
             Spacer(32),
-            combo,
+            comboC,
             Spacer()
          ]))
    }
@@ -164,7 +152,7 @@ final class Combinator<Main: InitProtocol
 
 extension UIColor {
    static var random: UIColor {
-      .init(hue: .random(in: 0 ... 1), saturation: 0.3, brightness: 0.8, alpha: 1)
+      .init(hue: .random(in: 0 ... 1), saturation: 0.5, brightness: 0.9, alpha: 1)
    }
 }
 

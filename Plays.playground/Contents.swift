@@ -26,7 +26,7 @@ PlaygroundPage.current.liveView = nc
 class VC: UIViewController {
    override func loadView() {
       view = historyModel.view
-      view.backgroundColor = .red
+      // view.backgroundColor = .red
    }
 }
 
@@ -50,6 +50,7 @@ extension BadgeModel: Stateable2 {
    typealias State = LabelState
    typealias State2 = ViewState
 }
+
 struct HistoryViewEvent: InitProtocol {}
 
 let historyModel = HistoryViewModel<ProductionAsset>()
@@ -75,55 +76,57 @@ final class HistoryViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
 
    private lazy var getTransactionsUseCase = Asset.apiUseCase.getTransactions.work()
 
-   override func start() {
-      set(.models([tableModel]))
+   //
+   //
+   //
+   //
 
-      let models = (0 ..< 100).map { index in
-         LogoTitleSubtitleModel()
-            .set(.image(Design.icon.make(\.checkCircle)))
-            .rightModel
-                  .set(.text(String(index)))
-                  .downModel
-                     .set(.text("Helllo"))
+   //
+   //
+   //
+   //
+
+   //
+   //
+   //
+   //
+
+   //
+   //
+   //
+   //
+   //
+   //
+   //
+   //
+   //
+   //
+   //
+   //
+
+   override func start() {
+
+      let combo = ComboClass { (model: LabelModel) in
+         model
+            .set(.size(.square(200)))
+            .set(.backColor(.random))
+            .set(.text("MAIN"))
+      } setDown: { (model: LabelModel) in
+         model
+            .set(.size(.square(40)))
+            .set(.backColor(.random))
+            .set(.text("SECOND"))
+      } setRight: { (model: LabelModel) in
+         model
+            .set(.backColor(.random))
+            .set(.text("THIRD"))
       }
 
-      tableModel
-         .set(.backColor(.gray))
-         .set(.models(models))
-
-      print("transactions started")
-      getTransactionsUseCase
-         .doAsync()
-         .onSuccess { transactions in
-            print(transactions)
-         }
-         .onFail {
-            print("transactions not loaded")
-         }
+      set(.alignment(.leading))
+      set(.axis(.vertical))
+      set(.models([
+         combo,
+         Spacer()
+      ]))
    }
 }
-
-
-// MARK: - Todo
-
-// public protocol TargetViewProtocol: UIView {
-//    associatedtype TargetView: UIView
-//
-//    var targetView: TargetView { get }
-// }
-//
-// final class TargetViewModel<TVM: ViewModelProtocol>: BaseViewModel<TVM.View> {
-//    lazy var targetModel = TVM()
-//
-//    override func start() {}
-// }
-//
-// final class TargetView<View: UIView>: UIView, TargetViewProtocol {
-//    lazy var targetView: View = {
-//        let view = View()
-//        self.addSubview(view)
-//        return view
-//    }()
-//
-//    typealias TargetView = View
-// }
