@@ -33,6 +33,9 @@ protocol IconsProtocol: InitProtocol,
     var loginBackground: IconType { get }
     
     var girlOnSkateboard: IconType { get }
+    
+    var sendCoinIcon: IconType { get }
+    var recieveCoinIcon: IconType { get }
 }
 
 struct Icons: IconsProtocol {
@@ -56,6 +59,10 @@ struct Icons: IconsProtocol {
     var loginBackground: String { "background_vector" }
     
     var girlOnSkateboard: String { "girl_on_skateboard" }
+    
+    var recieveCoinIcon: String { "recieve_coin_icon" }
+    var sendCoinIcon: String { "send_coin_icon" }
+    
 }
 extension Icons: KeyPathMaker {
     func make(_ keypath: KeyPath<Self, IconType>) -> UIImage {
