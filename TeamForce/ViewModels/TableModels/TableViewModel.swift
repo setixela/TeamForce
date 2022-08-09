@@ -10,6 +10,7 @@ import UIKit
 
 enum TableViewState {
    case models([UIViewModel])
+   case sections([TransactionSection])
 }
 
 struct TableViewEvents: InitProtocol {
@@ -21,6 +22,8 @@ final class TableViewModel: BaseViewModel<UITableView> {
    var eventsStore: TableViewEvents = .init()
 
    private var models: [UIViewModel] = []
+   private var sections: [TransactionSection] = []
+   private var isMultiSection: Bool = false
 
    override func start() {
       view.delegate = self
@@ -35,7 +38,12 @@ extension TableViewModel: Stateable2 {
    func applyState(_ state: TableViewState) {
       switch state {
       case .models(let array):
+         isMultiSection = false
          models = array
+         view.reloadData()
+      case .sections(let array):
+         isMultiSection = true
+         sections = array
          view.reloadData()
       }
    }
@@ -51,12 +59,21 @@ extension TableViewModel: UITableViewDelegate {
 }
 
 extension TableViewModel: UITableViewDataSource {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        isMultiSection ? sections.count : 1
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        isMultiSection ? self.sections[section].date : nil
+    }
+    
    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-      models.count
+       isMultiSection ? sections[section].transactions.count : models.count
    }
 
    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-      let model = models[indexPath.row]
+      let model = isMultiSection ? sections[indexPath.section].transactions[indexPath.row] : models[indexPath.row]
       let cell = tableView.dequeueReusableCell(withIdentifier: "cell") ?? UITableViewCell()
       let modelView = model.uiView
       cell.contentView.subviews.forEach { $0.removeFromSuperview() }
