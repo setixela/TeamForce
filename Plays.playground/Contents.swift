@@ -106,26 +106,53 @@ final class HistoryViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
 
    override func start() {
 
-      let combo = ComboClass { (model: LabelModel) in
+      let combo = Combos { (model: LabelModel) in
          model
-            .set(.size(.square(200)))
+            .set(.backColor(.random))
+            .set(.text("MAIN"))
+      } setRight: { (model: LabelModel) in
+         model
+            .set(.backColor(.random))
+            .set(.text("SECOND"))
+      }
+
+      let combo2 = Combos { (model: LabelModel) in
+         model
             .set(.backColor(.random))
             .set(.text("MAIN"))
       } setDown: { (model: LabelModel) in
          model
-            .set(.size(.square(40)))
             .set(.backColor(.random))
             .set(.text("SECOND"))
-      } setRight: { (model: LabelModel) in
+      }
+      let combo3 = Combos { (model: LabelModel) in
+         model
+            .set(.backColor(.random))
+            .set(.text("MAIN"))
+      } setDown: { (model: LabelModel) in
+         model
+            .set(.backColor(.random))
+            .set(.text("SECOND"))
+      } setDown2: { (model: LabelModel) in
          model
             .set(.backColor(.random))
             .set(.text("THIRD"))
       }
 
+
+
+
+
+
+
       set(.alignment(.leading))
       set(.axis(.vertical))
       set(.models([
          combo,
+         Spacer(16),
+         combo2,
+         Spacer(16),
+         combo3,
          Spacer()
       ]))
    }

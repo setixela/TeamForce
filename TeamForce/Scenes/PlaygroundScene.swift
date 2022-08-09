@@ -54,7 +54,7 @@ final class PlaygroundScene<Asset: AssetProtocol>: BaseSceneModel<
 //         }
 
       let comboC =
-         ComboClass { (model: ViewModel) in
+         Combos { (model: ViewModel) in
             model
                .set(.size(.square(60)))
                .set(.backColor(.random))
