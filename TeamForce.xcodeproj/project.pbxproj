@@ -93,6 +93,7 @@
 		6368D8282891E7C40049EEAB /* UserDefault+helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6368D8272891E7C30049EEAB /* UserDefault+helpers.swift */; };
 		6368D82A2894091B0049EEAB /* TransactInputViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6368D8292894091B0049EEAB /* TransactInputViewModel.swift */; };
 		6368D82C289415EC0049EEAB /* TextViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6368D82B289415EC0049EEAB /* TextViewModel.swift */; };
+		63A529F528A1F8AB004A858D /* SegmentedControlModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A529F428A1F8AA004A858D /* SegmentedControlModel.swift */; };
 		63AD437B28992045000511B9 /* TransactionStatusViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AD437A28992045000511B9 /* TransactionStatusViewModel.swift */; };
 		63CFA194289C312F000E4D1E /* HistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63CFA193289C312F000E4D1E /* HistoryViewModel.swift */; };
 		63CFA196289C38A9000E4D1E /* GetTransactionsApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63CFA195289C38A9000E4D1E /* GetTransactionsApiWorker.swift */; };
@@ -194,6 +195,7 @@
 		6368D8272891E7C30049EEAB /* UserDefault+helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefault+helpers.swift"; sourceTree = "<group>"; };
 		6368D8292894091B0049EEAB /* TransactInputViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactInputViewModel.swift; sourceTree = "<group>"; };
 		6368D82B289415EC0049EEAB /* TextViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextViewModel.swift; sourceTree = "<group>"; };
+		63A529F428A1F8AA004A858D /* SegmentedControlModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentedControlModel.swift; sourceTree = "<group>"; };
 		63AD437A28992045000511B9 /* TransactionStatusViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionStatusViewModel.swift; sourceTree = "<group>"; };
 		63CFA193289C312F000E4D1E /* HistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewModel.swift; sourceTree = "<group>"; };
 		63CFA195289C38A9000E4D1E /* GetTransactionsApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTransactionsApiWorker.swift; sourceTree = "<group>"; };
@@ -419,6 +421,7 @@
 				6368D8292894091B0049EEAB /* TransactInputViewModel.swift */,
 				6368D82B289415EC0049EEAB /* TextViewModel.swift */,
 				63AD437A28992045000511B9 /* TransactionStatusViewModel.swift */,
+				63A529F428A1F8AA004A858D /* SegmentedControlModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -609,6 +612,7 @@
 				19F15389289964D200ECF000 /* CommonUseCasePack.swift in Sources */,
 				19C1E98F285F426B00E7976D /* TeamForceApi.swift in Sources */,
 				199C4B6928632834008AD6FD /* DesignProtocol.swift in Sources */,
+				63A529F528A1F8AB004A858D /* SegmentedControlModel.swift in Sources */,
 				1953DE88287B4574000DC537 /* Fonts.swift in Sources */,
 				19D0835B286F424000F75E4A /* LabelIconHorizontalModel.swift in Sources */,
 				198FE1CE2899BB8E00BAF1A5 /* LoadBalanceUseCase.swift in Sources */,
