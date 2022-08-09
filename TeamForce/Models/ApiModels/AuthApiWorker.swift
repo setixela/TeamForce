@@ -92,22 +92,6 @@ struct Balance: Decodable {
    let distr: Distr
 }
 
-protocol ApiCommunicableModelProtocol: ApiProtocol, Communicable where Events: NetworkEventProtocol {}
-
-class BaseApiModel<Events: NetworkEventProtocol>: BaseModel, ApiCommunicableModelProtocol {
-   var apiEngine: ApiEngineProtocol?
-   var eventsStore: Events = .init()
-
-   required init(apiEngine: ApiEngineProtocol) {
-      super.init()
-      self.apiEngine = apiEngine
-   }
-
-   required init() {
-      fatalError()
-   }
-}
-
 protocol ApiProtocol {
    var apiEngine: ApiEngineProtocol? { get set }
 }
@@ -147,19 +131,5 @@ final class AuthApiWorker: BaseApiWorker<String, AuthResult> {
          .catch { _ in
             work.fail(())
          }
-   }
-}
-
-struct DataToDecodableParser {
-   func parse<T: Decodable>(_ data: Data) -> T? {
-      let decoder = JSONDecoder()
-
-      guard
-         let result = try? decoder.decode(T.self, from: data)
-      else {
-         return nil
-      }
-
-      return result
    }
 }

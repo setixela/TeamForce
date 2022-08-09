@@ -48,6 +48,7 @@
 		198FE1CC28999A2600BAF1A5 /* NilBlocker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198FE1CB28999A2600BAF1A5 /* NilBlocker.swift */; };
 		198FE1CE2899BB8E00BAF1A5 /* LoadBalanceUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198FE1CD2899BB8E00BAF1A5 /* LoadBalanceUseCase.swift */; };
 		198FE1D02899E0BF00BAF1A5 /* IsEmpty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198FE1CF2899E0BF00BAF1A5 /* IsEmpty.swift */; };
+		1999B6FE28A2F5D300D3570B /* DataToDecodableParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1999B6FD28A2F5D300D3570B /* DataToDecodableParser.swift */; };
 		199C4B6628624B4C008AD6FD /* Spacer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199C4B6528624B4C008AD6FD /* Spacer.swift */; };
 		199C4B6928632834008AD6FD /* DesignProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199C4B6828632834008AD6FD /* DesignProtocol.swift */; };
 		199C4B6B2863292F008AD6FD /* ButtonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199C4B6A2863292F008AD6FD /* ButtonModel.swift */; };
@@ -150,6 +151,7 @@
 		198FE1CB28999A2600BAF1A5 /* NilBlocker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NilBlocker.swift; sourceTree = "<group>"; };
 		198FE1CD2899BB8E00BAF1A5 /* LoadBalanceUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadBalanceUseCase.swift; sourceTree = "<group>"; };
 		198FE1CF2899E0BF00BAF1A5 /* IsEmpty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsEmpty.swift; sourceTree = "<group>"; };
+		1999B6FD28A2F5D300D3570B /* DataToDecodableParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataToDecodableParser.swift; sourceTree = "<group>"; };
 		199C4B6528624B4C008AD6FD /* Spacer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spacer.swift; sourceTree = "<group>"; };
 		199C4B6828632834008AD6FD /* DesignProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignProtocol.swift; sourceTree = "<group>"; };
 		199C4B6A2863292F008AD6FD /* ButtonModel.swift */ = {isa = PBXFileReference; indentWidth = 3; lastKnownFileType = sourcecode.swift; path = ButtonModel.swift; sourceTree = "<group>"; tabWidth = 3; };
@@ -256,7 +258,7 @@
 				19C1E9A428610E6F00E7976D /* ViewModels */,
 				19ECD54628623D92001765F6 /* Views */,
 				199C4B6728632461008AD6FD /* DesignSystem */,
-				19C1E99528610E1900E7976D /* Architecture */,
+				19C1E99528610E1900E7976D /* Common */,
 				19C1E983285F426B00E7976D /* Networking */,
 				190C1D41285D195800FB3518 /* Main */,
 				190C1D1F285D160000FB3518 /* Info.plist */,
@@ -388,12 +390,13 @@
 			path = Abstract;
 			sourceTree = "<group>";
 		};
-		19C1E99528610E1900E7976D /* Architecture */ = {
+		19C1E99528610E1900E7976D /* Common */ = {
 			isa = PBXGroup;
 			children = (
 				19C1E9A228610E4E00E7976D /* MainRouter.swift */,
+				1999B6FD28A2F5D300D3570B /* DataToDecodableParser.swift */,
 			);
-			path = Architecture;
+			path = Common;
 			sourceTree = "<group>";
 		};
 		19C1E9A428610E6F00E7976D /* ViewModels */ = {
@@ -671,6 +674,7 @@
 				1953DE812879FC55000DC537 /* SearchUserApiWorker.swift in Sources */,
 				19EF32AE287E08F80078F53D /* Colors.swift in Sources */,
 				19D08353286F403400F75E4A /* SideBarModel.swift in Sources */,
+				1999B6FE28A2F5D300D3570B /* DataToDecodableParser.swift in Sources */,
 				19D08359286F41FA00F75E4A /* IconLabelHorizontalModel.swift in Sources */,
 				1953DE8D287B4752000DC537 /* Typography.swift in Sources */,
 				19C1E98C285F426B00E7976D /* EndpointProtocol.swift in Sources */,

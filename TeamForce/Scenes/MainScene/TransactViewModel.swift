@@ -98,11 +98,11 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
 
       userSearchModel
          .onEvent(\.didEditingChanged)
-         .onSuccess { _ in
+         .onSuccess {
             wS?.hideHUD()
          }
          .doNext(usecase: IsEmpty())
-         .onSuccess { _ in
+         .onSuccess {
             wS?.tableModel.set(.hidden(true))
          }
          .doMap { text in
@@ -134,14 +134,13 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
             wS?.transactionStatusView.start()
             // FIX: super puper view :)
             guard
-               let superview = wS?.view.superview?.superview?.superview?.superview?.superview,
+               let superview = wS?.view,//.superview?.superview?.superview?.superview?.superview,
                let username = wS?.recipientUsername,
                let info = wS?.makeSendCoinRequest()
             else { return }
             let input = StatusViewInput(baseView: superview,
                                         sendCoinInfo: info,
                                         username: username)
-
             wS?.transactionStatusView.sendEvent(\.presentOnScene, input)
             wS?.setToInitialCondition()
          }.onFail { (text: String) in

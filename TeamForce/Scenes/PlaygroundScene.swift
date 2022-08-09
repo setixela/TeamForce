@@ -45,28 +45,19 @@ final class PlaygroundScene<Asset: AssetProtocol>: BaseSceneModel<
                }
          }
 
-//      let sCombo = SComboMR(main: ViewModel(), right: ViewModel())
-//      let comboClass = ComboClass(models: sCombo)
-//         .setMain { vm in
-//            print(vm)
-//         } setRight: { vm in
-//            print(vm)
-//         }
-
-      let comboC =
-         Combos { (model: ViewModel) in
-            model
-               .set(.size(.square(60)))
-               .set(.backColor(.random))
-         } setRight: { (model: ViewModel) in
-            model
-               .set(.size(.square(30)))
-               .set(.backColor(.random))
-         } setDown: { (model: ViewModel) in
-            model
-               .set(.size(.square(30)))
-               .set(.backColor(.random))
-         }
+      let comboC = Combos { (model: ViewModel) in
+         model
+            .set(.size(.square(60)))
+            .set(.backColor(.random))
+      } setRight: { (model: ViewModel) in
+         model
+            .set(.size(.square(30)))
+            .set(.backColor(.random))
+      } setDown: { (model: ViewModel) in
+         model
+            .set(.size(.square(30)))
+            .set(.backColor(.random))
+      }
 
       mainViewModel
          .set(.alignment(.leading))
