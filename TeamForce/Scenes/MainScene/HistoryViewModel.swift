@@ -18,7 +18,8 @@ final class HistoryViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
    typealias State = StackState
 
    var eventsStore: HistoryViewEvent = .init()
-
+   private var sections: [TransactionSection] = []
+    
    // MARK: - View Models
    private lazy var tableModel = TableViewModel()
       .set(.borderColor(.gray))
@@ -78,9 +79,20 @@ final class HistoryViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
     
     private func configureTableModel(cells: [Transaction], selectedSegmentIndex: Int) {
         var models: [LogoTitleSubtitleModel] = []
+        var sections: [TransactionSection] = []
         
         var isSendingCoin: Bool = false
+        var prevDay: String = ""
+        
         for transaction in cells {
+            guard let currentDay = convertToDate(time: transaction.createdAt) else { return }
+            
+            if prevDay != currentDay {
+                sections.append(TransactionSection(date: prevDay,
+                                                   transactions: models))
+                models = []
+            }
+            
             isSendingCoin = false
             var rightText = "Перевод от " + transaction.sender
             var downText = transaction.amount
@@ -109,12 +121,28 @@ final class HistoryViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
                 models.append(cell)
             }
             
+            prevDay = currentDay
         }
-        print("segment \(selectedSegmentIndex), models count \(models.count), cells \(cells.count)")
-
+        if !models.isEmpty {
+            sections.append(TransactionSection(date: prevDay,
+                                               transactions: models))
+            models = []
+        }
+        print(sections.count)
         tableModel
            .set(.backColor(.gray))
-           .set(.models(models))
+           .set(.sections(sections))
+    }
+    
+    private func convertToDate(time: String) -> String? {
+        let inputFormatter = DateFormatter()
+        inputFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+        guard let convertedDate = inputFormatter.date(from: time) else { return nil }
+        
+        let outputFormatter = DateFormatter()
+        outputFormatter.dateFormat = "d MMM y"
+        
+        return outputFormatter.string(from: convertedDate)
     }
 }
 
@@ -123,3 +151,11 @@ extension UIEdgeInsets {
       .init(top: width, left: width, bottom: width, right: width)
    }
 }
+
+
+struct TransactionSection {
+    let date: String
+    let transactions: [LogoTitleSubtitleModel]
+}
+
+
