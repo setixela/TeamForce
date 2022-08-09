@@ -88,9 +88,11 @@ final class HistoryViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
             guard let currentDay = convertToDate(time: transaction.createdAt) else { return }
             
             if prevDay != currentDay {
-                sections.append(TransactionSection(date: prevDay,
-                                                   transactions: models))
-                models = []
+                if models.count > 0 {
+                    sections.append(TransactionSection(date: prevDay,
+                                                       transactions: models))
+                    models = []
+                }
             }
             
             isSendingCoin = false
@@ -128,6 +130,7 @@ final class HistoryViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
                                                transactions: models))
             models = []
         }
+        print("sections count")
         print(sections.count)
         tableModel
            .set(.backColor(.gray))
