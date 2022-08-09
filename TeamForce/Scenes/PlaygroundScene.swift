@@ -78,8 +78,9 @@ final class PlaygroundScene<Asset: AssetProtocol>: BaseSceneModel<
    }
 }
 
-final class VizitkaDemo: BaseViewModel<UIView>, Stateable {
+final class VizitkaDemo: BaseViewModel<PaddingLabel>, Stateable2 {
    typealias State = ViewState
+   typealias State2 = LabelState
 
    let rightModel = ViewModel()
       .set(.size(.init(width: 66, height: 100)))
@@ -99,6 +100,10 @@ final class VizitkaDemo: BaseViewModel<UIView>, Stateable {
    let downModel = ViewModel()
       .set(.height(33))
       .set(.backColor(.blue))
+
+   override func start() {
+      set(.text("Main"))
+   }
 }
 
 //
