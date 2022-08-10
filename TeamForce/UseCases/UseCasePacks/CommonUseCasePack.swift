@@ -30,16 +30,16 @@ struct ApiUseCase: ApiUseCaseRegistry {
       .init(searchUserApiModel: searchUserApiWorker)
    }
     
-    var getTransactions: GetTransactionsUseCase {
-        .init(safeStringStorage: safeStringStorage, getTransactionsApiWorker: getTransactionsApiWorker)
-    }
+   var getTransactions: GetTransactionsUseCase {
+      .init(safeStringStorage: safeStringStorage, getTransactionsApiWorker: getTransactionsApiWorker)
+   }
 
    var sendCoin: SendCoinUseCase {
       .init(sendCoinApiModel: sendCoinApiWorker)
    }
     
    var getTransactionById: GetTransactionByIdUseCase {
-      .init(getTransactionByIdApiModel: getTransactionByIdApiWorker)
+       .init(safeStringStorage: safeStringStorage, getTransactionByIdApiModel: getTransactionByIdApiWorker)
    }
 
    // MARK: - Dependencies

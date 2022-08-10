@@ -11,47 +11,45 @@ import UIKit
 struct HistoryViewEvent: InitProtocol {}
 
 final class HistoryViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
-   Communicable,
-   Stateable,
-   Assetable
+                                                    Communicable,
+                                                    Stateable,
+                                                    Assetable
 {
    typealias State = StackState
-
+   
    var eventsStore: HistoryViewEvent = .init()
-
+   
    private var sections: [TableSection] = []
-
+   
    // MARK: - View Models
-
+   
    private lazy var tableModel = TableViewModel()
       .set(.borderColor(.gray))
       .set(.borderWidth(1))
       .set(.cornerRadius(Design.Parameters.cornerRadius))
-
+   
    private lazy var segmentedControl = SegmentedControlModel()
       .set(.items(["Все", "Получено", "Отправлено"]))
       .set(.height(50))
       .set(.selectedSegmentIndex(0))
-
+   
    // MARK: - Services
-
+   
    struct TempStore: KeyPathSetable {
       var currentUser: String = ""
       var transactions: [Transaction] = []
       var sections: [[Transaction]] = []
    }
-
+   
    private var store = TempStore()
-
+   
    private lazy var getTransactionsUseCase = Asset.apiUseCase.getTransactions.work()
    private lazy var loadProfileUseCase = Asset.apiUseCase.loadProfile.work()
-   private lazy var getTransactionByIdUse = Asset.apiUseCase.getTransactionById.work()
-   private lazy var safeStringStorage = StringStorageWorker(engine: Asset.service.safeStringStorage)
-
+   private lazy var getTransactionByIdUseCase = Asset.apiUseCase.getTransactionById.work()
+   //   private lazy var apiUseCase = Asset.apiUseCase
    private lazy var currentUser: String = ""
    private lazy var transactions: [Transaction] = []
-   private lazy var tokens: (token: String, csrf: String) = ("", "")
-
+   
    override func start() {
       weak var wS = self
       set(.axis(.vertical))
@@ -60,7 +58,7 @@ final class HistoryViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
          Spacer(10),
          tableModel
       ]))
-
+      
       loadProfileUseCase
          .doAsync()
          .onSuccess { user in
@@ -69,7 +67,7 @@ final class HistoryViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
          .onFail {
             print("profile not loaded")
          }
-
+      
       getTransactionsUseCase
          .doAsync()
          .onSuccess { transactions in
@@ -80,52 +78,32 @@ final class HistoryViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
          .onFail {
             print("transactions not loaded")
          }
-
-
+      
+      
       segmentedControl
          .onEvent(\.segmentChanged) { index in
             print("selected index \(index)")
             guard let transactions = wS?.transactions else { return }
             wS?.configureTableModel(cells: transactions, selectedSegmentIndex: index)
          }
-       
-       safeStringStorage
-          .doAsync("token")
-          .onSuccess {
-             wS?.tokens.token = $0
-          }
-          .onFail {
-             print("token load failed")
-          }
-          .doInput("csrftoken")
-          .doNext(worker: safeStringStorage)
-          .onSuccess {
-             wS?.tokens.csrf = $0
-          }
-          .onFail {
-             print("csrftoken load failed")
-          }
-       
-       tableModel.onEvent(\.didSelectRow) { indexPath in
-           print("indexPath is \(indexPath)")
-           let id = self.store.sections[indexPath.section][indexPath.row]
-           print("id \(id.id)")
-           let request = TransactionRequest(token: self.tokens.token,
-                                            csrfToken: self.tokens.csrf,
-                                            id: id.id)
-           self.getTransactionByIdUse
-               .doAsync(request)
-               .onSuccess { transaction in
-                   print(transaction)
-                   print("success happend")
-                   ProductionAsset.router?.route(\.transactionDetail, navType: .push, payload: transaction)
-               }
-               .onFail {
-                   print("failed")
-               }
-       }
+      
+      tableModel.onEvent(\.didSelectRow) { indexPath in
+         print("indexPath is \(indexPath)")
+         let id = self.store.sections[indexPath.section][indexPath.row]
+         print("id \(id.id)")
+         self.getTransactionByIdUseCase
+            .doAsync(id.id)
+            .onSuccess { transaction in
+               print(transaction)
+               print("success happend")
+               ProductionAsset.router?.route(\.transactionDetail, navType: .push, payload: transaction)
+            }
+            .onFail {
+               print("failed")
+            }
+      }
    }
-
+   
    private func configureTableModel(cells: [Transaction], selectedSegmentIndex: Int) {
       var models: [UIViewModel] = []
       var modelsWithTransactions: [Transaction] = []
@@ -133,7 +111,7 @@ final class HistoryViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
       var sectionWithTransactions: [[Transaction]] = []
       var isSendingCoin = false
       var prevDay = ""
-
+      
       for transaction in cells {
          guard let currentDay = convertToDate(time: transaction.createdAt) else { return }
          if prevDay != currentDay {
@@ -145,18 +123,18 @@ final class HistoryViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
                modelsWithTransactions = []
             }
          }
-
+         
          isSendingCoin = false
-          var rightText = "Перевод от " + transaction.sender.senderTgName
+         var rightText = "Перевод от " + transaction.sender.senderTgName
          var downText = transaction.amount
          var image = Design.icon.make(\.recieveCoinIcon)
-          if transaction.sender.senderTgName == currentUser {
+         if transaction.sender.senderTgName == currentUser {
             isSendingCoin = true
-              rightText = "Перевод для " + transaction.recipient.recipientTgName
+            rightText = "Перевод для " + transaction.recipient.recipientTgName
             downText = "+" + transaction.amount
             image = Design.icon.make(\.sendCoinIcon)
          }
-
+         
          let cell = LogoTitleSubtitleModel(isAutoreleaseView: true)
             .set(.image(image))
             .set(.padding(.outline(10)))
@@ -169,13 +147,13 @@ final class HistoryViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
                   }
             }
          if (selectedSegmentIndex == 1 && !isSendingCoin) ||
-            (selectedSegmentIndex == 2 && isSendingCoin) ||
-            selectedSegmentIndex == 0
+               (selectedSegmentIndex == 2 && isSendingCoin) ||
+               selectedSegmentIndex == 0
          {
             models.append(cell)
             modelsWithTransactions.append(transaction)
          }
-
+         
          prevDay = currentDay
       }
       if !models.isEmpty {
@@ -185,21 +163,21 @@ final class HistoryViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
          models = []
          modelsWithTransactions = []
       }
-       
+      
       self.store.sections = sectionWithTransactions
       tableModel
          .set(.backColor(.gray))
          .set(.sections(sections))
    }
-
+   
    private func convertToDate(time: String) -> String? {
       let inputFormatter = DateFormatter()
       inputFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
       guard let convertedDate = inputFormatter.date(from: time) else { return nil }
-
+      
       let outputFormatter = DateFormatter()
       outputFormatter.dateFormat = "d MMM y"
-
+      
       return outputFormatter.string(from: convertedDate)
    }
 }
