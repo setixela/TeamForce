@@ -5,7 +5,6 @@
 //  Created by Aleksandr Solovyev on 24.06.2022.
 //
 
-import UIKit
 import ReactiveWorks
 
 // MARK: - DigitalThanksScene

@@ -9,8 +9,8 @@ import ReactiveWorks
 import UIKit
 
 struct TableSection {
-    let title: String
-    let models: [UIViewModel]
+   let title: String
+   let models: [UIViewModel]
 }
 
 enum TableViewState {
@@ -19,6 +19,7 @@ enum TableViewState {
 }
 
 struct TableViewEvents: InitProtocol {
+   var cellForRow: Event<(UIViewModel) -> Void>?
    var didSelectRow: Event<Int>?
    var reloadData: Event<Void>?
 }
@@ -64,28 +65,41 @@ extension TableViewModel: UITableViewDelegate {
 }
 
 extension TableViewModel: UITableViewDataSource {
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        isMultiSection ? sections.count : 1
-    }
-    
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        isMultiSection ? self.sections[section].title : nil
-    }
-    
+   func numberOfSections(in tableView: UITableView) -> Int {
+      isMultiSection ? sections.count : 1
+   }
+
+   func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+      isMultiSection ? sections[section].title : nil
+   }
+
    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-       isMultiSection ? sections[section].models.count : models.count
+      isMultiSection ? sections[section].models.count : models.count
    }
 
    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-      let model = isMultiSection ? sections[indexPath.section].models[indexPath.row] : models[indexPath.row]
       let cell = tableView.dequeueReusableCell(withIdentifier: "cell") ?? UITableViewCell()
-      let modelView = model.uiView
-      cell.contentView.subviews.forEach { $0.removeFromSuperview() }
-      cell.contentView.addSubview(modelView)
-      modelView.addAnchors.fitToView(cell.contentView)
 
-      return cell
+      if eventsStore.cellForRow == nil {
+         let model = isMultiSection ? sections[indexPath.section].models[indexPath.row] : models[indexPath.row]
+         let modelView = model.uiView
+         cell.contentView.subviews.forEach { $0.removeFromSuperview() }
+         cell.contentView.addSubview(modelView)
+         modelView.addAnchors.fitToView(cell.contentView)
+
+         return cell
+      } else {
+         sendEvent(\.cellForRow, ({ viewModel in
+            cell.contentView.subviews.forEach { $0.removeFromSuperview() }
+            cell.contentView.addSubview(viewModel.uiView)
+            viewModel.uiView.addAnchors.fitToView(cell.contentView)
+         }))
+//         cell.contentView.subviews.forEach { $0.removeFromSuperview() }
+//         cell.contentView.addSubview(modelView)
+//         modelView.addAnchors.fitToView(cell.contentView)
+
+         return cell
+      }
    }
 
    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

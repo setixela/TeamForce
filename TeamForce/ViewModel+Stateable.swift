@@ -15,7 +15,6 @@ enum ViewState {
    case borderWidth(CGFloat)
    case borderColor(UIColor)
    case size(CGSize)
-   case padding(UIEdgeInsets)
    case height(CGFloat)
    case width(CGFloat)
    case hidden(Bool)
@@ -44,8 +43,6 @@ extension ViewModelProtocol where Self: Stateable {
          view.addAnchors
             .constWidth(size.width)
             .constHeight(size.height)
-      case .padding(let padding):
-         view.layoutMargins = padding
       case .zPosition(let value):
          view.layer.masksToBounds = false
          view.layer.zPosition = value
@@ -55,12 +52,6 @@ extension ViewModelProtocol where Self: Stateable {
       case .width(let value):
          view.addAnchors.constWidth(value)
       }
-   }
-}
-
-extension UIView {
-   func setPadding(_ insets: UIEdgeInsets) {
-
    }
 }
 

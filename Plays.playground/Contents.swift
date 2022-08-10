@@ -105,7 +105,6 @@ final class HistoryViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
    //
 
    override func start() {
-
       let combo = Combos { (model: LabelModel) in
          model
             .set(.backColor(.random))
@@ -116,6 +115,13 @@ final class HistoryViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
             .set(.text("SECOND"))
       }
 
+      combo
+         .set(\.main) {
+            $0.set(.text("no main he he"))
+         }.set(\.right) {
+            $0.set(.text("HAHAHAHAHA"))
+         }
+
       let combo2 = Combos { (model: LabelModel) in
          model
             .set(.backColor(.random))
@@ -125,6 +131,7 @@ final class HistoryViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
             .set(.backColor(.random))
             .set(.text("SECOND"))
       }
+
       let combo3 = Combos { (model: LabelModel) in
          model
             .set(.backColor(.random))
@@ -138,12 +145,6 @@ final class HistoryViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
             .set(.backColor(.random))
             .set(.text("THIRD"))
       }
-
-
-
-
-
-
 
       set(.alignment(.leading))
       set(.axis(.vertical))

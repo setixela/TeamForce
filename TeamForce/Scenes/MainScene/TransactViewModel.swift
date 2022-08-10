@@ -134,7 +134,7 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
             wS?.transactionStatusView.start()
             // FIX: super puper view :)
             guard
-               let superview = wS?.view,//.superview?.superview?.superview?.superview?.superview,
+               let superview = wS?.view, // .superview?.superview?.superview?.superview?.superview,
                let username = wS?.recipientUsername,
                let info = wS?.makeSendCoinRequest()
             else { return }

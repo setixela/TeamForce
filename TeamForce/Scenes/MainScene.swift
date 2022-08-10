@@ -14,13 +14,12 @@ final class MainScene<Asset: AssetProtocol>: BaseSceneModel<
   StackWithBottomPanelModel,
   Asset,
   Void
-    // Promise<UserData>
 > {
   // MARK: - Balance View Model
 
   private lazy var balanceViewModel = BalanceViewModel<Asset>()
-  private lazy var transactViewModel = TransactViewModel<Asset>() // TODO:
-  private lazy var historyViewModel = HistoryViewModel<Asset>() // TODO:
+  private lazy var transactViewModel = TransactViewModel<Asset>()
+  private lazy var historyViewModel = HistoryViewModel<Asset>()
 
   private lazy var balanceButton = Design.button.tabBar
     .set(.title("Баланс"))
