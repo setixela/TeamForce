@@ -24,7 +24,9 @@ struct TextViewEvents: InitProtocol {
 
 final class TextViewModel: BaseViewModel<UITextView> {
     var eventsStore: TextViewEvents = .init()
-    var placeholder: String = "Placeholder"
+
+    private var placeholder: String = "Placeholder"
+
     override func start() {
         view.textColor = UIColor.lightGray
         set(.backColor(.lightGray.withAlphaComponent(0.3)))

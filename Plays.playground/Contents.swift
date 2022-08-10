@@ -77,32 +77,6 @@ final class HistoryViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
    private lazy var getTransactionsUseCase = Asset.apiUseCase.getTransactions.work()
 
    //
-   //
-   //
-   //
-
-   //
-   //
-   //
-   //
-
-   //
-   //
-   //
-   //
-
-   //
-   //
-   //
-   //
-   //
-   //
-   //
-   //
-   //
-   //
-   //
-   //
 
    override func start() {
       let combo = Combos { (model: LabelModel) in
@@ -113,34 +87,7 @@ final class HistoryViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
          model
             .set(.backColor(.random))
             .set(.text("SECOND"))
-      }
-
-      combo
-         .set(\.main) {
-            $0.set(.text("no main he he"))
-         }.set(\.right) {
-            $0.set(.text("HAHAHAHAHA"))
-         }
-
-      let combo2 = Combos { (model: LabelModel) in
-         model
-            .set(.backColor(.random))
-            .set(.text("MAIN"))
       } setDown: { (model: LabelModel) in
-         model
-            .set(.backColor(.random))
-            .set(.text("SECOND"))
-      }
-
-      let combo3 = Combos { (model: LabelModel) in
-         model
-            .set(.backColor(.random))
-            .set(.text("MAIN"))
-      } setDown: { (model: LabelModel) in
-         model
-            .set(.backColor(.random))
-            .set(.text("SECOND"))
-      } setDown2: { (model: LabelModel) in
          model
             .set(.backColor(.random))
             .set(.text("THIRD"))
@@ -149,11 +96,10 @@ final class HistoryViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
       set(.alignment(.leading))
       set(.axis(.vertical))
       set(.models([
+         Spacer(300),
          combo,
          Spacer(16),
-         combo2,
          Spacer(16),
-         combo3,
          Spacer()
       ]))
    }

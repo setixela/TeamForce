@@ -86,6 +86,7 @@ final class HistoryViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
          }
    }
 
+   // TODO: (setixela) - Make presenting via cellForRow
    private func configureTableModel(cells: [Transaction], selectedSegmentIndex: Int) {
       var models: [UIViewModel] = []
       var sections: [TableSection] = []
