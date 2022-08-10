@@ -94,8 +94,9 @@ final class HistoryViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
       var prevDay = ""
 
       for transaction in cells {
+          print("here1")
          guard let currentDay = convertToDate(time: transaction.createdAt) else { return }
-
+         print("here2")
          if prevDay != currentDay {
             if models.count > 0 {
                sections.append(TableSection(title: prevDay,
@@ -105,12 +106,12 @@ final class HistoryViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
          }
 
          isSendingCoin = false
-         var rightText = "Перевод от " + transaction.sender
+          var rightText = "Перевод от " + transaction.sender.senderTgName
          var downText = transaction.amount
          var image = Design.icon.make(\.recieveCoinIcon)
-         if transaction.sender == currentUser {
+          if transaction.sender.senderTgName == currentUser {
             isSendingCoin = true
-            rightText = "Перевод для " + transaction.recipient
+              rightText = "Перевод для " + transaction.recipient.recipientTgName
             downText = "+" + transaction.amount
             image = Design.icon.make(\.sendCoinIcon)
          }

@@ -8,23 +8,75 @@
 import Foundation
 import ReactiveWorks
 
+struct Sender: Codable {
+    let senderId: Int
+    let senderTgName: String
+    let senderFirstName: String
+    let senderSurname: String
+    
+    enum CodingKeys: String, CodingKey {
+        case senderId = "sender_id"
+        case senderTgName = "sender_tg_name"
+        case senderFirstName = "sender_first_name"
+        case senderSurname = "sender_surname"
+    }
+}
+
+struct Recipient: Codable {
+    let recipientId: Int
+    let recipientTgName: String
+    let recipientFirstName: String
+    let recipientSurname: String
+    
+    enum CodingKeys: String, CodingKey {
+        case recipientId = "recipient_id"
+        case recipientTgName = "recipient_tg_name"
+        case recipientFirstName = "recipient_first_name"
+        case recipientSurname = "recipient_surname"
+    }
+}
+
+struct TransactionStatus: Codable {
+    let id: String
+    let name: String
+    
+    enum CodingKeys: String, CodingKey {
+        case id
+        case name
+    }
+}
+
+struct TransactionClass: Codable {
+    let id: String
+    let name: String
+    
+    enum CodingKeys: String, CodingKey {
+        case id
+        case name
+    }
+}
+
 struct Transaction: Codable {
     let id: Int
-    let sender: String
-    let recipient: String
-    let status: String
-    let transactionClass: String
+    let sender: Sender
+    let senderId: Int
+    let recipient: Recipient
+    let recipientId: Int
+    let transactionStatus: TransactionStatus
+    let transactionClass: TransactionClass
     let expireToCancel: String
     let amount: String
     let createdAt: String
     let updatedAt: String
     let reason: String
-    
+
     enum CodingKeys: String, CodingKey {
         case id
         case sender
+        case senderId = "sender_id"
         case recipient
-        case status
+        case recipientId = "recipient_id"
+        case transactionStatus = "transaction_status"
         case transactionClass = "transaction_class"
         case expireToCancel = "expire_to_cancel"
         case amount
