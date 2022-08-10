@@ -10,9 +10,15 @@ import UIKit
 
 // Протокол Фабрики цветов
 protocol ColorsProtocol: InitProtocol {
+    // Text colors
+    var textPrimary: UIColor { get }
+
+    // Backs
     var background: UIColor { get }
     var background1: UIColor { get }
     var background2: UIColor { get }
+
+    // Other
     var inactiveButton: UIColor { get }
     var errorColor: UIColor { get }
     var activeButtonColor: UIColor { get }
@@ -20,6 +26,7 @@ protocol ColorsProtocol: InitProtocol {
 
 // Фабрика цветов
 struct Colors: ColorsProtocol {
+    var textPrimary: UIColor { .black }
     var background: UIColor { .white }
     var background1: UIColor { .init(white: 0.93, alpha: 1) }
     var background2: UIColor { .init(hex: 0xf3eafcff) }
