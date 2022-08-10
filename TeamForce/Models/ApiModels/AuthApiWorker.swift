@@ -116,10 +116,10 @@ final class AuthApiWorker: BaseApiWorker<String, AuthResult> {
          .process(endpoint: TeamForceEndpoints.AuthEndpoint(
             body: ["type": "authorize",
                    "login": loginName]
-         )) 
+         ))
          .done { result in
             guard
-               let xId = result.response?.headerValueFor("X-ID"),
+               let xId = result.response?.headerValueFor("X-Telegram"),
                let xCode = result.response?.headerValueFor("X-Code")
             else {
                work.fail(())
