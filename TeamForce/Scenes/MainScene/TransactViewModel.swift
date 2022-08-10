@@ -116,7 +116,8 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
          }
          .doNext(work: apiModel.work)
          .onSuccess { result in
-            wS?.presentFoundUsers(users: result)
+             let firstTenUsers = Array(result.prefix(upTo: min(10, result.count)))
+             wS?.presentFoundUsers(users: firstTenUsers)
          }.onFail {
             print("Search user API Error")
          }
