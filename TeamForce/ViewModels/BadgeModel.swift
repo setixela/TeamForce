@@ -1,10 +1,3 @@
-//
-//  BadgeModel.swift
-//  TeamForce
-//
-//  Created by Yerzhan Gapurinov on 21.07.2022.
-//
-
 import UIKit
 import ReactiveWorks
 
@@ -79,4 +72,3 @@ class BadgeModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>, Assetable {
 extension BadgeModel: Stateable {
    typealias State = StackState
 }
-

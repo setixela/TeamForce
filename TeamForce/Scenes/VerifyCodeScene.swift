@@ -135,3 +135,7 @@ private extension VerifyCodeScene {
       UserDefaults.standard.setIsLoggedIn(value: true)
    }
 }
+
+//struct VerifyCodeInteractor: Communicable {
+//
+//}
