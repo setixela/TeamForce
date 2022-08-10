@@ -24,7 +24,8 @@ enum ProductionAsset: AssetProtocol {
          balanceApiModel: GetBalanceApiWorker(apiEngine: service.apiEngine),
          searchUserApiWorker: SearchUserApiWorker(apiEngine: service.apiEngine),
          sendCoinApiWorker: SendCoinApiWorker(apiEngine: service.apiEngine),
-         getTransactionsApiWorker: GetTransactionsApiWorker(apiEngine: service.apiEngine)
+         getTransactionsApiWorker: GetTransactionsApiWorker(apiEngine: service.apiEngine),
+         getTransactionByIdApiWorker: GetTransactionByIdApiWorker(apiEngine: service.apiEngine)
       )
    }
 }
@@ -39,6 +40,7 @@ struct Scenes: ScenesProtocol {
    var register: SceneModelProtocol { RegisterScene<ProductionAsset>() }
    var main: SceneModelProtocol { MainScene<ProductionAsset>() }
    var profile: SceneModelProtocol { ProfileViewModel<ProductionAsset>() }
+   var transactionDetail: SceneModelProtocol { TransactDeatilViewModel<ProductionAsset>() }
 }
 
 struct ProductionService: ServiceProtocol {

@@ -38,15 +38,19 @@ final class HistoryViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
    struct TempStore: KeyPathSetable {
       var currentUser: String = ""
       var transactions: [Transaction] = []
+      var sections: [[Transaction]] = []
    }
 
    private var store = TempStore()
 
    private lazy var getTransactionsUseCase = Asset.apiUseCase.getTransactions.work()
    private lazy var loadProfileUseCase = Asset.apiUseCase.loadProfile.work()
+   private lazy var getTransactionByIdUse = Asset.apiUseCase.getTransactionById.work()
+   private lazy var safeStringStorage = StringStorageWorker(engine: Asset.service.safeStringStorage)
 
    private lazy var currentUser: String = ""
    private lazy var transactions: [Transaction] = []
+   private lazy var tokens: (token: String, csrf: String) = ("", "")
 
    override func start() {
       weak var wS = self
@@ -84,24 +88,61 @@ final class HistoryViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
             guard let transactions = wS?.transactions else { return }
             wS?.configureTableModel(cells: transactions, selectedSegmentIndex: index)
          }
+       
+       safeStringStorage
+          .doAsync("token")
+          .onSuccess {
+             wS?.tokens.token = $0
+          }
+          .onFail {
+             print("token load failed")
+          }
+          .doInput("csrftoken")
+          .doNext(worker: safeStringStorage)
+          .onSuccess {
+             wS?.tokens.csrf = $0
+          }
+          .onFail {
+             print("csrftoken load failed")
+          }
+       
+       tableModel.onEvent(\.didSelectRow) { indexPath in
+           print("indexPath is \(indexPath)")
+           let id = self.store.sections[indexPath.section][indexPath.row]
+           print("id \(id.id)")
+           let request = TransactionRequest(token: self.tokens.token,
+                                            csrfToken: self.tokens.csrf,
+                                            id: id.id)
+           self.getTransactionByIdUse
+               .doAsync(request)
+               .onSuccess { transaction in
+                   print(transaction)
+                   print("success happend")
+                   ProductionAsset.router?.route(\.transactionDetail, navType: .push, payload: transaction)
+               }
+               .onFail {
+                   print("failed")
+               }
+       }
    }
 
    private func configureTableModel(cells: [Transaction], selectedSegmentIndex: Int) {
       var models: [UIViewModel] = []
+      var modelsWithTransactions: [Transaction] = []
       var sections: [TableSection] = []
-
+      var sectionWithTransactions: [[Transaction]] = []
       var isSendingCoin = false
       var prevDay = ""
 
       for transaction in cells {
-          print("here1")
          guard let currentDay = convertToDate(time: transaction.createdAt) else { return }
-         print("here2")
          if prevDay != currentDay {
             if models.count > 0 {
                sections.append(TableSection(title: prevDay,
                                             models: models))
+               sectionWithTransactions.append(modelsWithTransactions)
                models = []
+               modelsWithTransactions = []
             }
          }
 
@@ -132,6 +173,7 @@ final class HistoryViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
             selectedSegmentIndex == 0
          {
             models.append(cell)
+            modelsWithTransactions.append(transaction)
          }
 
          prevDay = currentDay
@@ -139,10 +181,12 @@ final class HistoryViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
       if !models.isEmpty {
          sections.append(TableSection(title: prevDay,
                                       models: models))
+         sectionWithTransactions.append(modelsWithTransactions)
          models = []
+         modelsWithTransactions = []
       }
-      print("sections count")
-      print(sections.count)
+       
+      self.store.sections = sectionWithTransactions
       tableModel
          .set(.backColor(.gray))
          .set(.sections(sections))

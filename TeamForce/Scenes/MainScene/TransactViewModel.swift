@@ -168,7 +168,7 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
       tableModel
          .onEvent(\.didSelectRow)
          .doMap { index in
-            wS?.foundUsers[index]
+             wS?.foundUsers[index.row]
          }.onSuccess { foundUser in
             let fullName = foundUser.name + " " + foundUser.surname
             wS?.recipientUsername = foundUser.tgName

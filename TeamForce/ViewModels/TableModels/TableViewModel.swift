@@ -20,7 +20,7 @@ enum TableViewState {
 
 struct TableViewEvents: InitProtocol {
    var cellForRow: Event<(UIViewModel) -> Void>?
-   var didSelectRow: Event<Int>?
+   var didSelectRow: Event<IndexPath>?
    var reloadData: Event<Void>?
 }
 
@@ -59,7 +59,7 @@ extension TableViewModel: Communicable {}
 
 extension TableViewModel: UITableViewDelegate {
    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-      sendEvent(\.didSelectRow, payload: indexPath.row)
+      sendEvent(\.didSelectRow, payload: indexPath)
       tableView.deselectRow(at: indexPath, animated: true)
    }
 }
