@@ -11,7 +11,7 @@ import UIKit
 
 final class MainScene<Asset: AssetProtocol>: BaseSceneModel<
   DefaultVCModel,
-  StackWithBottomPanelModel,
+  DoubleStacksModel,
   Asset,
   Void
 > {

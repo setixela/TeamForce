@@ -33,7 +33,7 @@ protocol IconsProtocol: InitProtocol,
 
    var clapHands: IconType { get }
 
-   var loginBackground: IconType { get }
+   var introlIllustrate: IconType { get }
 
    var girlOnSkateboard: IconType { get }
 
@@ -45,6 +45,7 @@ struct Icons: IconsProtocol {
    // brand
    var logo: String { "dt_logo" }
    var logoTitle: String { "dt_title" }
+   var introlIllustrate: String { "dt_main" }
 
    // other
    var upload2Fill: String { "upload-2-fill" }
@@ -61,8 +62,6 @@ struct Icons: IconsProtocol {
    var arrowDropUpLine: String { "arrow-drop-up-line" }
 
    var clapHands: String { "bloom_woman_and_man_clapped_their_hands_1" }
-
-   var loginBackground: String { "background_vector" }
 
    var girlOnSkateboard: String { "girl_on_skateboard" }
 

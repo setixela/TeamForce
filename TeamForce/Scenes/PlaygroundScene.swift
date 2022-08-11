@@ -26,6 +26,7 @@ final class PlaygroundScene<Asset: AssetProtocol>: BaseSceneModel<
             $0?.set(.color(Asset.Design.color.textPrimary))
          }
       }
+   private let logoTitle = LogoTitleVM<Asset>()
 
    override func start() {
       let viewModel = VizitkaDemo()
@@ -80,7 +81,7 @@ final class PlaygroundScene<Asset: AssetProtocol>: BaseSceneModel<
             Spacer(32),
             viewModel,
             Spacer(32),
-            title,
+            logoTitle,
             Spacer(32),
             titleSubtitle,
             Spacer(32),

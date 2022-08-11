@@ -12,7 +12,7 @@ import ReactiveWorks
 
 final class VerifyCodeScene<Asset: AssetProtocol>: BaseSceneModel<
    DefaultVCModel,
-   StackWithBottomPanelModel,
+   DoubleStacksModel,
    Asset,
    AuthResult
 > {

@@ -12,7 +12,7 @@ import ReactiveWorks
 
 final class LoginSuccessScene<Asset: AssetProtocol>: BaseSceneModel<
    DefaultVCModel,
-   StackWithBottomPanelModel,
+   DoubleStacksModel,
    Asset,
    String
 > {

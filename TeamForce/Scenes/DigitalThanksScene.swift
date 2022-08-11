@@ -12,11 +12,18 @@ import UIKit
 
 final class DigitalThanksScene<Asset: AssetProtocol>: BaseSceneModel<
    DefaultVCModel,
-   StackModel,
+   DoubleStacksModel,
    Asset,
    Void
 > {
    //
+
+   private lazy var logoTitle = HorizontalSquashed<LogoTitleVM<Asset>>()
+
+   private lazy var illustration = ImageViewModel()
+      .set(.image(Design.icon.make(\.introlIllustrate)))
+      .set(.width(300))
+
    private lazy var headerModel = Design.label.headline3
       .set(.numberOfLines(2))
       .set(.padding(.init(top: 0, left: 0, bottom: 40, right: 0)))
@@ -32,8 +39,6 @@ final class DigitalThanksScene<Asset: AssetProtocol>: BaseSceneModel<
       //
       configure()
 
-      mainViewModel.set(Design.State.mainView.default)
-
       enterButton
          .onEvent(\.didTap) {
             Asset.router?.route(\.login, navType: .push)
@@ -42,17 +47,24 @@ final class DigitalThanksScene<Asset: AssetProtocol>: BaseSceneModel<
 
    private func configure() {
       mainViewModel
-         //.set(Design.State.mainView.default)
-         .set(.alignment(.leading))
-         .set(.distribution(.equalSpacing))
          .set(.backColor(Design.color.background2))
+
+      mainViewModel.topStackModel
+         .set(Design.State.mainView.default)
+         .set(.alignment(.fill))
          .set(.models([
             Spacer(100),
-            LogoTitleVM<Asset>(),
+            logoTitle,
+            Spacer(24),
+            illustration,
             headerModel,
-            enterButton,
-            Spacer(16),
             Spacer()
+         ]))
+
+      mainViewModel.bottomStackModel
+         .set(Design.State.mainView.bottomPanel)
+         .set(.models([
+            enterButton
          ]))
    }
 }
@@ -73,7 +85,41 @@ final class LogoTitleVM<Asset: AssetProtocol>:
       } setRight: {
          $0
             .set(.image(Design.icon.make(\.logoTitle)))
-            .set(.padding(.left(12)))
+            .set(.padding(.init(top: 6, left: 12, bottom: 0, right: 0)))
       }
+   }
+}
+
+// обжимает модель с двух сторон, для того чтобы центрировать в .fill стеках
+final class HorizontalSquashed<VM: VMP>: BaseViewModel<UIStackView>, Stateable {
+   typealias State = StackState
+
+   let subModel = VM()
+
+   override func start() {
+      set(.axis(.horizontal))
+      set(.distribution(.equalCentering))
+      set(.models([
+         Spacer(),
+         subModel,
+         Spacer()
+      ]))
+   }
+}
+
+// обжимает модель с двух сторон, для того чтобы центрировать в .fill стеках
+final class VerticalSquashed<VM: VMP>: BaseViewModel<UIStackView>, Stateable {
+   typealias State = StackState
+
+   let subModel = VM()
+
+   override func start() {
+      set(.axis(.vertical))
+      set(.distribution(.equalCentering))
+      set(.models([
+         Spacer(),
+         subModel,
+         Spacer()
+      ]))
    }
 }
