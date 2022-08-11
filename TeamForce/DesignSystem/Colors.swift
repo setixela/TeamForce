@@ -10,6 +10,9 @@ import UIKit
 
 // Протокол Фабрики цветов
 protocol ColorsProtocol: InitProtocol {
+    // Brand colors
+    var brand: UIColor { get }
+
     // Text colors
     var textPrimary: UIColor { get }
 
@@ -20,23 +23,25 @@ protocol ColorsProtocol: InitProtocol {
 
     // Other
     var inactiveButton: UIColor { get }
-    var errorColor: UIColor { get }
-    var activeButtonColor: UIColor { get }
+    var error: UIColor { get }
+    var activeButton: UIColor { get }
 }
 
 // Фабрика цветов
 struct Colors: ColorsProtocol {
+    var brand: UIColor { .init(0xB47CE8ff) }
+
     var textPrimary: UIColor { .black }
     var background: UIColor { .white }
     var background1: UIColor { .init(white: 0.93, alpha: 1) }
-    var background2: UIColor { .init(hex: 0xf3eafcff) }
-    var inactiveButton: UIColor { .init(hex: 0xe9d5feff) }
-    var errorColor: UIColor { .init(hex: 0xf0260bff) }
-    var activeButtonColor: UIColor { .init(hex: 0x7F39BFFF) }
+    var background2: UIColor { .init(0xf3eafcff) }
+    var inactiveButton: UIColor { .init(0xe9d5feff) }
+    var error: UIColor { .init(0xf0260bff) }
+    var activeButton: UIColor { brand }
 }
 
 extension UIColor {
-    convenience init(hex: Int) {
+    convenience init(_ hex: Int) {
         let components = (
             r: CGFloat((hex >> 24) & 0xff) / 255,
             g: CGFloat((hex >> 16) & 0xff) / 255,

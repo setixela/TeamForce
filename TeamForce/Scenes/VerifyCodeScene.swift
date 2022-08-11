@@ -19,7 +19,7 @@ final class VerifyCodeScene<Asset: AssetProtocol>: BaseSceneModel<
    //
    private lazy var logoImage = ImageViewModel()
       .set(.size(.init(width: 65, height: 65)))
-      .set(.image(Design.icon.make(\.digitalThanksLogo)))
+      .set(.image(Design.icon.make(\.logo)))
       .set(.contentMode(.scaleAspectFit))
 
    private lazy var headerModel = Design.label.headline4

@@ -21,11 +21,15 @@ protocol TransactSceneWorksProtocol: SceneWorks {
 }
 
 final class TransactSceneWorks<Asset: AssetProtocol>: TransactSceneWorksProtocol {
+
    // api works
-   private lazy var searchUserWorker = SearchUserApiWorker(apiEngine: Asset.service.apiEngine)
-   private lazy var safeStringStorage = StringStorageWorker(engine: Asset.service.safeStringStorage)
-   private lazy var sendCoinApiWorker = SendCoinApiWorker(apiEngine: Asset.service.apiEngine)
-   private lazy var loadBalanceUseCase = Asset.apiUseCase.loadBalance
+   private lazy var apiUseCase = Asset.apiUseCase
+   private lazy var searchUserWorker = apiUseCase.userSearch.work()
+   private lazy var sendCoinApiWorker = apiUseCase.sendCoin.work()
+   private lazy var loadBalanceUseCase = apiUseCase.loadBalance.work()
+
+   private lazy var safeStringStorage = apiUseCase.safeStringStorage
+   
    // parsing input
    private lazy var coinInputParser = CoinInputCheckerModel()
    private lazy var reasonInputParser = ReasonCheckerModel()
@@ -45,7 +49,7 @@ final class TransactSceneWorks<Asset: AssetProtocol>: TransactSceneWorksProtocol
    lazy var coinInputParsing = coinInputParser.work
    lazy var reasonInputParsing = reasonInputParser.work
 
-   lazy var loadBalance = loadBalanceUseCase.work()
+   lazy var loadBalance = loadBalanceUseCase
 
    lazy var loadTokens = Work<Void, Void> { [weak self] work in
       self?.safeStringStorage
@@ -65,9 +69,7 @@ final class TransactSceneWorks<Asset: AssetProtocol>: TransactSceneWorksProtocol
    }
 
    lazy var searchUser = Work<String, [FoundUser]> { [weak self] work in
-      guard let self = self else {
-         return
-      }
+      guard let self = self else { return }
 
       let request = SearchUserRequest(
          data: work.unsafeInput,
@@ -87,9 +89,7 @@ final class TransactSceneWorks<Asset: AssetProtocol>: TransactSceneWorksProtocol
 
    lazy var sendCoins = Work<(amount: String, reason: String),
       (recipient: String, info: SendCoinRequest)> { [weak self] work in
-      guard let self = self else {
-         return
-      }
+      guard let self = self else { return }
 
       let request = SendCoinRequest(
          token: self.tempStorage.tokens.token,
@@ -110,9 +110,7 @@ final class TransactSceneWorks<Asset: AssetProtocol>: TransactSceneWorksProtocol
    }
 
    lazy var mapIndexToUser = Work<Int, FoundUser> { [weak self] work in
-      guard let self = self else {
-         return
-      }
+      guard let self = self else { return }
 
       let user = self.tempStorage.foundUsers[work.unsafeInput]
       self.tempStorage.recipientUsername = user.name

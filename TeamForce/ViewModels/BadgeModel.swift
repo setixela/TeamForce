@@ -59,11 +59,11 @@ class BadgeModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>, Assetable {
         case .error:
             errorLabel
                 .set(.hidden(false))
-                .set(.color(Design.color.errorColor))
+                .set(.color(Design.color.error))
             titleLabel
-                .set(.color(Design.color.errorColor))
+                .set(.color(Design.color.error))
             textFieldModel
-                .set(.borderColor(Design.color.errorColor))
+                .set(.borderColor(Design.color.error))
         }
     }
 

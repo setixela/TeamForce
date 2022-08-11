@@ -12,7 +12,7 @@ protocol DesignProtocol: InitProtocol {
     associatedtype Font: FontBuilderProtocol
     associatedtype Label: LabelBuilderProtocol
     associatedtype Button: ButtonBuilderProtocol
-    associatedtype State: ModelSetuperProtocol
+    associatedtype State: StateBuildersProtocol
     associatedtype Icon: IconsProtocol
     associatedtype Parameters: ParametersProtocol
     associatedtype Color: ColorsProtocol
@@ -37,7 +37,7 @@ protocol ParametersProtocol {
     static var contentPadding: UIEdgeInsets { get }
 }
 
-protocol ModelSetuperProtocol {
+protocol StateBuildersProtocol: Designable {
     associatedtype MainView: MainViewSetuperProtocol
     associatedtype Button: ButtonStateBuilderProtocol
 
@@ -45,11 +45,21 @@ protocol ModelSetuperProtocol {
     static var button: Button { get }
 }
 
-extension ModelSetuperProtocol {
+extension StateBuildersProtocol {
     static var mainView: MainView { .init() }
     static var button: Button { .init() }
 }
 
-protocol MainViewSetuperProtocol: InitProtocol {
+protocol MainViewSetuperProtocol: InitProtocol, Designable {
     var `default`: [StackState] { get }
+}
+
+struct MainViewStateBuilder<Design: DesignProtocol>: MainViewSetuperProtocol {
+    var `default`: [StackState] { [
+        .axis(.vertical),
+        .spacing(0),
+        .alignment(.fill),
+        .distribution(.fill),
+        .padding(UIEdgeInsets(top: 0, left: 16, bottom: 16, right: 16))
+    ] }
 }

@@ -84,8 +84,9 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
          }
          .doNext(work: works.loadBalance)
          .onSuccess {
-            wS?.transactInputViewModel
-               .set(.rightCaptionText(Text.title.make(\.availableThanks) + " " + String($0.distr.amount)))
+            wS?.transactInputViewModel.set(.rightCaptionText(
+               Text.title.make(\.availableThanks) + " " + String($0.distr.amount)
+            ))
          }
          .onFail {
             print("balance not loaded")
@@ -111,6 +112,7 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
       sendButton
          .onEvent(\.didTap)
          .doInput {
+            // TODO: - View запрещено, хранить текст в TempStore -> SceneWorks
             wS?.transactInputViewModel.textField.view.text
          }
          .doMap { (amount: String) in

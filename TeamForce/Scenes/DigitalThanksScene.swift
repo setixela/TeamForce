@@ -6,6 +6,7 @@
 //
 
 import ReactiveWorks
+import UIKit
 
 // MARK: - DigitalThanksScene
 
@@ -25,9 +26,6 @@ final class DigitalThanksScene<Asset: AssetProtocol>: BaseSceneModel<
    private lazy var enterButton = Design.button.default
       .set(.title(Text.button.make(\.enterButton)))
 
-   private lazy var registerButton = Design.button.transparent
-      .set(.title(Text.button.make(\.registerButton)))
-
    // MARK: - Start
 
    override func start() {
@@ -35,30 +33,47 @@ final class DigitalThanksScene<Asset: AssetProtocol>: BaseSceneModel<
       configure()
 
       mainViewModel.set(Design.State.mainView.default)
-      
+
       enterButton
          .onEvent(\.didTap) {
             Asset.router?.route(\.login, navType: .push)
          }
-
-      registerButton
-         .onEvent(\.didTap) {
-            Asset.router?.route(\.register, navType: .push)
-         }
    }
 
    private func configure() {
-      
       mainViewModel
-         .set(Design.State.mainView.default)
+         //.set(Design.State.mainView.default)
+         .set(.alignment(.leading))
+         .set(.distribution(.equalSpacing))
          .set(.backColor(Design.color.background2))
          .set(.models([
             Spacer(100),
+            LogoTitleVM<Asset>(),
             headerModel,
             enterButton,
             Spacer(16),
-            registerButton,
             Spacer()
          ]))
+   }
+}
+
+final class LogoTitleVM<Asset: AssetProtocol>:
+   Combos<SComboMR<ImageViewModel, ImageViewModel>>,
+   Assetable
+{
+   let mainModel: ImageViewModel = .init()
+   let rightModel: ImageViewModel = .init()
+
+   override func start() {
+      setMain {
+         $0
+            .set(.image(Design.icon.make(\.logo)))
+            .set(.size(.square(32)))
+
+      } setRight: {
+         $0
+            .set(.image(Design.icon.make(\.logoTitle)))
+            .set(.padding(.left(12)))
+      }
    }
 }
