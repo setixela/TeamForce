@@ -114,7 +114,7 @@ extension MainScene {
   private func presentModel(_ model: UIViewModel?) {
     guard let model = model else { return }
 
-    model.start()
+   // model.start()
     mainViewModel.topStackModel
       .set(Design.State.mainView.default)
       .set(.models([

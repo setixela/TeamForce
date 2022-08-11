@@ -133,16 +133,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "54A2837E-FF06-4326-80B9-977E4DC4A63C"
+            uuid = "4A832AE7-A614-4F42-8D84-91D21F3293F2"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "../ReactiveWorks/Sources/ReactiveWorks/Works/Work.swift"
+            filePath = "TeamForce/Scenes/MainScene/TransactViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "77"
-            endingLineNumber = "77"
-            landmarkName = "onSuccess(_:)"
+            startingLineNumber = "76"
+            endingLineNumber = "76"
+            landmarkName = "start()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
