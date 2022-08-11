@@ -12,22 +12,21 @@ protocol TransactSceneWorksProtocol: SceneWorks {
    var loadBalance: Work<Void, Balance> { get }
    var searchUser: Work<String, [FoundUser]> { get }
    var sendCoins: Work<(amount: String, reason: String), (recipient: String, info: SendCoinRequest)> { get }
-
    // data works
    var loadTokens: Work<Void, Void> { get }
    var mapIndexToUser: Work<Int, FoundUser> { get }
-
    // parsing input
    var coinInputParsing: Work<String, String> { get }
    var reasonInputParsing: Work<String, String> { get }
 }
 
 final class TransactSceneWorks<Asset: AssetProtocol>: TransactSceneWorksProtocol {
+   // api works
    private lazy var searchUserWorker = SearchUserApiWorker(apiEngine: Asset.service.apiEngine)
    private lazy var safeStringStorage = StringStorageWorker(engine: Asset.service.safeStringStorage)
    private lazy var sendCoinApiWorker = SendCoinApiWorker(apiEngine: Asset.service.apiEngine)
    private lazy var loadBalanceUseCase = Asset.apiUseCase.loadBalance
-
+   // parsing input
    private lazy var coinInputParser = CoinInputCheckerModel()
    private lazy var reasonInputParser = ReasonCheckerModel()
 
