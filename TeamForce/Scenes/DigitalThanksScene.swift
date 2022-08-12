@@ -80,12 +80,12 @@ final class LogoTitleVM<Asset: AssetProtocol>:
       setMain {
          $0
             .set(.image(Design.icon.make(\.logo)))
-            .set(.size(.square(32)))
+            .set(.size(.square(40)))
 
       } setRight: {
          $0
             .set(.image(Design.icon.make(\.logoTitle)))
-            .set(.padding(.init(top: 6, left: 12, bottom: 0, right: 0)))
+            .set(.padding(.init(top: 8, left: 12, bottom: 4, right: 0)))
       }
    }
 }

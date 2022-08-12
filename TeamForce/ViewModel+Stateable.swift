@@ -183,3 +183,35 @@ extension UIEdgeInsets {
       UIEdgeInsets(top: 0, left: offset, bottom: 0, right: 0)
    }
 }
+
+extension ViewModelProtocol where Self: Stateable, View: ButtonExtended {
+   func applyState(_ state: ButtonState) {
+      switch state {
+      case .enabled(let value):
+         view.isEnabled = value
+      case .selected(let value):
+         view.isSelected = value
+      case .title(let title):
+         view.setTitle(title, for: .normal)
+      case .textColor(let color):
+         view.setTitleColor(color, for: .normal)
+      case .backColor(let color):
+         view.backgroundColor = color
+      case .cornerRadius(let radius):
+         view.layer.cornerRadius = radius
+      case .height(let height):
+         view.addAnchors.constHeight(height)
+      case .font(let font):
+         view.titleLabel?.font = font
+      case .image(let image):
+         view.setImage(image, for: .normal)
+      case .tint(let value):
+         view.tintColor = value
+         view.imageView?.tintColor = value
+      case .vertical(let value):
+         view.isVertical = value
+      case .hidden(let value):
+         view.isHidden = value
+      }
+   }
+}

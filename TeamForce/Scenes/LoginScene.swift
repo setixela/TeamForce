@@ -32,7 +32,7 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
 
    private let nextButton = Design.button.inactive
       .set(.title(Text.button.make(\.getCodeButton)))
-
+     
    private let badgeModel = BadgeModel<Asset>()
 
    // MARK: - Use Cases

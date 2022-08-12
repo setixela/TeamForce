@@ -123,7 +123,7 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
          .doNext(work: works.sendCoins)
          .onSuccess { tuple in
             wS?.transactionStatusView.start()
-            guard
+            guard // ))) значит этому тут не место)) надо придумать механизм
                let superview = wS?.view.superview?.superview?.superview?.superview?.superview
             else { return }
             let input = StatusViewInput(baseView: superview,
