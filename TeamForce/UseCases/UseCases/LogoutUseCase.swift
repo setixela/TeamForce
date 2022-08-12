@@ -12,7 +12,7 @@ struct LogoutUseCase: UseCaseProtocol {
    let safeStringStorage: StringStorageWorker
    let logoutApiModel: LogoutApiWorker
 
-   func work() -> Work<Void, Void> {
+   var work: Work<Void, Void> {
       Work<Void, Void> { work in
          safeStringStorage
             .doAsync("token") // TODO: - Token key input

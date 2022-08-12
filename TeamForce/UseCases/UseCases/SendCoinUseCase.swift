@@ -11,7 +11,7 @@ import ReactiveWorks
 struct SendCoinUseCase: UseCaseProtocol {
    let sendCoinApiModel: SendCoinApiWorker
 
-    func work() -> Work<SendCoinRequest, Void> {
+   var work: Work<SendCoinRequest, Void> {
         sendCoinApiModel.work
     }
 }

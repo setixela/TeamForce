@@ -61,7 +61,7 @@ final class BalanceViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
    // MARK: - Services
 
    private lazy var useCase = Asset.apiUseCase
-   private lazy var loadBalanceUseCase = useCase.loadBalance.work()
+   private lazy var loadBalanceUseCase = useCase.loadBalance.work
 
    private var balance: Balance?
 

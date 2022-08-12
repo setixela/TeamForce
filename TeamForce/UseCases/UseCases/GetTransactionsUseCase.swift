@@ -13,7 +13,7 @@ struct GetTransactionsUseCase: UseCaseProtocol {
    let safeStringStorage: StringStorageWorker
    let getTransactionsApiWorker: GetTransactionsApiWorker
 
-   func work() -> Work<Void, [Transaction]> {
+   var work: Work<Void, [Transaction]> {
       Work<Void, [Transaction]>() { work in
          safeStringStorage
             .doAsync("token")

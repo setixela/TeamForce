@@ -43,7 +43,7 @@ final class TransactSceneWorks<Asset: AssetProtocol>: TransactSceneWorksProtocol
    lazy var coinInputParsing = coinInputParser.work
    lazy var reasonInputParsing = reasonInputParser.work
 
-   lazy var loadBalance = apiUseCase.loadBalance.work()
+   lazy var loadBalance = apiUseCase.loadBalance.work
 
    lazy var loadTokens = Work<Void, Void> { [weak self] work in
       self?.apiUseCase.safeStringStorage
@@ -71,7 +71,7 @@ final class TransactSceneWorks<Asset: AssetProtocol>: TransactSceneWorksProtocol
          csrfToken: self.tempStorage.tokens.csrf
       )
 
-      self.apiUseCase.userSearch.work()
+      self.apiUseCase.userSearch.work
          .doAsync(request)
          .onSuccess { result in
             self.tempStorage.foundUsers = result
@@ -93,7 +93,7 @@ final class TransactSceneWorks<Asset: AssetProtocol>: TransactSceneWorksProtocol
          reason: work.unsafeInput.reason
       )
 
-      self.apiUseCase.sendCoin.work()
+      self.apiUseCase.sendCoin.work
          .doAsync(request)
          .onSuccess {
             let tuple = (self.tempStorage.recipientUsername, request)

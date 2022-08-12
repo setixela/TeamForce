@@ -5,8 +5,8 @@
 //  Created by Aleksandr Solovyev on 01.07.2022.
 //
 
-import UIKit
 import ReactiveWorks
+import UIKit
 
 struct SideBarEvents: InitProtocol {
    var presentOnScene: Event<UIView>?
@@ -88,7 +88,7 @@ final class SideBarModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
 extension SideBarModel {
    private func configureLoadProfileUseCase() {
       useCase.loadProfile
-         .work()
+         .work
          .onSuccess { [weak self] user in
             self?.userModel.userName.set(.text(user.profile.tgName))
             self?.userModel.nickName.set(.text(user.profile.tgId))
@@ -97,9 +97,6 @@ extension SideBarModel {
             print("profile loading error")
          }
    }
-
-
-
 
    private func configureLogoutUseCase() {
       item4

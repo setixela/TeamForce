@@ -52,7 +52,7 @@ final class TransactInteractor<Asset: AssetProtocol>: Interactor {
    private lazy var searchUserWorker = SearchUserApiWorker(apiEngine: Asset.service.apiEngine)
    private lazy var safeStringStorage = StringStorageWorker(engine: Asset.service.safeStringStorage)
    private lazy var sendCoinApiWorker = SendCoinApiWorker(apiEngine: Asset.service.apiEngine)
-   private lazy var loadBalanceUseCase = apiUseCase.loadBalance.work()
+   private lazy var loadBalanceUseCase = apiUseCase.loadBalance.work
 
    private lazy var coinInputParser = CoinInputCheckerModel()
    private lazy var reasonInputParser = ReasonCheckerModel()
