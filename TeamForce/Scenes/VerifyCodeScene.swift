@@ -66,6 +66,7 @@ final class VerifyCodeScene<Asset: AssetProtocol>: BaseSceneModel<
          .onFail {
             print("VerifyRequest init error")
          }
+         //
          .doNext(worker: verifyApi)
          .onSuccess { result in
             weakSelf?.completeVerify(result: result)
@@ -135,7 +136,3 @@ private extension VerifyCodeScene {
       UserDefaults.standard.setIsLoggedIn(value: true)
    }
 }
-
-//struct VerifyCodeInteractor: Communicable {
-//
-//}

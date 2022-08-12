@@ -28,7 +28,7 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
       .set(.alignment(.left))
       .set(.padding(.init(top: 22, left: 0, bottom: 26, right: 0)))
 
-   private lazy var userSearchModel = TextFieldModel()
+   private lazy var userSearchTextField = TextFieldModel()
       .set(.backColor(.init(red: 0.33, green: 0.33, blue: 0.33, alpha: 0.08)))
       .set(.height(48))
       .set(.placeholder(Text.title.make(\.chooseRecipient)))
@@ -77,10 +77,10 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
       works.loadTokens
          .doAsync()
          .onSuccess {
-            wS?.userSearchModel.set(.hidden(false))
+            wS?.userSearchTextField.set(.hidden(false))
          }
          .onFail {
-            wS?.userSearchModel.set(.hidden(true))
+            wS?.userSearchTextField.set(.hidden(true))
          }
          .doNext(work: works.loadBalance)
          .onSuccess {
@@ -92,13 +92,13 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
             print("balance not loaded")
          }
 
-      userSearchModel
+      userSearchTextField
          .onEvent(\.didEditingChanged)
          .onSuccess {
             wS?.hideHUD()
          }
          .doNext(usecase: IsNotEmpty())
-         .onSuccess { _ in
+         .onSuccess {
             wS?.tableModel.set(.hidden(true))
          }
          .doNext(work: works.searchUser)
@@ -108,6 +108,7 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
          .onFail {
             print("Search user API Error")
          }
+
 
       sendButton
          .onEvent(\.didTap)
@@ -140,7 +141,7 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
          .doNext(work: works.mapIndexToUser)
          .onSuccess { foundUser in
             let fullName = foundUser.name + " " + foundUser.surname
-            wS?.userSearchModel.set(.text(fullName))
+            wS?.userSearchTextField.set(.text(fullName))
             wS?.tableModel.set(.hidden(true))
             wS?.transactInputViewModel.set(.hidden(false))
             wS?.sendButton.set(.hidden(false))
@@ -157,7 +158,7 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
       set(.spacing(8))
       set(.models([
          digitalThanksTitle,
-         userSearchModel,
+         userSearchTextField,
          transactInputViewModel,
          reasonTextView,
          sendButton,
@@ -167,7 +168,7 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
    }
 
    private func setToInitialCondition() {
-      userSearchModel.set(.text(""))
+      userSearchTextField.set(.text(""))
       transactInputViewModel.set(.hidden(true))
       transactInputViewModel.textField.set(.text(""))
       sendButton.set(.hidden(true))

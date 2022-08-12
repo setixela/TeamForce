@@ -21,15 +21,9 @@ protocol TransactSceneWorksProtocol: SceneWorks {
 }
 
 final class TransactSceneWorks<Asset: AssetProtocol>: TransactSceneWorksProtocol {
-
    // api works
    private lazy var apiUseCase = Asset.apiUseCase
-   private lazy var searchUserWorker = apiUseCase.userSearch.work()
-   private lazy var sendCoinApiWorker = apiUseCase.sendCoin.work()
-   private lazy var loadBalanceUseCase = apiUseCase.loadBalance.work()
 
-   private lazy var safeStringStorage = apiUseCase.safeStringStorage
-   
    // parsing input
    private lazy var coinInputParser = CoinInputCheckerModel()
    private lazy var reasonInputParser = ReasonCheckerModel()
@@ -49,17 +43,17 @@ final class TransactSceneWorks<Asset: AssetProtocol>: TransactSceneWorksProtocol
    lazy var coinInputParsing = coinInputParser.work
    lazy var reasonInputParsing = reasonInputParser.work
 
-   lazy var loadBalance = loadBalanceUseCase
+   lazy var loadBalance = apiUseCase.loadBalance.work()
 
    lazy var loadTokens = Work<Void, Void> { [weak self] work in
-      self?.safeStringStorage
+      self?.apiUseCase.safeStringStorage
          .doAsync("token")
          .onSuccess {
             self?.tempStorage.tokens.token = $0
          }.onFail {
             work.fail(())
          }.doInput("csrftoken")
-         .doNext(worker: self?.safeStringStorage)
+         .doNext(worker: self?.apiUseCase.safeStringStorage)
          .onSuccess {
             self?.tempStorage.tokens.csrf = $0
             work.success(result: ())
@@ -77,7 +71,7 @@ final class TransactSceneWorks<Asset: AssetProtocol>: TransactSceneWorksProtocol
          csrfToken: self.tempStorage.tokens.csrf
       )
 
-      self.searchUserWorker
+      self.apiUseCase.userSearch.work()
          .doAsync(request)
          .onSuccess { result in
             self.tempStorage.foundUsers = result
@@ -99,7 +93,7 @@ final class TransactSceneWorks<Asset: AssetProtocol>: TransactSceneWorksProtocol
          reason: work.unsafeInput.reason
       )
 
-      self.sendCoinApiWorker
+      self.apiUseCase.sendCoin.work()
          .doAsync(request)
          .onSuccess {
             let tuple = (self.tempStorage.recipientUsername, request)
