@@ -26,36 +26,34 @@ extension ViewModelProtocol {
    }
 }
 
-// обжимает модель с двух сторон, для того чтобы центрировать в .fill стеках
+// Центрирует в .fill стеках
 final class CenteredX<VM: VMP>: BaseViewModel<UIStackView>, Stateable, VMWrapper {
    typealias State = StackState
 
    lazy var subModel = VM()
 
    override func start() {
-      set(.axis(.horizontal))
-      set(.distribution(.equalCentering))
+      set(.axis(.vertical))
+      set(.alignment(.center))
+      set(.distribution(.equalSpacing))
       set(.models([
-         Spacer(),
-         subModel,
-         Spacer()
+         subModel
       ]))
    }
 }
 
-// обжимает модель с двух сторон, для того чтобы центрировать в .fill стеках
+// Центрирует в .fill стеках
 final class CenteredY<VM: VMP>: BaseViewModel<UIStackView>, Stateable, VMWrapper {
    typealias State = StackState
 
    lazy var subModel = VM()
 
    override func start() {
-      set(.axis(.vertical))
-      set(.distribution(.equalCentering))
+      set(.axis(.horizontal))
+      set(.alignment(.center))
+      set(.distribution(.equalSpacing))
       set(.models([
-         Spacer(),
-         subModel,
-         Spacer()
+         subModel
       ]))
    }
 }

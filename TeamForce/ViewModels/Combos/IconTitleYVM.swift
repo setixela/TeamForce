@@ -8,7 +8,4 @@
 import ReactiveWorks
 import UIKit
 
-class IconTitleYVM: Combos<SComboMR<ImageViewModel, LabelModel>> {
-   let mainModel: ImageViewModel = .init()
-   let rightModel: LabelModel = .init()
-}
+class IconTitleYVM: Combos<SComboMR<ImageViewModel, LabelModel>> {}

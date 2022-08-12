@@ -472,12 +472,12 @@
 			isa = PBXGroup;
 			children = (
 				19017B6628A697DF00B06345 /* AligningModels.swift */,
-				19017B7228A69CD400B06345 /* DTLogoTitleXVM.swift */,
-				19017B7028A69CB100B06345 /* IconTitleYVM.swift */,
-				19017B6E28A69C7800B06345 /* TitleSubtitleCaptionXVM.swift */,
-				19017B6C28A698BC00B06345 /* TitleSubtitleCaptionYVM.swift */,
 				19017B6A28A6989000B06345 /* TitleSubtitleYVM.swift */,
 				19017B6828A6986F00B06345 /* TitleSubtitleXVM.swift */,
+				19017B6E28A69C7800B06345 /* TitleSubtitleCaptionXVM.swift */,
+				19017B6C28A698BC00B06345 /* TitleSubtitleCaptionYVM.swift */,
+				19017B7228A69CD400B06345 /* DTLogoTitleXVM.swift */,
+				19017B7028A69CB100B06345 /* IconTitleYVM.swift */,
 			);
 			path = Combos;
 			sourceTree = "<group>";

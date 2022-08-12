@@ -32,7 +32,7 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
 
    private let nextButton = Design.button.inactive
       .set(.title(Text.button.make(\.getCodeButton)))
-     
+
    private let badgeModel = BadgeModel<Asset>()
 
    // MARK: - Use Cases
@@ -81,7 +81,7 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
          }
          .doNext(worker: TelegramNickCheckerModel())
          .onSuccess { text in
-            loginName = text //String(text.dropFirst())
+            loginName = text // String(text.dropFirst())
             weakSelf?.badgeModel.textFieldModel.set(.text(text))
             weakSelf?.nextButton.set(Design.State.button.default)
          }
@@ -94,22 +94,37 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
 
    private func configure() {
       mainViewModel
-         .set(.backColor(Design.color.background2))
+         .set(.backColor(Design.color.background))
 
       mainViewModel.topStackModel
+         .set(Design.State.mainView.default)
+         .set(.alignment(.leading))
          .set(.models([
-            Spacer(48),
-            coverViewModel
+            Spacer(Design.Parameters.globalTopOffset),
+            DTLogoTitleXVM<Asset>(),//.centeredX(),
+            Spacer(36),
+            TitleSubtitleYVM<Design>()
+               .setMain {
+                  $0
+                     .set(.alignment(.left))
+                     .set(.text(Text.title.make(\.enter)))
+               } setDown: {
+                  $0
+                     .set(.text(Text.title.make(\.enterTelegramName)))
+                     .set(.alignment(.left))
+               },
+            Spacer(),
          ]))
 
       mainViewModel.bottomStackModel
          .set(Design.State.mainView.default)
          .set(.models([
-            headerModel,
-            subtitleModel,
-            badgeModel,
+            // logoTitle,
+//            headerModel,
+//            subtitleModel,
+//            badgeModel,
             Spacer(),
-            nextButton
+//            nextButton
          ]))
    }
 }

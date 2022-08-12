@@ -28,10 +28,12 @@ protocol ParametersProtocol {
    static var cornerRadius: CGFloat { get }
    static var contentPadding: UIEdgeInsets { get }
    static var titleSubtitleOffset: CGFloat { get }
+   static var globalTopOffset: CGFloat { get }
 }
 
 struct GlobalParameters: ParametersProtocol {
    static let cornerRadius: CGFloat = 10
    static var contentPadding: UIEdgeInsets { .init(top: 12, left: 16, bottom: 12, right: 16) }
    static var titleSubtitleOffset: CGFloat { 16 }
+   static var globalTopOffset: CGFloat { 0 }
 }

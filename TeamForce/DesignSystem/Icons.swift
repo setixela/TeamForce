@@ -44,7 +44,7 @@ protocol IconsProtocol: InitProtocol,
 struct Icons: IconsProtocol {
    // brand
    var logo: String { "dt_logo" }
-   var logoTitle: String { "dt_title" }
+   var logoTitle: String { "dt_logo_title" }
    var introlIllustrate: String { "dt_main" }
 
    // other

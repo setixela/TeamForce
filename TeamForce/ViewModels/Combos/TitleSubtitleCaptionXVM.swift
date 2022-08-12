@@ -11,7 +11,10 @@ class TitleSubtitleCaptionXVM<Design: DesignProtocol>:
    Combos<SComboMRR<LabelModel, LabelModel, LabelModel>>,
    Designable
 {
-   override func start() {
+
+   required init() {
+      super.init()
+      
       setMain {
          $0
             .set(Design.label.state.title)

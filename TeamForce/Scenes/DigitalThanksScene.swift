@@ -18,7 +18,7 @@ final class DigitalThanksScene<Asset: AssetProtocol>: BaseSceneModel<
 > {
    //
    private lazy var logoTitle = DTLogoTitleXVM<Asset>()
-      .centeredX()
+     .centeredX()
 
    private lazy var illustration = ImageViewModel()
       .set(.image(Design.icon.make(\.introlIllustrate)))
@@ -30,7 +30,6 @@ final class DigitalThanksScene<Asset: AssetProtocol>: BaseSceneModel<
       } setDown: {
          $0.set(.text(Text.title.make(\.digitalThanksAbout)))
       }
-      .centeredX()
 
    private lazy var enterButton = Design.button.default
       .set(.title(Text.button.make(\.enterButton)))
@@ -53,9 +52,8 @@ final class DigitalThanksScene<Asset: AssetProtocol>: BaseSceneModel<
 
       mainViewModel.topStackModel
          .set(Design.State.mainView.default)
-         .set(.alignment(.fill))
          .set(.models([
-            Spacer(64),
+            Spacer(Design.Parameters.globalTopOffset),
             logoTitle,
             Spacer(32),
             illustration,
