@@ -177,3 +177,9 @@ extension ViewModelProtocol where Self: Stateable, View: PaddingImageView {
       }
    }
 }
+
+extension UIEdgeInsets {
+   static func left(_ offset: CGFloat) -> UIEdgeInsets {
+      UIEdgeInsets(top: 0, left: offset, bottom: 0, right: 0)
+   }
+}

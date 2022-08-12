@@ -12,14 +12,14 @@ import UIKit
 
 final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
    DefaultVCModel,
-   StackWithBottomPanelModel,
+   DoubleStacksModel,
    Asset,
    Void
 > {
    // MARK: - View Models
 
    private let coverViewModel = CoverViewModel<Asset>()
-      .set(.backImage(Design.icon.make(\.loginBackground)))
+      .set(.backImage(Design.icon.make(\.introlIllustrate)))
 
    private let headerModel = Design.label.headline4
       .set(.padding(.init(top: 12, left: 0, bottom: 24, right: 0)))

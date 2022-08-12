@@ -12,7 +12,7 @@ struct LoadBalanceUseCase: UseCaseProtocol {
    let safeStringStorage: StringStorageWorker
    let balanceApiModel: GetBalanceApiWorker
 
-   func work() -> Work<Void, Balance> {
+   var work: Work<Void, Balance> {
       Work<Void, Balance>() { work in
          safeStringStorage
             .doAsync("token")

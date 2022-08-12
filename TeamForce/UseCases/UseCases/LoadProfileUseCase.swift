@@ -12,7 +12,7 @@ struct LoadProfileUseCase: UseCaseProtocol {
    let safeStringStorage: StringStorageWorker
    let userProfileApiModel: ProfileApiWorker
 
-   func work() -> Work<Void, UserData> {
+   var work: Work<Void, UserData> {
       Work<Void, UserData> { work in
          safeStringStorage
             .doAsync("token")

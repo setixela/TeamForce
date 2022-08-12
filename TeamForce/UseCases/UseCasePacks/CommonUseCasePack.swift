@@ -6,8 +6,12 @@
 //
 
 import Foundation
+import ReactiveWorks
 
-struct ApiUseCase: ApiUseCaseRegistry {
+struct ApiUseCase: ApiUseCaseRegistry, WorkBasket {
+
+   var basket: [Any] = []
+
    // MARK: - UseCases
 
    var loadProfile: LoadProfileUseCase {
@@ -29,10 +33,10 @@ struct ApiUseCase: ApiUseCaseRegistry {
    var userSearch: UserSearchUseCase {
       .init(searchUserApiModel: searchUserApiWorker)
    }
-    
-    var getTransactions: GetTransactionsUseCase {
-        .init(safeStringStorage: safeStringStorage, getTransactionsApiWorker: getTransactionsApiWorker)
-    }
+
+   var getTransactions: GetTransactionsUseCase {
+      .init(safeStringStorage: safeStringStorage, getTransactionsApiWorker: getTransactionsApiWorker)
+   }
 
    var sendCoin: SendCoinUseCase {
       .init(sendCoinApiModel: sendCoinApiWorker)

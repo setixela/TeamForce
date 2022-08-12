@@ -26,7 +26,7 @@ struct UserSearchUseCase: UseCaseProtocol {
 
    let searchUserApiModel: SearchUserApiWorker
 
-   func work() -> Work<SearchUserRequest, [FoundUser]> {
+   var work: Work<SearchUserRequest, [FoundUser]> {
       searchUserApiModel.work
    }
 }

@@ -42,8 +42,10 @@ final class HistoryViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
 
    private var store = TempStore()
 
-   private lazy var getTransactionsUseCase = Asset.apiUseCase.getTransactions.work()
-   private lazy var loadProfileUseCase = Asset.apiUseCase.loadProfile.work()
+   private lazy var apiUseCase = Asset.apiUseCase
+
+   private lazy var getTransactionsUseCase = apiUseCase.getTransactions.work
+   private lazy var loadProfileUseCase = apiUseCase.loadProfile.work
 
    private lazy var currentUser: String = ""
    private lazy var transactions: [Transaction] = []

@@ -12,7 +12,7 @@ import ReactiveWorks
 
 final class RegisterScene<Asset: AssetProtocol>: BaseSceneModel<
    DefaultVCModel,
-   StackWithBottomPanelModel,
+   DoubleStacksModel,
    Asset,
    Void
 > {

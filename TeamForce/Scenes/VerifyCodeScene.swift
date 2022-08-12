@@ -12,14 +12,14 @@ import ReactiveWorks
 
 final class VerifyCodeScene<Asset: AssetProtocol>: BaseSceneModel<
    DefaultVCModel,
-   StackWithBottomPanelModel,
+   DoubleStacksModel,
    Asset,
    AuthResult
 > {
    //
    private lazy var logoImage = ImageViewModel()
       .set(.size(.init(width: 65, height: 65)))
-      .set(.image(Design.icon.make(\.digitalThanksLogo)))
+      .set(.image(Design.icon.make(\.logo)))
       .set(.contentMode(.scaleAspectFit))
 
    private lazy var headerModel = Design.label.headline4
@@ -66,6 +66,7 @@ final class VerifyCodeScene<Asset: AssetProtocol>: BaseSceneModel<
          .onFail {
             print("VerifyRequest init error")
          }
+         //
          .doNext(worker: verifyApi)
          .onSuccess { result in
             weakSelf?.completeVerify(result: result)
@@ -135,7 +136,3 @@ private extension VerifyCodeScene {
       UserDefaults.standard.setIsLoggedIn(value: true)
    }
 }
-
-//struct VerifyCodeInteractor: Communicable {
-//
-//}

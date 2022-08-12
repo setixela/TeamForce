@@ -10,7 +10,7 @@ import UIKit
 
 final class ProfileViewModel<Asset: AssetProtocol>: BaseSceneModel<
    DefaultVCModel,
-   StackWithBottomPanelModel,
+   DoubleStacksModel,
    Asset,
    Void
 > {

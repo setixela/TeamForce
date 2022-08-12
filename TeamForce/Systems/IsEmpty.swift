@@ -12,7 +12,7 @@ final class IsEmpty<T: Collection>: UseCaseProtocol {
    typealias In = T
    typealias Out = T
 
-   func work() -> Work<In, Out> {
+   var work: Work<In, Out> {
       .init {
          if $0.unsafeInput.isEmpty {
             $0.success(result: $0.unsafeInput)
@@ -22,3 +22,19 @@ final class IsEmpty<T: Collection>: UseCaseProtocol {
       }
    }
 }
+
+final class IsNotEmpty<T: Collection>: UseCaseProtocol {
+   typealias In = T
+   typealias Out = T
+
+   var work: Work<In, Out> {
+      .init {
+         if !$0.unsafeInput.isEmpty {
+            $0.success(result: $0.unsafeInput)
+         } else {
+            $0.failThenNext($0.unsafeInput)
+         }
+      }
+   }
+}
+

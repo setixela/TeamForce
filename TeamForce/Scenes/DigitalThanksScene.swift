@@ -6,16 +6,24 @@
 //
 
 import ReactiveWorks
+import UIKit
 
 // MARK: - DigitalThanksScene
 
 final class DigitalThanksScene<Asset: AssetProtocol>: BaseSceneModel<
    DefaultVCModel,
-   StackModel,
+   DoubleStacksModel,
    Asset,
    Void
 > {
    //
+
+   private lazy var logoTitle = HorizontalSquashed<LogoTitleVM<Asset>>()
+
+   private lazy var illustration = ImageViewModel()
+      .set(.image(Design.icon.make(\.introlIllustrate)))
+      .set(.width(300))
+
    private lazy var headerModel = Design.label.headline3
       .set(.numberOfLines(2))
       .set(.padding(.init(top: 0, left: 0, bottom: 40, right: 0)))
@@ -25,40 +33,93 @@ final class DigitalThanksScene<Asset: AssetProtocol>: BaseSceneModel<
    private lazy var enterButton = Design.button.default
       .set(.title(Text.button.make(\.enterButton)))
 
-   private lazy var registerButton = Design.button.transparent
-      .set(.title(Text.button.make(\.registerButton)))
-
    // MARK: - Start
 
    override func start() {
       //
       configure()
 
-      mainViewModel.set(Design.State.mainView.default)
-      
       enterButton
          .onEvent(\.didTap) {
             Asset.router?.route(\.login, navType: .push)
          }
-
-      registerButton
-         .onEvent(\.didTap) {
-            Asset.router?.route(\.register, navType: .push)
-         }
    }
 
    private func configure() {
-      
       mainViewModel
-         .set(Design.State.mainView.default)
          .set(.backColor(Design.color.background2))
+
+      mainViewModel.topStackModel
+         .set(Design.State.mainView.default)
+         .set(.alignment(.fill))
          .set(.models([
             Spacer(100),
+            logoTitle,
+            Spacer(24),
+            illustration,
             headerModel,
-            enterButton,
-            Spacer(16),
-            registerButton,
             Spacer()
          ]))
+
+      mainViewModel.bottomStackModel
+         .set(Design.State.mainView.bottomPanel)
+         .set(.models([
+            enterButton
+         ]))
+   }
+}
+
+final class LogoTitleVM<Asset: AssetProtocol>:
+   Combos<SComboMR<ImageViewModel, ImageViewModel>>,
+   Assetable
+{
+   let mainModel: ImageViewModel = .init()
+   let rightModel: ImageViewModel = .init()
+
+   override func start() {
+      setMain {
+         $0
+            .set(.image(Design.icon.make(\.logo)))
+            .set(.size(.square(32)))
+
+      } setRight: {
+         $0
+            .set(.image(Design.icon.make(\.logoTitle)))
+            .set(.padding(.init(top: 6, left: 12, bottom: 0, right: 0)))
+      }
+   }
+}
+
+// обжимает модель с двух сторон, для того чтобы центрировать в .fill стеках
+final class HorizontalSquashed<VM: VMP>: BaseViewModel<UIStackView>, Stateable {
+   typealias State = StackState
+
+   let subModel = VM()
+
+   override func start() {
+      set(.axis(.horizontal))
+      set(.distribution(.equalCentering))
+      set(.models([
+         Spacer(),
+         subModel,
+         Spacer()
+      ]))
+   }
+}
+
+// обжимает модель с двух сторон, для того чтобы центрировать в .fill стеках
+final class VerticalSquashed<VM: VMP>: BaseViewModel<UIStackView>, Stateable {
+   typealias State = StackState
+
+   let subModel = VM()
+
+   override func start() {
+      set(.axis(.vertical))
+      set(.distribution(.equalCentering))
+      set(.models([
+         Spacer(),
+         subModel,
+         Spacer()
+      ]))
    }
 }

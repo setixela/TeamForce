@@ -18,7 +18,7 @@ final class PlaygroundScene<Asset: AssetProtocol>: BaseSceneModel<
    private let badgedModel = BadgedViewModel<ComboMRD, Asset>()
       .onModeChanged(\.error) { model in
          [model?.topBadge, model?.bottomBadge].forEach {
-            $0?.set(.color(Asset.Design.color.errorColor))
+            $0?.set(.color(Asset.Design.color.error))
          }
       }
       .onModeChanged(\.normal) { model in
@@ -26,6 +26,7 @@ final class PlaygroundScene<Asset: AssetProtocol>: BaseSceneModel<
             $0?.set(.color(Asset.Design.color.textPrimary))
          }
       }
+   private let logoTitle = LogoTitleVM<Asset>()
 
    override func start() {
       let viewModel = VizitkaDemo()
@@ -80,7 +81,7 @@ final class PlaygroundScene<Asset: AssetProtocol>: BaseSceneModel<
             Spacer(32),
             viewModel,
             Spacer(32),
-            title,
+            logoTitle,
             Spacer(32),
             titleSubtitle,
             Spacer(32),
@@ -107,7 +108,6 @@ final class VizitkaDemo: BaseViewModel<PaddingLabel>, Stateable2 {
    let leftModel = ImageViewModel()
       .set(.size(.init(width: 33, height: 24)))
       .set(.backColor(.lightGray))
-      .set(.image(ProductionAsset.Design.icon.make(\.logo)))
 
    let topModel = LabelModel()
       .set(.padLeft(16))

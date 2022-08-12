@@ -8,14 +8,13 @@
 import UIKit
 import ReactiveWorks
 
-final class StackWithBottomPanelModel: BaseViewModel<UIStackView> {
+final class DoubleStacksModel: BaseViewModel<UIStackView> {
     let topStackModel = StackModel(.axis(.vertical),
                                    .alignment(.fill),
                                    .distribution(.fill))
     let bottomStackModel = StackModel(.axis(.vertical),
                                       .alignment(.fill),
-                                      .distribution(.fillEqually),
-                                      .spacing(12))
+                                      .distribution(.fillEqually))
 
     override func start() {
         set(.axis(.vertical))
@@ -28,6 +27,6 @@ final class StackWithBottomPanelModel: BaseViewModel<UIStackView> {
     }
 }
 
-extension StackWithBottomPanelModel: Stateable {
+extension DoubleStacksModel: Stateable {
    typealias State = StackState
 }
