@@ -12,6 +12,6 @@ struct SendCoinUseCase: UseCaseProtocol {
    let sendCoinApiModel: SendCoinApiWorker
 
    var work: Work<SendCoinRequest, Void> {
-        sendCoinApiModel.work
-    }
+      sendCoinApiModel.work
+   }
 }

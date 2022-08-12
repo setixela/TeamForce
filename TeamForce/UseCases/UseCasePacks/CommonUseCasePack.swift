@@ -6,17 +6,41 @@
 //
 
 import Foundation
+import ReactiveWorks
 
-struct ApiUseCase { // }: ApiUseCaseRegistry {
+struct ApiUseCase: ApiUseCaseRegistry, WorkBasket {
+
+   var basket: [Any] = []
+
    // MARK: - UseCases
 
-   lazy var loadProfile: LoadProfileUseCase = .init(safeStringStorage: safeStringStorage, userProfileApiModel: userProfileApiModel)
-   lazy var loadBalance: LoadBalanceUseCase = .init(safeStringStorage: safeStringStorage, balanceApiModel: balanceApiModel)
-   lazy var login: LoginUseCase = .init(authApiWorker: loginApiModel)
-   lazy var logout: LogoutUseCase = .init(safeStringStorage: safeStringStorage, logoutApiModel: logoutApiModel)
-   lazy var userSearch: UserSearchUseCase = .init(searchUserApiModel: searchUserApiWorker)
-   lazy var getTransactions: GetTransactionsUseCase = .init(safeStringStorage: safeStringStorage, getTransactionsApiWorker: getTransactionsApiWorker)
-   lazy var sendCoin: SendCoinUseCase = .init(sendCoinApiModel: sendCoinApiWorker)
+   var loadProfile: LoadProfileUseCase {
+      .init(safeStringStorage: safeStringStorage, userProfileApiModel: userProfileApiModel)
+   }
+
+   var loadBalance: LoadBalanceUseCase {
+      .init(safeStringStorage: safeStringStorage, balanceApiModel: balanceApiModel)
+   }
+
+   var login: LoginUseCase {
+      .init(authApiWorker: loginApiModel)
+   }
+
+   var logout: LogoutUseCase {
+      .init(safeStringStorage: safeStringStorage, logoutApiModel: logoutApiModel)
+   }
+
+   var userSearch: UserSearchUseCase {
+      .init(searchUserApiModel: searchUserApiWorker)
+   }
+
+   var getTransactions: GetTransactionsUseCase {
+      .init(safeStringStorage: safeStringStorage, getTransactionsApiWorker: getTransactionsApiWorker)
+   }
+
+   var sendCoin: SendCoinUseCase {
+      .init(sendCoinApiModel: sendCoinApiWorker)
+   }
 
    // MARK: - Dependencies
 

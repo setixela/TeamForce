@@ -71,7 +71,7 @@ final class TransactSceneWorks<Asset: AssetProtocol>: TransactSceneWorksProtocol
          csrfToken: self.tempStorage.tokens.csrf
       )
 
-      self.apiUseCase.userSearch.work
+      self.apiUseCase.workFor(\.userSearch)
          .doAsync(request)
          .onSuccess { result in
             self.tempStorage.foundUsers = result
@@ -93,7 +93,7 @@ final class TransactSceneWorks<Asset: AssetProtocol>: TransactSceneWorksProtocol
          reason: work.unsafeInput.reason
       )
 
-      self.apiUseCase.sendCoin.work
+      self.apiUseCase.workFor(\.sendCoin)
          .doAsync(request)
          .onSuccess {
             let tuple = (self.tempStorage.recipientUsername, request)
