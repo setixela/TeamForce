@@ -233,7 +233,9 @@ private extension TransactViewModel {
       var correctReasonInput = false
 
       transactInputViewModel.textField
+         // on did editing
          .onEvent(\.didEditingChanged)
+         // then parse and check input text
          .doNext(work: works.coinInputParsing)
          .onSuccess {
             wS?.transactInputViewModel.textField.set(.text($0))
@@ -248,7 +250,9 @@ private extension TransactViewModel {
          }
 
       reasonTextView
+         // on did editing
          .onEvent(\.didEditingChanged)
+         // then parse and check input text
          .doNext(work: works.reasonInputParsing)
          .onSuccess {
             wS?.reasonTextView.set(.text($0))
