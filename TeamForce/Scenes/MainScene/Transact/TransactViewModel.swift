@@ -65,7 +65,7 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
 
    // MARK: - Interactor
 
-   lazy var works = TransactSceneWorks<Asset>()
+   lazy var works = TransactWorks<Asset>()
 
    // MARK: - Start
 
@@ -74,6 +74,7 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
 
       weak var wS = self
 
+      // load tokens
       works.loadTokens
          .doAsync()
          .onSuccess {
@@ -82,6 +83,7 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
          .onFail {
             wS?.userSearchTextField.set(.hidden(true))
          }
+         // then load balance
          .doNext(work: works.loadBalance)
          .onSuccess {
             wS?.transactInputViewModel.set(.rightCaptionText(
@@ -90,6 +92,17 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
          }
          .onFail {
             print("balance not loaded")
+         }
+         // then break data
+         .doInput(())
+         // then load 10 user list
+         .doNext(work: works.getUserList)
+         .onSuccess {
+            wS?.tableModel.set(.hidden(false))
+            wS?.presentFoundUsers(users: $0)
+         }
+         .onFail {
+            wS?.tableModel.set(.hidden(true))
          }
 
       userSearchTextField
@@ -138,9 +151,7 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
 
       tableModel
          .onEvent(\.didSelectRow)
-         .doMap({
-            $0.row
-         })
+         // map index to user
          .doNext(work: works.mapIndexToUser)
          .onSuccess { foundUser in
             let fullName = foundUser.name + " " + foundUser.surname

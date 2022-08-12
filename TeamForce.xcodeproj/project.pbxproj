@@ -77,7 +77,7 @@
 		19C1E9A328610E4E00E7976D /* MainRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C1E9A228610E4E00E7976D /* MainRouter.swift */; };
 		19CF792328A45C52001531B8 /* TransactInteract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19CF792228A45C52001531B8 /* TransactInteract.swift */; };
 		19CF792828A54D60001531B8 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19CF792728A54D60001531B8 /* Config.swift */; };
-		19CF792C28A587B9001531B8 /* TransactSceneWorks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19CF792B28A587B9001531B8 /* TransactSceneWorks.swift */; };
+		19CF792C28A587B9001531B8 /* TransactWorks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19CF792B28A587B9001531B8 /* TransactWorks.swift */; };
 		19D08351286F401000F75E4A /* SideBarUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D08350286F401000F75E4A /* SideBarUserModel.swift */; };
 		19D08353286F403400F75E4A /* SideBarModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D08352286F403400F75E4A /* SideBarModel.swift */; };
 		19D08355286F405500F75E4A /* DoubleLabelModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D08354286F405500F75E4A /* DoubleLabelModel.swift */; };
@@ -197,7 +197,7 @@
 		19C1E9A228610E4E00E7976D /* MainRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainRouter.swift; sourceTree = "<group>"; };
 		19CF792228A45C52001531B8 /* TransactInteract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactInteract.swift; sourceTree = "<group>"; };
 		19CF792728A54D60001531B8 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
-		19CF792B28A587B9001531B8 /* TransactSceneWorks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactSceneWorks.swift; sourceTree = "<group>"; };
+		19CF792B28A587B9001531B8 /* TransactWorks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactWorks.swift; sourceTree = "<group>"; };
 		19D08350286F401000F75E4A /* SideBarUserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBarUserModel.swift; sourceTree = "<group>"; };
 		19D08352286F403400F75E4A /* SideBarModel.swift */ = {isa = PBXFileReference; indentWidth = 3; lastKnownFileType = sourcecode.swift; path = SideBarModel.swift; sourceTree = "<group>"; tabWidth = 3; };
 		19D08354286F405500F75E4A /* DoubleLabelModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleLabelModel.swift; sourceTree = "<group>"; };
@@ -424,7 +424,7 @@
 			children = (
 				19ACB3C928A599B700B5AD71 /* Archive */,
 				1953DE832879FDE3000DC537 /* TransactViewModel.swift */,
-				19CF792B28A587B9001531B8 /* TransactSceneWorks.swift */,
+				19CF792B28A587B9001531B8 /* TransactWorks.swift */,
 			);
 			path = Transact;
 			sourceTree = "<group>";
@@ -740,7 +740,7 @@
 				191571D1289F12350061510F /* PlaygroundScene.swift in Sources */,
 				199C4B6628624B4C008AD6FD /* Spacer.swift in Sources */,
 				196750A22865169C0019A6DE /* DigitalThanksScene.swift in Sources */,
-				19CF792C28A587B9001531B8 /* TransactSceneWorks.swift in Sources */,
+				19CF792C28A587B9001531B8 /* TransactWorks.swift in Sources */,
 				19C1E991285F426B00E7976D /* ApiEngine.swift in Sources */,
 				19017B7128A69CB100B06345 /* IconTitleYVM.swift in Sources */,
 				19EF32B02884B6C80078F53D /* TableViewModel.swift in Sources */,

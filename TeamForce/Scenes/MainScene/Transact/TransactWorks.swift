@@ -6,21 +6,25 @@
 //
 
 import ReactiveWorks
+import Foundation
 
-protocol TransactSceneWorksProtocol: SceneWorks {
+protocol TransactWorksProtocol: SceneWorks {
    // api works
    var loadBalance: Work<Void, Balance> { get }
    var searchUser: Work<String, [FoundUser]> { get }
    var sendCoins: Work<(amount: String, reason: String), (recipient: String, info: SendCoinRequest)> { get }
+   var getUserList: Work<Void, [FoundUser]> { get }
    // data works
    var loadTokens: Work<Void, Void> { get }
-   var mapIndexToUser: Work<Int, FoundUser> { get }
+   // index mapper
+   var mapIndexToUser: Work<IndexPath, FoundUser> { get }
    // parsing input
    var coinInputParsing: Work<String, String> { get }
    var reasonInputParsing: Work<String, String> { get }
 }
 
-final class TransactSceneWorks<Asset: AssetProtocol>: TransactSceneWorksProtocol {
+final class TransactWorks<Asset: AssetProtocol>: TransactWorksProtocol {
+
    // api works
    private lazy var apiUseCase = Asset.apiUseCase
 
@@ -71,7 +75,7 @@ final class TransactSceneWorks<Asset: AssetProtocol>: TransactSceneWorksProtocol
          csrfToken: self.tempStorage.tokens.csrf
       )
 
-      self.apiUseCase.workFor(\.userSearch)
+      self.apiUseCase.retainedWork(\.userSearch)
          .doAsync(request)
          .onSuccess { result in
             self.tempStorage.foundUsers = result
@@ -93,7 +97,7 @@ final class TransactSceneWorks<Asset: AssetProtocol>: TransactSceneWorksProtocol
          reason: work.unsafeInput.reason
       )
 
-      self.apiUseCase.workFor(\.sendCoin)
+      self.apiUseCase.retainedWork(\.sendCoin)
          .doAsync(request)
          .onSuccess {
             let tuple = (self.tempStorage.recipientUsername, request)
@@ -103,10 +107,25 @@ final class TransactSceneWorks<Asset: AssetProtocol>: TransactSceneWorksProtocol
          }
    }
 
-   lazy var mapIndexToUser = Work<Int, FoundUser> { [weak self] work in
+   lazy var getUserList = Work<Void, [FoundUser]> { [weak self] work in
       guard let self = self else { return }
 
-      let user = self.tempStorage.foundUsers[work.unsafeInput]
+      self.apiUseCase.retainedWork(\.getUsersList)
+         .doAsync()
+         .onSuccess { result in
+            self.tempStorage.foundUsers = result
+            work.success(result: result)
+         }.onFail {
+            work.fail(())
+         }
+   }
+
+   lazy var mapIndexToUser = Work<IndexPath, FoundUser> { [weak self] work in
+      guard let self = self else { return }
+
+      // TODO: - 2d sections mapping to 1d array error
+      let user = self.tempStorage.foundUsers[work.unsafeInput.row]
+
       self.tempStorage.recipientUsername = user.name
       self.tempStorage.recipientID = user.userId
       work.success(result: user)

@@ -5,6 +5,7 @@
 //  Created by Aleksandr Solovyev on 12.08.2022.
 //
 
+// сделать WaitForEvent
 import ReactiveWorks
 
 protocol WorkBasket {
@@ -18,7 +19,7 @@ extension WorkBasket {
       return work
    }
 
-   mutating func workFor<U: UseCaseProtocol>(_ keypath: KeyPath<Self, U>) -> Work<U.In, U.Out> {
+   mutating func retainedWork<U: UseCaseProtocol>(_ keypath: KeyPath<Self, U>) -> Work<U.In, U.Out> {
       let useCase = self[keyPath: keypath]
       let work = useCase.work
       basket.append(work)
