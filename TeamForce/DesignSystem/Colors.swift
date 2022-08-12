@@ -8,39 +8,57 @@
 import ReactiveWorks
 import UIKit
 
-// Протокол Фабрики цветов
+// Протокол Фабрики цветов ( Разнести потом палитру и детали )
 protocol ColorsProtocol: InitProtocol {
     // Brand colors
     var brand: UIColor { get }
+    var transparent: UIColor { get }
 
     // Text colors
-    var textPrimary: UIColor { get }
+    var text: UIColor { get }
+    var text2: UIColor { get }
+
+    var textInvert: UIColor { get }
+    var text2Invert: UIColor { get }
 
     // Backs
     var background: UIColor { get }
-    var background1: UIColor { get }
     var background2: UIColor { get }
+    var background3: UIColor { get }
+
+    // Errors
+    var error: UIColor { get }
 
     // Other
     var inactiveButton: UIColor { get }
-    var error: UIColor { get }
     var activeButton: UIColor { get }
+    var transparentButton: UIColor { get }
 }
 
 // Фабрика цветов
 struct Colors: ColorsProtocol {
-    var brand: UIColor { .init(0xB47CE8ff) }
+    var brand: UIColor { .init(0xb47ce8ff) }
+    var transparent: UIColor { .clear }
 
-    var textPrimary: UIColor { .black }
+    var text: UIColor { .black }
+    var text2: UIColor { .black.withAlphaComponent(0.85) }
+
+    var textInvert: UIColor { .white }
+    var text2Invert: UIColor { .white.withAlphaComponent(0.85) }
+
     var background: UIColor { .white }
-    var background1: UIColor { .init(white: 0.93, alpha: 1) }
-    var background2: UIColor { .init(0xf3eafcff) }
-    var inactiveButton: UIColor { .init(0xe9d5feff) }
-    var error: UIColor { .init(0xf0260bff) }
+    var background2: UIColor { .init(0xf2e7feff) }
+    var background3: UIColor { .init(0xb9a0d0ff) }
+
+    var error: UIColor { .init(0xff0b0bff) }
+
+    // button colors
     var activeButton: UIColor { brand }
+    var inactiveButton: UIColor { background2 }
+    var transparentButton: UIColor { transparent }
 }
 
-extension UIColor {
+private extension UIColor {
     convenience init(_ hex: Int) {
         let components = (
             r: CGFloat((hex >> 24) & 0xff) / 255,

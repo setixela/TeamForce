@@ -20,6 +20,7 @@ class TitleSubtitleXVM<Design: DesignProtocol>:
          $0
             .set(Design.label.state.subtitle)
             .set(.alignment(.center))
+            .set(.color(Design.color.text2))
       }
    }
 }

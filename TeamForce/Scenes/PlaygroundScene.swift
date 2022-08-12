@@ -23,7 +23,7 @@ final class PlaygroundScene<Asset: AssetProtocol>: BaseSceneModel<
       }
       .onModeChanged(\.normal) { model in
          [model?.topBadge, model?.bottomBadge].forEach {
-            $0?.set(.color(Asset.Design.color.textPrimary))
+            $0?.set(.color(Asset.Design.color.text))
          }
       }
 

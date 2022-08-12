@@ -48,7 +48,7 @@ private extension SceneDelegate {
          }
 
       if Config.isDebug {
-         ProductionAsset.router?.route(\.playground, navType: .push, payload: ())
+         ProductionAsset.router?.route(Config.startDebugScene, navType: .push, payload: ())
       } else {
          if UserDefaults.standard.isLoggedIn() {
             ProductionAsset.router?.route(\.main, navType: .push, payload: ())

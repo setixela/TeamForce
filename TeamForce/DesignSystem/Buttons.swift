@@ -44,7 +44,7 @@ struct ButtonStateBuilder<Design: DesignProtocol>: ButtonStateBuilderProtocol {
    ] }
 
    var transparent: [ButtonState] { [
-      .backColor(.white),
+      .backColor(Design.color.inactiveButton),
       .cornerRadius(Parameters.cornerRadius),
       .height(48),
       .textColor(.black),
@@ -52,7 +52,7 @@ struct ButtonStateBuilder<Design: DesignProtocol>: ButtonStateBuilderProtocol {
    ] }
 
    var inactive: [ButtonState] { [
-      .backColor(UIColor(0xE9D5FEFF)),
+      .backColor(Design.color.inactiveButton),
       .cornerRadius(Parameters.cornerRadius),
       .height(48),
       .textColor(.white),

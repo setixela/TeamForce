@@ -9,7 +9,7 @@ import Anchorage
 import ReactiveWorks
 import UIKit
 
-enum ButtonState: KeyPathSetable {
+enum ButtonState {
    case enabled(Bool)
    case selected(Bool)
    case title(String)

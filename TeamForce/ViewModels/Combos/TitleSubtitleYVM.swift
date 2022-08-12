@@ -20,6 +20,7 @@ class TitleSubtitleYVM<Design: DesignProtocol>:
       } setDown: {
          $0
             .set(Design.label.state.subtitle)
+            .set(.color(Design.color.text2))
             .set(.numberOfLines(0))
             .set(.alignment(.center))
             .set(.padUp(Design.Parameters.titleSubtitleOffset))
