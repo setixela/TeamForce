@@ -18,7 +18,7 @@ final class DigitalThanksScene<Asset: AssetProtocol>: BaseSceneModel<
 > {
    //
 
-   private lazy var logoTitle = HorizontalSquashed<LogoTitleVM<Asset>>()
+   private lazy var logoTitle = SquashedX<LogoTitleVM<Asset>>()
 
    private lazy var illustration = ImageViewModel()
       .set(.image(Design.icon.make(\.introlIllustrate)))
@@ -91,7 +91,7 @@ final class LogoTitleVM<Asset: AssetProtocol>:
 }
 
 // обжимает модель с двух сторон, для того чтобы центрировать в .fill стеках
-final class HorizontalSquashed<VM: VMP>: BaseViewModel<UIStackView>, Stateable {
+final class SquashedX<VM: VMP>: BaseViewModel<UIStackView>, Stateable {
    typealias State = StackState
 
    let subModel = VM()
@@ -108,7 +108,7 @@ final class HorizontalSquashed<VM: VMP>: BaseViewModel<UIStackView>, Stateable {
 }
 
 // обжимает модель с двух сторон, для того чтобы центрировать в .fill стеках
-final class VerticalSquashed<VM: VMP>: BaseViewModel<UIStackView>, Stateable {
+final class SquashedY<VM: VMP>: BaseViewModel<UIStackView>, Stateable {
    typealias State = StackState
 
    let subModel = VM()
