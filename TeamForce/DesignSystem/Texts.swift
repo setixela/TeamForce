@@ -65,6 +65,11 @@ protocol TitleTextsProtocol: InitProtocol, KeyPathMaker
     // errors
     var wrongUsername: String { get }
     var wrongCode: String { get }
+   
+    // verifyScene
+    var noCode: String { get }
+    var messageEmail: String { get }
+    var messageTelegram: String { get }
 }
 
 // MARK: - Button texts implements
@@ -110,6 +115,10 @@ struct TitleTexts: TitleTextsProtocol {
     // errors
     var wrongUsername: String { "Ошибка. Пользователь не найден" }
     var wrongCode: String { "Ошибка. Неверный код" }
+    // verifyScene
+    var noCode: String { "Не приходит код?" }
+    var messageEmail: String { "Проверьте корректность введенной почты"}
+    var messageTelegram: String { "Перейдите в диалог с ботом (ссылка), напишите ему что-нибудь после чего повторите процедуру аутентификации." } 
 }
 
 struct Texts: TextsProtocol, KeyPathMaker {

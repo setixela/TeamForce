@@ -96,6 +96,11 @@ protocol ApiProtocol {
    var apiEngine: ApiEngineProtocol? { get set }
 }
 
+enum Account {
+   case telegram
+   case email
+}
+
 class BaseApiWorker<In, Out>: ApiProtocol, WorkerProtocol {
    var apiEngine: ApiEngineProtocol?
 
@@ -111,7 +116,7 @@ class BaseApiWorker<In, Out>: ApiProtocol, WorkerProtocol {
 final class AuthApiWorker: BaseApiWorker<String, AuthResult> {
    override func doAsync(work: Work<String, AuthResult>) {
       guard let loginName = work.input else { return }
-
+      
       apiEngine?
          .process(endpoint: TeamForceEndpoints.AuthEndpoint(
             body: ["type": "authorize",
@@ -119,14 +124,26 @@ final class AuthApiWorker: BaseApiWorker<String, AuthResult> {
          )) 
          .done { result in
             guard
-               let xId = result.response?.headerValueFor("X-Telegram"),
                let xCode = result.response?.headerValueFor("X-Code")
             else {
                work.fail(())
                return
             }
-
-            work.success(result: AuthResult(xId: xId, xCode: xCode))
+            let account: Account?
+            let xId: String?
+            if (result.response?.headerValueFor("X-Telegram")) != nil {
+               xId = result.response?.headerValueFor("X-Telegram") ?? ""
+               account = .telegram
+            } else {
+               xId = result.response?.headerValueFor("X-Email") ?? ""
+               account = .email
+            }
+            
+            guard
+               let xId = xId,
+               let account = account
+            else { return }
+            work.success(result: AuthResult(xId: xId, xCode: xCode, account: account))
          }
          .catch { _ in
             work.fail(())

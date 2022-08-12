@@ -89,11 +89,11 @@ final class TelegramNickCheckerModel {}
 extension TelegramNickCheckerModel: WorkerProtocol {
    func doAsync(work: Work<String, String>) {
       guard let text = work.input else { return }
-
-      var resultText = text == "" ? "@" : text
-      if !resultText.hasPrefix("@") {
-         resultText = "@" + resultText
-      }
+      print("I am login \(text)")
+      var resultText = text //== "" ? "@" : text
+//      if !resultText.hasPrefix("@") {
+//         resultText = "@" + resultText
+//      }
       if resultText.count > 3 {
          work.success(result: resultText)
       } else {
