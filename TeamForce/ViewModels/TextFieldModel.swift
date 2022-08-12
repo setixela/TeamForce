@@ -88,16 +88,10 @@ final class TelegramNickCheckerModel {}
 
 extension TelegramNickCheckerModel: WorkerProtocol {
    func doAsync(work: Work<String, String>) {
-      guard let text = work.input else { return }
-      print("I am login \(text)")
-      var resultText = text //== "" ? "@" : text
-//      if !resultText.hasPrefix("@") {
-//         resultText = "@" + resultText
-//      }
-      if resultText.count > 3 {
-         work.success(result: resultText)
+      if work.unsafeInput.count > 3 {
+         work.success(result: work.unsafeInput)
       } else {
-         work.fail(resultText)
+         work.fail( work.unsafeInput)
       }
    }
 }
@@ -116,9 +110,9 @@ final class SmsCodeCheckerModel {
 extension SmsCodeCheckerModel: WorkerProtocol {
    //
    func doAsync(work: Work<String, String>) {
-      guard let text = work.input else { return }
+      let text =  work.unsafeInput
 
-      if text.count >= maxDigits {
+      if work.unsafeInput.count >= maxDigits {
          let text = text.dropLast(text.count - maxDigits)
          work.success(result: String(text))
       } else {
