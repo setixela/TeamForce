@@ -40,7 +40,7 @@ class WorksTests: XCTestCase {
          $0.success(result: $0.unsafeInput + 1)
       }
       work
-         .doMix(testObj)
+         .doWeakMix(testObj)
          .onSuccess { _, _ in
             fatalError()
          }.onFail {
@@ -62,7 +62,7 @@ class WorksTests: XCTestCase {
          $0.success(result: $0.unsafeInput + 1)
       }
       work
-         .doInput(testObj)
+         .doWeakInput(testObj)
          .onSuccess { _ in
             fatalError()
          }.onFail {
