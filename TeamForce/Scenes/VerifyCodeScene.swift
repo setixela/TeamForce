@@ -24,21 +24,21 @@ final class VerifyCodeScene<Asset: AssetProtocol>: BaseSceneModel<
 
    private lazy var headerModel = Design.label.headline4
       .set(.padding(.init(top: 0, left: 0, bottom: 24, right: 0)))
-      .set(.text(Text.title.make(\.enter)))
+      .set(.text(Text.title.enter))
 
    private lazy var subtitleModel = Design.label.subtitle
       .set(.padding(.init(top: 0, left: 0, bottom: 40, right: 0)))
-      .set(.text("2. " + Text.title.make(\.enterSmsCode)))
+      .set(.text("2. " + Text.title.enterSmsCode))
       .set(.numberOfLines(2))
    private lazy var noCodeLabel = Design.label.subtitle
-      .set(.text(Text.title.make(\.noCode)))
+      .set(.text(Text.title.noCode))
       .set(.color(.blue))
    private lazy var messageModel = Design.label.subtitle
       .set(.numberOfLines(4))
       .set(.hidden(true))
 
    private lazy var enterButton = ButtonModel(Design.state.button.inactive)
-      .set(.title(Text.button.make(\.enterButton)))
+      .set(.title(Text.button.enterButton))
 
    private let badgeModel = BadgeModel<Asset>()
 
@@ -55,8 +55,8 @@ final class VerifyCodeScene<Asset: AssetProtocol>: BaseSceneModel<
    override func start() {
       configure()
       noCodeLabel.makeTappable()
-      noCodeLabel.onEvent(\.didTap) {
-         self.messageModel.set(.hidden(!self.messageModel.view.isHidden))
+      noCodeLabel.onEvent(\.didTap) { [weak self] in
+         self?.messageModel.set(.hidden(self?.messageModel.view.isHidden == false))
       }
       
       var messageText = ""
@@ -71,9 +71,9 @@ final class VerifyCodeScene<Asset: AssetProtocol>: BaseSceneModel<
       messageModel
          .set(.text(messageText))
       
-      badgeModel.setLabels(title: Text.title.make(\.smsCode),
-                           placeholder: Text.title.make(\.smsCode),
-                           error: Text.title.make(\.wrongCode))
+      badgeModel.setLabels(title: Text.title.smsCode,
+                           placeholder: Text.title.smsCode,
+                           error: Text.title.wrongCode)
       badgeModel.changeState(to: BadgeState.default)
 
       weak var weakSelf = self

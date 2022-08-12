@@ -24,7 +24,7 @@ final class BalanceViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
    // MARK: - Frame Cells
 
    private lazy var digitalThanksTitle = Design.label.headline4
-      .set(.text(Text.title.make(\.digitalThanks)))
+      .set(.text(Text.title.digitalThanks))
       .set(.numberOfLines(1))
       .set(.alignment(.left))
       .set(.padding(.init(top: 22, left: 0, bottom: 26, right: 0)))
@@ -32,7 +32,7 @@ final class BalanceViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
    private lazy var frameModel = LabelIconHorizontalModel<Design>()
       .set(.backColor(.init(red: 0.33, green: 0.33, blue: 0.33, alpha: 0.08)))
       .set(.height(48))
-      .set(.text(Text.title.make(\.selectPeriod)))
+      .set(.text(Text.title.selectPeriod))
       .set(.image(Design.icon.make(\.calendarLine)))
 
    private lazy var frameModel2 = DoubleLabelPairModel<Design>()
@@ -41,10 +41,10 @@ final class BalanceViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
 
    private lazy var myAccountFrame = FrameCellModel<Design>()
       .set(.backColor(.init(red: 0.33, green: 0.33, blue: 0.33, alpha: 0.08)))
-      .set(.header(Text.title.make(\.myAccount)))
+      .set(.header(Text.title.myAccount))
 
    private lazy var leftToSendFrame = FrameCellModel<Design>()
-      .set(.header(Text.title.make(\.leftToSend)))
+      .set(.header(Text.title.leftToSend))
       .set(.borderWidth(1))
       .set(.borderColor(.init(red: 0.33, green: 0.33, blue: 0.33, alpha: 0.08)))
 
@@ -99,22 +99,22 @@ extension BalanceViewModel {
       let cancelledSum = balance.income.cancelled + balance.distr.cancelled
 
       frameModel2
-         .set(.leftPair(text1: "\(Text.title.make(\.onAgreement)): ",
+         .set(.leftPair(text1: "\(Text.title.onAgreement)): ",
                         text2: "\(frozenSum)"))
-         .set(.rightPair(text1: "\(Text.title.make(\.canceled)): ",
+         .set(.rightPair(text1: "\(Text.title.canceled)): ",
                          text2: "\(cancelledSum)"))
    }
 
    private func setIncome(_ income: Income) {
       myAccountFrame
          .set(.text(String(income.amount)))
-         .set(.caption("\(Text.title.make(\.sended)): \(income.sent)"))
+         .set(.caption("\(Text.title.sended)): \(income.sent)"))
    }
 
    private func setDistr(_ distr: Distr) {
       leftToSendFrame
          .set(.text(String(distr.amount)))
-         .set(.caption("\(Text.title.make(\.sended)): \(distr.sent)"))
+         .set(.caption("\(Text.title.sended)): \(distr.sent)"))
    }
 }
 

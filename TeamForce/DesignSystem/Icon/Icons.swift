@@ -9,8 +9,8 @@ import ReactiveWorks
 import UIKit
 
 struct Icons: IconElements {
-   
    typealias DesignElement = String
+
    // brand
    var logo: String { "dt_logo" }
    var logoTitle: String { "dt_logo_title" }

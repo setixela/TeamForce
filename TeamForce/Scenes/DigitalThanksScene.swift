@@ -26,13 +26,13 @@ final class DigitalThanksScene<Asset: AssetProtocol>: BaseSceneModel<
 
    private lazy var titleSubtitle = TitleSubtitleYVM<Design>()
       .setMain {
-         $0.set(.text(Text.title.make(\.digitalThanks)))
+         $0.set(.text(Text.title.digitalThanks))
       } setDown: {
-         $0.set(.text(Text.title.make(\.digitalThanksAbout)))
+         $0.set(.text(Text.title.digitalThanksAbout))
       }
 
    private lazy var enterButton = Design.button.default
-      .set(.title(Text.button.make(\.enterButton)))
+      .set(.title(Text.button.enterButton))
 
    // MARK: - Start
 

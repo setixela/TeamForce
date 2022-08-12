@@ -9,7 +9,7 @@ import ReactiveWorks
 
 // MARK: - Labels Protocol
 
-protocol LabelProtocol: InitProtocol, TypographyElements
+protocol LabelProtocol: TypographyElements
    where DesignElement == LabelModel
 {
    associatedtype State: LabelStateProtocol

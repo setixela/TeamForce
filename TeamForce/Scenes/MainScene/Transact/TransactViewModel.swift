@@ -23,7 +23,7 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
    // MARK: - View Models
 
    private lazy var digitalThanksTitle = Design.label.headline4
-      .set(.text(Text.title.make(\.digitalThanks)))
+      .set(.text(Text.title.digitalThanks))
       .set(.numberOfLines(1))
       .set(.alignment(.left))
       .set(.padding(.init(top: 22, left: 0, bottom: 26, right: 0)))
@@ -31,13 +31,13 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
    private lazy var userSearchTextField = TextFieldModel()
       .set(.backColor(.init(red: 0.33, green: 0.33, blue: 0.33, alpha: 0.08)))
       .set(.height(48))
-      .set(.placeholder(Text.title.make(\.chooseRecipient)))
+      .set(.placeholder(Text.title.chooseRecipient))
       .set(.hidden(true))
       .set(.padding(.init(top: 0, left: 16, bottom: 0, right: 16)))
 
    private lazy var transactInputViewModel = TransactInputViewModel<Design>()
-      .set(.leftCaptionText(Text.title.make(\.sendThanks)))
-      .set(.rightCaptionText(Text.title.make(\.availableThanks)))
+      .set(.leftCaptionText(Text.title.sendThanks))
+      .set(.rightCaptionText(Text.title.availableThanks))
       .set(.hidden(true))
 
    private lazy var tableModel = TableViewModel()
@@ -48,7 +48,7 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
 
    private lazy var sendButton = Design.button.default
       .set(Design.state.button.inactive)
-      .set(.title(Text.button.make(\.sendButton)))
+      .set(.title(Text.button.sendButton))
       .set(.hidden(true))
 
    private lazy var reasonTextView = TextViewModel()
@@ -87,7 +87,7 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
          .doNext(work: works.loadBalance)
          .onSuccess {
             wS?.transactInputViewModel.set(.rightCaptionText(
-               Text.title.make(\.availableThanks) + " " + String($0.distr.amount)
+               Text.title.availableThanks + " " + String($0.distr.amount)
             ))
          }
          .onFail {

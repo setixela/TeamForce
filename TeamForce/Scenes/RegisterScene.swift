@@ -19,11 +19,11 @@ final class RegisterScene<Asset: AssetProtocol>: BaseSceneModel<
    //
    private lazy var headerModel = Design.label.headline4
       .set(.padding(.init(top: 0, left: 0, bottom: 24, right: 0)))
-      .set(.text(Text.title.make(\.register)))
+      .set(.text(Text.title.register))
 
    private lazy var subtitleModel = Design.label.subtitle
       .set(.padding(.init(top: 0, left: 0, bottom: 40, right: 0)))
-      .set(.text("1. " + Text.title.make(\.enterTelegramName)))
+      .set(.text("1. " + Text.title.enterTelegramName))
       .set(.numberOfLines(2))
 
    private lazy var nextButton = ButtonModel(Design.state.button.inactive)
@@ -31,7 +31,7 @@ final class RegisterScene<Asset: AssetProtocol>: BaseSceneModel<
 
    private lazy var textFieldModel = TextFieldModel()
       .set(.padding(.init(top: 16, left: 16, bottom: 16, right: 16)))
-      .set(.placeholder("@" + Text.title.make(\.userName)))
+      .set(.placeholder("@" + Text.title.userName))
 
    private lazy var inputParser = TelegramNickCheckerModel()
 
@@ -49,8 +49,6 @@ final class RegisterScene<Asset: AssetProtocol>: BaseSceneModel<
    }
 
    private func setupLoginField() {
-      let label = Design.label.default
-      let states = Design.state
 //      textFieldModel
 //         .onEvent(\.didEditingChanged) { [weak self] text in
 //            self?.inputParser.sendEvent(\.request, text)

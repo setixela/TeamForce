@@ -18,10 +18,7 @@ protocol TextsProtocol: InitProtocol {
 
 // MARK: - Button texts
 
-protocol ButtonTextsProtocol: InitProtocol, KeyPathMaker
-   where MakeType == String,
-   ValueType == String
-{
+protocol ButtonTextsProtocol: InitProtocol {
    var enterButton: String { get }
    var nextButton: String { get }
    var registerButton: String { get }
@@ -33,10 +30,7 @@ protocol ButtonTextsProtocol: InitProtocol, KeyPathMaker
 
 // MARK: - Title texts
 
-protocol TitleTextsProtocol: InitProtocol, KeyPathMaker
-   where MakeType == String,
-   ValueType == String
-{
+protocol TitleTextsProtocol: InitProtocol {
    // main
    var digitalThanks: String { get }
    var digitalThanksAbout: String { get }
@@ -128,7 +122,7 @@ struct TitleTexts: TitleTextsProtocol {
    var messageTelegram: String { "Перейдите в диалог с ботом (ссылка), напишите ему что-нибудь после чего повторите процедуру аутентификации." }
 }
 
-struct Texts: TextsProtocol, KeyPathMaker {
+struct Texts: TextsProtocol {
    static var button: ButtonTexts { .init() }
    static var title: TitleTexts { .init() }
 }

@@ -34,10 +34,6 @@ final class PlaygroundScene<Asset: AssetProtocol>: BaseSceneModel<
          .set(.backColor(.random))
          .set(.size(.init(width: 100, height: 66)))
 
-      let title = LabelModel()
-         .set(.text("Hello"))
-         .set(.backColor(.random))
-
       let titleSubtitle = TitleSubtitleModel()
          .set(.text("Hello"))
          .set(.backColor(.random))

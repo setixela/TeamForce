@@ -44,7 +44,7 @@ final class TransactionStatusViewModel<Asset: AssetProtocol>: BaseViewModel<UISt
    }()
 
    let statusLabel = Design.label.headline5
-      .set(.text(Text.title.make(\.thanksWereSend)))
+      .set(.text(Text.title.thanksWereSend))
       .set(.numberOfLines(1))
       .set(.alignment(.center))
       .set(.padding(.init(top: 22, left: 0, bottom: 26, right: 0)))
@@ -64,7 +64,7 @@ final class TransactionStatusViewModel<Asset: AssetProtocol>: BaseViewModel<UISt
       .set(.alignment(.center))
 
    let button = Design.button.default
-      .set(.title(Text.button.make(\.toTheBeginingButton)))
+      .set(.title(Text.button.toTheBeginingButton))
 
    override func start() {
       set(Design.state.stack.default)

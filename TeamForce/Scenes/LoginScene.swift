@@ -23,15 +23,15 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
 
    private let headerModel = Design.label.headline4
       .set(.padding(.init(top: 12, left: 0, bottom: 24, right: 0)))
-      .set(.text(Text.title.make(\.enter)))
+      .set(.text(Text.title.enter))
 
    private let subtitleModel = Design.label.subtitle
       .set(.padding(.init(top: 0, left: 0, bottom: 32, right: 0)))
-      .set(.text(Text.title.make(\.enterTelegramName)))
+      .set(.text(Text.title.enterTelegramName))
       .set(.numberOfLines(2))
 
    private let nextButton = Design.button.inactive
-      .set(.title(Text.button.make(\.getCodeButton)))
+      .set(.title(Text.button.getCodeButton))
 
    private let badgeModel = BadgeModel<Asset>()
 
@@ -56,9 +56,9 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
       var loginName: String?
 
       badgeModel
-         .setLabels(title: Text.title.make(\.userName),
-                    placeholder: "@" + Text.title.make(\.userName),
-                    error: Text.title.make(\.wrongUsername))
+         .setLabels(title: Text.title.userName,
+                    placeholder: "@" + Text.title.userName,
+                    error: Text.title.wrongUsername)
 
       nextButton
          .onEvent(\.didTap)
@@ -109,10 +109,10 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
                .setMain {
                   $0
                      .set(.alignment(.left))
-                     .set(.text(Text.title.make(\.enter)))
+                     .set(.text(Text.title.enter))
                } setDown: {
                   $0
-                     .set(.text(Text.title.make(\.enterTelegramName)))
+                     .set(.text(Text.title.enterTelegramName))
                      .set(.alignment(.left))
                },
             Spacer(36),
