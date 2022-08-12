@@ -8,7 +8,23 @@
 import ReactiveWorks
 import UIKit
 
-final class LabelModel: BaseViewModel<PaddingLabel> {}
+struct LabelModelEvents: InitProtocol {
+   var didTap: Event<Void>?
+}
+
+final class LabelModel: BaseViewModel<PaddingLabel>, Communicable {
+   var eventsStore: ButtonEvents = .init()
+   
+   func makeTappable() {
+      let labelTap = UITapGestureRecognizer(target: self, action: #selector(labelTapped(_:)))
+      view.isUserInteractionEnabled = true
+      view.addGestureRecognizer(labelTap)
+   }
+   
+   @objc func labelTapped(_ sender: UITapGestureRecognizer) {
+      sendEvent(\.didTap)
+   }
+}
 
 extension LabelModel: Stateable2 {
    typealias State = LabelState

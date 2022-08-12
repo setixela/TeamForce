@@ -30,6 +30,12 @@ final class VerifyCodeScene<Asset: AssetProtocol>: BaseSceneModel<
       .set(.padding(.init(top: 0, left: 0, bottom: 40, right: 0)))
       .set(.text("2. " + Text.title.make(\.enterSmsCode)))
       .set(.numberOfLines(2))
+   private lazy var noCodeLabel = Design.label.subtitle
+      .set(.text(Text.title.make(\.noCode)))
+      .set(.color(.blue))
+   private lazy var messageModel = Design.label.subtitle
+      .set(.numberOfLines(4))
+      .set(.hidden(true))
 
    private lazy var enterButton = ButtonModel(Design.State.button.inactive)
       .set(.title(Text.button.make(\.enterButton)))
@@ -48,7 +54,23 @@ final class VerifyCodeScene<Asset: AssetProtocol>: BaseSceneModel<
 
    override func start() {
       configure()
-
+      noCodeLabel.makeTappable()
+      noCodeLabel.onEvent(\.didTap) {
+         self.messageModel.set(.hidden(!self.messageModel.view.isHidden))
+      }
+      
+      var messageText = ""
+      switch(inputValue?.account) {
+      case .email:
+         messageText = Text.title.messageEmail
+      case .telegram:
+         messageText = Text.title.messageTelegram
+      case .none:
+         messageText = ""
+      }
+      messageModel
+         .set(.text(messageText))
+      
       badgeModel.setLabels(title: Text.title.make(\.smsCode),
                            placeholder: Text.title.make(\.smsCode),
                            error: Text.title.make(\.wrongCode))
@@ -104,6 +126,10 @@ final class VerifyCodeScene<Asset: AssetProtocol>: BaseSceneModel<
             subtitleModel,
             Spacer(16),
             badgeModel,
+            Spacer(16),
+            noCodeLabel,
+            Spacer(8),
+            messageModel,
             Spacer()
          ]))
 

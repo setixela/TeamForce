@@ -81,7 +81,7 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
          }
          .doNext(worker: TelegramNickCheckerModel())
          .onSuccess { text in
-            loginName = String(text.dropFirst())
+            loginName = text //String(text.dropFirst())
             weakSelf?.badgeModel.textFieldModel.set(.text(text))
             weakSelf?.nextButton.set(Design.State.button.default)
          }

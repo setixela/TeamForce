@@ -33,13 +33,21 @@ struct ApiUseCase: ApiUseCaseRegistry, WorkBasket {
    var userSearch: UserSearchUseCase {
       .init(searchUserApiModel: searchUserApiWorker)
    }
-
+    
    var getTransactions: GetTransactionsUseCase {
       .init(safeStringStorage: safeStringStorage, getTransactionsApiWorker: getTransactionsApiWorker)
    }
 
    var sendCoin: SendCoinUseCase {
       .init(sendCoinApiModel: sendCoinApiWorker)
+   }
+    
+   var getTransactionById: GetTransactionByIdUseCase {
+       .init(safeStringStorage: safeStringStorage, getTransactionByIdApiModel: getTransactionByIdApiWorker)
+   }
+   
+   var getUsersList: GetUsersListUseCase {
+      .init(safeStringStorage: safeStringStorage, getUsersListApiWorker: getUsersListApiWorker)
    }
 
    // MARK: - Dependencies
@@ -54,4 +62,6 @@ struct ApiUseCase: ApiUseCaseRegistry, WorkBasket {
    let searchUserApiWorker: SearchUserApiWorker
    let sendCoinApiWorker: SendCoinApiWorker
    let getTransactionsApiWorker: GetTransactionsApiWorker
+   let getTransactionByIdApiWorker: GetTransactionByIdApiWorker
+   let getUsersListApiWorker: GetUsersListApiWorker
 }
