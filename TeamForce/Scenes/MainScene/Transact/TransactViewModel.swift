@@ -74,7 +74,7 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
 
       weak var wS = self
 
-      // load tokens
+      // load tokens, then load balance, then load 10 user list
       works.loadTokens
          .doAsync()
          .onSuccess {
@@ -105,15 +105,18 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
             wS?.tableModel.set(.hidden(true))
          }
 
+      // on input event, then check input is not empty, then search user
       userSearchTextField
          .onEvent(\.didEditingChanged)
          .onSuccess {
             wS?.hideHUD()
          }
+         // then check data is not empty
          .doNext(usecase: IsNotEmpty())
          .onSuccess {
             wS?.tableModel.set(.hidden(true))
          }
+         // then search user
          .doNext(work: works.searchUser)
          .onSuccess {
             wS?.presentFoundUsers(users: $0)

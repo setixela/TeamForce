@@ -12,12 +12,16 @@ protocol TransactWorksProtocol: SceneWorks {
    // api works
    var loadBalance: Work<Void, Balance> { get }
    var searchUser: Work<String, [FoundUser]> { get }
-   var sendCoins: Work<(amount: String, reason: String), (recipient: String, info: SendCoinRequest)> { get }
+   var sendCoins: Work<(amount: String, reason: String),
+                       (recipient: String, info: SendCoinRequest)> { get }
    var getUserList: Work<Void, [FoundUser]> { get }
+
    // data works
    var loadTokens: Work<Void, Void> { get }
+
    // index mapper
    var mapIndexToUser: Work<IndexPath, FoundUser> { get }
+
    // parsing input
    var coinInputParsing: Work<String, String> { get }
    var reasonInputParsing: Work<String, String> { get }
