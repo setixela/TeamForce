@@ -43,7 +43,7 @@ class BadgeModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>, Assetable {
         ]))
         
         textFieldModel
-           .onEvent(\.didTap) {
+          .onEvent(\.didTap) {_ in 
                self.titleLabel.set(.hidden(false))
            }
     }

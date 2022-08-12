@@ -25,7 +25,8 @@ enum ProductionAsset: AssetProtocol {
          searchUserApiWorker: SearchUserApiWorker(apiEngine: service.apiEngine),
          sendCoinApiWorker: SendCoinApiWorker(apiEngine: service.apiEngine),
          getTransactionsApiWorker: GetTransactionsApiWorker(apiEngine: service.apiEngine),
-         getTransactionByIdApiWorker: GetTransactionByIdApiWorker(apiEngine: service.apiEngine)
+         getTransactionByIdApiWorker: GetTransactionByIdApiWorker(apiEngine: service.apiEngine),
+         getUsersListApiWorker: GetUsersListApiWorker(apiEngine: service.apiEngine)
       )
    }
 }

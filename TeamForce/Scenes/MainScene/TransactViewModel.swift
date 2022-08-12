@@ -67,6 +67,7 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
    private lazy var safeStringStorage = StringStorageWorker(engine: Asset.service.safeStringStorage)
    private lazy var sendCoinApiModel = SendCoinApiWorker(apiEngine: Asset.service.apiEngine)
    private lazy var loadBalanceUseCase = Asset.apiUseCase.loadBalance.work()
+   private lazy var getUsersListUseCase = Asset.apiUseCase.getUsersList.work()
 
    private lazy var foundUsers: [FoundUser] = []
    private lazy var tokens: (token: String, csrf: String) = ("", "")
@@ -95,7 +96,7 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
          .onFail {
             print("balance not loaded")
          }
-
+      
       userSearchModel
          .onEvent(\.didEditingChanged)
          .onSuccess {
@@ -103,11 +104,18 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
          }
          .doNext(usecase: IsEmpty())
          .onSuccess {
-            wS?.tableModel.set(.hidden(true))
+            wS?.tableModel.set(.hidden(false))
+            wS?.getUsersListUseCase
+               .doAsync()
+               .onSuccess { usersList in
+                  wS?.presentFoundUsers(users: usersList)
+               }
+               .onFail {
+                  print("get users list error")
+               }
          }
          .doMap { text in
             guard let self = wS else { return nil }
-
             return SearchUserRequest(
                data: text,
                token: self.tokens.token,
@@ -120,6 +128,23 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
              wS?.presentFoundUsers(users: firstTenUsers)
          }.onFail {
             print("Search user API Error")
+         }
+      
+      userSearchModel
+         .onEvent(\.didTap)
+         .onSuccess {
+            wS?.hideHUD()
+         }
+         .doNext(usecase: IsEmpty())
+         .onSuccess {
+            wS?.getUsersListUseCase
+               .doAsync()
+               .onSuccess { usersList in
+                  wS?.presentFoundUsers(users: usersList)
+               }
+               .onFail {
+                  print("get users list error")
+               }
          }
 
       sendButton

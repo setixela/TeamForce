@@ -99,4 +99,15 @@ enum TeamForceEndpoints {
             self.headers = headers
         }
     }
+   
+   struct UsersList: EndpointProtocol {
+      //
+      let method = HTTPMethod.post
+      
+      var endPoint: String { urlBase + "/users-list/"}
+      
+      let body: [String : Any]
+      
+      let headers: [String : String]
+   }
 }

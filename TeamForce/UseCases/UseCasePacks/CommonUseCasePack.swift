@@ -41,6 +41,10 @@ struct ApiUseCase: ApiUseCaseRegistry {
    var getTransactionById: GetTransactionByIdUseCase {
        .init(safeStringStorage: safeStringStorage, getTransactionByIdApiModel: getTransactionByIdApiWorker)
    }
+   
+   var getUsersList: GetUsersListUseCase {
+      .init(safeStringStorage: safeStringStorage, getUsersListApiWorker: getUsersListApiWorker)
+   }
 
    // MARK: - Dependencies
 
@@ -55,4 +59,5 @@ struct ApiUseCase: ApiUseCaseRegistry {
    let sendCoinApiWorker: SendCoinApiWorker
    let getTransactionsApiWorker: GetTransactionsApiWorker
    let getTransactionByIdApiWorker: GetTransactionByIdApiWorker
+   let getUsersListApiWorker: GetUsersListApiWorker
 }
