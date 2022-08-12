@@ -43,11 +43,11 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
    private lazy var tableModel = TableViewModel()
       .set(.borderColor(.gray))
       .set(.borderWidth(1))
-      .set(.cornerRadius(Design.Parameters.cornerRadius))
+      .set(.cornerRadius(Design.Params.cornerRadius))
       .set(.hidden(true))
 
    private lazy var sendButton = Design.button.default
-      .set(Design.State.button.inactive)
+      .set(Design.state.button.inactive)
       .set(.title(Text.button.make(\.sendButton)))
       .set(.hidden(true))
 
@@ -241,12 +241,12 @@ private extension TransactViewModel {
             wS?.transactInputViewModel.textField.set(.text($0))
             correctCoinInput = true
             if correctReasonInput == true {
-               wS?.sendButton.set(Design.State.button.default)
+               wS?.sendButton.set(Design.state.button.default)
             }
          }
          .onFail { (text: String) in
             wS?.transactInputViewModel.textField.set(.text(text))
-            wS?.sendButton.set(Design.State.button.inactive)
+            wS?.sendButton.set(Design.state.button.inactive)
          }
 
       reasonTextView
@@ -258,13 +258,13 @@ private extension TransactViewModel {
             wS?.reasonTextView.set(.text($0))
             correctReasonInput = true
             if correctCoinInput == true {
-               wS?.sendButton.set(Design.State.button.default)
+               wS?.sendButton.set(Design.state.button.default)
             }
          }
          .onFail { (text: String) in
             wS?.reasonTextView.set(.text(text))
             correctReasonInput = false
-            wS?.sendButton.set(Design.State.button.inactive)
+            wS?.sendButton.set(Design.state.button.inactive)
          }
    }
 }

@@ -25,7 +25,7 @@ class TitleSubtitleYVM<Design: DesignProtocol>:
             .set(.color(Design.color.text2))
             .set(.numberOfLines(0))
             .set(.alignment(.center))
-            .set(.padUp(Design.Parameters.titleSubtitleOffset))
+            .set(.padUp(Design.Params.titleSubtitleOffset))
       }
    }
 }

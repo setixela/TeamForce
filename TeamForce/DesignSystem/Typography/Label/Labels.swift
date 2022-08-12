@@ -9,8 +9,8 @@ import ReactiveWorks
 
 // MARK: - Labels Protocol
 
-protocol LabelBuilderProtocol: InitProtocol, TypographyProtocol
-   where DesignType == LabelModel
+protocol LabelProtocol: InitProtocol, TypographyElements
+   where DesignElement == LabelModel
 {
    associatedtype State: LabelStateProtocol
 
@@ -19,7 +19,7 @@ protocol LabelBuilderProtocol: InitProtocol, TypographyProtocol
 
 // MARK: - Labels
 
-final class LabelBuilder: LabelBuilderProtocol {
+final class LabelBuilder: LabelProtocol {
    let state = LabelStateBuilder()
 
    var subtitle: LabelModel { .init(state.subtitle) }
@@ -38,8 +38,8 @@ final class LabelBuilder: LabelBuilderProtocol {
    var counter: LabelModel { .init(state.counter) }
 }
 
-protocol LabelStateProtocol: TypographyProtocol where DesignType == [LabelState] {
-   associatedtype Fonts: FontBuilderProtocol
+protocol LabelStateProtocol: TypographyElements where DesignElement == [LabelState] {
+   associatedtype Fonts: FontProtocol
 }
 
 struct LabelStateBuilder: LabelStateProtocol {

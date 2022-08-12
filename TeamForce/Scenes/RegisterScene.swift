@@ -26,8 +26,8 @@ final class RegisterScene<Asset: AssetProtocol>: BaseSceneModel<
       .set(.text("1. " + Text.title.make(\.enterTelegramName)))
       .set(.numberOfLines(2))
 
-   private lazy var nextButton = ButtonModel(Design.State.button.inactive)
-      .set(.title(Text.button.make(\.nextButton)))
+   private lazy var nextButton = ButtonModel(Design.state.button.inactive)
+      .set(.title(Text.button.nextButton))
 
    private lazy var textFieldModel = TextFieldModel()
       .set(.padding(.init(top: 16, left: 16, bottom: 16, right: 16)))
@@ -49,6 +49,8 @@ final class RegisterScene<Asset: AssetProtocol>: BaseSceneModel<
    }
 
    private func setupLoginField() {
+      let label = Design.label.default
+      let states = Design.state
 //      textFieldModel
 //         .onEvent(\.didEditingChanged) { [weak self] text in
 //            self?.inputParser.sendEvent(\.request, text)
@@ -57,17 +59,17 @@ final class RegisterScene<Asset: AssetProtocol>: BaseSceneModel<
 //      inputParser
 //         .onEvent(\.success) { [weak self] text in
 //            self?.textFieldModel.set(.text(text))
-//            self?.nextButton.set(Design.State.button.default)
+//            self?.nextButton.set(Design.state.button.default)
 //         }
 //         .onEvent(\.error) { [weak self] text in
 //            self?.textFieldModel.set(.text(text))
-//            self?.nextButton.set(Design.State.button.inactive)
+//            self?.nextButton.set(Design.state.button.inactive)
 //         }
    }
 
    private func configure() {
       mainViewModel
-         .set(Design.State.mainView.default)
+         .set(Design.state.stack.default)
          .set(.backColor(Design.color.background2))
 
       mainViewModel.topStackModel

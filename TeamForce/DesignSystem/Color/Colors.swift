@@ -9,7 +9,7 @@ import ReactiveWorks
 import UIKit
 
 // Протокол Фабрики цветов ( Разнести потом палитру и детали )
-protocol ColorsProtocol: InitProtocol {
+protocol ColorsElements: InitProtocol {
     // Brand colors
     var brand: UIColor { get }
     var transparent: UIColor { get }
@@ -36,7 +36,7 @@ protocol ColorsProtocol: InitProtocol {
 }
 
 // Фабрика цветов
-struct Colors: ColorsProtocol {
+struct Colors: ColorsElements {
     var brand: UIColor { .init(0xb47ce8ff) }
     var transparent: UIColor { .clear }
 

@@ -116,7 +116,7 @@ extension MainScene {
 
    // model.start()
     mainViewModel.topStackModel
-      .set(Design.State.mainView.default)
+      .set(Design.state.stack.default)
       .set(.models([
         model
       ]))

@@ -8,9 +8,9 @@
 import UIKit
 import ReactiveWorks
 
-protocol FontBuilderProtocol: InitProtocol, TypographyProtocol where DesignType == UIFont {}
+protocol FontProtocol: InitProtocol, TypographyElements where DesignElement == UIFont {}
 
-struct FontBuilder: FontBuilderProtocol {
+struct FontBuilder: FontProtocol {
     var `default`: UIFont { .systemFont(ofSize: 14, weight: .regular) }
 
     var headline2: UIFont { .systemFont(ofSize: 60, weight: .regular) }

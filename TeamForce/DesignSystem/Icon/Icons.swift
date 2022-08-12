@@ -8,40 +8,9 @@
 import ReactiveWorks
 import UIKit
 
-protocol IconsProtocol: InitProtocol,
-   KeyPathMaker where MakeType: UIImage, ValueType == IconType
-{
-   associatedtype IconType
-
-   // brand
-   var logo: IconType { get }
-   var logoTitle: IconType { get }
-   // other
-   var checkCircle: IconType { get }
-   var coinLine: IconType { get }
-   var historyLine: IconType { get }
-   var upload2Fill: IconType { get }
-   var calendarLine: IconType { get }
-
-   var avatarPlaceholder: IconType { get }
-
-   var sideMenu: IconType { get }
-
-   var arrowDropDownLine: IconType { get }
-   var arrowDropUpLine: IconType { get }
-
-
-   var clapHands: IconType { get }
-
-   var introlIllustrate: IconType { get }
-
-   var girlOnSkateboard: IconType { get }
-
-   var sendCoinIcon: IconType { get }
-   var recieveCoinIcon: IconType { get }
-}
-
-struct Icons: IconsProtocol {
+struct Icons: IconElements {
+   
+   typealias DesignElement = String
    // brand
    var logo: String { "dt_logo" }
    var logoTitle: String { "dt_logo_title" }
@@ -70,7 +39,7 @@ struct Icons: IconsProtocol {
 }
 
 extension Icons: KeyPathMaker {
-   func make(_ keypath: KeyPath<Self, IconType>) -> UIImage {
+   func make(_ keypath: KeyPath<Self, String>) -> UIImage {
       let name = self[keyPath: keypath]
       return UIImage(named: name) ?? UIImage()
    }

@@ -35,6 +35,8 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
 
    private let badgeModel = BadgeModel<Asset>()
 
+   private let loginTextField = TextFieldModel()
+
    // MARK: - Use Cases
 
    private lazy var useCase = Asset.apiUseCase
@@ -83,12 +85,12 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
          .onSuccess { text in
             loginName = text // String(text.dropFirst())
             weakSelf?.badgeModel.textFieldModel.set(.text(text))
-            weakSelf?.nextButton.set(Design.State.button.default)
+            weakSelf?.nextButton.set(Design.state.button.default)
          }
          .onFail { (text: String) in
             loginName = nil
             weakSelf?.badgeModel.textFieldModel.set(.text(text))
-            weakSelf?.nextButton.set(Design.State.button.inactive)
+            weakSelf?.nextButton.set(Design.state.button.inactive)
          }
    }
 
@@ -97,11 +99,11 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
          .set(.backColor(Design.color.background))
 
       mainViewModel.topStackModel
-         .set(Design.State.mainView.default)
+         .set(Design.state.stack.default)
          .set(.alignment(.leading))
          .set(.models([
-            Spacer(Design.Parameters.globalTopOffset),
-            DTLogoTitleXVM<Asset>(),//.centeredX(),
+            Spacer(Design.Params.globalTopOffset),
+            DTLogoTitleXVM<Asset>(),
             Spacer(36),
             TitleSubtitleYVM<Design>()
                .setMain {
@@ -113,18 +115,16 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
                      .set(.text(Text.title.make(\.enterTelegramName)))
                      .set(.alignment(.left))
                },
-            Spacer(),
+            Spacer(36),
          ]))
 
       mainViewModel.bottomStackModel
-         .set(Design.State.mainView.default)
+         .set(Design.state.stack.bottomPanel)
+
          .set(.models([
-            // logoTitle,
-//            headerModel,
-//            subtitleModel,
-//            badgeModel,
+            loginTextField,
+            nextButton,
             Spacer(),
-//            nextButton
          ]))
    }
 }

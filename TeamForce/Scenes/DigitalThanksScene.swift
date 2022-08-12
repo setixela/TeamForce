@@ -51,9 +51,9 @@ final class DigitalThanksScene<Asset: AssetProtocol>: BaseSceneModel<
          .set(.backColor(Design.color.background2))
 
       mainViewModel.topStackModel
-         .set(Design.State.mainView.default)
+         .set(Design.state.stack.default)
          .set(.models([
-            Spacer(Design.Parameters.globalTopOffset),
+            Spacer(Design.Params.globalTopOffset),
             logoTitle,
             Spacer(32),
             illustration,
@@ -63,7 +63,8 @@ final class DigitalThanksScene<Asset: AssetProtocol>: BaseSceneModel<
          ]))
 
       mainViewModel.bottomStackModel
-         .set(Design.State.mainView.bottomPanel)
+         .set(.spacing(Design.Params.buttonsSpacingY))
+         .set(Design.state.stack.bottomPanel)
          .set(.models([
             enterButton
          ]))

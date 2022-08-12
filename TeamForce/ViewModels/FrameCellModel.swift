@@ -26,7 +26,7 @@ final class FrameCellModel<Design: DesignProtocol>: BaseViewModel<UIStackView>,
    override func start() {
       set(.axis(.vertical))
       set(.padding(.init(top: 12, left: 16, bottom: 12, right: 16)))
-      set(.cornerRadius(Design.Parameters.cornerRadius))
+      set(.cornerRadius(Design.Params.cornerRadius))
       set(.models([
          headerLabel,
          textLabel,

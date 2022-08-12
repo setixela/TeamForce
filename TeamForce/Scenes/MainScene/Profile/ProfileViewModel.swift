@@ -33,7 +33,7 @@ final class ProfileViewModel<Asset: AssetProtocol>: BaseSceneModel<
 
    private func configure() {
       mainViewModel
-         .set(Design.State.mainView.default)
+         .set(Design.state.stack.default)
          .set(.backColor(Design.color.background2))
 
       mainViewModel

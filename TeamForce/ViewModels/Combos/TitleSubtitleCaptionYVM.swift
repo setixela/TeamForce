@@ -24,14 +24,14 @@ class TitleSubtitleCaptionYVM<Design: DesignProtocol>:
             .set(Design.label.state.subtitle)
             .set(.numberOfLines(0))
             .set(.alignment(.center))
-            .set(.padUp(Design.Parameters.titleSubtitleOffset))
+            .set(.padUp(Design.Params.titleSubtitleOffset))
             .set(.color(Design.color.text2))
       } setDown2: {
          $0
             .set(Design.label.state.caption)
             .set(.numberOfLines(0))
             .set(.alignment(.center))
-            .set(.padUp(Design.Parameters.titleSubtitleOffset))
+            .set(.padUp(Design.Params.titleSubtitleOffset))
       }
    }
 }

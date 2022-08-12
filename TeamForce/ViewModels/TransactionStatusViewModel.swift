@@ -67,7 +67,7 @@ final class TransactionStatusViewModel<Asset: AssetProtocol>: BaseViewModel<UISt
       .set(.title(Text.button.make(\.toTheBeginingButton)))
 
    override func start() {
-      set(Design.State.mainView.default)
+      set(Design.state.stack.default)
       set(.backColor(Design.color.background2))
       set(.cornerRadius(GlobalParameters.cornerRadius))
       set(.alignment(.fill))

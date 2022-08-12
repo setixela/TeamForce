@@ -24,7 +24,7 @@ final class DoubleLabelPairModel<Design: DesignProtocol>: BaseViewModel<UIStackV
 
     override func start() {
         set(.axis(.horizontal))
-            .set(.cornerRadius(Design.Parameters.cornerRadius))
+            .set(.cornerRadius(Design.Params.cornerRadius))
             .set(.distribution(.fillProportionally))
             .set(.alignment(.fill))
             .set(.models([

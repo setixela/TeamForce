@@ -28,7 +28,7 @@ final class LoginSuccessScene<Asset: AssetProtocol>: BaseSceneModel<
       .set(.padding(UIEdgeInsets(top: 24, left: 0, bottom: 24, right: 0)))
       .set(.text(Text.title.loginSuccess))
 
-   private lazy var nextButton = ButtonModel(Design.State.button.default)
+   private lazy var nextButton = ButtonModel(Design.state.button.default)
       .set(.title(Text.button.enterButton))
 
    private lazy var apiModel = ProfileApiWorker(apiEngine: Asset.service.apiEngine)
@@ -62,7 +62,7 @@ final class LoginSuccessScene<Asset: AssetProtocol>: BaseSceneModel<
 
    private func configure() {
       mainViewModel
-         .set(Design.State.mainView.default)
+         .set(Design.state.stack.default)
          .set(.backColor(Design.color.background2))
 
       mainViewModel.topStackModel

@@ -20,7 +20,6 @@ protocol AssetProtocol: AssetRoot
    Text: TextsProtocol
 {
    static var router: MainRouter<Scene>? { get set }
-
    static var apiUseCase: ApiUseCase { get }
 
    typealias Asset = Self

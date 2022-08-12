@@ -37,7 +37,7 @@ final class VerifyCodeScene<Asset: AssetProtocol>: BaseSceneModel<
       .set(.numberOfLines(4))
       .set(.hidden(true))
 
-   private lazy var enterButton = ButtonModel(Design.State.button.inactive)
+   private lazy var enterButton = ButtonModel(Design.state.button.inactive)
       .set(.title(Text.button.make(\.enterButton)))
 
    private let badgeModel = BadgeModel<Asset>()
@@ -105,11 +105,11 @@ final class VerifyCodeScene<Asset: AssetProtocol>: BaseSceneModel<
          .onSuccess {
             weakSelf?.smsCode = $0
             weakSelf?.badgeModel.textFieldModel.set(.text($0))
-            weakSelf?.enterButton.set(Design.State.button.default)
+            weakSelf?.enterButton.set(Design.state.button.default)
          }.onFail { (text: String) in
             weakSelf?.smsCode = nil
             weakSelf?.badgeModel.textFieldModel.set(.text(text))
-            weakSelf?.enterButton.set(Design.State.button.inactive)
+            weakSelf?.enterButton.set(Design.state.button.inactive)
          }
    }
 
@@ -117,7 +117,7 @@ final class VerifyCodeScene<Asset: AssetProtocol>: BaseSceneModel<
 
       mainViewModel
          .set(.backColor(Design.color.background2))
-         .set(Design.State.mainView.default)
+         .set(Design.state.stack.default)
 
       mainViewModel.topStackModel
          .set(.models([
