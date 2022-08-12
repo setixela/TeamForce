@@ -10,7 +10,7 @@ import ReactiveWorks
 
 // MARK: - LogoTitleSubtitleModel
 
-final class LogoTitleSubtitleModel: BaseViewModel<PaddingImageView>, Stateable2 {
+final class IconTitleSubtitleModel: BaseViewModel<PaddingImageView>, Stateable2 {
    typealias State = ViewState
    typealias State2 = ImageViewState
    //
@@ -18,4 +18,4 @@ final class LogoTitleSubtitleModel: BaseViewModel<PaddingImageView>, Stateable2 
    //
 }
 
-extension LogoTitleSubtitleModel: ComboRight {}
+extension IconTitleSubtitleModel: ComboRight {}

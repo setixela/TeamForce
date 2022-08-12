@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		19017B6728A697DF00B06345 /* AligningModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19017B6628A697DF00B06345 /* AligningModels.swift */; };
+		19017B6928A6986F00B06345 /* TitleSubtitleXVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19017B6828A6986F00B06345 /* TitleSubtitleXVM.swift */; };
+		19017B6B28A6989000B06345 /* TitleSubtitleYVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19017B6A28A6989000B06345 /* TitleSubtitleYVM.swift */; };
+		19017B6D28A698BC00B06345 /* TitleSubtitleCaptionYVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19017B6C28A698BC00B06345 /* TitleSubtitleCaptionYVM.swift */; };
+		19017B6F28A69C7800B06345 /* TitleSubtitleCaptionXVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19017B6E28A69C7800B06345 /* TitleSubtitleCaptionXVM.swift */; };
+		19017B7128A69CB100B06345 /* IconTitleYVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19017B7028A69CB100B06345 /* IconTitleYVM.swift */; };
+		19017B7328A69CD400B06345 /* DTLogoTitleXVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19017B7228A69CD400B06345 /* DTLogoTitleXVM.swift */; };
 		190C1D12285D15FF00FB3518 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190C1D11285D15FF00FB3518 /* AppDelegate.swift */; };
 		190C1D14285D15FF00FB3518 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190C1D13285D15FF00FB3518 /* SceneDelegate.swift */; };
 		190C1D16285D15FF00FB3518 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190C1D15285D15FF00FB3518 /* ViewController.swift */; };
@@ -22,14 +29,13 @@
 		191B0C272865E5C1001CF3D9 /* Icons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191B0C262865E5C1001CF3D9 /* Icons.swift */; };
 		191B0C292865F119001CF3D9 /* Texts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191B0C282865F119001CF3D9 /* Texts.swift */; };
 		19466E01289FE28C0052F0AB /* TitleSubtitleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19466E00289FE28C0052F0AB /* TitleSubtitleModel.swift */; };
-		19466E03289FFC040052F0AB /* LogoTitleSubtitleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19466E02289FFC040052F0AB /* LogoTitleSubtitleModel.swift */; };
+		19466E03289FFC040052F0AB /* IconTitleSubtitleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19466E02289FFC040052F0AB /* IconTitleSubtitleModel.swift */; };
 		194C095628759FD900D88D5B /* ViewModel+Stateable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 194C095528759FD900D88D5B /* ViewModel+Stateable.swift */; };
 		1953DE7F2878BCB5000DC537 /* SwiftKeychainWrapper in Frameworks */ = {isa = PBXBuildFile; productRef = 1953DE7E2878BCB5000DC537 /* SwiftKeychainWrapper */; };
 		1953DE812879FC55000DC537 /* SearchUserApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1953DE802879FC55000DC537 /* SearchUserApiWorker.swift */; };
 		1953DE842879FDE3000DC537 /* TransactViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1953DE832879FDE3000DC537 /* TransactViewModel.swift */; };
 		1953DE862879FE30000DC537 /* PickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1953DE852879FE30000DC537 /* PickerViewModel.swift */; };
 		1953DE88287B4574000DC537 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1953DE87287B4574000DC537 /* Fonts.swift */; };
-		1953DE8A287B4624000DC537 /* LabelStateBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1953DE89287B4624000DC537 /* LabelStateBuilder.swift */; };
 		1953DE8D287B4752000DC537 /* Typography.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1953DE8C287B4752000DC537 /* Typography.swift */; };
 		1967509D286491190019A6DE /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1967509C286491190019A6DE /* Buttons.swift */; };
 		1967509F286492780019A6DE /* Labels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1967509E286492780019A6DE /* Labels.swift */; };
@@ -119,6 +125,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		19017B6628A697DF00B06345 /* AligningModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AligningModels.swift; sourceTree = "<group>"; };
+		19017B6828A6986F00B06345 /* TitleSubtitleXVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleSubtitleXVM.swift; sourceTree = "<group>"; };
+		19017B6A28A6989000B06345 /* TitleSubtitleYVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleSubtitleYVM.swift; sourceTree = "<group>"; };
+		19017B6C28A698BC00B06345 /* TitleSubtitleCaptionYVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleSubtitleCaptionYVM.swift; sourceTree = "<group>"; };
+		19017B6E28A69C7800B06345 /* TitleSubtitleCaptionXVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleSubtitleCaptionXVM.swift; sourceTree = "<group>"; };
+		19017B7028A69CB100B06345 /* IconTitleYVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconTitleYVM.swift; sourceTree = "<group>"; };
+		19017B7228A69CD400B06345 /* DTLogoTitleXVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DTLogoTitleXVM.swift; sourceTree = "<group>"; };
 		190C1D0E285D15FF00FB3518 /* TeamForce.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TeamForce.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		190C1D11285D15FF00FB3518 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		190C1D13285D15FF00FB3518 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -136,13 +149,12 @@
 		191B0C262865E5C1001CF3D9 /* Icons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Icons.swift; sourceTree = "<group>"; };
 		191B0C282865F119001CF3D9 /* Texts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Texts.swift; sourceTree = "<group>"; };
 		19466E00289FE28C0052F0AB /* TitleSubtitleModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleSubtitleModel.swift; sourceTree = "<group>"; };
-		19466E02289FFC040052F0AB /* LogoTitleSubtitleModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoTitleSubtitleModel.swift; sourceTree = "<group>"; };
+		19466E02289FFC040052F0AB /* IconTitleSubtitleModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconTitleSubtitleModel.swift; sourceTree = "<group>"; };
 		194C095528759FD900D88D5B /* ViewModel+Stateable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewModel+Stateable.swift"; sourceTree = "<group>"; };
 		1953DE802879FC55000DC537 /* SearchUserApiWorker.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = SearchUserApiWorker.swift; sourceTree = "<group>"; tabWidth = 2; };
 		1953DE832879FDE3000DC537 /* TransactViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactViewModel.swift; sourceTree = "<group>"; };
 		1953DE852879FE30000DC537 /* PickerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerViewModel.swift; sourceTree = "<group>"; };
 		1953DE87287B4574000DC537 /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
-		1953DE89287B4624000DC537 /* LabelStateBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelStateBuilder.swift; sourceTree = "<group>"; };
 		1953DE8C287B4752000DC537 /* Typography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Typography.swift; sourceTree = "<group>"; };
 		1967509C286491190019A6DE /* Buttons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Buttons.swift; sourceTree = "<group>"; };
 		1967509E286492780019A6DE /* Labels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Labels.swift; sourceTree = "<group>"; };
@@ -305,13 +317,13 @@
 		19466DFF289FE0B20052F0AB /* LabelModels */ = {
 			isa = PBXGroup;
 			children = (
+				19ECD54028623D1F001765F6 /* LabelModel.swift */,
 				19D08354286F405500F75E4A /* DoubleLabelModel.swift */,
 				19D08356286F41B200F75E4A /* DoubleLabelPairModel.swift */,
 				19D08358286F41FA00F75E4A /* IconLabelHorizontalModel.swift */,
 				19D0835A286F424000F75E4A /* LabelIconHorizontalModel.swift */,
-				19ECD54028623D1F001765F6 /* LabelModel.swift */,
 				19466E00289FE28C0052F0AB /* TitleSubtitleModel.swift */,
-				19466E02289FFC040052F0AB /* LogoTitleSubtitleModel.swift */,
+				19466E02289FFC040052F0AB /* IconTitleSubtitleModel.swift */,
 			);
 			path = LabelModels;
 			sourceTree = "<group>";
@@ -333,7 +345,6 @@
 			children = (
 				1953DE8C287B4752000DC537 /* Typography.swift */,
 				1953DE87287B4574000DC537 /* Fonts.swift */,
-				1953DE89287B4624000DC537 /* LabelStateBuilder.swift */,
 				1967509E286492780019A6DE /* Labels.swift */,
 			);
 			path = Typography;
@@ -438,6 +449,20 @@
 			path = Profile;
 			sourceTree = "<group>";
 		};
+		19ACB3D128A65FDD00B5AD71 /* Combos */ = {
+			isa = PBXGroup;
+			children = (
+				19017B6628A697DF00B06345 /* AligningModels.swift */,
+				19017B7228A69CD400B06345 /* DTLogoTitleXVM.swift */,
+				19017B7028A69CB100B06345 /* IconTitleYVM.swift */,
+				19017B6E28A69C7800B06345 /* TitleSubtitleCaptionXVM.swift */,
+				19017B6C28A698BC00B06345 /* TitleSubtitleCaptionYVM.swift */,
+				19017B6A28A6989000B06345 /* TitleSubtitleYVM.swift */,
+				19017B6828A6986F00B06345 /* TitleSubtitleXVM.swift */,
+			);
+			path = Combos;
+			sourceTree = "<group>";
+		};
 		19AE3AF0286922FC00A0C6E4 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -479,6 +504,7 @@
 		19C1E9A428610E6F00E7976D /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				19ACB3D128A65FDD00B5AD71 /* Combos */,
 				19A73BE928A450EB000B74CF /* Badging */,
 				19466DFF289FE0B20052F0AB /* LabelModels */,
 				19DD3D93288766770085CDA8 /* TableModels */,
@@ -700,28 +726,32 @@
 				196750A22865169C0019A6DE /* DigitalThanksScene.swift in Sources */,
 				19CF792C28A587B9001531B8 /* TransactSceneWorks.swift in Sources */,
 				19C1E991285F426B00E7976D /* ApiEngine.swift in Sources */,
+				19017B7128A69CB100B06345 /* IconTitleYVM.swift in Sources */,
 				19EF32B02884B6C80078F53D /* TableViewModel.swift in Sources */,
 				19A73BED28A4530C000B74CF /* TextFieldBadged.swift in Sources */,
 				19DD3D97288A0A8C0085CDA8 /* CoverViewModel.swift in Sources */,
 				191B0C292865F119001CF3D9 /* Texts.swift in Sources */,
 				19D08355286F405500F75E4A /* DoubleLabelModel.swift in Sources */,
 				6368D8282891E7C40049EEAB /* UserDefault+helpers.swift in Sources */,
+				19017B6928A6986F00B06345 /* TitleSubtitleXVM.swift in Sources */,
 				63E1916D2889519E000FD312 /* BadgeModel.swift in Sources */,
 				19C1E9A328610E4E00E7976D /* MainRouter.swift in Sources */,
 				19A73BEB28A4510E000B74CF /* BadgedViewModel.swift in Sources */,
 				198FE1D02899E0BF00BAF1A5 /* IsEmpty.swift in Sources */,
 				19AE3AF22869230C00A0C6E4 /* AuthApiWorker.swift in Sources */,
+				19017B6B28A6989000B06345 /* TitleSubtitleYVM.swift in Sources */,
 				19D08351286F401000F75E4A /* SideBarUserModel.swift in Sources */,
 				19D0835F286F42C000F75E4A /* FrameCellModel.swift in Sources */,
 				19466E01289FE28C0052F0AB /* TitleSubtitleModel.swift in Sources */,
 				196750A4286516E40019A6DE /* RegisterScene.swift in Sources */,
 				19A73BEF28A454AC000B74CF /* BadgeProtocols.swift in Sources */,
 				63CFA198289C3FB6000E4D1E /* GetTransactionsUseCase.swift in Sources */,
+				19017B7328A69CD400B06345 /* DTLogoTitleXVM.swift in Sources */,
 				191B0C272865E5C1001CF3D9 /* Icons.swift in Sources */,
 				19CF792328A45C52001531B8 /* TransactInteract.swift in Sources */,
 				19EF32AB287CE80B0078F53D /* StringStorageWorker.swift in Sources */,
 				196750A6286516F40019A6DE /* LoginScene.swift in Sources */,
-				1953DE8A287B4624000DC537 /* LabelStateBuilder.swift in Sources */,
+				19017B6728A697DF00B06345 /* AligningModels.swift in Sources */,
 				6368D826289187B50049EEAB /* SendCoinApiModel.swift in Sources */,
 				1918CC7D286F6CAC004373F3 /* GetBalanceApiWorker.swift in Sources */,
 				196750A8286517070019A6DE /* VerifyCodeScene.swift in Sources */,
@@ -750,7 +780,9 @@
 				198FE1CC28999A2600BAF1A5 /* NilBlocker.swift in Sources */,
 				199C4B6B2863292F008AD6FD /* ButtonModel.swift in Sources */,
 				63AD437B28992045000511B9 /* TransactionStatusViewModel.swift in Sources */,
+				19017B6F28A69C7800B06345 /* TitleSubtitleCaptionXVM.swift in Sources */,
 				19ECD54328623D30001765F6 /* StackModel.swift in Sources */,
+				19017B6D28A698BC00B06345 /* TitleSubtitleCaptionYVM.swift in Sources */,
 				196750AA286517130019A6DE /* LoginSuccessScene.swift in Sources */,
 				19C1E990285F426B00E7976D /* TeamForceEndpoints.swift in Sources */,
 				1953DE862879FE30000DC537 /* PickerViewModel.swift in Sources */,
@@ -768,7 +800,7 @@
 				19ACB3D028A5E9E700B5AD71 /* WorkBasket.swift in Sources */,
 				196750B4286519660019A6DE /* ProductionAsset.swift in Sources */,
 				1918CC7B286F6C84004373F3 /* ProfileApiWorker.swift in Sources */,
-				19466E03289FFC040052F0AB /* LogoTitleSubtitleModel.swift in Sources */,
+				19466E03289FFC040052F0AB /* IconTitleSubtitleModel.swift in Sources */,
 				19D0835D286F428600F75E4A /* BarButtonModel.swift in Sources */,
 				196750AC2865189C0019A6DE /* TextFieldModel.swift in Sources */,
 				6368D8222891508C0049EEAB /* ProfileViewModel.swift in Sources */,

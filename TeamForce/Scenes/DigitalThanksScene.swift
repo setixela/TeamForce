@@ -17,18 +17,20 @@ final class DigitalThanksScene<Asset: AssetProtocol>: BaseSceneModel<
    Void
 > {
    //
-
-   private lazy var logoTitle = SquashedX<LogoTitleVM<Asset>>()
+   private lazy var logoTitle = DTLogoTitleXVM<Asset>()
+      .centeredX()
 
    private lazy var illustration = ImageViewModel()
       .set(.image(Design.icon.make(\.introlIllustrate)))
       .set(.width(300))
 
-   private lazy var headerModel = Design.label.headline3
-      .set(.numberOfLines(2))
-      .set(.padding(.init(top: 0, left: 0, bottom: 40, right: 0)))
-      .set(.text(Text.title.make(\.digitalThanks)))
-      .set(.alignment(.center))
+   private lazy var titleSubtitle = TitleSubtitleYVM<Design>()
+      .setMain {
+         $0.set(.text(Text.title.make(\.digitalThanks)))
+      } setDown: {
+         $0.set(.text(Text.title.make(\.digitalThanksAbout)))
+      }
+      .centeredX()
 
    private lazy var enterButton = Design.button.default
       .set(.title(Text.button.make(\.enterButton)))
@@ -53,11 +55,12 @@ final class DigitalThanksScene<Asset: AssetProtocol>: BaseSceneModel<
          .set(Design.State.mainView.default)
          .set(.alignment(.fill))
          .set(.models([
-            Spacer(100),
+            Spacer(64),
             logoTitle,
-            Spacer(24),
+            Spacer(32),
             illustration,
-            headerModel,
+            Spacer(64),
+            titleSubtitle,
             Spacer()
          ]))
 
@@ -66,60 +69,5 @@ final class DigitalThanksScene<Asset: AssetProtocol>: BaseSceneModel<
          .set(.models([
             enterButton
          ]))
-   }
-}
-
-final class LogoTitleVM<Asset: AssetProtocol>:
-   Combos<SComboMR<ImageViewModel, ImageViewModel>>,
-   Assetable
-{
-   let mainModel: ImageViewModel = .init()
-   let rightModel: ImageViewModel = .init()
-
-   override func start() {
-      setMain {
-         $0
-            .set(.image(Design.icon.make(\.logo)))
-            .set(.size(.square(40)))
-
-      } setRight: {
-         $0
-            .set(.image(Design.icon.make(\.logoTitle)))
-            .set(.padding(.init(top: 8, left: 12, bottom: 4, right: 0)))
-      }
-   }
-}
-
-// обжимает модель с двух сторон, для того чтобы центрировать в .fill стеках
-final class SquashedX<VM: VMP>: BaseViewModel<UIStackView>, Stateable {
-   typealias State = StackState
-
-   let subModel = VM()
-
-   override func start() {
-      set(.axis(.horizontal))
-      set(.distribution(.equalCentering))
-      set(.models([
-         Spacer(),
-         subModel,
-         Spacer()
-      ]))
-   }
-}
-
-// обжимает модель с двух сторон, для того чтобы центрировать в .fill стеках
-final class SquashedY<VM: VMP>: BaseViewModel<UIStackView>, Stateable {
-   typealias State = StackState
-
-   let subModel = VM()
-
-   override func start() {
-      set(.axis(.vertical))
-      set(.distribution(.equalCentering))
-      set(.models([
-         Spacer(),
-         subModel,
-         Spacer()
-      ]))
    }
 }

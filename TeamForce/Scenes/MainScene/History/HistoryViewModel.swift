@@ -118,7 +118,7 @@ final class HistoryViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
             image = Design.icon.make(\.sendCoinIcon)
          }
 
-         let cell = LogoTitleSubtitleModel(isAutoreleaseView: true)
+         let cell = IconTitleSubtitleModel(isAutoreleaseView: true)
             .set(.image(image))
             .set(.padding(.outline(10)))
             .set(.size(.init(width: 64, height: 64)))

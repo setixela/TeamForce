@@ -42,6 +42,11 @@ class ButtonModel: BaseViewModel<ButtonExtended> {
       if view.isEnabled {
          sendEvent(\.didTap)
          print("Did tap")
+         let frame = view.frame
+         view.frame = view.frame.inset(by: .init(top: 3, left: 1, bottom: -2, right: 1))
+         UIView.animate(withDuration: 0.2) {
+            self.view.frame = frame
+         }
       }
    }
 }

@@ -150,11 +150,11 @@ extension ViewModelProtocol where Self: Stateable, View: PaddingLabel {
       case .padLeft(let value):
          view.padding.left = value
       case .padRight(let value):
-         view.padding.left = value
+         view.padding.right = value
       case .padUp(let value):
-         view.padding.left = value
+         view.padding.top = value
       case .padBottom(let value):
-         view.padding.left = value
+         view.padding.bottom = value
       }
    }
 }

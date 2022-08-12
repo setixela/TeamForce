@@ -26,7 +26,8 @@ final class PlaygroundScene<Asset: AssetProtocol>: BaseSceneModel<
             $0?.set(.color(Asset.Design.color.textPrimary))
          }
       }
-   private let logoTitle = LogoTitleVM<Asset>()
+
+   private let logoTitle = DTLogoTitleXVM<Asset>()
 
    override func start() {
       let viewModel = VizitkaDemo()
@@ -46,7 +47,7 @@ final class PlaygroundScene<Asset: AssetProtocol>: BaseSceneModel<
                .set(.backColor(.random))
          }
 
-      let logoTitleSubtitle = LogoTitleSubtitleModel()
+      let logoTitleSubtitle = IconTitleSubtitleModel()
          .set(.image(Design.icon.make(\.logo)))
          .set(.backColor(.random))
          .setRight {
@@ -148,7 +149,6 @@ extension CGSize {
 
 final class ComboMRD: Combos<SComboMRD<LabelModel, LabelModel, LabelModel>> {
    override func start() {
-      print("\n########### START\n")
       setMain { (model: LabelModel) in
          model
             .set(.size(.square(100)))

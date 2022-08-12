@@ -32,10 +32,7 @@ extension DesignProtocol {
    static var color: Color { .init() }
 }
 
-protocol ParametersProtocol {
-   static var cornerRadius: CGFloat { get }
-   static var contentPadding: UIEdgeInsets { get }
-}
+
 
 protocol StateBuildersProtocol: Designable {
    associatedtype MainView: MainViewSetuperProtocol
