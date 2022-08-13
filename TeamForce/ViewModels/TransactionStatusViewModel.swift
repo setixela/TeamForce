@@ -69,7 +69,7 @@ final class TransactionStatusViewModel<Asset: AssetProtocol>: BaseViewModel<UISt
    override func start() {
       set(Design.state.stack.default)
       set(.backColor(Design.color.background2))
-      set(.cornerRadius(GlobalParameters.cornerRadius))
+      set(.cornerRadius(Design.params.cornerRadius))
       set(.alignment(.fill))
       set(.spacing(16))
 //        set(.distribution(.fill))
@@ -101,7 +101,7 @@ final class TransactionStatusViewModel<Asset: AssetProtocol>: BaseViewModel<UISt
    private func setup(info: SendCoinRequest, username: String) {
       amountLabel.set(.text("-" + info.amount))
       reasonLabel.set(.text(info.reason))
-      recipientLabel.set(.text(Texts.title.recipient + username))
+      recipientLabel.set(.text(TextBuilder.title.recipient + username))
    }
 }
 

@@ -8,31 +8,29 @@
 import ReactiveWorks
 import UIKit
 
-protocol ButtonStateProtocol: ButtonElements where DesignElement == [ButtonState] {
-   associatedtype Parameters: ParamsProtocol
-}
+protocol ButtonStateProtocol: ButtonElements where DesignElement == [ButtonState] {}
 
 struct ButtonStateBuilder<Design: DesignProtocol>: ButtonStateProtocol {
    var `default`: [ButtonState] { [
       .backColor(Design.color.activeButton),
       .textColor(Design.color.textInvert),
-      .cornerRadius(Parameters.cornerRadius),
-      .height(Parameters.buttonHeight),
+      .cornerRadius(Design.params.cornerRadius),
+      .height(Design.params.buttonHeight),
       .enabled(true),
    ] }
 
    var transparent: [ButtonState] { [
       .backColor(Design.color.inactiveButton),
-      .cornerRadius(Parameters.cornerRadius),
-      .height(Parameters.buttonHeight),
+      .cornerRadius(Design.params.cornerRadius),
+      .height(Design.params.buttonHeight),
       .textColor(Design.color.text),
       .enabled(true),
    ] }
 
    var inactive: [ButtonState] { [
       .backColor(Design.color.inactiveButton),
-      .cornerRadius(Parameters.cornerRadius),
-      .height(Parameters.buttonHeight),
+      .cornerRadius(Design.params.cornerRadius),
+      .height(Design.params.buttonHeight),
       .textColor(Design.color.textInvert),
       .enabled(false),
    ] }
@@ -48,5 +46,4 @@ struct ButtonStateBuilder<Design: DesignProtocol>: ButtonStateProtocol {
       .vertical(true),
    ] }
 
-   typealias Parameters = GlobalParameters
 }

@@ -8,7 +8,7 @@ enum BadgeState {
 
 class BadgeModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>, Assetable {
 
-    internal var textFieldModel = TextFieldModel()
+    internal var textFieldModel = TextFieldModel<Design>()
        .set(.padding(.init(top: 16, left: 16, bottom: 16, right: 16)))
        .set(.placeholder("Placeholder"))
        .set(.backColor(UIColor.clear))

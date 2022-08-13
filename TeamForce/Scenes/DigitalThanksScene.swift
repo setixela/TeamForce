@@ -17,14 +17,14 @@ final class DigitalThanksScene<Asset: AssetProtocol>: BaseSceneModel<
    Void
 > {
    //
-   private lazy var logoTitle = DTLogoTitleXVM<Asset>()
+   private lazy var logoTitle = DTLogoTitleX<Asset>()
      .centeredX()
 
    private lazy var illustration = ImageViewModel()
       .set(.image(Design.icon.make(\.introlIllustrate)))
       .set(.width(300))
 
-   private lazy var titleSubtitle = TitleSubtitleYVM<Design>()
+   private lazy var titleSubtitle = TitleSubtitleY<Design>()
       .setMain {
          $0.set(.text(Text.title.digitalThanks))
       } setDown: {
@@ -53,7 +53,7 @@ final class DigitalThanksScene<Asset: AssetProtocol>: BaseSceneModel<
       mainViewModel.topStackModel
          .set(Design.state.stack.default)
          .set(.models([
-            Spacer(Design.Params.globalTopOffset),
+            Spacer(Design.params.globalTopOffset),
             logoTitle,
             Spacer(32),
             illustration,
@@ -63,7 +63,7 @@ final class DigitalThanksScene<Asset: AssetProtocol>: BaseSceneModel<
          ]))
 
       mainViewModel.bottomStackModel
-         .set(.spacing(Design.Params.buttonsSpacingY))
+         .set(.spacing(Design.params.buttonsSpacingY))
          .set(Design.state.stack.bottomPanel)
          .set(.models([
             enterButton

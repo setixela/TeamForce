@@ -16,13 +16,13 @@ protocol AssetProtocol: AssetRoot
    where
    Scene: ScenesProtocol,
    Service: ServiceProtocol,
-   Design: DesignProtocol,
-   Text: TextsProtocol
+   Design: DesignProtocol
 {
    static var router: MainRouter<Scene>? { get set }
    static var apiUseCase: ApiUseCase { get }
 
    typealias Asset = Self
+   typealias Text = Design.Text
 }
 
 extension AssetProtocol {

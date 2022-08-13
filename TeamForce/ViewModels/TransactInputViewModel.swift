@@ -18,7 +18,7 @@ final class TransactInputViewModel<Design: DesignProtocol>: BaseViewModel<UIStac
 {
     private lazy var doubleLabel = DoubleLabelModel<Design>()
 
-    internal lazy var textField = TextFieldModel()
+    internal lazy var textField = TextFieldModel<Design>()
         .set(.clearButtonMode(.never))
         .set(.font(Design.font.headline2))
         .set(.height(72))

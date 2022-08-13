@@ -9,18 +9,19 @@ import ReactiveWorks
 import UIKit
 
 struct DesignSystem: DesignProtocol {
-   typealias Text = Texts
+   typealias Text = TextBuilder
    typealias Font = FontBuilder
-   typealias Params = GlobalParameters
-   typealias Icon = Icons
+   typealias Params = ParamBuilder
+   typealias Icon = IconBuilder
    typealias State = StateBuilders<Self>
-   typealias Button = DefaultButtonBuilder<Self>
-   typealias Label = LabelBuilder
-   typealias Color = Colors
+   typealias Button = ButtonBuilder<Self>
+   typealias Label = LabelBuilder<Self>
+   typealias Color = ColorBuilder
 }
 
 struct StateBuilders<Design: DesignProtocol>: StateProtocol {
    typealias Button = ButtonStateBuilder<Design>
    typealias Stack = StackStateBuilder<Design>
-   typealias Label = LabelStateBuilder
+   typealias Label = LabelStateBuilder<Design>
+   typealias TextField = TextFieldStateBuilder<Design>
 }

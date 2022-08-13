@@ -26,22 +26,22 @@ final class SideBarModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
    private lazy var userModel = SideBarUserModel<Design>()
 
    internal lazy var item1 = IconLabelHorizontalModel<Asset>()
-      .set(.padding(Design.Params.contentPadding))
+      .set(.padding(Design.params.contentPadding))
       .set(.text("Баланс"))
       .set(.icon(Design.icon.make(\.coinLine)))
 
    internal lazy var item2 = IconLabelHorizontalModel<Asset>()
-      .set(.padding(Design.Params.contentPadding))
+      .set(.padding(Design.params.contentPadding))
       .set(.text("Новый перевод"))
       .set(.icon(Design.icon.make(\.upload2Fill)))
 
    internal lazy var item3 = IconLabelHorizontalModel<Asset>()
-      .set(.padding(Design.Params.contentPadding))
+      .set(.padding(Design.params.contentPadding))
       .set(.text("История"))
       .set(.icon(Design.icon.make(\.historyLine)))
 
    private lazy var item4 = IconLabelHorizontalModel<Asset>()
-      .set(.padding(Design.Params.contentPadding))
+      .set(.padding(Design.params.contentPadding))
       .set(.text("Выход"))
 
    // MARK: - Use Cases

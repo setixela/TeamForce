@@ -7,7 +7,7 @@
 
 import ReactiveWorks
 
-class TitleSubtitleYVM<Design: DesignProtocol>:
+class TitleSubtitleY<Design: DesignProtocol>:
    Combos<SComboMD<LabelModel, LabelModel>>,
    Designable
 {
@@ -16,16 +16,16 @@ class TitleSubtitleYVM<Design: DesignProtocol>:
 
       setMain {
          $0
-            .set(Design.label.state.title)
+            .set(Design.state.label.title)
             .set(.numberOfLines(0))
             .set(.alignment(.center))
       } setDown: {
          $0
-            .set(Design.label.state.subtitle)
+            .set(Design.state.label.subtitle)
             .set(.color(Design.color.text2))
             .set(.numberOfLines(0))
             .set(.alignment(.center))
-            .set(.padUp(Design.Params.titleSubtitleOffset))
+            .set(.padUp(Design.params.titleSubtitleOffset))
       }
    }
 }

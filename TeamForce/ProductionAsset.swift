@@ -9,7 +9,7 @@ import ReactiveWorks
 
 enum ProductionAsset: AssetProtocol {
    typealias Router = MainRouter<Scene>
-   typealias Text = Texts
+   typealias Text = TextBuilder
    typealias Design = DesignSystem
    typealias Service = ProductionService
    typealias Scene = Scenes

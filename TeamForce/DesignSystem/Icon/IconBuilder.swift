@@ -8,7 +8,7 @@
 import ReactiveWorks
 import UIKit
 
-struct Icons: IconElements {
+struct IconBuilder: IconElements {
    typealias DesignElement = String
 
    // brand
@@ -38,7 +38,7 @@ struct Icons: IconElements {
    var sendCoinIcon: String { "send_coin_icon" }
 }
 
-extension Icons: KeyPathMaker {
+extension IconBuilder: KeyPathMaker {
    func make(_ keypath: KeyPath<Self, String>) -> UIImage {
       let name = self[keyPath: keypath]
       return UIImage(named: name) ?? UIImage()

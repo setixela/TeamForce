@@ -40,7 +40,7 @@ final class LabelIconHorizontalModel<Design: DesignProtocol>: BaseViewModel<UISt
 
     override func start() {
         set(.axis(.horizontal))
-        set(.cornerRadius(Design.Params.cornerRadius))
+        set(.cornerRadius(Design.params.cornerRadius))
         set(.distribution(.fill))
         set(.alignment(.fill))
         set(.padding(.init(top: 12, left: 16, bottom: 12, right: 16)))

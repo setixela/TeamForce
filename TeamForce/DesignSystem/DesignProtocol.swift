@@ -10,34 +10,36 @@ import UIKit
 
 /*
 
-...
-Design.label
-Design.icon
-Design.button
-Design.text
-Design.font
-Design.params
+ ...
+ Design.label
+ Design.icon
+ Design.button
+ Design.text
+ Design.font
+ Design.params
 
-Design.state.label
-Design.state.button
-Design.state.stack
-Design.state.view
-...
+ Design.state.label
+ Design.state.button
+ Design.state.stack
+ Design.state.view
+ ...
 
- */
+  */
 
-protocol DesignProtocol: InitProtocol {
-   associatedtype Text: TextsProtocol
-   associatedtype Color: ColorsElements
-   associatedtype Icon: IconElements
-   associatedtype Font: FontProtocol
-   associatedtype Label: LabelProtocol
-   associatedtype Button: ButtonProtocol
+typealias DSP = DesignProtocol
 
-   associatedtype State: StateProtocol
+protocol DesignProtocol: DesignRoot where
+   Text: TextsProtocol,
+   Color: ColorsElements,
+   Icon: IconElements,
+   Font: FontProtocol,
+   Label: LabelProtocol,
+   Button: ButtonProtocol,
 
-   associatedtype Params: ParamsProtocol
-}
+   State: StateProtocol,
+
+   Params: ParamsProtocol
+{}
 
 extension DesignProtocol {
    static var text: Text { .init() }
@@ -51,4 +53,3 @@ extension DesignProtocol {
 
    static var params: Params { .init() }
 }
-

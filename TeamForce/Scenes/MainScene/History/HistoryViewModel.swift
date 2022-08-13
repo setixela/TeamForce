@@ -26,7 +26,7 @@ final class HistoryViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
    private lazy var tableModel = TableViewModel()
       .set(.borderColor(.gray))
       .set(.borderWidth(1))
-      .set(.cornerRadius(Design.Params.cornerRadius))
+      .set(.cornerRadius(Design.params.cornerRadius))
 
    private lazy var segmentedControl = SegmentedControlModel()
       .set(.items(["Все", "Получено", "Отправлено"]))

@@ -19,7 +19,7 @@ final class LoginSuccessScene<Asset: AssetProtocol>: BaseSceneModel<
    //
    private lazy var checkmarkIcon = ImageViewModel()
       .set(.size(.init(width: 48, height: 48)))
-      .set(.image(Icons().make(\.checkCircle)))
+      .set(.image(IconBuilder().make(\.checkCircle)))
       .set(.contentMode(.scaleAspectFit))
 
    private lazy var headerModel = Design.label.headline4

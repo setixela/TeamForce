@@ -8,7 +8,7 @@
 import ReactiveWorks
 import UIKit
 
-// Протокол Фабрики цветов ( Разнести потом палитру и детали )
+// Протокол Фабрики цветов ( Разнести потом палитру и детали и обьекты)
 protocol ColorsElements: InitProtocol {
     // Brand colors
     var brand: UIColor { get }
@@ -33,10 +33,12 @@ protocol ColorsElements: InitProtocol {
     var inactiveButton: UIColor { get }
     var activeButton: UIColor { get }
     var transparentButton: UIColor { get }
+    // textfields
+    var textFieldBack: UIColor { get }
 }
 
 // Фабрика цветов
-struct Colors: ColorsElements {
+struct ColorBuilder: ColorsElements {
     var brand: UIColor { .init(0xb47ce8ff) }
     var transparent: UIColor { .clear }
 
@@ -56,6 +58,7 @@ struct Colors: ColorsElements {
     var activeButton: UIColor { brand }
     var inactiveButton: UIColor { background2 }
     var transparentButton: UIColor { transparent }
+    var textFieldBack: UIColor { background }
 }
 
 private extension UIColor {

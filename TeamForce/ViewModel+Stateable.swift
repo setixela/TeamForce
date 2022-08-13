@@ -215,3 +215,66 @@ extension ViewModelProtocol where Self: Stateable, View: ButtonExtended {
       }
    }
 }
+
+// MARK: - TextFieldModel
+
+enum TextFieldState {
+   case text(String)
+   case placeholder(String)
+   case backColor(UIColor)
+   case font(UIFont)
+   case clearButtonMode(UITextField.ViewMode)
+   case padding(UIEdgeInsets)
+   case height(CGFloat)
+   case widht(CGFloat)
+
+   case cornerRadius(CGFloat)
+   case borderWidth(CGFloat)
+   case borderColor(UIColor)
+   case size(CGSize)
+   case hidden(Bool)
+   case zPosition(CGFloat)
+   case placing(CGPoint)
+}
+
+extension ViewModelProtocol where Self: Stateable, View: PaddingTextField {
+   func applyState(_ state: TextFieldState) {
+      switch state {
+      case .text(let string):
+         view.text = string
+      case .placeholder(let string):
+         view.placeholder = string
+      case .backColor(let value):
+         view.backgroundColor = value
+      case .font(let font):
+         view.font = font
+      case .clearButtonMode(let value):
+         view.clearButtonMode = value
+      case .padding(let value):
+         view.padding = value
+      case .height(let value):
+         view.addAnchors.constHeight(value)
+      case .widht(let value):
+         view.addAnchors.constWidth(value)
+
+      case .cornerRadius(let value):
+         view.layer.cornerRadius = value
+      case .borderColor(let value):
+         view.layer.borderColor = value.cgColor
+      case .borderWidth(let value):
+         view.layer.borderWidth = value
+      case .hidden(let value):
+         view.isHidden = value
+      case .size(let size):
+         view.addAnchors
+            .constWidth(size.width)
+            .constHeight(size.height)
+      case .zPosition(let value):
+         view.layer.masksToBounds = false
+         view.layer.zPosition = value
+         view.setNeedsLayout()
+      case .placing(let value):
+         view.center = value
+      }
+   }
+}

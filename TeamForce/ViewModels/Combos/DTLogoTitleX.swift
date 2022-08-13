@@ -7,7 +7,7 @@
 
 import ReactiveWorks
 
-final class DTLogoTitleXVM<Asset: AssetProtocol>:
+final class DTLogoTitleX<Asset: AssetProtocol>:
    Combos<SComboMR<ImageViewModel, ImageViewModel>>,
    Assetable
 {

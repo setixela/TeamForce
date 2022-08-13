@@ -24,7 +24,7 @@ protocol ButtonProtocol: ButtonElements, Designable where DesignElement == Butto
 
 // MARK: - Buttons
 
-final class DefaultButtonBuilder<Design: DesignProtocol>: ButtonProtocol {
+final class ButtonBuilder<Design: DesignProtocol>: ButtonProtocol {
    var `default`: ButtonModel {
       .init(Design.state.button.default)
    }

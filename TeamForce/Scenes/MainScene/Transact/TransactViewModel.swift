@@ -28,7 +28,7 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
       .set(.alignment(.left))
       .set(.padding(.init(top: 22, left: 0, bottom: 26, right: 0)))
 
-   private lazy var userSearchTextField = TextFieldModel()
+   private lazy var userSearchTextField = TextFieldModel<Design>()
       .set(.backColor(.init(red: 0.33, green: 0.33, blue: 0.33, alpha: 0.08)))
       .set(.height(48))
       .set(.placeholder(Text.title.chooseRecipient))
@@ -43,7 +43,7 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
    private lazy var tableModel = TableViewModel()
       .set(.borderColor(.gray))
       .set(.borderWidth(1))
-      .set(.cornerRadius(Design.Params.cornerRadius))
+      .set(.cornerRadius(Design.params.cornerRadius))
       .set(.hidden(true))
 
    private lazy var sendButton = Design.button.default
@@ -51,9 +51,9 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
       .set(.title(Text.button.sendButton))
       .set(.hidden(true))
 
-   private lazy var reasonTextView = TextViewModel()
+   private lazy var reasonTextView = TextViewModel<Design>()
       .set(.padding(.init(top: 16, left: 16, bottom: 16, right: 16)))
-      .set(.placeholder(Texts.title.reasonPlaceholder))
+      .set(.placeholder(TextBuilder.title.reasonPlaceholder))
       .set(.backColor(UIColor.clear))
       .set(.borderColor(.lightGray.withAlphaComponent(0.4)))
       .set(.borderWidth(1.0))

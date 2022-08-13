@@ -29,7 +29,7 @@ final class RegisterScene<Asset: AssetProtocol>: BaseSceneModel<
    private lazy var nextButton = ButtonModel(Design.state.button.inactive)
       .set(.title(Text.button.nextButton))
 
-   private lazy var textFieldModel = TextFieldModel()
+   private lazy var textFieldModel = TextFieldModel<Design>()
       .set(.padding(.init(top: 16, left: 16, bottom: 16, right: 16)))
       .set(.placeholder("@" + Text.title.userName))
 

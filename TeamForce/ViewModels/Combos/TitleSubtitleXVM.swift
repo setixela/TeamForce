@@ -16,11 +16,11 @@ class TitleSubtitleXVM<Design: DesignProtocol>:
 
       setMain {
          $0
-            .set(Design.label.state.title)
+            .set(Design.state.label.title)
             .set(.alignment(.center))
       } setRight: {
          $0
-            .set(Design.label.state.subtitle)
+            .set(Design.state.label.subtitle)
             .set(.alignment(.center))
             .set(.color(Design.color.text2))
       }

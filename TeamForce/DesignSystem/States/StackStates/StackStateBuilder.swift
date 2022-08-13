@@ -8,12 +8,12 @@
 import ReactiveWorks
 import UIKit
 
-protocol StackStateElements: InitProtocol, Designable {
+protocol StackStatesProtocol: InitProtocol, Designable {
    var `default`: [StackState] { get }
    var bottomPanel: [StackState] { get }
 }
 
-struct StackStateBuilder<Design: DesignProtocol>: StackStateElements {
+struct StackStateBuilder<Design: DesignProtocol>: StackStatesProtocol {
    var `default`: [StackState] { [
       .axis(.vertical),
       .spacing(0),
@@ -24,7 +24,7 @@ struct StackStateBuilder<Design: DesignProtocol>: StackStateElements {
 
    var bottomPanel: [StackState] { [
       .axis(.vertical),
-      .spacing(Design.Params.buttonsSpacingY),
+      .spacing(Design.params.buttonsSpacingY),
       .alignment(.fill),
       .distribution(.fill),
       .backColor(Design.color.background2),

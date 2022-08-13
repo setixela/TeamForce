@@ -35,7 +35,8 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
 
    private let badgeModel = BadgeModel<Asset>()
 
-   private let loginTextField = TextFieldModel()
+   private let loginTextField = TextFieldModel<Design>(Design.state.textField.default)
+      .set(.placeholder(""))
 
    // MARK: - Use Cases
 
@@ -102,10 +103,10 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
          .set(Design.state.stack.default)
          .set(.alignment(.leading))
          .set(.models([
-            Spacer(Design.Params.globalTopOffset),
-            DTLogoTitleXVM<Asset>(),
+            Spacer(Design.params.globalTopOffset),
+            DTLogoTitleX<Asset>(),
             Spacer(36),
-            TitleSubtitleYVM<Design>()
+            TitleSubtitleY<Design>()
                .setMain {
                   $0
                      .set(.alignment(.left))
