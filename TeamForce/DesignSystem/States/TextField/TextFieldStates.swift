@@ -18,6 +18,7 @@ struct TextFieldStateBuilder<Design: DSP>: TextFieldStateProtocol, Designable {
    var `default`: [TextFieldState] {[
       .padding(.init(top: 16, left: 16, bottom: 16, right: 16)),
       .placeholder(""),
-      .backColor(Design.color.textFieldBack),
+      .backColor(Design.color.semantic.textFieldBack),
+      .height(Design.params.buttonHeight)
    ]}
 }

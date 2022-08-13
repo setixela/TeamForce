@@ -12,7 +12,7 @@ protocol ButtonStateProtocol: ButtonElements where DesignElement == [ButtonState
 
 struct ButtonStateBuilder<Design: DesignProtocol>: ButtonStateProtocol {
    var `default`: [ButtonState] { [
-      .backColor(Design.color.activeButton),
+      .backColor(Design.color.semantic.activeButtonBack),
       .textColor(Design.color.textInvert),
       .cornerRadius(Design.params.cornerRadius),
       .height(Design.params.buttonHeight),
@@ -20,7 +20,7 @@ struct ButtonStateBuilder<Design: DesignProtocol>: ButtonStateProtocol {
    ] }
 
    var transparent: [ButtonState] { [
-      .backColor(Design.color.inactiveButton),
+      .backColor(Design.color.semantic.inactiveButtonBack),
       .cornerRadius(Design.params.cornerRadius),
       .height(Design.params.buttonHeight),
       .textColor(Design.color.text),
@@ -28,7 +28,7 @@ struct ButtonStateBuilder<Design: DesignProtocol>: ButtonStateProtocol {
    ] }
 
    var inactive: [ButtonState] { [
-      .backColor(Design.color.inactiveButton),
+      .backColor(Design.color.semantic.inactiveButtonBack),
       .cornerRadius(Design.params.cornerRadius),
       .height(Design.params.buttonHeight),
       .textColor(Design.color.textInvert),

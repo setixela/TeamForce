@@ -8,15 +8,15 @@
 import ReactiveWorks
 
 protocol StateProtocol: InitProtocol, Designable {
+   associatedtype Stack: StackStatesProtocol
    associatedtype Label: LabelStateProtocol
    associatedtype Button: ButtonStateProtocol
-   associatedtype Stack: StackStatesProtocol
    associatedtype TextField: TextFieldStateProtocol
 }
 
 extension StateProtocol {
+   var stack: Stack { .init() }
    var label: Label { .init() }
    var button: Button { .init() }
-   var stack: Stack { .init() }
    var textField: TextField { .init() }
 }

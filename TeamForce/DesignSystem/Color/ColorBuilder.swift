@@ -9,7 +9,7 @@ import ReactiveWorks
 import UIKit
 
 // Протокол Фабрики цветов ( Разнести потом палитру и детали и обьекты)
-protocol ColorsElements: InitProtocol {
+protocol ColorsProtocol: InitProtocol {
     // Brand colors
     var brand: UIColor { get }
     var transparent: UIColor { get }
@@ -29,16 +29,23 @@ protocol ColorsElements: InitProtocol {
     // Errors
     var error: UIColor { get }
 
-    // Other
-    var inactiveButton: UIColor { get }
-    var activeButton: UIColor { get }
-    var transparentButton: UIColor { get }
-    // textfields
+    // MARK: - Semantic colors
+
+    associatedtype Semantic: SemanticColorProtocol
+
+    var semantic: Semantic { get }
+}
+
+protocol SemanticColorProtocol: InitProtocol {
+    // button colors
+    var activeButtonBack: UIColor { get }
+    var inactiveButtonBack: UIColor { get }
+    var transparentButtonBack: UIColor { get }
     var textFieldBack: UIColor { get }
 }
 
 // Фабрика цветов
-struct ColorBuilder: ColorsElements {
+struct ColorBuilder: ColorsProtocol {
     var brand: UIColor { .init(0xb47ce8ff) }
     var transparent: UIColor { .clear }
 
@@ -54,11 +61,16 @@ struct ColorBuilder: ColorsElements {
 
     var error: UIColor { .init(0xff0b0bff) }
 
+    // semantic colors
+    var semantic: Semantic<Self> = .init()
+}
+
+struct Semantic<Colors: ColorsProtocol>: SemanticColorProtocol {
     // button colors
-    var activeButton: UIColor { brand }
-    var inactiveButton: UIColor { background2 }
-    var transparentButton: UIColor { transparent }
-    var textFieldBack: UIColor { background }
+    var activeButtonBack: UIColor { Colors().brand }
+    var inactiveButtonBack: UIColor { Colors().background2 }
+    var transparentButtonBack: UIColor { Colors().transparent }
+    var textFieldBack: UIColor { Colors().background }
 }
 
 private extension UIColor {

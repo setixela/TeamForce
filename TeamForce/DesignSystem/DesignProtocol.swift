@@ -30,7 +30,7 @@ typealias DSP = DesignProtocol
 
 protocol DesignProtocol: DesignRoot where
    Text: TextsProtocol,
-   Color: ColorsElements,
+   Color: ColorsProtocol,
    Icon: IconElements,
    Font: FontProtocol,
    Label: LabelProtocol,

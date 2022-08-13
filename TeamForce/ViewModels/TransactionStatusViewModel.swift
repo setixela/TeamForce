@@ -53,7 +53,7 @@ final class TransactionStatusViewModel<Asset: AssetProtocol>: BaseViewModel<UISt
       .set(.numberOfLines(1))
       .set(.alignment(.center))
       .set(.padding(.init(top: 22, left: 0, bottom: 26, right: 0)))
-      .set(.color(Design.color.activeButton))
+      .set(.color(Design.color.semantic.activeButtonBack))
 
    let reasonLabel = Design.label.body1
       .set(.alignment(.center))
