@@ -14,8 +14,9 @@ final class StackModel: BaseViewModel<UIStackView> {
    }
 }
 
-extension StackModel: Stateable {
+extension StackModel: Stateable2 {
    typealias State = StackState
+   typealias State2 = ViewState
 }
 
 extension UIStackView {

@@ -14,10 +14,12 @@ struct SideBarUserModelEvent: InitProtocol {
 
 final class SideBarUserModel<Design: DesignProtocol>: BaseViewModel<UIStackView>,
    Communicable,
-   Stateable,
+   Stateable2,
    Designable
 {
    typealias State = StackState
+   typealias State2 = ViewState
+
    var eventsStore: SideBarUserModelEvent = .init()
 
    lazy var avatar = ImageViewModel()

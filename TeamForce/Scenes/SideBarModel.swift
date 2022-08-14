@@ -53,17 +53,17 @@ final class SideBarModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
 
       userModel.avatar.set(.image(Design.icon.avatarPlaceholder))
 
-      set(.axis(.vertical))
-         .set(.distribution(.fill))
-         .set(.alignment(.leading))
-         .set(.models([
+      setAxis(.vertical)
+         .setDistribution(.fill)
+         .setAlignment(.leading)
+         .setModels([
             userModel,
             item1,
             item2,
             item3,
             item4,
             Spacer()
-         ]))
+         ])
 
       onEvent(\.presentOnScene) { [weak self] baseView in
          self?.show(baseView: baseView)

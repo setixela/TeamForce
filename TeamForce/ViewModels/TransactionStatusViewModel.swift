@@ -21,10 +21,11 @@ struct TransactionStatusViewEvents: InitProtocol {
 
 final class TransactionStatusViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
    Communicable,
-   Stateable,
+   Stateable2,
    Assetable
 {
    typealias State = StackState
+   typealias State2 = ViewState
    var eventsStore: TransactionStatusViewEvents = .init()
 
    private let backgroundView: UIView = {

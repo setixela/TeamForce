@@ -17,17 +17,17 @@ final class DigitalThanksScene<Asset: AssetProtocol>: BaseSceneModel<
 > {
    //
    private lazy var logoTitle = DTLogoTitleX<Asset>()
-     .centeredX()
+      .centeredX()
 
    private lazy var illustration = ImageViewModel()
-      .set(.image(Design.icon.introlIllustrate))
-      .set(.width(300))
+      .setImage(Design.icon.introlIllustrate)
+      .setWidth(300)
 
    private lazy var titleSubtitle = TitleSubtitleY<Design>()
       .setMain {
-         $0.set(.text(Text.title.digitalThanks))
+         $0.setText(Text.title.digitalThanks)
       } setDown: {
-         $0.set(.text(Text.title.digitalThanksAbout))
+         $0.setText(Text.title.digitalThanksAbout)
       }
 
    private lazy var enterButton = Design.button.default
@@ -47,11 +47,11 @@ final class DigitalThanksScene<Asset: AssetProtocol>: BaseSceneModel<
 
    private func configure() {
       mainViewModel
-         .set(.backColor(Design.color.background2))
+         .setBackColor(Design.color.background2)
 
       mainViewModel.topStackModel
          .set(Design.state.stack.default)
-         .set(.models([
+         .setModels([
             Spacer(Design.params.globalTopOffset),
             logoTitle,
             Spacer(32),
@@ -59,13 +59,13 @@ final class DigitalThanksScene<Asset: AssetProtocol>: BaseSceneModel<
             Spacer(64),
             titleSubtitle,
             Spacer()
-         ]))
+         ])
 
       mainViewModel.bottomStackModel
-         .set(.spacing(Design.params.buttonsSpacingY))
          .set(Design.state.stack.bottomPanel)
-         .set(.models([
+         .setSpacing(Design.params.buttonsSpacingY)
+         .setModels([
             enterButton
-         ]))
+         ])
    }
 }

@@ -75,6 +75,8 @@
 		19A73BEB28A4510E000B74CF /* BadgedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A73BEA28A4510E000B74CF /* BadgedViewModel.swift */; };
 		19A73BED28A4530C000B74CF /* TextFieldBadged.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A73BEC28A4530C000B74CF /* TextFieldBadged.swift */; };
 		19A73BEF28A454AC000B74CF /* BadgeProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A73BEE28A454AC000B74CF /* BadgeProtocols.swift */; };
+		19A8229628A925760081D385 /* ViewModel+Setters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A8229528A925760081D385 /* ViewModel+Setters.swift */; };
+		19A8229828A9305D0081D385 /* UIEdgeInsets+Padding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A8229728A9305D0081D385 /* UIEdgeInsets+Padding.swift */; };
 		19ACB3D028A5E9E700B5AD71 /* WorkBasket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19ACB3CF28A5E9E700B5AD71 /* WorkBasket.swift */; };
 		19AE3AEF28691B2E00A0C6E4 /* MainScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19AE3AEE28691B2E00A0C6E4 /* MainScene.swift */; };
 		19AE3AF22869230C00A0C6E4 /* AuthApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19AE3AF12869230C00A0C6E4 /* AuthApiWorker.swift */; };
@@ -208,6 +210,8 @@
 		19A73BEA28A4510E000B74CF /* BadgedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgedViewModel.swift; sourceTree = "<group>"; };
 		19A73BEC28A4530C000B74CF /* TextFieldBadged.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldBadged.swift; sourceTree = "<group>"; };
 		19A73BEE28A454AC000B74CF /* BadgeProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeProtocols.swift; sourceTree = "<group>"; };
+		19A8229528A925760081D385 /* ViewModel+Setters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewModel+Setters.swift"; sourceTree = "<group>"; };
+		19A8229728A9305D0081D385 /* UIEdgeInsets+Padding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIEdgeInsets+Padding.swift"; sourceTree = "<group>"; };
 		19ACB3CF28A5E9E700B5AD71 /* WorkBasket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkBasket.swift; sourceTree = "<group>"; };
 		19AE3AEE28691B2E00A0C6E4 /* MainScene.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = MainScene.swift; sourceTree = "<group>"; tabWidth = 2; };
 		19AE3AF12869230C00A0C6E4 /* AuthApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthApiWorker.swift; sourceTree = "<group>"; };
@@ -380,6 +384,7 @@
 				19CF792728A54D60001531B8 /* Config.swift */,
 				190C1D13285D15FF00FB3518 /* SceneDelegate.swift */,
 				194C095528759FD900D88D5B /* ViewModel+Stateable.swift */,
+				19A8229528A925760081D385 /* ViewModel+Setters.swift */,
 				6368D8272891E7C30049EEAB /* UserDefault+helpers.swift */,
 				195870F328A8CDD90075D505 /* Assets */,
 				196750A02865168F0019A6DE /* Scenes */,
@@ -668,6 +673,7 @@
 			isa = PBXGroup;
 			children = (
 				1952EA6A28A71399003F7852 /* DesignElements.swift */,
+				19A8229728A9305D0081D385 /* UIEdgeInsets+Padding.swift */,
 				19D08360286F430B00F75E4A /* Designable.swift */,
 				19C1E9A228610E4E00E7976D /* MainRouter.swift */,
 				1999B6FD28A2F5D300D3570B /* DataToDecodableParser.swift */,
@@ -891,6 +897,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				194C095628759FD900D88D5B /* ViewModel+Stateable.swift in Sources */,
+				19A8229628A925760081D385 /* ViewModel+Setters.swift in Sources */,
 				199C4B6D2863299E008AD6FD /* DesignSystem.swift in Sources */,
 				19AE3AEF28691B2E00A0C6E4 /* MainScene.swift in Sources */,
 				19F15389289964D200ECF000 /* CommonUseCasePack.swift in Sources */,
@@ -995,6 +1002,7 @@
 				19ACB3D028A5E9E700B5AD71 /* WorkBasket.swift in Sources */,
 				196750B4286519660019A6DE /* ProductionAsset.swift in Sources */,
 				1918CC7B286F6C84004373F3 /* ProfileApiWorker.swift in Sources */,
+				19A8229828A9305D0081D385 /* UIEdgeInsets+Padding.swift in Sources */,
 				19466E03289FFC040052F0AB /* IconTitleSubtitleModel.swift in Sources */,
 				19D0835D286F428600F75E4A /* BarButtonModel.swift in Sources */,
 				196750AC2865189C0019A6DE /* TextFieldModel.swift in Sources */,

@@ -9,21 +9,6 @@ import Anchorage
 import ReactiveWorks
 import UIKit
 
-enum ButtonState {
-   case enabled(Bool)
-   case selected(Bool)
-   case title(String)
-   case textColor(UIColor)
-   case font(UIFont)
-   case backColor(UIColor)
-   case cornerRadius(CGFloat)
-   case height(CGFloat)
-   case image(UIImage)
-   case tint(UIColor)
-   case vertical(Bool)
-   case hidden(Bool)
-}
-
 struct ButtonEvents: InitProtocol {
    var didTap: Event<Void>?
 }

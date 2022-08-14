@@ -9,6 +9,8 @@ import Anchorage
 import ReactiveWorks
 import UIKit
 
+// MARK: - View states
+
 enum ViewState {
    case backColor(UIColor)
    case cornerRadius(CGFloat)
@@ -28,32 +30,30 @@ extension ViewModelProtocol where Self: Stateable {
    func applyState(_ state: ViewState) {
       switch state {
       case .backColor(let value):
-         view.backgroundColor = value
+         setBackColor(value)
       case .height(let value):
-         view.addAnchors.constHeight(value)
+         setHeight(value)
       case .cornerRadius(let value):
-         view.layer.cornerRadius = value
+         setCornerRadius(value)
       case .borderColor(let value):
-         view.layer.borderColor = value.cgColor
+         setBorderColor(value)
       case .borderWidth(let value):
-         view.layer.borderWidth = value
+         setBorderWidth(value)
       case .hidden(let value):
-         view.isHidden = value
-      case .size(let size):
-         view.addAnchors
-            .constWidth(size.width)
-            .constHeight(size.height)
+         setHidden(value)
+      case .size(let value):
+         setSize(value)
       case .zPosition(let value):
-         view.layer.masksToBounds = false
-         view.layer.zPosition = value
-         view.setNeedsLayout()
+         setZPosition(value)
       case .placing(let value):
-         view.center = value
+         setPlacing(value)
       case .width(let value):
-         view.addAnchors.constWidth(value)
+         setWidth(value)
       }
    }
 }
+
+// MARK: - Stack State
 
 enum StackState {
    case distribution(UIStackView.Distribution)
@@ -72,51 +72,45 @@ enum StackState {
    case backImage(UIImage)
 }
 
-// MARK: -  Stateable extensions
-
 extension ViewModelProtocol where Self: Stateable, View: UIStackView {
    func applyState(_ state: StackState) {
       switch state {
+      // Stack View
       case .distribution(let value):
-         view.distribution = value
+         setDistribution(value)
       case .axis(let value):
-         view.axis = value
+         setAxis(value)
       case .spacing(let value):
-         view.spacing = value
+         setSpacing(value)
       case .alignment(let value):
-         view.alignment = value
+         setAlignment(value)
       case .padding(let value):
-         view.layoutMargins = value
-         view.isLayoutMarginsRelativeArrangement = true
-      case .backColor(let value):
-         view.backgroundColor = value
-      case .height(let value):
-         view.addAnchors.constHeight(value)
-      case .models(let models):
-         view.subviews.forEach {
-            $0.removeFromSuperview()
-         }
-         models.forEach {
-            let subview = $0.uiView
-            print(subview)
-            view.addArrangedSubview($0.uiView)
-         }
-      case .cornerRadius(let value):
-         view.layer.cornerRadius = value
-      case .borderColor(let value):
-         view.layer.borderColor = value.cgColor
-      case .borderWidth(let value):
-         view.layer.borderWidth = value
-      case .hidden(let value):
-         view.isHidden = value
-      case .backView(let backView, let inset):
-         view.insertSubview(backView, at: 0)
-         backView.addAnchors.fitToViewInsetted(view, inset)
+         setPadding(value)
+      case .models(let value):
+         setModels(value)
+      case .backView(let value, let value2):
+         setBackView(value, inset: value2)
       case .backImage(let image):
-         applyState(.backView(PaddingImageView(image: image)))
+         setBackImage(image)
+
+      // View
+      case .backColor(let value):
+         setBackColor(value)
+      case .height(let value):
+         setHeight(value)
+      case .cornerRadius(let value):
+         setCornerRadius(value)
+      case .borderColor(let value):
+         setBorderColor(value)
+      case .borderWidth(let value):
+         setBorderWidth(value)
+      case .hidden(let value):
+         setHidden(value)
       }
    }
 }
+
+// MARK: - Label State
 
 enum LabelState {
    case text(String)
@@ -136,28 +130,30 @@ extension ViewModelProtocol where Self: Stateable, View: PaddingLabel {
    func applyState(_ state: LabelState) {
       switch state {
       case .text(let value):
-         view.text = value
+         setText(value)
       case .font(let value):
-         view.font = value
+         setFont(value)
       case .color(let value):
-         view.textColor = value
+         setColor(value)
       case .numberOfLines(let value):
-         view.numberOfLines = value
+         setNumberOfLines(value)
       case .alignment(let value):
-         view.textAlignment = value
+         setAlignment(value)
       case .padding(let value):
-         view.padding = value
+         setPadding(value)
       case .padLeft(let value):
-         view.padding.left = value
+         setPadLeft(value)
       case .padRight(let value):
-         view.padding.right = value
+         setPadRight(value)
       case .padUp(let value):
-         view.padding.top = value
+         setPadTop(value)
       case .padBottom(let value):
-         view.padding.bottom = value
+         setPadBottom(value)
       }
    }
 }
+
+// MARK: - Image view state
 
 enum ImageViewState {
    case image(UIImage)
@@ -168,55 +164,65 @@ enum ImageViewState {
 extension ViewModelProtocol where Self: Stateable, View: PaddingImageView {
    func applyState(_ state: ImageViewState) {
       switch state {
-      case .image(let uIImage):
-         view.image = uIImage
-      case .contentMode(let mode):
-         view.contentMode = mode
+      case .image(let value):
+         setImage(value)
+      case .contentMode(let value):
+         setContentMode(value)
       case .padding(let value):
-         view.padding = value
+         setPadding(value)
       }
    }
 }
 
-extension UIEdgeInsets {
-   static func left(_ offset: CGFloat) -> UIEdgeInsets {
-      UIEdgeInsets(top: 0, left: offset, bottom: 0, right: 0)
-   }
+// MARK: - Button states
+
+enum ButtonState {
+   case enabled(Bool)
+   case selected(Bool)
+   case title(String)
+   case textColor(UIColor)
+   case font(UIFont)
+   case backColor(UIColor)
+   case cornerRadius(CGFloat)
+   case height(CGFloat)
+   case image(UIImage)
+   case tint(UIColor)
+   case vertical(Bool)
+   case hidden(Bool)
 }
 
 extension ViewModelProtocol where Self: Stateable, View: ButtonExtended {
    func applyState(_ state: ButtonState) {
       switch state {
       case .enabled(let value):
-         view.isEnabled = value
+         setEnabled(value)
       case .selected(let value):
-         view.isSelected = value
-      case .title(let title):
-         view.setTitle(title, for: .normal)
-      case .textColor(let color):
-         view.setTitleColor(color, for: .normal)
-      case .backColor(let color):
-         view.backgroundColor = color
-      case .cornerRadius(let radius):
-         view.layer.cornerRadius = radius
-      case .height(let height):
-         view.addAnchors.constHeight(height)
-      case .font(let font):
-         view.titleLabel?.font = font
-      case .image(let image):
-         view.setImage(image, for: .normal)
+         setSelected(value)
+      case .title(let value):
+         setTitle(value)
+      case .textColor(let value):
+         setTextColor(value)
+      case .backColor(let value):
+         setBackColor(value)
+      case .cornerRadius(let value):
+         setCornerRadius(value)
+      case .height(let value):
+         setHeight(value)
+      case .font(let value):
+         setFont(value)
+      case .image(let value):
+         setImage(value)
       case .tint(let value):
-         view.tintColor = value
-         view.imageView?.tintColor = value
+         setTint(value)
       case .vertical(let value):
-         view.isVertical = value
+         setVertical(value)
       case .hidden(let value):
-         view.isHidden = value
+         setHidden(value)
       }
    }
 }
 
-// MARK: - TextFieldModel
+// MARK: - TextFieldModel state
 
 enum TextFieldState {
    case text(String)
@@ -240,41 +246,37 @@ enum TextFieldState {
 extension ViewModelProtocol where Self: Stateable, View: PaddingTextField {
    func applyState(_ state: TextFieldState) {
       switch state {
-      case .text(let string):
-         view.text = string
-      case .placeholder(let string):
-         view.placeholder = string
+      case .text(let value):
+         setText(value)
+      case .placeholder(let value):
+         setPlaceholder(value)
       case .backColor(let value):
-         view.backgroundColor = value
-      case .font(let font):
-         view.font = font
+         setBackColor(value)
+      case .font(let value):
+         setFont(value)
       case .clearButtonMode(let value):
-         view.clearButtonMode = value
+         setClearButtonMode(value)
       case .padding(let value):
-         view.padding = value
+         setPadding(value)
       case .height(let value):
-         view.addAnchors.constHeight(value)
+         setHeight(value)
       case .widht(let value):
-         view.addAnchors.constWidth(value)
+         setWidth(value)
 
       case .cornerRadius(let value):
-         view.layer.cornerRadius = value
+         setCornerRadius(value)
       case .borderColor(let value):
-         view.layer.borderColor = value.cgColor
+         setBorderColor(value)
       case .borderWidth(let value):
-         view.layer.borderWidth = value
+         setBorderWidth(value)
       case .hidden(let value):
-         view.isHidden = value
-      case .size(let size):
-         view.addAnchors
-            .constWidth(size.width)
-            .constHeight(size.height)
+         setHidden(value)
+      case .size(let value):
+         setSize(value)
       case .zPosition(let value):
-         view.layer.masksToBounds = false
-         view.layer.zPosition = value
-         view.setNeedsLayout()
+         setZPosition(value)
       case .placing(let value):
-         view.center = value
+         setPlacing(value)
       }
    }
 }
