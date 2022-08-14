@@ -40,9 +40,9 @@ final class DigitalThanksScene<Asset: AssetProtocol>: BaseSceneModel<
             // logo model
             DTLogoTitleX<Design>()
                .set(.invert)
-               .lefted(),
+               .lefted(), // выравниваем по левому краю ))
             // spacer
-            Spacer()
+            Grid.infinity.spacer
          ])
          .setBackImage(Design.icon.introlIllustrate)
 

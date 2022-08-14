@@ -81,7 +81,7 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
          .doNext {
             weakSelf?.badgeModel.changeState(to: BadgeState.default)
          }
-         .doNext(worker: TelegramNickCheckerModel())
+         .doNext(worker: telegramNickParser)
          .onSuccess { text in
             loginName = text // String(text.dropFirst())
             weakSelf?.badgeModel.textFieldModel
@@ -120,30 +120,12 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
             ])
       } setDown: { bottomStack in
          bottomStack
-            .setPadding(.init(top: -Grid.x16.float,
-                              left: 0,
-                              bottom: 0,
-                              right: 0))
+            // чтобы сделать offset с тенью
+            .setPadding(.top(-Grid.x16.value))
             .setModels([
                // обернули в еще один стек, чтобы сделать offset с тенью
                bottomPanel
             ])
       }
-   }
-}
-
-import UIKit
-final class Wrapper<VM: VMP>: BaseViewModel<UIStackView>,
-   VMWrapper,
-   Stateable
-{
-   typealias State = StackState
-
-   var subModel: VM = .init()
-
-   override func start() {
-      setModels([
-         subModel,
-      ])
    }
 }

@@ -9,7 +9,8 @@ import UIKit
 import ReactiveWorks
 import Anchorage
 
-enum Grid: Int {
+enum Grid: CGFloat {
+   case x1 = 1
    case x2 = 2
    case x4 = 4
    case x8 = 8
@@ -20,14 +21,17 @@ enum Grid: Int {
    case x36 = 36
    case x48 = 48
    case x64 = 64
+
+   // case infinity
+   case infinity = 0
 }
 
 extension Grid {
    var spacer: Spacer {
-      Spacer(float)
+      Spacer(value)
    }
 
-   var float: CGFloat {
+   var value: CGFloat {
       CGFloat(rawValue)
    }
 }

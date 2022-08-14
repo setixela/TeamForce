@@ -64,6 +64,7 @@
 		1977BE5528A7238F00D554EA /* TextFieldStates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1977BE5428A7238F00D554EA /* TextFieldStates.swift */; };
 		1977BE5828A7343400D554EA /* InputCheckers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1977BE5728A7343400D554EA /* InputCheckers.swift */; };
 		197A2D9928A98F4300190656 /* UIColor+Random.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197A2D9828A98F4300190656 /* UIColor+Random.swift */; };
+		197A2D9B28A9A96800190656 /* WrappedVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197A2D9A28A9A96800190656 /* WrappedVM.swift */; };
 		198FE1C92899994A00BAF1A5 /* LoginUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198FE1C82899994A00BAF1A5 /* LoginUseCase.swift */; };
 		198FE1CC28999A2600BAF1A5 /* NilBlocker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198FE1CB28999A2600BAF1A5 /* NilBlocker.swift */; };
 		198FE1CE2899BB8E00BAF1A5 /* LoadBalanceUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198FE1CD2899BB8E00BAF1A5 /* LoadBalanceUseCase.swift */; };
@@ -199,6 +200,7 @@
 		1977BE5428A7238F00D554EA /* TextFieldStates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldStates.swift; sourceTree = "<group>"; };
 		1977BE5728A7343400D554EA /* InputCheckers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputCheckers.swift; sourceTree = "<group>"; };
 		197A2D9828A98F4300190656 /* UIColor+Random.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Random.swift"; sourceTree = "<group>"; };
+		197A2D9A28A9A96800190656 /* WrappedVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrappedVM.swift; sourceTree = "<group>"; };
 		198FE1C82899994A00BAF1A5 /* LoginUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUseCase.swift; sourceTree = "<group>"; };
 		198FE1CB28999A2600BAF1A5 /* NilBlocker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NilBlocker.swift; sourceTree = "<group>"; };
 		198FE1CD2899BB8E00BAF1A5 /* LoadBalanceUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadBalanceUseCase.swift; sourceTree = "<group>"; };
@@ -644,6 +646,7 @@
 				19017B6C28A698BC00B06345 /* TitleSubtitleCaptionYVM.swift */,
 				19017B7228A69CD400B06345 /* DTLogoTitleX.swift */,
 				19017B7028A69CB100B06345 /* IconTitleYVM.swift */,
+				197A2D9A28A9A96800190656 /* WrappedVM.swift */,
 			);
 			path = Combos;
 			sourceTree = "<group>";
@@ -990,6 +993,7 @@
 				199C4B6B2863292F008AD6FD /* ButtonModel.swift in Sources */,
 				63AD437B28992045000511B9 /* TransactionStatusViewModel.swift in Sources */,
 				19017B6F28A69C7800B06345 /* TitleSubtitleCaptionXVM.swift in Sources */,
+				197A2D9B28A9A96800190656 /* WrappedVM.swift in Sources */,
 				19ECD54328623D30001765F6 /* StackModel.swift in Sources */,
 				19017B6D28A698BC00B06345 /* TitleSubtitleCaptionYVM.swift in Sources */,
 				196750AA286517130019A6DE /* LoginSuccessScene.swift in Sources */,
