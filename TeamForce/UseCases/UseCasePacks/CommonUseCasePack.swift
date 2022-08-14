@@ -10,7 +10,7 @@ import ReactiveWorks
 
 struct ApiUseCase: ApiUseCaseRegistry, WorkBasket {
 
-   var basket: [Any] = []
+   let retainer: Retainer = .init()
 
    // MARK: - UseCases
 

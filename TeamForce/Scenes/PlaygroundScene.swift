@@ -18,12 +18,12 @@ final class PlaygroundScene<Asset: AssetProtocol>: BaseSceneModel<
    private let badgedModel = BadgedViewModel<ComboMRD, Design>()
       .onModeChanged(\.error) { model in
          [model?.topBadge, model?.bottomBadge].forEach {
-            $0?.set(.color(Design.color.boundaryError))
+            $0?.setColor(Design.color.boundaryError)
          }
       }
       .onModeChanged(\.normal) { model in
          [model?.topBadge, model?.bottomBadge].forEach {
-            $0?.set(.color(Design.color.text))
+            $0?.setColor(Design.color.text)
          }
       }
 
@@ -31,29 +31,29 @@ final class PlaygroundScene<Asset: AssetProtocol>: BaseSceneModel<
 
    override func start() {
       let viewModel = VizitkaDemo()
-         .set(.backColor(.random))
-         .set(.size(.init(width: 100, height: 66)))
+         .setBackColor(.random)
+         .setSize(.init(width: 100, height: 66))
 
       let titleSubtitle = TitleSubtitleModel()
-         .set(.text("Hello"))
-         .set(.backColor(.random))
+         .setText("Hello")
+         .setBackColor(.random)
          .setDown {
             $0
-               .set(.text("World"))
-               .set(.backColor(.random))
+               .setText("World")
+               .setBackColor(.random)
          }
 
       let logoTitleSubtitle = IconTitleSubtitleModel()
-         .set(.image(Design.icon.logo))
+         .setImage(Design.icon.logo)
          .setBackColor(.random)
          .setRight {
             $0
-               .set(.text("Hello"))
-               .set(.backColor(.random))
+               .setText("Hello")
+               .setBackColor(.random)
                .setDown {
                   $0
-                     .set(.text("World"))
-                     .set(.backColor(.random))
+                     .setText("World")
+                     .setBackColor(.random)
                }
          }
 
@@ -72,9 +72,9 @@ final class PlaygroundScene<Asset: AssetProtocol>: BaseSceneModel<
       }
 
       mainViewModel
-         .set(.alignment(.leading))
-         .set(.axis(.vertical))
-         .set(.models([
+         .setAlignment(.leading)
+         .setAxis(.vertical)
+         .setModels([
             Spacer(32),
             viewModel,
             Spacer(32),
@@ -90,7 +90,7 @@ final class PlaygroundScene<Asset: AssetProtocol>: BaseSceneModel<
             Spacer(32),
             combo,
             Spacer()
-         ]))
+         ])
    }
 }
 

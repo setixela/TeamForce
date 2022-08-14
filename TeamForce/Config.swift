@@ -8,8 +8,8 @@
 import ReactiveWorks
 
 struct Config {
-   static let isDebug = false
-   static let startDebugScene: KeyPath<ProductionAsset.Scene, SceneModelProtocol> = \.login
+   static let isDebug = true
+   static let startDebugScene: KeyPath<ProductionAsset.Scene, SceneModelProtocol> = \.playground
 
    static let isDebugView = true
 }
