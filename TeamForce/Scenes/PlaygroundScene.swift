@@ -131,12 +131,6 @@ extension ViewModel: Stateable {
    typealias State = ViewState
 }
 
-extension UIColor {
-   static var random: UIColor {
-      .init(hue: .random(in: 0 ... 1), saturation: 0.5, brightness: 0.9, alpha: 1)
-   }
-}
-
 extension CGSize {
    static func square(_ size: CGFloat) -> CGSize {
       .init(width: size, height: size)

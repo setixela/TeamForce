@@ -62,6 +62,34 @@ extension ViewModelProtocol where Self: Stateable {
       view.center = value
       return self
    }
+
+   @discardableResult func setShadow(_ value: Shadow) -> Self {
+      view.layer.shadowColor = value.color.cgColor
+      view.layer.shadowOffset = .init(width: value.offset.x, height: value.offset.y)
+      view.layer.shadowRadius = value.radius
+      view.layer.shadowOpacity = Float(value.opacity)
+      return self
+   }
+}
+
+
+struct Shadow {
+   let radius: CGFloat
+   let offset: CGPoint
+   let color: UIColor
+   let opacity: CGFloat
+
+   init(
+      radius: CGFloat = 1,
+      offset: CGPoint = .zero,
+      color: UIColor = .label,
+      opacity: CGFloat = 1
+   ) {
+      self.radius = radius
+      self.offset = offset
+      self.color = color
+      self.opacity = opacity
+   }
 }
 
 extension ViewModelProtocol where Self: Stateable, View: UIStackView {
@@ -113,6 +141,13 @@ extension ViewModelProtocol where Self: Stateable, View: UIStackView {
       let imageView = PaddingImageView(image: value)
       imageView.contentMode = contentMode
       setBackView(imageView)
+      return self
+   }
+
+   @discardableResult func setBackViewModel(_ value: UIViewModel, inset: UIEdgeInsets = .zero) -> Self {
+      let backView = value.uiView
+      view.insertSubview(backView, at: 0)
+      backView.addAnchors.fitToViewInsetted(view, inset)
       return self
    }
 }

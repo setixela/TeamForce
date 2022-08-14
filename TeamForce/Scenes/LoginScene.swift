@@ -11,23 +11,11 @@ import ReactiveWorks
 
 final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
    DefaultVCModel,
-   DoubleStacksModel,
+   Combos<SComboMD<StackModel, StackModel>>,
    Asset,
    Void
 > {
    // MARK: - View Models
-
-   private let coverViewModel = CoverViewModel<Asset>()
-      .setBackImage(Design.icon.introlIllustrate)
-
-   private let headerModel = Design.label.headline4
-      .setPadding(.init(top: 12, left: 0, bottom: 24, right: 0))
-      .setText(Text.title.enter)
-
-   private let subtitleModel = Design.label.subtitle
-      .setPadding(.init(top: 0, left: 0, bottom: 32, right: 0))
-      .setText(Text.title.enterTelegramName)
-      .setNumberOfLines(2)
 
    private let nextButton = Design.button.inactive
       .setTitle(Text.button.getCodeButton)
@@ -36,6 +24,18 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
 
    private let loginTextField = TextFieldModel<Design>(Design.state.textField.default)
       .setPlaceholder("")
+
+   private lazy var bottomPanel = StackModel()
+      .set(Design.state.stack.bottomPanel)
+      .setCornerRadius(Design.params.cornerRadiusMedium)
+      .setShadow(.init(radius: 8, color: Design.color.iconContrast, opacity: 0.33))
+      .setModels([
+         Grid.x16.spacer,
+         badgeModel,
+         loginTextField,
+         nextButton,
+         Spacer(),
+      ])
 
    // MARK: - Use Cases
 
@@ -99,35 +99,51 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
    }
 
    private func configure() {
-//      mainVM
-//         .setBackColor(Design.color.backgroundBrand)
+      mainVM.setMain { topStack in
+         topStack
+            .set(Design.state.stack.default)
+            .setBackColor(Design.color.backgroundBrand)
+            .setAlignment(.leading)
+            .setModels([
+               // spacer
+               Grid.x16.spacer,
+               // logo
+               BrandLogoIcon<Design>(),
+               // spacer
+               Grid.x16.spacer,
+               // title
+               Design.label.headline5
+                  .setText(Text.title.autorisation)
+                  .setColor(Design.color.textInvert),
+               // spacer
+               Grid.x36.spacer,
+            ])
+      } setDown: { bottomStack in
+         bottomStack
+            .setPadding(.init(top: -Grid.x16.float,
+                              left: 0,
+                              bottom: 0,
+                              right: 0))
+            .setModels([
+               // обернули в еще один стек, чтобы сделать offset с тенью
+               bottomPanel
+            ])
+      }
+   }
+}
 
-      mainVM.topStackModel
-         .set(Design.state.stack.default)
-         .setBackColor(Design.color.backgroundBrand)
-         .setAlignment(.leading)
-         .setModels([
-            // spacer
-            Grid.x36.spacer,
-            // logo
-            BrandLogoIcon<Design>(),
-            // spacer
-            Grid.x36.spacer,
-            // title
-            Design.label.headline5
-               .setText(Text.title.autorisation)
-               .setColor(Design.color.textInvert),
-            // spacer
-            Grid.x36.spacer,
-         ])
+import UIKit
+final class Wrapper<VM: VMP>: BaseViewModel<UIStackView>,
+   VMWrapper,
+   Stateable
+{
+   typealias State = StackState
 
-      mainVM.bottomStackModel
-         .set(Design.state.stack.bottomPanel)
-         .setModels([
-            badgeModel,
-            loginTextField,
-            nextButton,
-            Spacer(),
-         ])
+   var subModel: VM = .init()
+
+   override func start() {
+      setModels([
+         subModel,
+      ])
    }
 }

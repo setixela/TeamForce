@@ -70,6 +70,7 @@ enum StackState {
    case hidden(Bool)
    case backView(UIView, inset: UIEdgeInsets = .zero)
    case backImage(UIImage)
+   case backViewModel(UIViewModel, inset: UIEdgeInsets = .zero)
 }
 
 extension ViewModelProtocol where Self: Stateable, View: UIStackView {
@@ -106,6 +107,8 @@ extension ViewModelProtocol where Self: Stateable, View: UIStackView {
          setBorderWidth(value)
       case .hidden(let value):
          setHidden(value)
+      case .backViewModel(let value, let inset):
+         setBackViewModel(value, inset: inset)
       }
    }
 }
@@ -284,3 +287,17 @@ extension ViewModelProtocol where Self: Stateable, View: PaddingTextField {
    }
 }
 
+// MARK: - Default conforms
+
+//extension ViewModelProtocol where Self: Stateable {
+//   typealias State = ViewState
+//}
+
+//extension ViewModelProtocol where Self: Stateable2, View: UIStackView {
+//   typealias State = ViewState
+//   typealias State2 = StackState
+//}
+//
+//extension ViewModelProtocol where Self: Stateable, View: UIStackView {
+//   typealias State = StackState
+//}
