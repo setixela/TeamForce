@@ -128,7 +128,7 @@ Transaction
       case "A":
          textColor = UIColor.systemGreen
       case "D":
-         textColor = Design.color.error
+         textColor = Design.color.boundaryError
       case "W":
          textColor = UIColor.orange
       default:

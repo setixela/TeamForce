@@ -8,10 +8,36 @@
 import ReactiveWorks
 import UIKit
 
+protocol ColorTokenProtocol {}
+
+enum ColorToken: String, ColorTokenProtocol {
+    //
+    case brand = "--general-general-color-brand"
+    case brand2 = "--secondary-secondary-color-brand"
+    //
+    case black = "--general-general-color-black"
+    case grey = "--general-general-corol-grey"
+    case white = "--general-general-color-white"
+    case secondary = "--general-general-color-secondary"
+    //
+    case info = "--minor-color-info-primary"
+    case info2 = "--minor-color-info-secondary"
+    //
+    case success = "--minor-color-success-primary"
+    case success2 = "--minor-color-success-secondary"
+    //
+    case warning = "--minor-color-warning-primary"
+    case warning2 = "--minor-color-warning-secondary"
+    //
+    case error = "--minor-color-error-primary"
+    case error2 = "--minor-color-error-secondary"
+}
+
 // Протокол Фабрики цветов ( Разнести потом палитру и детали и обьекты)
 protocol ColorsProtocol: InitProtocol {
-    // Brand colors
-    var brand: UIColor { get }
+    associatedtype Token: ColorTokenProtocol
+
+    // Common colors
     var transparent: UIColor { get }
 
     // Text colors
@@ -24,68 +50,117 @@ protocol ColorsProtocol: InitProtocol {
     // Backs
     var background: UIColor { get }
     var background2: UIColor { get }
-    var background3: UIColor { get }
 
-    // Errors
-    var error: UIColor { get }
-
-    // MARK: - Semantic colors
-
-    associatedtype Semantic: SemanticColorProtocol
-
-    var semantic: Semantic { get }
-}
-
-protocol SemanticColorProtocol: InitProtocol {
-    // button colors
+    // Buttons
     var activeButtonBack: UIColor { get }
     var inactiveButtonBack: UIColor { get }
     var transparentButtonBack: UIColor { get }
+
+    // Textfield
     var textFieldBack: UIColor { get }
+
+    // Boundaries
+    var boundary: UIColor { get }
+    var boundaryError: UIColor { get }
 }
 
-// Фабрика цветов
+// MARK: - Colors implement
+
+// Палитра
 struct ColorBuilder: ColorsProtocol {
-    var brand: UIColor { .init(0xb47ce8ff) }
+    typealias Token = ColorToken
+
     var transparent: UIColor { .clear }
 
-    var text: UIColor { .black }
-    var text2: UIColor { .black.withAlphaComponent(0.85) }
+    var text: UIColor { Token.black.color }
+    var text2: UIColor { Token.secondary.color }
 
-    var textInvert: UIColor { .white }
-    var text2Invert: UIColor { .white.withAlphaComponent(0.85) }
+    var textInvert: UIColor { Token.white.color }
+    var text2Invert: UIColor { Token.grey.color }
 
-    var background: UIColor { .white }
-    var background2: UIColor { .init(0xf2e7feff) }
-    var background3: UIColor { .init(0xb9a0d0ff) }
+    var background: UIColor { Token.white.color }
+    var background2: UIColor { Token.brand2.color }
 
-    var error: UIColor { .init(0xff0b0bff) }
+    // button colors
+    var activeButtonBack: UIColor { Token.brand.color }
+    var inactiveButtonBack: UIColor { Token.brand2.color }
+    var transparentButtonBack: UIColor { transparent }
 
-    // semantic colors
-    var semantic: Semantic<Self> = .init()
+    // textfield colors
+    var textFieldBack: UIColor { Token.white.color }
+
+    // boundaries
+    var boundary: UIColor { Token.grey.color }
+    var boundaryError: UIColor { Token.error.color }
 }
 
-struct Semantic<Colors: ColorsProtocol>: SemanticColorProtocol {
-    // button colors
-    var activeButtonBack: UIColor { Colors().brand }
-    var inactiveButtonBack: UIColor { Colors().background2 }
-    var transparentButtonBack: UIColor { Colors().transparent }
-    var textFieldBack: UIColor { Colors().background }
+// MARK: - Private helpers
+
+import SwiftCSSParser
+
+private extension ColorToken {
+    var color: UIColor {
+        guard let color = Self.colors[self] else { return UIColor() }
+
+        return color
+    }
+
+    static let cssColorString: String = {
+        if let filepath = Bundle.main.path(forResource: "CssColors", ofType: "css") {
+            do {
+                let contents = try String(contentsOfFile: filepath)
+                return contents
+            } catch {
+                fatalError()
+            }
+        } else {
+            fatalError()
+        }
+    }()
+
+    static let colors: [ColorToken: UIColor] = {
+        let styleScheet = try? Stylesheet.parse(from: cssColorString)
+
+        var colors = [ColorToken: UIColor]()
+
+        styleScheet?.statements.forEach {
+            switch $0 {
+            case .ruleSet(let value):
+                value.declarations.forEach {
+                    let property = $0.property
+                    let value = $0.value
+
+                    guard let key = ColorToken(rawValue: property) else { return }
+
+                    let color = UIColor(value)
+                    colors[key] = color
+                }
+            default:
+                break
+            }
+        }
+
+        return colors
+    }()
 }
 
 private extension UIColor {
-    convenience init(_ hex: Int) {
-        let components = (
-            r: CGFloat((hex >> 24) & 0xff) / 255,
-            g: CGFloat((hex >> 16) & 0xff) / 255,
-            b: CGFloat((hex >> 08) & 0xff) / 255,
-            a: CGFloat((hex >> 00) & 0xff) / 255
-        )
+    convenience init(_ hex: String, alpha: CGFloat = 1.0) {
+        var hexFormatted: String = hex.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).uppercased()
+
+        if hexFormatted.hasPrefix("#") {
+            hexFormatted = String(hexFormatted.dropFirst())
+        }
+
+        assert(hexFormatted.count == 6, "Invalid hex code used.")
+
+        var rgbValue: UInt64 = 0
+        Scanner(string: hexFormatted).scanHexInt64(&rgbValue)
+
         self.init(
-            red: components.r,
-            green: components.g,
-            blue: components.b,
-            alpha: components.a
-        )
+            red: CGFloat((rgbValue & 0xff0000) >> 16) / 255.0,
+            green: CGFloat((rgbValue & 0x00ff00) >> 8) / 255.0,
+            blue: CGFloat(rgbValue & 0x0000ff) / 255.0,
+            alpha: alpha)
     }
 }

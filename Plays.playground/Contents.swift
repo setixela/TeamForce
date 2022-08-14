@@ -30,8 +30,8 @@ class VC: UIViewController {
    }
 }
 
-let vc = VC()
-nc.viewControllers = [vc]
+// let vc = VC()
+// nc.viewControllers = [vc]
 
 struct HistoryViewEvent: InitProtocol {}
 
@@ -50,27 +50,22 @@ final class HistoryViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
    private lazy var tableModel = TableViewModel()
       .set(.borderColor(.gray))
       .set(.borderWidth(1))
-      .set(.cornerRadius(Design.Parameters.cornerRadius))
+      .set(.cornerRadius(Design.params.cornerRadius))
 
    // MARK: - Frame Cells
 
    // MARK: - Services
 
-   private lazy var getTransactionsUseCase = Asset.apiUseCase.getTransactions.work()
+   private lazy var getTransactionsUseCase = Asset.apiUseCase.getTransactions.work
 
    private let combo = ComboMRD()
-   private let badgedModel = BadgedViewModel<ComboMRD, Asset>()
-      .onModeChanged(\.error) { model in
-         [model?.topModel, model?.downModel].forEach {
-            $0?.set(.color(Asset.Design.color.errorColor))
-         }
+   private let badgedModel = BadgedViewModel<ComboMRD, Design>()
+      .onModeChanged(\.error) { _ in
+//
       }
-      .onModeChanged(\.normal) { model in
-         [model?.topModel, model?.downModel].forEach {
-            $0?.set(.color(Asset.Design.color.textPrimary))
-         }
+      .onModeChanged(\.normal) { _ in
       }
-//     .setMode(\.normal)
+      .setMode(\.normal)
 
    override func start() {
       set(.alignment(.leading))
@@ -90,5 +85,56 @@ final class HistoryViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
 // cменить дизайн
 // бизнес логику изолировать
 
+import SwiftCSSParser
+struct CSSParser {
+   static func parse(string: String) {}
+}
 
+let string = """
+:root {
+  --general-general-color-brand: #FFBF60;
+  --general-general-color-black: #212121;
+  --general-general-color-white: #F9FDFF;
+  --general-general-color-secondary: #8A8A8E;
+  --general-general-corol-grey: #9FAFFF;
+  --secondary-secondary-color-brand: #FFF0D9;
+  --minor-color-success-primary: #42AB44;
+  --minor-color-success-secondary: #EDF8ED;
+  --minor-color-error-primary: #FA1255;
+  --minor-color-error-secondary: #FEEFEF;
+  --minor-color-warning-primary: #FFD53F;
+  --minor-color-warning-secondary: #FFF4EC;
+  --minor-color-info-primary: #2E5AAC;
+  --minor-color-info-secondary: #EEF2FA;
+}
+"""
+
+let styleScheet = try Stylesheet.parse(from: string)
+let tokens = try Stylesheet.parseTokens(from: string)
+
+styleScheet.statements.forEach {
+   switch $0 {
+   case .charsetRule(let value):
+      print(value)
+   case .importRule(let value):
+      print(value)
+   case .namespaceRule(let value):
+      print(value)
+   case .atBlock(let value):
+      print(value)
+   case .ruleSet(let value):
+      value.declarations.forEach {
+         print($0.property)
+         print($0.value)
+      }
+   }
+}
+
+let value = 0x00000001
+print(value)
+let color = UIColor(value)
+print(color)
+
+let minValue = 0xffffff // 16777215
+print(minValue)
 

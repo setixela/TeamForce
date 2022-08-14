@@ -19,6 +19,15 @@
       }
     },
     {
+      "identity" : "reactiveworks",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/setixela/ReactiveWorks.git",
+      "state" : {
+        "branch" : "master",
+        "revision" : "f8b8986ec4bd7dfc0a302353bd55159cb2c2f39b"
+      }
+    },
+    {
       "identity" : "realm-core",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/realm/realm-core",
@@ -34,6 +43,15 @@
       "state" : {
         "branch" : "master",
         "revision" : "d949715c09767dbe1b9924a2d187624811fc5cd9"
+      }
+    },
+    {
+      "identity" : "swift-css-parser",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/stackotter/swift-css-parser.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "e776e4bd5031a0485accd06d2b8478df9e4ccdce"
       }
     },
     {

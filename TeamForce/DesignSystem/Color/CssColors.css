@@ -1,0 +1,16 @@
+:root {
+   --general-general-color-brand: #FFBF60;
+   --general-general-color-black: #212121;
+   --general-general-color-white: #F9FDFF;
+   --general-general-color-secondary: #8A8A8E;
+   --general-general-corol-grey: #9FAFFF;
+   --secondary-secondary-color-brand: #FFF0D9;
+   --minor-color-success-primary: #42AB44;
+   --minor-color-success-secondary: #EDF8ED;
+   --minor-color-error-primary: #FA1255;
+   --minor-color-error-secondary: #FEEFEF;
+   --minor-color-warning-primary: #FFD53F;
+   --minor-color-warning-secondary: #FFF4EC;
+   --minor-color-info-primary: #2E5AAC;
+   --minor-color-info-secondary: #EEF2FA;
+}

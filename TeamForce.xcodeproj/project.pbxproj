@@ -58,10 +58,10 @@
 		196750B0286518F80019A6DE /* DoubleStacksModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196750AF286518F80019A6DE /* DoubleStacksModel.swift */; };
 		196750B22865190D0019A6DE /* ImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196750B12865190D0019A6DE /* ImageViewModel.swift */; };
 		196750B4286519660019A6DE /* ProductionAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196750B3286519660019A6DE /* ProductionAsset.swift */; };
-		1969A314289D519000D44A6A /* ReactiveWorks in Frameworks */ = {isa = PBXBuildFile; productRef = 1969A313289D519000D44A6A /* ReactiveWorks */; };
+		1977518D28A8329F006CFAF3 /* ReactiveWorks in Frameworks */ = {isa = PBXBuildFile; productRef = 1977518C28A8329F006CFAF3 /* ReactiveWorks */; };
+		1977519028A83395006CFAF3 /* SwiftCSSParser in Frameworks */ = {isa = PBXBuildFile; productRef = 1977518F28A83395006CFAF3 /* SwiftCSSParser */; };
 		1977BE5528A7238F00D554EA /* TextFieldStates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1977BE5428A7238F00D554EA /* TextFieldStates.swift */; };
 		1977BE5828A7343400D554EA /* InputCheckers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1977BE5728A7343400D554EA /* InputCheckers.swift */; };
-		1981D27728A175BC007BC248 /* ReactiveWorks in Frameworks */ = {isa = PBXBuildFile; productRef = 1981D27628A175BC007BC248 /* ReactiveWorks */; };
 		198FE1C92899994A00BAF1A5 /* LoginUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198FE1C82899994A00BAF1A5 /* LoginUseCase.swift */; };
 		198FE1CC28999A2600BAF1A5 /* NilBlocker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198FE1CB28999A2600BAF1A5 /* NilBlocker.swift */; };
 		198FE1CE2899BB8E00BAF1A5 /* LoadBalanceUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198FE1CD2899BB8E00BAF1A5 /* LoadBalanceUseCase.swift */; };
@@ -106,6 +106,7 @@
 		19EF32AB287CE80B0078F53D /* StringStorageWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19EF32AA287CE80B0078F53D /* StringStorageWorker.swift */; };
 		19EF32AE287E08F80078F53D /* ColorBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19EF32AD287E08F80078F53D /* ColorBuilder.swift */; };
 		19EF32B02884B6C80078F53D /* TableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19EF32AF2884B6C80078F53D /* TableViewModel.swift */; };
+		19EFD4C228A82ABC00651E0A /* CssColors.css in Resources */ = {isa = PBXBuildFile; fileRef = 19EFD4C028A82A6400651E0A /* CssColors.css */; };
 		19F153842899649900ECF000 /* LoadProfileUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F153832899649900ECF000 /* LoadProfileUseCase.swift */; };
 		19F15386289964AA00ECF000 /* LogoutUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F15385289964AA00ECF000 /* LogoutUseCase.swift */; };
 		19F15389289964D200ECF000 /* CommonUseCasePack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F15388289964D200ECF000 /* CommonUseCasePack.swift */; };
@@ -235,6 +236,7 @@
 		19EF32AA287CE80B0078F53D /* StringStorageWorker.swift */ = {isa = PBXFileReference; indentWidth = 3; lastKnownFileType = sourcecode.swift; path = StringStorageWorker.swift; sourceTree = "<group>"; tabWidth = 3; };
 		19EF32AD287E08F80078F53D /* ColorBuilder.swift */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = ColorBuilder.swift; sourceTree = "<group>"; tabWidth = 4; };
 		19EF32AF2884B6C80078F53D /* TableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewModel.swift; sourceTree = "<group>"; };
+		19EFD4C028A82A6400651E0A /* CssColors.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = CssColors.css; sourceTree = "<group>"; };
 		19F153832899649900ECF000 /* LoadProfileUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadProfileUseCase.swift; sourceTree = "<group>"; };
 		19F15385289964AA00ECF000 /* LogoutUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutUseCase.swift; sourceTree = "<group>"; };
 		19F15388289964D200ECF000 /* CommonUseCasePack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonUseCasePack.swift; sourceTree = "<group>"; };
@@ -265,10 +267,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				1913F656286E1EC80033FAB3 /* RealmSwift in Frameworks */,
+				1977518D28A8329F006CFAF3 /* ReactiveWorks in Frameworks */,
 				19D5DC3A289D682700ACC440 /* Anchorage in Frameworks */,
+				1977519028A83395006CFAF3 /* SwiftCSSParser in Frameworks */,
 				19C1E9942860F05F00E7976D /* PromiseKit in Frameworks */,
-				1969A314289D519000D44A6A /* ReactiveWorks in Frameworks */,
-				1981D27728A175BC007BC248 /* ReactiveWorks in Frameworks */,
 				1953DE7F2878BCB5000DC537 /* SwiftKeychainWrapper in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -338,6 +340,7 @@
 			isa = PBXGroup;
 			children = (
 				19EF32AD287E08F80078F53D /* ColorBuilder.swift */,
+				19EFD4C028A82A6400651E0A /* CssColors.css */,
 			);
 			path = Color;
 			sourceTree = "<group>";
@@ -356,6 +359,7 @@
 				190C1D10285D15FF00FB3518 /* TeamForce */,
 				190C1D27285D160000FB3518 /* TeamForceTests */,
 				190C1D0F285D15FF00FB3518 /* Products */,
+				1977518B28A83281006CFAF3 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -497,6 +501,13 @@
 				191571D0289F12350061510F /* PlaygroundScene.swift */,
 			);
 			path = Scenes;
+			sourceTree = "<group>";
+		};
+		1977518B28A83281006CFAF3 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		1977BE5328A7238300D554EA /* TextField */ = {
@@ -771,9 +782,9 @@
 				19C1E9932860F05F00E7976D /* PromiseKit */,
 				1913F655286E1EC80033FAB3 /* RealmSwift */,
 				1953DE7E2878BCB5000DC537 /* SwiftKeychainWrapper */,
-				1969A313289D519000D44A6A /* ReactiveWorks */,
 				19D5DC39289D682700ACC440 /* Anchorage */,
-				1981D27628A175BC007BC248 /* ReactiveWorks */,
+				1977518C28A8329F006CFAF3 /* ReactiveWorks */,
+				1977518F28A83395006CFAF3 /* SwiftCSSParser */,
 			);
 			productName = TeamForce;
 			productReference = 190C1D0E285D15FF00FB3518 /* TeamForce.app */;
@@ -831,7 +842,7 @@
 				1953DE7D2878BCB5000DC537 /* XCRemoteSwiftPackageReference "SwiftKeychainWrapper" */,
 				1969A312289D519000D44A6A /* XCRemoteSwiftPackageReference "ReactiveWorks" */,
 				19D5DC38289D682700ACC440 /* XCRemoteSwiftPackageReference "Anchorage" */,
-				1981D27528A175BC007BC248 /* XCRemoteSwiftPackageReference "ReactiveWorks" */,
+				1977518E28A83395006CFAF3 /* XCRemoteSwiftPackageReference "swift-css-parser" */,
 			);
 			productRefGroup = 190C1D0F285D15FF00FB3518 /* Products */;
 			projectDirPath = "";
@@ -849,6 +860,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				190C1D1E285D160000FB3518 /* LaunchScreen.storyboard in Resources */,
+				19EFD4C228A82ABC00651E0A /* CssColors.css in Resources */,
 				190C1D1B285D160000FB3518 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1282,11 +1294,11 @@
 				kind = branch;
 			};
 		};
-		1981D27528A175BC007BC248 /* XCRemoteSwiftPackageReference "ReactiveWorks" */ = {
+		1977518E28A83395006CFAF3 /* XCRemoteSwiftPackageReference "swift-css-parser" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/setixela/ReactiveWorks.git";
+			repositoryURL = "https://github.com/stackotter/swift-css-parser.git";
 			requirement = {
-				branch = master;
+				branch = main;
 				kind = branch;
 			};
 		};
@@ -1319,15 +1331,15 @@
 			package = 1953DE7D2878BCB5000DC537 /* XCRemoteSwiftPackageReference "SwiftKeychainWrapper" */;
 			productName = SwiftKeychainWrapper;
 		};
-		1969A313289D519000D44A6A /* ReactiveWorks */ = {
+		1977518C28A8329F006CFAF3 /* ReactiveWorks */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 1969A312289D519000D44A6A /* XCRemoteSwiftPackageReference "ReactiveWorks" */;
 			productName = ReactiveWorks;
 		};
-		1981D27628A175BC007BC248 /* ReactiveWorks */ = {
+		1977518F28A83395006CFAF3 /* SwiftCSSParser */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 1969A312289D519000D44A6A /* XCRemoteSwiftPackageReference "ReactiveWorks" */;
-			productName = ReactiveWorks;
+			package = 1977518E28A83395006CFAF3 /* XCRemoteSwiftPackageReference "swift-css-parser" */;
+			productName = SwiftCSSParser;
 		};
 		19C1E9932860F05F00E7976D /* PromiseKit */ = {
 			isa = XCSwiftPackageProductDependency;
