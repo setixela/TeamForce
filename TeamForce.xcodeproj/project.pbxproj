@@ -47,6 +47,7 @@
 		1953DE862879FE30000DC537 /* PickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1953DE852879FE30000DC537 /* PickerViewModel.swift */; };
 		1953DE88287B4574000DC537 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1953DE87287B4574000DC537 /* Fonts.swift */; };
 		1953DE8D287B4752000DC537 /* TypographyElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1953DE8C287B4752000DC537 /* TypographyElements.swift */; };
+		195870F228A8C8040075D505 /* KeyPathMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 195870F128A8C8040075D505 /* KeyPathMaker.swift */; };
 		1967509D286491190019A6DE /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1967509C286491190019A6DE /* Buttons.swift */; };
 		1967509F286492780019A6DE /* Labels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1967509E286492780019A6DE /* Labels.swift */; };
 		196750A22865169C0019A6DE /* DigitalThanksScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196750A12865169C0019A6DE /* DigitalThanksScene.swift */; };
@@ -181,6 +182,7 @@
 		1953DE852879FE30000DC537 /* PickerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerViewModel.swift; sourceTree = "<group>"; };
 		1953DE87287B4574000DC537 /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
 		1953DE8C287B4752000DC537 /* TypographyElements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypographyElements.swift; sourceTree = "<group>"; };
+		195870F128A8C8040075D505 /* KeyPathMaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyPathMaker.swift; sourceTree = "<group>"; };
 		1967509C286491190019A6DE /* Buttons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Buttons.swift; sourceTree = "<group>"; };
 		1967509E286492780019A6DE /* Labels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Labels.swift; sourceTree = "<group>"; };
 		196750A12865169C0019A6DE /* DigitalThanksScene.swift */ = {isa = PBXFileReference; indentWidth = 3; lastKnownFileType = sourcecode.swift; path = DigitalThanksScene.swift; sourceTree = "<group>"; tabWidth = 3; };
@@ -377,10 +379,9 @@
 			children = (
 				19CF792728A54D60001531B8 /* Config.swift */,
 				190C1D13285D15FF00FB3518 /* SceneDelegate.swift */,
-				19C1E99B28610E2800E7976D /* AssetProtocol.swift */,
-				196750B3286519660019A6DE /* ProductionAsset.swift */,
 				194C095528759FD900D88D5B /* ViewModel+Stateable.swift */,
 				6368D8272891E7C30049EEAB /* UserDefault+helpers.swift */,
+				195870F328A8CDD90075D505 /* Assets */,
 				196750A02865168F0019A6DE /* Scenes */,
 				199C4B6728632461008AD6FD /* DesignSystem */,
 				198FE1CA28999A1500BAF1A5 /* Systems */,
@@ -488,6 +489,17 @@
 			path = Typography;
 			sourceTree = "<group>";
 		};
+		195870F328A8CDD90075D505 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				19C1E99B28610E2800E7976D /* AssetProtocol.swift */,
+				196750B3286519660019A6DE /* ProductionAsset.swift */,
+				199C4B6828632834008AD6FD /* DesignProtocol.swift */,
+				199C4B6C2863299E008AD6FD /* DesignSystem.swift */,
+			);
+			path = Assets;
+			sourceTree = "<group>";
+		};
 		196750A02865168F0019A6DE /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
@@ -539,8 +551,6 @@
 		199C4B6728632461008AD6FD /* DesignSystem */ = {
 			isa = PBXGroup;
 			children = (
-				199C4B6828632834008AD6FD /* DesignProtocol.swift */,
-				199C4B6C2863299E008AD6FD /* DesignSystem.swift */,
 				1952EA5E28A70FEE003F7852 /* States */,
 				19017B8B28A7001700B06345 /* Text */,
 				19017B8A28A6FFB900B06345 /* Color */,
@@ -662,6 +672,7 @@
 				19C1E9A228610E4E00E7976D /* MainRouter.swift */,
 				1999B6FD28A2F5D300D3570B /* DataToDecodableParser.swift */,
 				1952EA6828A711F2003F7852 /* Associated.swift */,
+				195870F128A8C8040075D505 /* KeyPathMaker.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -914,6 +925,7 @@
 				19A73BEB28A4510E000B74CF /* BadgedViewModel.swift in Sources */,
 				198FE1D02899E0BF00BAF1A5 /* IsEmpty.swift in Sources */,
 				19AE3AF22869230C00A0C6E4 /* AuthApiWorker.swift in Sources */,
+				195870F228A8C8040075D505 /* KeyPathMaker.swift in Sources */,
 				19017B6B28A6989000B06345 /* TitleSubtitleY.swift in Sources */,
 				19D08351286F401000F75E4A /* SideBarUserModel.swift in Sources */,
 				19D0835F286F42C000F75E4A /* FrameCellModel.swift in Sources */,

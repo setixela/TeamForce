@@ -12,12 +12,12 @@ import UIKit
 
 final class CoverViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>, Assetable {
    private let titleModel = IconLabelHorizontalModel<Asset>()
-      .set(.icon(Design.icon.make(\.logo)))
+      .set(.icon(Design.icon.logo))
       .set(.text(Text.title.digitalThanks))
 
    private let illustrationModel = ImageViewModel()
       .set(.size(.init(width: 242, height: 242)))
-      .set(.image(Design.icon.make(\.clapHands)))
+      .set(.image(Design.icon.clapHands))
 
    override func start() {
       set(.distribution(.fill))

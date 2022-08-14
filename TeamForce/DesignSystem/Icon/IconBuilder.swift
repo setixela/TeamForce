@@ -9,45 +9,36 @@ import ReactiveWorks
 import UIKit
 
 struct IconBuilder: IconElements {
-   typealias DesignElement = String
+   typealias DesignElement = UIImage
 
    // brand
-   var logo: String { "dt_logo" }
-   var logoTitle: String { "dt_logo_title" }
-   var introlIllustrate: String { "dt_main" }
+   var logo: UIImage { make("dt_logo") }
+   var logoTitle: UIImage { make("dt_logo_title") }
+   var introlIllustrate: UIImage { make("dt_main") }
 
    // other
-   var upload2Fill: String { "upload-2-fill" }
-   var coinLine: String { "coin-line" }
-   var historyLine: String { "history-line" }
-   var checkCircle: String { "check_circle_24px" }
-   var calendarLine: String { "calendar-line" }
+   var upload2Fill: UIImage { make("upload-2-fill") }
+   var coinLine: UIImage { make("coin-line") }
+   var historyLine: UIImage { make("history-line") }
+   var checkCircle: UIImage { make("check_circle_24px") }
+   var calendarLine: UIImage { make("calendar-line") }
 
-   var avatarPlaceholder: String { "avatarPlaceholder" }
+   var avatarPlaceholder: UIImage { make("avatarPlaceholder") }
 
-   var sideMenu: String { "menu_24px" }
+   var sideMenu: UIImage { make("menu_24px") }
 
-   var arrowDropDownLine: String { "arrow-drop-down-line" }
-   var arrowDropUpLine: String { "arrow-drop-up-line" }
+   var arrowDropDownLine: UIImage { make("arrow-drop-down-line") }
+   var arrowDropUpLine: UIImage { make("arrow-drop-up-line") }
 
-   var clapHands: String { "bloom_woman_and_man_clapped_their_hands_1" }
+   var clapHands: UIImage { make("bloom_woman_and_man_clapped_their_hands_1") }
 
-   var girlOnSkateboard: String { "girl_on_skateboard" }
+   var girlOnSkateboard: UIImage { make("girl_on_skateboard") }
 
-   var recieveCoinIcon: String { "recieve_coin_icon" }
-   var sendCoinIcon: String { "send_coin_icon" }
-}
+   var recieveCoinIcon: UIImage { make("recieve_coin_icon") }
+   var sendCoinIcon: UIImage { make("send_coin_icon") }
 
-extension IconBuilder: KeyPathMaker {
-   func make(_ keypath: KeyPath<Self, String>) -> UIImage {
-      let name = self[keyPath: keypath]
-      return UIImage(named: name) ?? UIImage()
+   //
+   private func make(_ name: String) -> UIImage {
+      UIImage(named: name) ?? UIImage()
    }
-}
-
-protocol KeyPathMaker {
-   associatedtype MakeType
-   associatedtype ValueType
-
-   func make(_ keypath: KeyPath<Self, ValueType>) -> MakeType
 }

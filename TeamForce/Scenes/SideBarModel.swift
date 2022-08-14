@@ -28,17 +28,17 @@ final class SideBarModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
    internal lazy var item1 = IconLabelHorizontalModel<Asset>()
       .set(.padding(Design.params.contentPadding))
       .set(.text("Баланс"))
-      .set(.icon(Design.icon.make(\.coinLine)))
+      .set(.icon(Design.icon.coinLine))
 
    internal lazy var item2 = IconLabelHorizontalModel<Asset>()
       .set(.padding(Design.params.contentPadding))
       .set(.text("Новый перевод"))
-      .set(.icon(Design.icon.make(\.upload2Fill)))
+      .set(.icon(Design.icon.upload2Fill))
 
    internal lazy var item3 = IconLabelHorizontalModel<Asset>()
       .set(.padding(Design.params.contentPadding))
       .set(.text("История"))
-      .set(.icon(Design.icon.make(\.historyLine)))
+      .set(.icon(Design.icon.historyLine))
 
    private lazy var item4 = IconLabelHorizontalModel<Asset>()
       .set(.padding(Design.params.contentPadding))
@@ -51,7 +51,7 @@ final class SideBarModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
    override func start() {
       view.backgroundColor = .white
 
-      userModel.avatar.set(.image(Design.icon.make(\.avatarPlaceholder)))
+      userModel.avatar.set(.image(Design.icon.avatarPlaceholder))
 
       set(.axis(.vertical))
          .set(.distribution(.fill))

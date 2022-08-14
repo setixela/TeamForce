@@ -23,21 +23,21 @@ final class MainScene<Asset: AssetProtocol>: BaseSceneModel<
 
   private lazy var balanceButton = Design.button.tabBar
     .set(.title("Баланс"))
-    .set(.image(Design.icon.make(\.coinLine)))
+    .set(.image(Design.icon.coinLine))
     .onEvent(\.didTap) { [weak self] in
       self?.presentModel(self?.balanceViewModel)
     }
 
   private lazy var transactButton = Design.button.tabBar
     .set(.title("Новый перевод"))
-    .set(.image(Design.icon.make(\.upload2Fill)))
+    .set(.image(Design.icon.upload2Fill))
     .onEvent(\.didTap) { [weak self] in
       self?.presentModel(self?.transactViewModel)
     }
 
   private lazy var historyButton = Design.button.tabBar
     .set(.title("История"))
-    .set(.image(Design.icon.make(\.historyLine)))
+    .set(.image(Design.icon.historyLine))
     .onEvent(\.didTap) { [weak self] in
       self?.presentModel(self?.historyViewModel)
     }
@@ -54,7 +54,7 @@ final class MainScene<Asset: AssetProtocol>: BaseSceneModel<
     sideBarModel.start()
 
     menuButton
-      .sendEvent(\.initWithImage, Design.icon.make(\.sideMenu))
+      .sendEvent(\.initWithImage, Design.icon.sideMenu)
 
     presentModel(balanceViewModel)
 

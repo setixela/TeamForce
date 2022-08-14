@@ -8,9 +8,7 @@
 import ReactiveWorks
 import UIKit
 
-protocol IconElements: InitProtocol, DesignElementable
-,   KeyPathMaker where MakeType: UIImage, ValueType == DesignElement
-{
+protocol IconElements: InitProtocol, DesignElementable where DesignElement == UIImage {
    // brand
    var logo: DesignElement { get }
    var logoTitle: DesignElement { get }

@@ -113,14 +113,14 @@ Transaction
          amountLabel
             .set(.text(input.amount))
          statusImage
-            .set(.image(Design.icon.make(\.sendCoinIcon)))
+            .set(.image(Design.icon.sendCoinIcon))
       case false:
          transactionOwnerLabel
             .set(.text("Перевод от " + input.sender.senderTgName))
          amountLabel
             .set(.text("+" + input.amount))
          statusImage
-            .set(.image(Design.icon.make(\.recieveCoinIcon)))
+            .set(.image(Design.icon.recieveCoinIcon))
       }
       
       var textColor = UIColor.black

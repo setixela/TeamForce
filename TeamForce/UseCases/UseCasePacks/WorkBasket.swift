@@ -8,6 +8,7 @@
 // сделать WaitForEvent
 import ReactiveWorks
 
+@available(*, deprecated, message: "Use Retainer class now")
 protocol WorkBasket {
    var basket: [Any] { get set }
 }

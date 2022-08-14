@@ -16,12 +16,12 @@ final class DTLogoTitleX<Asset: AssetProtocol>:
 
       setMain {
          $0
-            .set(.image(Design.icon.make(\.logo)))
+            .set(.image(Design.icon.logo))
             .set(.size(.square(34)))
 
       } setRight: {
          $0
-            .set(.image(Design.icon.make(\.logoTitle)))
+            .set(.image(Design.icon.logoTitle))
             .set(.width(120))
             .set(.padding(.left(12)))
             .set(.contentMode(.scaleAspectFit))

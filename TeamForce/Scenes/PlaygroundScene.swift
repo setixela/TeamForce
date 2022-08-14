@@ -44,7 +44,7 @@ final class PlaygroundScene<Asset: AssetProtocol>: BaseSceneModel<
          }
 
       let logoTitleSubtitle = IconTitleSubtitleModel()
-         .set(.image(Design.icon.make(\.logo)))
+         .set(.image(Design.icon.logo))
          .set(.backColor(.random))
          .setRight {
             $0

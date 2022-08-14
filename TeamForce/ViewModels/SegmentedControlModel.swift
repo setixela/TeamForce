@@ -36,7 +36,7 @@ final class SegmentedControlModel: BaseViewModel<UISegmentedControl>,
       sendEvent(\.segmentChanged, sender.selectedSegmentIndex)
    }
 
-   @available(*, deprecated, message: "Надо где то сохранить снаружи")
+   @available(*, deprecated, message: "Надо где то сохранить снаружи, данные от вью мы получаем только через ивенты.")
    func getSelectedIndex() -> Int {
       return view.selectedSegmentIndex
    }

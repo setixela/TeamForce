@@ -33,7 +33,7 @@ final class BalanceViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
       .set(.backColor(.init(red: 0.33, green: 0.33, blue: 0.33, alpha: 0.08)))
       .set(.height(48))
       .set(.text(Text.title.selectPeriod))
-      .set(.image(Design.icon.make(\.calendarLine)))
+      .set(.image(Design.icon.calendarLine))
 
    private lazy var frameModel2 = DoubleLabelPairModel<Design>()
       .set(.backColor(.init(red: 0.33, green: 0.33, blue: 0.33, alpha: 0.08)))

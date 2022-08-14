@@ -127,7 +127,7 @@ struct TextBuilder: TextsProtocol {
    static var title: TitleTexts { .init() }
 }
 
-extension KeyPathMaker where MakeType == String, ValueType == String {
+extension KeyPathMaker where Result == String, Key == String {
    func make(_ keypath: KeyPath<Self, String>) -> String {
       NSLocalizedString(self[keyPath: keypath], comment: "")
    }

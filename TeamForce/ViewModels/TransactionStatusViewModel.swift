@@ -37,7 +37,7 @@ final class TransactionStatusViewModel<Asset: AssetProtocol>: BaseViewModel<UISt
    private lazy var image: ImageViewModel = {
       let image = ImageViewModel()
          .set(.size(.init(width: 242, height: 242)))
-         .set(.image(Design.icon.make(\.girlOnSkateboard)))
+         .set(.image(Design.icon.girlOnSkateboard))
          .set(.contentMode(.scaleAspectFit))
       return image
 

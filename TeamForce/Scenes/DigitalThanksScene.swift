@@ -20,7 +20,7 @@ final class DigitalThanksScene<Asset: AssetProtocol>: BaseSceneModel<
      .centeredX()
 
    private lazy var illustration = ImageViewModel()
-      .set(.image(Design.icon.make(\.introlIllustrate)))
+      .set(.image(Design.icon.introlIllustrate))
       .set(.width(300))
 
    private lazy var titleSubtitle = TitleSubtitleY<Design>()

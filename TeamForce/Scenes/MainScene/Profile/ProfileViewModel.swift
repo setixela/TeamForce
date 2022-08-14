@@ -65,7 +65,7 @@ final class ProfileViewModel<Asset: AssetProtocol>: BaseSceneModel<
 
    private func setUserModelLabels(userData: UserData) {
       let profile = userData.profile
-      userModel.avatar.set(.image(Design.icon.make(\.avatarPlaceholder)))
+      userModel.avatar.set(.image(Design.icon.avatarPlaceholder))
       userModel.userName.set(.text(profile.tgName))
       userModel.nickName.set(.text(profile.tgId))
    }

@@ -101,22 +101,18 @@ import SwiftCSSParser
 
 private extension ColorToken {
     var color: UIColor {
-        guard let color = Self.colors[self] else { return UIColor() }
+        guard let color = Self.colors[self] else { fatalError() }
 
         return color
     }
 
     static let cssColorString: String = {
-        if let filepath = Bundle.main.path(forResource: "CssColors", ofType: "css") {
-            do {
-                let contents = try String(contentsOfFile: filepath)
-                return contents
-            } catch {
-                fatalError()
-            }
-        } else {
-            fatalError()
-        }
+        guard
+            let filepath = Bundle.main.path(forResource: "CssColors", ofType: "css"),
+            let contents = try? String(contentsOfFile: filepath)
+        else { fatalError() }
+
+        return contents
     }()
 
     static let colors: [ColorToken: UIColor] = {

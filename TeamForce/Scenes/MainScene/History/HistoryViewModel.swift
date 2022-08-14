@@ -79,7 +79,6 @@ final class HistoryViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
             print("transactions not loaded")
          }
 
-
       segmentedControl
          .onEvent(\.segmentChanged) { index in
             print("selected index \(index)")
@@ -97,7 +96,7 @@ final class HistoryViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
       var prevDay = ""
 
       for transaction in cells {
-          print("here1")
+         print("here1")
          guard let currentDay = convertToDate(time: transaction.createdAt) else { return }
          print("here2")
          if prevDay != currentDay {
@@ -109,14 +108,14 @@ final class HistoryViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
          }
 
          isSendingCoin = false
-          var rightText = "Перевод от " + transaction.sender.senderTgName
+         var rightText = "Перевод от " + transaction.sender.senderTgName
          var downText = transaction.amount
-         var image = Design.icon.make(\.recieveCoinIcon)
-          if transaction.sender.senderTgName == currentUser {
+         var image = Design.icon.recieveCoinIcon
+         if transaction.sender.senderTgName == currentUser {
             isSendingCoin = true
-              rightText = "Перевод для " + transaction.recipient.recipientTgName
+            rightText = "Перевод для " + transaction.recipient.recipientTgName
             downText = "+" + transaction.amount
-            image = Design.icon.make(\.sendCoinIcon)
+            image = Design.icon.sendCoinIcon
          }
 
          let cell = IconTitleSubtitleModel(isAutoreleaseView: true)
