@@ -9,6 +9,29 @@ import UIKit
 import ReactiveWorks
 import Anchorage
 
+enum Grid: Int {
+   case x2 = 2
+   case x4 = 4
+   case x8 = 8
+   case x12 = 12
+   case x16 = 16
+   case x24 = 24
+   case x32 = 32
+   case x36 = 36
+   case x48 = 48
+   case x64 = 64
+}
+
+extension Grid {
+   var spacer: Spacer {
+      Spacer(float)
+   }
+
+   var float: CGFloat {
+      CGFloat(rawValue)
+   }
+}
+
 final class Spacer: BaseViewModel<SpacerView> {
     convenience init(_ size: CGFloat = .zero) {
         self.init()

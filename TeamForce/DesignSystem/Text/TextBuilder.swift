@@ -31,6 +31,10 @@ protocol ButtonTextsProtocol: InitProtocol {
 // MARK: - Title texts
 
 protocol TitleTextsProtocol: InitProtocol {
+
+   // new
+   var autorisation: String { get }
+
    // main
    var digitalThanks: String { get }
    var digitalThanksAbout: String { get }
@@ -72,7 +76,7 @@ protocol TitleTextsProtocol: InitProtocol {
 // MARK: - Button texts implements
 
 struct ButtonTexts: ButtonTextsProtocol {
-   var enterButton: String { "ВХОД" }
+   var enterButton: String { "ВОЙТИ" }
    var nextButton: String { "ДАЛЕЕ" }
    var registerButton: String { "РЕГИСТРАЦИЯ" }
    var getCodeButton: String { "ПОЛУЧИТЬ КОД" }
@@ -82,6 +86,8 @@ struct ButtonTexts: ButtonTextsProtocol {
 }
 
 struct TitleTexts: TitleTextsProtocol {
+   // new
+   var autorisation: String { "Авторизация" }
    // main
    var digitalThanks: String { "Цифровое спасибо" }
    var digitalThanksAbout: String { "Реализация внутренней программы мотивации сотрудников и друзей ТИМ ФОРС" }

@@ -33,6 +33,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 private extension SceneDelegate {
    func startDispatcher(_ nc: UINavigationController) {
+      nc.navigationBar.tintColor = .white
       ProductionAsset.router?
          .onEvent(\.push) { vc in
             nc.pushViewController(vc, animated: true)

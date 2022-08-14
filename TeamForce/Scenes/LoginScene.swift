@@ -99,26 +99,26 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
    }
 
    private func configure() {
-      mainVM
-         .setBackColor(Design.color.background)
+//      mainVM
+//         .setBackColor(Design.color.backgroundBrand)
 
       mainVM.topStackModel
          .set(Design.state.stack.default)
+         .setBackColor(Design.color.backgroundBrand)
          .setAlignment(.leading)
          .setModels([
+            // spacer
+            Grid.x36.spacer,
+            // logo
             BrandLogoIcon<Design>(),
-            Spacer(36),
-            TitleSubtitleY<Design>()
-               .setMain {
-                  $0
-                     .setAlignment(.left)
-                     .setText(Text.title.enter)
-               } setDown: {
-                  $0
-                     .setText(Text.title.enterTelegramName)
-                     .setAlignment(.left)
-               },
-            Spacer(36),
+            // spacer
+            Grid.x36.spacer,
+            // title
+            Design.label.headline5
+               .setText(Text.title.autorisation)
+               .setColor(Design.color.textInvert),
+            // spacer
+            Grid.x36.spacer,
          ])
 
       mainVM.bottomStackModel
