@@ -31,7 +31,7 @@ final class DigitalThanksScene<Asset: AssetProtocol>: BaseSceneModel<
       }
 
    private lazy var enterButton = Design.button.default
-      .set(.title(Text.button.enterButton))
+      .setTitle(Text.button.enterButton)
 
    // MARK: - Start
 

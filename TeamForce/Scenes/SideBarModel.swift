@@ -87,8 +87,7 @@ final class SideBarModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
 
 extension SideBarModel {
    private func configureLoadProfileUseCase() {
-      useCase.loadProfile
-         .work
+      useCase.loadProfile.work
          .onSuccess { [weak self] user in
             self?.userModel.userName.set(.text(user.profile.tgName))
             self?.userModel.nickName.set(.text(user.profile.tgId))
