@@ -69,7 +69,7 @@ final class TransactionStatusViewModel<Asset: AssetProtocol>: BaseViewModel<UISt
 
    override func start() {
       set(Design.state.stack.default)
-      set(.backColor(Design.color.background2))
+      set(.backColor(Design.color.backgroundSecondary))
       set(.cornerRadius(Design.params.cornerRadius))
       set(.alignment(.fill))
       set(.spacing(16))

@@ -38,7 +38,7 @@ final class LoginSuccessScene<Asset: AssetProtocol>: BaseSceneModel<
 
    override func start() {
 
-      mainViewModel.topStackModel.set(.alignment(.center))
+      mainVM.topStackModel.set(.alignment(.center))
 
       configure()
 
@@ -61,11 +61,11 @@ final class LoginSuccessScene<Asset: AssetProtocol>: BaseSceneModel<
    }
 
    private func configure() {
-      mainViewModel
+      mainVM
          .set(Design.state.stack.default)
-         .set(.backColor(Design.color.background2))
+         .set(.backColor(Design.color.backgroundSecondary))
 
-      mainViewModel.topStackModel
+      mainVM.topStackModel
          .set(.models([
             Spacer(200),
             checkmarkIcon,
@@ -74,7 +74,7 @@ final class LoginSuccessScene<Asset: AssetProtocol>: BaseSceneModel<
             Spacer()
          ]))
 
-      mainViewModel.bottomStackModel
+      mainVM.bottomStackModel
          .set(.models([
             nextButton
          ]))

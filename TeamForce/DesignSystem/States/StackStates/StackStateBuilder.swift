@@ -19,6 +19,7 @@ struct StackStateBuilder<Design: DesignProtocol>: StackStatesProtocol {
       .spacing(0),
       .alignment(.fill),
       .distribution(.fill),
+      .backColor(Design.color.background),
       .padding(UIEdgeInsets(top: 0, left: 16, bottom: 16, right: 16))
    ] }
 
@@ -27,7 +28,7 @@ struct StackStateBuilder<Design: DesignProtocol>: StackStatesProtocol {
       .spacing(Design.params.buttonsSpacingY),
       .alignment(.fill),
       .distribution(.fill),
-      .backColor(Design.color.background2),
-      .padding(UIEdgeInsets(top: 24, left: 16, bottom: 46, right: 16))
+      .backColor(Design.color.background),
+      .padding(UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16))
    ] }
 }

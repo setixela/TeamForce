@@ -27,7 +27,7 @@ final class PlaygroundScene<Asset: AssetProtocol>: BaseSceneModel<
          }
       }
 
-   private let logoTitle = DTLogoTitleX<Asset>()
+   private let logoTitle = DTLogoTitleX<Design>()
 
    override func start() {
       let viewModel = VizitkaDemo()
@@ -71,7 +71,7 @@ final class PlaygroundScene<Asset: AssetProtocol>: BaseSceneModel<
             .setBackColor(.random)
       }
 
-      mainViewModel
+      mainVM
          .setAlignment(.leading)
          .setAxis(.vertical)
          .setModels([

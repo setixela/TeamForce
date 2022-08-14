@@ -104,7 +104,7 @@
 		19DD3D97288A0A8C0085CDA8 /* CoverViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19DD3D96288A0A8C0085CDA8 /* CoverViewModel.swift */; };
 		19ECD54128623D1F001765F6 /* LabelModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19ECD54028623D1F001765F6 /* LabelModel.swift */; };
 		19ECD54328623D30001765F6 /* StackModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19ECD54228623D30001765F6 /* StackModel.swift */; };
-		19ECD54828623D9C001765F6 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19ECD54728623D9C001765F6 /* PaddingLabel.swift */; };
+		19ECD54828623D9C001765F6 /* CustomViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19ECD54728623D9C001765F6 /* CustomViews.swift */; };
 		19EF32AB287CE80B0078F53D /* StringStorageWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19EF32AA287CE80B0078F53D /* StringStorageWorker.swift */; };
 		19EF32AE287E08F80078F53D /* ColorBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19EF32AD287E08F80078F53D /* ColorBuilder.swift */; };
 		19EF32B02884B6C80078F53D /* TableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19EF32AF2884B6C80078F53D /* TableViewModel.swift */; };
@@ -236,7 +236,7 @@
 		19DD3D96288A0A8C0085CDA8 /* CoverViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoverViewModel.swift; sourceTree = "<group>"; };
 		19ECD54028623D1F001765F6 /* LabelModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelModel.swift; sourceTree = "<group>"; };
 		19ECD54228623D30001765F6 /* StackModel.swift */ = {isa = PBXFileReference; indentWidth = 3; lastKnownFileType = sourcecode.swift; path = StackModel.swift; sourceTree = "<group>"; tabWidth = 3; };
-		19ECD54728623D9C001765F6 /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
+		19ECD54728623D9C001765F6 /* CustomViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomViews.swift; sourceTree = "<group>"; };
 		19EF32AA287CE80B0078F53D /* StringStorageWorker.swift */ = {isa = PBXFileReference; indentWidth = 3; lastKnownFileType = sourcecode.swift; path = StringStorageWorker.swift; sourceTree = "<group>"; tabWidth = 3; };
 		19EF32AD287E08F80078F53D /* ColorBuilder.swift */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = ColorBuilder.swift; sourceTree = "<group>"; tabWidth = 4; };
 		19EF32AF2884B6C80078F53D /* TableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewModel.swift; sourceTree = "<group>"; };
@@ -381,8 +381,7 @@
 			children = (
 				19CF792728A54D60001531B8 /* Config.swift */,
 				190C1D13285D15FF00FB3518 /* SceneDelegate.swift */,
-				194C095528759FD900D88D5B /* ViewModel+Stateable.swift */,
-				19A8229528A925760081D385 /* ViewModel+Setters.swift */,
+				197A2D9728A95D7500190656 /* States */,
 				6368D8272891E7C30049EEAB /* UserDefault+helpers.swift */,
 				195870F328A8CDD90075D505 /* Assets */,
 				196750A02865168F0019A6DE /* Scenes */,
@@ -539,6 +538,15 @@
 				1977BE5728A7343400D554EA /* InputCheckers.swift */,
 			);
 			path = InputCheckers;
+			sourceTree = "<group>";
+		};
+		197A2D9728A95D7500190656 /* States */ = {
+			isa = PBXGroup;
+			children = (
+				19A8229528A925760081D385 /* ViewModel+Setters.swift */,
+				194C095528759FD900D88D5B /* ViewModel+Stateable.swift */,
+			);
+			path = States;
 			sourceTree = "<group>";
 		};
 		198FE1CA28999A1500BAF1A5 /* Systems */ = {
@@ -721,7 +729,7 @@
 		19ECD54628623D92001765F6 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				19ECD54728623D9C001765F6 /* PaddingLabel.swift */,
+				19ECD54728623D9C001765F6 /* CustomViews.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -966,7 +974,7 @@
 				19F153842899649900ECF000 /* LoadProfileUseCase.swift in Sources */,
 				19F15386289964AA00ECF000 /* LogoutUseCase.swift in Sources */,
 				1953DE842879FDE3000DC537 /* TransactViewModel.swift in Sources */,
-				19ECD54828623D9C001765F6 /* PaddingLabel.swift in Sources */,
+				19ECD54828623D9C001765F6 /* CustomViews.swift in Sources */,
 				19F1538E2899692D00ECF000 /* ApiUseCaseRegistry.swift in Sources */,
 				63352DE7289AA69A00489F5F /* SendCoinUseCase.swift in Sources */,
 				634F4333288F4EE9003B2256 /* LogoutApiWorker.swift in Sources */,

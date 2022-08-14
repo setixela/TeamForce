@@ -24,7 +24,7 @@ final class TransactInputViewModel<Design: DesignProtocol>: BaseViewModel<UIStac
         .set(.height(72))
         .set(.placeholder("0"))
         .set(.padding(.init(top: 0, left: 16, bottom: 0, right: 16)))
-        .set(.backColor(Design.color.background2))
+        .set(.backColor(Design.color.backgroundSecondary))
 
     override func start() {
         set(.alignment(.fill),
@@ -32,7 +32,7 @@ final class TransactInputViewModel<Design: DesignProtocol>: BaseViewModel<UIStac
             .axis(.vertical),
             .spacing(0),
             .height(118),
-            .backColor(Design.color.background2),
+            .backColor(Design.color.backgroundSecondary),
             .models([
                 doubleLabel,
                 textField,

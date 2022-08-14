@@ -115,11 +115,11 @@ final class VerifyCodeScene<Asset: AssetProtocol>: BaseSceneModel<
 
    private func configure() {
 
-      mainViewModel
-         .set(.backColor(Design.color.background2))
+      mainVM
+         .set(.backColor(Design.color.backgroundSecondary))
          .set(Design.state.stack.default)
 
-      mainViewModel.topStackModel
+      mainVM.topStackModel
          .set(.models([
             Spacer(100),
             headerModel,
@@ -133,7 +133,7 @@ final class VerifyCodeScene<Asset: AssetProtocol>: BaseSceneModel<
             Spacer()
          ]))
 
-      mainViewModel.bottomStackModel
+      mainVM.bottomStackModel
          .set(.models([
             enterButton
          ]))

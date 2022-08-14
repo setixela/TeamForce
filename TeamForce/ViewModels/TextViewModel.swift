@@ -9,15 +9,6 @@ import Anchorage
 import ReactiveWorks
 import UIKit
 
-enum TextViewState {
-   case text(String)
-   case placeholder(String)
-   case font(UIFont)
-   case padding(UIEdgeInsets)
-   case height(CGFloat)
-   case width(CGFloat)
-}
-
 struct TextViewEvents: InitProtocol {
    var didEditingChanged: Event<String>?
 }
@@ -57,6 +48,15 @@ final class TextViewModel<Design: DesignProtocol>: BaseViewModel<UITextView>, De
          textView.textColor = UIColor.lightGray
       }
    }
+}
+
+enum TextViewState {
+   case text(String)
+   case placeholder(String)
+   case font(UIFont)
+   case padding(UIEdgeInsets)
+   case height(CGFloat)
+   case width(CGFloat)
 }
 
 extension TextViewModel: Stateable2 {

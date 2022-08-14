@@ -15,21 +15,6 @@ final class DigitalThanksScene<Asset: AssetProtocol>: BaseSceneModel<
    Asset,
    Void
 > {
-   //
-   private lazy var logoTitle = DTLogoTitleX<Asset>()
-      .centeredX()
-
-   private lazy var illustration = ImageViewModel()
-      .setImage(Design.icon.introlIllustrate)
-      .setWidth(300)
-
-   private lazy var titleSubtitle = TitleSubtitleY<Design>()
-      .setMain {
-         $0.setText(Text.title.digitalThanks)
-      } setDown: {
-         $0.setText(Text.title.digitalThanksAbout)
-      }
-
    private lazy var enterButton = Design.button.default
       .setTitle(Text.button.enterButton)
 
@@ -46,25 +31,37 @@ final class DigitalThanksScene<Asset: AssetProtocol>: BaseSceneModel<
    }
 
    private func configure() {
-      mainViewModel
-         .setBackColor(Design.color.background2)
+      mainVM
+         .setBackColor(Design.color.background)
 
-      mainViewModel.topStackModel
+      mainVM.topStackModel
          .set(Design.state.stack.default)
          .setModels([
-            Spacer(Design.params.globalTopOffset),
-            logoTitle,
-            Spacer(32),
-            illustration,
-            Spacer(64),
-            titleSubtitle,
+            // logo model
+            DTLogoTitleX<Design>()
+               .set(.invert)
+               .lefted(),
+            // spacer
             Spacer()
          ])
+         .setBackImage(Design.icon.introlIllustrate)
 
-      mainViewModel.bottomStackModel
+      mainVM.bottomStackModel
          .set(Design.state.stack.bottomPanel)
-         .setSpacing(Design.params.buttonsSpacingY)
+
          .setModels([
+            // spacer
+            Spacer(1),
+            // title subtitle
+            TitleSubtitleY<Design>()
+               .setMain {
+                  $0.setText(Text.title.digitalThanks)
+               } setDown: {
+                  $0.setText(Text.title.digitalThanksAbout)
+               },
+            // spacer
+            Spacer(1),
+            // enter button
             enterButton
          ])
    }

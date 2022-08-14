@@ -23,43 +23,44 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
    // MARK: - View Models
 
    private lazy var digitalThanksTitle = Design.label.headline4
-      .set(.text(Text.title.digitalThanks))
-      .set(.numberOfLines(1))
-      .set(.alignment(.left))
-      .set(.padding(.init(top: 22, left: 0, bottom: 26, right: 0)))
+      .setText(Text.title.digitalThanks)
+      .setNumberOfLines(1)
+      .setAlignment(.left)
+      .setPadding(.init(top: 22, left: 0, bottom: 26, right: 0))
 
    private lazy var userSearchTextField = TextFieldModel<Design>()
-      .set(.backColor(.init(red: 0.33, green: 0.33, blue: 0.33, alpha: 0.08)))
-      .set(.height(48))
-      .set(.placeholder(Text.title.chooseRecipient))
-      .set(.hidden(true))
-      .set(.padding(.init(top: 0, left: 16, bottom: 0, right: 16)))
+      .setBackColor(.init(red: 0.33, green: 0.33, blue: 0.33, alpha: 0.08))
+      .setHeight(48)
+      .setPlaceholder(Text.title.chooseRecipient)
+      .setHidden(true)
+      .setPadding(.init(top: 0, left: 16, bottom: 0, right: 16))
 
    private lazy var transactInputViewModel = TransactInputViewModel<Design>()
       .set(.leftCaptionText(Text.title.sendThanks))
       .set(.rightCaptionText(Text.title.availableThanks))
-      .set(.hidden(true))
+      .setHidden(true)
 
    private lazy var tableModel = TableViewModel()
-      .set(.borderColor(.gray))
-      .set(.borderWidth(1))
-      .set(.cornerRadius(Design.params.cornerRadius))
-      .set(.hidden(true))
+      .setBorderColor(.gray)
+      .setBorderWidth(1)
+      .setCornerRadius(Design.params.cornerRadius)
+      .setHidden(true)
 
    private lazy var sendButton = Design.button.default
       .set(Design.state.button.inactive)
-      .set(.title(Text.button.sendButton))
-      .set(.hidden(true))
+      .setTitle(Text.button.sendButton)
+      .setHidden(true)
 
    private lazy var reasonTextView = TextViewModel<Design>()
       .set(.padding(.init(top: 16, left: 16, bottom: 16, right: 16)))
       .set(.placeholder(TextBuilder.title.reasonPlaceholder))
-      .set(.backColor(UIColor.clear))
-      .set(.borderColor(.lightGray.withAlphaComponent(0.4)))
-      .set(.borderWidth(1.0))
       .set(.font(Design.font.body1))
-      .set(.height(200))
-      .set(.hidden(true))
+      .setBackColor(UIColor.clear)
+      .setBorderColor(.lightGray.withAlphaComponent(0.4))
+      .setBorderWidth(1.0)
+
+      .setHeight(200)
+      .setHidden(true)
 
    private lazy var transactionStatusView = TransactionStatusViewModel<Asset>()
 
@@ -78,10 +79,10 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
       works.loadTokens
          .doAsync()
          .onSuccess {
-            wS?.userSearchTextField.set(.hidden(false))
+            wS?.userSearchTextField.setHidden(false)
          }
          .onFail {
-            wS?.userSearchTextField.set(.hidden(true))
+            wS?.userSearchTextField.setHidden(true)
          }
          // then load balance
          .doNext(work: works.loadBalance)
@@ -98,11 +99,11 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
          // then load 10 user list
          .doNext(work: works.getUserList)
          .onSuccess {
-            wS?.tableModel.set(.hidden(false))
+            wS?.tableModel.setHidden(false)
             wS?.presentFoundUsers(users: $0)
          }
          .onFail {
-            wS?.tableModel.set(.hidden(true))
+            wS?.tableModel.setHidden(true)
          }
 
       // on input event, then check input is not empty, then search user
@@ -114,7 +115,7 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
          // then check data is not empty
          .doNext(usecase: IsNotEmpty())
          .onSuccess {
-            wS?.tableModel.set(.hidden(true))
+            wS?.tableModel.setHidden(true)
          }
          // then search user
          .doNext(work: works.searchUser)
@@ -124,7 +125,6 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
          .onFail {
             print("Search user API Error")
          }
-
 
       sendButton
          .onEvent(\.didTap)
@@ -159,21 +159,21 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
          .onSuccess { foundUser in
             let fullName = foundUser.name + " " + foundUser.surname
             wS?.userSearchTextField.set(.text(fullName))
-            wS?.tableModel.set(.hidden(true))
-            wS?.transactInputViewModel.set(.hidden(false))
-            wS?.sendButton.set(.hidden(false))
-            wS?.reasonTextView.set(.hidden(false))
+            wS?.tableModel.setHidden(true)
+            wS?.transactInputViewModel.setHidden(false)
+            wS?.sendButton.setHidden(false)
+            wS?.reasonTextView.setHidden(false)
          }
 
       configureInputParsers()
    }
 
    func configure() {
-      set(.axis(.vertical))
-      set(.distribution(.fill))
-      set(.alignment(.fill))
-      set(.spacing(8))
-      set(.models([
+      setAxis(.vertical)
+      setDistribution(.fill)
+      setAlignment(.fill)
+      setSpacing(8)
+      setModels([
          digitalThanksTitle,
          userSearchTextField,
          transactInputViewModel,
@@ -181,7 +181,7 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
          sendButton,
          tableModel,
          Spacer(),
-      ]))
+      ])
    }
 
    private func setToInitialCondition() {

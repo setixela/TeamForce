@@ -22,7 +22,7 @@ class TitleSubtitleY<Design: DesignProtocol>:
       } setDown: {
          $0
             .set(Design.state.label.subtitle)
-            .set(.color(Design.color.text2))
+            .set(.color(Design.color.textSecondary))
             .set(.numberOfLines(0))
             .set(.alignment(.center))
             .set(.padUp(Design.params.titleSubtitleOffset))

@@ -17,21 +17,21 @@ class TitleSubtitleCaptionYVM<Design: DesignProtocol>:
       setMain {
          $0
             .set(Design.state.label.title)
-            .set(.numberOfLines(0))
-            .set(.alignment(.center))
+            .setNumberOfLines(0)
+            .setAlignment(.center)
       } setDown: {
          $0
             .set(Design.state.label.subtitle)
-            .set(.numberOfLines(0))
-            .set(.alignment(.center))
-            .set(.padUp(Design.params.titleSubtitleOffset))
-            .set(.color(Design.color.text2))
+            .setNumberOfLines(0)
+            .setAlignment(.center)
+            .setPadTop(Design.params.titleSubtitleOffset)
+            .setColor(Design.color.textSecondary)
       } setDown2: {
          $0
             .set(Design.state.label.caption)
-            .set(.numberOfLines(0))
-            .set(.alignment(.center))
-            .set(.padUp(Design.params.titleSubtitleOffset))
+            .setNumberOfLines(0)
+            .setAlignment(.center)
+            .setPadTop(Design.params.titleSubtitleOffset)
       }
    }
 }

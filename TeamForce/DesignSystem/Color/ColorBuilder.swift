@@ -13,25 +13,22 @@ protocol ColorTokenProtocol {}
 // imported from Figma via "Colors to Code" Figma's plugin
 enum ColorToken: String, ColorTokenProtocol {
     //
-    case brand = "--general-general-color-brand"
-    case brand2 = "--secondary-secondary-color-brand"
-    //
-    case black = "--general-general-color-black"
-    case grey = "--general-general-corol-grey"
-    case white = "--general-general-color-white"
-    case secondary = "--general-general-color-secondary"
-    //
-    case info = "--minor-color-info-primary"
-    case info2 = "--minor-color-info-secondary"
-    //
-    case success = "--minor-color-success-primary"
-    case success2 = "--minor-color-success-secondary"
-    //
-    case warning = "--minor-color-warning-primary"
-    case warning2 = "--minor-color-warning-secondary"
-    //
-    case error = "--minor-color-error-primary"
-    case error2 = "--minor-color-error-secondary"
+    case brand = "--general-brand"
+    case brandSecondary = "--general-brand-secondary"
+    case contrast = "--general-contrast"
+    case contrastSecondary = "--general-contrast-secondary"
+    case midpoint = "--general-grey"
+    case midpointSecondary = "--general-grey-secondary"
+    case inverse = "--general-inverse"
+    case inverseSecondary = "--general-inverse-secondary"
+    case success = "--minor-success"
+    case successSecondary = "--minor-success-secondary"
+    case error = "--minor-error"
+    case errorSecondary = "--minor-error-secondary"
+    case warning = "--minor-warning"
+    case warningSecondary = "--minor-warning-secondary"
+    case info = "--minor-info"
+    case infoSecondary = "--minor-info-secondary"
 }
 
 // Протокол Фабрики цветов
@@ -43,14 +40,16 @@ protocol ColorsProtocol: InitProtocol {
 
     // Text colors
     var text: UIColor { get }
-    var text2: UIColor { get }
+    var textSecondary: UIColor { get }
     var textError: UIColor { get }
     var textInvert: UIColor { get }
-    var text2Invert: UIColor { get }
+    var textSecondaryInvert: UIColor { get }
+    var textThird: UIColor { get }
+    var textThirdInvert: UIColor { get }
 
     // Backs
     var background: UIColor { get }
-    var background2: UIColor { get }
+    var backgroundSecondary: UIColor { get }
 
     // Buttons
     var activeButtonBack: UIColor { get }
@@ -63,36 +62,47 @@ protocol ColorsProtocol: InitProtocol {
     // Boundaries
     var boundary: UIColor { get }
     var boundaryError: UIColor { get }
+
+    // Images
+    var iconContrast: UIColor { get }
+    var iconInvert: UIColor { get }
 }
 
 // MARK: - Colors implement
 
 // Палитра
 struct ColorBuilder: ColorsProtocol {
+
     typealias Token = ColorToken
 
     var transparent: UIColor { .clear }
 
-    var text: UIColor { Token.black.color }
-    var text2: UIColor { Token.secondary.color }
+    var text: UIColor { Token.contrast.color }
+    var textSecondary: UIColor { Token.contrast.color }
+    var textSecondaryInvert: UIColor { Token.inverseSecondary.color }
+    var textThird: UIColor { Token.contrast.color }
+    var textThirdInvert: UIColor { Token.inverseSecondary.color }
+    var textInvert: UIColor { Token.inverse.color }
     var textError: UIColor { Token.error.color }
-    var textInvert: UIColor { Token.white.color }
-    var text2Invert: UIColor { Token.grey.color }
 
-    var background: UIColor { Token.white.color }
-    var background2: UIColor { Token.brand2.color }
+    var background: UIColor { Token.inverse.color }
+    var backgroundSecondary: UIColor { Token.inverseSecondary.color }
 
     // button colors
     var activeButtonBack: UIColor { Token.brand.color }
-    var inactiveButtonBack: UIColor { Token.brand2.color }
+    var inactiveButtonBack: UIColor { Token.brandSecondary.color }
     var transparentButtonBack: UIColor { transparent }
 
     // textfield colors
-    var textFieldBack: UIColor { Token.white.color }
+    var textFieldBack: UIColor { Token.inverse.color }
 
     // boundaries
-    var boundary: UIColor { Token.grey.color }
+    var boundary: UIColor { Token.midpoint.color }
     var boundaryError: UIColor { Token.error.color }
+
+    // icons
+    var iconContrast: UIColor { Token.contrast.color }
+    var iconInvert: UIColor { Token.inverse.color }
 }
 
 // MARK: - Private helpers

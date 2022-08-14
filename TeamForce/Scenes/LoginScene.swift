@@ -99,15 +99,14 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
    }
 
    private func configure() {
-      mainViewModel
+      mainVM
          .setBackColor(Design.color.background)
 
-      mainViewModel.topStackModel
+      mainVM.topStackModel
          .set(Design.state.stack.default)
          .setAlignment(.leading)
          .setModels([
-            Spacer(Design.params.globalTopOffset),
-            DTLogoTitleX<Asset>(),
+            BrandLogoIcon<Design>(),
             Spacer(36),
             TitleSubtitleY<Design>()
                .setMain {
@@ -122,7 +121,7 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
             Spacer(36),
          ])
 
-      mainViewModel.bottomStackModel
+      mainVM.bottomStackModel
          .set(Design.state.stack.bottomPanel)
          .setModels([
             badgeModel,

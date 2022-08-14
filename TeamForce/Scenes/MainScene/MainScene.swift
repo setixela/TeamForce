@@ -58,10 +58,10 @@ final class MainScene<Asset: AssetProtocol>: BaseSceneModel<
 
     presentModel(balanceViewModel)
 
-    mainViewModel
+    mainVM
       .set(.backColor(Design.color.background))
 
-    mainViewModel.bottomStackModel
+    mainVM.bottomStackModel
       .set(.axis(.horizontal))
       .set(.padding(.zero))
       .set(.spacing(0))
@@ -81,7 +81,7 @@ final class MainScene<Asset: AssetProtocol>: BaseSceneModel<
       .onEvent(\.didTap) {
         guard let self = weakSelf else { return }
 
-        self.sideBarModel.sendEvent(\.presentOnScene, self.mainViewModel.view)
+        self.sideBarModel.sendEvent(\.presentOnScene, self.mainVM.view)
       }
 
     configureSideBarItemsEvents()
@@ -115,7 +115,7 @@ extension MainScene {
     guard let model = model else { return }
 
    // model.start()
-    mainViewModel.topStackModel
+    mainVM.topStackModel
       .set(Design.state.stack.default)
       .set(.models([
         model

@@ -109,8 +109,10 @@ extension ViewModelProtocol where Self: Stateable, View: UIStackView {
       return self
    }
 
-   @discardableResult func setBackImage(_ value: UIImage) -> Self {
-      applyState(.backView(PaddingImageView(image: value)))
+   @discardableResult func setBackImage(_ value: UIImage, contentMode: UIImageView.ContentMode = .scaleAspectFill) -> Self {
+      let imageView = PaddingImageView(image: value)
+      imageView.contentMode = contentMode
+      setBackView(imageView)
       return self
    }
 }
@@ -180,6 +182,12 @@ extension ViewModelProtocol where Self: Stateable, View: PaddingImageView {
 
    @discardableResult func setPadding(_ value: UIEdgeInsets) -> Self {
       view.padding = value
+      return self
+   }
+
+   @discardableResult func setTintColor(_ value: UIColor) -> Self {
+      view.image = view.image?.withRenderingMode(UIImage.RenderingMode.alwaysTemplate)
+      view.tintColor = value
       return self
    }
 }

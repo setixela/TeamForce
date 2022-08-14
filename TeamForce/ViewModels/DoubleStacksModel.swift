@@ -14,7 +14,7 @@ final class DoubleStacksModel: BaseViewModel<UIStackView> {
                                    .distribution(.fill))
     let bottomStackModel = StackModel(.axis(.vertical),
                                       .alignment(.fill),
-                                      .distribution(.fillEqually))
+                                      .distribution(.fill))
 
     override func start() {
         set(.axis(.vertical))

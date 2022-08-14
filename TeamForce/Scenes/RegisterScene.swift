@@ -65,11 +65,11 @@ final class RegisterScene<Asset: AssetProtocol>: BaseSceneModel<
    }
 
    private func configure() {
-      mainViewModel
+      mainVM
          .set(Design.state.stack.default)
-         .set(.backColor(Design.color.background2))
+         .set(.backColor(Design.color.backgroundSecondary))
 
-      mainViewModel.topStackModel
+      mainVM.topStackModel
          .set(.models([
             Spacer(100),
             headerModel,
@@ -79,7 +79,7 @@ final class RegisterScene<Asset: AssetProtocol>: BaseSceneModel<
             Spacer()
          ]))
 
-      mainViewModel.bottomStackModel
+      mainVM.bottomStackModel
          .set(.models([
             nextButton
          ]))

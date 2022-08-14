@@ -9,7 +9,7 @@ import ReactiveWorks
 
 struct Config {
    static let isDebug = true
-   static let startDebugScene: KeyPath<ProductionAsset.Scene, SceneModelProtocol> = \.playground
+   static let startDebugScene: KeyPath<ProductionAsset.Scene, SceneModelProtocol> = \.digitalThanks
 
    static let isDebugView = true
 }

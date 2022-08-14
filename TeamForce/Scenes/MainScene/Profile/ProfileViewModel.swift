@@ -32,11 +32,11 @@ final class ProfileViewModel<Asset: AssetProtocol>: BaseSceneModel<
    }
 
    private func configure() {
-      mainViewModel
+      mainVM
          .set(Design.state.stack.default)
-         .set(.backColor(Design.color.background2))
+         .set(.backColor(Design.color.backgroundSecondary))
 
-      mainViewModel
+      mainVM
          .set(.models([
             userModel,
             Spacer(16),
