@@ -45,7 +45,7 @@ final class PlaygroundScene<Asset: AssetProtocol>: BaseSceneModel<
 
       let logoTitleSubtitle = IconTitleSubtitleModel()
          .set(.image(Design.icon.logo))
-         .set(.backColor(.random))
+         .setBackColor(.random)
          .setRight {
             $0
                .set(.text("Hello"))
@@ -59,16 +59,16 @@ final class PlaygroundScene<Asset: AssetProtocol>: BaseSceneModel<
 
       let comboC = Combos { (model: ViewModel) in
          model
-            .set(.size(.square(60)))
-            .set(.backColor(.random))
+            .setSize(.square(60))
+            .setBackColor(.random)
       } setRight: { (model: ViewModel) in
          model
-            .set(.size(.square(30)))
-            .set(.backColor(.random))
+            .setSize(.square(30))
+            .setBackColor(.random)
       } setDown: { (model: ViewModel) in
          model
-            .set(.size(.square(30)))
-            .set(.backColor(.random))
+            .setSize(.square(30))
+            .setBackColor(.random)
       }
 
       mainViewModel

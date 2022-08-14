@@ -18,24 +18,24 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
    // MARK: - View Models
 
    private let coverViewModel = CoverViewModel<Asset>()
-      .set(.backImage(Design.icon.introlIllustrate))
+      .setBackImage(Design.icon.introlIllustrate)
 
    private let headerModel = Design.label.headline4
-      .set(.padding(.init(top: 12, left: 0, bottom: 24, right: 0)))
-      .set(.text(Text.title.enter))
+      .setPadding(.init(top: 12, left: 0, bottom: 24, right: 0))
+      .setText(Text.title.enter)
 
    private let subtitleModel = Design.label.subtitle
-      .set(.padding(.init(top: 0, left: 0, bottom: 32, right: 0)))
-      .set(.text(Text.title.enterTelegramName))
-      .set(.numberOfLines(2))
+      .setPadding(.init(top: 0, left: 0, bottom: 32, right: 0))
+      .setText(Text.title.enterTelegramName)
+      .setNumberOfLines(2)
 
    private let nextButton = Design.button.inactive
-      .set(.title(Text.button.getCodeButton))
+      .setTitle(Text.button.getCodeButton)
 
    private let badgeModel = BadgeModel<Asset>()
 
    private let loginTextField = TextFieldModel<Design>(Design.state.textField.default)
-      .set(.placeholder(""))
+      .setPlaceholder("")
 
    // MARK: - Use Cases
 
@@ -84,48 +84,51 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
          .doNext(worker: TelegramNickCheckerModel())
          .onSuccess { text in
             loginName = text // String(text.dropFirst())
-            weakSelf?.badgeModel.textFieldModel.set(.text(text))
-            weakSelf?.nextButton.set(Design.state.button.default)
+            weakSelf?.badgeModel.textFieldModel
+               .setText(text)
+            weakSelf?.nextButton
+               .set(Design.state.button.default)
          }
          .onFail { (text: String) in
             loginName = nil
-            weakSelf?.badgeModel.textFieldModel.set(.text(text))
-            weakSelf?.nextButton.set(Design.state.button.inactive)
+            weakSelf?.badgeModel.textFieldModel
+               .setText(text)
+            weakSelf?.nextButton
+               .set(Design.state.button.inactive)
          }
    }
 
    private func configure() {
       mainViewModel
-         .set(.backColor(Design.color.background))
+         .setBackColor(Design.color.background)
 
       mainViewModel.topStackModel
          .set(Design.state.stack.default)
-         .set(.alignment(.leading))
-         .set(.models([
+         .setAlignment(.leading)
+         .setModels([
             Spacer(Design.params.globalTopOffset),
             DTLogoTitleX<Asset>(),
             Spacer(36),
             TitleSubtitleY<Design>()
                .setMain {
                   $0
-                     .set(.alignment(.left))
-                     .set(.text(Text.title.enter))
+                     .setAlignment(.left)
+                     .setText(Text.title.enter)
                } setDown: {
                   $0
-                     .set(.text(Text.title.enterTelegramName))
-                     .set(.alignment(.left))
+                     .setText(Text.title.enterTelegramName)
+                     .setAlignment(.left)
                },
             Spacer(36),
-         ]))
+         ])
 
       mainViewModel.bottomStackModel
          .set(Design.state.stack.bottomPanel)
-
-         .set(.models([
+         .setModels([
             badgeModel,
             loginTextField,
             nextButton,
             Spacer(),
-         ]))
+         ])
    }
 }

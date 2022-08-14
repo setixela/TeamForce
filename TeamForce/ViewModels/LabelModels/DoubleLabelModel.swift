@@ -28,7 +28,8 @@ final class DoubleLabelModel<Design: DesignProtocol>: BaseViewModel<UIStackView>
    }
 }
 
-extension DoubleLabelModel: Stateable {
+extension DoubleLabelModel: Stateable2 {
    typealias State = StackState
+   typealias State2 = ViewState
 }
 

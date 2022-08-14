@@ -27,6 +27,7 @@ final class DoubleStacksModel: BaseViewModel<UIStackView> {
     }
 }
 
-extension DoubleStacksModel: Stateable {
+extension DoubleStacksModel: Stateable2 {
    typealias State = StackState
+   typealias State2 = ViewState
 }
