@@ -10,6 +10,7 @@ import UIKit
 
 protocol ColorTokenProtocol {}
 
+// imported from Figma via "Colors to Code" Figma's plugin
 enum ColorToken: String, ColorTokenProtocol {
     //
     case brand = "--general-general-color-brand"
@@ -33,7 +34,7 @@ enum ColorToken: String, ColorTokenProtocol {
     case error2 = "--minor-color-error-secondary"
 }
 
-// Протокол Фабрики цветов ( Разнести потом палитру и детали и обьекты)
+// Протокол Фабрики цветов
 protocol ColorsProtocol: InitProtocol {
     associatedtype Token: ColorTokenProtocol
 
@@ -43,7 +44,7 @@ protocol ColorsProtocol: InitProtocol {
     // Text colors
     var text: UIColor { get }
     var text2: UIColor { get }
-
+    var textError: UIColor { get }
     var textInvert: UIColor { get }
     var text2Invert: UIColor { get }
 
@@ -74,7 +75,7 @@ struct ColorBuilder: ColorsProtocol {
 
     var text: UIColor { Token.black.color }
     var text2: UIColor { Token.secondary.color }
-
+    var textError: UIColor { Token.error.color }
     var textInvert: UIColor { Token.white.color }
     var text2Invert: UIColor { Token.grey.color }
 

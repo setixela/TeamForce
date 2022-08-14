@@ -6,7 +6,6 @@
 //
 
 import ReactiveWorks
-import UIKit
 
 // MARK: - LoginScene
 
@@ -123,6 +122,7 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
          .set(Design.state.stack.bottomPanel)
 
          .set(.models([
+            badgeModel,
             loginTextField,
             nextButton,
             Spacer(),

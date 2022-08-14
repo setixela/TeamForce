@@ -5,36 +5,33 @@
 //  Created by Aleksandr Solovyev on 11.08.2022.
 //
 
-import ReactiveWorks
 import Foundation
+import ReactiveWorks
 
 protocol TransactWorksProtocol: SceneWorks {
    // api works
    var loadBalance: Work<Void, Balance> { get }
    var searchUser: Work<String, [FoundUser]> { get }
    var sendCoins: Work<(amount: String, reason: String),
-                       (recipient: String, info: SendCoinRequest)> { get }
+      (recipient: String, info: SendCoinRequest)> { get }
    var getUserList: Work<Void, [FoundUser]> { get }
-
    // data works
    var loadTokens: Work<Void, Void> { get }
-
    // index mapper
    var mapIndexToUser: Work<IndexPath, FoundUser> { get }
-
    // parsing input
    var coinInputParsing: Work<String, String> { get }
    var reasonInputParsing: Work<String, String> { get }
 }
 
 final class TransactWorks<Asset: AssetProtocol>: TransactWorksProtocol {
-
    // api works
    private lazy var apiUseCase = Asset.apiUseCase
-
    // parsing input
    private lazy var coinInputParser = CoinInputCheckerModel()
    private lazy var reasonInputParser = ReasonCheckerModel()
+
+   private lazy var retainer = Retainer()
 
    // storage
    struct TempStorage {
@@ -79,7 +76,8 @@ final class TransactWorks<Asset: AssetProtocol>: TransactWorksProtocol {
          csrfToken: self.tempStorage.tokens.csrf
       )
 
-      self.apiUseCase.retainedWork(\.userSearch)
+      self.apiUseCase.userSearch.work
+         .retainBy(self.retainer)
          .doAsync(request)
          .onSuccess { result in
             self.tempStorage.foundUsers = result
@@ -101,7 +99,8 @@ final class TransactWorks<Asset: AssetProtocol>: TransactWorksProtocol {
          reason: work.unsafeInput.reason
       )
 
-      self.apiUseCase.retainedWork(\.sendCoin)
+      self.apiUseCase.sendCoin.work
+         .retainBy(self.retainer)
          .doAsync(request)
          .onSuccess {
             let tuple = (self.tempStorage.recipientUsername, request)
@@ -114,7 +113,8 @@ final class TransactWorks<Asset: AssetProtocol>: TransactWorksProtocol {
    lazy var getUserList = Work<Void, [FoundUser]> { [weak self] work in
       guard let self = self else { return }
 
-      self.apiUseCase.retainedWork(\.getUsersList)
+      self.apiUseCase.getUsersList.work
+         .retainBy(self.retainer)
          .doAsync()
          .onSuccess { result in
             self.tempStorage.foundUsers = result
