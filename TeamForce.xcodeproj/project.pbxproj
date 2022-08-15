@@ -49,7 +49,7 @@
 		1953DE88287B4574000DC537 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1953DE87287B4574000DC537 /* Fonts.swift */; };
 		1953DE8D287B4752000DC537 /* TypographyElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1953DE8C287B4752000DC537 /* TypographyElements.swift */; };
 		195870F228A8C8040075D505 /* KeyPathMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 195870F128A8C8040075D505 /* KeyPathMaker.swift */; };
-		1959F27428AA8E9700DEEE5C /* LoginSceneWorks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1959F27328AA8E9700DEEE5C /* LoginSceneWorks.swift */; };
+		1959F27428AA8E9700DEEE5C /* LoginWorks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1959F27328AA8E9700DEEE5C /* LoginWorks.swift */; };
 		1967509D286491190019A6DE /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1967509C286491190019A6DE /* Buttons.swift */; };
 		1967509F286492780019A6DE /* Labels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1967509E286492780019A6DE /* Labels.swift */; };
 		196750A22865169C0019A6DE /* DigitalThanksScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196750A12865169C0019A6DE /* DigitalThanksScene.swift */; };
@@ -200,7 +200,7 @@
 		1953DE87287B4574000DC537 /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
 		1953DE8C287B4752000DC537 /* TypographyElements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypographyElements.swift; sourceTree = "<group>"; };
 		195870F128A8C8040075D505 /* KeyPathMaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyPathMaker.swift; sourceTree = "<group>"; };
-		1959F27328AA8E9700DEEE5C /* LoginSceneWorks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginSceneWorks.swift; sourceTree = "<group>"; };
+		1959F27328AA8E9700DEEE5C /* LoginWorks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginWorks.swift; sourceTree = "<group>"; };
 		1967509C286491190019A6DE /* Buttons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Buttons.swift; sourceTree = "<group>"; };
 		1967509E286492780019A6DE /* Labels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Labels.swift; sourceTree = "<group>"; };
 		196750A12865169C0019A6DE /* DigitalThanksScene.swift */ = {isa = PBXFileReference; indentWidth = 3; lastKnownFileType = sourcecode.swift; path = DigitalThanksScene.swift; sourceTree = "<group>"; tabWidth = 3; };
@@ -538,7 +538,7 @@
 			isa = PBXGroup;
 			children = (
 				196750A5286516F40019A6DE /* LoginScene.swift */,
-				1959F27328AA8E9700DEEE5C /* LoginSceneWorks.swift */,
+				1959F27328AA8E9700DEEE5C /* LoginWorks.swift */,
 			);
 			path = LoginScene;
 			sourceTree = "<group>";
@@ -994,7 +994,7 @@
 				1952EA6528A7115D003F7852 /* StackStateBuilder.swift in Sources */,
 				19D0835B286F424000F75E4A /* LabelIconHorizontalModel.swift in Sources */,
 				198FE1CE2899BB8E00BAF1A5 /* LoadBalanceUseCase.swift in Sources */,
-				1959F27428AA8E9700DEEE5C /* LoginSceneWorks.swift in Sources */,
+				1959F27428AA8E9700DEEE5C /* LoginWorks.swift in Sources */,
 				196750B22865190D0019A6DE /* ImageViewModel.swift in Sources */,
 				63D419E928A5109E0024E22C /* GetUsersListUseCase.swift in Sources */,
 				63D419ED28AA56570024E22C /* GetFeedUseCase.swift in Sources */,

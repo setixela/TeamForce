@@ -7,6 +7,11 @@
 
 import ReactiveWorks
 
+struct LoginSceneMode<WeakSelf>: SceneModeProtocol {
+   var inputUserName: VoidEvent?
+   var inputSmsCode: VoidEvent?
+}
+
 // MARK: - LoginScene
 
 final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
@@ -15,16 +20,18 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
    Asset,
    Void
 >, WorkableModel {
+   var modes: LoginSceneMode<LoginScene> = .init()
+
    // MARK: - View Models
 
-   private let userNameInputField = IconTextField<Design>()
+   private let userNameInputModel = IconTextField<Design>()
       .setMain {
          $0.setImage(Design.icon.user)
       } setRight: {
          $0.setPlaceholder(Text.title.userName)
       }
 
-   private let smsCodeInputField = IconTextField<Design>()
+   private let smsCodeInputModel = IconTextField<Design>()
       .setMain {
          $0.setImage(Design.icon.lock)
       } setRight: {
@@ -32,8 +39,11 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
       }
       .setHidden(true)
 
-   private let nextButton = Design.button.inactive
+   private lazy var getCodeButton = Design.button.inactive
       .setTitle(Text.button.getCodeButton)
+
+   private lazy var loginButton = ButtonModel(Design.state.button.inactive)
+      .set(.title(Text.button.enterButton))
 
    private lazy var bottomPanel = StackModel()
       .set(Design.state.stack.bottomPanel)
@@ -42,65 +52,108 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
       .setModels([
          Grid.x16.spacer,
          //  badgeModel,
-         userNameInputField,
-         smsCodeInputField,
-         nextButton,
+         userNameInputModel,
+         smsCodeInputModel,
+         getCodeButton,
+         loginButton,
          Grid.xxx.spacer
       ])
 
    // MARK: - Use Cases
 
-   let works = LoginSceneWorks<Asset>()
-
-   private lazy var useCase = Asset.apiUseCase
+   let works = LoginWorks<Asset>()
 
    // MARK: - Start
 
    override func start() {
       configure()
+      configureSceneStates()
+      configureUserNameWorks()
+      configureSmsCodeWorks()
+   }
+}
 
-      weak var weakSelf = self
+// MARK: - Configure works
 
+private extension LoginScene {
+   func configureUserNameWorks() {
+      weak var slf = self
       let works = works
 
-      var loginName: String?
-
-      nextButton
-         .onEvent(\.didTap)
-         .doInput {
-            loginName
-         }
-         .onFail {
-            print("login name is nil")
-         }
-         .doNext(usecase: useCase.login)
-         .onSuccess {
-            weakSelf?.smsCodeInputField.setHidden(false)
-            // Asset.router?.route(\.verifyCode, navType: .push, payload: $0)
-         }
-         .onFail {
-            weakSelf?.smsCodeInputField.setHidden(true)
-//            weakSelf?.badgeModel.changeState(to: BadgeState.error)
-         }
-
-      userNameInputField.models.right
+      // setup input field reactions
+      userNameInputModel.models.right
          .onEvent(\.didEditingChanged)
          .onSuccess {
 //            weakSelf?.badgeModel.changeState(to: BadgeState.default)
-            print($0)
          }
          .doNext(work: works.loginNameInputParse)
          .onSuccess { text in
-            weakSelf?.userNameInputField.models.right.setText(text)
-            weakSelf?.nextButton.set(Design.state.button.default)
+            slf?.userNameInputModel.models.right.setText(text)
+            slf?.getCodeButton.set(Design.state.button.default)
          }
          .onFail { (text: String) in
-            weakSelf?.userNameInputField.models.right.setText(text)
-            weakSelf?.nextButton.set(Design.state.button.inactive)
+            slf?.userNameInputModel.models.right.setText(text)
+            slf?.getCodeButton.set(Design.state.button.inactive)
+         }
+
+      // setup get code button reaction
+      getCodeButton
+         .onEvent(\.didTap)
+         .doNext(work: works.authByName)
+         .onSuccess {
+            slf?.setMode(\.inputSmsCode)
+         }
+         .onFail {
+            slf?.smsCodeInputModel.setHidden(true)
+//            weakSelf?.badgeModel.changeState(to: BadgeState.error)
          }
    }
 
-   private func configure() {
+   func configureSmsCodeWorks() {
+      weak var slf = self
+      let works = works
+
+      // setup input field reactions
+      smsCodeInputModel.models.right
+         //
+         .onEvent(\.didEditingChanged)
+         //
+         .doNext(work: works.smsCodeInputParse)
+         .onSuccess {
+            slf?.smsCodeInputModel.models.right.set(.text($0))
+            slf?.loginButton.set(Design.state.button.default)
+         }.onFail { (text: String) in
+            slf?.smsCodeInputModel.models.right.set(.text(text))
+            slf?.loginButton.set(Design.state.button.inactive)
+         }
+
+      // setup login button reactions
+      loginButton
+         //
+         .onEvent(\.didTap)
+         //
+         .doNext(work: works.verifyCode)
+         .onFail {
+            print("Verify api error")
+            // weakSelf?.badgeModel.changeState(to: BadgeState.error)
+         }
+         .doNext(work: works.saveLoginResults)
+         .onSuccess {
+            Asset.router?.route(\.loginSuccess, navType: .push, payload: ())
+         }
+         .onFail {
+            print("Save login results to persistence error")
+            // weakSelf?.badgeModel.changeState(to: BadgeState.error)
+         }
+   }
+}
+
+// TODO: - Этот слой надо выносить из сцены
+
+// MARK: - Configure presenting
+
+private extension LoginScene {
+   func configure() {
       mainVM.setMain { topStack in
          topStack
             .set(Design.state.stack.default)
@@ -125,9 +178,33 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
             // чтобы сделать offset с тенью
             .setPadding(.top(-Grid.x16.value))
             .setModels([
-               // обернули в еще один стек, чтобы сделать offset с тенью
+               // обернул в еще один стек, чтобы сделать offset с тенью
                bottomPanel
             ])
       }
    }
 }
+
+// MARK: - Configure scene states
+
+private extension LoginScene {
+   func configureSceneStates() {
+      weak var slf = self
+
+      onModeChanged(\.inputUserName) {
+         slf?.smsCodeInputModel.setHidden(true)
+         slf?.userNameInputModel.setHidden(false)
+         slf?.loginButton.setHidden(true)
+         slf?.getCodeButton.setHidden(false)
+      }
+      onModeChanged(\.inputSmsCode) {
+         slf?.smsCodeInputModel.setHidden(false)
+         slf?.userNameInputModel.setHidden(true)
+         slf?.loginButton.setHidden(false)
+         slf?.getCodeButton.setHidden(true)
+      }
+      setMode(\.inputUserName)
+   }
+}
+
+extension LoginScene: SceneModable {}
