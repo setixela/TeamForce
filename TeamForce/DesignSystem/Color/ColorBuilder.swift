@@ -99,7 +99,7 @@ struct ColorBuilder: ColorsProtocol {
     var textFieldBack: UIColor { Token.inverse.color }
 
     // boundaries
-    var boundary: UIColor { Token.midpoint.color }
+    var boundary: UIColor { Token.contrastSecondary.color }
     var boundaryError: UIColor { Token.error.color }
 
     // icons

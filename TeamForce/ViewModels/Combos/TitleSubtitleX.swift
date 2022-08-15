@@ -7,7 +7,7 @@
 
 import ReactiveWorks
 
-class TitleSubtitleXVM<Design: DesignProtocol>:
+class TitleSubtitleX<Design: DesignProtocol>:
    Combos<SComboMR<LabelModel, LabelModel>>,
    Designable
 {

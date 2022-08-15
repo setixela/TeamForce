@@ -17,20 +17,19 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
 > {
    // MARK: - View Models
 
-   private let userNameInputField = Combos()
-      .setMain { (model: ImageViewModel) in
-         model
-            .setSize(.square(Grid.x24.value))
-            .setImage(Design.icon.user)
-      } setRight: { (model: TextFieldModel<Design>) in
-         model
-            .set(Design.state.textField.invisible)
-            .setPlaceholder(Text.title.userName)
+   private let userNameInputField = IconTextField<Design>()
+      .setMain {
+         $0.setImage(Design.icon.user)
+      } setRight: {
+         $0.setPlaceholder(Text.title.userName)
       }
-      .set(Design.state.stack.inputContent)
-      .setAlignment(.center)
-      .setHeight(Design.params.buttonHeight)
-      .setBackColor(Design.color.backgroundSecondary)
+
+   private let smsCodeInputField = IconTextField<Design>()
+      .setMain {
+         $0.setImage(Design.icon.lock)
+      } setRight: {
+         $0.setPlaceholder(Text.title.enterSmsCode)
+      }
 
    private let nextButton = Design.button.inactive
       .setTitle(Text.button.getCodeButton)
@@ -43,6 +42,7 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
          Grid.x16.spacer,
          //  badgeModel,
          userNameInputField,
+         smsCodeInputField,
          nextButton,
          Grid.xxx.spacer
       ])
@@ -129,3 +129,4 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
       }
    }
 }
+

@@ -40,6 +40,7 @@ struct StackStateBuilder<Design: DesignProtocol>: StackStatesProtocol {
       .distribution(.fill),
       .backColor(Design.color.background),
       .cornerRadius(Design.params.cornerRadius),
+      .borderWidth(1),
       .borderColor(Design.color.boundary),
       .padding(UIEdgeInsets(top: 12, left: 12, bottom: 12, right: 12))
    ] }
