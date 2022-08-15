@@ -68,6 +68,9 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
 
    lazy var works = TransactWorks<Asset>()
 
+   private var inputAmountText = ""
+   private var inputReasonText = ""
+
    // MARK: - Start
 
    override func start() {
@@ -99,7 +102,6 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
          // then load 10 user list
          .doNext(work: works.getUserList)
          .onSuccess {
-            wS?.tableModel.setHidden(false)
             wS?.presentFoundUsers(users: $0)
          }
          .onFail {
@@ -116,11 +118,11 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
          .doNext(usecase: IsEmpty())
          .onSuccess {
             wS?.tableModel.setHidden(true)
-                        wS?.works.getUserList
-                           .doAsync()
-                           .onSuccess {
-                              wS?.presentFoundUsers(users: $0)
-                           }
+            wS?.works.getUserList
+               .doAsync()
+               .onSuccess {
+                  wS?.presentFoundUsers(users: $0)
+               }
          }
          // then search user
          .doNext(work: works.searchUser)
@@ -134,12 +136,10 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
       sendButton
          .onEvent(\.didTap)
          .doInput {
-            // TODO: - View запрещено, хранить текст в TempStore -> SceneWorks
-            wS?.transactInputViewModel.textField.view.text
-         }
-         .doMap { (amount: String) in
-            let reason = wS?.reasonTextView.view.text ?? ""
-            return (amount, reason)
+            wS?.inputAmountText
+         } // TODO: - Сделать по аналогии Zip
+         .doMap { amount in
+            (amount, wS?.inputReasonText ?? "")
          }
          .doNext(work: works.sendCoins)
          .onSuccess { tuple in
@@ -245,11 +245,13 @@ private extension TransactViewModel {
          .onSuccess {
             wS?.transactInputViewModel.textField.set(.text($0))
             correctCoinInput = true
+            wS?.inputAmountText = $0
             if correctReasonInput == true {
                wS?.sendButton.set(Design.state.button.default)
             }
          }
          .onFail { (text: String) in
+            wS?.inputAmountText = ""
             wS?.transactInputViewModel.textField.set(.text(text))
             wS?.sendButton.set(Design.state.button.inactive)
          }
@@ -262,6 +264,7 @@ private extension TransactViewModel {
          .onSuccess {
             wS?.reasonTextView.set(.text($0))
             correctReasonInput = true
+            wS?.inputReasonText = $0
             if correctCoinInput == true {
                wS?.sendButton.set(Design.state.button.default)
             }
@@ -269,6 +272,7 @@ private extension TransactViewModel {
          .onFail { (text: String) in
             wS?.reasonTextView.set(.text(text))
             correctReasonInput = false
+            wS?.inputReasonText = ""
             wS?.sendButton.set(Design.state.button.inactive)
          }
    }
