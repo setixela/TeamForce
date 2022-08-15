@@ -110,4 +110,13 @@ enum TeamForceEndpoints {
       
       let headers: [String : String]
    }
+   
+   struct Feed: EndpointProtocol {
+      //
+      let method = HTTPMethod.get
+      
+      var endPoint: String { urlBase + "/feed/" }
+      
+      let headers: [String : String]
+   }
 }
