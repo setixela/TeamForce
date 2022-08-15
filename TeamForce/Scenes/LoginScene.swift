@@ -51,10 +51,6 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
 
    private lazy var useCase = Asset.apiUseCase
 
-   // MARK: - Private
-
-   private let telegramNickParser = TelegramNickCheckerModel()
-
    // MARK: - Start
 
    override func start() {
@@ -85,7 +81,7 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
          .doNext {
 //            weakSelf?.badgeModel.changeState(to: BadgeState.default)
          }
-         .doNext(worker: telegramNickParser)
+         .doNext(worker: TelegramNickCheckerModel())
          .onSuccess { text in
             loginName = text // String(text.dropFirst())
             weakSelf?.userNameInputField.models.right
