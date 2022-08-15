@@ -16,8 +16,8 @@ final class BrandLogoIcon<Design: DesignProtocol>: BaseViewModel<PaddingImageVie
    typealias State = ImageViewState
 
    override func start() {
-      setImage(Design.icon.logo)
-      setSize(.square(34))
+      set_image(Design.icon.logo)
+      set_size(.square(34))
    }
 }
 
@@ -31,10 +31,10 @@ final class DTLogoTitleX<Design: DesignProtocol>:
 
       setMain { _ in } setRight: {
          $0
-            .setImage(Design.icon.logoTitle)
-            .setWidth(120)
-            .setPadding(.left(12))
-            .setContentMode(.scaleAspectFit)
+            .set_image(Design.icon.logoTitle)
+            .set_width(120)
+            .set_padding(.left(12))
+            .set_contentMode(.scaleAspectFit)
       }
    }
 }
@@ -45,12 +45,12 @@ extension DTLogoTitleX {
       case .normal:
          setMain { _ in } setRight: {
             $0
-               .setTintColor(Design.color.iconContrast)
+               .set_tintColor(Design.color.iconContrast)
          }
       case .invert:
          setMain { _ in } setRight: {
             $0
-               .setTintColor(Design.color.iconInvert)
+               .set_tintColor(Design.color.iconInvert)
          }
       }
    }

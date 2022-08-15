@@ -53,10 +53,10 @@ final class SideBarModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
 
       userModel.avatar.set(.image(Design.icon.avatarPlaceholder))
 
-      setAxis(.vertical)
-         .setDistribution(.fill)
-         .setAlignment(.leading)
-         .setModels([
+      set_axis(.vertical)
+         .set_distribution(.fill)
+         .set_alignment(.leading)
+         .set_models([
             userModel,
             item1,
             item2,

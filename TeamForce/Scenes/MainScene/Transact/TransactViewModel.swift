@@ -23,44 +23,44 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
    // MARK: - View Models
 
    private lazy var digitalThanksTitle = Design.label.headline4
-      .setText(Text.title.digitalThanks)
-      .setNumberOfLines(1)
-      .setAlignment(.left)
-      .setPadding(.init(top: 22, left: 0, bottom: 26, right: 0))
+      .set_text(Text.title.digitalThanks)
+      .set_numberOfLines(1)
+      .set_alignment(.left)
+      .set_padding(.init(top: 22, left: 0, bottom: 26, right: 0))
 
    private lazy var userSearchTextField = TextFieldModel<Design>()
-      .setBackColor(.init(red: 0.33, green: 0.33, blue: 0.33, alpha: 0.08))
-      .setHeight(48)
-      .setPlaceholder(Text.title.chooseRecipient)
-      .setHidden(true)
-      .setPadding(.init(top: 0, left: 16, bottom: 0, right: 16))
+      .set_backColor(.init(red: 0.33, green: 0.33, blue: 0.33, alpha: 0.08))
+      .set_height(48)
+      .set_placeholder(Text.title.chooseRecipient)
+      .set_hidden(true)
+      .set_padding(.init(top: 0, left: 16, bottom: 0, right: 16))
 
    private lazy var transactInputViewModel = TransactInputViewModel<Design>()
       .set(.leftCaptionText(Text.title.sendThanks))
       .set(.rightCaptionText(Text.title.availableThanks))
-      .setHidden(true)
+      .set_hidden(true)
 
    private lazy var tableModel = TableViewModel()
-      .setBorderColor(.gray)
-      .setBorderWidth(1)
-      .setCornerRadius(Design.params.cornerRadius)
-      .setHidden(true)
+      .set_borderColor(.gray)
+      .set_borderWidth(1)
+      .set_cornerRadius(Design.params.cornerRadius)
+      .set_hidden(true)
 
    private lazy var sendButton = Design.button.default
       .set(Design.state.button.inactive)
-      .setTitle(Text.button.sendButton)
-      .setHidden(true)
+      .set_title(Text.button.sendButton)
+      .set_hidden(true)
 
    private lazy var reasonTextView = TextViewModel<Design>()
       .set(.padding(.init(top: 16, left: 16, bottom: 16, right: 16)))
       .set(.placeholder(TextBuilder.title.reasonPlaceholder))
       .set(.font(Design.font.body1))
-      .setBackColor(UIColor.clear)
-      .setBorderColor(.lightGray.withAlphaComponent(0.4))
-      .setBorderWidth(1.0)
+      .set_backColor(UIColor.clear)
+      .set_borderColor(.lightGray.withAlphaComponent(0.4))
+      .set_borderWidth(1.0)
 
-      .setHeight(200)
-      .setHidden(true)
+      .set_height(200)
+      .set_hidden(true)
 
    private lazy var transactionStatusView = TransactionStatusViewModel<Asset>()
 
@@ -81,10 +81,10 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
       works.loadTokens
          .doAsync()
          .onSuccess {
-            wS?.userSearchTextField.setHidden(false)
+            wS?.userSearchTextField.set_hidden(false)
          }
          .onFail {
-            wS?.userSearchTextField.setHidden(true)
+            wS?.userSearchTextField.set_hidden(true)
          }
          // then load balance
          .doNext(work: works.loadBalance)
@@ -104,7 +104,7 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
             wS?.presentFoundUsers(users: $0)
          }
          .onFail {
-            wS?.tableModel.setHidden(true)
+            wS?.tableModel.set_hidden(true)
          }
 
       // on input event, then check input is not empty, then search user
@@ -116,7 +116,7 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
          // then check data is not empty
          .doNext(usecase: IsEmpty())
          .onSuccess {
-            wS?.tableModel.setHidden(true)
+            wS?.tableModel.set_hidden(true)
             wS?.works.getUserList
                .doAsync()
                .onSuccess {
@@ -163,21 +163,21 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
          .onSuccess { foundUser in
             let fullName = foundUser.name + " " + foundUser.surname
             wS?.userSearchTextField.set(.text(fullName))
-            wS?.tableModel.setHidden(true)
-            wS?.transactInputViewModel.setHidden(false)
-            wS?.sendButton.setHidden(false)
-            wS?.reasonTextView.setHidden(false)
+            wS?.tableModel.set_hidden(true)
+            wS?.transactInputViewModel.set_hidden(false)
+            wS?.sendButton.set_hidden(false)
+            wS?.reasonTextView.set_hidden(false)
          }
 
       configureInputParsers()
    }
 
    func configure() {
-      setAxis(.vertical)
-      setDistribution(.fill)
-      setAlignment(.fill)
-      setSpacing(8)
-      setModels([
+      set_axis(.vertical)
+      set_distribution(.fill)
+      set_alignment(.fill)
+      set_spacing(8)
+      set_models([
          digitalThanksTitle,
          userSearchTextField,
          transactInputViewModel,

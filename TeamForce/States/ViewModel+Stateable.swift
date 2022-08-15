@@ -30,25 +30,25 @@ extension ViewModelProtocol where Self: Stateable {
    func applyState(_ state: ViewState) {
       switch state {
       case .backColor(let value):
-         setBackColor(value)
+         set_backColor(value)
       case .height(let value):
-         setHeight(value)
+         set_height(value)
       case .cornerRadius(let value):
-         setCornerRadius(value)
+         set_cornerRadius(value)
       case .borderColor(let value):
-         setBorderColor(value)
+         set_borderColor(value)
       case .borderWidth(let value):
-         setBorderWidth(value)
+         set_borderWidth(value)
       case .hidden(let value):
-         setHidden(value)
+         set_hidden(value)
       case .size(let value):
-         setSize(value)
+         set_size(value)
       case .zPosition(let value):
-         setZPosition(value)
+         set_zPosition(value)
       case .placing(let value):
-         setPlacing(value)
+         set_placing(value)
       case .width(let value):
-         setWidth(value)
+         set_width(value)
       }
    }
 }
@@ -79,39 +79,39 @@ extension ViewModelProtocol where Self: Stateable, View: UIStackView {
       switch state {
       // Stack View
       case .distribution(let value):
-         setDistribution(value)
+         set_distribution(value)
       case .axis(let value):
-         setAxis(value)
+         set_axis(value)
       case .spacing(let value):
-         setSpacing(value)
+         set_spacing(value)
       case .alignment(let value):
-         setAlignment(value)
+         set_alignment(value)
       case .padding(let value):
-         setPadding(value)
+         set_padding(value)
       case .models(let value):
-         setModels(value)
+         set_models(value)
       case .backView(let value, let value2):
          setBackView(value, inset: value2)
       case .backImage(let image):
-         setBackImage(image)
+         set_backImage(image)
 
       // View
       case .backColor(let value):
-         setBackColor(value)
+         set_backColor(value)
       case .height(let value):
-         setHeight(value)
+         set_height(value)
       case .cornerRadius(let value):
-         setCornerRadius(value)
+         set_cornerRadius(value)
       case .borderColor(let value):
-         setBorderColor(value)
+         set_borderColor(value)
       case .borderWidth(let value):
-         setBorderWidth(value)
+         set_borderWidth(value)
       case .hidden(let value):
-         setHidden(value)
+         set_hidden(value)
       case .backViewModel(let value, let inset):
-         setBackViewModel(value, inset: inset)
+         set_backViewModel(value, inset: inset)
       case .shadow(let value):
-         setShadow(value)
+         set_shadow(value)
       }
    }
 }
@@ -136,25 +136,25 @@ extension ViewModelProtocol where Self: Stateable, View: PaddingLabel {
    func applyState(_ state: LabelState) {
       switch state {
       case .text(let value):
-         setText(value)
+         set_text(value)
       case .font(let value):
-         setFont(value)
+         set_font(value)
       case .color(let value):
-         setColor(value)
+         set_color(value)
       case .numberOfLines(let value):
-         setNumberOfLines(value)
+         set_numberOfLines(value)
       case .alignment(let value):
-         setAlignment(value)
+         set_alignment(value)
       case .padding(let value):
-         setPadding(value)
+         set_padding(value)
       case .padLeft(let value):
-         setPadLeft(value)
+         set_padLeft(value)
       case .padRight(let value):
-         setPadRight(value)
+         set_padRight(value)
       case .padUp(let value):
-         setPadTop(value)
+         set_padTop(value)
       case .padBottom(let value):
-         setPadBottom(value)
+         set_padBottom(value)
       }
    }
 }
@@ -172,13 +172,13 @@ extension ViewModelProtocol where Self: Stateable, View: PaddingImageView {
    func applyState(_ state: ImageViewState) {
       switch state {
       case .image(let value):
-         setImage(value)
+         set_image(value)
       case .contentMode(let value):
-         setContentMode(value)
+         set_contentMode(value)
       case .padding(let value):
-         setPadding(value)
+         set_padding(value)
       case .tintColor(let value):
-         setTintColor(value)
+         set_tintColor(value)
       }
    }
 }
@@ -204,29 +204,29 @@ extension ViewModelProtocol where Self: Stateable, View: ButtonExtended {
    func applyState(_ state: ButtonState) {
       switch state {
       case .enabled(let value):
-         setEnabled(value)
+         set_enabled(value)
       case .selected(let value):
-         setSelected(value)
+         set_selected(value)
       case .title(let value):
-         setTitle(value)
+         set_title(value)
       case .textColor(let value):
-         setTextColor(value)
+         set_textColor(value)
       case .backColor(let value):
-         setBackColor(value)
+         set_backColor(value)
       case .cornerRadius(let value):
-         setCornerRadius(value)
+         set_cornerRadius(value)
       case .height(let value):
-         setHeight(value)
+         set_height(value)
       case .font(let value):
-         setFont(value)
+         set_font(value)
       case .image(let value):
-         setImage(value)
+         set_image(value)
       case .tint(let value):
-         setTint(value)
+         set_tint(value)
       case .vertical(let value):
-         setVertical(value)
+         set_vertical(value)
       case .hidden(let value):
-         setHidden(value)
+         set_hidden(value)
       }
    }
 }
@@ -256,36 +256,36 @@ extension ViewModelProtocol where Self: Stateable, View: PaddingTextField {
    func applyState(_ state: TextFieldState) {
       switch state {
       case .text(let value):
-         setText(value)
+         set_text(value)
       case .placeholder(let value):
-         setPlaceholder(value)
+         set_placeholder(value)
       case .backColor(let value):
-         setBackColor(value)
+         set_backColor(value)
       case .font(let value):
-         setFont(value)
+         set_font(value)
       case .clearButtonMode(let value):
-         setClearButtonMode(value)
+         set_clearButtonMode(value)
       case .padding(let value):
-         setPadding(value)
+         set_padding(value)
       case .height(let value):
-         setHeight(value)
+         set_height(value)
       case .widht(let value):
-         setWidth(value)
+         set_width(value)
 
       case .cornerRadius(let value):
-         setCornerRadius(value)
+         set_cornerRadius(value)
       case .borderColor(let value):
-         setBorderColor(value)
+         set_borderColor(value)
       case .borderWidth(let value):
-         setBorderWidth(value)
+         set_borderWidth(value)
       case .hidden(let value):
-         setHidden(value)
+         set_hidden(value)
       case .size(let value):
-         setSize(value)
+         set_size(value)
       case .zPosition(let value):
-         setZPosition(value)
+         set_zPosition(value)
       case .placing(let value):
-         setPlacing(value)
+         set_placing(value)
       }
    }
 }

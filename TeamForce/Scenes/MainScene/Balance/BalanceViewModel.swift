@@ -49,14 +49,14 @@ final class BalanceViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
       .set(.borderColor(.init(red: 0.33, green: 0.33, blue: 0.33, alpha: 0.08)))
 
    private lazy var frameCellStackModel = StackModel()
-      .set(.axis(.horizontal))
-      .set(.distribution(.fillEqually))
-      .set(.alignment(.center))
-      .set(.spacing(8))
-      .set(.models([
+      .set_axis(.horizontal)
+      .set_distribution(.fillEqually)
+      .set_alignment(.center)
+      .set_spacing(8)
+      .set_models([
          myAccountFrame,
          leftToSendFrame
-      ]))
+      ])
 
    // MARK: - Services
 

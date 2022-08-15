@@ -18,12 +18,12 @@ final class PlaygroundScene<Asset: AssetProtocol>: BaseSceneModel<
    private let badgedModel = BadgedViewModel<ComboMRD, Design>()
       .onModeChanged(\.error) { model in
          [model?.topBadge, model?.bottomBadge].forEach {
-            $0?.setColor(Design.color.boundaryError)
+            $0?.set_color(Design.color.boundaryError)
          }
       }
       .onModeChanged(\.normal) { model in
          [model?.topBadge, model?.bottomBadge].forEach {
-            $0?.setColor(Design.color.text)
+            $0?.set_color(Design.color.text)
          }
       }
 
@@ -31,50 +31,50 @@ final class PlaygroundScene<Asset: AssetProtocol>: BaseSceneModel<
 
    override func start() {
       let viewModel = VizitkaDemo()
-         .setBackColor(.random)
-         .setSize(.init(width: 100, height: 66))
+         .set_backColor(.random)
+         .set_size(.init(width: 100, height: 66))
 
       let titleSubtitle = TitleSubtitleModel()
-         .setText("Hello")
-         .setBackColor(.random)
+         .set_text("Hello")
+         .set_backColor(.random)
          .setDown {
             $0
-               .setText("World")
-               .setBackColor(.random)
+               .set_text("World")
+               .set_backColor(.random)
          }
 
       let logoTitleSubtitle = IconTitleSubtitleModel()
-         .setImage(Design.icon.logo)
-         .setBackColor(.random)
+         .set_image(Design.icon.logo)
+         .set_backColor(.random)
          .setRight {
             $0
-               .setText("Hello")
-               .setBackColor(.random)
+               .set_text("Hello")
+               .set_backColor(.random)
                .setDown {
                   $0
-                     .setText("World")
-                     .setBackColor(.random)
+                     .set_text("World")
+                     .set_backColor(.random)
                }
          }
 
       let comboC = Combos { (model: ViewModel) in
          model
-            .setSize(.square(60))
-            .setBackColor(.random)
+            .set_size(.square(60))
+            .set_backColor(.random)
       } setRight: { (model: ViewModel) in
          model
-            .setSize(.square(30))
-            .setBackColor(.random)
+            .set_size(.square(30))
+            .set_backColor(.random)
       } setDown: { (model: ViewModel) in
          model
-            .setSize(.square(30))
-            .setBackColor(.random)
+            .set_size(.square(30))
+            .set_backColor(.random)
       }
 
       mainVM
-         .setAlignment(.leading)
-         .setAxis(.vertical)
-         .setModels([
+         .set_alignment(.leading)
+         .set_axis(.vertical)
+         .set_models([
             Spacer(32),
             viewModel,
             Spacer(32),

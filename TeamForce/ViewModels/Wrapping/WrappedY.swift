@@ -17,7 +17,7 @@ final class WrappedY<VM: VMP>: BaseViewModel<UIStackView>,
    var subModel: VM = .init()
 
    override func start() {
-      setModels([
+      set_models([
          subModel
       ])
    }
@@ -32,8 +32,8 @@ final class WrappedX<VM: VMP>: BaseViewModel<UIStackView>,
    var subModel: VM = .init()
 
    override func start() {
-      setAxis(.horizontal)
-      setModels([
+      set_axis(.horizontal)
+      set_models([
          subModel
       ])
    }
