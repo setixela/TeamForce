@@ -24,7 +24,7 @@ final class BrandLogoIcon<Design: DesignProtocol>: BaseViewModel<PaddingImageVie
 final class DTLogoTitleX<Design: DesignProtocol>:
    Combos<SComboMR<BrandLogoIcon<Design>, ImageViewModel>>,
    Designable,
-   Stateable
+   Stateable2
 {
    required init() {
       super.init()

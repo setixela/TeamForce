@@ -36,25 +36,37 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
 > {
    // MARK: - View Models
 
-   private let coverViewModel = CoverViewModel<Asset>()
-      .setBackImage(Design.icon.introlIllustrate)
-
-   private let headerModel = Design.label.headline4
-      .setPadding(.init(top: 12, left: 0, bottom: 24, right: 0))
-      .setText(Text.title.enter)
-
-   private let subtitleModel = Design.label.subtitle
-      .setPadding(.init(top: 0, left: 0, bottom: 32, right: 0))
-      .setText(Text.title.enterTelegramName)
-      .setNumberOfLines(2)
-
    private let nextButton = Design.button.inactive
       .setTitle(Text.button.getCodeButton)
 
    private let badgeModel = BadgeModel<Asset>()
 
-   private let loginTextField = TextFieldModel<Design>(Design.state.textField.default)
-      .setPlaceholder("")
+
+   private let loginTextField = Combos {  (model: ImageViewModel) in
+      model
+         .setSize(.square(Grid.x24.value))
+         .setImage(Design.icon.user)
+   } setRight: { (model: TextFieldModel<Design>) in
+      model
+         .set(Design.state.textField.default)
+      //TextFieldModel<Design>(Design.state.textField.default)
+        // .setPlaceholder("")
+   }
+
+//   TextFieldModel<Design>(Design.state.textField.default)
+//      .setPlaceholder("")
+
+   private lazy var bottomPanel = StackModel()
+      .set(Design.state.stack.bottomPanel)
+      .setCornerRadius(Design.params.cornerRadiusMedium)
+      .setShadow(.init(radius: 8, color: Design.color.iconContrast, opacity: 0.33))
+      .setModels([
+         Grid.x16.spacer,
+       //  badgeModel,
+         loginTextField,
+         nextButton,
+         Grid.xxx.spacer
+      ])
 
    // MARK: - Use Cases
 
@@ -100,7 +112,7 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
          .doNext {
             weakSelf?.badgeModel.changeState(to: BadgeState.default)
          }
-         .doNext(worker: TelegramNickCheckerModel())
+         .doNext(worker: telegramNickParser)
          .onSuccess { text in
             loginName = text // String(text.dropFirst())
             weakSelf?.badgeModel.textFieldModel
@@ -118,8 +130,8 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
    }
 
    private func configure() {
-      mainVM.setMain {
-         $0
+      mainVM.setMain { topStack in
+         topStack
             .set(Design.state.stack.default)
             .setBackColor(Design.color.backgroundBrand)
             .setAlignment(.leading)
@@ -137,52 +149,14 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
                // spacer
                Grid.x36.spacer,
             ])
-      } setDown: {
-         let stack = StackModel()
-            .set(Design.state.stack.bottomPanel)
-            .setCornerRadius(Design.params.cornerRadiusMedium)
-            .setShadow(.init(radius: 8,
-                             offset: .init(x: 0, y: 0),
-                             color: Design.color.iconContrast,
-                             opacity: 0.33))
+      } setDown: { bottomStack in
+         bottomStack
+            // чтобы сделать offset с тенью
+            .setPadding(.top(-Grid.x16.value))
             .setModels([
-               Grid.x16.spacer,
-               badgeModel,
-               loginTextField,
-               nextButton,
-               Spacer(),
-            ])
-
-         $0
-            .setPadding(.init(top: -Grid.x16.float,
-                              left: 0,
-                              bottom: 0,
-                              right: 0))
-            .setModels([
-               stack,
+               // обернули в еще один стек, чтобы сделать offset с тенью
+               bottomPanel
             ])
       }
    }
 }
-
-final class ViewModel: BaseViewModel<UIView> {
-   override func start() {}
-}
-
-extension ViewModel: Stateable {
-   typealias State = ViewState
-}
-
-final class Wrapper<VM: VMP>: BaseViewModel<UIStackView>,
-   VMWrapper,
-   Stateable2
-{
-   var subModel: VM = .init()
-
-   override func start() {
-      setModels([
-         subModel,
-      ])
-   }
-}
-

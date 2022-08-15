@@ -23,7 +23,7 @@ enum Grid: CGFloat {
    case x64 = 64
 
    // case infinity
-   case infinity = 0
+   case xxx = 0
 }
 
 extension Grid {

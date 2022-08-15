@@ -11,6 +11,12 @@ import UIKit
 struct IconBuilder: IconElements {
    typealias DesignElement = UIImage
 
+   var bell: UIImage { make("bell") }
+   var calendar: UIImage { make("calendar") }
+   var lock: UIImage { make("lock") }
+   var mail: UIImage { make("mail") }
+   var user: UIImage { make("user") }
+
    // brand
    var logo: UIImage { make("dt_logo") }
    var logoTitle: UIImage { make("dt_logo_title") }
@@ -37,8 +43,12 @@ struct IconBuilder: IconElements {
    var recieveCoinIcon: UIImage { make("recieve_coin_icon") }
    var sendCoinIcon: UIImage { make("send_coin_icon") }
 
+
    //
    private func make(_ name: String) -> UIImage {
-      UIImage(named: name) ?? UIImage()
+      UIImage(named: name) ?? {
+         print("\n##### Image named: \(name) not found! #####\n")
+         return UIImage()
+      }()
    }
 }

@@ -159,6 +159,3 @@ final class ComboMRD: Combos<SComboMRD<LabelModel, LabelModel, LabelModel>> {
    }
 }
 
-extension ComboMRD: Stateable {
-   typealias State = ViewState
-}

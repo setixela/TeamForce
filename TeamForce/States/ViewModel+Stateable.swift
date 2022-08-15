@@ -289,15 +289,20 @@ extension ViewModelProtocol where Self: Stateable, View: PaddingTextField {
 
 // MARK: - Default conforms
 
-//extension ViewModelProtocol where Self: Stateable {
+// extension ViewModelProtocol where Self: Stateable {
 //   typealias State = ViewState
-//}
+// }
 
-//extension ViewModelProtocol where Self: Stateable2, View: UIStackView {
+// extension ViewModelProtocol where Self: Stateable2, View: UIStackView {
 //   typealias State = ViewState
 //   typealias State2 = StackState
-//}
+// }
 //
-//extension ViewModelProtocol where Self: Stateable, View: UIStackView {
+// extension ViewModelProtocol where Self: Stateable, View: UIStackView {
 //   typealias State = StackState
-//}
+// }
+
+// extension Combos: Stateable2 {
+//   typealias State = ViewState
+//   typealias State2 = StackState
+// }

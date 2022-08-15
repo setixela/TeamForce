@@ -64,7 +64,11 @@
 		1977BE5528A7238F00D554EA /* TextFieldStates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1977BE5428A7238F00D554EA /* TextFieldStates.swift */; };
 		1977BE5828A7343400D554EA /* InputCheckers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1977BE5728A7343400D554EA /* InputCheckers.swift */; };
 		197A2D9928A98F4300190656 /* UIColor+Random.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197A2D9828A98F4300190656 /* UIColor+Random.swift */; };
-		197A2D9B28A9A96800190656 /* WrappedVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197A2D9A28A9A96800190656 /* WrappedVM.swift */; };
+		197A2D9B28A9A96800190656 /* WrappedY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197A2D9A28A9A96800190656 /* WrappedY.swift */; };
+		197A2DA228A9BF4B00190656 /* Combos+Configure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197A2D9E28A9BF4B00190656 /* Combos+Configure.swift */; };
+		197A2DA328A9BF4B00190656 /* Combos+Init.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197A2D9F28A9BF4B00190656 /* Combos+Init.swift */; };
+		197A2DA428A9BF4B00190656 /* Combos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197A2DA028A9BF4B00190656 /* Combos.swift */; };
+		197A2DA528A9BF4B00190656 /* SCombo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197A2DA128A9BF4B00190656 /* SCombo.swift */; };
 		198FE1C92899994A00BAF1A5 /* LoginUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198FE1C82899994A00BAF1A5 /* LoginUseCase.swift */; };
 		198FE1CC28999A2600BAF1A5 /* NilBlocker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198FE1CB28999A2600BAF1A5 /* NilBlocker.swift */; };
 		198FE1CE2899BB8E00BAF1A5 /* LoadBalanceUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198FE1CD2899BB8E00BAF1A5 /* LoadBalanceUseCase.swift */; };
@@ -200,7 +204,11 @@
 		1977BE5428A7238F00D554EA /* TextFieldStates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldStates.swift; sourceTree = "<group>"; };
 		1977BE5728A7343400D554EA /* InputCheckers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputCheckers.swift; sourceTree = "<group>"; };
 		197A2D9828A98F4300190656 /* UIColor+Random.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Random.swift"; sourceTree = "<group>"; };
-		197A2D9A28A9A96800190656 /* WrappedVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrappedVM.swift; sourceTree = "<group>"; };
+		197A2D9A28A9A96800190656 /* WrappedY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrappedY.swift; sourceTree = "<group>"; };
+		197A2D9E28A9BF4B00190656 /* Combos+Configure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Combos+Configure.swift"; sourceTree = "<group>"; };
+		197A2D9F28A9BF4B00190656 /* Combos+Init.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Combos+Init.swift"; sourceTree = "<group>"; };
+		197A2DA028A9BF4B00190656 /* Combos.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Combos.swift; sourceTree = "<group>"; };
+		197A2DA128A9BF4B00190656 /* SCombo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCombo.swift; sourceTree = "<group>"; };
 		198FE1C82899994A00BAF1A5 /* LoginUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUseCase.swift; sourceTree = "<group>"; };
 		198FE1CB28999A2600BAF1A5 /* NilBlocker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NilBlocker.swift; sourceTree = "<group>"; };
 		198FE1CD2899BB8E00BAF1A5 /* LoadBalanceUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadBalanceUseCase.swift; sourceTree = "<group>"; };
@@ -414,6 +422,10 @@
 		190C1D41285D195800FB3518 /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				197A2DA028A9BF4B00190656 /* Combos.swift */,
+				197A2D9E28A9BF4B00190656 /* Combos+Configure.swift */,
+				197A2D9F28A9BF4B00190656 /* Combos+Init.swift */,
+				197A2DA128A9BF4B00190656 /* SCombo.swift */,
 				190C1D11285D15FF00FB3518 /* AppDelegate.swift */,
 				190C1D15285D15FF00FB3518 /* ViewController.swift */,
 				190C1D1A285D160000FB3518 /* Assets.xcassets */,
@@ -430,8 +442,6 @@
 				19D08356286F41B200F75E4A /* DoubleLabelPairModel.swift */,
 				19D08358286F41FA00F75E4A /* IconLabelHorizontalModel.swift */,
 				19D0835A286F424000F75E4A /* LabelIconHorizontalModel.swift */,
-				19466E00289FE28C0052F0AB /* TitleSubtitleModel.swift */,
-				19466E02289FFC040052F0AB /* IconTitleSubtitleModel.swift */,
 			);
 			path = LabelModels;
 			sourceTree = "<group>";
@@ -553,6 +563,24 @@
 			path = States;
 			sourceTree = "<group>";
 		};
+		197A2D9C28A9B06900190656 /* Wrapping */ = {
+			isa = PBXGroup;
+			children = (
+				19017B6628A697DF00B06345 /* AligningModels.swift */,
+				197A2D9A28A9A96800190656 /* WrappedY.swift */,
+			);
+			path = Wrapping;
+			sourceTree = "<group>";
+		};
+		197A2D9D28A9B08100190656 /* RuntimeCombos */ = {
+			isa = PBXGroup;
+			children = (
+				19466E00289FE28C0052F0AB /* TitleSubtitleModel.swift */,
+				19466E02289FFC040052F0AB /* IconTitleSubtitleModel.swift */,
+			);
+			path = RuntimeCombos;
+			sourceTree = "<group>";
+		};
 		198FE1CA28999A1500BAF1A5 /* Systems */ = {
 			isa = PBXGroup;
 			children = (
@@ -639,14 +667,13 @@
 		19ACB3D128A65FDD00B5AD71 /* Combos */ = {
 			isa = PBXGroup;
 			children = (
-				19017B6628A697DF00B06345 /* AligningModels.swift */,
+				197A2D9D28A9B08100190656 /* RuntimeCombos */,
 				19017B6A28A6989000B06345 /* TitleSubtitleY.swift */,
 				19017B6828A6986F00B06345 /* TitleSubtitleXVM.swift */,
 				19017B6E28A69C7800B06345 /* TitleSubtitleCaptionXVM.swift */,
 				19017B6C28A698BC00B06345 /* TitleSubtitleCaptionYVM.swift */,
 				19017B7228A69CD400B06345 /* DTLogoTitleX.swift */,
 				19017B7028A69CB100B06345 /* IconTitleYVM.swift */,
-				197A2D9A28A9A96800190656 /* WrappedVM.swift */,
 			);
 			path = Combos;
 			sourceTree = "<group>";
@@ -698,6 +725,7 @@
 		19C1E9A428610E6F00E7976D /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				197A2D9C28A9B06900190656 /* Wrapping */,
 				19ACB3D128A65FDD00B5AD71 /* Combos */,
 				19A73BE928A450EB000B74CF /* Badging */,
 				19466DFF289FE0B20052F0AB /* LabelModels */,
@@ -911,11 +939,13 @@
 				19A8229628A925760081D385 /* ViewModel+Setters.swift in Sources */,
 				199C4B6D2863299E008AD6FD /* DesignSystem.swift in Sources */,
 				19AE3AEF28691B2E00A0C6E4 /* MainScene.swift in Sources */,
+				197A2DA428A9BF4B00190656 /* Combos.swift in Sources */,
 				19F15389289964D200ECF000 /* CommonUseCasePack.swift in Sources */,
 				19C1E98F285F426B00E7976D /* TeamForceApi.swift in Sources */,
 				199C4B6928632834008AD6FD /* DesignProtocol.swift in Sources */,
 				63A529F528A1F8AB004A858D /* SegmentedControlModel.swift in Sources */,
 				1953DE88287B4574000DC537 /* Fonts.swift in Sources */,
+				197A2DA228A9BF4B00190656 /* Combos+Configure.swift in Sources */,
 				1952EA6528A7115D003F7852 /* StackStateBuilder.swift in Sources */,
 				19D0835B286F424000F75E4A /* LabelIconHorizontalModel.swift in Sources */,
 				198FE1CE2899BB8E00BAF1A5 /* LoadBalanceUseCase.swift in Sources */,
@@ -949,6 +979,7 @@
 				19D08351286F401000F75E4A /* SideBarUserModel.swift in Sources */,
 				19D0835F286F42C000F75E4A /* FrameCellModel.swift in Sources */,
 				19466E01289FE28C0052F0AB /* TitleSubtitleModel.swift in Sources */,
+				197A2DA528A9BF4B00190656 /* SCombo.swift in Sources */,
 				1952EA6B28A71399003F7852 /* DesignElements.swift in Sources */,
 				196750A4286516E40019A6DE /* RegisterScene.swift in Sources */,
 				1952EA6728A711A7003F7852 /* ButtonStateBuilder.swift in Sources */,
@@ -969,6 +1000,7 @@
 				1952EA6D28A71537003F7852 /* ButtonElements.swift in Sources */,
 				19DD3D95288766860085CDA8 /* LabelCellModel.swift in Sources */,
 				63CFA196289C38A9000E4D1E /* GetTransactionsApiWorker.swift in Sources */,
+				197A2DA328A9BF4B00190656 /* Combos+Init.swift in Sources */,
 				1967509F286492780019A6DE /* Labels.swift in Sources */,
 				19C1E98E285F426B00E7976D /* ApiEngineProtocol.swift in Sources */,
 				19CF792828A54D60001531B8 /* Config.swift in Sources */,
@@ -993,7 +1025,7 @@
 				199C4B6B2863292F008AD6FD /* ButtonModel.swift in Sources */,
 				63AD437B28992045000511B9 /* TransactionStatusViewModel.swift in Sources */,
 				19017B6F28A69C7800B06345 /* TitleSubtitleCaptionXVM.swift in Sources */,
-				197A2D9B28A9A96800190656 /* WrappedVM.swift in Sources */,
+				197A2D9B28A9A96800190656 /* WrappedY.swift in Sources */,
 				19ECD54328623D30001765F6 /* StackModel.swift in Sources */,
 				19017B6D28A698BC00B06345 /* TitleSubtitleCaptionYVM.swift in Sources */,
 				196750AA286517130019A6DE /* LoginSuccessScene.swift in Sources */,

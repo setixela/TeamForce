@@ -42,7 +42,7 @@ final class DigitalThanksScene<Asset: AssetProtocol>: BaseSceneModel<
                .set(.invert)
                .lefted(), // выравниваем по левому краю ))
             // spacer
-            Grid.infinity.spacer
+            Grid.xxx.spacer
          ])
          .setBackImage(Design.icon.introlIllustrate)
 

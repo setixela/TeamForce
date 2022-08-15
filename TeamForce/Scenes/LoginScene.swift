@@ -17,13 +17,23 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
 > {
    // MARK: - View Models
 
+   private let userNameInputField = Combos()
+      .setMain { (model: ImageViewModel) in
+         model
+            .setSize(.square(Grid.x24.value))
+            .setImage(Design.icon.user)
+      } setRight: { (model: TextFieldModel<Design>) in
+         model
+            .set(Design.state.textField.invisible)
+            .setPlaceholder(Text.title.userName)
+      }
+      .set(Design.state.stack.inputContent)
+      .setAlignment(.center)
+      .setHeight(Design.params.buttonHeight)
+      .setBackColor(Design.color.backgroundSecondary)
+
    private let nextButton = Design.button.inactive
       .setTitle(Text.button.getCodeButton)
-
-   private let badgeModel = BadgeModel<Asset>()
-
-   private let loginTextField = TextFieldModel<Design>(Design.state.textField.default)
-      .setPlaceholder("")
 
    private lazy var bottomPanel = StackModel()
       .set(Design.state.stack.bottomPanel)
@@ -31,10 +41,10 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
       .setShadow(.init(radius: 8, color: Design.color.iconContrast, opacity: 0.33))
       .setModels([
          Grid.x16.spacer,
-         badgeModel,
-         loginTextField,
+         //  badgeModel,
+         userNameInputField,
          nextButton,
-         Spacer(),
+         Grid.xxx.spacer
       ])
 
    // MARK: - Use Cases
@@ -44,7 +54,6 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
    // MARK: - Private
 
    private let telegramNickParser = TelegramNickCheckerModel()
-   // private var loginName: String?
 
    // MARK: - Start
 
@@ -54,11 +63,6 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
       weak var weakSelf = self
 
       var loginName: String?
-
-      badgeModel
-         .setLabels(title: Text.title.userName,
-                    placeholder: "@" + Text.title.userName,
-                    error: Text.title.wrongUsername)
 
       nextButton
          .onEvent(\.didTap)
@@ -73,25 +77,25 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
             Asset.router?.route(\.verifyCode, navType: .push, payload: $0)
          }
          .onFail {
-            weakSelf?.badgeModel.changeState(to: BadgeState.error)
+//            weakSelf?.badgeModel.changeState(to: BadgeState.error)
          }
 
-      badgeModel.textFieldModel
+      userNameInputField.models.right
          .onEvent(\.didEditingChanged)
          .doNext {
-            weakSelf?.badgeModel.changeState(to: BadgeState.default)
+//            weakSelf?.badgeModel.changeState(to: BadgeState.default)
          }
          .doNext(worker: telegramNickParser)
          .onSuccess { text in
             loginName = text // String(text.dropFirst())
-            weakSelf?.badgeModel.textFieldModel
+            weakSelf?.userNameInputField.models.right
                .setText(text)
             weakSelf?.nextButton
                .set(Design.state.button.default)
          }
          .onFail { (text: String) in
             loginName = nil
-            weakSelf?.badgeModel.textFieldModel
+            weakSelf?.userNameInputField.models.right
                .setText(text)
             weakSelf?.nextButton
                .set(Design.state.button.inactive)
@@ -116,7 +120,7 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
                   .setText(Text.title.autorisation)
                   .setColor(Design.color.textInvert),
                // spacer
-               Grid.x36.spacer,
+               Grid.x36.spacer
             ])
       } setDown: { bottomStack in
          bottomStack

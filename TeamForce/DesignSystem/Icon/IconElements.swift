@@ -9,6 +9,11 @@ import ReactiveWorks
 import UIKit
 
 protocol IconElements: InitProtocol, DesignElementable where DesignElement == UIImage {
+   var bell: DesignElement { get }
+   var calendar: DesignElement { get }
+   var lock: DesignElement { get }
+   var mail: DesignElement { get }
+   var user: DesignElement { get }
    // brand
    var logo: DesignElement { get }
    var logoTitle: DesignElement { get }
