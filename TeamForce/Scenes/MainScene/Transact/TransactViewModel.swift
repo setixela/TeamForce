@@ -113,9 +113,14 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
             wS?.hideHUD()
          }
          // then check data is not empty
-         .doNext(usecase: IsNotEmpty())
+         .doNext(usecase: IsEmpty())
          .onSuccess {
             wS?.tableModel.setHidden(true)
+                        wS?.works.getUserList
+                           .doAsync()
+                           .onSuccess {
+                              wS?.presentFoundUsers(users: $0)
+                           }
          }
          // then search user
          .doNext(work: works.searchUser)
