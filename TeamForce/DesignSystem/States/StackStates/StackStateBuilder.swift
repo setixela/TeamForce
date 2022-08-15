@@ -10,7 +10,11 @@ import UIKit
 
 protocol StackStatesProtocol: InitProtocol, Designable {
    var `default`: [StackState] { get }
+
    var bottomPanel: [StackState] { get }
+   var bottomShadowedPanel: [StackState] { get }
+   var bottomTabBar: [StackState] { get }
+
    var inputContent: [StackState] { get }
 }
 
@@ -43,5 +47,23 @@ struct StackStateBuilder<Design: DesignProtocol>: StackStatesProtocol {
       .borderWidth(1),
       .borderColor(Design.color.boundary),
       .padding(UIEdgeInsets(top: 12, left: 12, bottom: 12, right: 12))
+   ] }
+
+   var bottomShadowedPanel: [StackState] { [
+      .axis(.vertical),
+      .spacing(Design.params.buttonsSpacingY),
+      .alignment(.fill),
+      .distribution(.fill),
+      .backColor(Design.color.background),
+      .padding(UIEdgeInsets(top: 30, left: 16, bottom: 16, right: 16)),
+      .cornerRadius(Design.params.cornerRadiusMedium),
+      .shadow(.init(radius: 8, color: Design.color.iconContrast, opacity: 0.33))
+   ] }
+
+   var bottomTabBar: [StackState] { [
+      .axis(.horizontal),
+      .distribution(.fillEqually),
+      .padding(.zero),
+      .spacing(0)
    ] }
 }

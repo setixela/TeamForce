@@ -62,7 +62,9 @@ final class MainScene<Asset: AssetProtocol>: BaseSceneModel<
       .set(.backColor(Design.color.background))
 
     mainVM.bottomStackModel
+      .set(Design.state.stack.bottomPanel)
       .set(.axis(.horizontal))
+      .set(.distribution(.fillEqually))
       .set(.padding(.zero))
       .set(.spacing(0))
       .set(.backColor(.black))

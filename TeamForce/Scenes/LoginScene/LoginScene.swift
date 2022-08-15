@@ -46,12 +46,8 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
       .set(.title(Text.button.enterButton))
 
    private lazy var bottomPanel = StackModel()
-      .set(Design.state.stack.bottomPanel)
-      .setCornerRadius(Design.params.cornerRadiusMedium)
-      .setShadow(.init(radius: 8, color: Design.color.iconContrast, opacity: 0.33))
+      .set(Design.state.stack.bottomShadowedPanel)
       .setModels([
-         Grid.x16.spacer,
-         //  badgeModel,
          userNameInputModel,
          smsCodeInputModel,
          getCodeButton,
@@ -139,7 +135,7 @@ private extension LoginScene {
          }
          .doNext(work: works.saveLoginResults)
          .onSuccess {
-            Asset.router?.route(\.loginSuccess, navType: .push, payload: ())
+            Asset.router?.route(\.main, navType: .present, payload: ())
          }
          .onFail {
             print("Save login results to persistence error")
@@ -199,7 +195,6 @@ private extension LoginScene {
       }
       onModeChanged(\.inputSmsCode) {
          slf?.smsCodeInputModel.setHidden(false)
-         slf?.userNameInputModel.setHidden(true)
          slf?.loginButton.setHidden(false)
          slf?.getCodeButton.setHidden(true)
       }

@@ -71,6 +71,7 @@ enum StackState {
    case backView(UIView, inset: UIEdgeInsets = .zero)
    case backImage(UIImage)
    case backViewModel(UIViewModel, inset: UIEdgeInsets = .zero)
+   case shadow(Shadow)
 }
 
 extension ViewModelProtocol where Self: Stateable, View: UIStackView {
@@ -109,6 +110,8 @@ extension ViewModelProtocol where Self: Stateable, View: UIStackView {
          setHidden(value)
       case .backViewModel(let value, let inset):
          setBackViewModel(value, inset: inset)
+      case .shadow(let value):
+         setShadow(value)
       }
    }
 }

@@ -26,14 +26,14 @@ protocol ParamsProtocol: InitProtocol {
 
 struct ParamBuilder: ParamsProtocol {
    //
-   var cornerRadius: CGFloat { 15 }
+   var cornerRadius: CGFloat { 12 }
    var cornerRadiusMedium: CGFloat { 20 }
    //
    var contentPadding: UIEdgeInsets { .init(top: 12, left: 16, bottom: 12, right: 16) }
    var titleSubtitleOffset: CGFloat { 16 }
    var globalTopOffset: CGFloat { 24 }
    //
-   var buttonHeight: CGFloat { 50 }
+   var buttonHeight: CGFloat { 52 }
    var buttonsSpacingX: CGFloat { 8 }
-   var buttonsSpacingY: CGFloat { 24 }
+   var buttonsSpacingY: CGFloat { 16 }
 }
