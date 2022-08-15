@@ -119,4 +119,13 @@ enum TeamForceEndpoints {
       
       let headers: [String : String]
    }
+   
+   struct Periods: EndpointProtocol {
+      //
+      let method = HTTPMethod.get
+      
+      var endPoint: String { urlBase + "/periods/" }
+      
+      let headers: [String : String]
+   }
 }

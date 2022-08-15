@@ -138,6 +138,8 @@
 		63D419E928A5109E0024E22C /* GetUsersListUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D419E828A5109E0024E22C /* GetUsersListUseCase.swift */; };
 		63D419EB28AA500A0024E22C /* GetFeedsApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D419EA28AA500A0024E22C /* GetFeedsApiWorker.swift */; };
 		63D419ED28AA56570024E22C /* GetFeedUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D419EC28AA56570024E22C /* GetFeedUseCase.swift */; };
+		63D419EF28AA81800024E22C /* GetPeriodsApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D419EE28AA81800024E22C /* GetPeriodsApiWorker.swift */; };
+		63D419F128AA825F0024E22C /* GetPeriodsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D419F028AA825F0024E22C /* GetPeriodsUseCase.swift */; };
 		63E1916D2889519E000FD312 /* BadgeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E1916C2889519E000FD312 /* BadgeModel.swift */; };
 /* End PBXBuildFile section */
 
@@ -280,6 +282,8 @@
 		63D419E828A5109E0024E22C /* GetUsersListUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUsersListUseCase.swift; sourceTree = "<group>"; };
 		63D419EA28AA500A0024E22C /* GetFeedsApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetFeedsApiWorker.swift; sourceTree = "<group>"; };
 		63D419EC28AA56570024E22C /* GetFeedUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetFeedUseCase.swift; sourceTree = "<group>"; };
+		63D419EE28AA81800024E22C /* GetPeriodsApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetPeriodsApiWorker.swift; sourceTree = "<group>"; };
+		63D419F028AA825F0024E22C /* GetPeriodsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetPeriodsUseCase.swift; sourceTree = "<group>"; };
 		63E1916C2889519E000FD312 /* BadgeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -789,6 +793,7 @@
 				63AD132528A39B4800CFF75B /* GetTransactionByIdApiWorker.swift */,
 				63D419E628A50F730024E22C /* GetUsersListApiWorker.swift */,
 				63D419EA28AA500A0024E22C /* GetFeedsApiWorker.swift */,
+				63D419EE28AA81800024E22C /* GetPeriodsApiWorker.swift */,
 			);
 			path = ApiModels;
 			sourceTree = "<group>";
@@ -815,6 +820,7 @@
 				63AD132728A3B06C00CFF75B /* GetTransactionByIdUseCase.swift */,
 				63D419E828A5109E0024E22C /* GetUsersListUseCase.swift */,
 				63D419EC28AA56570024E22C /* GetFeedUseCase.swift */,
+				63D419F028AA825F0024E22C /* GetPeriodsUseCase.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -953,6 +959,7 @@
 				19C1E98F285F426B00E7976D /* TeamForceApi.swift in Sources */,
 				199C4B6928632834008AD6FD /* DesignProtocol.swift in Sources */,
 				63A529F528A1F8AB004A858D /* SegmentedControlModel.swift in Sources */,
+				63D419F128AA825F0024E22C /* GetPeriodsUseCase.swift in Sources */,
 				1953DE88287B4574000DC537 /* Fonts.swift in Sources */,
 				197A2DA228A9BF4B00190656 /* Combos+Configure.swift in Sources */,
 				1952EA6528A7115D003F7852 /* StackStateBuilder.swift in Sources */,
@@ -1000,6 +1007,7 @@
 				19017B7328A69CD400B06345 /* DTLogoTitleX.swift in Sources */,
 				191B0C272865E5C1001CF3D9 /* IconBuilder.swift in Sources */,
 				19CF792328A45C52001531B8 /* TransactInteract.swift in Sources */,
+				63D419EF28AA81800024E22C /* GetPeriodsApiWorker.swift in Sources */,
 				19EF32AB287CE80B0078F53D /* StringStorageWorker.swift in Sources */,
 				196750A6286516F40019A6DE /* LoginScene.swift in Sources */,
 				19017B6728A697DF00B06345 /* AligningModels.swift in Sources */,
