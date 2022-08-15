@@ -30,6 +30,7 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
       } setRight: {
          $0.setPlaceholder(Text.title.enterSmsCode)
       }
+      .setHidden(true)
 
    private let nextButton = Design.button.inactive
       .setTitle(Text.button.getCodeButton)
@@ -70,9 +71,11 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
          }
          .doNext(usecase: useCase.login)
          .onSuccess {
-            Asset.router?.route(\.verifyCode, navType: .push, payload: $0)
+            weakSelf?.smsCodeInputField.setHidden(false)
+           // Asset.router?.route(\.verifyCode, navType: .push, payload: $0)
          }
          .onFail {
+            weakSelf?.smsCodeInputField.setHidden(true)
 //            weakSelf?.badgeModel.changeState(to: BadgeState.error)
          }
 

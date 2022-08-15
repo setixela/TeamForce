@@ -9,22 +9,26 @@ func example(_ name: String = "", action: () -> Void) {
    action()
 }
 
-let nc = UINavigationController()
-nc.view.frame = CGRect(x: 0, y: 0, width: 360, height: 640)
-PlaygroundPage.current.liveView = nc
+if false {
+   let nc = UINavigationController()
+   nc.view.frame = CGRect(x: 0, y: 0, width: 360, height: 640)
+   PlaygroundPage.current.liveView = nc
 
-///////// """ STATEABLE -> PARAMETRIC """
+   ///////// """ STATEABLE -> PARAMETRIC """
 
-///// MARK: - СДЕЛАТЬ АНИМАЦИЮ ПОЯВЛЕНИЯ БЛОКОВ
+   ///// MARK: - СДЕЛАТЬ АНИМАЦИЮ ПОЯВЛЕНИЯ БЛОКОВ
 
-class VC: UIViewController {
-   override func loadView() {
-      view = historyModel.makeMainView()
+   class VC: UIViewController {
+      override func loadView() {
+         view = historyModel.makeMainView()
+      }
    }
-}
 
-let vc = VC()
-nc.viewControllers = [vc]
+   let vc = VC()
+   nc.viewControllers = [vc]
+} else {
+   PlaygroundPage.current.needsIndefiniteExecution = true
+}
 
 let historyModel = LoginScene<ProductionAsset>()
 
@@ -41,16 +45,15 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
 
    private let badgeModel = BadgeModel<Asset>()
 
-
-   private let loginTextField = Combos {  (model: ImageViewModel) in
+   private let loginTextField = Combos { (model: ImageViewModel) in
       model
          .setSize(.square(Grid.x24.value))
          .setImage(Design.icon.user)
    } setRight: { (model: TextFieldModel<Design>) in
       model
          .set(Design.state.textField.default)
-      //TextFieldModel<Design>(Design.state.textField.default)
-        // .setPlaceholder("")
+      // TextFieldModel<Design>(Design.state.textField.default)
+      // .setPlaceholder("")
    }
 
 //   TextFieldModel<Design>(Design.state.textField.default)
@@ -62,7 +65,7 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
       .setShadow(.init(radius: 8, color: Design.color.iconContrast, opacity: 0.33))
       .setModels([
          Grid.x16.spacer,
-       //  badgeModel,
+         //  badgeModel,
          loginTextField,
          nextButton,
          Grid.xxx.spacer
@@ -147,7 +150,7 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
                   .setText(Text.title.autorisation)
                   .setColor(Design.color.textInvert),
                // spacer
-               Grid.x36.spacer,
+               Grid.x36.spacer
             ])
       } setDown: { bottomStack in
          bottomStack
@@ -158,5 +161,59 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
                bottomPanel
             ])
       }
+   }
+}
+
+
+
+
+class TempStore: InitProtocol {
+   required init() {}
+
+   var tokens: (token: String, csrf: String) = ("", "")
+   var foundUsers: [FoundUser] = []
+   var recipientID = 0
+   var recipientUsername = ""
+
+   var inputAmountText = ""
+   var inputReasonText = ""
+}
+
+// static var tempStorage: TempStore = .init()
+var store: TempStore = .init()
+
+// MARK: - Works
+
+UnsafeTemper.initStore(for: TempStore.self)
+
+UnsafeTemper.store(for: TempStore.self)
+   .tokens.token = "A"
+
+print(UnsafeTemper.store(for: TempStore.self).tokens.token)
+
+enum UnsafeTemper {
+   private static var storage: [String: InitAnyObject] = [:]
+
+   static func initStore(for type: InitAnyObject.Type) {
+      let key = String(reflecting: type)
+      let new = type.init()
+
+      storage[key] = new
+   }
+
+   static func store<T: InitAnyObject>(for type: T.Type) -> T {
+      let key = String(reflecting: type)
+
+      guard let value = storage[key] as? T else {
+         fatalError()
+      }
+
+      return value
+   }
+
+   static func clearStore(for type: InitAnyObject.Type) {
+      let key = String(reflecting: type)
+
+      storage[key] = nil
    }
 }

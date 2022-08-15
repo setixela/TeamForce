@@ -26,6 +26,5 @@ final class IconTextField<Design: DesignProtocol>:
       set(Design.state.stack.inputContent)
       setAlignment(.center)
       setHeight(Design.params.buttonHeight)
-      setBackColor(Design.color.backgroundSecondary)
    }
 }

@@ -68,9 +68,6 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
 
    lazy var works = TransactWorks<Asset>()
 
-   private var inputAmountText = ""
-   private var inputReasonText = ""
-
    // MARK: - Start
 
    override func start() {
@@ -133,29 +130,29 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
             print("Search user API Error")
          }
 
-      sendButton
-         .onEvent(\.didTap)
-         .doInput {
-            wS?.inputAmountText
-         } // TODO: - Сделать по аналогии Zip
-         .doMap { amount in
-            (amount, wS?.inputReasonText ?? "")
-         }
-         .doNext(work: works.sendCoins)
-         .onSuccess { tuple in
-            wS?.transactionStatusView.start()
-            guard // ))) значит этому тут не место)) надо придумать механизм
-               let superview = wS?.view.superview?.superview?.superview?.superview?.superview
-            else { return }
-            let input = StatusViewInput(baseView: superview,
-                                        sendCoinInfo: tuple.info,
-                                        username: tuple.recipient)
-            wS?.transactionStatusView.sendEvent(\.presentOnScene, input)
-            wS?.setToInitialCondition()
-         }
-         .onFail {
-            wS?.presentAlert(text: "Не могу послать деньгу")
-         }
+//      sendButton
+//         .onEvent(\.didTap)
+//         .doInput {
+//            wS?.inputAmountText
+//         } // TODO: - Сделать по аналогии Zip
+//         .doMap { amount in
+//            (amount, wS?.inputReasonText ?? "")
+//         }
+//         .doNext(work: works.sendCoins)
+//         .onSuccess { tuple in
+//            wS?.transactionStatusView.start()
+//            guard // ))) значит этому тут не место)) надо придумать механизм
+//               let superview = wS?.view.superview?.superview?.superview?.superview?.superview
+//            else { return }
+//            let input = StatusViewInput(baseView: superview,
+//                                        sendCoinInfo: tuple.info,
+//                                        username: tuple.recipient)
+//            wS?.transactionStatusView.sendEvent(\.presentOnScene, input)
+//            wS?.setToInitialCondition()
+//         }
+//         .onFail {
+//            wS?.presentAlert(text: "Не могу послать деньгу")
+//         }
 
       tableModel
          .onEvent(\.didSelectRow)
@@ -237,43 +234,43 @@ private extension TransactViewModel {
       var correctCoinInput = false
       var correctReasonInput = false
 
-      transactInputViewModel.textField
-         // on did editing
-         .onEvent(\.didEditingChanged)
-         // then parse and check input text
-         .doNext(work: works.coinInputParsing)
-         .onSuccess {
-            wS?.transactInputViewModel.textField.set(.text($0))
-            correctCoinInput = true
-            wS?.inputAmountText = $0
-            if correctReasonInput == true {
-               wS?.sendButton.set(Design.state.button.default)
-            }
-         }
-         .onFail { (text: String) in
-            wS?.inputAmountText = ""
-            wS?.transactInputViewModel.textField.set(.text(text))
-            wS?.sendButton.set(Design.state.button.inactive)
-         }
-
-      reasonTextView
-         // on did editing
-         .onEvent(\.didEditingChanged)
-         // then parse and check input text
-         .doNext(work: works.reasonInputParsing)
-         .onSuccess {
-            wS?.reasonTextView.set(.text($0))
-            correctReasonInput = true
-            wS?.inputReasonText = $0
-            if correctCoinInput == true {
-               wS?.sendButton.set(Design.state.button.default)
-            }
-         }
-         .onFail { (text: String) in
-            wS?.reasonTextView.set(.text(text))
-            correctReasonInput = false
-            wS?.inputReasonText = ""
-            wS?.sendButton.set(Design.state.button.inactive)
-         }
+//      transactInputViewModel.textField
+//         // on did editing
+//         .onEvent(\.didEditingChanged)
+//         // then parse and check input text
+//         .doNext(work: works.coinInputParsing)
+//         .onSuccess {
+//            wS?.transactInputViewModel.textField.set(.text($0))
+//            correctCoinInput = true
+//            wS?.inputAmountText = $0
+//            if correctReasonInput == true {
+//               wS?.sendButton.set(Design.state.button.default)
+//            }
+//         }
+//         .onFail { (text: String) in
+//            wS?.inputAmountText = ""
+//            wS?.transactInputViewModel.textField.set(.text(text))
+//            wS?.sendButton.set(Design.state.button.inactive)
+//         }
+//
+//      reasonTextView
+//         // on did editing
+//         .onEvent(\.didEditingChanged)
+//         // then parse and check input text
+//         .doNext(work: works.reasonInputParsing)
+//         .onSuccess {
+//            wS?.reasonTextView.set(.text($0))
+//            correctReasonInput = true
+//            wS?.inputReasonText = $0
+//            if correctCoinInput == true {
+//               wS?.sendButton.set(Design.state.button.default)
+//            }
+//         }
+//         .onFail { (text: String) in
+//            wS?.reasonTextView.set(.text(text))
+//            correctReasonInput = false
+//            wS?.inputReasonText = ""
+//            wS?.sendButton.set(Design.state.button.inactive)
+//         }
    }
 }
