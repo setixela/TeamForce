@@ -75,7 +75,7 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
 
       weak var wS = self
 
-      var store = works.store
+      let store = works.store
 
       // load tokens, then load balance, then load 10 user list
       works.loadTokens

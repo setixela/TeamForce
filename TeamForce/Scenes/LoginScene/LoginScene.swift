@@ -16,7 +16,7 @@ struct LoginSceneMode<WeakSelf>: SceneModeProtocol {
 
 final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
    DefaultVCModel,
-   Combos<SComboMD<StackModel, StackModel>>,
+   DoubleStacksBrandedVM<Asset.Design>,
    Asset,
    Void
 >, WorkableModel {
@@ -150,33 +150,46 @@ private extension LoginScene {
 
 private extension LoginScene {
    func configure() {
-      mainVM.setMain { topStack in
-         topStack
+      mainVM.setMain {
+         $0.set_models([
+            // spacer
+            Grid.x16.spacer,
+            // logo
+            BrandLogoIcon<Design>(),
+            // spacer
+            Grid.x16.spacer,
+            // title
+            Design.label.headline5
+               .set_text(Text.title.autorisation)
+               .set_color(Design.color.textInvert),
+            // spacer
+            Grid.x36.spacer
+         ])
+      } setDown: {
+         $0.set_models([
+            // обернул в еще один стек, чтобы сделать offset с тенью
+            bottomPanel
+         ])
+      }
+   }
+}
+
+final class DoubleStacksBrandedVM<Design: DesignProtocol>: Combos<SComboMD<StackModel, StackModel>>,
+   Designable
+{
+   required init() {
+      super.init()
+
+      setMain {
+         $0
             .set(Design.state.stack.default)
             .set_backColor(Design.color.backgroundBrand)
             .set_alignment(.leading)
-            .set_models([
-               // spacer
-               Grid.x16.spacer,
-               // logo
-               BrandLogoIcon<Design>(),
-               // spacer
-               Grid.x16.spacer,
-               // title
-               Design.label.headline5
-                  .set_text(Text.title.autorisation)
-                  .set_color(Design.color.textInvert),
-               // spacer
-               Grid.x36.spacer
-            ])
-      } setDown: { bottomStack in
-         bottomStack
-            // чтобы сделать offset с тенью
+      } setDown: {
+         $0
+            .set_backColor(Design.color.background)
             .set_padding(.top(-Grid.x16.value))
-            .set_models([
-               // обернул в еще один стек, чтобы сделать offset с тенью
-               bottomPanel
-            ])
+            .set_padBottom(-Grid.x16.value)
       }
    }
 }

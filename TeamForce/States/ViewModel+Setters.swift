@@ -119,6 +119,30 @@ extension ViewModelProtocol where Self: Stateable, View: UIStackView {
       return self
    }
 
+   @discardableResult func set_padLeft(_ value: CGFloat) -> Self {
+      view.layoutMargins.left = value
+      view.isLayoutMarginsRelativeArrangement = true
+      return self
+   }
+
+   @discardableResult func set_padRight(_ value: CGFloat) -> Self {
+      view.layoutMargins.right = value
+      view.isLayoutMarginsRelativeArrangement = true
+      return self
+   }
+
+   @discardableResult func set_padTop(_ value: CGFloat) -> Self {
+      view.layoutMargins.top = value
+      view.isLayoutMarginsRelativeArrangement = true
+      return self
+   }
+
+   @discardableResult func set_padBottom(_ value: CGFloat) -> Self {
+      view.layoutMargins.bottom = value
+      view.isLayoutMarginsRelativeArrangement = true
+      return self
+   }
+
    @discardableResult func set_models(_ value: [UIViewModel]) -> Self {
       view.subviews.forEach {
          $0.removeFromSuperview()
