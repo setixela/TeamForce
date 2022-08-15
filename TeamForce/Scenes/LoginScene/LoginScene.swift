@@ -14,7 +14,7 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
    Combos<SComboMD<StackModel, StackModel>>,
    Asset,
    Void
-> {
+>, WorkableModel {
    // MARK: - View Models
 
    private let userNameInputField = IconTextField<Design>()
@@ -50,6 +50,8 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
 
    // MARK: - Use Cases
 
+   let works = LoginSceneWorks<Asset>()
+
    private lazy var useCase = Asset.apiUseCase
 
    // MARK: - Start
@@ -58,6 +60,8 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
       configure()
 
       weak var weakSelf = self
+
+      let works = works
 
       var loginName: String?
 
@@ -72,7 +76,7 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
          .doNext(usecase: useCase.login)
          .onSuccess {
             weakSelf?.smsCodeInputField.setHidden(false)
-           // Asset.router?.route(\.verifyCode, navType: .push, payload: $0)
+            // Asset.router?.route(\.verifyCode, navType: .push, payload: $0)
          }
          .onFail {
             weakSelf?.smsCodeInputField.setHidden(true)
@@ -81,23 +85,18 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
 
       userNameInputField.models.right
          .onEvent(\.didEditingChanged)
-         .doNext {
+         .onSuccess {
 //            weakSelf?.badgeModel.changeState(to: BadgeState.default)
+            print($0)
          }
-         .doNext(worker: TelegramNickCheckerModel())
+         .doNext(work: works.loginNameInputParse)
          .onSuccess { text in
-            loginName = text // String(text.dropFirst())
-            weakSelf?.userNameInputField.models.right
-               .setText(text)
-            weakSelf?.nextButton
-               .set(Design.state.button.default)
+            weakSelf?.userNameInputField.models.right.setText(text)
+            weakSelf?.nextButton.set(Design.state.button.default)
          }
          .onFail { (text: String) in
-            loginName = nil
-            weakSelf?.userNameInputField.models.right
-               .setText(text)
-            weakSelf?.nextButton
-               .set(Design.state.button.inactive)
+            weakSelf?.userNameInputField.models.right.setText(text)
+            weakSelf?.nextButton.set(Design.state.button.inactive)
          }
    }
 
@@ -132,4 +131,3 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
       }
    }
 }
-

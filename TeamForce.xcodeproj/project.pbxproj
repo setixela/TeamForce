@@ -16,6 +16,7 @@
 		19017B7328A69CD400B06345 /* DTLogoTitleX.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19017B7228A69CD400B06345 /* DTLogoTitleX.swift */; };
 		19017B8128A6A39800B06345 /* TransactDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19017B7A28A6A2F900B06345 /* TransactDetailViewModel.swift */; };
 		19017B8228A6A3FB00B06345 /* GetUsersListApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D419E628A50F730024E22C /* GetUsersListApiWorker.swift */; };
+		190991E628AA9D2A00371909 /* VerifyCodeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190991E528AA9D2A00371909 /* VerifyCodeUseCase.swift */; };
 		190C1D12285D15FF00FB3518 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190C1D11285D15FF00FB3518 /* AppDelegate.swift */; };
 		190C1D14285D15FF00FB3518 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190C1D13285D15FF00FB3518 /* SceneDelegate.swift */; };
 		190C1D16285D15FF00FB3518 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190C1D15285D15FF00FB3518 /* ViewController.swift */; };
@@ -48,6 +49,7 @@
 		1953DE88287B4574000DC537 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1953DE87287B4574000DC537 /* Fonts.swift */; };
 		1953DE8D287B4752000DC537 /* TypographyElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1953DE8C287B4752000DC537 /* TypographyElements.swift */; };
 		195870F228A8C8040075D505 /* KeyPathMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 195870F128A8C8040075D505 /* KeyPathMaker.swift */; };
+		1959F27428AA8E9700DEEE5C /* LoginSceneWorks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1959F27328AA8E9700DEEE5C /* LoginSceneWorks.swift */; };
 		1967509D286491190019A6DE /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1967509C286491190019A6DE /* Buttons.swift */; };
 		1967509F286492780019A6DE /* Labels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1967509E286492780019A6DE /* Labels.swift */; };
 		196750A22865169C0019A6DE /* DigitalThanksScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196750A12865169C0019A6DE /* DigitalThanksScene.swift */; };
@@ -164,6 +166,7 @@
 		19017B7028A69CB100B06345 /* IconTitleY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconTitleY.swift; sourceTree = "<group>"; };
 		19017B7228A69CD400B06345 /* DTLogoTitleX.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DTLogoTitleX.swift; sourceTree = "<group>"; };
 		19017B7A28A6A2F900B06345 /* TransactDetailViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactDetailViewModel.swift; sourceTree = "<group>"; };
+		190991E528AA9D2A00371909 /* VerifyCodeUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyCodeUseCase.swift; sourceTree = "<group>"; };
 		190C1D0E285D15FF00FB3518 /* TeamForce.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TeamForce.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		190C1D11285D15FF00FB3518 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		190C1D13285D15FF00FB3518 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -197,6 +200,7 @@
 		1953DE87287B4574000DC537 /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
 		1953DE8C287B4752000DC537 /* TypographyElements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypographyElements.swift; sourceTree = "<group>"; };
 		195870F128A8C8040075D505 /* KeyPathMaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyPathMaker.swift; sourceTree = "<group>"; };
+		1959F27328AA8E9700DEEE5C /* LoginSceneWorks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginSceneWorks.swift; sourceTree = "<group>"; };
 		1967509C286491190019A6DE /* Buttons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Buttons.swift; sourceTree = "<group>"; };
 		1967509E286492780019A6DE /* Labels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Labels.swift; sourceTree = "<group>"; };
 		196750A12865169C0019A6DE /* DigitalThanksScene.swift */ = {isa = PBXFileReference; indentWidth = 3; lastKnownFileType = sourcecode.swift; path = DigitalThanksScene.swift; sourceTree = "<group>"; tabWidth = 3; };
@@ -530,12 +534,29 @@
 			path = Assets;
 			sourceTree = "<group>";
 		};
+		1959F27128AA8E5C00DEEE5C /* LoginScene */ = {
+			isa = PBXGroup;
+			children = (
+				196750A5286516F40019A6DE /* LoginScene.swift */,
+				1959F27328AA8E9700DEEE5C /* LoginSceneWorks.swift */,
+			);
+			path = LoginScene;
+			sourceTree = "<group>";
+		};
+		1959F27228AA8E7400DEEE5C /* IntroScene */ = {
+			isa = PBXGroup;
+			children = (
+				196750A12865169C0019A6DE /* DigitalThanksScene.swift */,
+			);
+			path = IntroScene;
+			sourceTree = "<group>";
+		};
 		196750A02865168F0019A6DE /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
 				1953DE822879FDB3000DC537 /* MainScene */,
-				196750A12865169C0019A6DE /* DigitalThanksScene.swift */,
-				196750A5286516F40019A6DE /* LoginScene.swift */,
+				1959F27228AA8E7400DEEE5C /* IntroScene */,
+				1959F27128AA8E5C00DEEE5C /* LoginScene */,
 				196750A3286516E40019A6DE /* RegisterScene.swift */,
 				196750A7286517070019A6DE /* VerifyCodeScene.swift */,
 				196750A9286517130019A6DE /* LoginSuccessScene.swift */,
@@ -827,6 +848,7 @@
 				63D419EC28AA56570024E22C /* GetFeedUseCase.swift */,
 				63D419F028AA825F0024E22C /* GetPeriodsUseCase.swift */,
 				63D419F628AA8AA70024E22C /* GetStatByPeriodIdUseCase.swift */,
+				190991E528AA9D2A00371909 /* VerifyCodeUseCase.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -972,6 +994,7 @@
 				1952EA6528A7115D003F7852 /* StackStateBuilder.swift in Sources */,
 				19D0835B286F424000F75E4A /* LabelIconHorizontalModel.swift in Sources */,
 				198FE1CE2899BB8E00BAF1A5 /* LoadBalanceUseCase.swift in Sources */,
+				1959F27428AA8E9700DEEE5C /* LoginSceneWorks.swift in Sources */,
 				196750B22865190D0019A6DE /* ImageViewModel.swift in Sources */,
 				63D419E928A5109E0024E22C /* GetUsersListUseCase.swift in Sources */,
 				63D419ED28AA56570024E22C /* GetFeedUseCase.swift in Sources */,
@@ -1074,6 +1097,7 @@
 				19C1E98C285F426B00E7976D /* EndpointProtocol.swift in Sources */,
 				196750B4286519660019A6DE /* ProductionAsset.swift in Sources */,
 				1918CC7B286F6C84004373F3 /* ProfileApiWorker.swift in Sources */,
+				190991E628AA9D2A00371909 /* VerifyCodeUseCase.swift in Sources */,
 				19A8229828A9305D0081D385 /* UIEdgeInsets+Padding.swift in Sources */,
 				19466E03289FFC040052F0AB /* IconTitleSubtitleModel.swift in Sources */,
 				19D0835D286F428600F75E4A /* BarButtonModel.swift in Sources */,

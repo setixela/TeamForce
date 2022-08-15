@@ -31,6 +31,7 @@ extension AssetProtocol {
          safeStringStorage: StringStorageWorker(engine: service.safeStringStorage),
          userProfileApiModel: ProfileApiWorker(apiEngine: service.apiEngine),
          loginApiModel: AuthApiWorker(apiEngine: service.apiEngine),
+         verifyCodeApiWorker: VerifyApiModel(apiEngine: service.apiEngine),
          logoutApiModel: LogoutApiWorker(apiEngine: service.apiEngine),
          balanceApiModel: GetBalanceApiWorker(apiEngine: service.apiEngine),
          searchUserApiWorker: SearchUserApiWorker(apiEngine: service.apiEngine),

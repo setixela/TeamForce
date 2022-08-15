@@ -8,9 +8,7 @@
 import Foundation
 import ReactiveWorks
 
-struct ApiUseCase: ApiUseCaseRegistry, WorkBasket {
-
-   let retainer: Retainer = .init()
+struct ApiUseCase {
 
    // MARK: - UseCases
 
@@ -24,6 +22,10 @@ struct ApiUseCase: ApiUseCaseRegistry, WorkBasket {
 
    var login: LoginUseCase {
       .init(authApiWorker: loginApiModel)
+   }
+
+   var verifyCode: VerifyCodeUseCase {
+      .init(verifyCodeApiWorker: verifyCodeApiWorker)
    }
 
    var logout: LogoutUseCase {
@@ -68,6 +70,7 @@ struct ApiUseCase: ApiUseCaseRegistry, WorkBasket {
    let userProfileApiModel: ProfileApiWorker
 
    let loginApiModel: AuthApiWorker
+   let verifyCodeApiWorker: VerifyApiModel
    let logoutApiModel: LogoutApiWorker
    let balanceApiModel: GetBalanceApiWorker
 

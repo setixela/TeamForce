@@ -15,23 +15,22 @@ enum ProductionAsset: AssetProtocol {
    typealias Scene = Scenes
 
    static var router: MainRouter<Scene>? = MainRouter<Scene>()
-   static var apiUseCase: ApiUseCase {
-      .init(
-         safeStringStorage: StringStorageWorker(engine: service.safeStringStorage),
-         userProfileApiModel: ProfileApiWorker(apiEngine: service.apiEngine),
-         loginApiModel: AuthApiWorker(apiEngine: service.apiEngine),
-         logoutApiModel: LogoutApiWorker(apiEngine: service.apiEngine),
-         balanceApiModel: GetBalanceApiWorker(apiEngine: service.apiEngine),
-         searchUserApiWorker: SearchUserApiWorker(apiEngine: service.apiEngine),
-         sendCoinApiWorker: SendCoinApiWorker(apiEngine: service.apiEngine),
-         getTransactionsApiWorker: GetTransactionsApiWorker(apiEngine: service.apiEngine),
-         getTransactionByIdApiWorker: GetTransactionByIdApiWorker(apiEngine: service.apiEngine),
-         getUsersListApiWorker: GetUsersListApiWorker(apiEngine: service.apiEngine),
-         getFeedsApiWorker: GetFeedsApiWorker(apiEngine: service.apiEngine),
-         getPeriodsApiWorker: GetPeriodsApiWorker(apiEngine: service.apiEngine),
-         getStatByPeriodIdApiWorker: GetStatByPeriodIdApiWorker(apiEngine: service.apiEngine)
-      )
-   }
+//   static var apiUseCase: ApiUseCase {
+//      .init(
+//         safeStringStorage: StringStorageWorker(engine: service.safeStringStorage),
+//         userProfileApiModel: ProfileApiWorker(apiEngine: service.apiEngine),
+//         loginApiModel: AuthApiWorker(apiEngine: service.apiEngine),
+//         verifyCodeApiWorker: VerifyApiModel(apiEngine: service.apiEngine),
+//         logoutApiModel: LogoutApiWorker(apiEngine: service.apiEngine),
+//         balanceApiModel: GetBalanceApiWorker(apiEngine: service.apiEngine),
+//         searchUserApiWorker: SearchUserApiWorker(apiEngine: service.apiEngine),
+//         sendCoinApiWorker: SendCoinApiWorker(apiEngine: service.apiEngine),
+//         getTransactionsApiWorker: GetTransactionsApiWorker(apiEngine: service.apiEngine),
+//         getTransactionByIdApiWorker: GetTransactionByIdApiWorker(apiEngine: service.apiEngine),
+//         getUsersListApiWorker: GetUsersListApiWorker(apiEngine: service.apiEngine),
+//         getFeedsApiWorker: GetFeedsApiWorker(apiEngine: service.apiEngine)
+//      )
+//   }
 }
 
 struct Scenes: ScenesProtocol {

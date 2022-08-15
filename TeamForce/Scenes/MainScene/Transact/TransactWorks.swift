@@ -32,8 +32,6 @@ final class TransactWorks<Asset: AssetProtocol>: BaseSceneWorks<TransactWorks.Te
    private lazy var coinInputParser = CoinInputCheckerModel()
    private lazy var reasonInputParser = ReasonCheckerModel()
 
-   private lazy var retainer = Retainer()
-
    // storage
    class Temp: InitProtocol {
       required init() {}
@@ -91,7 +89,7 @@ final class TransactWorks<Asset: AssetProtocol>: BaseSceneWorks<TransactWorks.Te
    }
 
    lazy var sendCoins = Work<(amount: String, reason: String),
-      (recipient: String, info: SendCoinRequest)> { work in
+      (recipient: String, info: SendCoinRequest)> { [weak self] work in
 
       let request = SendCoinRequest(
          token: Self.store.tokens.token,
@@ -101,8 +99,8 @@ final class TransactWorks<Asset: AssetProtocol>: BaseSceneWorks<TransactWorks.Te
          reason: work.unsafeInput.reason
       )
 
-      self.apiUseCase.sendCoin.work
-         .retainBy(self.retainer)
+      self?.apiUseCase.sendCoin.work
+         .retainBy(self?.retainer)
          .doAsync(request)
          .onSuccess {
             let tuple = (Self.store.recipientUsername, request)

@@ -8,19 +8,19 @@
 import Foundation
 import ReactiveWorks
 
-protocol ApiUseCaseRegistry {
-   //
-   var loadProfile: LoadProfileUseCase { get }
-   var loadBalance: LoadBalanceUseCase { get }
-   //
-   var login: LoginUseCase { get }
-   var logout: LogoutUseCase { get }
-   //
-   var userSearch: UserSearchUseCase { get }
-   //
-   var sendCoin: SendCoinUseCase { get }
-   
-}
+//protocol ApiUseCaseRegistry {
+//   //
+//   var loadProfile: LoadProfileUseCase { get }
+//   var loadBalance: LoadBalanceUseCase { get }
+//   //
+//   var login: LoginUseCase { get }
+//   var logout: LogoutUseCase { get }
+//   //
+//   var userSearch: UserSearchUseCase { get }
+//   //
+//   var sendCoin: SendCoinUseCase { get }
+//   
+//}
 
 struct UserSearchUseCase: UseCaseProtocol {
 
