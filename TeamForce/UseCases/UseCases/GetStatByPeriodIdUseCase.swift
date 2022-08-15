@@ -1,19 +1,19 @@
 //
-//  GetTransactionByIdUseCase.swift
+//  GetStatByPeriodIdUseCase.swift
 //  TeamForce
 //
-//  Created by Yerzhan Gapurinov on 10.08.2022.
+//  Created by Yerzhan Gapurinov on 15.08.2022.
 //
 
 import Foundation
 import ReactiveWorks
 
-struct GetTransactionByIdUseCase: UseCaseProtocol {
+struct GetStatByPeriodIdUseCase: UseCaseProtocol {
    let safeStringStorage: StringStorageWorker
-   let getTransactionByIdApiModel: GetTransactionByIdApiWorker
+   let getStatByPeriodIdApiWorker: GetStatByPeriodIdApiWorker
    
-   var work: Work<Int, Transaction> {
-      Work<Int, Transaction>() { work in
+   var work: Work<Int, PeriodStat> {
+      Work<Int, PeriodStat>() { work in
          safeStringStorage
             .doAsync("token")
             .onFail {
@@ -23,7 +23,7 @@ struct GetTransactionByIdUseCase: UseCaseProtocol {
                guard let id = work.input else { return nil }
                return RequestWithId(token: $0, id: id)
             }
-            .doNext(worker: getTransactionByIdApiModel)
+            .doNext(worker: getStatByPeriodIdApiWorker)
             .onSuccess {
                work.success(result: $0)
             }

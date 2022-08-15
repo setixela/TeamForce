@@ -14,15 +14,15 @@ import ReactiveWorks
 //    var error: Event<ApiEngineError>?
 //}
 
-struct TransactionRequest {
+struct RequestWithId {
    let token: String
    //   let csrfToken: String
    let id: Int
 }
 
 
-final class GetTransactionByIdApiWorker: BaseApiWorker<TransactionRequest, Transaction> {
-   override func doAsync(work: Work<TransactionRequest, Transaction>) {
+final class GetTransactionByIdApiWorker: BaseApiWorker<RequestWithId, Transaction> {
+   override func doAsync(work: Work<RequestWithId, Transaction>) {
       let cookieName = "csrftoken"
       
       guard

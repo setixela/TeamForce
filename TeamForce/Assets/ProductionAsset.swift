@@ -28,7 +28,8 @@ enum ProductionAsset: AssetProtocol {
          getTransactionByIdApiWorker: GetTransactionByIdApiWorker(apiEngine: service.apiEngine),
          getUsersListApiWorker: GetUsersListApiWorker(apiEngine: service.apiEngine),
          getFeedsApiWorker: GetFeedsApiWorker(apiEngine: service.apiEngine),
-         getPeriodsApiWorker: GetPeriodsApiWorker(apiEngine: service.apiEngine)
+         getPeriodsApiWorker: GetPeriodsApiWorker(apiEngine: service.apiEngine),
+         getStatByPeriodIdApiWorker: GetStatByPeriodIdApiWorker(apiEngine: service.apiEngine)
       )
    }
 }
