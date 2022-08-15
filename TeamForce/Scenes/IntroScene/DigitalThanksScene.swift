@@ -16,7 +16,7 @@ final class DigitalThanksScene<Asset: AssetProtocol>: BaseSceneModel<
    Void
 > {
    private lazy var enterButton = Design.button.default
-      .setTitle(Text.button.enterButton)
+      .set_title(Text.button.enterButton)
 
    // MARK: - Start
 
@@ -32,11 +32,11 @@ final class DigitalThanksScene<Asset: AssetProtocol>: BaseSceneModel<
 
    private func configure() {
       mainVM
-         .setBackColor(Design.color.background)
+         .set_backColor(Design.color.background)
 
       mainVM.topStackModel
          .set(Design.state.stack.default)
-         .setModels([
+         .set_models([
             // logo model
             DTLogoTitleX<Design>()
                .set(.invert)
@@ -44,23 +44,23 @@ final class DigitalThanksScene<Asset: AssetProtocol>: BaseSceneModel<
             // spacer
             Grid.xxx.spacer
          ])
-         .setBackImage(Design.icon.introlIllustrate)
+         .set_backImage(Design.icon.introlIllustrate)
 
       mainVM.bottomStackModel
          .set(Design.state.stack.bottomPanel)
 
-         .setModels([
+         .set_models([
             // spacer
-            Spacer(1),
+            Grid.x1.spacer,
             // title subtitle
             TitleSubtitleY<Design>()
                .setMain {
-                  $0.setText(Text.title.digitalThanks)
+                  $0.set_text(Text.title.digitalThanks)
                } setDown: {
-                  $0.setText(Text.title.digitalThanksAbout)
+                  $0.set_text(Text.title.digitalThanksAbout)
                },
             // spacer
-            Spacer(1),
+            Grid.x1.spacer,
             // enter button
             enterButton
          ])
