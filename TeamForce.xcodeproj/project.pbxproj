@@ -136,6 +136,8 @@
 		63CFA196289C38A9000E4D1E /* GetTransactionsApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63CFA195289C38A9000E4D1E /* GetTransactionsApiWorker.swift */; };
 		63CFA198289C3FB6000E4D1E /* GetTransactionsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63CFA197289C3FB6000E4D1E /* GetTransactionsUseCase.swift */; };
 		63D419E928A5109E0024E22C /* GetUsersListUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D419E828A5109E0024E22C /* GetUsersListUseCase.swift */; };
+		63D419EB28AA500A0024E22C /* GetFeedsApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D419EA28AA500A0024E22C /* GetFeedsApiWorker.swift */; };
+		63D419ED28AA56570024E22C /* GetFeedUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D419EC28AA56570024E22C /* GetFeedUseCase.swift */; };
 		63E1916D2889519E000FD312 /* BadgeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E1916C2889519E000FD312 /* BadgeModel.swift */; };
 /* End PBXBuildFile section */
 
@@ -276,6 +278,8 @@
 		63CFA197289C3FB6000E4D1E /* GetTransactionsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTransactionsUseCase.swift; sourceTree = "<group>"; };
 		63D419E628A50F730024E22C /* GetUsersListApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUsersListApiWorker.swift; sourceTree = "<group>"; };
 		63D419E828A5109E0024E22C /* GetUsersListUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUsersListUseCase.swift; sourceTree = "<group>"; };
+		63D419EA28AA500A0024E22C /* GetFeedsApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetFeedsApiWorker.swift; sourceTree = "<group>"; };
+		63D419EC28AA56570024E22C /* GetFeedUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetFeedUseCase.swift; sourceTree = "<group>"; };
 		63E1916C2889519E000FD312 /* BadgeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -784,6 +788,7 @@
 				63CFA195289C38A9000E4D1E /* GetTransactionsApiWorker.swift */,
 				63AD132528A39B4800CFF75B /* GetTransactionByIdApiWorker.swift */,
 				63D419E628A50F730024E22C /* GetUsersListApiWorker.swift */,
+				63D419EA28AA500A0024E22C /* GetFeedsApiWorker.swift */,
 			);
 			path = ApiModels;
 			sourceTree = "<group>";
@@ -809,6 +814,7 @@
 				63CFA197289C3FB6000E4D1E /* GetTransactionsUseCase.swift */,
 				63AD132728A3B06C00CFF75B /* GetTransactionByIdUseCase.swift */,
 				63D419E828A5109E0024E22C /* GetUsersListUseCase.swift */,
+				63D419EC28AA56570024E22C /* GetFeedUseCase.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -954,6 +960,7 @@
 				198FE1CE2899BB8E00BAF1A5 /* LoadBalanceUseCase.swift in Sources */,
 				196750B22865190D0019A6DE /* ImageViewModel.swift in Sources */,
 				63D419E928A5109E0024E22C /* GetUsersListUseCase.swift in Sources */,
+				63D419ED28AA56570024E22C /* GetFeedUseCase.swift in Sources */,
 				1977BE5528A7238F00D554EA /* TextFieldStates.swift in Sources */,
 				1967509D286491190019A6DE /* Buttons.swift in Sources */,
 				191571D1289F12350061510F /* PlaygroundScene.swift in Sources */,
@@ -1032,6 +1039,7 @@
 				197A2D9B28A9A96800190656 /* WrappedY.swift in Sources */,
 				19ECD54328623D30001765F6 /* StackModel.swift in Sources */,
 				19017B6D28A698BC00B06345 /* TitleSubtitleCaptionY.swift in Sources */,
+				63D419EB28AA500A0024E22C /* GetFeedsApiWorker.swift in Sources */,
 				196750AA286517130019A6DE /* LoginSuccessScene.swift in Sources */,
 				19C1E990285F426B00E7976D /* TeamForceEndpoints.swift in Sources */,
 				1953DE862879FE30000DC537 /* PickerViewModel.swift in Sources */,
