@@ -20,7 +20,7 @@ struct LoginSceneryCase: SceneModeProtocol {
 }
 
 final class LoginScenery<Asset: AssetProtocol>:
-   BaseScenery<LoginViewModels<Asset.Design>, LoginWorks<Asset>>
+   BaseScenario<LoginViewModels<Asset.Design>, LoginWorks<Asset>>
 {
 
    var modes: LoginSceneryCase = .init()

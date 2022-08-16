@@ -7,15 +7,15 @@
 
 import ReactiveWorks
 
-protocol Scenario {
-   associatedtype Scenery: SceneryProtocol
+protocol Scenaryable {
+   associatedtype Scenery: ScenarioProtocol
 
    var scenario: Scenery { get }
 }
 
 // Сокращение ДЖЕНЕРИКОВ с в стиле Пятачка: ДЖНРК
 
-protocol SceneryProtocol {
+protocol ScenarioProtocol {
    associatedtype VWMDLS
    associatedtype WRKS: SceneWorks
 
@@ -25,7 +25,7 @@ protocol SceneryProtocol {
    init(viewModels: VWMDLS, works: WRKS)
 }
 
-class BaseScenery<VWMDLS, WRKS: SceneWorks>: BaseModel, SceneryProtocol {
+class BaseScenario<VWMDLS, WRKS: SceneWorks>: BaseModel, ScenarioProtocol {
    let works: WRKS
    let vModels: VWMDLS
 
