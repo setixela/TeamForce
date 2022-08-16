@@ -34,15 +34,8 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
    override func start() {
       configure()
 
-      let fun = viewModels.setState
-      test(fun)
-
       viewModels.setState(.inputUserName)
       scenario.start(stateMachineFunc: viewModels.setState)
-   }
-
-   func test(_ fun: @escaping (LoginSceneState) -> Void) {
-      fun(.inputUserName)
    }
 }
 
