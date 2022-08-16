@@ -61,7 +61,6 @@ final class BalanceViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
    // MARK: - Services
 
    private lazy var useCase = Asset.apiUseCase
-   private lazy var loadBalanceUseCase = useCase.loadBalance.work
 
    private var balance: Balance?
 
@@ -79,7 +78,7 @@ final class BalanceViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
          Spacer()
       ]))
 
-      loadBalanceUseCase
+      useCase.retainedWork(\.loadBalance)
          .doAsync()
          .onSuccess { [weak self] balance in
             self?.setBalance(balance)

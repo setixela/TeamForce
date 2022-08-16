@@ -146,9 +146,13 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
             guard // ))) значит этому тут не место)) надо придумать механизм
                let superview = wS?.view.superview?.superview?.superview?.superview?.superview
             else { return }
-            let input = StatusViewInput(baseView: superview,
-                                        sendCoinInfo: tuple.info,
-                                        username: tuple.recipient)
+
+            let input = StatusViewInput(
+               baseView: superview,
+               sendCoinInfo: tuple.info,
+               username: tuple.recipient
+            )
+
             wS?.transactionStatusView.sendEvent(\.presentOnScene, input)
             wS?.setToInitialCondition()
          }

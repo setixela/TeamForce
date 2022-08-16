@@ -85,6 +85,8 @@
 		19A8229828A9305D0081D385 /* UIEdgeInsets+Padding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A8229728A9305D0081D385 /* UIEdgeInsets+Padding.swift */; };
 		19AE3AEF28691B2E00A0C6E4 /* MainScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19AE3AEE28691B2E00A0C6E4 /* MainScene.swift */; };
 		19AE3AF22869230C00A0C6E4 /* AuthApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19AE3AF12869230C00A0C6E4 /* AuthApiWorker.swift */; };
+		19BD2A8728ABB35C00FCC00A /* LoginScenario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19BD2A8628ABB35C00FCC00A /* LoginScenario.swift */; };
+		19BD2A8928ABB72500FCC00A /* Scenario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19BD2A8828ABB72500FCC00A /* Scenario.swift */; };
 		19C1E98C285F426B00E7976D /* EndpointProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C1E985285F426B00E7976D /* EndpointProtocol.swift */; };
 		19C1E98E285F426B00E7976D /* ApiEngineProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C1E987285F426B00E7976D /* ApiEngineProtocol.swift */; };
 		19C1E98F285F426B00E7976D /* TeamForceApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C1E988285F426B00E7976D /* TeamForceApi.swift */; };
@@ -232,6 +234,8 @@
 		19A8229728A9305D0081D385 /* UIEdgeInsets+Padding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIEdgeInsets+Padding.swift"; sourceTree = "<group>"; };
 		19AE3AEE28691B2E00A0C6E4 /* MainScene.swift */ = {isa = PBXFileReference; indentWidth = 3; lastKnownFileType = sourcecode.swift; path = MainScene.swift; sourceTree = "<group>"; tabWidth = 3; };
 		19AE3AF12869230C00A0C6E4 /* AuthApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthApiWorker.swift; sourceTree = "<group>"; };
+		19BD2A8628ABB35C00FCC00A /* LoginScenario.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginScenario.swift; sourceTree = "<group>"; };
+		19BD2A8828ABB72500FCC00A /* Scenario.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scenario.swift; sourceTree = "<group>"; };
 		19C1E985285F426B00E7976D /* EndpointProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EndpointProtocol.swift; sourceTree = "<group>"; };
 		19C1E987285F426B00E7976D /* ApiEngineProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiEngineProtocol.swift; sourceTree = "<group>"; };
 		19C1E988285F426B00E7976D /* TeamForceApi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamForceApi.swift; sourceTree = "<group>"; };
@@ -534,6 +538,7 @@
 			isa = PBXGroup;
 			children = (
 				196750A5286516F40019A6DE /* LoginScene.swift */,
+				19BD2A8628ABB35C00FCC00A /* LoginScenario.swift */,
 				1959F27328AA8E9700DEEE5C /* LoginWorks.swift */,
 			);
 			path = LoginScene;
@@ -747,6 +752,7 @@
 				1952EA6828A711F2003F7852 /* Associated.swift */,
 				195870F128A8C8040075D505 /* KeyPathMaker.swift */,
 				197A2D9828A98F4300190656 /* UIColor+Random.swift */,
+				19BD2A8828ABB72500FCC00A /* Scenario.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -1009,6 +1015,7 @@
 				19C1E991285F426B00E7976D /* ApiEngine.swift in Sources */,
 				19017B7128A69CB100B06345 /* IconTitleY.swift in Sources */,
 				19EF32B02884B6C80078F53D /* TableViewModel.swift in Sources */,
+				19BD2A8928ABB72500FCC00A /* Scenario.swift in Sources */,
 				19A73BED28A4530C000B74CF /* TextFieldBadged.swift in Sources */,
 				19017B8128A6A39800B06345 /* TransactDetailViewModel.swift in Sources */,
 				19DD3D97288A0A8C0085CDA8 /* CoverViewModel.swift in Sources */,
@@ -1063,6 +1070,7 @@
 				19F153842899649900ECF000 /* LoadProfileUseCase.swift in Sources */,
 				19F15386289964AA00ECF000 /* LogoutUseCase.swift in Sources */,
 				1953DE842879FDE3000DC537 /* TransactViewModel.swift in Sources */,
+				19BD2A8728ABB35C00FCC00A /* LoginScenario.swift in Sources */,
 				19ECD54828623D9C001765F6 /* CustomViews.swift in Sources */,
 				19F1538E2899692D00ECF000 /* ApiUseCaseRegistry.swift in Sources */,
 				63352DE7289AA69A00489F5F /* SendCoinUseCase.swift in Sources */,

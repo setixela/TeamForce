@@ -8,8 +8,10 @@
 import Foundation
 import ReactiveWorks
 
-struct ApiUseCase<Asset: AssetProtocol>: Assetable {
+struct ApiUseCase<Asset: AssetProtocol>: Assetable, WorkBasket {
    //
+   let retainer = Retainer()
+
    var safeStringStorage: StringStorageWorker {
       StringStorageWorker(engine: Asset.service.safeStringStorage)
    }
@@ -84,3 +86,4 @@ struct ApiUseCase<Asset: AssetProtocol>: Assetable {
    private var getPeriodsApiWorker: GetPeriodsApiWorker { GetPeriodsApiWorker(apiEngine: Asset.service.apiEngine) }
    private var getStatByPeriodIdApiWorker: GetStatByPeriodIdApiWorker { GetStatByPeriodIdApiWorker(apiEngine: Asset.service.apiEngine) }
 }
+

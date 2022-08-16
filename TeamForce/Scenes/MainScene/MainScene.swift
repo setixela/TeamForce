@@ -110,7 +110,12 @@ extension MainScene {
    private func presentModel(_ model: UIViewModel?) {
       guard let model = model else { return }
 
-      mainVM.models.down.set_models([model])
-
+      mainVM.models.down.set_models([
+         StackModel()
+            .set(Design.state.stack.bottomShadowedPanel)
+            .set_models([
+               model
+            ])
+      ])
    }
 }

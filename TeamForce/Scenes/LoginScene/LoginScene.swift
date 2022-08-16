@@ -7,11 +7,6 @@
 
 import ReactiveWorks
 
-struct LoginSceneMode: SceneModeProtocol {
-   var inputUserName: VoidEvent?
-   var inputSmsCode: VoidEvent?
-}
-
 // MARK: - LoginScene
 
 final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
@@ -19,9 +14,15 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
    DoubleStacksBrandedVM<Asset.Design>,
    Asset,
    Void
->, WorkableModel {
+>, WorkableModel, Scenario {
    //
-   var modes: LoginSceneMode = .init()
+
+   lazy var scenario = LoginScenery(viewModels: LoginViewModels<Design>(
+      userNameInputModel: userNameInputModel,
+      smsCodeInputModel: smsCodeInputModel,
+      getCodeButton: getCodeButton,
+      loginButton: loginButton
+   ), works: LoginWorks<Asset>())
 
    // MARK: - View Models
 
@@ -64,88 +65,9 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
 
    override func start() {
       configure()
-      configureSceneStates()
-      configureUserNameWorks()
-      configureSmsCodeWorks()
+      scenario.start()
    }
 }
-
-// MARK: - Configure works
-
-private extension LoginScene {
-   func configureUserNameWorks() {
-      weak var slf = self
-      let works = works
-
-      // setup input field reactions
-      userNameInputModel.models.right
-         .onEvent(\.didEditingChanged)
-         .onSuccess {
-//            weakSelf?.badgeModel.changeState(to: BadgeState.default)
-         }
-         .doNext(work: works.loginNameInputParse)
-         .onSuccess { text in
-            slf?.userNameInputModel.models.right.set_text(text)
-            slf?.getCodeButton.set(Design.state.button.default)
-         }
-         .onFail { (text: String) in
-            slf?.userNameInputModel.models.right.set_text(text)
-            slf?.getCodeButton.set(Design.state.button.inactive)
-         }
-
-      // setup get code button reaction
-      getCodeButton
-         .onEvent(\.didTap)
-         .doNext(work: works.authByName)
-         .onSuccess {
-            slf?.setMode(\.inputSmsCode)
-         }
-         .onFail {
-            slf?.smsCodeInputModel.set_hidden(true)
-//            weakSelf?.badgeModel.changeState(to: BadgeState.error)
-         }
-   }
-
-   func configureSmsCodeWorks() {
-      weak var slf = self
-      let works = works
-
-      // setup input field reactions
-      smsCodeInputModel.models.right
-         //
-         .onEvent(\.didEditingChanged)
-         //
-         .doNext(work: works.smsCodeInputParse)
-         .onSuccess {
-            slf?.smsCodeInputModel.models.right.set(.text($0))
-            slf?.loginButton.set(Design.state.button.default)
-         }.onFail { (text: String) in
-            slf?.smsCodeInputModel.models.right.set(.text(text))
-            slf?.loginButton.set(Design.state.button.inactive)
-         }
-
-      // setup login button reactions
-      loginButton
-         //
-         .onEvent(\.didTap)
-         //
-         .doNext(work: works.verifyCode)
-         .onFail {
-            print("Verify api error")
-            // weakSelf?.badgeModel.changeState(to: BadgeState.error)
-         }
-         .doNext(work: works.saveLoginResults)
-         .onSuccess {
-            Asset.router?.route(\.main, navType: .present, payload: ())
-         }
-         .onFail {
-            print("Save login results to persistence error")
-            // weakSelf?.badgeModel.changeState(to: BadgeState.error)
-         }
-   }
-}
-
-// TODO: - Этот слой надо выносить из сцены
 
 // MARK: - Configure presenting
 
@@ -160,26 +82,3 @@ private extension LoginScene {
          .header.set_text(Design.Text.title.autorisation)
    }
 }
-
-// MARK: - Configure scene states
-
-private extension LoginScene {
-   func configureSceneStates() {
-      weak var slf = self
-
-      onModeChanged(\.inputUserName) {
-         slf?.smsCodeInputModel.set_hidden(true)
-         slf?.userNameInputModel.set_hidden(false)
-         slf?.loginButton.set_hidden(true)
-         slf?.getCodeButton.set_hidden(false)
-      }
-      onModeChanged(\.inputSmsCode) {
-         slf?.smsCodeInputModel.set_hidden(false)
-         slf?.loginButton.set_hidden(false)
-         slf?.getCodeButton.set_hidden(true)
-      }
-      setMode(\.inputUserName)
-   }
-}
-
-extension LoginScene: SceneModable {}
