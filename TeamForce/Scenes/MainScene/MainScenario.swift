@@ -6,7 +6,7 @@
 //
 
 
-final class MainScenario<Asset: AssetProtocol>: BaseScenario<MainViewModels<Asset>, MainWorks<Asset>> {
-
-
-}
+//final class MainScenario<Asset: AssetProtocol>: BaseScenario<MainViewModels<Asset>, MainWorks<Asset>> {
+//
+//
+//}

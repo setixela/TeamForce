@@ -7,55 +7,60 @@
 
 import ReactiveWorks
 
+typealias VoidWork<T> = Work<Void, T>
 
-final class LoginScenario<Asset: AssetProtocol>: BaseScenario<LoginViewModels<Asset>, LoginWorks<Asset>>
+struct LoginScenarioEvents {
+   let userNameStringEvent: VoidWork<String>
+   let smsCodeStringEvent: VoidWork<String>
+   let getCodeButtonEvent: VoidWork<Void>
+   let loginButtonEvent: VoidWork<Void>
+}
+
+final class LoginScenario<Asset: AssetProtocol>:
+   BaseScenario<
+      LoginScenarioEvents,
+      LoginSceneState,
+      LoginBackstage<Asset>
+   >
 {
-
-   override func start() {
+   override func start(stateMachineFunc: @escaping (LoginSceneState) -> Void) {
       let works = works
-      let vModels = vModels
 
       // setup input field reactions
-      vModels.userNameInputModel.textField
-         .onEvent(\.didEditingChanged)
+      events.userNameStringEvent
          .onSuccess {
-           //weakSelf?.badgeModel.changeState(to: BadgeState.default)
+            // weakSelf?.badgeModel.changeState(to: BadgeState.default)
          }
          .doNext(work: works.loginNameInputParse)
          .onSuccess {
-            vModels.setState(.nameInputParseSuccess($0))
+            stateMachineFunc(.nameInputParseSuccess($0))
          }
          .onFail { (text: String) in
-            vModels.setState(.smsInputParseError(text))
+            stateMachineFunc(.smsInputParseError(text))
          }
 
       // setup get code button reaction
-      vModels.getCodeButton
-         .onEvent(\.didTap)
+      events.getCodeButtonEvent
          .doNext(work: works.authByName)
          .onSuccess {
-            vModels.setState(.inputSmsCode)
+            stateMachineFunc(.inputSmsCode)
          }
          .onFail {
-            vModels.setState(.inputUserName)
+            stateMachineFunc(.inputUserName)
          }
 
       // setup input field reactions
-      vModels.smsCodeInputModel.textField
-         //
-         .onEvent(\.didEditingChanged)
+      events.smsCodeStringEvent
          //
          .doNext(work: works.smsCodeInputParse)
          .onSuccess {
-            vModels.setState(.smsInputParseSuccess($0))
+            stateMachineFunc(.smsInputParseSuccess($0))
          }.onFail { (text: String) in
-            vModels.setState(.smsInputParseError(text))
+            stateMachineFunc(.smsInputParseError(text))
          }
 
       // setup login button reactions
-      vModels.loginButton
-         //
-         .onEvent(\.didTap)
+      events.loginButtonEvent
          //
          .doNext(work: works.verifyCode)
          .onFail {

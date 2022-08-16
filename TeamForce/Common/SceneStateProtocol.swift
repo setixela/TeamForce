@@ -9,5 +9,6 @@ import Foundation
 
 protocol SceneStateProtocol {
    associatedtype SceneState
+   
    func setState(_ state: SceneState)
 }

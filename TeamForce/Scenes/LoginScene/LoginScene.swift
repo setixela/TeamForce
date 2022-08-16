@@ -19,15 +19,30 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
 
    private lazy var viewModels = LoginViewModels<Asset>()
 
-   lazy var scenario = LoginScenario(viewModels: viewModels,
-                                     works: LoginWorks<Asset>())
+   lazy var scenario = LoginScenario(
+      works: LoginBackstage<Asset>(),
+      events: LoginScenarioEvents(
+         userNameStringEvent: viewModels.userNameInputModel.textField.onEvent(\.didEditingChanged),
+         smsCodeStringEvent: viewModels.smsCodeInputModel.textField.onEvent(\.didEditingChanged),
+         getCodeButtonEvent: viewModels.getCodeButton.onEvent(\.didTap),
+         loginButtonEvent: viewModels.loginButton.onEvent(\.didTap)
+      )
+   )
 
    // MARK: - Start
 
    override func start() {
       configure()
+
+      let fun = viewModels.setState
+      test(fun)
+
       viewModels.setState(.inputUserName)
       scenario.start()
+   }
+
+   func test(_ fun: @escaping (LoginSceneState) -> Void) {
+      fun(.inputUserName)
    }
 }
 

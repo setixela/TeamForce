@@ -18,7 +18,7 @@ protocol LoginWorksProtocol: Assetable {
    var saveLoginResults: Work<VerifyResultBody, Void> { get }
 }
 
-final class LoginWorks<Asset: AssetProtocol>: BaseSceneWorks<LoginWorks.Temp, Asset>, LoginWorksProtocol {
+final class LoginBackstage<Asset: AssetProtocol>: BaseSceneWorks<LoginBackstage.Temp, Asset>, LoginWorksProtocol {
    //
    private lazy var useCase = Asset.apiUseCase
 
@@ -37,7 +37,6 @@ final class LoginWorks<Asset: AssetProtocol>: BaseSceneWorks<LoginWorks.Temp, As
    lazy var authByName = Work<Void, AuthResult> { [weak self] work in
       self?.useCase.login.work
          .doAsync(Self.store.loginName)
-         .doAsync()
          .onSuccess {
             Self.store.authResult = $0
             work.success(result: $0)

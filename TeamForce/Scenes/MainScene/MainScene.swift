@@ -22,13 +22,13 @@ final class MainScene<Asset: AssetProtocol>:
       DoubleStacksBrandedVM<Asset.Design>,
       Asset,
       Void
-   >,
-   Scenaryable
+   >//,
+ ///  Scenaryable
 {
    // MARK: - Balance View Model
-
-   lazy var scenario = MainScenario<Asset>(viewModels: MainViewModels<Asset>(),
-                                           works: MainWorks<Asset>())
+//
+//   lazy var scenario = MainScenario<Asset>(viewModels: MainViewModels<Asset>(),
+//                                           works: MainWorks<Asset>())
 
    private lazy var balanceButton = Design.button.tabBar
       .set(.title("Баланс"))
@@ -50,73 +50,73 @@ final class MainScene<Asset: AssetProtocol>:
    // MARK: - Start
 
    override func start() {
-      sideBarModel.start()
-
-      mainVM
-         .header.set_text(Design.Text.title.canceled)
-
-      menuButton
-         .sendEvent(\.initWithImage, Design.icon.sideMenu)
-
-      presentModel(scenario.vModels.balanceViewModel)
-
-      mainVM.models.main
-         .set(.models([
-            balanceButton,
-            transactButton,
-            historyButton
-         ]))
-
-      weak var weakSelf = self
-
-      balanceButton
-         .onEvent(\.didTap) { [weak self] in
-            self?.presentModel(self?.scenario.vModels.balanceViewModel)
-         }
-
-      transactButton
-         .onEvent(\.didTap) { [weak self] in
-            self?.presentModel(self?.scenario.vModels.transactViewModel)
-         }
-
-      historyButton
-         .onEvent(\.didTap) { [weak self] in
-            self?.presentModel(self?.scenario.vModels.historyViewModel)
-         }
-
-      menuButton
-         .onEvent(\.initiated) { item in
-            weakSelf?.vcModel?.sendEvent(\.setLeftBarItems, [item])
-         }
-         .onEvent(\.didTap) {
-            guard let self = weakSelf else { return }
-
-            self.sideBarModel.sendEvent(\.presentOnScene, self.mainVM.view)
-         }
-
-      configureSideBarItemsEvents()
+//      sideBarModel.start()
+//
+//      mainVM
+//         .header.set_text(Design.Text.title.canceled)
+//
+//      menuButton
+//         .sendEvent(\.initWithImage, Design.icon.sideMenu)
+//
+//      presentModel(scenario.vModels.balanceViewModel)
+//
+//      mainVM.models.main
+//         .set(.models([
+//            balanceButton,
+//            transactButton,
+//            historyButton
+//         ]))
+//
+//      weak var weakSelf = self
+//
+//      balanceButton
+//         .onEvent(\.didTap) { [weak self] in
+//            self?.presentModel(self?.scenario.vModels.balanceViewModel)
+//         }
+//
+//      transactButton
+//         .onEvent(\.didTap) { [weak self] in
+//            self?.presentModel(self?.scenario.vModels.transactViewModel)
+//         }
+//
+//      historyButton
+//         .onEvent(\.didTap) { [weak self] in
+//            self?.presentModel(self?.scenario.vModels.historyViewModel)
+//         }
+//
+//      menuButton
+//         .onEvent(\.initiated) { item in
+//            weakSelf?.vcModel?.sendEvent(\.setLeftBarItems, [item])
+//         }
+//         .onEvent(\.didTap) {
+//            guard let self = weakSelf else { return }
+//
+//            self.sideBarModel.sendEvent(\.presentOnScene, self.mainVM.view)
+//         }
+//
+//      configureSideBarItemsEvents()
    }
 
    private func configureSideBarItemsEvents() {
-      weak var weakSelf = self
-
-      sideBarModel.item1
-         .onEvent(\.didTap) {
-            weakSelf?.sideBarModel.sendEvent(\.hide)
-            weakSelf?.presentModel(weakSelf?.scenario.vModels.balanceViewModel)
-         }
-
-      sideBarModel.item2
-         .onEvent(\.didTap) {
-            weakSelf?.sideBarModel.sendEvent(\.hide)
-            weakSelf?.presentModel(weakSelf?.scenario.vModels.transactViewModel)
-         }
-
-      sideBarModel.item3
-         .onEvent(\.didTap) {
-            weakSelf?.sideBarModel.sendEvent(\.hide)
-            weakSelf?.presentModel(weakSelf?.scenario.vModels.historyViewModel)
-         }
+//      weak var weakSelf = self
+//
+//      sideBarModel.item1
+//         .onEvent(\.didTap) {
+//            weakSelf?.sideBarModel.sendEvent(\.hide)
+//            weakSelf?.presentModel(weakSelf?.scenario.vModels.balanceViewModel)
+//         }
+//
+//      sideBarModel.item2
+//         .onEvent(\.didTap) {
+//            weakSelf?.sideBarModel.sendEvent(\.hide)
+//            weakSelf?.presentModel(weakSelf?.scenario.vModels.transactViewModel)
+//         }
+//
+//      sideBarModel.item3
+//         .onEvent(\.didTap) {
+//            weakSelf?.sideBarModel.sendEvent(\.hide)
+//            weakSelf?.presentModel(weakSelf?.scenario.vModels.historyViewModel)
+//         }
    }
 }
 

@@ -49,7 +49,7 @@
 		1953DE88287B4574000DC537 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1953DE87287B4574000DC537 /* Fonts.swift */; };
 		1953DE8D287B4752000DC537 /* TypographyElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1953DE8C287B4752000DC537 /* TypographyElements.swift */; };
 		195870F228A8C8040075D505 /* KeyPathMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 195870F128A8C8040075D505 /* KeyPathMaker.swift */; };
-		1959F27428AA8E9700DEEE5C /* LoginWorks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1959F27328AA8E9700DEEE5C /* LoginWorks.swift */; };
+		1959F27428AA8E9700DEEE5C /* LoginBackstage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1959F27328AA8E9700DEEE5C /* LoginBackstage.swift */; };
 		1967509D286491190019A6DE /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1967509C286491190019A6DE /* Buttons.swift */; };
 		1967509F286492780019A6DE /* Labels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1967509E286492780019A6DE /* Labels.swift */; };
 		196750A22865169C0019A6DE /* DigitalThanksScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196750A12865169C0019A6DE /* DigitalThanksScene.swift */; };
@@ -110,7 +110,7 @@
 		19D5DC3A289D682700ACC440 /* Anchorage in Frameworks */ = {isa = PBXBuildFile; productRef = 19D5DC39289D682700ACC440 /* Anchorage */; };
 		19D84E2F28ABD39C00418B9E /* MainScenario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D84E2E28ABD39C00418B9E /* MainScenario.swift */; };
 		19D84E3128ABD3AA00418B9E /* MainWorks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D84E3028ABD3AA00418B9E /* MainWorks.swift */; };
-		19D84E3328AC077200418B9E /* LoginPresent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D84E3228AC077200418B9E /* LoginPresent.swift */; };
+		19D84E3328AC077200418B9E /* LoginActors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D84E3228AC077200418B9E /* LoginActors.swift */; };
 		19DD3D95288766860085CDA8 /* LabelCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19DD3D94288766860085CDA8 /* LabelCellModel.swift */; };
 		19DD3D97288A0A8C0085CDA8 /* CoverViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19DD3D96288A0A8C0085CDA8 /* CoverViewModel.swift */; };
 		19E9F30F28AC14D100AD951F /* SceneStateProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E9F30E28AC14D100AD951F /* SceneStateProtocol.swift */; };
@@ -208,7 +208,7 @@
 		1953DE87287B4574000DC537 /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
 		1953DE8C287B4752000DC537 /* TypographyElements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypographyElements.swift; sourceTree = "<group>"; };
 		195870F128A8C8040075D505 /* KeyPathMaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyPathMaker.swift; sourceTree = "<group>"; };
-		1959F27328AA8E9700DEEE5C /* LoginWorks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginWorks.swift; sourceTree = "<group>"; };
+		1959F27328AA8E9700DEEE5C /* LoginBackstage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginBackstage.swift; sourceTree = "<group>"; };
 		1967509C286491190019A6DE /* Buttons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Buttons.swift; sourceTree = "<group>"; };
 		1967509E286492780019A6DE /* Labels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Labels.swift; sourceTree = "<group>"; };
 		196750A12865169C0019A6DE /* DigitalThanksScene.swift */ = {isa = PBXFileReference; indentWidth = 3; lastKnownFileType = sourcecode.swift; path = DigitalThanksScene.swift; sourceTree = "<group>"; tabWidth = 3; };
@@ -265,7 +265,7 @@
 		19D08360286F430B00F75E4A /* Designable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Designable.swift; sourceTree = "<group>"; };
 		19D84E2E28ABD39C00418B9E /* MainScenario.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScenario.swift; sourceTree = "<group>"; };
 		19D84E3028ABD3AA00418B9E /* MainWorks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWorks.swift; sourceTree = "<group>"; };
-		19D84E3228AC077200418B9E /* LoginPresent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPresent.swift; sourceTree = "<group>"; };
+		19D84E3228AC077200418B9E /* LoginActors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginActors.swift; sourceTree = "<group>"; };
 		19DD3D94288766860085CDA8 /* LabelCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelCellModel.swift; sourceTree = "<group>"; };
 		19DD3D96288A0A8C0085CDA8 /* CoverViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoverViewModel.swift; sourceTree = "<group>"; };
 		19E9F30E28AC14D100AD951F /* SceneStateProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneStateProtocol.swift; sourceTree = "<group>"; };
@@ -557,8 +557,8 @@
 			children = (
 				196750A5286516F40019A6DE /* LoginScene.swift */,
 				19BD2A8628ABB35C00FCC00A /* LoginScenario.swift */,
-				19D84E3228AC077200418B9E /* LoginPresent.swift */,
-				1959F27328AA8E9700DEEE5C /* LoginWorks.swift */,
+				19D84E3228AC077200418B9E /* LoginActors.swift */,
+				1959F27328AA8E9700DEEE5C /* LoginBackstage.swift */,
 			);
 			path = LoginScene;
 			sourceTree = "<group>";
@@ -1027,7 +1027,7 @@
 				1952EA6528A7115D003F7852 /* StackStateBuilder.swift in Sources */,
 				19D0835B286F424000F75E4A /* LabelIconHorizontalModel.swift in Sources */,
 				198FE1CE2899BB8E00BAF1A5 /* LoadBalanceUseCase.swift in Sources */,
-				1959F27428AA8E9700DEEE5C /* LoginWorks.swift in Sources */,
+				1959F27428AA8E9700DEEE5C /* LoginBackstage.swift in Sources */,
 				196750B22865190D0019A6DE /* ImageViewModel.swift in Sources */,
 				63D419E928A5109E0024E22C /* GetUsersListUseCase.swift in Sources */,
 				63D419ED28AA56570024E22C /* GetFeedUseCase.swift in Sources */,
@@ -1062,7 +1062,7 @@
 				19AE3AF22869230C00A0C6E4 /* AuthApiWorker.swift in Sources */,
 				195870F228A8C8040075D505 /* KeyPathMaker.swift in Sources */,
 				19017B6B28A6989000B06345 /* TitleSubtitleY.swift in Sources */,
-				19D84E3328AC077200418B9E /* LoginPresent.swift in Sources */,
+				19D84E3328AC077200418B9E /* LoginActors.swift in Sources */,
 				19D08351286F401000F75E4A /* SideBarUserModel.swift in Sources */,
 				19D0835F286F42C000F75E4A /* FrameCellModel.swift in Sources */,
 				19466E01289FE28C0052F0AB /* TitleSubtitleModel.swift in Sources */,

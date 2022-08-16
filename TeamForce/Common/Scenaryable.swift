@@ -8,33 +8,38 @@
 import ReactiveWorks
 
 protocol Scenaryable {
-   associatedtype Scenery: ScenarioProtocol
+   associatedtype Scenery: Scenario
 
    var scenario: Scenery { get }
 }
 
-// Сокращение ДЖЕНЕРИКОВ с в стиле Пятачка: ДЖНРК
+protocol Scenario {
+   associatedtype Works: SceneWorks
+   associatedtype Events
+   associatedtype State
 
-protocol ScenarioProtocol {
-   associatedtype VWMDLS
-   associatedtype WRKS: SceneWorks
+   init(works: Works, events: Events)
 
-   var works: WRKS { get }
-   var vModels: VWMDLS { get }
+   var events: Events { get }
 
-   init(viewModels: VWMDLS, works: WRKS)
+   func start(stateMachineFunc: @escaping (State) -> Void)
 }
 
-class BaseScenario<VWMDLS, WRKS: SceneWorks>: BaseModel, ScenarioProtocol {
-   var works: WRKS
-   var vModels: VWMDLS
+class BaseScenario<Events, State, Works: SceneWorks>: BaseModel, Scenario {
+   var works: Works
+   var events: Events
 
-   required init(viewModels: VWMDLS, works: WRKS) {
-      self.vModels = viewModels
+   required init(works: Works, events: Events) {
+      self.events = events
       self.works = works
    }
 
    required init() {
       fatalError("init() has not been implemented")
    }
+
+   open func start(stateMachineFunc: @escaping (State) -> Void) {
+
+   }
 }
+
