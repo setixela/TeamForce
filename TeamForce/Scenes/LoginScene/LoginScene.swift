@@ -48,7 +48,7 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
    private lazy var bottomPanel = StackModel()
       .set(Design.state.stack.bottomShadowedPanel)
       .set_models([
-         userNameInputModel,
+         userNameInputModel, // перенос на стек короче автоматически 2 слоя
          smsCodeInputModel,
          getCodeButton,
          loginButton,
@@ -150,33 +150,22 @@ private extension LoginScene {
 
 private extension LoginScene {
    func configure() {
-      mainVM.setMain {
-         $0.set_models([
-            // spacer
-            Grid.x16.spacer,
-            // logo
-            BrandLogoIcon<Design>(),
-            // spacer
-            Grid.x16.spacer,
-            // title
-            Design.label.headline5
-               .set_text(Text.title.autorisation)
-               .set_color(Design.color.textInvert),
-            // spacer
-            Grid.x36.spacer
-         ])
-      } setDown: {
-         $0.set_models([
-            // обернул в еще один стек, чтобы сделать offset с тенью
-            bottomPanel
-         ])
-      }
+      mainVM
+         .setMain { _ in } setDown: {
+            $0.set_models([
+               bottomPanel
+            ])
+         }
+         .header.set_text(Design.Text.title.autorisation)
    }
 }
 
 final class DoubleStacksBrandedVM<Design: DesignProtocol>: Combos<SComboMD<StackModel, StackModel>>,
    Designable
 {
+   lazy var header = Design.label.headline5
+      .set_color(Design.color.textInvert)
+
    required init() {
       super.init()
 
@@ -185,6 +174,13 @@ final class DoubleStacksBrandedVM<Design: DesignProtocol>: Combos<SComboMD<Stack
             .set(Design.state.stack.default)
             .set_backColor(Design.color.backgroundBrand)
             .set_alignment(.leading)
+            .set_models([
+               Grid.x16.spacer,
+               BrandLogoIcon<Design>(),
+               Grid.x16.spacer,
+               header,
+               Grid.x36.spacer
+            ])
       } setDown: {
          $0
             .set_backColor(Design.color.background)
