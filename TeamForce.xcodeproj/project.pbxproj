@@ -113,6 +113,7 @@
 		19D84E3328AC077200418B9E /* LoginPresent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D84E3228AC077200418B9E /* LoginPresent.swift */; };
 		19DD3D95288766860085CDA8 /* LabelCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19DD3D94288766860085CDA8 /* LabelCellModel.swift */; };
 		19DD3D97288A0A8C0085CDA8 /* CoverViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19DD3D96288A0A8C0085CDA8 /* CoverViewModel.swift */; };
+		19E9F30F28AC14D100AD951F /* SceneStateProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E9F30E28AC14D100AD951F /* SceneStateProtocol.swift */; };
 		19ECD54128623D1F001765F6 /* LabelModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19ECD54028623D1F001765F6 /* LabelModel.swift */; };
 		19ECD54328623D30001765F6 /* StackModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19ECD54228623D30001765F6 /* StackModel.swift */; };
 		19ECD54828623D9C001765F6 /* CustomViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19ECD54728623D9C001765F6 /* CustomViews.swift */; };
@@ -267,6 +268,7 @@
 		19D84E3228AC077200418B9E /* LoginPresent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPresent.swift; sourceTree = "<group>"; };
 		19DD3D94288766860085CDA8 /* LabelCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelCellModel.swift; sourceTree = "<group>"; };
 		19DD3D96288A0A8C0085CDA8 /* CoverViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoverViewModel.swift; sourceTree = "<group>"; };
+		19E9F30E28AC14D100AD951F /* SceneStateProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneStateProtocol.swift; sourceTree = "<group>"; };
 		19ECD54028623D1F001765F6 /* LabelModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelModel.swift; sourceTree = "<group>"; };
 		19ECD54228623D30001765F6 /* StackModel.swift */ = {isa = PBXFileReference; indentWidth = 3; lastKnownFileType = sourcecode.swift; path = StackModel.swift; sourceTree = "<group>"; tabWidth = 3; };
 		19ECD54728623D9C001765F6 /* CustomViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomViews.swift; sourceTree = "<group>"; };
@@ -762,6 +764,7 @@
 			isa = PBXGroup;
 			children = (
 				1952EA6A28A71399003F7852 /* DesignElements.swift */,
+				19E9F30E28AC14D100AD951F /* SceneStateProtocol.swift */,
 				19A8229728A9305D0081D385 /* UIEdgeInsets+Padding.swift */,
 				19D08360286F430B00F75E4A /* Designable.swift */,
 				19C1E9A228610E4E00E7976D /* MainRouter.swift */,
@@ -1051,6 +1054,7 @@
 				19D84E3128ABD3AA00418B9E /* MainWorks.swift in Sources */,
 				6368D8282891E7C40049EEAB /* UserDefault+helpers.swift in Sources */,
 				19017B6928A6986F00B06345 /* TitleSubtitleX.swift in Sources */,
+				19E9F30F28AC14D100AD951F /* SceneStateProtocol.swift in Sources */,
 				63E1916D2889519E000FD312 /* BadgeModel.swift in Sources */,
 				19C1E9A328610E4E00E7976D /* MainRouter.swift in Sources */,
 				19A73BEB28A4510E000B74CF /* BadgedViewModel.swift in Sources */,

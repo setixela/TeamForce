@@ -23,10 +23,10 @@ final class LoginScenario<Asset: AssetProtocol>: BaseScenario<LoginViewModels<As
          }
          .doNext(work: works.loginNameInputParse)
          .onSuccess {
-            vModels.setMode(.nameInputParseSuccess($0))
+            vModels.setState(.nameInputParseSuccess($0))
          }
          .onFail { (text: String) in
-            vModels.setMode(.smsInputParseError(text))
+            vModels.setState(.smsInputParseError(text))
          }
 
       // setup get code button reaction
@@ -34,10 +34,10 @@ final class LoginScenario<Asset: AssetProtocol>: BaseScenario<LoginViewModels<As
          .onEvent(\.didTap)
          .doNext(work: works.authByName)
          .onSuccess {
-            vModels.setMode(.inputSmsCode)
+            vModels.setState(.inputSmsCode)
          }
          .onFail {
-            vModels.setMode(.inputUserName)
+            vModels.setState(.inputUserName)
          }
 
       // setup input field reactions
@@ -47,9 +47,9 @@ final class LoginScenario<Asset: AssetProtocol>: BaseScenario<LoginViewModels<As
          //
          .doNext(work: works.smsCodeInputParse)
          .onSuccess {
-            vModels.setMode(.smsInputParseSuccess($0))
+            vModels.setState(.smsInputParseSuccess($0))
          }.onFail { (text: String) in
-            vModels.setMode(.smsInputParseError(text))
+            vModels.setState(.smsInputParseError(text))
          }
 
       // setup login button reactions

@@ -17,16 +17,16 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
 >, Scenaryable {
    //
 
+   private lazy var viewModels = LoginViewModels<Asset>()
+
    lazy var scenario = LoginScenario(viewModels: viewModels,
                                      works: LoginWorks<Asset>())
 
    // MARK: - Start
 
-   private lazy var viewModels = LoginViewModels<Asset>()
-
    override func start() {
       configure()
-      viewModels.setMode(.inputUserName)
+      viewModels.setState(.inputUserName)
       scenario.start()
    }
 }
@@ -47,5 +47,3 @@ private extension LoginScene {
          ])
    }
 }
-
-

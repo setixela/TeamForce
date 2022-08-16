@@ -9,15 +9,15 @@ import ReactiveWorks
 
 // MARK: - View models
 
-struct LoginViewModels<Asset: AssetProtocol>: Assetable {
-   let userNameInputModel: IconTextField<Design> = .init()
+final class LoginViewModels<Asset: AssetProtocol>: Assetable {
+   lazy var userNameInputModel: IconTextField<Design> = .init()
       .setMain {
          $0.set_image(Design.icon.user)
       } setRight: {
          $0.set_placeholder(Text.title.userName)
       }
 
-   let smsCodeInputModel: IconTextField<Design> = .init()
+   lazy var smsCodeInputModel: IconTextField<Design> = .init()
       .setMain {
          $0.set_image(Design.icon.lock)
       } setRight: {
@@ -25,10 +25,10 @@ struct LoginViewModels<Asset: AssetProtocol>: Assetable {
       }
       .set_hidden(true)
 
-   let getCodeButton: ButtonModel = Design.button.inactive
+   lazy var getCodeButton: ButtonModel = Design.button.inactive
       .set_title(Text.button.getCodeButton)
 
-   let loginButton: ButtonModel = .init(Design.state.button.inactive)
+   lazy var loginButton: ButtonModel = .init(Design.state.button.inactive)
       .set(.title(Text.button.enterButton))
 }
 
@@ -44,9 +44,9 @@ enum LoginSceneState {
    case smsInputParseError(String)
 }
 
-extension LoginViewModels {
-   func setMode(_ mode: LoginSceneState) {
-      switch mode {
+extension LoginViewModels: SceneStateProtocol {
+   func setState(_ state: LoginSceneState) {
+      switch state {
       case .inputUserName:
          smsCodeInputModel.set_hidden(true)
          userNameInputModel.set_hidden(false)
