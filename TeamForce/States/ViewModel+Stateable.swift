@@ -91,7 +91,7 @@ extension ViewModelProtocol where Self: Stateable, View: UIStackView {
       case .models(let value):
          set_models(value)
       case .backView(let value, let value2):
-         setBackView(value, inset: value2)
+         set_backView(value, inset: value2)
       case .backImage(let image):
          set_backImage(image)
 

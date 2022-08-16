@@ -79,9 +79,10 @@ final class TripleStacksBrandedVM<Design: DesignProtocol>:
       } setDown2: {
          $0
             //            .set(Design.state.stack.bottomShadowedPanel)
-            .set_backColor(Design.color.background)
-            .set_padding(.top(-Grid.x16.value))
-            .set_padBottom(-Grid.x32.value)
+            .set_backColor(Design.color.backgroundBrand)
+//            .set_padding(.top(-Grid.x16.value))
+//            .set_padBottom(-Grid.x32.value)
+            .set_axis(.horizontal)
             .subModel
             .set(Design.state.stack.bottomShadowedPanel)
       }

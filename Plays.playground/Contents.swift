@@ -9,7 +9,7 @@ func example(_ name: String = "", action: () -> Void) {
    action()
 }
 
-if false {
+if true {
    let nc = UINavigationController()
    nc.view.frame = CGRect(x: 0, y: 0, width: 360, height: 640)
    PlaygroundPage.current.liveView = nc
@@ -30,190 +30,95 @@ if false {
    PlaygroundPage.current.needsIndefiniteExecution = true
 }
 
-let historyModel = LoginScene<ProductionAsset>()
+let historyModel = TestScene<ProductionAsset>()
 
-final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
+final class TestScene<Asset: AssetProtocol>: BaseSceneModel<
    DefaultVCModel,
-   Combos<SComboMD<StackModel, StackModel>>,
+   TripleStacksBrandedVM<Asset.Design>,
    Asset,
    Void
 > {
+   let panelBack = ImageViewModel()
+      .set_image(Asset.Design.icon.bottomPanel)
+
    // MARK: - View Models
 
-   private let nextButton = Design.button.inactive
-      .setTitle(Text.button.getCodeButton)
-
-   private let badgeModel = BadgeModel<Asset>()
-
-   private let loginTextField = Combos { (model: ImageViewModel) in
-      model
-         .setSize(.square(Grid.x24.value))
-         .setImage(Design.icon.user)
-   } setRight: { (model: TextFieldModel<Design>) in
-      model
-         .set(Design.state.textField.default)
-      // TextFieldModel<Design>(Design.state.textField.default)
-      // .setPlaceholder("")
-   }
-
-//   TextFieldModel<Design>(Design.state.textField.default)
-//      .setPlaceholder("")
-
-   private lazy var bottomPanel = StackModel()
-      .set(Design.state.stack.bottomPanel)
-      .setCornerRadius(Design.params.cornerRadiusMedium)
-      .setShadow(.init(radius: 8, color: Design.color.iconContrast, opacity: 0.33))
-      .setModels([
-         Grid.x16.spacer,
-         //  badgeModel,
-         loginTextField,
-         nextButton,
-         Grid.xxx.spacer
-      ])
-
-   // MARK: - Use Cases
-
-   private lazy var useCase = Asset.apiUseCase
-
-   // MARK: - Private
-
-   private let telegramNickParser = TelegramNickCheckerModel()
-   // private var loginName: String?
-
-   // MARK: - Start
-
    override func start() {
-      configure()
+      mainVM.footerStack
+         // .set_models([panelBack])
 
-      weak var weakSelf = self
+         .set_axis(.horizontal)
+         .set_distribution(.equalCentering)
+         .set_alignment(.bottom)
+         .set_models([
+            Grid.xxx.spacer,
+            ImageViewModel()
+               .set_image(Design.icon.tabBarMainButton)
+               .set_contentMode(.scaleAspectFit)
+               .set_size(.square(60))
+               //.set_backColor(.green)
+            ,
+            Grid.xxx.spacer
+         ])
+         .set_padding(.init(top: -36, left: 0, bottom:36, right: 0))
+         .set_height(88)
 
-      var loginName: String?
-
-      badgeModel
-         .setLabels(title: Text.title.userName,
-                    placeholder: "@" + Text.title.userName,
-                    error: Text.title.wrongUsername)
-
-      nextButton
-         .onEvent(\.didTap)
-         .doInput {
-            loginName
-         }
-         .onFail {
-            print("login name is nil")
-         }
-         .doNext(usecase: useCase.login)
-         .onSuccess {
-            Asset.router?.route(\.verifyCode, navType: .push, payload: $0)
-         }
-         .onFail {
-            weakSelf?.badgeModel.changeState(to: BadgeState.error)
-         }
-
-      badgeModel.textFieldModel
-         .onEvent(\.didEditingChanged)
-         .doNext {
-            weakSelf?.badgeModel.changeState(to: BadgeState.default)
-         }
-         .doNext(worker: telegramNickParser)
-         .onSuccess { text in
-            loginName = text // String(text.dropFirst())
-            weakSelf?.badgeModel.textFieldModel
-               .setText(text)
-            weakSelf?.nextButton
-               .set(Design.state.button.default)
-         }
-         .onFail { (text: String) in
-            loginName = nil
-            weakSelf?.badgeModel.textFieldModel
-               .setText(text)
-            weakSelf?.nextButton
-               .set(Design.state.button.inactive)
-         }
+//         .set_backImage(Asset.Design.icon.bottomPanel, contentMode: .scaleToFill)
    }
+}
 
-   private func configure() {
-      mainVM.setMain { topStack in
-         topStack
+final class TripleStacksBrandedVM<Design: DesignProtocol>:
+   Combos<SComboMDD<StackModel, WrappedY<StackModel>, WrappedY<StackModel>>>,
+   Designable
+{
+   lazy var header = Design.label.headline5
+      .set_color(Design.color.textInvert)
+
+   var headerStack: StackModel { models.main }
+   var bodyStack: StackModel { models.down.subModel }
+   var footerStack: StackModel { models.down2.subModel }
+
+   required init() {
+      super.init()
+
+      set_backColor(.lightGray)
+      setMain {
+         $0
             .set(Design.state.stack.default)
-            .setBackColor(Design.color.backgroundBrand)
-            .setAlignment(.leading)
-            .setModels([
-               // spacer
+            .set_backColor(Design.color.backgroundBrand)
+            .set_alignment(.leading)
+            .set_models([
                Grid.x16.spacer,
-               // logo
                BrandLogoIcon<Design>(),
-               // spacer
                Grid.x16.spacer,
-               // title
-               Design.label.headline5
-                  .setText(Text.title.autorisation)
-                  .setColor(Design.color.textInvert),
-               // spacer
+               header,
                Grid.x36.spacer
             ])
-      } setDown: { bottomStack in
-         bottomStack
-            // чтобы сделать offset с тенью
-            .setPadding(.top(-Grid.x16.value))
-            .setModels([
-               // обернули в еще один стек, чтобы сделать offset с тенью
-               bottomPanel
-            ])
+      } setDown: {
+         $0
+            //            .set(Design.state.stack.bottomShadowedPanel)
+            .set_backColor(Design.color.background)
+            .set_padding(.top(-Grid.x16.value))
+            .set_padBottom(-Grid.x64.value)
+            .subModel
+            .set(Design.state.stack.bottomShadowedPanel)
+      } setDown2: {
+         print($0.view.layoutMargins)
+         $0
+        //    .set_backColor(.red)
+            .set_backImage(Design.icon.bottomPanel, contentMode: .scaleToFill)
+//            .set_height(100)
+
+         //            .set(Design.state.stack.bottomShadowedPanel)
+//           .set_backColor(Design.color.transparent)
+          // .set_padding(.top(Grid.x16.value))
+            .set_shadow(.init(radius: 8, color: Design.color.iconContrast, opacity: 0.33))
+         //    .set_padBottom(-Grid.x32.value)
+
+         // .set_height(300)
+         // .set_backImage(Design.icon.bottomPanel, contentMode: .scaleToFill)
+         //  .subModel
+         // .set(Design.state.stack.bottomShadowedPanel)
       }
-   }
-}
-
-
-
-
-class TempStore: InitProtocol {
-   required init() {}
-
-   var tokens: (token: String, csrf: String) = ("", "")
-   var foundUsers: [FoundUser] = []
-   var recipientID = 0
-   var recipientUsername = ""
-
-   var inputAmountText = ""
-   var inputReasonText = ""
-}
-
-// static var tempStorage: TempStore = .init()
-var store: TempStore = .init()
-
-// MARK: - Works
-
-UnsafeTemper.initStore(for: TempStore.self)
-
-UnsafeTemper.store(for: TempStore.self)
-   .tokens.token = "A"
-
-print(UnsafeTemper.store(for: TempStore.self).tokens.token)
-
-enum UnsafeTemper {
-   private static var storage: [String: InitAnyObject] = [:]
-
-   static func initStore(for type: InitAnyObject.Type) {
-      let key = String(reflecting: type)
-      let new = type.init()
-
-      storage[key] = new
-   }
-
-   static func store<T: InitAnyObject>(for type: T.Type) -> T {
-      let key = String(reflecting: type)
-
-      guard let value = storage[key] as? T else {
-         fatalError()
-      }
-
-      return value
-   }
-
-   static func clearStore(for type: InitAnyObject.Type) {
-      let key = String(reflecting: type)
-
-      storage[key] = nil
    }
 }

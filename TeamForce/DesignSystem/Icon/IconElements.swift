@@ -39,4 +39,8 @@ protocol IconElements: InitProtocol, DesignElementable where DesignElement == UI
 
    var sendCoinIcon: DesignElement { get }
    var recieveCoinIcon: DesignElement { get }
+
+   // bottom panel
+   var bottomPanel: DesignElement { get }
+   var tabBarMainButton: DesignElement { get }
 }

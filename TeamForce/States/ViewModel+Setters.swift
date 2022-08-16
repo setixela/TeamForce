@@ -155,7 +155,7 @@ extension ViewModelProtocol where Self: Stateable, View: UIStackView {
       return self
    }
 
-   @discardableResult func setBackView(_ value: UIView, inset: UIEdgeInsets = .zero) -> Self {
+   @discardableResult func set_backView(_ value: UIView, inset: UIEdgeInsets = .zero) -> Self {
       view.insertSubview(value, at: 0)
       value.addAnchors.fitToViewInsetted(view, inset)
       return self
@@ -164,7 +164,7 @@ extension ViewModelProtocol where Self: Stateable, View: UIStackView {
    @discardableResult func set_backImage(_ value: UIImage, contentMode: UIImageView.ContentMode = .scaleAspectFill) -> Self {
       let imageView = PaddingImageView(image: value)
       imageView.contentMode = contentMode
-      setBackView(imageView)
+      set_backView(imageView)
       return self
    }
 

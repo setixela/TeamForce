@@ -43,9 +43,13 @@ struct IconBuilder: IconElements {
    var recieveCoinIcon: UIImage { make("recieve_coin_icon") }
    var sendCoinIcon: UIImage { make("send_coin_icon") }
 
+   var bottomPanel: UIImage { make("bottom_panel") }
 
-   //
-   private func make(_ name: String) -> UIImage {
+   var tabBarMainButton: UIImage { make("dt_tabbar_main_button") }
+}
+
+private extension IconBuilder {
+   func make(_ name: String) -> UIImage {
       UIImage(named: name) ?? {
          print("\n##### Image named: \(name) not found! #####\n")
          return UIImage()
