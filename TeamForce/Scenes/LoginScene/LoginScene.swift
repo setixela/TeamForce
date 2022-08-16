@@ -14,7 +14,7 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
    DoubleStacksBrandedVM<Asset.Design>,
    Asset,
    Void
->, WorkableModel, Scenario {
+>, Scenario {
    //
 
    lazy var scenario = LoginScenery(viewModels: LoginViewModels<Design>(
