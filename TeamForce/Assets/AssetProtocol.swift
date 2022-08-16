@@ -40,7 +40,8 @@ extension AssetProtocol {
          getUsersListApiWorker: GetUsersListApiWorker(apiEngine: service.apiEngine),
          getFeedsApiWorker: GetFeedsApiWorker(apiEngine: service.apiEngine),
          getPeriodsApiWorker: GetPeriodsApiWorker(apiEngine: service.apiEngine),
-         getStatByPeriodIdApiWorker: GetStatByPeriodIdApiWorker(apiEngine: service.apiEngine)
+         getStatByPeriodIdApiWorker: GetStatByPeriodIdApiWorker(apiEngine: service.apiEngine),
+         getTransactionsByPeriodApiWorker: GetTransactionsByPeriodApiWorker(apiEngine: service.apiEngine)
       )
    }
 }
