@@ -19,6 +19,7 @@ protocol LoginWorksProtocol {
 }
 
 final class LoginWorks<Asset: AssetProtocol>: BaseSceneWorks<LoginWorks.Temp, Asset>, LoginWorksProtocol {
+   //
    private lazy var useCase = Asset.apiUseCase
 
    private lazy var loginParser = TelegramNickCheckerModel()

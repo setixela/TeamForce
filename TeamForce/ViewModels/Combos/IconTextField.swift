@@ -12,6 +12,10 @@ final class IconTextField<Design: DesignProtocol>:
       ImageViewModel, TextFieldModel<Design>
    >>
 {
+
+   var textField: TextFieldModel<Design> { models.right }
+   var icon: ImageViewModel { models.main }
+
    required init() {
       super.init()
 

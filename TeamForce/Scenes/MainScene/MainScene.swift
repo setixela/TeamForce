@@ -23,23 +23,14 @@ final class MainScene<Asset: AssetProtocol>: BaseSceneModel<
    private lazy var balanceButton = Design.button.tabBar
       .set(.title("Баланс"))
       .set(.image(Design.icon.coinLine))
-      .onEvent(\.didTap) { [weak self] in
-         self?.presentModel(self?.balanceViewModel)
-      }
 
    private lazy var transactButton = Design.button.tabBar
       .set(.title("Новый перевод"))
       .set(.image(Design.icon.upload2Fill))
-      .onEvent(\.didTap) { [weak self] in
-         self?.presentModel(self?.transactViewModel)
-      }
 
    private lazy var historyButton = Design.button.tabBar
       .set(.title("История"))
       .set(.image(Design.icon.historyLine))
-      .onEvent(\.didTap) { [weak self] in
-         self?.presentModel(self?.historyViewModel)
-      }
 
    // MARK: - Side bar
 
@@ -68,6 +59,21 @@ final class MainScene<Asset: AssetProtocol>: BaseSceneModel<
          ]))
 
       weak var weakSelf = self
+
+      balanceButton
+         .onEvent(\.didTap) { [weak self] in
+            self?.presentModel(self?.balanceViewModel)
+         }
+
+      transactButton
+         .onEvent(\.didTap) { [weak self] in
+            self?.presentModel(self?.transactViewModel)
+         }
+
+      historyButton
+         .onEvent(\.didTap) { [weak self] in
+            self?.presentModel(self?.historyViewModel)
+         }
 
       menuButton
          .onEvent(\.initiated) { item in
@@ -109,13 +115,11 @@ extension MainScene {
    private func presentModel(_ model: UIViewModel?) {
       guard let model = model else { return }
 
-      mainVM.models.down
+      mainVM.header
+         .set_text(Design.Text.title.autorisation)
+      mainVM.bottomSubStack
          .set_models([
-            StackModel()
-               .set(Design.state.stack.bottomShadowedPanel)
-               .set_models([
-                  model
-               ])
+            model
          ])
    }
 }

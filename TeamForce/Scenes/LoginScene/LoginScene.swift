@@ -53,17 +53,15 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
 
 private extension LoginScene {
    func configure() {
-      mainVM
-         .setMain { _ in } setDown: {
-            $0.subModel
-               .set_models([
-                  scenario.vModels.userNameInputModel,
-                  scenario.vModels.smsCodeInputModel,
-                  scenario.vModels.getCodeButton,
-                  scenario.vModels.loginButton,
-                  Grid.xxx.spacer
-               ])
-         }
-         .header.set_text(Design.Text.title.autorisation)
+      mainVM.header
+         .set_text(Design.Text.title.autorisation)
+      mainVM.bottomSubStack
+         .set_models([
+            scenario.vModels.userNameInputModel,
+            scenario.vModels.smsCodeInputModel,
+            scenario.vModels.getCodeButton,
+            scenario.vModels.loginButton,
+            Grid.xxx.spacer
+         ])
    }
 }

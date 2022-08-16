@@ -32,18 +32,18 @@ final class LoginScenario<Asset: AssetProtocol>:
       let vModels = vModels
 
       // setup input field reactions
-      vModels.userNameInputModel.models.right
+      vModels.userNameInputModel.textField
          .onEvent(\.didEditingChanged)
          .onSuccess {
             //            weakSelf?.badgeModel.changeState(to: BadgeState.default)
          }
          .doNext(work: works.loginNameInputParse)
          .onSuccess { text in
-            vModels.userNameInputModel.models.right.set_text(text)
+            vModels.userNameInputModel.textField.set_text(text)
             vModels.getCodeButton.set(Asset.Design.state.button.default)
          }
          .onFail { (text: String) in
-            vModels.userNameInputModel.models.right.set_text(text)
+            vModels.userNameInputModel.textField.set_text(text)
             vModels.getCodeButton.set(Asset.Design.state.button.inactive)
          }
 
@@ -60,16 +60,16 @@ final class LoginScenario<Asset: AssetProtocol>:
          }
 
       // setup input field reactions
-      vModels.smsCodeInputModel.models.right
+      vModels.smsCodeInputModel.textField
       //
          .onEvent(\.didEditingChanged)
       //
          .doNext(work: works.smsCodeInputParse)
          .onSuccess {
-            vModels.smsCodeInputModel.models.right.set(.text($0))
+            vModels.smsCodeInputModel.textField.set(.text($0))
             vModels.loginButton.set(Asset.Design.state.button.default)
          }.onFail { (text: String) in
-            vModels.smsCodeInputModel.models.right.set(.text(text))
+            vModels.smsCodeInputModel.textField.set(.text(text))
             vModels.loginButton.set(Asset.Design.state.button.inactive)
          }
 
