@@ -17,8 +17,6 @@ final class LoginScenario<Asset: AssetProtocol>: BaseScenario<LoginViewModels<As
    var modes: LoginSceneryCase = .init()
 
    override func start() {
-      configure()
-
       let works = works
       let vModels = vModels
 
@@ -26,28 +24,25 @@ final class LoginScenario<Asset: AssetProtocol>: BaseScenario<LoginViewModels<As
       vModels.userNameInputModel.textField
          .onEvent(\.didEditingChanged)
          .onSuccess {
-            //            weakSelf?.badgeModel.changeState(to: BadgeState.default)
+           //weakSelf?.badgeModel.changeState(to: BadgeState.default)
          }
          .doNext(work: works.loginNameInputParse)
-         .onSuccess { text in
-            vModels.userNameInputModel.textField.set_text(text)
-            vModels.getCodeButton.set(Asset.Design.state.button.default)
+         .onSuccess {
+            vModels.setMode(.nameInputParseSuccess($0))
          }
          .onFail { (text: String) in
-            vModels.userNameInputModel.textField.set_text(text)
-            vModels.getCodeButton.set(Asset.Design.state.button.inactive)
+            vModels.setMode(.smsInputParseError(text))
          }
 
       // setup get code button reaction
       vModels.getCodeButton
          .onEvent(\.didTap)
          .doNext(work: works.authByName)
-         .onSuccess { [weak self] in
-            self?.setMode(\.inputSmsCode)
+         .onSuccess {
+            vModels.setMode(.inputSmsCode)
          }
          .onFail {
-            vModels.smsCodeInputModel.set_hidden(true)
-            //            weakSelf?.badgeModel.changeState(to: BadgeState.error)
+            vModels.setMode(.inputUserName)
          }
 
       // setup input field reactions
@@ -57,11 +52,9 @@ final class LoginScenario<Asset: AssetProtocol>: BaseScenario<LoginViewModels<As
          //
          .doNext(work: works.smsCodeInputParse)
          .onSuccess {
-            vModels.smsCodeInputModel.textField.set(.text($0))
-            vModels.loginButton.set(Asset.Design.state.button.default)
+            vModels.setMode(.smsInputParseSuccess($0))
          }.onFail { (text: String) in
-            vModels.smsCodeInputModel.textField.set(.text(text))
-            vModels.loginButton.set(Asset.Design.state.button.inactive)
+            vModels.setMode(.smsInputParseError(text))
          }
 
       // setup login button reactions
@@ -72,7 +65,6 @@ final class LoginScenario<Asset: AssetProtocol>: BaseScenario<LoginViewModels<As
          .doNext(work: works.verifyCode)
          .onFail {
             print("Verify api error")
-            // weakSelf?.badgeModel.changeState(to: BadgeState.error)
          }
          .doNext(work: works.saveLoginResults)
          .onSuccess {
@@ -80,28 +72,6 @@ final class LoginScenario<Asset: AssetProtocol>: BaseScenario<LoginViewModels<As
          }
          .onFail {
             print("Save login results to persistence error")
-            // weakSelf?.badgeModel.changeState(to: BadgeState.error)
          }
-   }
-}
-
-// MARK: - Configure scene states
-
-extension LoginScenario: SceneModable {
-   private func configure() {
-      let vModels = vModels
-
-      onModeChanged(\.inputUserName) {
-         vModels.smsCodeInputModel.set_hidden(true)
-         vModels.userNameInputModel.set_hidden(false)
-         vModels.loginButton.set_hidden(true)
-         vModels.getCodeButton.set_hidden(false)
-      }
-      onModeChanged(\.inputSmsCode) {
-         vModels.smsCodeInputModel.set_hidden(false)
-         vModels.loginButton.set_hidden(false)
-         vModels.getCodeButton.set_hidden(true)
-      }
-      setMode(\.inputUserName)
    }
 }

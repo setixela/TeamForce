@@ -110,6 +110,7 @@
 		19D5DC3A289D682700ACC440 /* Anchorage in Frameworks */ = {isa = PBXBuildFile; productRef = 19D5DC39289D682700ACC440 /* Anchorage */; };
 		19D84E2F28ABD39C00418B9E /* MainScenario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D84E2E28ABD39C00418B9E /* MainScenario.swift */; };
 		19D84E3128ABD3AA00418B9E /* MainWorks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D84E3028ABD3AA00418B9E /* MainWorks.swift */; };
+		19D84E3328AC077200418B9E /* LoginPresent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D84E3228AC077200418B9E /* LoginPresent.swift */; };
 		19DD3D95288766860085CDA8 /* LabelCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19DD3D94288766860085CDA8 /* LabelCellModel.swift */; };
 		19DD3D97288A0A8C0085CDA8 /* CoverViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19DD3D96288A0A8C0085CDA8 /* CoverViewModel.swift */; };
 		19ECD54128623D1F001765F6 /* LabelModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19ECD54028623D1F001765F6 /* LabelModel.swift */; };
@@ -263,6 +264,7 @@
 		19D08360286F430B00F75E4A /* Designable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Designable.swift; sourceTree = "<group>"; };
 		19D84E2E28ABD39C00418B9E /* MainScenario.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScenario.swift; sourceTree = "<group>"; };
 		19D84E3028ABD3AA00418B9E /* MainWorks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWorks.swift; sourceTree = "<group>"; };
+		19D84E3228AC077200418B9E /* LoginPresent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPresent.swift; sourceTree = "<group>"; };
 		19DD3D94288766860085CDA8 /* LabelCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelCellModel.swift; sourceTree = "<group>"; };
 		19DD3D96288A0A8C0085CDA8 /* CoverViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoverViewModel.swift; sourceTree = "<group>"; };
 		19ECD54028623D1F001765F6 /* LabelModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelModel.swift; sourceTree = "<group>"; };
@@ -553,6 +555,7 @@
 			children = (
 				196750A5286516F40019A6DE /* LoginScene.swift */,
 				19BD2A8628ABB35C00FCC00A /* LoginScenario.swift */,
+				19D84E3228AC077200418B9E /* LoginPresent.swift */,
 				1959F27328AA8E9700DEEE5C /* LoginWorks.swift */,
 			);
 			path = LoginScene;
@@ -1055,6 +1058,7 @@
 				19AE3AF22869230C00A0C6E4 /* AuthApiWorker.swift in Sources */,
 				195870F228A8C8040075D505 /* KeyPathMaker.swift in Sources */,
 				19017B6B28A6989000B06345 /* TitleSubtitleY.swift in Sources */,
+				19D84E3328AC077200418B9E /* LoginPresent.swift in Sources */,
 				19D08351286F401000F75E4A /* SideBarUserModel.swift in Sources */,
 				19D0835F286F42C000F75E4A /* FrameCellModel.swift in Sources */,
 				19466E01289FE28C0052F0AB /* TitleSubtitleModel.swift in Sources */,

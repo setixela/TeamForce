@@ -17,7 +17,8 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
 >, Scenaryable {
    //
 
-   lazy var scenario = LoginScenario(viewModels: LoginViewModels<Asset>(), works: LoginWorks<Asset>())
+   lazy var scenario = LoginScenario(viewModels: LoginViewModels<Asset>(),
+                                     works: LoginWorks<Asset>())
 
    // MARK: - Start
 
@@ -44,27 +45,4 @@ private extension LoginScene {
    }
 }
 
-// MARK: - View models
 
-struct LoginViewModels<Asset: AssetProtocol>: Assetable {
-   let userNameInputModel: IconTextField<Design> = .init()
-      .setMain {
-         $0.set_image(Design.icon.user)
-      } setRight: {
-         $0.set_placeholder(Text.title.userName)
-      }
-
-   let smsCodeInputModel: IconTextField<Design> = .init()
-      .setMain {
-         $0.set_image(Design.icon.lock)
-      } setRight: {
-         $0.set_placeholder(Text.title.enterSmsCode)
-      }
-      .set_hidden(true)
-
-   let getCodeButton: ButtonModel = Design.button.inactive
-      .set_title(Text.button.getCodeButton)
-
-   let loginButton: ButtonModel = .init(Design.state.button.inactive)
-      .set(.title(Text.button.enterButton))
-}
