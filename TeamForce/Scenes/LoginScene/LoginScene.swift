@@ -41,18 +41,6 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
 
    ), works: LoginWorks<Asset>())
 
-   // MARK: - View Models
-
-   private lazy var bottomPanel = StackModel()
-      .set(Design.state.stack.bottomShadowedPanel)
-      .set_models([
-         scenario.vModels.userNameInputModel, // перенос на стек короче автоматически 2 слоя
-         scenario.vModels.smsCodeInputModel,
-         scenario.vModels.getCodeButton,
-         scenario.vModels.loginButton,
-         Grid.xxx.spacer
-      ])
-
    // MARK: - Start
 
    override func start() {
@@ -67,9 +55,14 @@ private extension LoginScene {
    func configure() {
       mainVM
          .setMain { _ in } setDown: {
-            $0.set_models([
-               bottomPanel
-            ])
+            $0.subModel
+               .set_models([
+                  scenario.vModels.userNameInputModel,
+                  scenario.vModels.smsCodeInputModel,
+                  scenario.vModels.getCodeButton,
+                  scenario.vModels.loginButton,
+                  Grid.xxx.spacer
+               ])
          }
          .header.set_text(Design.Text.title.autorisation)
    }

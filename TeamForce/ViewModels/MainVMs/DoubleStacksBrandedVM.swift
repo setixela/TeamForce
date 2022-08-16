@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class DoubleStacksBrandedVM<Design: DesignProtocol>: Combos<SComboMD<StackModel, StackModel>>,
+final class DoubleStacksBrandedVM<Design: DesignProtocol>: Combos<SComboMD<StackModel, WrappedY<StackModel>>>,
                                                            Designable
 {
    lazy var header = Design.label.headline5
@@ -34,6 +34,8 @@ final class DoubleStacksBrandedVM<Design: DesignProtocol>: Combos<SComboMD<Stack
             .set_backColor(Design.color.background)
             .set_padding(.top(-Grid.x16.value))
             .set_padBottom(-Grid.x32.value)
+            .subModel
+            .set(Design.state.stack.bottomShadowedPanel)
       }
    }
 }
