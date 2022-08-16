@@ -7,22 +7,13 @@
 
 import ReactiveWorks
 
-struct LoginViewModels<Design: DesignProtocol> {
-   let userNameInputModel: IconTextField<Design>
-   let smsCodeInputModel: IconTextField<Design>
-   let getCodeButton: ButtonModel
-   let loginButton: ButtonModel
-}
-
 struct LoginSceneryCase: SceneModeProtocol {
    var inputUserName: VoidEvent?
    var inputSmsCode: VoidEvent?
 }
 
-final class LoginScenario<Asset: AssetProtocol>:
-   BaseScenario<LoginViewModels<Asset.Design>, LoginWorks<Asset>>
+final class LoginScenario<Asset: AssetProtocol>: BaseScenario<LoginViewModels<Asset>, LoginWorks<Asset>>
 {
-
    var modes: LoginSceneryCase = .init()
 
    override func start() {
@@ -61,9 +52,9 @@ final class LoginScenario<Asset: AssetProtocol>:
 
       // setup input field reactions
       vModels.smsCodeInputModel.textField
-      //
+         //
          .onEvent(\.didEditingChanged)
-      //
+         //
          .doNext(work: works.smsCodeInputParse)
          .onSuccess {
             vModels.smsCodeInputModel.textField.set(.text($0))
@@ -75,9 +66,9 @@ final class LoginScenario<Asset: AssetProtocol>:
 
       // setup login button reactions
       vModels.loginButton
-      //
+         //
          .onEvent(\.didTap)
-      //
+         //
          .doNext(work: works.verifyCode)
          .onFail {
             print("Verify api error")
@@ -85,7 +76,7 @@ final class LoginScenario<Asset: AssetProtocol>:
          }
          .doNext(work: works.saveLoginResults)
          .onSuccess {
-             Asset.router?.route(\.main, navType: .present, payload: ())
+            Asset.router?.route(\.main, navType: .present, payload: ())
          }
          .onFail {
             print("Save login results to persistence error")
@@ -96,8 +87,8 @@ final class LoginScenario<Asset: AssetProtocol>:
 
 // MARK: - Configure scene states
 
- extension LoginScenario: SceneModable {
-    private func configure() {
+extension LoginScenario: SceneModable {
+   private func configure() {
       let vModels = vModels
 
       onModeChanged(\.inputUserName) {
@@ -114,4 +105,3 @@ final class LoginScenario<Asset: AssetProtocol>:
       setMode(\.inputUserName)
    }
 }
-

@@ -26,8 +26,8 @@ protocol ScenarioProtocol {
 }
 
 class BaseScenario<VWMDLS, WRKS: SceneWorks>: BaseModel, ScenarioProtocol {
-   let works: WRKS
-   let vModels: VWMDLS
+   var works: WRKS
+   var vModels: VWMDLS
 
    required init(viewModels: VWMDLS, works: WRKS) {
       self.vModels = viewModels

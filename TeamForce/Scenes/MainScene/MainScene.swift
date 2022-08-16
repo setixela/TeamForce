@@ -8,17 +8,27 @@
 import ReactiveWorks
 import UIKit
 
-final class MainScene<Asset: AssetProtocol>: BaseSceneModel<
-   DefaultVCModel,
-   DoubleStacksBrandedVM<Asset.Design>,
-   Asset,
-   Void
-> {
+protocol SceneViewModels: InitProtocol {}
+
+struct MainViewModels<Asset: AssetProtocol>: SceneViewModels, Assetable {
+   lazy var balanceViewModel = BalanceViewModel<Asset>()
+   lazy var transactViewModel = TransactViewModel<Asset>()
+   lazy var historyViewModel = HistoryViewModel<Asset>()
+}
+
+final class MainScene<Asset: AssetProtocol>:
+   BaseSceneModel<
+      DefaultVCModel,
+      DoubleStacksBrandedVM<Asset.Design>,
+      Asset,
+      Void
+   >,
+   Scenaryable
+{
    // MARK: - Balance View Model
 
-   private lazy var balanceViewModel = BalanceViewModel<Asset>()
-   private lazy var transactViewModel = TransactViewModel<Asset>()
-   private lazy var historyViewModel = HistoryViewModel<Asset>()
+   lazy var scenario = MainScenario<Asset>(viewModels: MainViewModels<Asset>(),
+                                           works: MainWorks<Asset>())
 
    private lazy var balanceButton = Design.button.tabBar
       .set(.title("Баланс"))
@@ -35,7 +45,6 @@ final class MainScene<Asset: AssetProtocol>: BaseSceneModel<
    // MARK: - Side bar
 
    private let sideBarModel = SideBarModel<Asset>()
-
    private let menuButton = BarButtonModel()
 
    // MARK: - Start
@@ -49,7 +58,7 @@ final class MainScene<Asset: AssetProtocol>: BaseSceneModel<
       menuButton
          .sendEvent(\.initWithImage, Design.icon.sideMenu)
 
-      presentModel(balanceViewModel)
+      presentModel(scenario.vModels.balanceViewModel)
 
       mainVM.models.main
          .set(.models([
@@ -62,17 +71,17 @@ final class MainScene<Asset: AssetProtocol>: BaseSceneModel<
 
       balanceButton
          .onEvent(\.didTap) { [weak self] in
-            self?.presentModel(self?.balanceViewModel)
+            self?.presentModel(self?.scenario.vModels.balanceViewModel)
          }
 
       transactButton
          .onEvent(\.didTap) { [weak self] in
-            self?.presentModel(self?.transactViewModel)
+            self?.presentModel(self?.scenario.vModels.transactViewModel)
          }
 
       historyButton
          .onEvent(\.didTap) { [weak self] in
-            self?.presentModel(self?.historyViewModel)
+            self?.presentModel(self?.scenario.vModels.historyViewModel)
          }
 
       menuButton
@@ -94,19 +103,19 @@ final class MainScene<Asset: AssetProtocol>: BaseSceneModel<
       sideBarModel.item1
          .onEvent(\.didTap) {
             weakSelf?.sideBarModel.sendEvent(\.hide)
-            weakSelf?.presentModel(weakSelf?.balanceViewModel)
+            weakSelf?.presentModel(weakSelf?.scenario.vModels.balanceViewModel)
          }
 
       sideBarModel.item2
          .onEvent(\.didTap) {
             weakSelf?.sideBarModel.sendEvent(\.hide)
-            weakSelf?.presentModel(weakSelf?.transactViewModel)
+            weakSelf?.presentModel(weakSelf?.scenario.vModels.transactViewModel)
          }
 
       sideBarModel.item3
          .onEvent(\.didTap) {
             weakSelf?.sideBarModel.sendEvent(\.hide)
-            weakSelf?.presentModel(weakSelf?.historyViewModel)
+            weakSelf?.presentModel(weakSelf?.scenario.vModels.historyViewModel)
          }
    }
 }
