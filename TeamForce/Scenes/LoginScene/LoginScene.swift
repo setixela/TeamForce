@@ -7,7 +7,7 @@
 
 import ReactiveWorks
 
-struct LoginSceneMode<WeakSelf>: SceneModeProtocol {
+struct LoginSceneMode: SceneModeProtocol {
    var inputUserName: VoidEvent?
    var inputSmsCode: VoidEvent?
 }
@@ -20,7 +20,8 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
    Asset,
    Void
 >, WorkableModel {
-   var modes: LoginSceneMode<LoginScene> = .init()
+   //
+   var modes: LoginSceneMode = .init()
 
    // MARK: - View Models
 

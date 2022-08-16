@@ -36,12 +36,12 @@ extension StringStorageWorker: WorkerProtocol {
 
 extension StringStorageWorker: Stateable {
    enum State {
-      case saveValueForKey((value: String, key: String))
+      case save((value: String, key: String))
    }
 
    func applyState(_ state: State) {
       switch state {
-      case .saveValueForKey(let keyValue):
+      case .save(let keyValue):
          storageEngine?.save(keyValue.value, forKey: keyValue.key)
       }
    }

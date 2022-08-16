@@ -105,8 +105,8 @@ final class LoginWorks<Asset: AssetProtocol>: BaseSceneWorks<LoginWorks.Temp, As
    lazy var saveLoginResults = Work<VerifyResultBody, Void> { [weak self] work in
 
       self?.useCase.safeStringStorage
-         .set(.saveValueForKey((value: work.unsafeInput.token, key: "token")))
-         .set(.saveValueForKey((value: work.unsafeInput.sessionId, key: "csrftoken")))
+         .set(.save((value: work.unsafeInput.token, key: "token")))
+         .set(.save((value: work.unsafeInput.sessionId, key: "csrftoken")))
 
       UserDefaults.standard.setIsLoggedIn(value: true)
 

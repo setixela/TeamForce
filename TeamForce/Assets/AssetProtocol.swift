@@ -19,30 +19,15 @@ protocol AssetProtocol: AssetRoot
    Design: DesignProtocol
 {
    static var router: MainRouter<Scene>? { get set }
-   static var apiUseCase: ApiUseCase { get }
+   static var apiUseCase: ApiUseCase<Asset> { get }
 
    typealias Asset = Self
    typealias Text = Design.Text
 }
 
 extension AssetProtocol {
-   static var apiUseCase: ApiUseCase {
-      .init(
-         safeStringStorage: StringStorageWorker(engine: service.safeStringStorage),
-         userProfileApiModel: ProfileApiWorker(apiEngine: service.apiEngine),
-         loginApiModel: AuthApiWorker(apiEngine: service.apiEngine),
-         verifyCodeApiWorker: VerifyApiModel(apiEngine: service.apiEngine),
-         logoutApiModel: LogoutApiWorker(apiEngine: service.apiEngine),
-         balanceApiModel: GetBalanceApiWorker(apiEngine: service.apiEngine),
-         searchUserApiWorker: SearchUserApiWorker(apiEngine: service.apiEngine),
-         sendCoinApiWorker: SendCoinApiWorker(apiEngine: service.apiEngine),
-         getTransactionsApiWorker: GetTransactionsApiWorker(apiEngine: service.apiEngine),
-         getTransactionByIdApiWorker: GetTransactionByIdApiWorker(apiEngine: service.apiEngine),
-         getUsersListApiWorker: GetUsersListApiWorker(apiEngine: service.apiEngine),
-         getFeedsApiWorker: GetFeedsApiWorker(apiEngine: service.apiEngine),
-         getPeriodsApiWorker: GetPeriodsApiWorker(apiEngine: service.apiEngine),
-         getStatByPeriodIdApiWorker: GetStatByPeriodIdApiWorker(apiEngine: service.apiEngine)
-      )
+   static var apiUseCase: ApiUseCase<Asset> {
+      .init()
    }
 }
 

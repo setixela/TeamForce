@@ -118,7 +118,7 @@
 		19EFD4C228A82ABC00651E0A /* CssColors.css in Resources */ = {isa = PBXBuildFile; fileRef = 19EFD4C028A82A6400651E0A /* CssColors.css */; };
 		19F153842899649900ECF000 /* LoadProfileUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F153832899649900ECF000 /* LoadProfileUseCase.swift */; };
 		19F15386289964AA00ECF000 /* LogoutUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F15385289964AA00ECF000 /* LogoutUseCase.swift */; };
-		19F15389289964D200ECF000 /* CommonUseCasePack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F15388289964D200ECF000 /* CommonUseCasePack.swift */; };
+		19F15389289964D200ECF000 /* ApiUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F15388289964D200ECF000 /* ApiUseCase.swift */; };
 		19F1538E2899692D00ECF000 /* ApiUseCaseRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F1538D2899692D00ECF000 /* ApiUseCaseRegistry.swift */; };
 		63352DE7289AA69A00489F5F /* SendCoinUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63352DE6289AA69A00489F5F /* SendCoinUseCase.swift */; };
 		634F4333288F4EE9003B2256 /* LogoutApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634F4332288F4EE9003B2256 /* LogoutApiWorker.swift */; };
@@ -263,7 +263,7 @@
 		19EFD4C028A82A6400651E0A /* CssColors.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = CssColors.css; sourceTree = "<group>"; };
 		19F153832899649900ECF000 /* LoadProfileUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadProfileUseCase.swift; sourceTree = "<group>"; };
 		19F15385289964AA00ECF000 /* LogoutUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutUseCase.swift; sourceTree = "<group>"; };
-		19F15388289964D200ECF000 /* CommonUseCasePack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonUseCasePack.swift; sourceTree = "<group>"; };
+		19F15388289964D200ECF000 /* ApiUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiUseCase.swift; sourceTree = "<group>"; };
 		19F1538D2899692D00ECF000 /* ApiUseCaseRegistry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiUseCaseRegistry.swift; sourceTree = "<group>"; };
 		63352DE6289AA69A00489F5F /* SendCoinUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendCoinUseCase.swift; sourceTree = "<group>"; };
 		634F4332288F4EE9003B2256 /* LogoutApiWorker.swift */ = {isa = PBXFileReference; indentWidth = 3; lastKnownFileType = sourcecode.swift; path = LogoutApiWorker.swift; sourceTree = "<group>"; tabWidth = 3; };
@@ -858,7 +858,7 @@
 		19F15387289964C300ECF000 /* UseCasePacks */ = {
 			isa = PBXGroup;
 			children = (
-				19F15388289964D200ECF000 /* CommonUseCasePack.swift */,
+				19F15388289964D200ECF000 /* ApiUseCase.swift */,
 			);
 			path = UseCasePacks;
 			sourceTree = "<group>";
@@ -985,7 +985,7 @@
 				199C4B6D2863299E008AD6FD /* DesignSystem.swift in Sources */,
 				19AE3AEF28691B2E00A0C6E4 /* MainScene.swift in Sources */,
 				197A2DA428A9BF4B00190656 /* Combos.swift in Sources */,
-				19F15389289964D200ECF000 /* CommonUseCasePack.swift in Sources */,
+				19F15389289964D200ECF000 /* ApiUseCase.swift in Sources */,
 				19C1E98F285F426B00E7976D /* TeamForceApi.swift in Sources */,
 				63D419F728AA8AA70024E22C /* GetStatByPeriodIdUseCase.swift in Sources */,
 				199C4B6928632834008AD6FD /* DesignProtocol.swift in Sources */,
