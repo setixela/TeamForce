@@ -18,42 +18,38 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
    //
 
    lazy var scenario = LoginScenery(viewModels: LoginViewModels<Design>(
-      userNameInputModel: userNameInputModel,
-      smsCodeInputModel: smsCodeInputModel,
-      getCodeButton: getCodeButton,
-      loginButton: loginButton
+      userNameInputModel: IconTextField<Design>()
+         .setMain {
+            $0.set_image(Design.icon.user)
+         } setRight: {
+            $0.set_placeholder(Text.title.userName)
+         },
+
+      smsCodeInputModel: IconTextField<Design>()
+         .setMain {
+            $0.set_image(Design.icon.lock)
+         } setRight: {
+            $0.set_placeholder(Text.title.enterSmsCode)
+         }
+         .set_hidden(true),
+
+      getCodeButton: Design.button.inactive
+         .set_title(Text.button.getCodeButton),
+
+      loginButton: ButtonModel(Design.state.button.inactive)
+         .set(.title(Text.button.enterButton))
+
    ), works: LoginWorks<Asset>())
 
    // MARK: - View Models
 
-   private let userNameInputModel = IconTextField<Design>()
-      .setMain {
-         $0.set_image(Design.icon.user)
-      } setRight: {
-         $0.set_placeholder(Text.title.userName)
-      }
-
-   private let smsCodeInputModel = IconTextField<Design>()
-      .setMain {
-         $0.set_image(Design.icon.lock)
-      } setRight: {
-         $0.set_placeholder(Text.title.enterSmsCode)
-      }
-      .set_hidden(true)
-
-   private lazy var getCodeButton = Design.button.inactive
-      .set_title(Text.button.getCodeButton)
-
-   private lazy var loginButton = ButtonModel(Design.state.button.inactive)
-      .set(.title(Text.button.enterButton))
-
    private lazy var bottomPanel = StackModel()
       .set(Design.state.stack.bottomShadowedPanel)
       .set_models([
-         userNameInputModel, // перенос на стек короче автоматически 2 слоя
-         smsCodeInputModel,
-         getCodeButton,
-         loginButton,
+         scenario.vModels.userNameInputModel, // перенос на стек короче автоматически 2 слоя
+         scenario.vModels.smsCodeInputModel,
+         scenario.vModels.getCodeButton,
+         scenario.vModels.loginButton,
          Grid.xxx.spacer
       ])
 
