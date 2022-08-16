@@ -6,3 +6,10 @@
 //
 
 import Foundation
+import ReactiveWorks
+
+final class MainTemptore: InitProtocol {}
+
+final class MainWorks<Asset: AssetProtocol>: BaseSceneWorks<MainTemptore, Asset> {
+
+}

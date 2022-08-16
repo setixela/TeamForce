@@ -17,7 +17,7 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
 >, Scenaryable {
    //
 
-   lazy var scenario = LoginScenery(viewModels: LoginViewModels<Design>(
+   lazy var scenario = LoginScenario(viewModels: LoginViewModels<Design>(
       userNameInputModel: IconTextField<Design>()
          .setMain {
             $0.set_image(Design.icon.user)

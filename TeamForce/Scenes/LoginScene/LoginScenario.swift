@@ -19,7 +19,7 @@ struct LoginSceneryCase: SceneModeProtocol {
    var inputSmsCode: VoidEvent?
 }
 
-final class LoginScenery<Asset: AssetProtocol>:
+final class LoginScenario<Asset: AssetProtocol>:
    BaseScenario<LoginViewModels<Asset.Design>, LoginWorks<Asset>>
 {
 
@@ -96,7 +96,7 @@ final class LoginScenery<Asset: AssetProtocol>:
 
 // MARK: - Configure scene states
 
- extension LoginScenery: SceneModable {
+ extension LoginScenario: SceneModable {
     private func configure() {
       let vModels = vModels
 
