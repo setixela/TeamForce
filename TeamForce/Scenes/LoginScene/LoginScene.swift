@@ -57,10 +57,6 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
          Grid.xxx.spacer
       ])
 
-   // MARK: - Use Cases
-
-   let works = LoginWorks<Asset>()
-
    // MARK: - Start
 
    override func start() {
