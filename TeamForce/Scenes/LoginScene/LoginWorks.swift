@@ -8,7 +8,7 @@
 import Foundation
 import ReactiveWorks
 
-protocol LoginWorksProtocol {
+protocol LoginWorksProtocol: Assetable {
    var authByName: Work<Void, AuthResult> { get }
    var verifyCode: Work<Void, VerifyResultBody> { get }
 

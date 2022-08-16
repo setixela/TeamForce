@@ -39,10 +39,10 @@ private extension LoginScene {
          .set_text(Design.Text.title.autorisation)
       mainVM.bottomSubStack
          .set_models([
-            scenario.vModels.userNameInputModel,
-            scenario.vModels.smsCodeInputModel,
-            scenario.vModels.getCodeButton,
-            scenario.vModels.loginButton,
+            viewModels.userNameInputModel,
+            viewModels.smsCodeInputModel,
+            viewModels.getCodeButton,
+            viewModels.loginButton,
             Grid.xxx.spacer
          ])
    }
