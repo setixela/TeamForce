@@ -8,7 +8,7 @@
 import Foundation
 import ReactiveWorks
 
-protocol LoginWorksProtocol: Assetable {
+protocol LoginBackstageProtocol: Assetable {
    var authByName: Work<Void, AuthResult> { get }
    var verifyCode: Work<Void, VerifyResultBody> { get }
 
@@ -18,7 +18,7 @@ protocol LoginWorksProtocol: Assetable {
    var saveLoginResults: Work<VerifyResultBody, Void> { get }
 }
 
-final class LoginBackstage<Asset: AssetProtocol>: BaseSceneWorks<LoginBackstage.Temp, Asset>, LoginWorksProtocol {
+final class LoginBackstage<Asset: AssetProtocol>: BaseSceneWorks<LoginBackstage.Temp, Asset>, LoginBackstageProtocol {
    //
    private lazy var useCase = Asset.apiUseCase
 

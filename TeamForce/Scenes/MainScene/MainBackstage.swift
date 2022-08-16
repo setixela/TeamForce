@@ -10,6 +10,4 @@ import ReactiveWorks
 
 final class MainTemptore: InitProtocol {}
 
-final class MainWorks<Asset: AssetProtocol>: BaseSceneWorks<MainTemptore, Asset> {
-
-}
+final class MainBackstage<Asset: AssetProtocol>: BaseSceneWorks<MainTemptore, Asset> {}

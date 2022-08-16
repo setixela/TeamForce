@@ -17,7 +17,7 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
 >, Scenaryable {
    //
 
-   private lazy var viewModels = LoginViewModels<Asset>()
+   private lazy var viewModels = LoginActors<Asset>()
 
    lazy var scenario = LoginScenario(
       works: LoginBackstage<Asset>(),

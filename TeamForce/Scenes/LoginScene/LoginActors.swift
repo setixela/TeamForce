@@ -9,7 +9,7 @@ import ReactiveWorks
 
 // MARK: - View models
 
-final class LoginViewModels<Asset: AssetProtocol>: Assetable {
+final class LoginActors<Asset: AssetProtocol>: Assetable {
    lazy var userNameInputModel: IconTextField<Design> = .init()
       .setMain {
          $0.set_image(Design.icon.user)
@@ -44,27 +44,33 @@ enum LoginSceneState {
    case smsInputParseError(String)
 }
 
-extension LoginViewModels: SceneStateProtocol {
+extension LoginActors: SceneStateProtocol {
    func setState(_ state: LoginSceneState) {
       switch state {
+
       case .inputUserName:
          smsCodeInputModel.set_hidden(true)
          userNameInputModel.set_hidden(false)
          loginButton.set_hidden(true)
          getCodeButton.set_hidden(false)
+
       case .inputSmsCode:
          smsCodeInputModel.set_hidden(false)
          loginButton.set_hidden(false)
          getCodeButton.set_hidden(true)
+
       case .nameInputParseSuccess(let value):
          userNameInputModel.textField.set_text(value)
          getCodeButton.set(Asset.Design.state.button.default)
+
       case .nameInputParseError(let value):
          userNameInputModel.textField.set_text(value)
          getCodeButton.set(Asset.Design.state.button.inactive)
+
       case .smsInputParseSuccess(let value):
          smsCodeInputModel.textField.set(.text(value))
          loginButton.set(Asset.Design.state.button.default)
+
       case .smsInputParseError(let value):
          smsCodeInputModel.textField.set(.text(value))
          loginButton.set(Asset.Design.state.button.inactive)
