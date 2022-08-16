@@ -65,6 +65,10 @@ struct ApiUseCase: ApiUseCaseRegistry, WorkBasket {
    var getTransactionsByPeriod: GetTransactionsByPeriodUseCase {
       .init(safeStringStorage: safeStringStorage, getTransactionsByPeriodApiModel: getTransactionsByPeriodApiWorker)
    }
+   
+   var cancelTransactionById: CancelTransactionByIdUseCase {
+      .init(safeStringStorage: safeStringStorage, cancelTransactionByIdApiWorker: cancelTransactionByIdApiWorker)
+   }
 
    // MARK: - Dependencies
 
@@ -84,4 +88,5 @@ struct ApiUseCase: ApiUseCaseRegistry, WorkBasket {
    let getPeriodsApiWorker: GetPeriodsApiWorker
    let getStatByPeriodIdApiWorker: GetStatByPeriodIdApiWorker
    let getTransactionsByPeriodApiWorker: GetTransactionsByPeriodApiWorker
+   let cancelTransactionByIdApiWorker: CancelTransactionByIdApiWorker
 }

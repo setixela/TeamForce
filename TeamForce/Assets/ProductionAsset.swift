@@ -30,7 +30,8 @@ enum ProductionAsset: AssetProtocol {
          getFeedsApiWorker: GetFeedsApiWorker(apiEngine: service.apiEngine),
          getPeriodsApiWorker: GetPeriodsApiWorker(apiEngine: service.apiEngine),
          getStatByPeriodIdApiWorker: GetStatByPeriodIdApiWorker(apiEngine: service.apiEngine),
-         getTransactionsByPeriodApiWorker: GetTransactionsByPeriodApiWorker(apiEngine: service.apiEngine)
+         getTransactionsByPeriodApiWorker: GetTransactionsByPeriodApiWorker(apiEngine: service.apiEngine),
+         cancelTransactionByIdApiWorker: CancelTransactionByIdApiWorker(apiEngine: service.apiEngine)
       )
    }
 }

@@ -13,6 +13,8 @@ typealias TeamForceResult<T> = Swift.Result<T, TeamForceApiError>
 enum HTTPMethod: String {
     case get = "GET"
     case post = "POST"
+    case put = "PUT"
+    case patch = "PATCH"
 }
 
 enum TeamForceApiError: Error {

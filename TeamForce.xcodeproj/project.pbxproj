@@ -124,6 +124,8 @@
 		634F4333288F4EE9003B2256 /* LogoutApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634F4332288F4EE9003B2256 /* LogoutApiWorker.swift */; };
 		63578E5828AB8DA000423957 /* GetTransactionsByPeriodApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63578E5728AB8DA000423957 /* GetTransactionsByPeriodApiWorker.swift */; };
 		63578E5A28AB8F6000423957 /* GetTransactionsByPeriodUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63578E5928AB8F6000423957 /* GetTransactionsByPeriodUseCase.swift */; };
+		63578E5C28AB9B3E00423957 /* CancelTransactionByIdApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63578E5B28AB9B3E00423957 /* CancelTransactionByIdApiWorker.swift */; };
+		63578E5E28ABA2E500423957 /* CancelTransactionByIdUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63578E5D28ABA2E500423957 /* CancelTransactionByIdUseCase.swift */; };
 		6368D8222891508C0049EEAB /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6368D8212891508C0049EEAB /* ProfileViewModel.swift */; };
 		6368D824289168740049EEAB /* CustomCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6368D823289168740049EEAB /* CustomCellModel.swift */; };
 		6368D826289187B50049EEAB /* SendCoinApiModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6368D825289187B50049EEAB /* SendCoinApiModel.swift */; };
@@ -271,6 +273,8 @@
 		634F4332288F4EE9003B2256 /* LogoutApiWorker.swift */ = {isa = PBXFileReference; indentWidth = 3; lastKnownFileType = sourcecode.swift; path = LogoutApiWorker.swift; sourceTree = "<group>"; tabWidth = 3; };
 		63578E5728AB8DA000423957 /* GetTransactionsByPeriodApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTransactionsByPeriodApiWorker.swift; sourceTree = "<group>"; };
 		63578E5928AB8F6000423957 /* GetTransactionsByPeriodUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTransactionsByPeriodUseCase.swift; sourceTree = "<group>"; };
+		63578E5B28AB9B3E00423957 /* CancelTransactionByIdApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelTransactionByIdApiWorker.swift; sourceTree = "<group>"; };
+		63578E5D28ABA2E500423957 /* CancelTransactionByIdUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelTransactionByIdUseCase.swift; sourceTree = "<group>"; };
 		6368D8212891508C0049EEAB /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		6368D823289168740049EEAB /* CustomCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCellModel.swift; sourceTree = "<group>"; };
 		6368D825289187B50049EEAB /* SendCoinApiModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendCoinApiModel.swift; sourceTree = "<group>"; };
@@ -804,6 +808,7 @@
 				63D419EE28AA81800024E22C /* GetPeriodsApiWorker.swift */,
 				63D419F228AA85560024E22C /* GetStatByPeriodIdApiWorker.swift */,
 				63578E5728AB8DA000423957 /* GetTransactionsByPeriodApiWorker.swift */,
+				63578E5B28AB9B3E00423957 /* CancelTransactionByIdApiWorker.swift */,
 			);
 			path = ApiModels;
 			sourceTree = "<group>";
@@ -833,6 +838,7 @@
 				63D419F028AA825F0024E22C /* GetPeriodsUseCase.swift */,
 				63D419F628AA8AA70024E22C /* GetStatByPeriodIdUseCase.swift */,
 				63578E5928AB8F6000423957 /* GetTransactionsByPeriodUseCase.swift */,
+				63578E5D28ABA2E500423957 /* CancelTransactionByIdUseCase.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -986,6 +992,7 @@
 				1967509D286491190019A6DE /* Buttons.swift in Sources */,
 				191571D1289F12350061510F /* PlaygroundScene.swift in Sources */,
 				199C4B6628624B4C008AD6FD /* Spacer.swift in Sources */,
+				63578E5E28ABA2E500423957 /* CancelTransactionByIdUseCase.swift in Sources */,
 				196750A22865169C0019A6DE /* DigitalThanksScene.swift in Sources */,
 				19CF792C28A587B9001531B8 /* TransactWorks.swift in Sources */,
 				19C1E991285F426B00E7976D /* ApiEngine.swift in Sources */,
@@ -1077,6 +1084,7 @@
 				1952EA6928A711F2003F7852 /* Associated.swift in Sources */,
 				19D08353286F403400F75E4A /* SideBarModel.swift in Sources */,
 				1999B6FE28A2F5D300D3570B /* DataToDecodableParser.swift in Sources */,
+				63578E5C28AB9B3E00423957 /* CancelTransactionByIdApiWorker.swift in Sources */,
 				19D08359286F41FA00F75E4A /* IconLabelHorizontalModel.swift in Sources */,
 				1953DE8D287B4752000DC537 /* TypographyElements.swift in Sources */,
 				19C1E98C285F426B00E7976D /* EndpointProtocol.swift in Sources */,

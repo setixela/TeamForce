@@ -5,6 +5,8 @@
 //  Created by Aleksandr Solovyev on 11.06.2022.
 //
 
+import Foundation
+
 // Api Endpoints
 enum TeamForceEndpoints {
     private static var urlBase: String { "http://176.99.6.251:8888" }
@@ -155,5 +157,22 @@ enum TeamForceEndpoints {
            endPoint = endPoint + id + "/"
            self.headers = headers
        }
+   }
+   
+   struct CancelTransaction: EndpointProtocol {
+      //
+      let method = HTTPMethod.put
+      
+      var endPoint: String = urlBase + "/cancel-transaction/"
+      
+      var headers: [String : String]
+      
+      var body: [String : Any] //= ["status": "D"]
+      
+      init(id: String, headers: [String : String], body: [String : Any]) {
+         endPoint = endPoint + id + "/"
+         self.headers = headers
+         self.body = body
+      }
    }
 }
