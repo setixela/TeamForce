@@ -72,7 +72,6 @@ final class LoginWorks<Asset: AssetProtocol>: BaseSceneWorks<LoginWorks.Temp, As
          .onFail {
             work.fail(())
          }
-
    }
 
    lazy var loginNameInputParse = Work<String, String> { [weak self] work in

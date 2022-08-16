@@ -33,6 +33,7 @@ struct LoginViewModels<Asset: AssetProtocol>: Assetable {
 }
 
 enum LoginSceneState {
+   //
    case inputUserName
    case inputSmsCode
    //

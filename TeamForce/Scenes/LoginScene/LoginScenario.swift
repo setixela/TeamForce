@@ -7,14 +7,9 @@
 
 import ReactiveWorks
 
-struct LoginSceneryCase: SceneModeProtocol {
-   var inputUserName: VoidEvent?
-   var inputSmsCode: VoidEvent?
-}
 
 final class LoginScenario<Asset: AssetProtocol>: BaseScenario<LoginViewModels<Asset>, LoginWorks<Asset>>
 {
-   var modes: LoginSceneryCase = .init()
 
    override func start() {
       let works = works
