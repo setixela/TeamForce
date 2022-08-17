@@ -13,15 +13,3 @@ struct Config {
 
    static let isDebugView = true
 }
-//
-//import UIKit
-//
-//extension ViewModelProtocol {
-//   var uiView: UIView {
-//      let vuew = myView()
-//      if Config.isDebugView {
-//         vuew.backgroundColor = .random
-//      }
-//      return myView()
-//   }
-//}

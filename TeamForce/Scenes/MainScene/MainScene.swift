@@ -29,7 +29,7 @@ final class MainScene<Asset: AssetProtocol>:
 
    lazy var balanceViewModel = BalanceViewModel<Asset>()
    lazy var transactViewModel = TransactViewModel<Asset>()
-   lazy var historyViewModel = HistoryViewModel<Asset>()
+   lazy var historyViewModel = HistoryScene<Asset>()
 
    lazy var balanceButton = Design.button.tabBar
       .set(.title("Баланс"))

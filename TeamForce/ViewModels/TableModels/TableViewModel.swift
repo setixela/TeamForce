@@ -27,6 +27,8 @@ struct TableViewEvents: InitProtocol {
 final class TableViewModel: BaseViewModel<UITableView> {
    var eventsStore: TableViewEvents = .init()
 
+   private var cellName = "cellName"// String(Int.random(in: 0...999999900000))
+
    private var models: [UIViewModel] = []
    private var sections: [TableSection] = []
    private var isMultiSection: Bool = false
@@ -34,7 +36,7 @@ final class TableViewModel: BaseViewModel<UITableView> {
    override func start() {
       view.delegate = self
       view.dataSource = self
-      view.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+      view.register(UITableViewCell.self, forCellReuseIdentifier: cellName)
    }
 }
 
@@ -78,7 +80,7 @@ extension TableViewModel: UITableViewDataSource {
    }
 
    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-      let cell = tableView.dequeueReusableCell(withIdentifier: "cell") ?? UITableViewCell()
+      let cell = tableView.dequeueReusableCell(withIdentifier: cellName) ?? UITableViewCell()
 
       if eventsStore.cellForRow == nil {
          let model = isMultiSection ? sections[indexPath.section].models[indexPath.row] : models[indexPath.row]
@@ -94,9 +96,6 @@ extension TableViewModel: UITableViewDataSource {
             cell.contentView.addSubview(viewModel.uiView)
             viewModel.uiView.addAnchors.fitToView(cell.contentView)
          }))
-//         cell.contentView.subviews.forEach { $0.removeFromSuperview() }
-//         cell.contentView.addSubview(modelView)
-//         modelView.addAnchors.fitToView(cell.contentView)
 
          return cell
       }

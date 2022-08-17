@@ -39,10 +39,11 @@ final class HistoryScene<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
 
 private extension HistoryScene {
    func configure() {
+   
+      set_axis(.vertical)
       set_models([
          viewModels.segmentedControl,
          viewModels.tableModel,
-         Grid.xxx.spacer
       ])
    }
 }
