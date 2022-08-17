@@ -8,9 +8,13 @@
 import UIKit
 import ReactiveWorks
 
-struct TableItemsSection {
+class TableItemsSection {
    let title: String
-   var items: [Any]
+   var items: [Any] = []
+
+   init(title: String) {
+      self.title = title
+   }
 }
 
 enum TableItemsState {

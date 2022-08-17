@@ -98,20 +98,15 @@ final class HistoryWorks<Asset: AssetProtocol>: BaseSceneWorks<HistoryWorks.Temp
             let currentDay = Self.convertToDate(time: item.createdAt) ?? ""
 
             if prevDay != currentDay {
-               result.append(TableItemsSection(title: currentDay,
-                                               items: []))
+               result.append(TableItemsSection(title: currentDay))
             }
 
-            guard var currentSection = result.last else { return result }
-
-            result = result.dropLast()
-            currentSection.items.append(item)
-            result.append(currentSection)
-
+            result.last?.items.append(item)
             return result
          }
 
       work.success(result: result)
+
       Self.store.sections = result
    }
 
