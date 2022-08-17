@@ -8,7 +8,7 @@
 import Foundation
 
 final class HistoryViewModels<Design: DesignProtocol>: Designable {
-   lazy var tableModel = TableViewModel()
+   lazy var tableModel = TableItemsModel()
       .set(.borderColor(.gray))
       .set(.borderWidth(1))
       .set(.cornerRadius(Design.params.cornerRadius))

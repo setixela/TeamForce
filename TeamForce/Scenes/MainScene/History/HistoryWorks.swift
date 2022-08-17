@@ -16,7 +16,7 @@ protocol HistoryWorksProtocol {
    var getTransactionById: Work<Int, Transaction> { get }
 
    // TODO: - Потом разобрать и перенести, никаких тут вью моделей, Саша!
-   var filterTransactions: Work<Int, [TableSection]> { get }
+   var filterTransactions: Work<Int, [TableItemsSection]> { get }
 }
 
 final class HistoryWorks<Asset: AssetProtocol>: BaseSceneWorks<HistoryWorks.Temp, Asset>, HistoryWorksProtocol {
@@ -26,7 +26,7 @@ final class HistoryWorks<Asset: AssetProtocol>: BaseSceneWorks<HistoryWorks.Temp
    final class Temp: InitProtocol {
       var currentUser: String?
       var transactions: [Transaction]?
-      var sections: [TableSection]?
+      var sections: [TableItemsSection]?
       var currentTransaction: Transaction?
    }
 
@@ -72,74 +72,68 @@ final class HistoryWorks<Asset: AssetProtocol>: BaseSceneWorks<HistoryWorks.Temp
    }
 
    // Fucking shit)))
-   lazy var filterTransactions = Work<Int, [TableSection]> { [weak self] work in
+   lazy var filterTransactions = Work<Int, [TableItemsSection]> { [weak self] work in
 
-      guard let transactions = Self.store.transactions else {
+      guard var transactions = Self.store.transactions else {
          work.fail(())
          return
       }
 
       let selectedSegmentIndex = work.unsafeInput
 
-      var models: [UIViewModel] = []
-      var sections: [TableSection] = []
-
-      var isSendingCoin = false
+      var result = [TableItemsSection]()
       var prevDay = ""
 
-      for transaction in transactions {
-         guard let currentDay = Self.convertToDate(time: transaction.createdAt) else { return }
-         if prevDay != currentDay {
-            if models.count > 0 {
-               sections.append(TableSection(title: prevDay,
-                                            models: models))
-               models = []
-            }
+      switch selectedSegmentIndex {
+      case 1:
+         transactions = transactions.filter {
+            $0.sender.senderTgName != Self.store.currentUser
          }
-
-         isSendingCoin = false
-         var rightText = "Перевод от " + transaction.sender.senderTgName
-         var downText = transaction.amount
-         var image = Asset.Design.icon.recieveCoinIcon
-         if transaction.sender.senderTgName == Self.store.currentUser {
-            isSendingCoin = true
-            rightText = "Перевод для " + transaction.recipient.recipientTgName
-            downText = "+" + transaction.amount
-            image = Asset.Design.icon.sendCoinIcon
+      case 2:
+         transactions = transactions.filter {
+            $0.sender.senderTgName == Self.store.currentUser
          }
-
-         let cell = IconTitleSubtitleModel(isAutoreleaseView: true)
-            .set(.image(image))
-            .set(.padding(.outline(10)))
-            .set(.size(.init(width: 64, height: 64)))
-            .setRight {
-               $0
-                  .set(.text(rightText))
-                  .setDown {
-                     $0.set(.text(downText))
-                  }
-            }
-         if (selectedSegmentIndex == 1 && !isSendingCoin) ||
-            (selectedSegmentIndex == 2 && isSendingCoin) ||
-            selectedSegmentIndex == 0
-         {
-            models.append(cell)
-         }
-
-         prevDay = currentDay
+      default:
+         break
       }
-      if !models.isEmpty {
-         sections.append(TableSection(title: prevDay,
-                                      models: models))
-         models = []
-      }
-      Self.store.sections = sections
 
-      work.success(result: sections)
+      result = transactions
+         .reduce([TableItemsSection]()) { result, transact in
+            var state = TransactionItem.State.recieved
+            if transact.sender.senderTgName == Self.store.currentUser {
+               state = .sendSuccess
+            }
+
+            let item = TransactionItem(
+               state: state,
+               sender: transact.sender,
+               recipient: transact.recipient,
+               amount: transact.amount,
+               createdAt: transact.createdAt
+            )
+
+            var result = result
+            let currentDay = Self.convertToDate(time: item.createdAt) ?? ""
+
+            if prevDay != currentDay {
+               result.append(TableItemsSection(title: currentDay,
+                                               items: []))
+            }
+
+            guard var currentSection = result.last else { return result }
+
+            result = result.dropLast()
+            currentSection.items.append(item)
+            result.append(currentSection)
+
+            return result
+         }
+
+      work.success(result: result)
+      Self.store.sections = result
    }
 
    private static func convertToDate(time: String) -> String? {
-
       let inputFormatter = DateFormatter()
       inputFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
       guard let convertedDate = inputFormatter.date(from: time) else { return nil }

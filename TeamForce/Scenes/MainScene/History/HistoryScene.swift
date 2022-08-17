@@ -32,6 +32,11 @@ final class HistoryScene<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
    override func start() {
       configure()
       scenario.start(stateMachineFunc: setState)
+
+      viewModels.tableModel
+         .set(.presenters([
+            HistoryPresenters<Design>.transactToIconSubtitle,
+         ]))
    }
 }
 
@@ -39,7 +44,6 @@ final class HistoryScene<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
 
 private extension HistoryScene {
    func configure() {
-   
       set_axis(.vertical)
       set_models([
          viewModels.segmentedControl,
@@ -52,7 +56,7 @@ enum HistoryState {
    case loadProfilError
    case loadTransactionsError
 
-   case present([TableSection])
+   case present([TableItemsSection])
 }
 
 extension HistoryScene: SceneStateProtocol {
@@ -65,7 +69,7 @@ extension HistoryScene: SceneStateProtocol {
       case .present(let sections):
          viewModels.tableModel
             .set(.backColor(.gray))
-            .set(.sections(sections))
+            .set(.itemSections(sections))
       }
    }
 }

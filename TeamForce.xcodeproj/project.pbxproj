@@ -26,6 +26,7 @@
 		1913F656286E1EC80033FAB3 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 1913F655286E1EC80033FAB3 /* RealmSwift */; };
 		191571D1289F12350061510F /* PlaygroundScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191571D0289F12350061510F /* PlaygroundScene.swift */; };
 		19171F4B28AD23AE000926B1 /* HistoryViewModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19171F4A28AD23AE000926B1 /* HistoryViewModels.swift */; };
+		19171F4D28AD663F000926B1 /* TableItemsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19171F4C28AD663F000926B1 /* TableItemsModel.swift */; };
 		1918CC77286F67EB004373F3 /* BalanceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1918CC76286F67EB004373F3 /* BalanceViewModel.swift */; };
 		1918CC79286F6C69004373F3 /* VerifyApiModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1918CC78286F6C69004373F3 /* VerifyApiModel.swift */; };
 		1918CC7B286F6C84004373F3 /* ProfileApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1918CC7A286F6C83004373F3 /* ProfileApiWorker.swift */; };
@@ -70,6 +71,9 @@
 		197A2DA428A9BF4B00190656 /* Combos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197A2DA028A9BF4B00190656 /* Combos.swift */; };
 		197A2DA528A9BF4B00190656 /* SCombo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197A2DA128A9BF4B00190656 /* SCombo.swift */; };
 		197A2DA728A9D10900190656 /* IconTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197A2DA628A9D10900190656 /* IconTextField.swift */; };
+		197A771828AD90800082CD81 /* XelaLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197A771728AD90800082CD81 /* XelaLog.swift */; };
+		197A771A28AD90B30082CD81 /* Presenting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197A771928AD90B30082CD81 /* Presenting.swift */; };
+		197A771C28AD91E20082CD81 /* HistoryPresenters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197A771B28AD91E20082CD81 /* HistoryPresenters.swift */; };
 		198FE1C92899994A00BAF1A5 /* LoginUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198FE1C82899994A00BAF1A5 /* LoginUseCase.swift */; };
 		198FE1CC28999A2600BAF1A5 /* NilBlocker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198FE1CB28999A2600BAF1A5 /* NilBlocker.swift */; };
 		198FE1CE2899BB8E00BAF1A5 /* LoadBalanceUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198FE1CD2899BB8E00BAF1A5 /* LoadBalanceUseCase.swift */; };
@@ -190,6 +194,7 @@
 		190C1D28285D160000FB3518 /* WorksTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorksTests.swift; sourceTree = "<group>"; };
 		191571D0289F12350061510F /* PlaygroundScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundScene.swift; sourceTree = "<group>"; };
 		19171F4A28AD23AE000926B1 /* HistoryViewModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewModels.swift; sourceTree = "<group>"; };
+		19171F4C28AD663F000926B1 /* TableItemsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableItemsModel.swift; sourceTree = "<group>"; };
 		1918CC76286F67EB004373F3 /* BalanceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceViewModel.swift; sourceTree = "<group>"; };
 		1918CC78286F6C69004373F3 /* VerifyApiModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyApiModel.swift; sourceTree = "<group>"; };
 		1918CC7A286F6C83004373F3 /* ProfileApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileApiWorker.swift; sourceTree = "<group>"; };
@@ -231,6 +236,9 @@
 		197A2DA028A9BF4B00190656 /* Combos.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Combos.swift; sourceTree = "<group>"; };
 		197A2DA128A9BF4B00190656 /* SCombo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCombo.swift; sourceTree = "<group>"; };
 		197A2DA628A9D10900190656 /* IconTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconTextField.swift; sourceTree = "<group>"; };
+		197A771728AD90800082CD81 /* XelaLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XelaLog.swift; sourceTree = "<group>"; };
+		197A771928AD90B30082CD81 /* Presenting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Presenting.swift; sourceTree = "<group>"; };
+		197A771B28AD91E20082CD81 /* HistoryPresenters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryPresenters.swift; sourceTree = "<group>"; };
 		198FE1C82899994A00BAF1A5 /* LoginUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUseCase.swift; sourceTree = "<group>"; };
 		198FE1CB28999A2600BAF1A5 /* NilBlocker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NilBlocker.swift; sourceTree = "<group>"; };
 		198FE1CD2899BB8E00BAF1A5 /* LoadBalanceUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadBalanceUseCase.swift; sourceTree = "<group>"; };
@@ -709,6 +717,7 @@
 				19171F4A28AD23AE000926B1 /* HistoryViewModels.swift */,
 				63EB469628AC35920070A271 /* HistoryScenario.swift */,
 				63EB469828AC35A30070A271 /* HistoryWorks.swift */,
+				197A771B28AD91E20082CD81 /* HistoryPresenters.swift */,
 			);
 			path = History;
 			sourceTree = "<group>";
@@ -785,6 +794,8 @@
 				195870F128A8C8040075D505 /* KeyPathMaker.swift */,
 				197A2D9828A98F4300190656 /* UIColor+Random.swift */,
 				19BD2A8828ABB72500FCC00A /* Scenaryable.swift */,
+				197A771728AD90800082CD81 /* XelaLog.swift */,
+				197A771928AD90B30082CD81 /* Presenting.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -822,6 +833,7 @@
 			isa = PBXGroup;
 			children = (
 				19EF32AF2884B6C80078F53D /* TableViewModel.swift */,
+				19171F4C28AD663F000926B1 /* TableItemsModel.swift */,
 				19DD3D94288766860085CDA8 /* LabelCellModel.swift */,
 				6368D823289168740049EEAB /* CustomCellModel.swift */,
 			);
@@ -1026,6 +1038,7 @@
 				19A8229628A925760081D385 /* ViewModel+Setters.swift in Sources */,
 				199C4B6D2863299E008AD6FD /* DesignSystem.swift in Sources */,
 				63578E5828AB8DA000423957 /* GetTransactionsByPeriodApiWorker.swift in Sources */,
+				197A771828AD90800082CD81 /* XelaLog.swift in Sources */,
 				19AE3AEF28691B2E00A0C6E4 /* MainScene.swift in Sources */,
 				197A2DA428A9BF4B00190656 /* Combos.swift in Sources */,
 				19F15389289964D200ECF000 /* ApiUseCase.swift in Sources */,
@@ -1042,6 +1055,7 @@
 				1959F27428AA8E9700DEEE5C /* LoginBackstage.swift in Sources */,
 				196750B22865190D0019A6DE /* ImageViewModel.swift in Sources */,
 				63D419E928A5109E0024E22C /* GetUsersListUseCase.swift in Sources */,
+				197A771A28AD90B30082CD81 /* Presenting.swift in Sources */,
 				63D419ED28AA56570024E22C /* GetFeedUseCase.swift in Sources */,
 				1977BE5528A7238F00D554EA /* TextFieldStates.swift in Sources */,
 				1967509D286491190019A6DE /* Buttons.swift in Sources */,
@@ -1099,6 +1113,7 @@
 				19D08357286F41B200F75E4A /* DoubleLabelPairModel.swift in Sources */,
 				1952EA6D28A71537003F7852 /* ButtonElements.swift in Sources */,
 				19DD3D95288766860085CDA8 /* LabelCellModel.swift in Sources */,
+				197A771C28AD91E20082CD81 /* HistoryPresenters.swift in Sources */,
 				63CFA196289C38A9000E4D1E /* GetTransactionsApiWorker.swift in Sources */,
 				197A2DA328A9BF4B00190656 /* Combos+Init.swift in Sources */,
 				1967509F286492780019A6DE /* Labels.swift in Sources */,
@@ -1121,6 +1136,7 @@
 				63352DE7289AA69A00489F5F /* SendCoinUseCase.swift in Sources */,
 				634F4333288F4EE9003B2256 /* LogoutApiWorker.swift in Sources */,
 				19C1E9A128610E2800E7976D /* AssetProtocol.swift in Sources */,
+				19171F4D28AD663F000926B1 /* TableItemsModel.swift in Sources */,
 				190C1D16285D15FF00FB3518 /* ViewController.swift in Sources */,
 				19ECD54128623D1F001765F6 /* LabelModel.swift in Sources */,
 				196750B0286518F80019A6DE /* DoubleStacksModel.swift in Sources */,
