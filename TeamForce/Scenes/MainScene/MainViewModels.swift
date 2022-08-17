@@ -7,7 +7,7 @@
 
 import ReactiveWorks
 
-final class MainActors<Asset: AssetProtocol>: InitProtocol, Assetable {
+final class MainViewModels<Asset: AssetProtocol>: InitProtocol, Assetable {
    lazy var balanceButton = Design.button.tabBar
       .set(.title("Баланс"))
       .set(.image(Design.icon.coinLine))
@@ -27,7 +27,7 @@ enum MainSceneState {
    case history
 }
 
-extension MainActors: SceneStateProtocol {
+extension MainViewModels: SceneStateProtocol {
    func setState(_ state: MainSceneState) {
       switch state {
       case .balance:

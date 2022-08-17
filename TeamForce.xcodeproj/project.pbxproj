@@ -25,6 +25,7 @@
 		190C1D29285D160000FB3518 /* WorksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190C1D28285D160000FB3518 /* WorksTests.swift */; };
 		1913F656286E1EC80033FAB3 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 1913F655286E1EC80033FAB3 /* RealmSwift */; };
 		191571D1289F12350061510F /* PlaygroundScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191571D0289F12350061510F /* PlaygroundScene.swift */; };
+		19171F4B28AD23AE000926B1 /* HistoryViewModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19171F4A28AD23AE000926B1 /* HistoryViewModels.swift */; };
 		1918CC77286F67EB004373F3 /* BalanceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1918CC76286F67EB004373F3 /* BalanceViewModel.swift */; };
 		1918CC79286F6C69004373F3 /* VerifyApiModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1918CC78286F6C69004373F3 /* VerifyApiModel.swift */; };
 		1918CC7B286F6C84004373F3 /* ProfileApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1918CC7A286F6C83004373F3 /* ProfileApiWorker.swift */; };
@@ -110,11 +111,11 @@
 		19D5DC3A289D682700ACC440 /* Anchorage in Frameworks */ = {isa = PBXBuildFile; productRef = 19D5DC39289D682700ACC440 /* Anchorage */; };
 		19D84E2F28ABD39C00418B9E /* MainScenario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D84E2E28ABD39C00418B9E /* MainScenario.swift */; };
 		19D84E3128ABD3AA00418B9E /* MainBackstage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D84E3028ABD3AA00418B9E /* MainBackstage.swift */; };
-		19D84E3328AC077200418B9E /* LoginActors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D84E3228AC077200418B9E /* LoginActors.swift */; };
+		19D84E3328AC077200418B9E /* LoginViewModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D84E3228AC077200418B9E /* LoginViewModels.swift */; };
 		19DD3D95288766860085CDA8 /* LabelCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19DD3D94288766860085CDA8 /* LabelCellModel.swift */; };
 		19DD3D97288A0A8C0085CDA8 /* CoverViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19DD3D96288A0A8C0085CDA8 /* CoverViewModel.swift */; };
 		19E9F30F28AC14D100AD951F /* SceneStateProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E9F30E28AC14D100AD951F /* SceneStateProtocol.swift */; };
-		19E9F31128AC39D900AD951F /* MainActors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E9F31028AC39D900AD951F /* MainActors.swift */; };
+		19E9F31128AC39D900AD951F /* MainViewModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E9F31028AC39D900AD951F /* MainViewModels.swift */; };
 		19ECD54128623D1F001765F6 /* LabelModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19ECD54028623D1F001765F6 /* LabelModel.swift */; };
 		19ECD54328623D30001765F6 /* StackModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19ECD54228623D30001765F6 /* StackModel.swift */; };
 		19ECD54828623D9C001765F6 /* CustomViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19ECD54728623D9C001765F6 /* CustomViews.swift */; };
@@ -143,7 +144,7 @@
 		63AD132628A39B4900CFF75B /* GetTransactionByIdApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AD132528A39B4800CFF75B /* GetTransactionByIdApiWorker.swift */; };
 		63AD132828A3B06C00CFF75B /* GetTransactionByIdUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AD132728A3B06C00CFF75B /* GetTransactionByIdUseCase.swift */; };
 		63AD437B28992045000511B9 /* TransactionStatusViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AD437A28992045000511B9 /* TransactionStatusViewModel.swift */; };
-		63CFA194289C312F000E4D1E /* HistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63CFA193289C312F000E4D1E /* HistoryViewModel.swift */; };
+		63CFA194289C312F000E4D1E /* HistoryViewModelOld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63CFA193289C312F000E4D1E /* HistoryViewModelOld.swift */; };
 		63CFA196289C38A9000E4D1E /* GetTransactionsApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63CFA195289C38A9000E4D1E /* GetTransactionsApiWorker.swift */; };
 		63CFA198289C3FB6000E4D1E /* GetTransactionsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63CFA197289C3FB6000E4D1E /* GetTransactionsUseCase.swift */; };
 		63D419E928A5109E0024E22C /* GetUsersListUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D419E828A5109E0024E22C /* GetUsersListUseCase.swift */; };
@@ -189,6 +190,7 @@
 		190C1D24285D160000FB3518 /* TeamForceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TeamForceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		190C1D28285D160000FB3518 /* WorksTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorksTests.swift; sourceTree = "<group>"; };
 		191571D0289F12350061510F /* PlaygroundScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundScene.swift; sourceTree = "<group>"; };
+		19171F4A28AD23AE000926B1 /* HistoryViewModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewModels.swift; sourceTree = "<group>"; };
 		1918CC76286F67EB004373F3 /* BalanceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceViewModel.swift; sourceTree = "<group>"; };
 		1918CC78286F6C69004373F3 /* VerifyApiModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyApiModel.swift; sourceTree = "<group>"; };
 		1918CC7A286F6C83004373F3 /* ProfileApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileApiWorker.swift; sourceTree = "<group>"; };
@@ -269,11 +271,11 @@
 		19D08360286F430B00F75E4A /* Designable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Designable.swift; sourceTree = "<group>"; };
 		19D84E2E28ABD39C00418B9E /* MainScenario.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScenario.swift; sourceTree = "<group>"; };
 		19D84E3028ABD3AA00418B9E /* MainBackstage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainBackstage.swift; sourceTree = "<group>"; };
-		19D84E3228AC077200418B9E /* LoginActors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginActors.swift; sourceTree = "<group>"; };
+		19D84E3228AC077200418B9E /* LoginViewModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModels.swift; sourceTree = "<group>"; };
 		19DD3D94288766860085CDA8 /* LabelCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelCellModel.swift; sourceTree = "<group>"; };
 		19DD3D96288A0A8C0085CDA8 /* CoverViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoverViewModel.swift; sourceTree = "<group>"; };
 		19E9F30E28AC14D100AD951F /* SceneStateProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneStateProtocol.swift; sourceTree = "<group>"; };
-		19E9F31028AC39D900AD951F /* MainActors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainActors.swift; sourceTree = "<group>"; };
+		19E9F31028AC39D900AD951F /* MainViewModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModels.swift; sourceTree = "<group>"; };
 		19ECD54028623D1F001765F6 /* LabelModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelModel.swift; sourceTree = "<group>"; };
 		19ECD54228623D30001765F6 /* StackModel.swift */ = {isa = PBXFileReference; indentWidth = 3; lastKnownFileType = sourcecode.swift; path = StackModel.swift; sourceTree = "<group>"; tabWidth = 3; };
 		19ECD54728623D9C001765F6 /* CustomViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomViews.swift; sourceTree = "<group>"; };
@@ -302,7 +304,7 @@
 		63AD132528A39B4800CFF75B /* GetTransactionByIdApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTransactionByIdApiWorker.swift; sourceTree = "<group>"; };
 		63AD132728A3B06C00CFF75B /* GetTransactionByIdUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTransactionByIdUseCase.swift; sourceTree = "<group>"; };
 		63AD437A28992045000511B9 /* TransactionStatusViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionStatusViewModel.swift; sourceTree = "<group>"; };
-		63CFA193289C312F000E4D1E /* HistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewModel.swift; sourceTree = "<group>"; };
+		63CFA193289C312F000E4D1E /* HistoryViewModelOld.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewModelOld.swift; sourceTree = "<group>"; };
 		63CFA195289C38A9000E4D1E /* GetTransactionsApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTransactionsApiWorker.swift; sourceTree = "<group>"; };
 		63CFA197289C3FB6000E4D1E /* GetTransactionsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTransactionsUseCase.swift; sourceTree = "<group>"; };
 		63D419E628A50F730024E22C /* GetUsersListApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUsersListApiWorker.swift; sourceTree = "<group>"; };
@@ -528,7 +530,7 @@
 			children = (
 				19AE3AEE28691B2E00A0C6E4 /* MainScene.swift */,
 				19D84E2E28ABD39C00418B9E /* MainScenario.swift */,
-				19E9F31028AC39D900AD951F /* MainActors.swift */,
+				19E9F31028AC39D900AD951F /* MainViewModels.swift */,
 				19D84E3028ABD3AA00418B9E /* MainBackstage.swift */,
 				19ACB3CB28A599DF00B5AD71 /* Balance */,
 				19ACB3CA28A599D600B5AD71 /* Transact */,
@@ -566,7 +568,7 @@
 			children = (
 				196750A5286516F40019A6DE /* LoginScene.swift */,
 				19BD2A8628ABB35C00FCC00A /* LoginScenario.swift */,
-				19D84E3228AC077200418B9E /* LoginActors.swift */,
+				19D84E3228AC077200418B9E /* LoginViewModels.swift */,
 				1959F27328AA8E9700DEEE5C /* LoginBackstage.swift */,
 			);
 			path = LoginScene;
@@ -705,10 +707,11 @@
 		19ACB3CC28A599E600B5AD71 /* History */ = {
 			isa = PBXGroup;
 			children = (
-				63CFA193289C312F000E4D1E /* HistoryViewModel.swift */,
 				63EB469428AC35720070A271 /* HistoryScene.swift */,
+				19171F4A28AD23AE000926B1 /* HistoryViewModels.swift */,
 				63EB469628AC35920070A271 /* HistoryScenario.swift */,
 				63EB469828AC35A30070A271 /* HistoryWorks.swift */,
+				63CFA193289C312F000E4D1E /* HistoryViewModelOld.swift */,
 			);
 			path = History;
 			sourceTree = "<group>";
@@ -1053,6 +1056,7 @@
 				19C1E991285F426B00E7976D /* ApiEngine.swift in Sources */,
 				19017B7128A69CB100B06345 /* IconTitleY.swift in Sources */,
 				19EF32B02884B6C80078F53D /* TableViewModel.swift in Sources */,
+				19171F4B28AD23AE000926B1 /* HistoryViewModels.swift in Sources */,
 				19BD2A8928ABB72500FCC00A /* Scenaryable.swift in Sources */,
 				19A73BED28A4530C000B74CF /* TextFieldBadged.swift in Sources */,
 				19017B8128A6A39800B06345 /* TransactDetailViewModel.swift in Sources */,
@@ -1075,7 +1079,7 @@
 				19AE3AF22869230C00A0C6E4 /* AuthApiWorker.swift in Sources */,
 				195870F228A8C8040075D505 /* KeyPathMaker.swift in Sources */,
 				19017B6B28A6989000B06345 /* TitleSubtitleY.swift in Sources */,
-				19D84E3328AC077200418B9E /* LoginActors.swift in Sources */,
+				19D84E3328AC077200418B9E /* LoginViewModels.swift in Sources */,
 				19D08351286F401000F75E4A /* SideBarUserModel.swift in Sources */,
 				19D0835F286F42C000F75E4A /* FrameCellModel.swift in Sources */,
 				19466E01289FE28C0052F0AB /* TitleSubtitleModel.swift in Sources */,
@@ -1136,7 +1140,7 @@
 				1953DE862879FE30000DC537 /* PickerViewModel.swift in Sources */,
 				6368D82C289415EC0049EEAB /* TextViewModel.swift in Sources */,
 				190C1D12285D15FF00FB3518 /* AppDelegate.swift in Sources */,
-				63CFA194289C312F000E4D1E /* HistoryViewModel.swift in Sources */,
+				63CFA194289C312F000E4D1E /* HistoryViewModelOld.swift in Sources */,
 				190C1D14285D15FF00FB3518 /* SceneDelegate.swift in Sources */,
 				1953DE812879FC55000DC537 /* SearchUserApiWorker.swift in Sources */,
 				19EF32AE287E08F80078F53D /* ColorBuilder.swift in Sources */,
@@ -1158,7 +1162,7 @@
 				19D0835D286F428600F75E4A /* BarButtonModel.swift in Sources */,
 				196750AC2865189C0019A6DE /* TextFieldModel.swift in Sources */,
 				6368D8222891508C0049EEAB /* ProfileViewModel.swift in Sources */,
-				19E9F31128AC39D900AD951F /* MainActors.swift in Sources */,
+				19E9F31128AC39D900AD951F /* MainViewModels.swift in Sources */,
 				198FE1C92899994A00BAF1A5 /* LoginUseCase.swift in Sources */,
 				1952EA7128A718AE003F7852 /* Params.swift in Sources */,
 				1952EA6F28A71590003F7852 /* IconElements.swift in Sources */,
@@ -1314,11 +1318,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = B9QL37WADD;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = TeamForce/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = DigThanks;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -1330,7 +1336,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = TeamForce.DigitalThanks;
+				PRODUCT_BUNDLE_IDENTIFIER = TeamForce.DigThanks;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1344,11 +1350,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = B9QL37WADD;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = TeamForce/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = DigThanks;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -1360,7 +1368,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = TeamForce.DigitalThanks;
+				PRODUCT_BUNDLE_IDENTIFIER = TeamForce.DigThanks;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;

@@ -20,7 +20,8 @@ if true {
 
    class VC: UIViewController {
       override func loadView() {
-         view = historyModel.makeMainView()
+         view = MyViewModel().view
+         // view = historyModel.makeMainView()
       }
    }
 

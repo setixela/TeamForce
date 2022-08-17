@@ -21,7 +21,7 @@ enum LoginSceneState {
 
 // MARK: - View models
 
-final class LoginActors<Asset: AssetProtocol>: Assetable {
+final class LoginViewModels<Asset: AssetProtocol>: Assetable {
    //
    lazy var userNameInputModel: IconTextField<Design> = .init()
       .setMain {
@@ -45,7 +45,7 @@ final class LoginActors<Asset: AssetProtocol>: Assetable {
       .set(.title(Text.button.enterButton))
 }
 
-extension LoginActors: SceneStateProtocol {
+extension LoginViewModels: SceneStateProtocol {
    func setState(_ state: LoginSceneState) {
       switch state {
 

@@ -6,29 +6,23 @@
 //
 
 import ReactiveWorks
+import UIKit
 
 // MARK: - HistoryScene
 
-final class HistoryScene<Asset: AssetProtocol>: BaseSceneModel<
-   DefaultVCModel,
-   DoubleStacksBrandedVM<Asset.Design>,
-   Asset,
-   Void
->, Scenaryable {
+final class HistoryScene<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
+   Assetable,
+   Stateable,
+   Scenaryable
+{
    //
+   typealias State = StackState
 
-   lazy var scenario = HistoryScenario(viewModels: HistoryViewModels<Design>(
-      tableModel: TableViewModel()
-         .set(.borderColor(.gray))
-         .set(.borderWidth(1))
-         .set(.cornerRadius(Design.params.cornerRadius)),
+   private lazy var viewModels = HistoryViewModels<Design>()
 
-      segmentedControl: SegmentedControlModel()
-         .set(.items(["Все", "Получено", "Отправлено"]))
-         .set(.height(50))
-         .set(.selectedSegmentIndex(0))
-
-   ), works: HistoryWorks<Asset>())
+   lazy var scenario = HistoryScenario(
+      works: HistoryWorks<Asset>(),
+      events: HistoryScenarioEvents(segmentContorlEvent: viewModels.segmentedControl.onEvent(\.segmentChanged)))
 
    // MARK: - Start
 
@@ -42,15 +36,32 @@ final class HistoryScene<Asset: AssetProtocol>: BaseSceneModel<
 
 private extension HistoryScene {
    func configure() {
-      mainVM
-         .setMain { _ in } setDown: {
-            $0.subModel
-               .set_models([
-                  scenario.vModels.segmentedControl,
-                  scenario.vModels.tableModel,
-                  Grid.xxx.spacer
-               ])
-         }
-         .header.set_text(Design.Text.title.autorisation)
+      set_models([
+         viewModels.segmentedControl,
+         viewModels.tableModel,
+         Grid.xxx.spacer
+      ])
+   }
+}
+
+enum HistoryState {
+   case loadProfilError
+   case loadTransactionsError
+
+   case present([TableSection])
+}
+
+extension HistoryScene: SceneStateProtocol {
+   func setState(_ state: HistoryState) {
+      switch state {
+      case .loadProfilError:
+         break
+      case .loadTransactionsError:
+         break
+      case .present(let sections):
+         viewModels.tableModel
+            .set(.backColor(.gray))
+            .set(.sections(sections))
+      }
    }
 }
