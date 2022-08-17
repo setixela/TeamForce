@@ -93,7 +93,7 @@ extension TableItemsModel: UITableViewDataSource {
       let item = isMultiSection ? itemSections[indexPath.section].items[indexPath.row] : items[indexPath.row]
 
       let cellName = String(describing: type(of: item))
-      log(self, cellName)
+      log(cellName, self)
 
       view.register(UITableViewCell.self, forCellReuseIdentifier: cellName)
 

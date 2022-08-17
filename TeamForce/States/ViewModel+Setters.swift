@@ -90,6 +90,10 @@ struct Shadow {
       self.color = color
       self.opacity = opacity
    }
+
+   static var noShadow: Shadow {
+      Shadow(radius: 0, offset: .zero, color: .clear, opacity: 0)
+   }
 }
 
 extension ViewModelProtocol where Self: Stateable, View: UIStackView {
