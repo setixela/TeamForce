@@ -31,4 +31,8 @@ extension UIEdgeInsets {
    static func horizontalShift(_ offset: CGFloat) -> UIEdgeInsets {
       UIEdgeInsets(top: 0, left: offset, bottom: 0, right: -offset)
    }
+
+   static func outline(_ width: CGFloat) -> UIEdgeInsets {
+      .init(top: width, left: width, bottom: width, right: width)
+   }
 }
