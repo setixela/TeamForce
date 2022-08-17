@@ -52,16 +52,17 @@ final class TestScene<Asset: AssetProtocol>: BaseSceneModel<
          .set_alignment(.bottom)
          .set_models([
             Grid.xxx.spacer,
-            ImageViewModel()
+            ButtonModel()
                .set_image(Design.icon.tabBarMainButton)
-               .set_contentMode(.scaleAspectFit)
                .set_size(.square(60))
-               //.set_backColor(.green)
+            // .set_padding(.verticalShift(36))
             ,
             Grid.xxx.spacer
          ])
-         .set_padding(.init(top: -36, left: 0, bottom:36, right: 0))
+         .set_padding(.verticalShift(36))
          .set_height(88)
+         .set_shadow(.init(radius: 8, color: Design.color.iconContrast, opacity: 0.13)
+)
 
 //         .set_backImage(Asset.Design.icon.bottomPanel, contentMode: .scaleToFill)
    }
@@ -112,7 +113,7 @@ final class TripleStacksBrandedVM<Design: DesignProtocol>:
          //            .set(Design.state.stack.bottomShadowedPanel)
 //           .set_backColor(Design.color.transparent)
           // .set_padding(.top(Grid.x16.value))
-            .set_shadow(.init(radius: 8, color: Design.color.iconContrast, opacity: 0.33))
+            .set_shadow(.init(radius: 8, color: Design.color.iconContrast, opacity: 0.13))
          //    .set_padBottom(-Grid.x32.value)
 
          // .set_height(300)

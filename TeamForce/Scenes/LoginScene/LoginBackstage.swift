@@ -9,8 +9,8 @@ import Foundation
 import ReactiveWorks
 
 protocol LoginBackstageProtocol: Assetable {
-   var authByName: Work<Void, AuthResult> { get }
-   var verifyCode: Work<Void, VerifyResultBody> { get }
+   var authByName: VoidWork<AuthResult> { get }
+   var verifyCode: VoidWork<VerifyResultBody> { get }
 
    var loginNameInputParse: Work<String, String> { get }
    var smsCodeInputParse: Work<String, String> { get }
@@ -34,7 +34,7 @@ final class LoginBackstage<Asset: AssetProtocol>: BaseSceneWorks<LoginBackstage.
 
    // MARK: - Works
 
-   lazy var authByName = Work<Void, AuthResult> { [weak self] work in
+   lazy var authByName = VoidWork<AuthResult> { [weak self] work in
       self?.useCase.login.work
          .doAsync(Self.store.loginName)
          .onSuccess {
@@ -47,7 +47,7 @@ final class LoginBackstage<Asset: AssetProtocol>: BaseSceneWorks<LoginBackstage.
          .retainBy(self?.retainer)
    }
 
-   lazy var verifyCode = Work<Void, VerifyResultBody> { [weak self] work in
+   lazy var verifyCode = VoidWork<VerifyResultBody> { [weak self] work in
 
       guard
          let inputCode = Self.store.smsCodeInput,

@@ -7,9 +7,22 @@
 
 import ReactiveWorks
 
+enum LoginSceneState {
+   //
+   case inputUserName
+   case inputSmsCode
+   //
+   case nameInputParseSuccess(String)
+   case nameInputParseError(String)
+   //
+   case smsInputParseSuccess(String)
+   case smsInputParseError(String)
+}
+
 // MARK: - View models
 
 final class LoginActors<Asset: AssetProtocol>: Assetable {
+   //
    lazy var userNameInputModel: IconTextField<Design> = .init()
       .setMain {
          $0.set_image(Design.icon.user)
@@ -30,18 +43,6 @@ final class LoginActors<Asset: AssetProtocol>: Assetable {
 
    lazy var loginButton: ButtonModel = .init(Design.state.button.inactive)
       .set(.title(Text.button.enterButton))
-}
-
-enum LoginSceneState {
-   //
-   case inputUserName
-   case inputSmsCode
-   //
-   case nameInputParseSuccess(String)
-   case nameInputParseError(String)
-   //
-   case smsInputParseSuccess(String)
-   case smsInputParseError(String)
 }
 
 extension LoginActors: SceneStateProtocol {

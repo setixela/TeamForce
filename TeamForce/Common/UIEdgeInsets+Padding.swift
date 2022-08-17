@@ -23,4 +23,12 @@ extension UIEdgeInsets {
    static func bottom(_ offset: CGFloat) -> UIEdgeInsets {
       UIEdgeInsets(top: 0, left: 0, bottom: offset, right: 0)
    }
+
+   static func verticalShift(_ offset: CGFloat) -> UIEdgeInsets {
+      .init(top: -offset, left: 0, bottom: offset, right: 0)
+   }
+
+   static func horizontalShift(_ offset: CGFloat) -> UIEdgeInsets {
+      UIEdgeInsets(top: 0, left: offset, bottom: 0, right: -offset)
+   }
 }
