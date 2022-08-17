@@ -22,13 +22,16 @@ final class HistoryScene<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
 
    lazy var scenario = HistoryScenario(
       works: HistoryWorks<Asset>(),
-      events: HistoryScenarioEvents(segmentContorlEvent: viewModels.segmentedControl.onEvent(\.segmentChanged)))
+      events: HistoryScenarioEvents(
+         segmentContorlEvent: viewModels.segmentedControl.onEvent(\.segmentChanged)
+      )
+   )
 
    // MARK: - Start
 
    override func start() {
       configure()
-      scenario.start()
+      scenario.start(stateMachineFunc: setState)
    }
 }
 
