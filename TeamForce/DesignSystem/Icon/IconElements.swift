@@ -43,4 +43,8 @@ protocol IconElements: InitProtocol, DesignElementable where DesignElement == UI
    // bottom panel
    var bottomPanel: DesignElement { get }
    var tabBarMainButton: DesignElement { get }
+   var tabBarButton1: UIImage { get }
+   var tabBarButton2: UIImage { get }
+   var tabBarButton3: UIImage { get }
+   var tabBarButton4: UIImage { get }
 }

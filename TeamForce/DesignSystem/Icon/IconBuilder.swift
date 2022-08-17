@@ -46,6 +46,10 @@ struct IconBuilder: IconElements {
    var bottomPanel: UIImage { make("bottom_panel") }
 
    var tabBarMainButton: UIImage { make("dt_tabbar_main_button") }
+   var tabBarButton1: UIImage { make("dt_bttm_bttn_1") }
+   var tabBarButton2: UIImage { make("dt_bttm_bttn_2") }
+   var tabBarButton3: UIImage { make("dt_bttm_bttn_3") }
+   var tabBarButton4: UIImage { make("dt_bttm_bttn_4") }
 }
 
 private extension IconBuilder {

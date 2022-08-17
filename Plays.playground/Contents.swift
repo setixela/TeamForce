@@ -32,137 +32,13 @@ if true {
 
 let historyModel = TestScene<ProductionAsset>()
 
-struct BottomPanelVMBuilder<Design: DesignProtocol>: Designable {
-   static var button: ButtonModel {
-      ButtonModel()
-         .set_width(55)
-         .set_height(46)
-         .set_cornerRadius(16)
-         .onModeChanged(\.normal) { button in
-            button?
-               .set_backColor(Design.color.backgroundBrandSecondary)
-               .set_shadow(.init(
-                  radius: 8,
-                  offset: .init(x: 0, y: 10),
-                  color: Design.color.iconContrast,
-                  opacity: 0.23
-               ))
-         }
-         .onModeChanged(\.inactive) { button in
-            button?
-               .set_backColor(Design.color.transparent)
-               .set_shadow(.noShadow)
-         }
-         .setMode(\.inactive)
-   }
-}
-
 final class TestScene<Asset: AssetProtocol>: BaseSceneModel<
    DefaultVCModel,
    TripleStacksBrandedVM<Asset.Design>,
    Asset,
    Void
 > {
-   let panelBack = ImageViewModel()
-      .set_image(Asset.Design.icon.bottomPanel)
-
-   // MARK: - View Models
-
-   private let button1: ButtonModel = BottomPanelVMBuilder<Design>.button
-   private let button2: ButtonModel = BottomPanelVMBuilder<Design>.button
-
-   private let buttonMain: ButtonModel = BottomPanelVMBuilder<Design>.button
-
-   private let button3: ButtonModel = BottomPanelVMBuilder<Design>.button
-   private let button4: ButtonModel = BottomPanelVMBuilder<Design>.button
-
-   override func start() {
-      mainVM.footerStack
-         // .set_models([panelBack])
-
-         .set_axis(.horizontal)
-         .set_distribution(.equalSpacing)
-         .set_alignment(.bottom)
-         .set_models([
-            Grid.xxx.spacer,
-            button1,
-            button2,
-
-            WrappedY(
-               ButtonModel()
-                  .set_image(Design.icon.tabBarMainButton)
-                  .set_size(.square(60))
-                  .set_shadow(.init(
-                     radius: 8,
-                     offset: .init(x: 0, y: 10),
-                     color: Design.color.iconContrast,
-                     opacity: 0.23
-                  ))
-            ).set_padding(.verticalShift(23)),
-
-            button3,
-            button4,
-            Grid.xxx.spacer
-         ])
-         .set_padding(.verticalShift(13))
-         .set_height(88)
-         .set_shadow(.init(radius: 8, color: Design.color.iconContrast, opacity: 0.13)
-         )
-   }
+   override func start() {}
 }
 
-final class TripleStacksBrandedVM<Design: DesignProtocol>:
-   Combos<SComboMDD<StackModel, WrappedY<StackModel>, WrappedY<StackModel>>>,
-   Designable
-{
-   lazy var header = Design.label.headline5
-      .set_color(Design.color.textInvert)
 
-   var headerStack: StackModel { models.main }
-   var bodyStack: StackModel { models.down.subModel }
-   var footerStack: StackModel { models.down2.subModel }
-
-   required init() {
-      super.init()
-
-      set_backColor(.lightGray)
-      setMain {
-         $0
-            .set(Design.state.stack.default)
-            .set_backColor(Design.color.backgroundBrand)
-            .set_alignment(.leading)
-            .set_models([
-               Grid.x16.spacer,
-               BrandLogoIcon<Design>(),
-               Grid.x16.spacer,
-               header,
-               Grid.x36.spacer
-            ])
-      } setDown: {
-         $0
-            //            .set(Design.state.stack.bottomShadowedPanel)
-            .set_backColor(Design.color.background)
-            .set_padding(.top(-Grid.x16.value))
-            .set_padBottom(-Grid.x64.value)
-            .subModel
-            .set(Design.state.stack.bottomShadowedPanel)
-      } setDown2: {
-         print($0.view.layoutMargins)
-         $0
-            //    .set_backColor(.red)
-            .set_backImage(Design.icon.bottomPanel, contentMode: .scaleToFill)
-//            .set_height(100)
-
-            //            .set(Design.state.stack.bottomShadowedPanel)
-//           .set_backColor(Design.color.transparent)
-            // .set_padding(.top(Grid.x16.value))
-            .set_shadow(.init(radius: 8, color: Design.color.iconContrast, opacity: 0.13))
-         //    .set_padBottom(-Grid.x32.value)
-
-         // .set_height(300)
-         // .set_backImage(Design.icon.bottomPanel, contentMode: .scaleToFill)
-         //  .subModel
-         // .set(Design.state.stack.bottomShadowedPanel)
-      }
-   }
-}

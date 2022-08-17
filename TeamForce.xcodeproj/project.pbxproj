@@ -60,6 +60,8 @@
 		196750B0286518F80019A6DE /* DoubleStacksModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196750AF286518F80019A6DE /* DoubleStacksModel.swift */; };
 		196750B22865190D0019A6DE /* ImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196750B12865190D0019A6DE /* ImageViewModel.swift */; };
 		196750B4286519660019A6DE /* ProductionAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196750B3286519660019A6DE /* ProductionAsset.swift */; };
+		196D883428ADB6EC00F4C09D /* TripleStacksBrandedVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196D883328ADB6EC00F4C09D /* TripleStacksBrandedVM.swift */; };
+		196D883628ADB74800F4C09D /* TabBarPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196D883528ADB74800F4C09D /* TabBarPanel.swift */; };
 		1977518D28A8329F006CFAF3 /* ReactiveWorks in Frameworks */ = {isa = PBXBuildFile; productRef = 1977518C28A8329F006CFAF3 /* ReactiveWorks */; };
 		1977519028A83395006CFAF3 /* SwiftCSSParser in Frameworks */ = {isa = PBXBuildFile; productRef = 1977518F28A83395006CFAF3 /* SwiftCSSParser */; };
 		1977BE5528A7238F00D554EA /* TextFieldStates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1977BE5428A7238F00D554EA /* TextFieldStates.swift */; };
@@ -227,6 +229,8 @@
 		196750AF286518F80019A6DE /* DoubleStacksModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleStacksModel.swift; sourceTree = "<group>"; };
 		196750B12865190D0019A6DE /* ImageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewModel.swift; sourceTree = "<group>"; };
 		196750B3286519660019A6DE /* ProductionAsset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductionAsset.swift; sourceTree = "<group>"; };
+		196D883328ADB6EC00F4C09D /* TripleStacksBrandedVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripleStacksBrandedVM.swift; sourceTree = "<group>"; };
+		196D883528ADB74800F4C09D /* TabBarPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarPanel.swift; sourceTree = "<group>"; };
 		1977BE5428A7238F00D554EA /* TextFieldStates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldStates.swift; sourceTree = "<group>"; };
 		1977BE5728A7343400D554EA /* InputCheckers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputCheckers.swift; sourceTree = "<group>"; };
 		197A2D9828A98F4300190656 /* UIColor+Random.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Random.swift"; sourceTree = "<group>"; };
@@ -851,6 +855,8 @@
 		19EE848E28AB20A600D862EE /* MainVMs */ = {
 			isa = PBXGroup;
 			children = (
+				196D883328ADB6EC00F4C09D /* TripleStacksBrandedVM.swift */,
+				196D883528ADB74800F4C09D /* TabBarPanel.swift */,
 				19EE848F28AB20CE00D862EE /* DoubleStacksBrandedVM.swift */,
 			);
 			path = MainVMs;
@@ -1039,6 +1045,7 @@
 				199C4B6D2863299E008AD6FD /* DesignSystem.swift in Sources */,
 				63578E5828AB8DA000423957 /* GetTransactionsByPeriodApiWorker.swift in Sources */,
 				197A771828AD90800082CD81 /* XelaLog.swift in Sources */,
+				196D883428ADB6EC00F4C09D /* TripleStacksBrandedVM.swift in Sources */,
 				19AE3AEF28691B2E00A0C6E4 /* MainScene.swift in Sources */,
 				197A2DA428A9BF4B00190656 /* Combos.swift in Sources */,
 				19F15389289964D200ECF000 /* ApiUseCase.swift in Sources */,
@@ -1159,6 +1166,7 @@
 				63AD132828A3B06C00CFF75B /* GetTransactionByIdUseCase.swift in Sources */,
 				1952EA6928A711F2003F7852 /* Associated.swift in Sources */,
 				19D08353286F403400F75E4A /* SideBarModel.swift in Sources */,
+				196D883628ADB74800F4C09D /* TabBarPanel.swift in Sources */,
 				1999B6FE28A2F5D300D3570B /* DataToDecodableParser.swift in Sources */,
 				63578E5C28AB9B3E00423957 /* CancelTransactionByIdApiWorker.swift in Sources */,
 				19D08359286F41FA00F75E4A /* IconLabelHorizontalModel.swift in Sources */,
