@@ -13,6 +13,7 @@ protocol SceneViewModels: InitProtocol {}
 struct MainViewModels<Asset: AssetProtocol>: SceneViewModels, Assetable {
    lazy var balanceViewModel = BalanceViewModel<Asset>()
    lazy var transactViewModel = TransactViewModel<Asset>()
+//   lazy var historyViewModel = HistoryScene<Asset>() //HistoryViewModel<Asset>()
    lazy var historyViewModel = HistoryViewModel<Asset>()
 }
 
@@ -81,7 +82,8 @@ final class MainScene<Asset: AssetProtocol>:
 
       historyButton
          .onEvent(\.didTap) { [weak self] in
-            self?.presentModel(self?.scenario.vModels.historyViewModel)
+//            self?.scenario.vModels.historyViewModel.start()
+            self?.presentModel(self?.scenario.vModels.historyViewModel/*.mainVM.bottomSubStack*/)
          }
 
       menuButton
@@ -115,7 +117,8 @@ final class MainScene<Asset: AssetProtocol>:
       sideBarModel.item3
          .onEvent(\.didTap) {
             weakSelf?.sideBarModel.sendEvent(\.hide)
-            weakSelf?.presentModel(weakSelf?.scenario.vModels.historyViewModel)
+//            weakSelf?.scenario.vModels.historyViewModel.start()
+            weakSelf?.presentModel(weakSelf?.scenario.vModels.historyViewModel/*.mainVM.bottomSubStack*/)
          }
    }
 }

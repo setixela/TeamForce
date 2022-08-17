@@ -153,6 +153,9 @@
 		63D419F328AA85560024E22C /* GetStatByPeriodIdApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D419F228AA85560024E22C /* GetStatByPeriodIdApiWorker.swift */; };
 		63D419F728AA8AA70024E22C /* GetStatByPeriodIdUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D419F628AA8AA70024E22C /* GetStatByPeriodIdUseCase.swift */; };
 		63E1916D2889519E000FD312 /* BadgeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E1916C2889519E000FD312 /* BadgeModel.swift */; };
+		63EB469528AC35720070A271 /* HistoryScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EB469428AC35720070A271 /* HistoryScene.swift */; };
+		63EB469728AC35920070A271 /* HistoryScenario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EB469628AC35920070A271 /* HistoryScenario.swift */; };
+		63EB469928AC35A30070A271 /* HistoryWorks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EB469828AC35A30070A271 /* HistoryWorks.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -309,6 +312,9 @@
 		63D419F228AA85560024E22C /* GetStatByPeriodIdApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetStatByPeriodIdApiWorker.swift; sourceTree = "<group>"; };
 		63D419F628AA8AA70024E22C /* GetStatByPeriodIdUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetStatByPeriodIdUseCase.swift; sourceTree = "<group>"; };
 		63E1916C2889519E000FD312 /* BadgeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeModel.swift; sourceTree = "<group>"; };
+		63EB469428AC35720070A271 /* HistoryScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryScene.swift; sourceTree = "<group>"; };
+		63EB469628AC35920070A271 /* HistoryScenario.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryScenario.swift; sourceTree = "<group>"; };
+		63EB469828AC35A30070A271 /* HistoryWorks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryWorks.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -697,6 +703,9 @@
 			isa = PBXGroup;
 			children = (
 				63CFA193289C312F000E4D1E /* HistoryViewModel.swift */,
+				63EB469428AC35720070A271 /* HistoryScene.swift */,
+				63EB469628AC35920070A271 /* HistoryScenario.swift */,
+				63EB469828AC35A30070A271 /* HistoryWorks.swift */,
 			);
 			path = History;
 			sourceTree = "<group>";
@@ -1044,6 +1053,7 @@
 				19BD2A8928ABB72500FCC00A /* Scenaryable.swift in Sources */,
 				19A73BED28A4530C000B74CF /* TextFieldBadged.swift in Sources */,
 				19017B8128A6A39800B06345 /* TransactDetailViewModel.swift in Sources */,
+				63EB469528AC35720070A271 /* HistoryScene.swift in Sources */,
 				19DD3D97288A0A8C0085CDA8 /* CoverViewModel.swift in Sources */,
 				191B0C292865F119001CF3D9 /* TextBuilder.swift in Sources */,
 				19D08355286F405500F75E4A /* DoubleLabelModel.swift in Sources */,
@@ -1096,6 +1106,7 @@
 				63578E5A28AB8F6000423957 /* GetTransactionsByPeriodUseCase.swift in Sources */,
 				6368D82A2894091B0049EEAB /* TransactInputViewModel.swift in Sources */,
 				1918CC79286F6C69004373F3 /* VerifyApiModel.swift in Sources */,
+				63EB469928AC35A30070A271 /* HistoryWorks.swift in Sources */,
 				19017B8228A6A3FB00B06345 /* GetUsersListApiWorker.swift in Sources */,
 				19F153842899649900ECF000 /* LoadProfileUseCase.swift in Sources */,
 				19F15386289964AA00ECF000 /* LogoutUseCase.swift in Sources */,
@@ -1133,6 +1144,7 @@
 				63578E5C28AB9B3E00423957 /* CancelTransactionByIdApiWorker.swift in Sources */,
 				19D08359286F41FA00F75E4A /* IconLabelHorizontalModel.swift in Sources */,
 				1953DE8D287B4752000DC537 /* TypographyElements.swift in Sources */,
+				63EB469728AC35920070A271 /* HistoryScenario.swift in Sources */,
 				19C1E98C285F426B00E7976D /* EndpointProtocol.swift in Sources */,
 				196750B4286519660019A6DE /* ProductionAsset.swift in Sources */,
 				1918CC7B286F6C84004373F3 /* ProfileApiWorker.swift in Sources */,

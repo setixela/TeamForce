@@ -38,6 +38,8 @@ final class HistoryViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
    struct TempStore: KeyPathSetable {
       var currentUser: String = ""
       var transactions: [Transaction] = []
+      var sections: [TableSection] = []
+      var sectionWithTransactions: [[Transaction]] = []
    }
 
    private var store = TempStore()
@@ -46,6 +48,7 @@ final class HistoryViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
 
    private lazy var getTransactionsUseCase = apiUseCase.getTransactions.work
    private lazy var loadProfileUseCase = apiUseCase.loadProfile.work
+   private lazy var getTransactionByIdUseCase = apiUseCase.getTransactionById.work
 
    private lazy var currentUser: String = ""
    private lazy var transactions: [Transaction] = []
@@ -85,12 +88,33 @@ final class HistoryViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
             guard let transactions = wS?.transactions else { return }
             wS?.configureTableModel(cells: transactions, selectedSegmentIndex: index)
          }
+
+      tableModel.onEvent(\.didSelectRow) { indexPath in
+         print("indexPath is \(indexPath)")
+         print(self.store.sectionWithTransactions.count)
+         print(self.store.sectionWithTransactions)
+         let id = self.store.sectionWithTransactions[indexPath.section][indexPath.row]
+         
+         print("id \(id.id)")
+         self.getTransactionByIdUseCase
+            .doAsync(id.id)
+            .onSuccess { transaction in
+               print(transaction)
+               print("success happend")
+               ProductionAsset.router?.route(\.transactionDetail, navType: .push, payload: transaction)
+            }
+            .onFail {
+               print("failed")
+            }
+      }
    }
 
    // TODO: (setixela) - Make presenting via cellForRow
    private func configureTableModel(cells: [Transaction], selectedSegmentIndex: Int) {
       var models: [UIViewModel] = []
+      var modelsWithTransactions: [Transaction] = []
       var sections: [TableSection] = []
+      var sectionWithTransactions: [[Transaction]] = []
 
       var isSendingCoin = false
       var prevDay = ""
@@ -103,7 +127,9 @@ final class HistoryViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
             if models.count > 0 {
                sections.append(TableSection(title: prevDay,
                                             models: models))
+               sectionWithTransactions.append(modelsWithTransactions)
                models = []
+               modelsWithTransactions = []
             }
          }
 
@@ -134,6 +160,7 @@ final class HistoryViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
             selectedSegmentIndex == 0
          {
             models.append(cell)
+            modelsWithTransactions.append(transaction)
          }
 
          prevDay = currentDay
@@ -141,10 +168,15 @@ final class HistoryViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
       if !models.isEmpty {
          sections.append(TableSection(title: prevDay,
                                       models: models))
+         sectionWithTransactions.append(modelsWithTransactions)
          models = []
+         modelsWithTransactions = []
       }
-      print("sections count")
+//      print("sections count")
       print(sections.count)
+      store.sections = sections
+      print(sectionWithTransactions.count)
+      store.sectionWithTransactions = sectionWithTransactions
       tableModel
          .set(.backColor(.gray))
          .set(.sections(sections))
