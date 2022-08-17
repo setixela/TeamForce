@@ -9,8 +9,10 @@ import ReactiveWorks
 import UIKit
 
 struct HistoryPresenters<Design: DesignProtocol>: Designable {
+
    static var transactToIconSubtitle: Presenter<TransactionItem, IconTitleSubtitleModel> {
       Presenter<TransactionItem, IconTitleSubtitleModel> { work in
+
          let item = work.unsafeInput
 
          var rightText: String

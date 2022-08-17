@@ -71,33 +71,15 @@ final class HistoryWorks<Asset: AssetProtocol>: BaseSceneWorks<HistoryWorks.Temp
          }
    }
 
-   // Fucking shit)))
+   // not so Fucking shit already, but shit
    lazy var filterTransactions = Work<Int, [TableItemsSection]> { [weak self] work in
 
-      guard var transactions = Self.store.transactions else {
-         work.fail(())
-         return
-      }
-
       let selectedSegmentIndex = work.unsafeInput
+      let transactions = Self.filteredTransactionsForIndex(selectedSegmentIndex)
 
-      var result = [TableItemsSection]()
       var prevDay = ""
 
-      switch selectedSegmentIndex {
-      case 1:
-         transactions = transactions.filter {
-            $0.sender.senderTgName != Self.store.currentUser
-         }
-      case 2:
-         transactions = transactions.filter {
-            $0.sender.senderTgName == Self.store.currentUser
-         }
-      default:
-         break
-      }
-
-      result = transactions
+      let result = transactions
          .reduce([TableItemsSection]()) { result, transact in
             var state = TransactionItem.State.recieved
             if transact.sender.senderTgName == Self.store.currentUser {
@@ -131,6 +113,25 @@ final class HistoryWorks<Asset: AssetProtocol>: BaseSceneWorks<HistoryWorks.Temp
 
       work.success(result: result)
       Self.store.sections = result
+   }
+
+   private static func filteredTransactionsForIndex(_ index: Int) -> [Transaction] {
+      guard let transactions = store.transactions else {
+         return []
+      }
+
+      switch index {
+      case 1:
+         return transactions.filter {
+            $0.sender.senderTgName != Self.store.currentUser
+         }
+      case 2:
+         return transactions.filter {
+            $0.sender.senderTgName == Self.store.currentUser
+         }
+      default:
+         return transactions
+      }
    }
 
    private static func convertToDate(time: String) -> String? {
