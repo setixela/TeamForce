@@ -5,4 +5,159 @@
 //  Created by Aleksandr Solovyev on 18.08.2022.
 //
 
+import ReactiveWorks
 import Foundation
+
+struct TransactScenarioEvents {
+   let userSearchTFBeginEditing: VoidWork<String>
+   let userSearchTFDidEditingChanged: VoidWork<String>
+   let userSelected: VoidWork<IndexPath>
+   let sendButtonEvent: VoidWork<Void>
+   
+   let transactInputChanged: VoidWork<String>
+   let reasonInputChanged: VoidWork<String>
+}
+
+enum TransactState {
+   case loadProfilError
+   case loadTransactionsError
+   
+   case loadTokensSuccess
+   case loadTokensError
+
+   case loadBalanceSuccess(Int)
+   case loadBalanceError
+   
+   case loadUsersListSuccess([FoundUser])
+   case loadUsersListError
+   
+   case searchTextFieldBeginEditing([FoundUser])
+   case emptyUserSearchTF([FoundUser])
+   case listOfFoundUsers([FoundUser])
+   
+   case userSelectedSuccess(FoundUser)
+   
+   case userSearchTFDidEditingChangedSuccess
+   
+   case sendCoinSuccess((String, SendCoinRequest))
+   case sendCoinError
+   
+   case coinInputSuccess(String)
+   case coinInputError(String)
+   
+   case reasonInputSuccess(String)
+   case reasonInputError(String)
+}
+
+final class TransactScenario<Asset: AssetProtocol>:
+   BaseScenario<TransactScenarioEvents, TransactState, TransactWorks<Asset>>
+{
+   override func start(stateMachineFunc: @escaping (TransactState) -> Void) {
+      works.loadTokens
+         .doAsync()
+         .onSuccess {
+            stateMachineFunc(.loadTokensSuccess)
+         }
+         .onFail {
+            stateMachineFunc(.loadTokensError)
+         }
+         // then load balance
+         .doNext(work: works.loadBalance)
+         .onSuccess {
+            stateMachineFunc(.loadBalanceSuccess($0.distr.amount))
+         }
+         .onFail {
+            stateMachineFunc(.loadBalanceError)
+         }
+         // then break data
+         .doInput(())
+         // then load 10 user list
+         .doNext(work: works.getUserList)
+         .onSuccess {
+            stateMachineFunc(.loadUsersListSuccess($0))
+         }
+         .onFail {
+            stateMachineFunc(.loadUsersListError)
+         }
+      
+      // load tokens, then load balance, then load 10 user list
+      events.userSearchTFBeginEditing
+         .doNext(usecase: IsEmpty())
+         .onSuccess {
+            self.works.getUserList
+               .doAsync()
+               .onSuccess {
+                  stateMachineFunc(.searchTextFieldBeginEditing($0))
+               }
+         }
+      
+      // on input event, then check input is not empty, then search user
+      events.userSearchTFDidEditingChanged
+         .onSuccess {
+            stateMachineFunc(.userSearchTFDidEditingChangedSuccess)
+         }
+         .doNext(usecase: IsEmpty())
+         .onSuccess {
+            
+            self.works.getUserList
+               .doAsync()
+               .onSuccess {
+                  stateMachineFunc(.emptyUserSearchTF($0))
+               }
+         }
+         .doNext(work: works.searchUser)
+         .onSuccess {
+            stateMachineFunc(.listOfFoundUsers($0))
+         }
+         .onFail {
+            print("Search user API Error")
+         }
+    
+      events.userSelected
+         .doNext(work: works.mapIndexToUser)
+         .onSuccess {
+            stateMachineFunc(.userSelectedSuccess($0))
+         }
+      
+      events.sendButtonEvent
+         .doInput {
+            self.works.store.inputAmountText
+         }
+         .doMap { amount in
+            (amount, self.works.store.inputReasonText)
+         }
+         .doNext(work: self.works.sendCoins)
+         .onSuccess { tuple in
+            stateMachineFunc(.sendCoinSuccess(tuple))
+         }
+         .onFail {
+            stateMachineFunc(.sendCoinError)
+         }
+      
+      events.transactInputChanged
+         .doNext(work: works.coinInputParsing)
+         .onSuccess {
+            self.works.store.isCorrectCoinInput = true
+            self.works.store.inputAmountText = $0
+            stateMachineFunc(.coinInputSuccess($0))
+         }
+         .onFail { (text: String) in
+            self.works.store.isCorrectCoinInput = false
+            self.works.store.inputAmountText = ""
+            stateMachineFunc(.coinInputError(text))
+         }
+      
+      events.reasonInputChanged
+         .doNext(work: works.reasonInputParsing)
+         .onSuccess {
+            self.works.store.isCorrectReasonInput = true
+            self.works.store.inputReasonText = $0
+            stateMachineFunc(.reasonInputSuccess($0))
+         }
+         .onFail { (text: String) in
+            self.works.store.isCorrectReasonInput = false
+            self.works.store.inputReasonText = ""
+            stateMachineFunc(.reasonInputError(text))
+         }
+   }
+}
