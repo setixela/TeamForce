@@ -43,6 +43,9 @@ final class TransactWorks<Asset: AssetProtocol>: BaseSceneWorks<TransactWorks.Te
 
       var inputAmountText = ""
       var inputReasonText = ""
+      
+      var isCorrectCoinInput = false
+      var isCorrectReasonInput = false
    }
 
    // MARK: - Works
