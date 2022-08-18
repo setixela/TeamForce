@@ -108,12 +108,21 @@ final class TransactScene<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
          // then load 10 user list
          .doNext(work: works.getUserList)
          .onSuccess {
-            wS?.presentFoundUsers(users: $0)
+            // wS?.presentFoundUsers(users: $0)
          }
          .onFail {
             wS?.tableModel.set_hidden(true)
          }
-
+      userSearchTextField
+         .onEvent(\.didBeginEditing)
+         .onSuccess {
+            wS?.tableModel.set_hidden(true)
+            wS?.works.getUserList
+               .doAsync()
+               .onSuccess {
+                  wS?.presentFoundUsers(users: $0)
+               }
+         }
       // on input event, then check input is not empty, then search user
       userSearchTextField
          .onEvent(\.didEditingChanged)

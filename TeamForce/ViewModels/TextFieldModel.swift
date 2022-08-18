@@ -12,6 +12,7 @@ import UIKit
 struct TextFieldEvents: InitProtocol {
    var didEditingChanged: Event<String>?
    var didTap: Event<String>?
+   var didBeginEditing: Event<String>?
 }
 
 final class TextFieldModel<Design: DSP>: BaseViewModel<PaddingTextField>,
@@ -27,7 +28,7 @@ final class TextFieldModel<Design: DSP>: BaseViewModel<PaddingTextField>,
       set(.cornerRadius(Design.params.cornerRadius))
       view.delegate = self
       view.addTarget(self, action: #selector(changValue), for: .editingChanged)
-      view.addTarget(self, action: #selector(didTap), for: .touchDown)
+      view.addTarget(self, action: #selector(didEditingBegin), for: .editingDidBegin)
    }
 
    @objc func changValue() {
@@ -36,9 +37,9 @@ final class TextFieldModel<Design: DSP>: BaseViewModel<PaddingTextField>,
       sendEvent(\.didEditingChanged, text)
    }
 
-   @objc func didTap() {
+   @objc func didEditingBegin() {
       guard let text = view.text else { return }
-      sendEvent(\.didTap, text)
+      sendEvent(\.didBeginEditing, text)
       print("Did tap textfield")
    }
 
