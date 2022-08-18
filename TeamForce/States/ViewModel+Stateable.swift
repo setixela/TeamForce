@@ -56,10 +56,10 @@ extension ViewModelProtocol where Self: Stateable {
 // MARK: - Stack State
 
 enum StackState {
-   case distribution(UIStackView.Distribution)
+   case distribution(StackViewExtended.Distribution)
    case axis(NSLayoutConstraint.Axis)
    case spacing(CGFloat)
-   case alignment(UIStackView.Alignment)
+   case alignment(StackViewExtended.Alignment)
    case padding(UIEdgeInsets)
    case backColor(UIColor)
    case cornerRadius(CGFloat)
@@ -74,7 +74,7 @@ enum StackState {
    case shadow(Shadow)
 }
 
-extension ViewModelProtocol where Self: Stateable, View: UIStackView {
+extension ViewModelProtocol where Self: Stateable, View: StackViewExtended {
    func applyState(_ state: StackState) {
       switch state {
       // Stack View
@@ -165,7 +165,7 @@ enum ImageViewState {
    case image(UIImage)
    case contentMode(UIView.ContentMode)
    case padding(UIEdgeInsets)
-   case tintColor(UIColor)
+   case imageTintColor(UIColor)
 }
 
 extension ViewModelProtocol where Self: Stateable, View: PaddingImageView {
@@ -177,8 +177,8 @@ extension ViewModelProtocol where Self: Stateable, View: PaddingImageView {
          set_contentMode(value)
       case .padding(let value):
          set_padding(value)
-      case .tintColor(let value):
-         set_color(value)
+      case .imageTintColor(let value):
+         set_imageTintColor(value)
       }
    }
 }
@@ -296,12 +296,12 @@ extension ViewModelProtocol where Self: Stateable, View: PaddingTextField {
 //   typealias State = ViewState
 // }
 
-// extension ViewModelProtocol where Self: Stateable2, View: UIStackView {
+// extension ViewModelProtocol where Self: Stateable2, View: StackViewExtended {
 //   typealias State = ViewState
 //   typealias State2 = StackState
 // }
 //
-// extension ViewModelProtocol where Self: Stateable, View: UIStackView {
+// extension ViewModelProtocol where Self: Stateable, View: StackViewExtended {
 //   typealias State = StackState
 // }
 

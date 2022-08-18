@@ -8,7 +8,7 @@
 import ReactiveWorks
 import UIKit
 
-final class DoubleLabelModel<Design: DesignProtocol>: BaseViewModel<UIStackView>,
+final class DoubleLabelModel<Design: DesignProtocol>: BaseViewModel<StackViewExtended>,
    Designable
 {
    lazy var labelLeft = Design.label.body2

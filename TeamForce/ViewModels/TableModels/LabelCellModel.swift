@@ -12,7 +12,7 @@ enum LabelCellState {
     case text(String)
 }
 
-final class LabelCellModel: BaseViewModel<UIStackView> {
+final class LabelCellModel: BaseViewModel<StackViewExtended> {
     let label = LabelModel()
 
     required init() {

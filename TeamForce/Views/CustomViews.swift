@@ -93,8 +93,20 @@ final class PaddingView: UIView, Marginable {
 
 // MARK: - StackViewExtendeed -------------------------
 
-final class StackViewExtendeed: UIStackView {
-   private weak var backView: UIView?
+final class StackViewExtended: UIStackView {
+   weak var backView: UIView?
+
+   override init(frame: CGRect) {
+      super.init(frame: frame)
+
+      clipsToBounds = false
+      layer.masksToBounds = false
+   }
+
+   required init(coder: NSCoder) {
+      fatalError("init(coder:) has not been implemented")
+   }
+
 
    override func layoutSubviews() {
       super.layoutSubviews()

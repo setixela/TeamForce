@@ -13,7 +13,7 @@ enum TransactInputState {
     case rightCaptionText(String)
 }
 
-final class TransactInputViewModel<Design: DesignProtocol>: BaseViewModel<UIStackView>,
+final class TransactInputViewModel<Design: DesignProtocol>: BaseViewModel<StackViewExtended>,
     Designable
 {
     private lazy var doubleLabel = DoubleLabelModel<Design>()

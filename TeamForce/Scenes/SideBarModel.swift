@@ -13,7 +13,7 @@ struct SideBarEvents: InitProtocol {
    var hide: Event<Void>?
 }
 
-final class SideBarModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
+final class SideBarModel<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>,
    Communicable,
    Stateable,
    Assetable

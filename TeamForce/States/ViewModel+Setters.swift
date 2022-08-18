@@ -32,9 +32,8 @@ extension ViewModelProtocol where Self: Stateable {
    }
 
    @discardableResult func set_size(_ value: CGSize) -> Self {
-      view.addAnchors
-         .constWidth(value.width)
-         .constHeight(value.height)
+      set_width(value.width)
+      set_height(value.height)
       return self
    }
 
@@ -45,6 +44,22 @@ extension ViewModelProtocol where Self: Stateable {
 
    @discardableResult func set_width(_ value: CGFloat) -> Self {
       view.addAnchors.constWidth(value)
+      return self
+   }
+
+   @discardableResult func set_sizeAspect(_ value: CGSize) -> Self {
+      set_widthAspect(value.width)
+      set_heightAspect(value.height)
+      return self
+   }
+
+   @discardableResult func set_heightAspect(_ value: CGFloat) -> Self {
+      view.addAnchors.constHeight(value * Config.sizeAspectCoeficient)
+      return self
+   }
+
+   @discardableResult func set_widthAspect(_ value: CGFloat) -> Self {
+      view.addAnchors.constWidth(value * Config.sizeAspectCoeficient)
       return self
    }
 
@@ -73,8 +88,26 @@ extension ViewModelProtocol where Self: Stateable {
       view.layer.shouldRasterize = false
       return self
    }
-}
 
+   @discardableResult func set_subviewModels(_ value: [UIViewModel]) -> Self {
+      value.forEach {
+         let subview = $0.uiView
+         view.addSubview(subview)
+         subview.addAnchors.fitToView(view)
+      }
+      return self
+   }
+
+   @discardableResult func set_contentMode(_ value: UIView.ContentMode) -> Self {
+      view.contentMode = value
+      return self
+   }
+
+   @discardableResult func set_safeAreaOffsetDisabled() -> Self {
+      view.insetsLayoutMarginsFromSafeArea = false
+      return self
+   }
+}
 
 struct Shadow {
    let radius: CGFloat
@@ -99,8 +132,8 @@ struct Shadow {
    }
 }
 
-extension ViewModelProtocol where Self: Stateable, View: UIStackView {
-   @discardableResult func set_distribution(_ value: UIStackView.Distribution) -> Self {
+extension ViewModelProtocol where Self: Stateable, View: StackViewExtended {
+   @discardableResult func set_distribution(_ value: StackViewExtended.Distribution) -> Self {
       view.distribution = value
       return self
    }
@@ -115,7 +148,7 @@ extension ViewModelProtocol where Self: Stateable, View: UIStackView {
       return self
    }
 
-   @discardableResult func set_alignment(_ value: UIStackView.Alignment) -> Self {
+   @discardableResult func set_alignment(_ value: StackViewExtended.Alignment) -> Self {
       view.alignment = value
       return self
    }
@@ -156,14 +189,14 @@ extension ViewModelProtocol where Self: Stateable, View: UIStackView {
       }
       value.forEach {
          let subview = $0.uiView
-         print(subview)
-         view.addArrangedSubview($0.uiView)
+         view.addArrangedSubview(subview)
       }
       return self
    }
 
    @discardableResult func set_backView(_ value: UIView, inset: UIEdgeInsets = .zero) -> Self {
       view.insertSubview(value, at: 0)
+      view.backView = value
       value.addAnchors.fitToViewInsetted(view, inset)
       return self
    }
@@ -177,8 +210,7 @@ extension ViewModelProtocol where Self: Stateable, View: UIStackView {
 
    @discardableResult func set_backViewModel(_ value: UIViewModel, inset: UIEdgeInsets = .zero) -> Self {
       let backView = value.uiView
-      view.insertSubview(backView, at: 0)
-      backView.addAnchors.fitToViewInsetted(view, inset)
+      set_backView(backView)
       return self
    }
 }
@@ -251,7 +283,7 @@ extension ViewModelProtocol where Self: Stateable, View: PaddingImageView {
       return self
    }
 
-   @discardableResult func set_color(_ value: UIColor) -> Self {
+   @discardableResult func set_imageTintColor(_ value: UIColor) -> Self {
       view.image = view.image?.withRenderingMode(UIImage.RenderingMode.alwaysTemplate)
       view.tintColor = value
       return self
@@ -286,6 +318,16 @@ extension ViewModelProtocol where Self: Stateable, View: ButtonExtended {
 
    @discardableResult func set_image(_ value: UIImage) -> Self {
       view.setImage(value, for: .normal)
+      return self
+   }
+
+   @discardableResult func set_backImage(_ value: UIImage) -> Self {
+      view.setBackgroundImage(value, for: .normal)
+      return self
+   }
+
+   @discardableResult func set_imageContentMode(_ value: UIView.ContentMode) -> Self {
+      view.imageView?.contentMode = value
       return self
    }
 

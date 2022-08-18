@@ -13,7 +13,7 @@ struct BalanceViewEvent: InitProtocol {}
 
 ///////// """ STATEABLE -> PARAMETRIC """
 
-final class BalanceViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
+final class BalanceViewModel<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>,
    Communicable,
    Stateable,
    Assetable
@@ -66,7 +66,7 @@ final class BalanceViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
       .setMain {
          $0
             .set_image(Design.icon.cross)
-            .set_color(Design.color.textError)
+            .set_imageTintColor(Design.color.textError)
       } setRight: {
          $0
             .set_text("Аннулировано")
@@ -81,7 +81,7 @@ final class BalanceViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
       .setMain {
          $0
             .set_image(Design.icon.inProgress)
-            .set_color(Design.color.success)
+            .set_imageTintColor(Design.color.success)
       } setRight: {
          $0
             .set_text("На согласовании")

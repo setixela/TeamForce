@@ -17,7 +17,7 @@ import UIKit
 
 struct TransactViewEvent: InitProtocol {}
 
-final class TransactScene<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
+final class TransactScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>,
    Communicable,
    Stateable,
    Assetable,

@@ -31,7 +31,7 @@ enum SegmentControlState {
    case items([UIViewModel])
 }
 
-//final class SegmentControl<Design: DSP>: BaseViewModel<UIStackView>, Designable, Stateable2 {
+//final class SegmentControl<Design: DSP>: BaseViewModel<StackViewExtended>, Designable, Stateable2 {
 //   typealias State = StackState
 //   typealias State2 = SegmentControlState
 //
@@ -58,7 +58,7 @@ struct SegmentControlButtonMode: SceneModeProtocol {
    var selected: VoidEvent?
 }
 
-final class SegmentControlButton<Design: DSP>: BaseViewModel<UIStackView>, Designable, SceneModable, Stateable {
+final class SegmentControlButton<Design: DSP>: BaseViewModel<StackViewExtended>, Designable, SceneModable, Stateable {
 
    var modes: SegmentControlButtonMode = .init()
 

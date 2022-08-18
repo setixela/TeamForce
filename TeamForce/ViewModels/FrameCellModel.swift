@@ -14,7 +14,7 @@ enum FrameCellState {
    case caption(String)
 }
 
-final class FrameCellModel<Design: DesignProtocol>: BaseViewModel<UIStackView>,
+final class FrameCellModel<Design: DesignProtocol>: BaseViewModel<StackViewExtended>,
    Designable
 {
    typealias State = StackState

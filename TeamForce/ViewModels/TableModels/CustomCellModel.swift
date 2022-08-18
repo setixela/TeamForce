@@ -13,7 +13,7 @@ enum CustomCellState {
     case text(String)
 }
 
-final class CustomCellModel<Design: DesignProtocol>: BaseViewModel<UIStackView>,
+final class CustomCellModel<Design: DesignProtocol>: BaseViewModel<StackViewExtended>,
     Designable
 {
     let title = LabelModel()

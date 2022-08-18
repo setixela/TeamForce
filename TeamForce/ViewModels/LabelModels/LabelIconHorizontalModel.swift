@@ -23,7 +23,7 @@ enum LabelIconState {
    case image(UIImage)
 }
 
-final class LabelIconHorizontalModel<Design: DesignProtocol>: BaseViewModel<UIStackView>,
+final class LabelIconHorizontalModel<Design: DesignProtocol>: BaseViewModel<StackViewExtended>,
    Designable,
    Communicable
 {

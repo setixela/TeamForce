@@ -31,51 +31,8 @@ if true {
 }
 
 let scene = MainScene<ProductionAsset>()
+
 // MARK: - Experiments --------------------------------------------------------------
-
-
-final class TripleStacksBrandedVM<Design: DesignProtocol>:
-   Combos<SComboMDD<StackModel, WrappedY<StackModel>, WrappedY<TabBarPanel<Design>>>>,
-   Designable
-{
-   lazy var header = Design.label.headline5
-      .set_color(Design.color.textInvert)
-
-   var headerStack: StackModel { models.main }
-   var bodyStack: StackModel { models.down.subModel }
-   var footerStack: TabBarPanel<Design> { models.down2.subModel }
-
-   required init() {
-      super.init()
-
-      //      set_backColor(.red) //Design.color.background)
-      setMain {
-         $0
-            .set(Design.state.stack.header)
-            .set_alignment(.leading)
-            .set_models([
-               Grid.x1.spacer,
-               BrandLogoIcon<Design>(),
-               Grid.x16.spacer,
-               header,
-               Grid.x36.spacer
-            ])
-      } setDown: {
-         $0
-            .set_backColor(Design.color.background)
-            .set_padding(.top(-Grid.x16.value))
-            .set_padBottom(-88)
-            .subModel
-            .set(Design.state.stack.bodyStack)
-      } setDown2: {
-         $0
-            .set_height(88)
-            .set_backImage(Design.icon.bottomPanel, contentMode: .scaleToFill)
-      }
-   }
-}
-
-// MARK: ------------------
 
 final class MainScene<Asset: AssetProtocol>:
    BaseSceneModel<
@@ -157,6 +114,7 @@ final class MainScene<Asset: AssetProtocol>:
       //         }
 
       configureSideBarItemsEvents()
+      //   mainVM.uiView.layoutSubviews()
    }
 
    private func unlockTabButtons() {
@@ -185,7 +143,6 @@ final class MainScene<Asset: AssetProtocol>:
          .onEvent(\.didTap) {
             weakSelf?.sideBarModel.sendEvent(\.hide)
             weakSelf?.presentModel(weakSelf?.historyViewModel)
-
          }
    }
 }
@@ -201,9 +158,58 @@ extension MainScene {
    }
 }
 
+final class TabBarBackImageModel<Design: DSP>: BaseViewModel<PaddingImageView>, Designable, Stateable2 {
+   typealias State = ImageViewState
+   typealias State2 = ViewState
+
+   override func start() {
+      set_image(Design.icon.bottomPanel)
+      set_imageTintColor(Design.color.background)
+      set_shadow(Design.params.panelShadow)
+   }
+}
+
 // MARK: - View Models --------------------------------------------------------------
 
-final class TabBarPanel<Design: DesignProtocol>: BaseViewModel<UIStackView>, Designable, Stateable {
+final class TripleStacksBrandedVM<Design: DesignProtocol>:
+   Combos<SComboMDD<StackModel, WrappedY<StackModel>, WrappedSubviewY<TabBarPanel<Design>>>>,
+   Designable
+{
+   lazy var header = Design.label.headline5
+      .set_color(Design.color.textInvert)
+
+   var headerStack: StackModel { models.main }
+   var bodyStack: StackModel { models.down.subModel }
+   var footerStack: TabBarPanel<Design> { models.down2.subModel }
+
+   required init() {
+      super.init()
+
+      setMain {
+         $0
+            .set(Design.state.stack.header)
+            .set_alignment(.leading)
+            .set_models([
+               Grid.x1.spacer,
+               BrandLogoIcon<Design>(),
+               Grid.x16.spacer,
+               header,
+               Grid.x36.spacer
+            ])
+      } setDown: {
+         $0
+            .set_backColor(Design.color.background)
+            .set_padding(.top(-Grid.x16.value))
+            .set_padBottom(-88)
+            .subModel
+            .set(Design.state.stack.bodyStack)
+      } setDown2: { _ in }
+   }
+}
+
+// MARK: - -----------------
+
+final class TabBarPanel<Design: DesignProtocol>: BaseViewModel<StackViewExtended>, Designable, Stateable {
    typealias State = StackState
 
    // MARK: - View Models
@@ -220,6 +226,10 @@ final class TabBarPanel<Design: DesignProtocol>: BaseViewModel<UIStackView>, Des
    let button4: ButtonModel = BottomPanelVMBuilder<Design>.button
       .set_image(Design.icon.tabBarButton4)
 
+   // MARK: - Private
+
+   private let backImage = TabBarBackImageModel<Design>()
+
    // MARK: - Start
 
    override func start() {
@@ -229,24 +239,20 @@ final class TabBarPanel<Design: DesignProtocol>: BaseViewModel<UIStackView>, Des
          .set_models([
             Grid.xxx.spacer,
             button1,
-            button2
-,
+            button2,
+
             WrappedY(
                buttonMain
             )
-            .set_padding(.verticalShift(24)),
-
+            .set_padding(.verticalShift(30)),
             button3,
             button4,
             Grid.xxx.spacer
          ])
 
-         .set_shadow(.init(
-            radius: 8, color: Design.color.iconContrast, opacity: 0.13
-         ))
-         .set_padding(.verticalShift(10))
-         .set_height(88)
-//         .set_backImage(Design.icon.bottomPanel, contentMode: .scaleToFill)
+         .set_padding(.verticalShift(11))
+         .set_height(97)
+         .set_backViewModel(backImage)
    }
 }
 
@@ -255,12 +261,7 @@ struct BottomPanelVMBuilder<Design: DesignProtocol>: Designable {
       ButtonModel()
          .set_image(Design.icon.tabBarMainButton)
          .set_size(.square(60))
-         .set_shadow(.init(
-            radius: 8,
-            offset: .init(x: 0, y: 10),
-            color: Design.color.iconContrast,
-            opacity: 0.23
-         ))
+         .set_shadow(Design.params.panelMainButtonShadow)
    }
 
    static var button: ButtonModel {
@@ -269,14 +270,11 @@ struct BottomPanelVMBuilder<Design: DesignProtocol>: Designable {
          .set_height(46)
          .set_cornerRadius(16)
          .onModeChanged(\.normal) { button in
+            log("sh")
             button?
                .set_backColor(Design.color.backgroundBrandSecondary)
-               .set_shadow(.init(
-                  radius: 8,
-                  offset: .init(x: 0, y: 10),
-                  color: Design.color.iconContrast,
-                  opacity: 0.23
-               ))
+               .set_shadow(Design.params.panelButtonShadow)
+            button?.uiView.layoutIfNeeded()
          }
          .onModeChanged(\.inactive) { button in
             button?
@@ -286,4 +284,3 @@ struct BottomPanelVMBuilder<Design: DesignProtocol>: Designable {
          .setMode(\.inactive)
    }
 }
-

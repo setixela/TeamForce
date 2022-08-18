@@ -6,7 +6,7 @@ enum BadgeState {
     case error
 }
 
-class BadgeModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>, Assetable {
+class BadgeModel<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>, Assetable {
 
     internal var textFieldModel = TextFieldModel<Design>()
        .set(.padding(.init(top: 16, left: 16, bottom: 16, right: 16)))

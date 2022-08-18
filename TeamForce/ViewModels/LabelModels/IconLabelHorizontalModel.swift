@@ -17,7 +17,7 @@ struct IconLabelHorizontalModelEvents: InitProtocol {
    var didTap: Event<Void>?
 }
 
-final class IconLabelHorizontalModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
+final class IconLabelHorizontalModel<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>,
     Assetable, Communicable
 {
     var eventsStore: IconLabelHorizontalModelEvents = .init()

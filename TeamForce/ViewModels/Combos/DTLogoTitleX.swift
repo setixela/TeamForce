@@ -45,12 +45,12 @@ extension DTLogoTitleX {
       case .normal:
          setMain { _ in } setRight: {
             $0
-               .set_color(Design.color.iconContrast)
+               .set_imageTintColor(Design.color.iconContrast)
          }
       case .invert:
          setMain { _ in } setRight: {
             $0
-               .set_color(Design.color.iconInvert)
+               .set_imageTintColor(Design.color.iconInvert)
          }
       }
    }

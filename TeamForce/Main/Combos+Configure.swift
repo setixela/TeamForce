@@ -205,16 +205,16 @@ private extension Combos
    }
 
    // makers
-   var vertical: UIStackView
+   var vertical: StackViewExtended
    {
-      let stack = UIStackView()
+      let stack = StackViewExtended()
       stack.axis = .vertical
       return stack
    }
 
-   var horizontal: UIStackView
+   var horizontal: StackViewExtended
    {
-      let stack = UIStackView()
+      let stack = StackViewExtended()
       stack.axis = .horizontal
       return stack
    }

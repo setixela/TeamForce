@@ -68,7 +68,6 @@ final class TableItemsModel<Design: DSP>: BaseViewModel<UITableView>,
       let item = isMultiSection ? itemSections[indexPath.section].items[indexPath.row] : items[indexPath.row]
 
       let cellName = String(describing: type(of: item))
-      log(cellName, self)
 
       view.register(UITableViewCell.self, forCellReuseIdentifier: cellName)
 
