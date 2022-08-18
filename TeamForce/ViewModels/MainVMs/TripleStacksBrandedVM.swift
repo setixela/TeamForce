@@ -21,13 +21,13 @@ final class TripleStacksBrandedVM<Design: DesignProtocol>:
    required init() {
       super.init()
 
+//      set_backColor(.red) //Design.color.background)
       setMain {
          $0
-            .set(Design.state.stack.default)
-            .set_backColor(Design.color.backgroundBrand)
+            .set(Design.state.stack.header)
             .set_alignment(.leading)
             .set_models([
-               Grid.x16.spacer,
+               Grid.x1.spacer,
                BrandLogoIcon<Design>(),
                Grid.x16.spacer,
                header,
@@ -37,9 +37,9 @@ final class TripleStacksBrandedVM<Design: DesignProtocol>:
          $0
             .set_backColor(Design.color.background)
             .set_padding(.top(-Grid.x16.value))
-            .set_padBottom(-Grid.x64.value)
+            .set_padBottom(-88)
             .subModel
-            .set(Design.state.stack.bottomShadowedPanel)
+            .set(Design.state.stack.bodyStack)
       } setDown2: { _ in }
    }
 }

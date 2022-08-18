@@ -15,12 +15,10 @@ enum ColorToken: String, ColorTokenProtocol {
     //
     case brand = "--general-brand"
     case brandSecondary = "--general-brand-secondary"
+    case inverse = "--general-background"
     case contrast = "--general-contrast"
-    case contrastSecondary = "--general-contrast-secondary"
-    case midpoint = "--general-grey"
-    case midpointSecondary = "--general-grey-secondary"
-    case inverse = "--general-inverse"
-    case inverseSecondary = "--general-inverse-secondary"
+    case contrastSecondary = "--general-secondary"
+    case midpoint = "--general-corol-grey"
     case success = "--minor-success"
     case successSecondary = "--minor-success-secondary"
     case error = "--minor-error"
@@ -29,6 +27,10 @@ enum ColorToken: String, ColorTokenProtocol {
     case warningSecondary = "--minor-warning-secondary"
     case info = "--minor-info"
     case infoSecondary = "--minor-info-secondary"
+    case midpointSecondary = "--minor---grey"
+
+    case extra1 = "--color-blue"
+    case extra2 = "--color-yellow"
 }
 
 // Протокол Фабрики цветов
@@ -68,6 +70,15 @@ protocol ColorsProtocol: InitProtocol {
     // Images
     var iconContrast: UIColor { get }
     var iconInvert: UIColor { get }
+
+    // Frame cell color
+    var frameCellBackground: UIColor { get }
+    var frameCellBackgroundSecondary: UIColor { get }
+
+    // success error
+    var errorSecondary: UIColor { get }
+    var success: UIColor { get }
+    var successSecondary: UIColor { get }
 }
 
 // MARK: - Colors implement
@@ -81,14 +92,14 @@ struct ColorBuilder: ColorsProtocol {
 
     var text: UIColor { Token.contrast.color }
     var textSecondary: UIColor { Token.contrast.color }
-    var textSecondaryInvert: UIColor { Token.inverseSecondary.color }
+    var textSecondaryInvert: UIColor { Token.inverse.color }
     var textThird: UIColor { Token.contrast.color }
-    var textThirdInvert: UIColor { Token.inverseSecondary.color }
+    var textThirdInvert: UIColor { Token.inverse.color }
     var textInvert: UIColor { Token.inverse.color }
     var textError: UIColor { Token.error.color }
 
     var background: UIColor { Token.inverse.color }
-    var backgroundSecondary: UIColor { Token.inverseSecondary.color }
+    var backgroundSecondary: UIColor { Token.inverse.color }
     var backgroundBrand: UIColor { Token.brand.color }
     var backgroundBrandSecondary: UIColor { Token.brandSecondary.color }
 
@@ -107,6 +118,15 @@ struct ColorBuilder: ColorsProtocol {
     // icons
     var iconContrast: UIColor { Token.contrast.color }
     var iconInvert: UIColor { Token.inverse.color }
+
+    // Frame cell color
+    var frameCellBackground: UIColor { Token.extra1.color }
+    var frameCellBackgroundSecondary: UIColor { Token.extra2.color }
+
+    // success error
+    var errorSecondary: UIColor { Token.errorSecondary.color }
+    var success: UIColor { Token.success.color }
+    var successSecondary: UIColor { Token.successSecondary.color }
 }
 
 // MARK: - Private helpers

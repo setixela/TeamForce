@@ -17,7 +17,7 @@ Void
 >
 {
    lazy var balanceViewModel = BalanceViewModel<Asset>()
-   lazy var transactViewModel = TransactViewModel<Asset>()
+   lazy var transactViewModel = TransactScene<Asset>()
    lazy var historyViewModel = HistoryScene<Asset>()
 
    var tabBarPanel: TabBarPanel<Design> { mainVM.footerStack }
@@ -51,6 +51,14 @@ Void
          .onEvent(\.didTap) { [weak self] in
             self?.unlockTabButtons()
             self?.mainVM.header.set_text("Баланс")
+            self?.presentModel(self?.balanceViewModel)
+            self?.tabBarPanel.button2.setMode(\.normal)
+         }
+
+      tabBarPanel.buttonMain
+         .onEvent(\.didTap) { [weak self] in
+            self?.unlockTabButtons()
+            self?.mainVM.header.set_text("Тра")
             self?.presentModel(self?.transactViewModel)
             self?.tabBarPanel.button2.setMode(\.normal)
          }

@@ -23,40 +23,74 @@ final class BalanceViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
 
    // MARK: - Frame Cells
 
-   private lazy var digitalThanksTitle = Design.label.headline4
-      .set(.text(Text.title.digitalThanks))
-      .set(.numberOfLines(1))
-      .set(.alignment(.left))
-      .set(.padding(.init(top: 22, left: 0, bottom: 26, right: 0)))
-
    private lazy var frameModel = LabelIconHorizontalModel<Design>()
-      .set(.backColor(.init(red: 0.33, green: 0.33, blue: 0.33, alpha: 0.08)))
+      .set(.backColor(Design.color.frameCellBackground))
       .set(.height(48))
       .set(.text(Text.title.selectPeriod))
       .set(.image(Design.icon.calendarLine))
 
-   private lazy var frameModel2 = DoubleLabelPairModel<Design>()
-      .set(.backColor(.init(red: 0.33, green: 0.33, blue: 0.33, alpha: 0.08)))
-      .set(.height(48))
-
    private lazy var myAccountFrame = FrameCellModel<Design>()
-      .set(.backColor(.init(red: 0.33, green: 0.33, blue: 0.33, alpha: 0.08)))
+      .set(.backColor(Design.color.frameCellBackground))
       .set(.header(Text.title.myAccount))
 
    private lazy var leftToSendFrame = FrameCellModel<Design>()
       .set(.header(Text.title.leftToSend))
       .set(.borderWidth(1))
+      .set(.backColor(Design.color.frameCellBackgroundSecondary))
       .set(.borderColor(.init(red: 0.33, green: 0.33, blue: 0.33, alpha: 0.08)))
 
-   private lazy var frameCellStackModel = StackModel()
-      .set_axis(.horizontal)
-      .set_distribution(.fillEqually)
-      .set_alignment(.center)
-      .set_spacing(8)
-      .set_models([
-         myAccountFrame,
-         leftToSendFrame
-      ])
+   private lazy var frameCellStackModel = WrappedX(
+      ScrollViewModelX()
+         .set(.models([
+            Grid.x16.spacer,
+            myAccountFrame,
+            Grid.x16.spacer,
+            leftToSendFrame,
+            Grid.x16.spacer,
+         ]))
+   )
+   .set_padding(.init(top: 0, left: -16, bottom: 0, right: -16))
+   .set_height(184)
+
+//   StackModel()
+//      .set_axis(.horizontal)
+//      .set_distribution(.fillEqually)
+//      .set_alignment(.center)
+//      .set_spacing(16)
+//      .set_models([
+//         myAccountFrame,
+//         leftToSendFrame
+//      ])
+
+   private lazy var annulationFrame = BalanceStatusFrame<Design>()
+      .setMain {
+         $0
+            .set_image(Design.icon.cross)
+            .set_color(Design.color.textError)
+      } setRight: {
+         $0
+            .set_text("Аннулировано")
+            .set_color(Design.color.textError)
+      } setDown: {
+         $0
+            .set_text("0")
+      }
+      .set_backColor(Design.color.errorSecondary)
+
+   private lazy var inProgessFrame = BalanceStatusFrame<Design>()
+      .setMain {
+         $0
+            .set_image(Design.icon.inProgress)
+            .set_color(Design.color.success)
+      } setRight: {
+         $0
+            .set_text("На согласовании")
+            .set_color(Design.color.success)
+      } setDown: {
+         $0
+            .set_text("0")
+      }
+      .set_backColor(Design.color.successSecondary)
 
    // MARK: - Services
 
@@ -69,13 +103,14 @@ final class BalanceViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
       set(.distribution(.fill))
       set(.alignment(.fill))
       set(.models([
-         digitalThanksTitle,
          frameModel,
          Spacer(20),
          frameCellStackModel,
+         Spacer(27),
+         annulationFrame,
          Spacer(8),
-         frameModel2,
-         Spacer()
+         inProgessFrame,
+         Grid.xxx.spacer,
       ]))
 
       useCase.retainedWork(\.loadBalance)
@@ -97,11 +132,10 @@ extension BalanceViewModel {
       let frozenSum = balance.income.frozen + balance.distr.frozen
       let cancelledSum = balance.income.cancelled + balance.distr.cancelled
 
-      frameModel2
-         .set(.leftPair(text1: "\(Text.title.onAgreement)): ",
-                        text2: "\(frozenSum)"))
-         .set(.rightPair(text1: "\(Text.title.canceled)): ",
-                         text2: "\(cancelledSum)"))
+      annulationFrame.models.down
+         .set_text("\(cancelledSum)")
+      inProgessFrame.models.down
+         .set_text("\(frozenSum)")
    }
 
    private func setIncome(_ income: Income) {

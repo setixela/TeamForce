@@ -25,7 +25,7 @@ class TitleSubtitleY<Design: DesignProtocol>:
             .set(.color(Design.color.textSecondary))
             .set(.numberOfLines(0))
             .set(.alignment(.center))
-            .set(.padUp(Design.params.titleSubtitleOffset))
+           // .set(.padUp(Design.params.titleSubtitleOffset))
       }
    }
 }

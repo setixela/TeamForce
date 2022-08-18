@@ -35,7 +35,7 @@ final class HistoryScene<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
 
       viewModels.tableModel
          .set(.presenters([
-            HistoryPresenters<Design>.transactToIconSubtitle,
+            HistoryPresenters<Design>.transactToHistoryCell,
          ]))
    }
 }
@@ -48,6 +48,7 @@ private extension HistoryScene {
       set_models([
          viewModels.segmentedControl,
          viewModels.tableModel,
+//         Spacer(88)
       ])
    }
 }

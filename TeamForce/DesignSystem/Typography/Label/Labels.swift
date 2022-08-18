@@ -26,8 +26,11 @@ struct LabelBuilder<Design: DSP>: LabelProtocol, Designable {
    var headline6: LabelModel { .init(Design.state.label.headline6) }
 
    var title: LabelModel { .init(Design.state.label.title) }
+
    var body1: LabelModel { .init(Design.state.label.body1) }
    var body2: LabelModel { .init(Design.state.label.body2) }
+   var body3: LabelModel { .init(Design.state.label.body3) }
+
    var caption: LabelModel { .init(Design.state.label.caption) }
    var counter: LabelModel { .init(Design.state.label.counter) }
 }
@@ -78,6 +81,11 @@ struct LabelStateBuilder<Design: DSP>: LabelStateProtocol, Designable {
 
    var body2: [LabelState] { [
       .font(Design.font.body2),
+      .color(.black)
+   ] }
+
+   var body3: [LabelState] { [
+      .font(Design.font.body3),
       .color(.black)
    ] }
 

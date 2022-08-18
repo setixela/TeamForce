@@ -11,12 +11,15 @@ import UIKit
 protocol IconElements: InitProtocol, DesignElementable where DesignElement == UIImage {
    var bell: DesignElement { get }
    var calendar: DesignElement { get }
+   var cross: DesignElement { get }
+   var inProgress: DesignElement { get }
    var lock: DesignElement { get }
    var mail: DesignElement { get }
    var user: DesignElement { get }
    // brand
    var logo: DesignElement { get }
    var logoTitle: DesignElement { get }
+
    // other
    var checkCircle: DesignElement { get }
    var coinLine: DesignElement { get }
@@ -47,4 +50,5 @@ protocol IconElements: InitProtocol, DesignElementable where DesignElement == UI
    var tabBarButton2: UIImage { get }
    var tabBarButton3: UIImage { get }
    var tabBarButton4: UIImage { get }
+   
 }

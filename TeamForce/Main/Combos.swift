@@ -74,6 +74,24 @@ extension Combos
       return self
    }
 
+   @discardableResult func setMain<M, R, R2, R3>(
+      _ setMain: GenericClosure<M>,
+      setRight: GenericClosure<R>,
+      setRight2: GenericClosure<R2>,
+      setRight3: GenericClosure<R3>) -> Self where S == SComboMRRR<M, R, R2, R3>
+   {
+      setMain(models.main)
+      setRight(models.right)
+      setRight2(models.right2)
+      setRight3(models.right3)
+      if !isConfigured
+      {
+         configure()
+         isConfigured = true
+      }
+      return self
+   }
+
    @discardableResult func setMain<M, R, D>(
       _ setMain: GenericClosure<M>,
       setRight: GenericClosure<R>,
@@ -130,12 +148,12 @@ extension Combos
       _ setMain: GenericClosure<M>,
       setRight: GenericClosure<R>,
       setDown: GenericClosure<D>,
-      setDown2: GenericClosure<D2>) -> Self where S == SComboMRDD<M, R, D, D2>
+      setDown2: GenericClosure<D2>? = nil) -> Self where S == SComboMRDD<M, R, D, D2>
    {
       setMain(models.main)
       setRight(models.right)
       setDown(models.down)
-      setDown2(models.down2)
+      setDown2?(models.down2)
       if !isConfigured
       {
          configure()

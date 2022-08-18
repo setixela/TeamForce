@@ -39,6 +39,18 @@ import ReactiveWorks
       view.addArrangedSubview(models.right2.uiView)
    }
 
+    // M R R R
+    // _ _ _ _
+    // _ _ _ _
+    func configure<M, R, R2, R3>() where S == SComboMRRR<M, R, R2, R3>
+    {
+       configureRightStart()
+       view.addArrangedSubview(models.main.uiView)
+       view.addArrangedSubview(models.right.uiView)
+       view.addArrangedSubview(models.right2.uiView)
+       view.addArrangedSubview(models.right3.uiView)
+    }
+
    // M R _
    // _ D _
    // _ _ _

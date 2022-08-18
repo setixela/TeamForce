@@ -6,5 +6,5 @@
 //
 
 protocol Designable {
-    associatedtype Design: DesignProtocol
+   associatedtype Design: DesignProtocol
 }

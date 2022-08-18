@@ -1,4 +1,11 @@
 //
+//  TransactScene.swift
+//  TeamForce
+//
+//  Created by Aleksandr Solovyev on 18.08.2022.
+//
+
+//
 //  TransactViewModel.swift
 //  TeamForce
 //
@@ -10,7 +17,7 @@ import UIKit
 
 struct TransactViewEvent: InitProtocol {}
 
-final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
+final class TransactScene<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
    Communicable,
    Stateable,
    Assetable,
@@ -214,7 +221,7 @@ final class TransactViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
    }
 }
 
-private extension TransactViewModel {
+private extension TransactScene {
    func hideHUD() {
       transactInputViewModel.set(.hidden(true))
       sendButton.set(.hidden(true))
@@ -233,7 +240,7 @@ private extension TransactViewModel {
    }
 }
 
-private extension TransactViewModel {
+private extension TransactScene {
    func configureInputParsers() {
       weak var wS = self
 

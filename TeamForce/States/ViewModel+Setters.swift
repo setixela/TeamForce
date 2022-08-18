@@ -16,6 +16,8 @@ extension ViewModelProtocol where Self: Stateable {
 
    @discardableResult func set_cornerRadius(_ value: CGFloat) -> Self {
       view.layer.cornerRadius = value
+      view.layer.masksToBounds = true
+      view.clipsToBounds = true
       return self
    }
 
@@ -68,6 +70,7 @@ extension ViewModelProtocol where Self: Stateable {
       view.layer.shadowOffset = .init(width: value.offset.x, height: value.offset.y)
       view.layer.shadowRadius = value.radius
       view.layer.shadowOpacity = Float(value.opacity)
+      view.layer.shouldRasterize = true
       return self
    }
 }
@@ -248,7 +251,7 @@ extension ViewModelProtocol where Self: Stateable, View: PaddingImageView {
       return self
    }
 
-   @discardableResult func set_tintColor(_ value: UIColor) -> Self {
+   @discardableResult func set_color(_ value: UIColor) -> Self {
       view.image = view.image?.withRenderingMode(UIImage.RenderingMode.alwaysTemplate)
       view.tintColor = value
       return self

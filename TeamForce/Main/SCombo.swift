@@ -51,6 +51,24 @@ struct SComboMRR<M: VMP, R: VMP, R2: VMP>: SCP {
    // M>R>R
 }
 
+struct SComboMRRR<M: VMP, R: VMP, R2: VMP, R3: VMP>: SCP {
+   init(main: M, right: R, right2: R2, right3: R3) {
+      self.main = main
+      self.right = right
+      self.right2 = right2
+      self.right3 = right3
+   }
+
+   init() {}
+
+   var main: M = .init()
+   var right: R = .init()
+   var right2: R2 = .init()
+   var right3: R3 = .init()
+
+   // M>R>R>R
+}
+
 struct SComboMRD<M: VMP, R: VMP, D: VMP>: SCP {
    init(main: M, right: R, down: D) {
       self.main = main

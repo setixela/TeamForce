@@ -5,8 +5,8 @@
 //  Created by Aleksandr Solovyev on 17.08.2022.
 //
 
-import UIKit
 import ReactiveWorks
+import UIKit
 
 class TableItemsSection {
    let title: String
@@ -28,7 +28,11 @@ struct TableItemsEvents: InitProtocol {
    var reloadData: Event<Void>?
 }
 
-final class TableItemsModel: BaseViewModel<UITableView> {
+final class TableItemsModel<Design: DSP>: BaseViewModel<UITableView>,
+   Designable,
+   UITableViewDelegate,
+   UITableViewDataSource
+{
    var eventsStore: TableItemsEvents = .init()
 
    private var isMultiSection: Bool = false
@@ -41,48 +45,19 @@ final class TableItemsModel: BaseViewModel<UITableView> {
    override func start() {
       view.delegate = self
       view.dataSource = self
-   }
-}
 
-extension TableItemsModel: Stateable2 {
-   typealias State = ViewState
-
-   func applyState(_ state: TableItemsState) {
-      switch state {
-      case .items(let items):
-         self.items = items
-         view.reloadData()
-      case .itemSections(let sections):
-         itemSections = sections
-         isMultiSection = true
-         view.reloadData()
-         //
-      case .presenters(let presenters):
-         self.presenters.removeAll()
-         presenters.forEach {
-            let key =  $0.cellType
-            self.presenters[key] = $0
-         }
+      if #available(iOS 15.0, *) {
+         view.sectionHeaderTopPadding = 0
       }
    }
-}
 
-extension TableItemsModel: Communicable {}
-
-extension TableItemsModel: UITableViewDelegate {
    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
       sendEvent(\.didSelectRow, payload: indexPath)
       tableView.deselectRow(at: indexPath, animated: true)
    }
-}
 
-extension TableItemsModel: UITableViewDataSource {
    func numberOfSections(in tableView: UITableView) -> Int {
       isMultiSection ? itemSections.count : 1
-   }
-
-   func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-      isMultiSection ? itemSections[section].title : nil
    }
 
    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -116,4 +91,49 @@ extension TableItemsModel: UITableViewDataSource {
    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
       UITableView.automaticDimension
    }
+
+   func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+      guard isMultiSection else { return nil }
+
+      let text = itemSections[section].title
+      let view = LabelModel()
+         .set_font(Design.font.title)
+         .set_padding(.init(top: 4, left: 16, bottom: 4, right: 16))
+         .set_text(text)
+         .set_backColor(Design.color.background)
+         .uiView
+
+      return view
+   }
+
+   func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+      guard isMultiSection else { return 0 }
+
+      return 36
+   }
 }
+
+extension TableItemsModel: Stateable2 {
+   typealias State = ViewState
+
+   func applyState(_ state: TableItemsState) {
+      switch state {
+      case .items(let items):
+         self.items = items
+         view.reloadData()
+      case .itemSections(let sections):
+         itemSections = sections
+         isMultiSection = true
+         view.reloadData()
+      //
+      case .presenters(let presenters):
+         self.presenters.removeAll()
+         presenters.forEach {
+            let key = $0.cellType
+            self.presenters[key] = $0
+         }
+      }
+   }
+}
+
+extension TableItemsModel: Communicable {}

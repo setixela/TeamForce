@@ -36,32 +36,27 @@ final class DigitalThanksScene<Asset: AssetProtocol>: BaseSceneModel<
 
       mainVM.topStackModel
          .set(Design.state.stack.default)
+         .set(.alignment(.center))
          .set_models([
-            // logo model
-            DTLogoTitleX<Design>()
-               .set(.invert)
-               .lefted(), // выравниваем по левому краю ))
-            // spacer
-            Grid.xxx.spacer
+            DTLogoTitleX<Design>(),
+            Grid.xxx.spacer,
+            ImageViewModel()
+               .set_image(Design.icon.introlIllustrate)
+               .set_size(.square(280))
          ])
-         .set_backImage(Design.icon.introlIllustrate)
 
       mainVM.bottomStackModel
          .set(Design.state.stack.bottomPanel)
-
          .set_models([
-            // spacer
             Grid.x1.spacer,
-            // title subtitle
             TitleSubtitleY<Design>()
+               .set_padding(.top(Design.params.titleSubtitleOffset))
                .setMain {
                   $0.set_text(Text.title.digitalThanks)
                } setDown: {
                   $0.set_text(Text.title.digitalThanksAbout)
                },
-            // spacer
             Grid.x1.spacer,
-            // enter button
             enterButton
          ])
    }

@@ -13,6 +13,8 @@ struct IconBuilder: IconElements {
 
    var bell: UIImage { make("bell") }
    var calendar: UIImage { make("calendar") }
+   var cross: UIImage { make("cross") }
+   var inProgress: UIImage { make("in_progress") }
    var lock: UIImage { make("lock") }
    var mail: UIImage { make("mail") }
    var user: UIImage { make("user") }

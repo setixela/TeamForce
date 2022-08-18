@@ -178,7 +178,7 @@ extension ViewModelProtocol where Self: Stateable, View: PaddingImageView {
       case .padding(let value):
          set_padding(value)
       case .tintColor(let value):
-         set_tintColor(value)
+         set_color(value)
       }
    }
 }

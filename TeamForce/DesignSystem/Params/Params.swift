@@ -13,6 +13,7 @@ import UIKit
 protocol ParamsProtocol: InitProtocol {
    //
    var cornerRadius: CGFloat { get }
+   var cornerRadiusSmall: CGFloat { get }
    var cornerRadiusMedium: CGFloat { get }
    //
    var contentPadding: UIEdgeInsets { get }
@@ -22,11 +23,14 @@ protocol ParamsProtocol: InitProtocol {
    var buttonHeight: CGFloat { get }
    var buttonsSpacingX: CGFloat { get }
    var buttonsSpacingY: CGFloat { get }
+   //
+   var infoFrameHeight: CGFloat { get }
 }
 
 struct ParamBuilder: ParamsProtocol {
    //
-   var cornerRadius: CGFloat { 12 }
+   var cornerRadius: CGFloat { 14 }
+   var cornerRadiusSmall: CGFloat { 11 }
    var cornerRadiusMedium: CGFloat { 20 }
    //
    var contentPadding: UIEdgeInsets { .init(top: 12, left: 16, bottom: 12, right: 16) }
@@ -36,4 +40,6 @@ struct ParamBuilder: ParamsProtocol {
    var buttonHeight: CGFloat { 52 }
    var buttonsSpacingX: CGFloat { 8 }
    var buttonsSpacingY: CGFloat { 16 }
+   //
+   var infoFrameHeight: CGFloat { 70 }
 }

@@ -102,6 +102,7 @@ final class HistoryWorks<Asset: AssetProtocol>: BaseSceneWorks<HistoryWorks.Temp
             }
 
             result.last?.items.append(item)
+            prevDay = currentDay
             return result
          }
 

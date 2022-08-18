@@ -9,9 +9,8 @@ import ReactiveWorks
 import UIKit
 
 struct HistoryPresenters<Design: DesignProtocol>: Designable {
-
    static var transactToIconSubtitle: Presenter<TransactionItem, IconTitleSubtitleModel> {
-      Presenter<TransactionItem, IconTitleSubtitleModel> { work in
+      Presenter { work in
 
          let item = work.unsafeInput
 
@@ -41,6 +40,76 @@ struct HistoryPresenters<Design: DesignProtocol>: Designable {
                      $0.set(.text(downText))
                   }
             }
+         work.success(result: cell)
+      }
+   }
+
+   static var transactToHistoryCell: Presenter<TransactionItem, HistoryCellModel<Design>> {
+      Presenter { work in
+         let item = work.unsafeInput
+
+         var userName: String
+         var statusHidden: Bool
+         var statusText: String
+         var statusColor: UIColor
+         var sumText: String
+         var image: UIImage
+
+         switch item.state {
+         case .recieved:
+            userName = item.sender.senderTgName
+            statusText = ""
+            sumText = "+" + item.amount
+            statusColor = .clear
+            statusHidden = true
+            image = Design.icon.recieveCoinIcon
+         default:
+            userName = item.recipient.recipientTgName
+            statusText = "   Выполнен   "
+            sumText = "-" + item.amount
+            statusColor = Design.color.success
+            statusHidden = false
+            image = Design.icon.sendCoinIcon
+         }
+
+         let cell = HistoryCellModel<Design>()
+            .setMain { _ in
+
+            } setRight: {
+               $0
+                  .setMain { model in
+                     model
+                        .set_text(userName)
+                  } setDown: { model in
+                     guard statusHidden == false else {
+                        model.set_hidden(true)
+                        return
+                     }
+
+                     model
+                        .set_text(statusText)
+                        .set_backColor(statusColor)
+                        .set_hidden(false)
+                  }
+
+            } setRight2: {
+               $0
+                  .setMain { model in
+                     model
+                        .set_text(sumText + "   ")
+                  } setDown: { model in
+                     guard item.state != .recieved else {
+                        model.set_hidden(true)
+                        return
+                     }
+
+                     model
+                        .set_image(Design.icon.cross)
+                        .set_color(Design.color.textError)
+                        .set_hidden(false)
+                  }
+            }
+
          work.success(result: cell)
       }
    }

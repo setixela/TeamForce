@@ -13,7 +13,6 @@ struct ButtonEvents: InitProtocol {
    var didTap: Event<Void>?
 }
 
-
 class ButtonModel: BaseViewModel<ButtonExtended> {
    //
    var eventsStore: ButtonEvents = .init()

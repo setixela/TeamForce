@@ -34,6 +34,19 @@ import ReactiveWorks
                    setRight2: setRight2)
    }
 
+    convenience init<M, R, R2, R3>(
+      _ setMain: GenericClosure<M>,
+      setRight: GenericClosure<R>,
+      setRight2: GenericClosure<R2>,
+      setRight3: GenericClosure<R3>) where S == SComboMRRR<M, R, R2, R3>
+    {
+       self.init()
+       self.setMain(setMain,
+                    setRight: setRight,
+                    setRight2: setRight2,
+                    setRight3: setRight3)
+    }
+
    convenience init<M, R, D>(
       _ setMain: GenericClosure<M>,
       setRight: GenericClosure<R>,
@@ -75,7 +88,7 @@ import ReactiveWorks
       _ setMain: GenericClosure<M>,
       setRight: GenericClosure<R>,
       setDown: GenericClosure<D>,
-      setDown2: GenericClosure<D2>) where S == SComboMRDD<M, R, D, D2>
+      setDown2: @escaping GenericClosure<D2>) where S == SComboMRDD<M, R, D, D2>
    {
       self.init()
       self.setMain(setMain,
