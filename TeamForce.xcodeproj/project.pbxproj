@@ -86,6 +86,7 @@
 		199C4B6928632834008AD6FD /* DesignProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199C4B6828632834008AD6FD /* DesignProtocol.swift */; };
 		199C4B6B2863292F008AD6FD /* ButtonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199C4B6A2863292F008AD6FD /* ButtonModel.swift */; };
 		199C4B6D2863299E008AD6FD /* DesignSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199C4B6C2863299E008AD6FD /* DesignSystem.swift */; };
+		19A097FE28AEC4C700D8FFF2 /* MemoryLeakTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A097FD28AEC4C700D8FFF2 /* MemoryLeakTests.swift */; };
 		19A73BEB28A4510E000B74CF /* BadgedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A73BEA28A4510E000B74CF /* BadgedViewModel.swift */; };
 		19A73BED28A4530C000B74CF /* TextFieldBadged.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A73BEC28A4530C000B74CF /* TextFieldBadged.swift */; };
 		19A73BEF28A454AC000B74CF /* BadgeProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A73BEE28A454AC000B74CF /* BadgeProtocols.swift */; };
@@ -252,6 +253,7 @@
 		199C4B6828632834008AD6FD /* DesignProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignProtocol.swift; sourceTree = "<group>"; };
 		199C4B6A2863292F008AD6FD /* ButtonModel.swift */ = {isa = PBXFileReference; indentWidth = 3; lastKnownFileType = sourcecode.swift; path = ButtonModel.swift; sourceTree = "<group>"; tabWidth = 3; };
 		199C4B6C2863299E008AD6FD /* DesignSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignSystem.swift; sourceTree = "<group>"; };
+		19A097FD28AEC4C700D8FFF2 /* MemoryLeakTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryLeakTests.swift; sourceTree = "<group>"; };
 		19A73BEA28A4510E000B74CF /* BadgedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgedViewModel.swift; sourceTree = "<group>"; };
 		19A73BEC28A4530C000B74CF /* TextFieldBadged.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldBadged.swift; sourceTree = "<group>"; };
 		19A73BEE28A454AC000B74CF /* BadgeProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeProtocols.swift; sourceTree = "<group>"; };
@@ -458,6 +460,7 @@
 			isa = PBXGroup;
 			children = (
 				190C1D28285D160000FB3518 /* WorksTests.swift */,
+				19A097FD28AEC4C700D8FFF2 /* MemoryLeakTests.swift */,
 			);
 			path = TeamForceTests;
 			sourceTree = "<group>";
@@ -1173,6 +1176,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				190C1D29285D160000FB3518 /* WorksTests.swift in Sources */,
+				19A097FE28AEC4C700D8FFF2 /* MemoryLeakTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
