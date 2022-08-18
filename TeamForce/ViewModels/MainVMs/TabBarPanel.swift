@@ -39,7 +39,7 @@ final class TabBarPanel<Design: DesignProtocol>: BaseViewModel<UIStackView>, Des
             WrappedY(
                buttonMain
             )
-            .set_padding(.verticalShift(23)),
+            .set_padding(.verticalShift(8)),
 
             button3,
             button4,
@@ -49,8 +49,45 @@ final class TabBarPanel<Design: DesignProtocol>: BaseViewModel<UIStackView>, Des
          .set_shadow(.init(
             radius: 8, color: Design.color.iconContrast, opacity: 0.13
          ))
-         .set_padding(.verticalShift(13))
-         .set_height(88)
+         .set_padding(.verticalShift(-8))
+         .set_height(88 + 16)
          .set_backImage(Design.icon.bottomPanel, contentMode: .scaleToFill)
+   }
+}
+
+struct BottomPanelVMBuilder<Design: DesignProtocol>: Designable {
+   static var mainButton: ButtonModel {
+      ButtonModel()
+         .set_image(Design.icon.tabBarMainButton)
+         .set_size(.square(60))
+         .set_shadow(.init(
+            radius: 8,
+            offset: .init(x: 0, y: 10),
+            color: Design.color.iconContrast,
+            opacity: 0.23
+         ))
+   }
+
+   static var button: ButtonModel {
+      ButtonModel()
+         .set_width(55)
+         .set_height(46)
+         .set_cornerRadius(16)
+         .onModeChanged(\.normal) { button in
+            button?
+               .set_backColor(Design.color.backgroundBrandSecondary)
+               .set_shadow(.init(
+                  radius: 8,
+                  offset: .init(x: 0, y: 10),
+                  color: Design.color.iconContrast,
+                  opacity: 0.23
+               ))
+         }
+         .onModeChanged(\.inactive) { button in
+            button?
+               .set_backColor(Design.color.transparent)
+               .set_shadow(.noShadow)
+         }
+         .setMode(\.inactive)
    }
 }
