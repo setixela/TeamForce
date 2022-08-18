@@ -115,6 +115,7 @@ final class TransactScene<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
          }
       userSearchTextField
          .onEvent(\.didBeginEditing)
+         .doNext(usecase: IsEmpty())
          .onSuccess {
             wS?.tableModel.set_hidden(true)
             wS?.works.getUserList
@@ -181,6 +182,8 @@ final class TransactScene<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
          // map index to user
          .doNext(work: works.mapIndexToUser)
          .onSuccess { foundUser in
+            //wS?.clearFields()
+            wS?.setToInitialCondition()
             let fullName = foundUser.name + " " + foundUser.surname
             wS?.userSearchTextField.set(.text(fullName))
             wS?.tableModel.set_hidden(true)
@@ -209,12 +212,22 @@ final class TransactScene<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
    }
 
    private func setToInitialCondition() {
-      userSearchTextField.set(.text(""))
+      clearFields()
+      configureInputParsers()
+      hideViews()
+      sendButton.set(Design.state.button.inactive)
+   }
+   
+   private func hideViews() {
       transactInputViewModel.set(.hidden(true))
-      transactInputViewModel.textField.set(.text(""))
       sendButton.set(.hidden(true))
-      reasonTextView.set(.text(""))
       reasonTextView.set(.hidden(true))
+   }
+   
+   private func clearFields() {
+      userSearchTextField.set_text("")
+      transactInputViewModel.textField.set_text("")
+      reasonTextView.set(.text(""))
    }
 
    private func presentAlert(text: String) {
@@ -254,6 +267,8 @@ private extension TransactScene {
       weak var wS = self
 
       let store = works.store
+      store.inputReasonText = ""
+      store.inputReasonText = ""
       var correctCoinInput = false
       var correctReasonInput = false
 
