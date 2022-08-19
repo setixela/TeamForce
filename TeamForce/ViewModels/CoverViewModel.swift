@@ -11,7 +11,7 @@ import UIKit
 // MARK: - Digital Thanks Cover
 
 final class CoverViewModel<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>, Assetable {
-   private let titleModel = IconLabelHorizontalModel<Asset>()
+   private let titleModel = IconLabelX<Asset>()
       .set(.icon(Design.icon.logo))
       .set(.text(Text.title.digitalThanks))
 

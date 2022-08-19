@@ -23,11 +23,15 @@ final class BalanceViewModel<Asset: AssetProtocol>: BaseViewModel<StackViewExten
 
    // MARK: - Frame Cells
 
-   private lazy var frameModel = LabelIconHorizontalModel<Design>()
-      .set(.backColor(Design.color.frameCellBackground))
-      .set(.height(48))
-      .set(.text(Text.title.selectPeriod))
-      .set(.image(Design.icon.calendarLine))
+   private lazy var selectPeriod = LabelIconX<Design>(Design.state.stack.buttonFrame)
+      .set {
+         $0.label
+            .set_text(Text.title.selectPeriod)
+            .set_color(Design.color.textSecondary)
+         $0.iconModel
+            .set_image(Design.icon.calendarLine)
+            .set_imageTintColor(Design.color.iconBrand)
+      }
 
    private lazy var myAccountFrame = FrameCellModel<Design>()
       .set(.backColor(Design.color.frameCellBackground))
@@ -103,7 +107,7 @@ final class BalanceViewModel<Asset: AssetProtocol>: BaseViewModel<StackViewExten
       set(.distribution(.fill))
       set(.alignment(.fill))
       set(.models([
-         frameModel,
+         selectPeriod,
          Spacer(20),
          frameCellStackModel,
          Spacer(27),

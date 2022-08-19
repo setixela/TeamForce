@@ -35,7 +35,7 @@ final class TransactScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended
 
    override func start() {
       configure()
-      scenario.start(stateMachineFunc: setState)
+      scenario.start(setState: setState)
    }
 
    func configure() {

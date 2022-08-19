@@ -70,6 +70,7 @@ protocol ColorsProtocol: InitProtocol {
     // Images
     var iconContrast: UIColor { get }
     var iconInvert: UIColor { get }
+    var iconBrand: UIColor { get }
 
     // Frame cell color
     var frameCellBackground: UIColor { get }
@@ -91,7 +92,7 @@ struct ColorBuilder: ColorsProtocol {
     var transparent: UIColor { .clear }
 
     var text: UIColor { Token.contrast.color }
-    var textSecondary: UIColor { Token.contrast.color }
+    var textSecondary: UIColor { Token.midpoint.color }
     var textSecondaryInvert: UIColor { Token.inverse.color }
     var textThird: UIColor { Token.contrast.color }
     var textThirdInvert: UIColor { Token.inverse.color }
@@ -118,6 +119,7 @@ struct ColorBuilder: ColorsProtocol {
     // icons
     var iconContrast: UIColor { Token.contrast.color }
     var iconInvert: UIColor { Token.inverse.color }
+    var iconBrand: UIColor { Token.brand.color }
 
     // Frame cell color
     var frameCellBackground: UIColor { Token.extra1.color }

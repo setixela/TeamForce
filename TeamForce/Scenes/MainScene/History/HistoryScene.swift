@@ -31,7 +31,7 @@ final class HistoryScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>
 
    override func start() {
       configure()
-      scenario.start(stateMachineFunc: setState)
+      scenario.start(setState: setState)
 
       viewModels.tableModel
          .set(.presenters([

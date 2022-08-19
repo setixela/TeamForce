@@ -22,7 +22,7 @@ protocol Scenario {
 
    var events: Events { get }
 
-   func start(stateMachineFunc: @escaping (State) -> Void)
+   func start(setState: @escaping (State) -> Void)
 }
 
 class BaseScenario<Events, State, Works: SceneWorks>: BaseModel, Scenario {
@@ -38,7 +38,7 @@ class BaseScenario<Events, State, Works: SceneWorks>: BaseModel, Scenario {
       fatalError("init() has not been implemented")
    }
 
-   open func start(stateMachineFunc: @escaping (State) -> Void) {
+   open func start(setState: @escaping (State) -> Void) {
 
    }
 }

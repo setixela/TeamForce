@@ -35,7 +35,7 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
       configure()
 
       viewModels.setState(.inputUserName)
-      scenario.start(stateMachineFunc: viewModels.setState)
+      scenario.start(setState: viewModels.setState)
    }
 }
 
