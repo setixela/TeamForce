@@ -16,6 +16,8 @@ protocol ParamsProtocol: InitProtocol, Designable {
    var cornerRadiusSmall: CGFloat { get }
    var cornerRadiusMedium: CGFloat { get }
    //
+   var borderWidth: CGFloat { get }
+   //
    var contentPadding: UIEdgeInsets { get }
    var titleSubtitleOffset: CGFloat { get }
    var globalTopOffset: CGFloat { get }
@@ -37,7 +39,10 @@ struct ParamBuilder<Design: DSP>: ParamsProtocol {
    var cornerRadiusSmall: CGFloat { 11 }
    var cornerRadiusMedium: CGFloat { 20 }
    //
+   var borderWidth: CGFloat = 1
+   //
    var contentPadding: UIEdgeInsets { .init(top: 12, left: 16, bottom: 12, right: 16) }
+   
    var titleSubtitleOffset: CGFloat { 16 }
    var globalTopOffset: CGFloat { 24 }
    //

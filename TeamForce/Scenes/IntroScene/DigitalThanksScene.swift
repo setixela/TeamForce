@@ -37,7 +37,7 @@ final class DigitalThanksScene<Asset: AssetProtocol>: BaseSceneModel<
       mainVM.topStackModel
          .set(Design.state.stack.default)
          .set(.alignment(.center))
-         .set_models([
+         .set_arrangedModels([
             DTLogoTitleX<Design>(),
             Grid.xxx.spacer,
             ImageViewModel()
@@ -47,7 +47,7 @@ final class DigitalThanksScene<Asset: AssetProtocol>: BaseSceneModel<
 
       mainVM.bottomStackModel
          .set(Design.state.stack.bottomPanel)
-         .set_models([
+         .set_arrangedModels([
             Grid.x1.spacer,
             TitleSubtitleY<Design>()
                .set_padding(.top(Design.params.titleSubtitleOffset))

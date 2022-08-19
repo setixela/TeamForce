@@ -35,7 +35,7 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
       configure()
 
       viewModels.setState(.inputUserName)
-      scenario.start(stateMachineFunc: viewModels.setState)
+      scenario.start(setState: viewModels.setState)
    }
 }
 
@@ -46,7 +46,7 @@ private extension LoginScene {
       mainVM.header
          .set_text(Design.Text.title.autorisation)
       mainVM.bottomSubStack
-         .set_models([
+         .set_arrangedModels([
             viewModels.userNameInputModel,
             viewModels.smsCodeInputModel,
             viewModels.getCodeButton,

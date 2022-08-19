@@ -35,7 +35,12 @@ final class TransactScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended
 
    override func start() {
       configure()
-      scenario.start(stateMachineFunc: setState)
+
+      view
+         .onEvent(\.willAppear) {
+            self.setToInitialCondition()
+            self.scenario.start(setState: self.setState)
+         }
    }
 
    func configure() {
@@ -43,7 +48,7 @@ final class TransactScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended
       set_distribution(.fill)
       set_alignment(.fill)
       set_spacing(8)
-      set_models([
+      set_arrangedModels([
          viewModels.userSearchTextField,
          viewModels.transactInputViewModel,
          viewModels.reasonTextView,

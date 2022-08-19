@@ -125,9 +125,8 @@ Void
 extension MainScene {
    private func presentModel(_ model: UIViewModel?) {
       guard let model = model else { return }
-      model.start()
       mainVM.bodyStack
-         .set_models([
+         .set_arrangedModels([
             model
          ])
    }

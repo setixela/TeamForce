@@ -83,7 +83,7 @@ final class SegmentControlButton<Design: DSP>: BaseViewModel<StackViewExtended>,
             .set_hidden(false)
       }
       setMode(\.normal)
-      set_models([
+      set_arrangedModels([
          button,
          selector
       ])

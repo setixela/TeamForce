@@ -89,7 +89,7 @@ extension ViewModelProtocol where Self: Stateable, View: StackViewExtended {
       case .padding(let value):
          set_padding(value)
       case .models(let value):
-         set_models(value)
+         set_arrangedModels(value)
       case .backView(let value, let value2):
          set_backView(value, inset: value2)
       case .backImage(let image):

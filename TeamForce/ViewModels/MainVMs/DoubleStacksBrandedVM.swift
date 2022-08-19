@@ -23,7 +23,7 @@ final class DoubleStacksBrandedVM<Design: DesignProtocol>: Combos<SComboMD<Stack
             .set(Design.state.stack.default)
             .set_backColor(Design.color.backgroundBrand)
             .set_alignment(.leading)
-            .set_models([
+            .set_arrangedModels([
                Grid.x16.spacer,
                BrandLogoIcon<Design>(),
                Grid.x16.spacer,

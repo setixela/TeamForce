@@ -74,7 +74,7 @@ final class PlaygroundScene<Asset: AssetProtocol>: BaseSceneModel<
       mainVM
          .set_alignment(.leading)
          .set_axis(.vertical)
-         .set_models([
+         .set_arrangedModels([
             Spacer(32),
             viewModel,
             Spacer(32),

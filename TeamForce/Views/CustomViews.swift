@@ -5,6 +5,7 @@
 //  Created by Aleksandr Solovyev on 21.06.2022.
 //
 
+import ReactiveWorks
 import UIKit
 
 protocol Marginable {
@@ -93,7 +94,14 @@ final class PaddingView: UIView, Marginable {
 
 // MARK: - StackViewExtendeed -------------------------
 
-final class StackViewExtended: UIStackView {
+final class StackViewExtended: UIStackView, Communicable {
+   struct Events: InitProtocol {
+      var willAppear: Event<Void>?
+      var willDisappear: Event<Void>?
+   }
+
+   var eventsStore: Events = .init()
+
    weak var backView: UIView?
 
    override init(frame: CGRect) {
@@ -103,10 +111,10 @@ final class StackViewExtended: UIStackView {
       layer.masksToBounds = false
    }
 
+   @available(*, unavailable)
    required init(coder: NSCoder) {
       fatalError("init(coder:) has not been implemented")
    }
-
 
    override func layoutSubviews() {
       super.layoutSubviews()
@@ -116,5 +124,15 @@ final class StackViewExtended: UIStackView {
       }
 
       sendSubviewToBack(backView)
+   }
+
+   override func willMove(toSuperview newSuperview: UIView?) {
+      super.willMove(toSuperview: newSuperview)
+
+      if newSuperview == nil {
+         sendEvent(\.willDisappear)
+      } else {
+         sendEvent(\.willAppear)
+      }
    }
 }

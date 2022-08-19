@@ -25,22 +25,22 @@ final class SideBarModel<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>
 
    private lazy var userModel = SideBarUserModel<Design>()
 
-   internal lazy var item1 = IconLabelHorizontalModel<Asset>()
+   internal lazy var item1 = IconLabelX<Asset>()
       .set(.padding(Design.params.contentPadding))
       .set(.text("Баланс"))
       .set(.icon(Design.icon.coinLine))
 
-   internal lazy var item2 = IconLabelHorizontalModel<Asset>()
+   internal lazy var item2 = IconLabelX<Asset>()
       .set(.padding(Design.params.contentPadding))
       .set(.text("Новый перевод"))
       .set(.icon(Design.icon.upload2Fill))
 
-   internal lazy var item3 = IconLabelHorizontalModel<Asset>()
+   internal lazy var item3 = IconLabelX<Asset>()
       .set(.padding(Design.params.contentPadding))
       .set(.text("История"))
       .set(.icon(Design.icon.historyLine))
 
-   private lazy var item4 = IconLabelHorizontalModel<Asset>()
+   private lazy var item4 = IconLabelX<Asset>()
       .set(.padding(Design.params.contentPadding))
       .set(.text("Выход"))
 
@@ -56,7 +56,7 @@ final class SideBarModel<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>
       set_axis(.vertical)
          .set_distribution(.fill)
          .set_alignment(.leading)
-         .set_models([
+         .set_arrangedModels([
             userModel,
             item1,
             item2,

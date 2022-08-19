@@ -23,7 +23,7 @@ enum LabelIconState {
    case image(UIImage)
 }
 
-final class LabelIconHorizontalModel<Design: DesignProtocol>: BaseViewModel<StackViewExtended>,
+final class LabelIconX<Design: DesignProtocol>: BaseViewModel<StackViewExtended>,
    Designable,
    Communicable
 {
@@ -31,7 +31,7 @@ final class LabelIconHorizontalModel<Design: DesignProtocol>: BaseViewModel<Stac
 
    var eventsStore: TappableEvent = .init()
 
-   let label = Design.label.body2
+   let label = Design.label.body1
    let iconModel = ImageViewModel()
 
    required init() {
@@ -40,10 +40,8 @@ final class LabelIconHorizontalModel<Design: DesignProtocol>: BaseViewModel<Stac
 
    override func start() {
       set(.axis(.horizontal))
-      set(.cornerRadius(Design.params.cornerRadius))
       set(.distribution(.fill))
       set(.alignment(.fill))
-      set(.padding(.init(top: 12, left: 16, bottom: 12, right: 16)))
       set(.models([
          label,
          Spacer(),
@@ -62,7 +60,7 @@ final class LabelIconHorizontalModel<Design: DesignProtocol>: BaseViewModel<Stac
    }
 }
 
-extension LabelIconHorizontalModel: Stateable2 {
+extension LabelIconX: Stateable2 {
    func applyState(_ state: LabelIconState) {
       switch state {
       case .text(let string):
