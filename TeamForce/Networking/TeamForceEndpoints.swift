@@ -175,4 +175,50 @@ enum TeamForceEndpoints {
          self.body = body
       }
    }
+   
+   struct GetCurrentPeriod: EndpointProtocol {
+      //
+      let method = HTTPMethod.get
+      
+      var endPoint: String { urlBase + "/get-current-period/" }
+      
+      let headers: [String : String]
+   }
+   
+   struct GetPeriodByDate: EndpointProtocol {
+      //
+      let method = HTTPMethod.post
+      
+      var endPoint: String { urlBase + "/get-period-by-date/"}
+      
+      let body: [String : Any]
+      
+      let headers: [String : String]
+   }
+   
+   struct GetPeriodsFromDate: EndpointProtocol {
+      let method = HTTPMethod.post
+      
+      var endPoint: String { urlBase + "/get-periods/"}
+      
+      let body: [String : Any]
+      
+      let headers: [String : String]
+   }
+   
+   struct UpdateProfileImage: EndpointProtocol {
+      let method = HTTPMethod.put
+      
+      var endPoint: String = urlBase + "/update-profile-image/"
+      
+      var body: [String : Any]
+      
+      var headers: [String : String]
+      
+      init(id: String, headers: [String : String], body: [String : Any]) {
+         endPoint = endPoint + id + "/"
+         self.headers = headers
+         self.body = body
+      }
+   }
 }

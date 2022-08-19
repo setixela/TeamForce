@@ -77,6 +77,22 @@ struct ApiUseCase<Asset: AssetProtocol>: Assetable, WorkBasket {
    var getStatByPeriodId: GetStatByPeriodIdUseCase {
       .init(safeStringStorage: safeStringStorage, getStatByPeriodIdApiWorker: getStatByPeriodIdApiWorker)
    }
+   
+   var getCurrentPeriod: GetCurrentPeriodUseCase {
+      .init(safeStringStorage: safeStringStorage, getCurrentPeriodApiWorker: getCurrentPeriodApiWorker)
+   }
+   
+   var getPeriodByDate: GetPeriodByDateUseCase {
+      .init(safeStringStorage: safeStringStorage, getPeriodByDateApiWorker: getPeriodByDateApiWorker)
+   }
+   
+   var getPeriodsFromDate: GetPeriodsFromDateUseCase {
+      .init(safeStringStorage: safeStringStorage, getPeriodsFromDateApiWorker: getPeriodsFromDateApiWorker)
+   }
+   
+   var updateProfileImage: UpdateProfileImageUseCase {
+      .init(safeStringStorage: safeStringStorage, updateProfileImageApiWorker: updateProfileImageApiWorker)
+   }
 
    // MARK: - Dependencies
 
@@ -95,4 +111,8 @@ struct ApiUseCase<Asset: AssetProtocol>: Assetable, WorkBasket {
    private var getStatByPeriodIdApiWorker: GetStatByPeriodIdApiWorker { GetStatByPeriodIdApiWorker(apiEngine: Asset.service.apiEngine) }
    private var getTransactionsByPeriodApiWorker: GetTransactionsByPeriodApiWorker { .init(apiEngine: Asset.service.apiEngine) }
    private var cancelTransactionByIdApiWorker: CancelTransactionByIdApiWorker { .init(apiEngine: Asset.service.apiEngine) }
+   private var getCurrentPeriodApiWorker: GetCurrentPeriodApiWorker { .init(apiEngine: Asset.service.apiEngine) }
+   private var getPeriodByDateApiWorker: GetPeriodByDateApiWorker { .init(apiEngine: Asset.service.apiEngine) }
+   private var getPeriodsFromDateApiWorker: GetPeriodsFromDateApiWorker { .init(apiEngine: Asset.service.apiEngine) }
+   private var updateProfileImageApiWorker: UpdateProfileImageApiWorker { .init(apiEngine: Asset.service.apiEngine) }
 }
