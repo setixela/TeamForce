@@ -10,7 +10,7 @@ import UIKit
 
 struct TransactViewEvent: InitProtocol {}
 
-final class TransactScene<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
+final class TransactScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>,
    Assetable,
    Stateable,
    Scenaryable
@@ -36,7 +36,6 @@ final class TransactScene<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
    override func start() {
       configure()
       scenario.start(stateMachineFunc: setState)
-      configureInputParsers()
    }
 
    func configure() {
@@ -57,7 +56,7 @@ final class TransactScene<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
 
    private func setToInitialCondition() {
       clearFields()
-      configureInputParsers()
+      scenario.works.reset.doSync()
       hideViews()
       viewModels.sendButton.set(Design.state.button.inactive)
    }
@@ -127,27 +126,27 @@ extension TransactScene: SceneStateProtocol {
          setToInitialCondition()
       case .sendCoinError:
          presentAlert(text: "Не могу послать деньгу")
-      case .coinInputSuccess(let text):
+      case .coinInputSuccess(let text, let isCorrect):
          viewModels.transactInputViewModel.textField.set(.text(text))
-         if scenario.works.store.isCorrectReasonInput == true {
+         if isCorrect {
             viewModels.sendButton.set(Design.state.button.default)
+         } else {
+            viewModels.transactInputViewModel.textField.set(.text(text))
+            viewModels.sendButton.set(Design.state.button.inactive)
          }
-      case .coinInputError(let text):
-         viewModels.transactInputViewModel.textField.set(.text(text))
-         viewModels.sendButton.set(Design.state.button.inactive)
-      case .reasonInputSuccess(let text):
+      case .reasonInputSuccess(let text, let isCorrect):
          viewModels.reasonTextView.set(.text(text))
-         if scenario.works.store.isCorrectCoinInput == true {
+         if isCorrect {
             viewModels.sendButton.set(Design.state.button.default)
+         } else {
+            viewModels.reasonTextView.set(.text(text))
+            viewModels.sendButton.set(Design.state.button.inactive)
          }
-      case .reasonInputError(let text):
-         viewModels.reasonTextView.set(.text(text))
-         viewModels.sendButton.set(Design.state.button.inactive)
       }
    }
 }
 
-extension TransactScene {
+private extension TransactScene {
    func hideHUD() {
       viewModels.transactInputViewModel.set(.hidden(true))
       viewModels.sendButton.set(.hidden(true))
@@ -165,13 +164,7 @@ extension TransactScene {
       viewModels.tableModel.set(.hidden(found.isEmpty ? true : false))
    }
 
-   func configureInputParsers() {
-      let store = scenario.works.store
-      store.inputReasonText = ""
-      store.inputReasonText = ""
-   }
-
-   private func presentAlert(text: String) {
+   func presentAlert(text: String) {
       let alert = UIAlertController(title: "Ошибка",
                                     message: text,
                                     preferredStyle: .alert)

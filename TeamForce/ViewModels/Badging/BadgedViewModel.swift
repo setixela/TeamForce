@@ -15,7 +15,7 @@ struct BadgeMode<WeakSelf>: WeakSelfied {
 
 // MARK: - Top and Bottom badged
 
-class BadgedViewModel<VM: VMPS, Design: DSP>: BVM<UIStackView>, Designable {
+class BadgedViewModel<VM: VMPS, Design: DSP>: BVM<StackViewExtended>, Designable {
    var modes: Mode = .init()
 
    let mainModel: VM = .init()
@@ -48,7 +48,7 @@ extension BadgedViewModel: Modable {
 
 // MARK: - Top badged
 
-class BadgedTopViewModel<VM: VMPS, Asset: AssetProtocol>: BVM<UIStackView>, Assetable {
+class BadgedTopViewModel<VM: VMPS, Asset: AssetProtocol>: BVM<StackViewExtended>, Assetable {
    var modes: Mode = .init()
 
    let mainModel: VM = .init()
@@ -76,7 +76,7 @@ extension BadgedTopViewModel: Modable {
 
 // MARK: - Bottom badged
 
-class BadgedBottomViewModel<VM: VMPS, Asset: AssetProtocol>: BVM<UIStackView>, Assetable {
+class BadgedBottomViewModel<VM: VMPS, Asset: AssetProtocol>: BVM<StackViewExtended>, Assetable {
    var modes: Mode = .init()
 
    let mainModel: VM = .init()

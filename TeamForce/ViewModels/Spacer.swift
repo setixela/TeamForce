@@ -15,12 +15,57 @@ enum Grid: CGFloat {
    case x4 = 4
    case x8 = 8
    case x12 = 12
+   case x14 = 14
    case x16 = 16
+   case x20 = 20
    case x24 = 24
+   case x30 = 30
    case x32 = 32
    case x36 = 36
+   case x40 = 40
    case x48 = 48
+
+   case x50 = 50
+
+   case x60 = 60
    case x64 = 64
+
+   case x70 = 70
+   case x80 = 80
+   case x90 = 90
+   case x100 = 100
+   case x128 = 128
+
+   // case infinity
+   case xxx = 0
+}
+
+enum GridAsp: CGFloat {
+   case x1 = 1
+   case x2 = 2
+   case x4 = 4
+   case x8 = 8
+   case x12 = 12
+   case x14 = 14
+   case x16 = 16
+   case x20 = 20
+   case x24 = 24
+   case x30 = 30
+   case x32 = 32
+   case x36 = 36
+   case x40 = 40
+   case x48 = 48
+
+   case x50 = 50
+
+   case x60 = 60
+   case x64 = 64
+
+   case x70 = 70
+   case x80 = 80
+   case x90 = 90
+   case x100 = 100
+   case x128 = 128
 
    // case infinity
    case xxx = 0
@@ -29,6 +74,16 @@ enum Grid: CGFloat {
 extension Grid {
    var spacer: Spacer {
       Spacer(value)
+   }
+
+   var value: CGFloat {
+      CGFloat(rawValue)
+   }
+}
+
+extension GridAsp {
+   var spacer: Spacer {
+      Spacer(value * Config.sizeAspectCoeficient)
    }
 
    var value: CGFloat {
@@ -76,7 +131,7 @@ final class SpacerView: UIView {
     }
 }
 
-extension UIStackView {
+extension StackViewExtended {
     func addArrangedSubviews(_ views: UIView...) {
         views.forEach { view in
             self.addArrangedSubview(view)
@@ -84,7 +139,7 @@ extension UIStackView {
     }
 }
 
-extension UIStackView {
+extension StackViewExtended {
     func addViewModels(_ models: UIViewModel...) {
         models.forEach { model in
             self.addArrangedSubview(model.uiView)

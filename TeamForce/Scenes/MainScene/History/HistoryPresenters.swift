@@ -105,7 +105,7 @@ struct HistoryPresenters<Design: DesignProtocol>: Designable {
 
                      model
                         .set_image(Design.icon.cross)
-                        .set_color(Design.color.textError)
+                        .set_imageTintColor(Design.color.textError)
                         .set_hidden(false)
                   }
             }

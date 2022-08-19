@@ -27,7 +27,7 @@ extension ViewModelProtocol {
 }
 
 // Центрирует в .fill стеках
-final class CenteredX<VM: VMP>: BaseViewModel<UIStackView>, Stateable, VMWrapper {
+final class CenteredX<VM: VMP>: BaseViewModel<StackViewExtended>, Stateable, VMWrapper {
    typealias State = StackState
 
    lazy var subModel = VM()
@@ -43,7 +43,7 @@ final class CenteredX<VM: VMP>: BaseViewModel<UIStackView>, Stateable, VMWrapper
 }
 
 // Центрирует в .fill стеках
-final class CenteredY<VM: VMP>: BaseViewModel<UIStackView>, Stateable, VMWrapper {
+final class CenteredY<VM: VMP>: BaseViewModel<StackViewExtended>, Stateable, VMWrapper {
    typealias State = StackState
 
    lazy var subModel = VM()
@@ -59,7 +59,7 @@ final class CenteredY<VM: VMP>: BaseViewModel<UIStackView>, Stateable, VMWrapper
 }
 
 // обжимает модель с двух сторон, для увода влево в .fill стеках
-final class Lefted<VM: VMP>: BaseViewModel<UIStackView>, Stateable, VMWrapper {
+final class Lefted<VM: VMP>: BaseViewModel<StackViewExtended>, Stateable, VMWrapper {
    typealias State = StackState
 
    lazy var subModel = VM()
@@ -75,7 +75,7 @@ final class Lefted<VM: VMP>: BaseViewModel<UIStackView>, Stateable, VMWrapper {
 }
 
 // обжимает модель с двух сторон, для увода вправо в .fill стеках
-final class Righted<VM: VMP>: BaseViewModel<UIStackView>, Stateable, VMWrapper {
+final class Righted<VM: VMP>: BaseViewModel<StackViewExtended>, Stateable, VMWrapper {
    typealias State = StackState
 
    lazy var subModel = VM()

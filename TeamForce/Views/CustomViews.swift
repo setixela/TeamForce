@@ -11,6 +11,8 @@ protocol Marginable {
    var padding: UIEdgeInsets { get set }
 }
 
+// MARK: - PaddingLabel -------------------------
+
 final class PaddingLabel: UILabel, Marginable {
    var padding: UIEdgeInsets = .init()
 
@@ -43,6 +45,8 @@ final class PaddingLabel: UILabel, Marginable {
    }
 }
 
+// MARK: - PaddingTextField -------------------------
+
 /// Description
 final class PaddingTextField: UITextField, Marginable {
    // padding extension
@@ -61,6 +65,8 @@ final class PaddingTextField: UITextField, Marginable {
    }
 }
 
+// MARK: - PaddinPaddingImageViewgLabel -------------------------
+
 final class PaddingImageView: UIImageView, Marginable {
    var padding: UIEdgeInsets = .init()
 
@@ -71,6 +77,8 @@ final class PaddingImageView: UIImageView, Marginable {
                    right: -padding.right)
    }
 }
+
+// MARK: - PaddingView -------------------------
 
 final class PaddingView: UIView, Marginable {
    var padding: UIEdgeInsets = .init()
@@ -83,3 +91,30 @@ final class PaddingView: UIView, Marginable {
    }
 }
 
+// MARK: - StackViewExtendeed -------------------------
+
+final class StackViewExtended: UIStackView {
+   weak var backView: UIView?
+
+   override init(frame: CGRect) {
+      super.init(frame: frame)
+
+      clipsToBounds = false
+      layer.masksToBounds = false
+   }
+
+   required init(coder: NSCoder) {
+      fatalError("init(coder:) has not been implemented")
+   }
+
+
+   override func layoutSubviews() {
+      super.layoutSubviews()
+
+      guard let backView = backView else {
+         return
+      }
+
+      sendSubviewToBack(backView)
+   }
+}

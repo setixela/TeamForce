@@ -16,7 +16,7 @@ struct DesignSystem: DesignProtocol {
    typealias Label = LabelBuilder<Self>
    typealias Button = ButtonBuilder<Self>
 
-   typealias Params = ParamBuilder
+   typealias Params = ParamBuilder<Self>
    typealias State = StateBuilders<Self>
 }
 

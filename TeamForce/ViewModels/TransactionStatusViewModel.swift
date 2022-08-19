@@ -19,7 +19,7 @@ struct TransactionStatusViewEvents: InitProtocol {
    var hide: Event<Void>?
 }
 
-final class TransactionStatusViewModel<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
+final class TransactionStatusViewModel<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>,
    Communicable,
    Stateable2,
    Assetable

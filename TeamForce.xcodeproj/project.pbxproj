@@ -86,6 +86,7 @@
 		199C4B6928632834008AD6FD /* DesignProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199C4B6828632834008AD6FD /* DesignProtocol.swift */; };
 		199C4B6B2863292F008AD6FD /* ButtonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199C4B6A2863292F008AD6FD /* ButtonModel.swift */; };
 		199C4B6D2863299E008AD6FD /* DesignSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199C4B6C2863299E008AD6FD /* DesignSystem.swift */; };
+		19A097FE28AEC4C700D8FFF2 /* MemoryLeakTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A097FD28AEC4C700D8FFF2 /* MemoryLeakTests.swift */; };
 		19A73BEB28A4510E000B74CF /* BadgedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A73BEA28A4510E000B74CF /* BadgedViewModel.swift */; };
 		19A73BED28A4530C000B74CF /* TextFieldBadged.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A73BEC28A4530C000B74CF /* TextFieldBadged.swift */; };
 		19A73BEF28A454AC000B74CF /* BadgeProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A73BEE28A454AC000B74CF /* BadgeProtocols.swift */; };
@@ -159,6 +160,15 @@
 		63D419F728AA8AA70024E22C /* GetStatByPeriodIdUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D419F628AA8AA70024E22C /* GetStatByPeriodIdUseCase.swift */; };
 		63E1916D2889519E000FD312 /* BadgeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E1916C2889519E000FD312 /* BadgeModel.swift */; };
 		63E7A73928AE5C2B00FB2C80 /* OldTransactView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E7A73828AE5C2A00FB2C80 /* OldTransactView.swift */; };
+		63E7A73B28AF9A7500FB2C80 /* GetCurrentPeriodApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E7A73A28AF9A7500FB2C80 /* GetCurrentPeriodApiWorker.swift */; };
+		63E7A73D28AF9BC100FB2C80 /* GetCurrentPeriodUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E7A73C28AF9BC100FB2C80 /* GetCurrentPeriodUseCase.swift */; };
+		63E7A73F28AF9E8000FB2C80 /* ReadyWorks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E7A73E28AF9E8000FB2C80 /* ReadyWorks.swift */; };
+		63E7A74128AFA0D200FB2C80 /* GetPeriodByDateApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E7A74028AFA0D200FB2C80 /* GetPeriodByDateApiWorker.swift */; };
+		63E7A74328AFA35E00FB2C80 /* GetPeriodByDateUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E7A74228AFA35E00FB2C80 /* GetPeriodByDateUseCase.swift */; };
+		63E7A74528AFBC5300FB2C80 /* GetPeriodsFromDateApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E7A74428AFBC5300FB2C80 /* GetPeriodsFromDateApiWorker.swift */; };
+		63E7A74728AFBDE500FB2C80 /* GetPeriodsFromDateUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E7A74628AFBDE500FB2C80 /* GetPeriodsFromDateUseCase.swift */; };
+		63E7A74B28AFCB1800FB2C80 /* UpdateProfileImageApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E7A74A28AFCB1800FB2C80 /* UpdateProfileImageApiWorker.swift */; };
+		63E7A74D28AFCBF400FB2C80 /* UpdateProfileImageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E7A74C28AFCBF400FB2C80 /* UpdateProfileImageUseCase.swift */; };
 		63EB469528AC35720070A271 /* HistoryScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EB469428AC35720070A271 /* HistoryScene.swift */; };
 		63EB469728AC35920070A271 /* HistoryScenario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EB469628AC35920070A271 /* HistoryScenario.swift */; };
 		63EB469928AC35A30070A271 /* HistoryWorks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EB469828AC35A30070A271 /* HistoryWorks.swift */; };
@@ -252,6 +262,7 @@
 		199C4B6828632834008AD6FD /* DesignProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignProtocol.swift; sourceTree = "<group>"; };
 		199C4B6A2863292F008AD6FD /* ButtonModel.swift */ = {isa = PBXFileReference; indentWidth = 3; lastKnownFileType = sourcecode.swift; path = ButtonModel.swift; sourceTree = "<group>"; tabWidth = 3; };
 		199C4B6C2863299E008AD6FD /* DesignSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignSystem.swift; sourceTree = "<group>"; };
+		19A097FD28AEC4C700D8FFF2 /* MemoryLeakTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryLeakTests.swift; sourceTree = "<group>"; };
 		19A73BEA28A4510E000B74CF /* BadgedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgedViewModel.swift; sourceTree = "<group>"; };
 		19A73BEC28A4530C000B74CF /* TextFieldBadged.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldBadged.swift; sourceTree = "<group>"; };
 		19A73BEE28A454AC000B74CF /* BadgeProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeProtocols.swift; sourceTree = "<group>"; };
@@ -324,6 +335,15 @@
 		63D419F628AA8AA70024E22C /* GetStatByPeriodIdUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetStatByPeriodIdUseCase.swift; sourceTree = "<group>"; };
 		63E1916C2889519E000FD312 /* BadgeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeModel.swift; sourceTree = "<group>"; };
 		63E7A73828AE5C2A00FB2C80 /* OldTransactView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OldTransactView.swift; sourceTree = "<group>"; };
+		63E7A73A28AF9A7500FB2C80 /* GetCurrentPeriodApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetCurrentPeriodApiWorker.swift; sourceTree = "<group>"; };
+		63E7A73C28AF9BC100FB2C80 /* GetCurrentPeriodUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetCurrentPeriodUseCase.swift; sourceTree = "<group>"; };
+		63E7A73E28AF9E8000FB2C80 /* ReadyWorks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadyWorks.swift; sourceTree = "<group>"; };
+		63E7A74028AFA0D200FB2C80 /* GetPeriodByDateApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetPeriodByDateApiWorker.swift; sourceTree = "<group>"; };
+		63E7A74228AFA35E00FB2C80 /* GetPeriodByDateUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetPeriodByDateUseCase.swift; sourceTree = "<group>"; };
+		63E7A74428AFBC5300FB2C80 /* GetPeriodsFromDateApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetPeriodsFromDateApiWorker.swift; sourceTree = "<group>"; };
+		63E7A74628AFBDE500FB2C80 /* GetPeriodsFromDateUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetPeriodsFromDateUseCase.swift; sourceTree = "<group>"; };
+		63E7A74A28AFCB1800FB2C80 /* UpdateProfileImageApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateProfileImageApiWorker.swift; sourceTree = "<group>"; };
+		63E7A74C28AFCBF400FB2C80 /* UpdateProfileImageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateProfileImageUseCase.swift; sourceTree = "<group>"; };
 		63EB469428AC35720070A271 /* HistoryScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryScene.swift; sourceTree = "<group>"; };
 		63EB469628AC35920070A271 /* HistoryScenario.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryScenario.swift; sourceTree = "<group>"; };
 		63EB469828AC35A30070A271 /* HistoryWorks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryWorks.swift; sourceTree = "<group>"; };
@@ -458,6 +478,7 @@
 			isa = PBXGroup;
 			children = (
 				190C1D28285D160000FB3518 /* WorksTests.swift */,
+				19A097FD28AEC4C700D8FFF2 /* MemoryLeakTests.swift */,
 			);
 			path = TeamForceTests;
 			sourceTree = "<group>";
@@ -741,6 +762,7 @@
 			children = (
 				19EF32AC287CE8140078F53D /* ApiModels */,
 				19EF32AA287CE80B0078F53D /* StringStorageWorker.swift */,
+				63E7A73E28AF9E8000FB2C80 /* ReadyWorks.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -860,6 +882,10 @@
 				63D419F228AA85560024E22C /* GetStatByPeriodIdApiWorker.swift */,
 				63578E5728AB8DA000423957 /* GetTransactionsByPeriodApiWorker.swift */,
 				63578E5B28AB9B3E00423957 /* CancelTransactionByIdApiWorker.swift */,
+				63E7A73A28AF9A7500FB2C80 /* GetCurrentPeriodApiWorker.swift */,
+				63E7A74028AFA0D200FB2C80 /* GetPeriodByDateApiWorker.swift */,
+				63E7A74428AFBC5300FB2C80 /* GetPeriodsFromDateApiWorker.swift */,
+				63E7A74A28AFCB1800FB2C80 /* UpdateProfileImageApiWorker.swift */,
 			);
 			path = ApiModels;
 			sourceTree = "<group>";
@@ -891,6 +917,10 @@
 				190991E528AA9D2A00371909 /* VerifyCodeUseCase.swift */,
 				63578E5928AB8F6000423957 /* GetTransactionsByPeriodUseCase.swift */,
 				63578E5D28ABA2E500423957 /* CancelTransactionByIdUseCase.swift */,
+				63E7A73C28AF9BC100FB2C80 /* GetCurrentPeriodUseCase.swift */,
+				63E7A74228AFA35E00FB2C80 /* GetPeriodByDateUseCase.swift */,
+				63E7A74628AFBDE500FB2C80 /* GetPeriodsFromDateUseCase.swift */,
+				63E7A74C28AFCBF400FB2C80 /* UpdateProfileImageUseCase.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -1034,6 +1064,7 @@
 				199C4B6928632834008AD6FD /* DesignProtocol.swift in Sources */,
 				63A529F528A1F8AB004A858D /* SegmentedControlModel.swift in Sources */,
 				63D419F128AA825F0024E22C /* GetPeriodsUseCase.swift in Sources */,
+				63E7A73F28AF9E8000FB2C80 /* ReadyWorks.swift in Sources */,
 				1953DE88287B4574000DC537 /* Fonts.swift in Sources */,
 				197A2DA228A9BF4B00190656 /* Combos+Configure.swift in Sources */,
 				1952EA6528A7115D003F7852 /* StackStateBuilder.swift in Sources */,
@@ -1053,13 +1084,16 @@
 				19CF792C28A587B9001531B8 /* TransactWorks.swift in Sources */,
 				19C1E991285F426B00E7976D /* ApiEngine.swift in Sources */,
 				19017B7128A69CB100B06345 /* IconTitleY.swift in Sources */,
+				63E7A74528AFBC5300FB2C80 /* GetPeriodsFromDateApiWorker.swift in Sources */,
 				19EF32B02884B6C80078F53D /* TableViewModel.swift in Sources */,
 				19171F4B28AD23AE000926B1 /* HistoryViewModels.swift in Sources */,
 				19C306D828ADF6C2002D5124 /* HistoryVMs.swift in Sources */,
 				19BD2A8928ABB72500FCC00A /* Scenaryable.swift in Sources */,
+				63E7A74128AFA0D200FB2C80 /* GetPeriodByDateApiWorker.swift in Sources */,
 				19A73BED28A4530C000B74CF /* TextFieldBadged.swift in Sources */,
 				19017B8128A6A39800B06345 /* TransactDetailViewModel.swift in Sources */,
 				63EB469528AC35720070A271 /* HistoryScene.swift in Sources */,
+				63E7A74328AFA35E00FB2C80 /* GetPeriodByDateUseCase.swift in Sources */,
 				19DD3D97288A0A8C0085CDA8 /* CoverViewModel.swift in Sources */,
 				191B0C292865F119001CF3D9 /* TextBuilder.swift in Sources */,
 				19D08355286F405500F75E4A /* DoubleLabelModel.swift in Sources */,
@@ -1112,6 +1146,7 @@
 				19D08361286F430B00F75E4A /* Designable.swift in Sources */,
 				63578E5A28AB8F6000423957 /* GetTransactionsByPeriodUseCase.swift in Sources */,
 				6368D82A2894091B0049EEAB /* TransactInputViewModel.swift in Sources */,
+				63E7A74B28AFCB1800FB2C80 /* UpdateProfileImageApiWorker.swift in Sources */,
 				1918CC79286F6C69004373F3 /* VerifyApiModel.swift in Sources */,
 				63EB469928AC35A30070A271 /* HistoryWorks.swift in Sources */,
 				19017B8228A6A3FB00B06345 /* GetUsersListApiWorker.swift in Sources */,
@@ -1124,6 +1159,7 @@
 				19F1538E2899692D00ECF000 /* ApiUseCaseRegistry.swift in Sources */,
 				63352DE7289AA69A00489F5F /* SendCoinUseCase.swift in Sources */,
 				634F4333288F4EE9003B2256 /* LogoutApiWorker.swift in Sources */,
+				63E7A73D28AF9BC100FB2C80 /* GetCurrentPeriodUseCase.swift in Sources */,
 				19C1E9A128610E2800E7976D /* AssetProtocol.swift in Sources */,
 				19171F4D28AD663F000926B1 /* TableItemsModel.swift in Sources */,
 				190C1D16285D15FF00FB3518 /* ViewController.swift in Sources */,
@@ -1144,6 +1180,7 @@
 				190C1D14285D15FF00FB3518 /* SceneDelegate.swift in Sources */,
 				1953DE812879FC55000DC537 /* SearchUserApiWorker.swift in Sources */,
 				19EF32AE287E08F80078F53D /* ColorBuilder.swift in Sources */,
+				63E7A74D28AFCBF400FB2C80 /* UpdateProfileImageUseCase.swift in Sources */,
 				63AD132828A3B06C00CFF75B /* GetTransactionByIdUseCase.swift in Sources */,
 				1952EA6928A711F2003F7852 /* Associated.swift in Sources */,
 				19D08353286F403400F75E4A /* SideBarModel.swift in Sources */,
@@ -1152,6 +1189,7 @@
 				63578E5C28AB9B3E00423957 /* CancelTransactionByIdApiWorker.swift in Sources */,
 				19D08359286F41FA00F75E4A /* IconLabelHorizontalModel.swift in Sources */,
 				63EB469728AC35920070A271 /* HistoryScenario.swift in Sources */,
+				63E7A73B28AF9A7500FB2C80 /* GetCurrentPeriodApiWorker.swift in Sources */,
 				19C1E98C285F426B00E7976D /* EndpointProtocol.swift in Sources */,
 				196750B4286519660019A6DE /* ProductionAsset.swift in Sources */,
 				1918CC7B286F6C84004373F3 /* ProfileApiWorker.swift in Sources */,
@@ -1161,6 +1199,7 @@
 				19EE849028AB20CE00D862EE /* DoubleStacksBrandedVM.swift in Sources */,
 				19D0835D286F428600F75E4A /* BarButtonModel.swift in Sources */,
 				196750AC2865189C0019A6DE /* TextFieldModel.swift in Sources */,
+				63E7A74728AFBDE500FB2C80 /* GetPeriodsFromDateUseCase.swift in Sources */,
 				6368D8222891508C0049EEAB /* ProfileViewModel.swift in Sources */,
 				198FE1C92899994A00BAF1A5 /* LoginUseCase.swift in Sources */,
 				1952EA7128A718AE003F7852 /* Params.swift in Sources */,
@@ -1173,6 +1212,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				190C1D29285D160000FB3518 /* WorksTests.swift in Sources */,
+				19A097FE28AEC4C700D8FFF2 /* MemoryLeakTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

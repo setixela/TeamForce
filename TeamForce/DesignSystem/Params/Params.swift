@@ -10,7 +10,7 @@ import UIKit
 
 // MARK: - Parameters
 
-protocol ParamsProtocol: InitProtocol {
+protocol ParamsProtocol: InitProtocol, Designable {
    //
    var cornerRadius: CGFloat { get }
    var cornerRadiusSmall: CGFloat { get }
@@ -25,9 +25,13 @@ protocol ParamsProtocol: InitProtocol {
    var buttonsSpacingY: CGFloat { get }
    //
    var infoFrameHeight: CGFloat { get }
+   //
+   var panelShadow: Shadow { get }
+   var panelButtonShadow: Shadow { get }
+   var panelMainButtonShadow: Shadow { get }
 }
 
-struct ParamBuilder: ParamsProtocol {
+struct ParamBuilder<Design: DSP>: ParamsProtocol {
    //
    var cornerRadius: CGFloat { 14 }
    var cornerRadiusSmall: CGFloat { 11 }
@@ -42,4 +46,22 @@ struct ParamBuilder: ParamsProtocol {
    var buttonsSpacingY: CGFloat { 16 }
    //
    var infoFrameHeight: CGFloat { 70 }
+   //
+   var panelShadow: Shadow { .init(
+      radius: 20,
+      color: Design.color.iconContrast,
+      opacity: 0.19
+   ) }
+   var panelButtonShadow: Shadow { .init(
+      radius: 8,
+      offset: .init(x: 0, y: 10),
+      color: Design.color.iconContrast,
+      opacity: 0.23
+   ) }
+   var panelMainButtonShadow: Shadow { .init(
+      radius: 8,
+      offset: .init(x: 0, y: 10),
+      color: Design.color.iconContrast,
+      opacity: 0.23
+   ) }
 }

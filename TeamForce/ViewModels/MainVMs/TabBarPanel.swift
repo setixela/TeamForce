@@ -8,7 +8,9 @@
 import ReactiveWorks
 import UIKit
 
-final class TabBarPanel<Design: DesignProtocol>: BaseViewModel<UIStackView>, Designable, Stateable {
+// MARK: - -----------------
+
+final class TabBarPanel<Design: DesignProtocol>: BaseViewModel<StackViewExtended>, Designable, Stateable {
    typealias State = StackState
 
    // MARK: - View Models
@@ -25,9 +27,14 @@ final class TabBarPanel<Design: DesignProtocol>: BaseViewModel<UIStackView>, Des
    let button4: ButtonModel = BottomPanelVMBuilder<Design>.button
       .set_image(Design.icon.tabBarButton4)
 
+   // MARK: - Private
+
+   private let backImage = TabBarBackImageModel<Design>()
+
    // MARK: - Start
 
    override func start() {
+      set_safeAreaOffsetDisabled()
       set_axis(.horizontal)
          .set_distribution(.equalSpacing)
          .set_alignment(.bottom)
@@ -39,49 +46,42 @@ final class TabBarPanel<Design: DesignProtocol>: BaseViewModel<UIStackView>, Des
             WrappedY(
                buttonMain
             )
-            .set_padding(.verticalShift(8)),
-
+            .set_safeAreaOffsetDisabled()
+            .set_padding(.verticalShift(30.aspectInverted)),
             button3,
             button4,
             Grid.xxx.spacer
          ])
 
-         .set_shadow(.init(
-            radius: 8, color: Design.color.iconContrast, opacity: 0.13
-         ))
-         .set_padding(.verticalShift(-8))
-         .set_height(88 + 16)
-         .set_backImage(Design.icon.bottomPanel, contentMode: .scaleToFill)
+         .set_padding(.verticalShift(16.aspected))
+         .set_height(97.aspected)
+         .set_backViewModel(backImage)
    }
 }
 
 struct BottomPanelVMBuilder<Design: DesignProtocol>: Designable {
    static var mainButton: ButtonModel {
       ButtonModel()
-         .set_image(Design.icon.tabBarMainButton)
-         .set_size(.square(60))
-         .set_shadow(.init(
-            radius: 8,
-            offset: .init(x: 0, y: 10),
-            color: Design.color.iconContrast,
-            opacity: 0.23
-         ))
+         .set_safeAreaOffsetDisabled()
+         //
+         .set_backImage(Design.icon.tabBarMainButton)
+         .set_size(.square(60.aspected))
+         .set_shadow(Design.params.panelMainButtonShadow)
    }
 
    static var button: ButtonModel {
       ButtonModel()
+         .set_safeAreaOffsetDisabled()
+         //
          .set_width(55)
          .set_height(46)
          .set_cornerRadius(16)
          .onModeChanged(\.normal) { button in
+            log("sh")
             button?
                .set_backColor(Design.color.backgroundBrandSecondary)
-               .set_shadow(.init(
-                  radius: 8,
-                  offset: .init(x: 0, y: 10),
-                  color: Design.color.iconContrast,
-                  opacity: 0.23
-               ))
+               .set_shadow(Design.params.panelButtonShadow)
+            button?.uiView.layoutIfNeeded()
          }
          .onModeChanged(\.inactive) { button in
             button?
@@ -89,5 +89,16 @@ struct BottomPanelVMBuilder<Design: DesignProtocol>: Designable {
                .set_shadow(.noShadow)
          }
          .setMode(\.inactive)
+   }
+}
+
+final class TabBarBackImageModel<Design: DSP>: BaseViewModel<PaddingImageView>, Designable, Stateable2 {
+   typealias State = ImageViewState
+   typealias State2 = ViewState
+
+   override func start() {
+      set_image(Design.icon.bottomPanel)
+      set_imageTintColor(Design.color.background)
+      set_shadow(Design.params.panelShadow)
    }
 }

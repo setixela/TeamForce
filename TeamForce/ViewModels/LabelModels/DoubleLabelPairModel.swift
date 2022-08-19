@@ -13,7 +13,7 @@ enum DoubleLabelPairState {
    case rightPair(text1: String, text2: String)
 }
 
-final class DoubleLabelPairModel<Design: DesignProtocol>: BaseViewModel<UIStackView>,
+final class DoubleLabelPairModel<Design: DesignProtocol>: BaseViewModel<StackViewExtended>,
    Designable
 {
    let doubleLabelLeft = DoubleLabelModel<Design>()

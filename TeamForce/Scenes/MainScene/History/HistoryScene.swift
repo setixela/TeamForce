@@ -10,7 +10,7 @@ import UIKit
 
 // MARK: - HistoryScene
 
-final class HistoryScene<Asset: AssetProtocol>: BaseViewModel<UIStackView>,
+final class HistoryScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>,
    Assetable,
    Stateable,
    Scenaryable

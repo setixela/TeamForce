@@ -8,7 +8,20 @@
 import ReactiveWorks
 import UIKit
 
-final class WrappedY<VM: VMP>: BaseViewModel<UIStackView>,
+final class WrappedSubviewY<VM: VMP>: BaseViewModel<StackViewExtended>,
+                               VMWrapper,
+                               Stateable
+{
+   typealias State = StackState
+
+   var subModel: VM = .init()
+
+   override func start() {
+      set_subviewModels([subModel])
+   }
+}
+
+final class WrappedY<VM: VMP>: BaseViewModel<StackViewExtended>,
    VMWrapper,
    Stateable
 {
@@ -23,7 +36,7 @@ final class WrappedY<VM: VMP>: BaseViewModel<UIStackView>,
    }
 }
 
-final class WrappedX<VM: VMP>: BaseViewModel<UIStackView>,
+final class WrappedX<VM: VMP>: BaseViewModel<StackViewExtended>,
    VMWrapper,
    Stateable
 {

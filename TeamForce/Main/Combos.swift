@@ -10,7 +10,7 @@ import UIKit
 
 // MARK: - Right combos
 
-class Combos<S: SCP>: BaseViewModel<UIStackView>
+class Combos<S: SCP>: BaseViewModel<StackViewExtended>
 {
    let models: S = .init()
 

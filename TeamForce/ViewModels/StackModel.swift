@@ -8,7 +8,7 @@
 import ReactiveWorks
 import UIKit
 
-final class StackModel: BaseViewModel<UIStackView> {
+final class StackModel: BaseViewModel<StackViewExtended> {
    override func start() {
       set(.axis(.vertical))
    }
@@ -19,7 +19,7 @@ extension StackModel: Stateable2 {
    typealias State2 = ViewState
 }
 
-extension UIStackView {
+extension StackViewExtended {
    /// Удаляет все subviews
    func removeAllSubviews() {
       let removedSubviews = arrangedSubviews.reduce([]) { subview, next -> [UIView] in

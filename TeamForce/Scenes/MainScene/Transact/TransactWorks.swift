@@ -12,8 +12,7 @@ protocol TransactWorksProtocol: SceneWorks {
    // api works
    var loadBalance: Work<Void, Balance> { get }
    var searchUser: Work<String, [FoundUser]> { get }
-   var sendCoins: Work<(amount: String, reason: String),
-      (recipient: String, info: SendCoinRequest)> { get }
+   var sendCoins: VoidWork<(recipient: String, info: SendCoinRequest)> { get }
    var getUserList: Work<Void, [FoundUser]> { get }
    // data works
    var loadTokens: Work<Void, Void> { get }
@@ -22,6 +21,8 @@ protocol TransactWorksProtocol: SceneWorks {
    // parsing input
    var coinInputParsing: Work<String, String> { get }
    var reasonInputParsing: Work<String, String> { get }
+   //
+   var reset: VoidWork<Void> { get }
 }
 
 // Transact Works - (если нужно хранилище временное, то наследуемся от BaseSceneWorks)
@@ -35,7 +36,7 @@ final class TransactWorks<Asset: AssetProtocol>: BaseSceneWorks<TransactWorks.Te
    // storage
    class Temp: InitProtocol {
       required init() {}
-      
+
       var tokens: (token: String, csrf: String) = ("", "")
       var foundUsers: [FoundUser] = []
       var recipientID = 0
@@ -43,15 +44,12 @@ final class TransactWorks<Asset: AssetProtocol>: BaseSceneWorks<TransactWorks.Te
 
       var inputAmountText = ""
       var inputReasonText = ""
-      
+
       var isCorrectCoinInput = false
       var isCorrectReasonInput = false
    }
 
    // MARK: - Works
-
-   lazy var coinInputParsing = coinInputParser.work
-   lazy var reasonInputParsing = reasonInputParser.work
 
    lazy var loadBalance = apiUseCase.loadBalance.work
 
@@ -91,15 +89,14 @@ final class TransactWorks<Asset: AssetProtocol>: BaseSceneWorks<TransactWorks.Te
          }
    }
 
-   lazy var sendCoins = Work<(amount: String, reason: String),
-      (recipient: String, info: SendCoinRequest)> { [weak self] work in
+   lazy var sendCoins = VoidWork<(recipient: String, info: SendCoinRequest)> { [weak self] work in
 
       let request = SendCoinRequest(
          token: Self.store.tokens.token,
          csrfToken: Self.store.tokens.csrf,
          recipient: Self.store.recipientID,
-         amount: work.unsafeInput.amount,
-         reason: work.unsafeInput.reason
+         amount: Self.store.inputAmountText,
+         reason: Self.store.inputReasonText
       )
 
       self?.apiUseCase.sendCoin.work
@@ -134,4 +131,67 @@ final class TransactWorks<Asset: AssetProtocol>: BaseSceneWorks<TransactWorks.Te
       Self.store.recipientID = user.userId
       work.success(result: user)
    }
+
+   lazy var coinInputParsing = Work<String, String> { [weak self] work in
+      self?.coinInputParser.work
+         .retainBy(self?.retainer)
+         .doAsync(work.input)
+         .onSuccess {
+            Self.store.inputAmountText = $0
+            Self.store.isCorrectCoinInput = true
+            work.success(result: $0)
+         }
+         .onFail { (text: String) in
+            Self.store.inputAmountText = ""
+            Self.store.isCorrectCoinInput = false
+            work.fail(text)
+         }
+   }
+
+   lazy var reasonInputParsing = Work<String, String> { [weak self] work in
+      self?.reasonInputParser.work
+         .retainBy(self?.retainer)
+         .doAsync(work.input)
+         .onSuccess {
+            Self.store.inputReasonText = $0
+            Self.store.isCorrectReasonInput = true
+            work.success(result: $0)
+         }
+         .onFail { (text: String) in
+            Self.store.inputReasonText = ""
+            Self.store.isCorrectReasonInput = false
+            work.fail(text)
+         }
+   }
+
+   lazy var reset = VoidWork<Void> { [weak self] work in
+      Self.store.inputReasonText = ""
+      Self.store.inputReasonText = ""
+      Self.store.isCorrectCoinInput = false
+      Self.store.isCorrectReasonInput = false
+      work.success(result: ())
+   }
+   
+   lazy var updateAmount = Work<(String, Bool), Void> { [weak self] work in
+      guard let input = work.input else { return }
+      Self.store.inputAmountText = input.0
+      Self.store.isCorrectCoinInput = input.1
+      work.success(result: ())
+   }
+   
+   lazy var updateReason = Work<(String, Bool), Void> { [weak self] work in
+      guard let input = work.input else { return }
+      Self.store.inputReasonText = input.0
+      Self.store.isCorrectReasonInput = input.1
+      work.success(result: ())
+   }
+   
+   lazy var isCorrect = Work<Void, Bool> { [weak self] work in
+      if Self.store.isCorrectReasonInput && Self.store.isCorrectCoinInput {
+         work.success(result: true)
+      } else {
+         work.fail(false)
+      }
+   }
 }
+

@@ -12,7 +12,7 @@ struct SideBarUserModelEvent: InitProtocol {
    var didTap: Event<Void>?
 }
 
-final class SideBarUserModel<Design: DesignProtocol>: BaseViewModel<UIStackView>,
+final class SideBarUserModel<Design: DesignProtocol>: BaseViewModel<StackViewExtended>,
    Communicable,
    Stateable2,
    Designable

@@ -6,10 +6,35 @@
 //
 
 import ReactiveWorks
+import Foundation
+import UIKit
 
 struct Config {
    static let isDebug = false
    static let startDebugScene: KeyPath<ProductionAsset.Scene, SceneModelProtocol> = \.login
 
    static let isDebugView = true
+
+   static let baseAspectWidth: CGFloat = 360
+   static var sizeAspectCoeficient: CGFloat { UIScreen.main.bounds.width / baseAspectWidth }
+}
+
+extension CGFloat {
+   var aspected: CGFloat {
+      self * Config.sizeAspectCoeficient
+   }
+
+   var aspectInverted: CGFloat {
+      CGFloat(self) / Config.sizeAspectCoeficient
+   }
+}
+
+extension Int {
+   var aspected: CGFloat {
+      CGFloat(self) * Config.sizeAspectCoeficient
+   }
+
+   var aspectInverted: CGFloat {
+      CGFloat(self) / Config.sizeAspectCoeficient
+   }
 }
