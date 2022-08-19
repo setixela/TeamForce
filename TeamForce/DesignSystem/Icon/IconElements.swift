@@ -23,6 +23,7 @@ protocol IconElements: InitProtocol, DesignElementable where DesignElement == UI
    // other
    var checkCircle: DesignElement { get }
    var coinLine: DesignElement { get }
+   var coinBackground: DesignElement { get }
    var historyLine: DesignElement { get }
    var upload2Fill: DesignElement { get }
    var calendarLine: DesignElement { get }

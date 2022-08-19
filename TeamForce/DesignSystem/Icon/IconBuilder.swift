@@ -27,6 +27,8 @@ struct IconBuilder: IconElements {
    // other
    var upload2Fill: UIImage { make("upload-2-fill") }
    var coinLine: UIImage { make("coin-line") }
+   var coinBackground: DesignElement { make("coin-background") }
+
    var historyLine: UIImage { make("history-line") }
    var checkCircle: UIImage { make("check_circle_24px") }
    var calendarLine: UIImage { make("calendar-line") }

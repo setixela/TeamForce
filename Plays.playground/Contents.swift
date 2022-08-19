@@ -9,7 +9,7 @@ func example(_ name: String = "", action: () -> Void) {
    action()
 }
 
-if true {
+if false {
    let nc = UINavigationController()
    nc.view.frame = CGRect(x: 0, y: 0, width: 360, height: 640)
    PlaygroundPage.current.liveView = nc
@@ -171,116 +171,233 @@ final class TabBarBackImageModel<Design: DSP>: BaseViewModel<PaddingImageView>, 
 
 // MARK: - View Models --------------------------------------------------------------
 
-final class TripleStacksBrandedVM<Design: DesignProtocol>:
-   Combos<SComboMDD<StackModel, WrappedY<StackModel>, WrappedSubviewY<TabBarPanel<Design>>>>,
-   Designable
-{
-   lazy var header = Design.label.headline5
-      .set_color(Design.color.textInvert)
+protocol StateProtocol {}
+struct Grouper<T> {
 
-   var headerStack: StackModel { models.main }
-   var bodyStack: StackModel { models.down.subModel }
-   var footerStack: TabBarPanel<Design> { models.down2.subModel }
+   @discardableResult
+   func set(_ value: T) -> Self {
+      return self
+   }
 
-   required init() {
-      super.init()
-
-      setMain {
-         $0
-            .set(Design.state.stack.header)
-            .set_alignment(.leading)
-            .set_models([
-               Grid.x1.spacer,
-               BrandLogoIcon<Design>(),
-               Grid.x16.spacer,
-               header,
-               Grid.x36.spacer
-            ])
-      } setDown: {
-         $0
-            .set_backColor(Design.color.background)
-            .set_padding(.top(-Grid.x16.value))
-            .set_padBottom(-88)
-            .subModel
-            .set(Design.state.stack.bodyStack)
-      } setDown2: { _ in }
+   var next: T.Type {
+      return T.self
    }
 }
 
-// MARK: - -----------------
+extension StateProtocol {
+   static func group(@TestBuilder _ content: () -> [Self]) ->  [Self] {
+      content()
+   }
 
-final class TabBarPanel<Design: DesignProtocol>: BaseViewModel<StackViewExtended>, Designable, Stateable {
-   typealias State = StackState
+  // private static var group: [Self] = []
+//   static var group: Grouper<Self> {
+//      return Grouper<Self>()
+//   }
 
-   // MARK: - View Models
+   static var next: Self.Type {
+//      let arr = [Self]()
+//
+//      let
+      Self.self
+   }
 
-   let button1: ButtonModel = BottomPanelVMBuilder<Design>.button
-      .set_image(Design.icon.tabBarButton1)
-   let button2: ButtonModel = BottomPanelVMBuilder<Design>.button
-      .set_image(Design.icon.tabBarButton2)
+   var next: Self.Type {
+    //  let key = self.hashValue
+      Self.self
+   }
 
-   let buttonMain: ButtonModel = BottomPanelVMBuilder<Design>.mainButton
+//   func finishGroup() -> [Self] {
+//      let result = group
+//      return group
+//   }
+}
 
-   let button3: ButtonModel = BottomPanelVMBuilder<Design>.button
-      .set_image(Design.icon.tabBarButton3)
-   let button4: ButtonModel = BottomPanelVMBuilder<Design>.button
-      .set_image(Design.icon.tabBarButton4)
+protocol HashableExtra: Hashable {}
 
-   // MARK: - Private
+extension HashableExtra {
 
-   private let backImage = TabBarBackImageModel<Design>()
+   var caseName: String {
+      Mirror(reflecting: self).children.first?.label ?? String(describing: self)
+   }
 
-   // MARK: - Start
-
-   override func start() {
-      set_axis(.horizontal)
-         .set_distribution(.equalSpacing)
-         .set_alignment(.bottom)
-         .set_models([
-            Grid.xxx.spacer,
-            button1,
-            button2,
-
-            WrappedY(
-               buttonMain
-            )
-            .set_padding(.verticalShift(30)),
-            button3,
-            button4,
-            Grid.xxx.spacer
-         ])
-
-         .set_padding(.verticalShift(11))
-         .set_height(97)
-         .set_backViewModel(backImage)
+   func hash(into hasher: inout Hasher) {
+      hasher.combine(caseName)
    }
 }
 
-struct BottomPanelVMBuilder<Design: DesignProtocol>: Designable {
-   static var mainButton: ButtonModel {
-      ButtonModel()
-         .set_image(Design.icon.tabBarMainButton)
-         .set_size(.square(60))
-         .set_shadow(Design.params.panelMainButtonShadow)
-   }
-
-   static var button: ButtonModel {
-      ButtonModel()
-         .set_width(55)
-         .set_height(46)
-         .set_cornerRadius(16)
-         .onModeChanged(\.normal) { button in
-            log("sh")
-            button?
-               .set_backColor(Design.color.backgroundBrandSecondary)
-               .set_shadow(Design.params.panelButtonShadow)
-            button?.uiView.layoutIfNeeded()
-         }
-         .onModeChanged(\.inactive) { button in
-            button?
-               .set_backColor(Design.color.transparent)
-               .set_shadow(.noShadow)
-         }
-         .setMode(\.inactive)
+extension HashableExtra {
+   static func == (lhs: Self, rhs: Self) -> Bool {
+      lhs.hashValue == rhs.hashValue
    }
 }
+//StackState
+//   .next.alignment(.center)
+//   .next.distribution(.fill)
+//   .next.axis(.vertical)
+//   .next.distribution(.fill)
+//   .next.axis(.vertical)
+//   .finishGroup()
+
+@resultBuilder
+struct TestBuilder {
+   static func buildBlock(_ components: StateProtocol...) -> [StateProtocol] {
+      return components
+   }
+
+}
+
+func build(@TestBuilder _ content: () -> [StateProtocol]) -> [StateProtocol] {
+   content()
+}
+
+@resultBuilder
+struct TestBuilderConcrete {
+   static func buildBlock(_ components: StackState...) -> [StackState] {
+      return components
+   }
+}
+
+func buildConcret(@TestBuilderConcrete _ content: () -> [StackState]) -> [StackState] {
+   content()
+}
+
+//func text(_ value: StackState) -> StackState {
+//   return value
+//}
+
+protocol InitNoname: InitProtocol {
+   associatedtype T
+
+   var value: T { get set }
+}
+
+extension InitNoname {
+
+   init(_ value: T) {
+      self.init()
+      self.value = value
+   }
+}
+
+struct text: StateProtocol, InitNoname {
+   var value: String = "" // default
+}
+
+struct align: StateProtocol, InitNoname {
+   var value: UIStackView.Alignment = .center // default
+}
+
+let value = build {
+   text("hello")
+   align(.center)
+}
+
+
+
+StackState.distribution(.fill)
+StackState.axis(.vertical)
+StackState.distribution(.fill)
+
+
+//StackState.group
+//   .set(.height(10))
+//   .set(.distribution(.fill))
+//   .set(.axis(.vertical))
+//   .set(.distribution(.fill))
+//   .set(.axis(.vertical))
+//
+print(value)
+
+//
+
+enum StackState: StateProtocol, HashableExtra {
+   case distribution(StackViewExtended.Distribution)
+   case axis(NSLayoutConstraint.Axis)
+   case spacing(CGFloat)
+   case alignment(StackViewExtended.Alignment)
+   case padding(UIEdgeInsets)
+   case backColor(UIColor)
+   case cornerRadius(CGFloat)
+   case borderWidth(CGFloat)
+   case borderColor(UIColor)
+   case height(CGFloat)
+   case models([UIViewModel])
+   case hidden(Bool)
+   case backView(UIView, inset: UIEdgeInsets = .zero)
+   case backImage(UIImage)
+   case backViewModel(UIViewModel, inset: UIEdgeInsets = .zero)
+   case shadow(Shadow)
+}
+
+enum LabelState: StateProtocol, HashableExtra {
+   case text(String)
+   case font(UIFont)
+   case color(UIColor)
+   case numberOfLines(Int)
+   case alignment(NSTextAlignment)
+   // Padding
+   case padding(UIEdgeInsets)
+   case padLeft(CGFloat)
+   case padRight(CGFloat)
+   case padUp(CGFloat)
+   case padBottom(CGFloat)
+}
+
+protocol Params {}
+
+example {
+
+   enum ParamsA: Params {
+      case param1
+      case param2
+   }
+
+   func makeParams() -> Params {
+      ParamsA.param1
+   }
+
+   let params = makeParams()
+
+   log(params)
+
+   func makeSomeParams() -> Params {
+      ParamsA.param1
+   }
+
+   func makeInt() -> some Equatable {
+      10
+   }
+}
+
+
+public typealias InitHashable = Hashable & InitProtocol
+
+enum UnsafeHashableTemper {
+   private static var storage: [Int: Any] = [:]
+
+   @discardableResult
+   static func initStore<T: InitHashable>(for key: Int) -> T {
+      let new = T.init()
+
+      DispatchQueue.main.async {
+         storage[key] = new
+      }
+
+      return new
+   }
+
+   static func store<T: InitHashable>(for key: Int) -> T {
+
+      guard let value = storage[key] as? T else {
+         fatalError()
+      }
+
+      return value
+   }
+
+   static func clearStore(for key: Int) {
+      storage[key] = nil
+   }
+}
+
+let asdas = ["a","N"].hashValue
