@@ -118,6 +118,8 @@ final class TransactScenario<Asset: AssetProtocol>:
       events.sendButtonEvent
          .doNext(work: self.works.sendCoins)
          .onSuccess { tuple in
+            self.works.reset
+               .doAsync()
             stateMachineFunc(.sendCoinSuccess(tuple))
          }
          .onFail {
@@ -126,20 +128,48 @@ final class TransactScenario<Asset: AssetProtocol>:
       
       events.transactInputChanged
          .doNext(work: works.coinInputParsing)
-         .onSuccess {
-            stateMachineFunc(.coinInputSuccess($0, true))
+         .onSuccess { text in
+            self.works.updateAmount
+               .doAsync((text, true))
+            
+            self.works.isCorrect
+               .doAsync()
+               .onSuccess {
+                  stateMachineFunc(.coinInputSuccess(text, $0))
+               }
+               .onFail {
+                  stateMachineFunc(.coinInputSuccess(text, $0))
+               }
          }
          .onFail { (text: String) in
-            stateMachineFunc(.coinInputSuccess(text, false))
+            self.works.updateAmount
+               .doAsync((text, false))
+               .onSuccess {
+                  stateMachineFunc(.coinInputSuccess(text, false))
+               }
          }
 
       events.reasonInputChanged
          .doNext(work: works.reasonInputParsing)
-         .onSuccess {
-            stateMachineFunc(.reasonInputSuccess($0, true))
+         .onSuccess { text in
+            self.works.updateReason
+               .doAsync((text, true))
+            
+            self.works.isCorrect
+               .doAsync()
+               .onSuccess {
+                  stateMachineFunc(.reasonInputSuccess(text, $0))
+               }
+               .onFail {
+                  stateMachineFunc(.reasonInputSuccess(text, $0))
+               }
          }
          .onFail { (text: String) in
-            stateMachineFunc(.reasonInputSuccess(text, false))
+            self.works.updateReason
+               .doAsync((text, false))
+               .onSuccess {
+                  stateMachineFunc(.reasonInputSuccess(text, false))
+               }
          }
    }
 }
