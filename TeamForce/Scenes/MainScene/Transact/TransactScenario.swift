@@ -123,7 +123,7 @@ final class TransactScenario<Asset: AssetProtocol>:
          .onFail {
             stateMachineFunc(.sendCoinError)
          }
-      
+
       events.transactInputChanged
          .doNext(work: works.coinInputParsing)
          .onSuccess {

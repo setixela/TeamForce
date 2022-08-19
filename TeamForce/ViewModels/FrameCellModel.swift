@@ -38,6 +38,10 @@ final class FrameCellModel<Design: DesignProtocol>: BaseViewModel<StackViewExten
          Spacer(54),
          captionLabel
       ]))
+      set_backViewModel(ImageViewModel()
+         .set_image(Design.icon.coinBackground)
+         .set_padding(.horizontalShift(40))
+      )
    }
 }
 

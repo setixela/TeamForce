@@ -44,7 +44,6 @@ final class TransactScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended
       set_alignment(.fill)
       set_spacing(8)
       set_models([
-         viewModels.digitalThanksTitle,
          viewModels.userSearchTextField,
          viewModels.transactInputViewModel,
          viewModels.reasonTextView,
