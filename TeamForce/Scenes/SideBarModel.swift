@@ -56,7 +56,7 @@ final class SideBarModel<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>
       set_axis(.vertical)
          .set_distribution(.fill)
          .set_alignment(.leading)
-         .set_models([
+         .set_arrangedModels([
             userModel,
             item1,
             item2,

@@ -46,7 +46,7 @@ private extension LoginScene {
       mainVM.header
          .set_text(Design.Text.title.autorisation)
       mainVM.bottomSubStack
-         .set_models([
+         .set_arrangedModels([
             viewModels.userNameInputModel,
             viewModels.smsCodeInputModel,
             viewModels.getCodeButton,

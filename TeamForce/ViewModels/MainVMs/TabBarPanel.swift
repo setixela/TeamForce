@@ -38,7 +38,7 @@ final class TabBarPanel<Design: DesignProtocol>: BaseViewModel<StackViewExtended
       set_axis(.horizontal)
          .set_distribution(.equalSpacing)
          .set_alignment(.bottom)
-         .set_models([
+         .set_arrangedModels([
             Grid.xxx.spacer,
             button1,
             button2,

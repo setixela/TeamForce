@@ -29,7 +29,7 @@ final class TripleStacksBrandedVM<Design: DesignProtocol>:
          $0
             .set(Design.state.stack.header)
             .set_alignment(.leading)
-            .set_models([
+            .set_arrangedModels([
                Grid.x1.spacer,
                BrandLogoIcon<Design>(),
                Grid.x16.spacer,

@@ -71,4 +71,10 @@ final class ButtonExtended: UIButton {
       self.imageEdgeInsets = UIEdgeInsets(top: -(titleSize.height + spacing), left: 0, bottom: 0, right: -titleSize.width)
       self.titleEdgeInsets = UIEdgeInsets(top: 0, left: -imageSize.width, bottom: -(imageSize.height + spacing), right: 0)
    }
+
+//   override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
+//      return bounds.insetBy(dx: -10, dy: -10).contains(point)
+//   }
+
+   // or so: button.contentEdgeInsets = UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 16)
 }
