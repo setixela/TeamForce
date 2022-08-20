@@ -25,7 +25,8 @@ class Combos<S: SCP>: BaseViewModel<StackViewExtended>
    }
 }
 
-extension Combos: Stateable {
+extension Combos: Stateable
+{
    typealias State = StackState
 }
 
@@ -66,6 +67,20 @@ extension Combos
       setMain(models.main)
       setRight(models.right)
       setRight2(models.right2)
+      if !isConfigured
+      {
+         configure()
+         isConfigured = true
+      }
+      return self
+   }
+
+   // Test set all version
+   @discardableResult func setAll<M, R, R2>(
+      _ setAll: VariadicClosure3<M, R, R2>) -> Self where S == SComboMRR<M, R, R2>
+   {
+      setAll(models.main, models.right, models.right2)
+
       if !isConfigured
       {
          configure()
@@ -170,6 +185,17 @@ extension Combos
    {
       setMain(models.main)
       setDown(models.down)
+      if !isConfigured
+      {
+         configure()
+         isConfigured = true
+      }
+      return self
+   }
+
+   @discardableResult func setAll<M, D>(_ setAll: VariadicClosure2<M, D>) -> Self where S == SComboMD<M, D>
+   {
+      setAll(models.main, models.down)
       if !isConfigured
       {
          configure()

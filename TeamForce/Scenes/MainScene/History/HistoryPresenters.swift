@@ -9,46 +9,11 @@ import ReactiveWorks
 import UIKit
 
 struct HistoryPresenters<Design: DesignProtocol>: Designable {
-   static var transactToIconSubtitle: Presenter<TransactionItem, IconTitleSubtitleModel> {
-      Presenter { work in
-
-         let item = work.unsafeInput
-
-         var rightText: String
-         var downText: String
-         var image: UIImage
-
-         switch item.state {
-         case .recieved:
-            rightText = "Перевод от " + item.sender.senderTgName
-            downText = item.amount
-            image = Design.icon.recieveCoinIcon
-         default:
-            rightText = "Перевод для " + item.recipient.recipientTgName
-            downText = "+" + item.amount
-            image = Design.icon.sendCoinIcon
-         }
-
-         let cell = IconTitleSubtitleModel(isAutoreleaseView: true)
-            .set(.image(image))
-            .set(.padding(.outline(10)))
-            .set(.size(.init(width: 64, height: 64)))
-            .setRight {
-               $0
-                  .set(.text(rightText))
-                  .setDown {
-                     $0.set(.text(downText))
-                  }
-            }
-         work.success(result: cell)
-      }
-   }
-
    static var transactToHistoryCell: Presenter<TransactionItem, HistoryCellModel<Design>> {
       Presenter { work in
          let item = work.unsafeInput
 
-         var userName: String
+         var userNameText: String
          var statusHidden: Bool
          var statusText: String
          var statusColor: UIColor
@@ -57,14 +22,14 @@ struct HistoryPresenters<Design: DesignProtocol>: Designable {
 
          switch item.state {
          case .recieved:
-            userName = item.sender.senderTgName
+            userNameText = item.sender.senderTgName
             statusText = ""
             sumText = "+" + item.amount
             statusColor = .clear
             statusHidden = true
             image = Design.icon.recieveCoinIcon
          default:
-            userName = item.recipient.recipientTgName
+            userNameText = item.recipient.recipientTgName
             statusText = "   Выполнен   "
             sumText = "-" + item.amount
             statusColor = Design.color.success
@@ -73,37 +38,37 @@ struct HistoryPresenters<Design: DesignProtocol>: Designable {
          }
 
          let cell = HistoryCellModel<Design>()
-            .setMain { _ in
+            .setAll { _, userAndStatus, sumLabelAndCancelButton in
+               userAndStatus
+                  .set_padLeft(18)
+                  .set_alignment(.leading)
+                  .setAll { userLabel, statusLabel in
+                     userLabel
+                        .set_text(userNameText)
 
-            } setRight: {
-               $0
-                  .setMain { model in
-                     model
-                        .set_text(userName)
-                  } setDown: { model in
                      guard statusHidden == false else {
-                        model.set_hidden(true)
+                        statusLabel.set_hidden(true)
                         return
                      }
 
-                     model
+                     statusLabel
                         .set_text(statusText)
                         .set_backColor(statusColor)
                         .set_hidden(false)
                   }
 
-            } setRight2: {
-               $0
-                  .setMain { model in
-                     model
-                        .set_text(sumText + "   ")
-                  } setDown: { model in
+               sumLabelAndCancelButton
+                  .set_alignment(.trailing)
+                  .setAll { sumLabel, cancelButton in
+                     sumLabel
+                        .set_text(sumText)
+
                      guard item.state != .recieved else {
-                        model.set_hidden(true)
+                        cancelButton.set_hidden(true)
                         return
                      }
 
-                     model
+                     cancelButton
                         .set_image(Design.icon.cross)
                         .set_imageTintColor(Design.color.textError)
                         .set_hidden(false)

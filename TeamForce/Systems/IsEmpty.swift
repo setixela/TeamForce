@@ -17,7 +17,7 @@ final class IsEmpty<T: Collection>: UseCaseProtocol {
          if $0.unsafeInput.isEmpty {
             $0.success(result: $0.unsafeInput)
          } else {
-            $0.failThenNext($0.unsafeInput)
+            $0.fail($0.unsafeInput)
          }
       }
    }
@@ -32,7 +32,7 @@ final class IsNotEmpty<T: Collection>: UseCaseProtocol {
          if !$0.unsafeInput.isEmpty {
             $0.success(result: $0.unsafeInput)
          } else {
-            $0.failThenNext($0.unsafeInput)
+            $0.fail($0.unsafeInput)
          }
       }
    }

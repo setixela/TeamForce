@@ -16,41 +16,33 @@ final class HistoryCellModel<Design: DSP>:
 
       set_alignment(.center)
       set_padding(.init(top: 23, left: 16, bottom: 23, right: 16))
-      setMain {
-         $0
+      setAll { icon, nameStatus, summa in
+         icon
             .set_image(Design.icon.avatarPlaceholder)
             .set_size(.square(52))
-      } setRight: {
-         $0
+         nameStatus
             .set_padLeft(18)
             .set_alignment(.leading)
-            .setMain {
-               $0
-                  .set_text("Hello")
+            .setAll { username, status in
+               username
                   .set_padBottom(10)
                   .set_font(Design.font.body1)
                   .set_alignment(.left)
-            } setDown: {
-               $0
+               status
                   .set_color(Design.color.textInvert)
                   .set_alignment(.left)
                   .set_height(Design.params.cornerRadiusSmall * 2)
-                  .set_shadow(Shadow())
                   .set_cornerRadius(Design.params.cornerRadiusSmall)
             }
-      } setRight2: {
-         $0
+         summa
             .set_alignment(.trailing)
-            .setMain {
-               $0
+            .setAll { sumText, cancelButton in
+               sumText
                   .set_font(Design.font.body3)
                   .set_alignment(.right)
-
-            } setDown: {
-               $0
+               cancelButton
                   .set_size(.square(32))
             }
       }
    }
 }
-

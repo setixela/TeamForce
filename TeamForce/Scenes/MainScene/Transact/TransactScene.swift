@@ -23,7 +23,7 @@ final class TransactScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended
       works: TransactWorks<Asset>(),
       stateDelegate: stateDelegate,
       events: TransactScenarioEvents(
-         userSearchTFBeginEditing: viewModels.userSearchTextField.onEvent(\.didBeginEditing),
+         userSearchTXTFLDBeginEditing: viewModels.userSearchTextField.onEvent(\.didBeginEditing),
          userSearchTFDidEditingChanged: viewModels.userSearchTextField.onEvent(\.didEditingChanged),
          userSelected: viewModels.tableModel.onEvent(\.didSelectRow),
          sendButtonEvent: viewModels.sendButton.onEvent(\.didTap),
@@ -99,7 +99,7 @@ extension TransactScene: SceneStateProtocol {
          presentFoundUsers(users: users)
       case .loadUsersListError:
          viewModels.tableModel.set_hidden(true)
-      case .searchTextFieldBeginEditing(let users):
+      case .presentFoundUser(let users):
          viewModels.tableModel.set_hidden(true)
          presentFoundUsers(users: users)
       case .emptyUserSearchTF(let users):

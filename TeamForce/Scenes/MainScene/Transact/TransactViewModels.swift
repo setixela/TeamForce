@@ -7,18 +7,6 @@
 import ReactiveWorks
 import UIKit
 
-enum TransactSceneState {
-   //
-   case inputUserName
-   case inputSmsCode
-   //
-   case nameInputParseSuccess(String)
-   case nameInputParseError(String)
-   //
-   case smsInputParseSuccess(String)
-   case smsInputParseError(String)
-}
-
 // MARK: - View models
 
 final class TransactViewModels<Asset: AssetProtocol>: Assetable {
