@@ -21,6 +21,7 @@ final class TransactScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended
 
    lazy var scenario = TransactScenario(
       works: TransactWorks<Asset>(),
+      stateDelegate: stateDelegate,
       events: TransactScenarioEvents(
          userSearchTFBeginEditing: viewModels.userSearchTextField.onEvent(\.didBeginEditing),
          userSearchTFDidEditingChanged: viewModels.userSearchTextField.onEvent(\.didEditingChanged),
@@ -36,11 +37,10 @@ final class TransactScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended
    override func start() {
       configure()
 
-      var fun = setState
       view
          .onEvent(\.willAppear) { [weak self] in
             self?.setToInitialCondition()
-            self?.scenario.start(setState: fun)
+            self?.scenario.start()
          }
    }
 

@@ -18,26 +18,29 @@ protocol Scenario {
    associatedtype Events
    associatedtype State
 
-   init(works: Works, events: Events)
+   init(works: Works, stateDelegate: ((State) -> Void)?, events: Events)
 
    var events: Events { get }
+   var setState: (State) -> Void { get set }
 
-   func start(setState: @escaping (State) -> Void)
+   func start()
 }
 
 class BaseScenario<Events, State, Works: SceneWorks>: BaseModel, Scenario {
    var works: Works
    var events: Events
+   var setState: (State) -> Void = {  _ in log("fuck") }
 
-   required init(works: Works, events: Events) {
+   required init(works: Works, stateDelegate: ((State) -> Void)? = nil, events: Events) {
       self.events = events
       self.works = works
+      if let setStateFunc = stateDelegate {
+         setState = setStateFunc
+      }
    }
 
    required init() {
       fatalError("init() has not been implemented")
    }
-
-   open func start(setState: @escaping (State) -> Void) {   }
 }
 

@@ -10,20 +10,18 @@ import Foundation
 protocol SceneStateProtocol: AnyObject {
    associatedtype SceneState
 
-
-   
    func setState(_ state: SceneState)
-   
 }
 
 extension SceneStateProtocol {
 
-   typealias StateFunc = (SceneState) -> Void
+   var stateDelegate: (SceneState) -> Void {
 
-   var setStateFunc: StateFunc? {
-      weak var slf = self
+      let fun: (SceneState) -> Void = { [weak self] in
+         self?.setState($0)
+      }
 
-      return slf?.setState
+      return fun
    }
 }
 

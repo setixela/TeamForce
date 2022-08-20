@@ -17,11 +17,13 @@ class HistoryMemoryLeakTests: XCTestCase {
 
       weak var weakScene = scene
       weak var weakView: UIView? = scene?.uiView
+      weak var weakWorks = weakScene?.scenario.works
 
       scene = nil
 
       XCTAssertNil(weakScene)
       XCTAssertNil(weakView)
+      XCTAssertNil(weakWorks)
    }
 
    func testWorksMemoryLeaks() throws {
@@ -56,9 +58,14 @@ class TransactMemoryLeakTests: XCTestCase {
       var scene: TransactScene? = TransactScene<ProductionAsset>()
 
       weak var weakScene = scene
+      weak var weakView: UIView? = scene?.uiView
+      weak var weakWorks = weakScene?.scenario.works
+
       scene = nil
 
       XCTAssertNil(weakScene)
+      XCTAssertNil(weakView)
+      XCTAssertNil(weakWorks)
    }
 
    func testViewMemoryLeaks() throws {
@@ -93,9 +100,11 @@ class TransactMemoryLeakTests: XCTestCase {
       )
 
       weak var weakScenario = scenario
+      weak var weakWorks = weakScenario?.works
       scenario = nil
 
       XCTAssertNil(weakScenario)
+      XCTAssertNil(weakWorks)
    }
 
    func testModelMemoryLeak() {

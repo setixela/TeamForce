@@ -15,26 +15,28 @@ struct HistoryScenarioEvents {
 final class HistoryScenario<Asset: AssetProtocol>:
    BaseScenario<HistoryScenarioEvents, HistoryState, HistoryWorks<Asset>>
 {
-   override func start(setState: @escaping (HistoryState) -> Void) {
+   override func start() {
+      weak var slf = self
+
       works.loadProfile
          .doAsync()
          .onFail {
-            setState(.loadProfilError)
+            slf?.setState(.loadProfilError)
          }
          .doNext(work: works.getTransactions)
          .onFail {
-            setState(.loadTransactionsError)
+            slf?.setState(.loadTransactionsError)
          }
          .doInput(0)
          .doNext(work: works.filterTransactions)
          .onSuccess {
-            setState(.present($0))
+            slf?.setState(.present($0))
          }
 
       events.segmentContorlEvent
          .doNext(work: works.filterTransactions)
          .onSuccess {
-            setState(.present($0))
+            slf?.setState(.present($0))
          }
    }
 }

@@ -21,6 +21,7 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
 
    lazy var scenario = LoginScenario(
       works: LoginBackstage<Asset>(),
+      stateDelegate: viewModels.setState,
       events: LoginScenarioEvents(
          userNameStringEvent: viewModels.userNameInputModel.textField.onEvent(\.didEditingChanged),
          smsCodeStringEvent: viewModels.smsCodeInputModel.textField.onEvent(\.didEditingChanged),
@@ -35,7 +36,7 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
       configure()
 
       viewModels.setState(.inputUserName)
-      scenario.start(setState: viewModels.setState)
+      scenario.start()
    }
 }
 

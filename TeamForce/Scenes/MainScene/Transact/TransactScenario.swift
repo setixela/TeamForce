@@ -49,61 +49,63 @@ enum TransactState {
 final class TransactScenario<Asset: AssetProtocol>:
    BaseScenario<TransactScenarioEvents, TransactState, TransactWorks<Asset>>
 {
-   override func start(setState: @escaping (TransactState) -> Void) {
+   override func start() {
+      weak var slf = self
+
       works.loadTokens
          .doAsync()
          .onSuccess {
-            setState(.loadTokensSuccess)
+            slf?.setState(.loadTokensSuccess)
          }
          .onFail {
-            setState(.loadTokensError)
+            slf?.setState(.loadTokensError)
          }
          // then load balance
          .doNext(work: works.loadBalance)
          .onSuccess {
-            setState(.loadBalanceSuccess($0.distr.amount))
+            slf?.setState(.loadBalanceSuccess($0.distr.amount))
          }
          .onFail {
-            setState(.loadBalanceError)
+            slf?.setState(.loadBalanceError)
          }
          // then break data
          .doInput(())
          // then load 10 user list
          .doNext(work: works.getUserList)
          .onSuccess {
-            setState(.loadUsersListSuccess($0))
+            slf?.setState(.loadUsersListSuccess($0))
          }
          .onFail {
-            setState(.loadUsersListError)
+            slf?.setState(.loadUsersListError)
          }
 
       // load tokens, then load balance, then load 10 user list
       events.userSearchTFBeginEditing
          .doNext(usecase: IsEmpty())
          .onSuccess {
-            self.works.getUserList
+            slf?.works.getUserList
                .doAsync()
                .onSuccess {
-                  setState(.searchTextFieldBeginEditing($0))
+                  slf?.setState(.searchTextFieldBeginEditing($0))
                }
          }
 
       // on input event, then check input is not empty, then search user
       events.userSearchTFDidEditingChanged
          .onSuccess {
-            setState(.userSearchTFDidEditingChangedSuccess)
+            slf?.setState(.userSearchTFDidEditingChangedSuccess)
          }
          .doNext(usecase: IsEmpty())
          .onSuccess {
-            self.works.getUserList
+            slf?.works.getUserList
                .doAsync()
                .onSuccess {
-                  setState(.emptyUserSearchTF($0))
+                  slf?.setState(.emptyUserSearchTF($0))
                }
          }
          .doNext(work: works.searchUser)
          .onSuccess {
-            setState(.listOfFoundUsers($0))
+            slf?.setState(.listOfFoundUsers($0))
          }
          .onFail {
             print("Search user API Error")
@@ -112,63 +114,63 @@ final class TransactScenario<Asset: AssetProtocol>:
       events.userSelected
          .doNext(work: works.mapIndexToUser)
          .onSuccess {
-            setState(.userSelectedSuccess($0))
+            slf?.setState(.userSelectedSuccess($0))
          }
 
       events.sendButtonEvent
-         .doNext(work: self.works.sendCoins)
+         .doNext(work: works.sendCoins)
          .onSuccess { tuple in
-            self.works.reset
+            slf?.works.reset
                .doAsync()
-            setState(.sendCoinSuccess(tuple))
+            slf?.setState(.sendCoinSuccess(tuple))
          }
          .onFail {
-            setState(.sendCoinError)
+            slf?.setState(.sendCoinError)
          }
 
       events.transactInputChanged
          .doNext(work: works.coinInputParsing)
          .onSuccess { text in
-            self.works.updateAmount
+            slf?.works.updateAmount
                .doAsync((text, true))
             
-            self.works.isCorrect
+            slf?.works.isCorrect
                .doAsync()
                .onSuccess {
-                  setState(.coinInputSuccess(text, $0))
+                  slf?.setState(.coinInputSuccess(text, $0))
                }
                .onFail {
-                  setState(.coinInputSuccess(text, $0))
+                  slf?.setState(.coinInputSuccess(text, $0))
                }
          }
          .onFail { (text: String) in
-            self.works.updateAmount
+            slf?.works.updateAmount
                .doAsync((text, false))
                .onSuccess {
-                  setState(.coinInputSuccess(text, false))
+                  slf?.setState(.coinInputSuccess(text, false))
                }
          }
 
       events.reasonInputChanged
          .doNext(work: works.reasonInputParsing)
          .onSuccess { text in
-            self.works.updateReason
+            slf?.works.updateReason
                .doAsync((text, true))
             
-            self.works.isCorrect
+            slf?.works.isCorrect
                .doAsync()
                .onSuccess {
-                  setState(.reasonInputSuccess(text, $0))
+                  slf?.setState(.reasonInputSuccess(text, $0))
                }
                .onFail {
-                  setState(.reasonInputSuccess(text, $0))
+                  slf?.setState(.reasonInputSuccess(text, $0))
                }
          }
          .onFail { (text: String) in
-            self.works.updateReason
+            slf?.works.updateReason
                .doAsync((text, false))
                .onSuccess {
-                  setState(.reasonInputSuccess(text, false))
+                  slf?.setState(.reasonInputSuccess(text, false))
                }
          }
    }

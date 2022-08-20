@@ -22,6 +22,7 @@ final class HistoryScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>
 
    lazy var scenario = HistoryScenario(
       works: HistoryWorks<Asset>(),
+      stateDelegate: stateDelegate,
       events: HistoryScenarioEvents(
          segmentContorlEvent: viewModels.segmentedControl.onEvent(\.segmentChanged)
       )
@@ -32,7 +33,7 @@ final class HistoryScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>
    override func start() {
       configure()
 
-      scenario.start(setState: setStateFunc)
+      scenario.start()
 
       viewModels.tableModel
          .set(.presenters([

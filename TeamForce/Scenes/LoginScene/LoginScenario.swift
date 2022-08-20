@@ -23,8 +23,8 @@ final class LoginScenario<Asset: AssetProtocol>:
       LoginBackstage<Asset>
    >
 {
-   override func start(setState: @escaping (LoginSceneState) -> Void) {
-      let works = works
+   override func start() {
+      weak var slf = self
 
       // setup input field reactions
       events.userNameStringEvent
@@ -33,20 +33,20 @@ final class LoginScenario<Asset: AssetProtocol>:
          }
          .doNext(work: works.loginNameInputParse)
          .onSuccess {
-            setState(.nameInputParseSuccess($0))
+            slf?.setState(.nameInputParseSuccess($0))
          }
          .onFail { (text: String) in
-            setState(.smsInputParseError(text))
+            slf?.setState(.smsInputParseError(text))
          }
 
       // setup get code button reaction
       events.getCodeButtonEvent
          .doNext(work: works.authByName)
          .onSuccess {
-            setState(.inputSmsCode)
+            slf?.setState(.inputSmsCode)
          }
          .onFail {
-            setState(.inputUserName)
+            slf?.setState(.inputUserName)
          }
 
       // setup input field reactions
@@ -54,9 +54,9 @@ final class LoginScenario<Asset: AssetProtocol>:
          //
          .doNext(work: works.smsCodeInputParse)
          .onSuccess {
-            setState(.smsInputParseSuccess($0))
+            slf?.setState(.smsInputParseSuccess($0))
          }.onFail { (text: String) in
-            setState(.smsInputParseError(text))
+            slf?.setState(.smsInputParseError(text))
          }
 
       // setup login button reactions
