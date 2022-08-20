@@ -38,8 +38,6 @@ class BaseScenario<Events, State, Works: SceneWorks>: BaseModel, Scenario {
       fatalError("init() has not been implemented")
    }
 
-   open func start(setState: @escaping (State) -> Void) {
-
-   }
+   open func start(setState: @escaping (State) -> Void) {   }
 }
 

@@ -31,7 +31,8 @@ final class HistoryScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>
 
    override func start() {
       configure()
-      scenario.start(setState: setState)
+
+      scenario.start(setState: setStateFunc)
 
       viewModels.tableModel
          .set(.presenters([
@@ -48,7 +49,7 @@ private extension HistoryScene {
       set_arrangedModels([
          viewModels.segmentedControl,
          viewModels.tableModel,
-//         Spacer(88)
+         Spacer(88)
       ])
    }
 }

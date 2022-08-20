@@ -5,13 +5,24 @@
 //  Created by Aleksandr Solovyev on 18.08.2022.
 //
 
-import XCTest
-@testable import TeamForce
 @testable import ReactiveWorks
+@testable import TeamForce
+import XCTest
 
 class HistoryMemoryLeakTests: XCTestCase {
    private var viewModels = HistoryViewModels<ProductionAsset.Design>()
 
+   func testSceneMemoryLeaks() throws {
+      var scene: HistoryScene? = HistoryScene<ProductionAsset>()
+
+      weak var weakScene = scene
+      weak var weakView: UIView? = scene?.uiView
+
+      scene = nil
+
+      XCTAssertNil(weakScene)
+      XCTAssertNil(weakView)
+   }
 
    func testWorksMemoryLeaks() throws {
       var works: HistoryWorks<ProductionAsset>? = HistoryWorks<ProductionAsset>()
@@ -23,7 +34,7 @@ class HistoryMemoryLeakTests: XCTestCase {
    }
 
    func testScenarioMemoryLeaks() throws {
-      let works: HistoryWorks<ProductionAsset> = HistoryWorks<ProductionAsset>()
+      let works = HistoryWorks<ProductionAsset>()
       var scenario: HistoryScenario? = HistoryScenario(
          works: works,
          events: HistoryScenarioEvents(
@@ -41,6 +52,23 @@ class HistoryMemoryLeakTests: XCTestCase {
 class TransactMemoryLeakTests: XCTestCase {
    private var viewModels = TransactViewModels<ProductionAsset>()
 
+   func testSceneMemoryLeaks() throws {
+      var scene: TransactScene? = TransactScene<ProductionAsset>()
+
+      weak var weakScene = scene
+      scene = nil
+
+      XCTAssertNil(weakScene)
+   }
+
+   func testViewMemoryLeaks() throws {
+      var scene: TransactScene? = TransactScene<ProductionAsset>()
+      weak var view: UIView? = scene?.uiView
+
+      scene = nil
+
+      XCTAssertNil(view)
+   }
 
    func testWorksMemoryLeaks() throws {
       var works: TransactWorks<ProductionAsset>? = TransactWorks<ProductionAsset>()
@@ -69,5 +97,13 @@ class TransactMemoryLeakTests: XCTestCase {
 
       XCTAssertNil(weakScenario)
    }
-}
 
+   func testModelMemoryLeak() {
+      var stack: StackModel? = StackModel()
+      weak var view = stack?.uiView
+
+      stack = nil
+
+      XCTAssertNil(view)
+   }
+}

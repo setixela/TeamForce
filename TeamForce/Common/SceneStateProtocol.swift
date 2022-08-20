@@ -7,8 +7,23 @@
 
 import Foundation
 
-protocol SceneStateProtocol {
+protocol SceneStateProtocol: AnyObject {
    associatedtype SceneState
+
+
    
    func setState(_ state: SceneState)
+   
 }
+
+extension SceneStateProtocol {
+
+   typealias StateFunc = (SceneState) -> Void
+
+   var setStateFunc: StateFunc? {
+      weak var slf = self
+
+      return slf?.setState
+   }
+}
+

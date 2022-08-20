@@ -36,10 +36,11 @@ final class TransactScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended
    override func start() {
       configure()
 
+      var fun = setState
       view
-         .onEvent(\.willAppear) {
-            self.setToInitialCondition()
-            self.scenario.start(setState: self.setState)
+         .onEvent(\.willAppear) { [weak self] in
+            self?.setToInitialCondition()
+            self?.scenario.start(setState: fun)
          }
    }
 
