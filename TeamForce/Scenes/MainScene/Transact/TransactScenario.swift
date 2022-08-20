@@ -51,61 +51,61 @@ final class TransactScenario<Asset: AssetProtocol>:
 {
    override func start() {
       weak var slf = self
+      let setState = setState
 
       works.loadTokens
          .doAsync()
          .onSuccess {
-            slf?.setState(.loadTokensSuccess)
+            setState(.loadTokensSuccess)
          }
          .onFail {
-            slf?.setState(.loadTokensError)
+            setState(.loadTokensError)
          }
          // then load balance
          .doNext(work: works.loadBalance)
          .onSuccess {
-            slf?.setState(.loadBalanceSuccess($0.distr.amount))
+            setState(.loadBalanceSuccess($0.distr.amount))
          }
          .onFail {
-            slf?.setState(.loadBalanceError)
+            setState(.loadBalanceError)
          }
          // then break data
          .doInput(())
          // then load 10 user list
          .doNext(work: works.getUserList)
          .onSuccess {
-            slf?.setState(.loadUsersListSuccess($0))
+            setState(.loadUsersListSuccess($0))
          }
          .onFail {
-            slf?.setState(.loadUsersListError)
+            setState(.loadUsersListError)
          }
 
-      // load tokens, then load balance, then load 10 user list
       events.userSearchTFBeginEditing
          .doNext(usecase: IsEmpty())
          .onSuccess {
             slf?.works.getUserList
                .doAsync()
                .onSuccess {
-                  slf?.setState(.searchTextFieldBeginEditing($0))
+                  setState(.searchTextFieldBeginEditing($0))
                }
          }
 
       // on input event, then check input is not empty, then search user
       events.userSearchTFDidEditingChanged
          .onSuccess {
-            slf?.setState(.userSearchTFDidEditingChangedSuccess)
+            setState(.userSearchTFDidEditingChangedSuccess)
          }
          .doNext(usecase: IsEmpty())
          .onSuccess {
             slf?.works.getUserList
                .doAsync()
                .onSuccess {
-                  slf?.setState(.emptyUserSearchTF($0))
+                  setState(.emptyUserSearchTF($0))
                }
          }
          .doNext(work: works.searchUser)
          .onSuccess {
-            slf?.setState(.listOfFoundUsers($0))
+            setState(.listOfFoundUsers($0))
          }
          .onFail {
             print("Search user API Error")
@@ -114,19 +114,19 @@ final class TransactScenario<Asset: AssetProtocol>:
       events.userSelected
          .doNext(work: works.mapIndexToUser)
          .onSuccess {
-            slf?.setState(.userSelectedSuccess($0))
+            setState(.userSelectedSuccess($0))
          }
 
       events.sendButtonEvent
          .doNext(work: works.sendCoins)
          .onSuccess { tuple in
-            slf?.works.reset
-               .doAsync()
-            slf?.setState(.sendCoinSuccess(tuple))
+            setState(.sendCoinSuccess(tuple))
          }
          .onFail {
-            slf?.setState(.sendCoinError)
+            setState(.sendCoinError)
          }
+         .doInput(())
+         .doNext(work: works.reset)
 
       events.transactInputChanged
          .doNext(work: works.coinInputParsing)
@@ -137,19 +137,20 @@ final class TransactScenario<Asset: AssetProtocol>:
             slf?.works.isCorrect
                .doAsync()
                .onSuccess {
-                  slf?.setState(.coinInputSuccess(text, $0))
+                  setState(.coinInputSuccess(text, $0))
                }
                .onFail {
-                  slf?.setState(.coinInputSuccess(text, $0))
+                  setState(.coinInputSuccess(text, $0))
                }
          }
          .onFail { (text: String) in
             slf?.works.updateAmount
                .doAsync((text, false))
                .onSuccess {
-                  slf?.setState(.coinInputSuccess(text, false))
+                  setState(.coinInputSuccess(text, false))
                }
          }
+
 
       events.reasonInputChanged
          .doNext(work: works.reasonInputParsing)
@@ -160,17 +161,17 @@ final class TransactScenario<Asset: AssetProtocol>:
             slf?.works.isCorrect
                .doAsync()
                .onSuccess {
-                  slf?.setState(.reasonInputSuccess(text, $0))
+                  setState(.reasonInputSuccess(text, $0))
                }
                .onFail {
-                  slf?.setState(.reasonInputSuccess(text, $0))
+                  setState(.reasonInputSuccess(text, $0))
                }
          }
          .onFail { (text: String) in
             slf?.works.updateReason
                .doAsync((text, false))
                .onSuccess {
-                  slf?.setState(.reasonInputSuccess(text, false))
+                  setState(.reasonInputSuccess(text, false))
                }
          }
    }

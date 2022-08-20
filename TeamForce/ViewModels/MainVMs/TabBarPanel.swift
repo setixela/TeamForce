@@ -77,7 +77,6 @@ struct BottomPanelVMBuilder<Design: DesignProtocol>: Designable {
          .set_height(46)
          .set_cornerRadius(16)
          .onModeChanged(\.normal) { button in
-            log("sh")
             button?
                .set_backColor(Design.color.backgroundBrandSecondary)
                .set_shadow(Design.params.panelButtonShadow)

@@ -26,7 +26,7 @@ protocol Scenario {
    func start()
 }
 
-class BaseScenario<Events, State, Works: SceneWorks>: BaseModel, Scenario {
+class BaseScenario<Events, State, Works: SceneWorks>: Scenario {
    var works: Works
    var events: Events
    var setState: (State) -> Void = {  _ in log("fuck") }
@@ -42,5 +42,7 @@ class BaseScenario<Events, State, Works: SceneWorks>: BaseModel, Scenario {
    required init() {
       fatalError("init() has not been implemented")
    }
+
+   open func start() {}
 }
 

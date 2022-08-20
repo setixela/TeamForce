@@ -16,27 +16,27 @@ final class HistoryScenario<Asset: AssetProtocol>:
    BaseScenario<HistoryScenarioEvents, HistoryState, HistoryWorks<Asset>>
 {
    override func start() {
-      weak var slf = self
+      let setState = setState
 
       works.loadProfile
          .doAsync()
          .onFail {
-            slf?.setState(.loadProfilError)
+            setState(.loadProfilError)
          }
          .doNext(work: works.getTransactions)
          .onFail {
-            slf?.setState(.loadTransactionsError)
+            setState(.loadTransactionsError)
          }
          .doInput(0)
          .doNext(work: works.filterTransactions)
          .onSuccess {
-            slf?.setState(.present($0))
+            setState(.present($0))
          }
 
       events.segmentContorlEvent
          .doNext(work: works.filterTransactions)
          .onSuccess {
-            slf?.setState(.present($0))
+            setState(.present($0))
          }
    }
 }
