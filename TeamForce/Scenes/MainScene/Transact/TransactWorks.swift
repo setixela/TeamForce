@@ -165,7 +165,7 @@ final class TransactWorks<Asset: AssetProtocol>: BaseSceneWorks<TransactWorks.Te
    }
 
    lazy var reset = VoidWork<Void> { [weak self] work in
-      Self.store.inputReasonText = ""
+      Self.store.inputAmountText = ""
       Self.store.inputReasonText = ""
       Self.store.isCorrectCoinInput = false
       Self.store.isCorrectReasonInput = false
@@ -186,11 +186,11 @@ final class TransactWorks<Asset: AssetProtocol>: BaseSceneWorks<TransactWorks.Te
       work.success(result: ())
    }
    
-   lazy var isCorrect = Work<Void, Bool> { [weak self] work in
+   lazy var isCorrect = Work<Void, Void> { [weak self] work in
       if Self.store.isCorrectReasonInput && Self.store.isCorrectCoinInput {
-         work.success(result: true)
+         work.success(result: ())
       } else {
-         work.fail(false)
+         work.fail(())
       }
    }
 }

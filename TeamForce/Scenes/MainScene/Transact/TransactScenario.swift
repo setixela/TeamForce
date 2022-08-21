@@ -34,7 +34,7 @@ enum TransactState: ModelState {
    case loadUsersListError
 
    case presentFoundUser([FoundUser])
-   case emptyUserSearchTF([FoundUser])
+   case presentUsers([FoundUser])
    case listOfFoundUsers([FoundUser])
 
    case userSelectedSuccess(FoundUser)
@@ -63,13 +63,13 @@ final class TransactScenario<Asset: AssetProtocol>:
          .onSuccess(setState) { .loadBalanceSuccess($0.distr.amount) }
          .onFail(setState, .loadBalanceError)
          // then break to void and load 10 user list
-         .doNext(works.getUserList)
+         .doVoidNext(works.getUserList)
          .onSuccess(setState) { .loadUsersListSuccess($0) }
          .onFail(setState, .loadUsersListError)
 
       events.userSearchTXTFLDBeginEditing
          .doNext(usecase: IsEmpty())
-         .doNext(works.getUserList)
+         .doVoidNext(works.getUserList)
          .onSuccess(setState) { .presentFoundUser($0) }
 
       // on input event, then check input is not empty, then search user
@@ -79,7 +79,7 @@ final class TransactScenario<Asset: AssetProtocol>:
          .onSuccess {
             slf?.works.getUserList
                .doAsync()
-               .onSuccess(slf?.setState) { .emptyUserSearchTF($0) }
+               .onSuccess(slf?.setState) { .presentUsers($0) }
          }
          .doRecover(works.searchUser)
          .onSuccess(setState) { .listOfFoundUsers($0) }
@@ -92,24 +92,40 @@ final class TransactScenario<Asset: AssetProtocol>:
          .doNext(work: works.sendCoins)
          .onSuccess(setState) { .sendCoinSuccess($0) }
          .onFail(setState, .sendCoinError)
-         .doNext(works.reset)
+         .doVoidNext(works.reset)
 
       events.transactInputChanged
          .doNext(work: works.coinInputParsing)
-         .onSuccess { text in
-            slf?.works.updateAmount
-               .doAsync((text, true))
-
-            slf?.works.isCorrect
-               .doAsync()
-               .onSuccess(slf?.setState) { .coinInputSuccess(text, $0) }
-               .onFail(slf?.setState) { .coinInputSuccess(text, $0) }
-         }
-         .onFail { (text: String) in
-            slf?.works.updateAmount
+         .onFail { [weak self] text in
+            self?.works.updateAmount
                .doAsync((text, false))
-               .onSuccess(slf?.setState) { .coinInputSuccess(text, false) }
+               .onSuccess(slf?.setState) {
+                  .coinInputSuccess(text, false)
+               }
          }
+         .doRecover()
+         .doSaveResult() // save inputString
+         .doMap { ($0, true) }
+         .doNext(work: works.updateAmount)
+         .doNext(work: works.isCorrect)
+         .onSuccessMixSaved(setState) { _, inputString in
+            .coinInputSuccess(inputString, true)
+         }
+         .onFailMixSaved(setState) { _, inputString in
+            .coinInputSuccess(inputString, false)
+         }
+
+//
+//         .doSaveResult()
+//         .doMap { ($0, true) }
+//         .doNext(works.updateAmount)
+//         .onSuccessMixSaved(setState) {
+//            .coinInputSuccess($0.1, false)
+//         }
+//         .doNext(work: works.isCorrect)6
+//         .onSuccessMixSaved(setState) {
+//            .coinInputSuccess($0.1, $0.0)
+//         }
 
       events.reasonInputChanged
          .doNext(work: works.reasonInputParsing)
@@ -119,8 +135,8 @@ final class TransactScenario<Asset: AssetProtocol>:
 
             slf?.works.isCorrect
                .doAsync()
-               .onSuccess(slf?.setState) { .reasonInputSuccess(text, $0) }
-               .onFail(slf?.setState) { .reasonInputSuccess(text, $0) }
+               .onSuccess(slf?.setState, .reasonInputSuccess(text, true))
+               .onFail(slf?.setState, .reasonInputSuccess(text, false))
          }
          .onFail { (text: String) in
             slf?.works.updateReason
