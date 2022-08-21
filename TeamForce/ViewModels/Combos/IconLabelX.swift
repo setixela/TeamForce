@@ -20,7 +20,7 @@ struct IconLabelHorizontalModelEvents: InitProtocol {
 final class IconLabelX<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>,
    Assetable, Communicable
 {
-   var eventsStore: IconLabelHorizontalModelEvents = .init()
+   var events: IconLabelHorizontalModelEvents = .init()
 
    let label = Design.label.body2
    let icon = ImageViewModel()

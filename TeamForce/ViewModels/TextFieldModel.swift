@@ -20,7 +20,7 @@ final class TextFieldModel<Design: DSP>: BaseViewModel<PaddingTextField>,
    Stateable2,
    UITextFieldDelegate
 {
-   var eventsStore: TextFieldEvents = .init()
+   var events: TextFieldEvents = .init()
 
    override func start() {
       set(.backColor(.lightGray.withAlphaComponent(0.3)))

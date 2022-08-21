@@ -17,7 +17,7 @@ struct ButtonEvents: InitProtocol {
 
 class ButtonModel: BaseViewModel<ButtonExtended>, ButtonModelProtocol {
    //
-   var eventsStore: ButtonEvents = .init()
+   var events: ButtonEvents = .init()
    var modes: Mode = .init()
 
    override func start() {

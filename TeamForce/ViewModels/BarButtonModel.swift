@@ -15,7 +15,7 @@ struct BarButtonEvent: InitProtocol {
 }
 
 final class BarButtonModel: BaseModel, Communicable {
-    var eventsStore = BarButtonEvent()
+    var events = BarButtonEvent()
 
     override func start() {
         onEvent(\.initWithImage) { [weak self] image in

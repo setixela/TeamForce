@@ -29,7 +29,7 @@ final class LabelIconX<Design: DesignProtocol>: BaseViewModel<StackViewExtended>
 {
    typealias State = StackState
 
-   var eventsStore: TappableEvent = .init()
+   var events: TappableEvent = .init()
 
    let label = Design.label.body1
    let iconModel = ImageViewModel()

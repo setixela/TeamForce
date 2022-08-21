@@ -24,9 +24,9 @@ final class HistoryScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>
       works: HistoryWorks<Asset>(),
       stateDelegate: stateDelegate,
       events: HistoryScenarioEvents(
-         presentAllTransactions: viewModels.segmentedControl.onEvent(\.selected1),
-         presentSentTransactions: viewModels.segmentedControl.onEvent(\.selected2),
-         presentRecievedTransaction: viewModels.segmentedControl.onEvent(\.selected3)
+         presentAllTransactions: viewModels.segmentedControl.onEvent(\.selected0),
+         presentSentTransactions: viewModels.segmentedControl.onEvent(\.selected1),
+         presentRecievedTransaction: viewModels.segmentedControl.onEvent(\.selected2)
       )
    )
 
@@ -51,8 +51,9 @@ private extension HistoryScene {
       set_axis(.vertical)
       set_arrangedModels([
          viewModels.segmentedControl,
+         Grid.x16.spacer,
          viewModels.tableModel,
-         Spacer(88),
+         //Spacer(88),
       ])
    }
 }

@@ -13,7 +13,7 @@ struct LabelModelEvents: InitProtocol {
 }
 
 final class LabelModel: BaseViewModel<PaddingLabel>, Communicable {
-   var eventsStore: ButtonEvents = .init()
+   var events: ButtonEvents = .init()
    
    func makeTappable() {
       let labelTap = UITapGestureRecognizer(target: self, action: #selector(labelTapped(_:)))

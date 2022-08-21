@@ -15,7 +15,7 @@ struct SegmentButtonMode: SceneModeProtocol {
 final class SegmentButton<Design: DSP>: BaseViewModel<StackViewExtended>, SegmentButtonModelProtocol
 {
    var modes: SegmentButtonMode = .init()
-   var eventsStore: ButtonEvents = .init()
+   var events: ButtonEvents = .init()
 
    typealias State = StackState
 
@@ -26,6 +26,9 @@ final class SegmentButton<Design: DSP>: BaseViewModel<StackViewExtended>, Segmen
       .set_backColor(Design.color.textError)
 
    override func start() {
+
+      button.view.contentVerticalAlignment = .top
+
       onModeChanged(\.normal) { [weak self] in
          self?.button
             .set_textColor(Design.color.text)

@@ -26,7 +26,7 @@ final class TransactionStatusViewModel<Asset: AssetProtocol>: BaseViewModel<Stac
 {
    typealias State = StackState
    typealias State2 = ViewState
-   var eventsStore: TransactionStatusViewEvents = .init()
+   var events: TransactionStatusViewEvents = .init()
 
    private let backgroundView: UIView = {
       let backgroundView = UIView()

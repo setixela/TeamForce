@@ -8,27 +8,38 @@
 import ReactiveWorks
 
 protocol SegmentControlEventsProtocol: InitProtocol {
-   var selectedIndex: Event<Int>? { get set }
+   func sendEventBy(index: Int)
 }
 
 struct SegmentControl3Events: SegmentControlEventsProtocol {
+   var selected0: Event<Void>?
    var selected1: Event<Void>?
    var selected2: Event<Void>?
-   var selected3: Event<Void>?
 
-   var selectedIndex: Event<Int>?
+   func sendEventBy(index: Int) {
+      switch index {
+      case 1:
+         selected1?(())
+      case 2:
+         selected2?(())
+      default:
+         selected0?(())
+      }
+   }
 }
 
 enum SegmentControlState {
    case items([UIViewModel])
+   case selected(Int)
 }
 
 final class SegmentControl<Button: SegmentButtonModelProtocol,
-                           Event: SegmentControlEventsProtocol>:
-   BaseViewModel<StackViewExtended>, Stateable2 {
+   Event: SegmentControlEventsProtocol>:
+   BaseViewModel<StackViewExtended>, Stateable2
+{
    typealias State = StackState
 
-   var eventsStore: Event = .init()
+   var events: Event = .init()
 
    private lazy var _buttons: [UIViewModel] = []
 
@@ -47,10 +58,12 @@ extension SegmentControl {
          buttons.enumerated().forEach { index, model in
             model.onEvent(\.didTap) { [weak self] in
                self?.unselectAll()
-               self?.sendEvent(\.selectedIndex, index)
+               self?.events.sendEventBy(index: index)
                model.setMode(\.selected)
             }
          }
+      case .selected(let value):
+         buttons[value].setMode(\.selected)
       }
    }
 

@@ -14,12 +14,13 @@ final class HistoryViewModels<Design: DesignProtocol>: Designable {
       .set_backColor(Design.color.background)
 
    lazy var segmentedControl = SegmentControl<SegmentButton<Design>, SegmentControl3Events>()
-      .set(.height(50))
+      .set(.height(Grid.x40.value))
       .set(.items([
          SegmentButton<Design>.withTitle("Вся история"),
          SegmentButton<Design>.withTitle("Получено"),
          SegmentButton<Design>.withTitle("Отправлено"),
       ]))
+      .set(.selected(0))
 }
 
 

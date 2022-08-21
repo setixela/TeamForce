@@ -20,7 +20,7 @@ final class SideBarUserModel<Design: DesignProtocol>: BaseViewModel<StackViewExt
    typealias State = StackState
    typealias State2 = ViewState
 
-   var eventsStore: SideBarUserModelEvent = .init()
+   var events: SideBarUserModelEvent = .init()
 
    lazy var avatar = ImageViewModel()
       .set(.size(.init(width: 64, height: 64)))

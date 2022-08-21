@@ -23,7 +23,7 @@ enum SegmentedControlState {
 final class SegmentedControlModel: BaseViewModel<UISegmentedControl>,
    Communicable
 {
-   var eventsStore = SegmentedControlEvent()
+   var events = SegmentedControlEvent()
 
    private var items: [String] = []
 

@@ -14,7 +14,7 @@ struct TextViewEvents: InitProtocol {
 }
 
 final class TextViewModel<Design: DesignProtocol>: BaseViewModel<UITextView>, Designable, UITextViewDelegate {
-   var eventsStore: TextViewEvents = .init()
+   var events: TextViewEvents = .init()
 
    private var placeholder: String = "Placeholder"
 

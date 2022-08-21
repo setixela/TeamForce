@@ -33,7 +33,7 @@ final class TableItemsModel<Design: DSP>: BaseViewModel<UITableView>,
    UITableViewDelegate,
    UITableViewDataSource
 {
-   var eventsStore: TableItemsEvents = .init()
+   var events: TableItemsEvents = .init()
 
    private var isMultiSection: Bool = false
 

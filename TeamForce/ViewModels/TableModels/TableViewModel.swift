@@ -25,7 +25,7 @@ struct TableViewEvents: InitProtocol {
 }
 
 final class TableViewModel: BaseViewModel<UITableView> {
-   var eventsStore: TableViewEvents = .init()
+   var events: TableViewEvents = .init()
 
    private var cellName = "cellName"// String(Int.random(in: 0...999999900000))
 
@@ -82,7 +82,7 @@ extension TableViewModel: UITableViewDataSource {
    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
       let cell = tableView.dequeueReusableCell(withIdentifier: cellName) ?? UITableViewCell()
 
-      if eventsStore.cellForRow == nil {
+      if events.cellForRow == nil {
          let model = isMultiSection ? sections[indexPath.section].models[indexPath.row] : models[indexPath.row]
          let modelView = model.uiView
          cell.contentView.subviews.forEach { $0.removeFromSuperview() }

@@ -100,7 +100,7 @@ final class StackViewExtended: UIStackView, Communicable {
       var willDisappear: Event<Void>?
    }
 
-   var eventsStore: Events = .init()
+   var events: Events = .init()
 
    weak var backView: UIView?
 

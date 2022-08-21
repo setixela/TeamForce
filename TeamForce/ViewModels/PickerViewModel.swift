@@ -17,7 +17,7 @@ enum PickerViewState {
 }
 
 final class PickerViewModel: BaseViewModel<UIPickerView> {
-    var eventsStore = PickerViewEvent()
+    var events = PickerViewEvent()
 
     private var items: [String] = []
 
