@@ -102,7 +102,7 @@ extension TransactScene: SceneStateProtocol {
       case .presentFoundUser(let users):
          viewModels.tableModel.set_hidden(true)
          presentFoundUsers(users: users)
-      case .emptyUserSearchTF(let users):
+      case .presentUsers(let users):
          viewModels.tableModel.set_hidden(true)
          presentFoundUsers(users: users)
       case .listOfFoundUsers(let users):

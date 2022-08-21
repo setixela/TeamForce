@@ -65,3 +65,11 @@ struct KeyChainStore: StringStorageProtocol {
       KeychainWrapper.standard.string(forKey: key)
    }
 }
+
+struct MockKeyChainStore: StringStorageProtocol {
+   func save(_ value: String, forKey key: String) {}
+
+   func load(forKey key: String) -> String? {
+      "token"
+   }
+}

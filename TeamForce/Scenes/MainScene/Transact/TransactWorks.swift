@@ -165,33 +165,40 @@ final class TransactWorks<Asset: AssetProtocol>: BaseSceneWorks<TransactWorks.Te
    }
 
    lazy var reset = VoidWork<Void> { [weak self] work in
-      Self.store.inputReasonText = ""
+      Self.store.inputAmountText = ""
       Self.store.inputReasonText = ""
       Self.store.isCorrectCoinInput = false
       Self.store.isCorrectReasonInput = false
       work.success(result: ())
    }
-   
-   lazy var updateAmount = Work<(String, Bool), Void> { [weak self] work in
-      guard let input = work.input else { return }
-      Self.store.inputAmountText = input.0
-      Self.store.isCorrectCoinInput = input.1
-      work.success(result: ())
+
+   var updateAmount: Work<(String, Bool), Void> {
+      Work<(String, Bool), Void> { work in
+         guard let input = work.input else { return }
+
+         Self.store.inputAmountText = input.0
+         Self.store.isCorrectCoinInput = input.1
+         work.success(result: ())
+
+      }
+      .retainBy(retainer) // hmm
    }
-   
-   lazy var updateReason = Work<(String, Bool), Void> { [weak self] work in
-      guard let input = work.input else { return }
-      Self.store.inputReasonText = input.0
-      Self.store.isCorrectReasonInput = input.1
-      work.success(result: ())
+
+   var updateReason: Work<(String, Bool), Void> {
+      Work<(String, Bool), Void> { work in
+         guard let input = work.input else { return }
+         Self.store.inputReasonText = input.0
+         Self.store.isCorrectReasonInput = input.1
+         work.success(result: ())
+      }
+      .retainBy(retainer)
    }
-   
-   lazy var isCorrect = Work<Void, Bool> { [weak self] work in
-      if Self.store.isCorrectReasonInput && Self.store.isCorrectCoinInput {
-         work.success(result: true)
+
+   lazy var isCorrect = Work<Void, Void> { [weak self] work in
+      if Self.store.isCorrectReasonInput, Self.store.isCorrectCoinInput {
+         work.success(result: ())
       } else {
-         work.fail(false)
+         work.fail(())
       }
    }
 }
-

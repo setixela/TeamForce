@@ -90,7 +90,7 @@ class TransactMemoryLeakTests: XCTestCase {
       var scenario: TransactScenario? = TransactScenario(
          works: TransactWorks<ProductionAsset>(),
          events: TransactScenarioEvents(
-            userSearchTFBeginEditing: viewModels.userSearchTextField.onEvent(\.didBeginEditing),
+            userSearchTXTFLDBeginEditing: viewModels.userSearchTextField.onEvent(\.didBeginEditing),
             userSearchTFDidEditingChanged: viewModels.userSearchTextField.onEvent(\.didEditingChanged),
             userSelected: viewModels.tableModel.onEvent(\.didSelectRow),
             sendButtonEvent: viewModels.sendButton.onEvent(\.didTap),
