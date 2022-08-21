@@ -78,6 +78,8 @@
 		197A771828AD90800082CD81 /* XelaLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197A771728AD90800082CD81 /* XelaLog.swift */; };
 		197A771A28AD90B30082CD81 /* Presenting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197A771928AD90B30082CD81 /* Presenting.swift */; };
 		197A771C28AD91E20082CD81 /* HistoryPresenters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197A771B28AD91E20082CD81 /* HistoryPresenters.swift */; };
+		1985A12628B2966400B017E0 /* SegmentControlButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1985A12528B2966400B017E0 /* SegmentControlButtons.swift */; };
+		1985A12828B296FB00B017E0 /* SegmentControl3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1985A12728B296FB00B017E0 /* SegmentControl3.swift */; };
 		198FE1C92899994A00BAF1A5 /* LoginUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198FE1C82899994A00BAF1A5 /* LoginUseCase.swift */; };
 		198FE1CC28999A2600BAF1A5 /* NilBlocker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198FE1CB28999A2600BAF1A5 /* NilBlocker.swift */; };
 		198FE1CE2899BB8E00BAF1A5 /* LoadBalanceUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198FE1CD2899BB8E00BAF1A5 /* LoadBalanceUseCase.swift */; };
@@ -256,6 +258,8 @@
 		197A771928AD90B30082CD81 /* Presenting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Presenting.swift; sourceTree = "<group>"; };
 		197A771B28AD91E20082CD81 /* HistoryPresenters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryPresenters.swift; sourceTree = "<group>"; };
 		1985A12328B2780000B017E0 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		1985A12528B2966400B017E0 /* SegmentControlButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentControlButtons.swift; sourceTree = "<group>"; };
+		1985A12728B296FB00B017E0 /* SegmentControl3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentControl3.swift; sourceTree = "<group>"; };
 		198FE1C82899994A00BAF1A5 /* LoginUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUseCase.swift; sourceTree = "<group>"; };
 		198FE1CB28999A2600BAF1A5 /* NilBlocker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NilBlocker.swift; sourceTree = "<group>"; };
 		198FE1CD2899BB8E00BAF1A5 /* LoadBalanceUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadBalanceUseCase.swift; sourceTree = "<group>"; };
@@ -663,6 +667,16 @@
 			path = RuntimeCombos;
 			sourceTree = "<group>";
 		};
+		1985A12428B2963C00B017E0 /* SegmentControls */ = {
+			isa = PBXGroup;
+			children = (
+				63A529F428A1F8AA004A858D /* SegmentedControlModel.swift */,
+				1985A12528B2966400B017E0 /* SegmentControlButtons.swift */,
+				1985A12728B296FB00B017E0 /* SegmentControl3.swift */,
+			);
+			path = SegmentControls;
+			sourceTree = "<group>";
+		};
 		198FE1CA28999A1500BAF1A5 /* Systems */ = {
 			isa = PBXGroup;
 			children = (
@@ -835,7 +849,7 @@
 				6368D8292894091B0049EEAB /* TransactInputViewModel.swift */,
 				6368D82B289415EC0049EEAB /* TextViewModel.swift */,
 				63AD437A28992045000511B9 /* TransactionStatusViewModel.swift */,
-				63A529F428A1F8AA004A858D /* SegmentedControlModel.swift */,
+				1985A12428B2963C00B017E0 /* SegmentControls */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -1074,6 +1088,7 @@
 				197A2DA228A9BF4B00190656 /* Combos+Configure.swift in Sources */,
 				1952EA6528A7115D003F7852 /* StackStateBuilder.swift in Sources */,
 				19D0835B286F424000F75E4A /* LabelIconX.swift in Sources */,
+				1985A12828B296FB00B017E0 /* SegmentControl3.swift in Sources */,
 				198FE1CE2899BB8E00BAF1A5 /* LoadBalanceUseCase.swift in Sources */,
 				1959F27428AA8E9700DEEE5C /* LoginBackstage.swift in Sources */,
 				196750B22865190D0019A6DE /* ImageViewModel.swift in Sources */,
@@ -1166,6 +1181,7 @@
 				634F4333288F4EE9003B2256 /* LogoutApiWorker.swift in Sources */,
 				63E7A73D28AF9BC100FB2C80 /* GetCurrentPeriodUseCase.swift in Sources */,
 				19C1E9A128610E2800E7976D /* AssetProtocol.swift in Sources */,
+				1985A12628B2966400B017E0 /* SegmentControlButtons.swift in Sources */,
 				19171F4D28AD663F000926B1 /* TableItemsModel.swift in Sources */,
 				190C1D16285D15FF00FB3518 /* ViewController.swift in Sources */,
 				19ECD54128623D1F001765F6 /* LabelModel.swift in Sources */,

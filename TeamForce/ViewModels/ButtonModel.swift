@@ -9,8 +9,7 @@ import Anchorage
 import ReactiveWorks
 import UIKit
 
-protocol ButtonModelProtocol: UIViewModel, InitProtocol, Communicable where Events == ButtonEvents {
-}
+protocol ButtonModelProtocol: UIViewModel, InitProtocol, Communicable where Events == ButtonEvents {}
 
 struct ButtonEvents: InitProtocol {
    var didTap: Event<Void>?
