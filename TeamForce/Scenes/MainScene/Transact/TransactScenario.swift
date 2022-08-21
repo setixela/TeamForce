@@ -52,7 +52,6 @@ final class TransactScenario<Asset: AssetProtocol>:
    BaseScenario<TransactScenarioEvents, TransactState, TransactWorks<Asset>>
 {
    override func start() {
-      weak var slf = self
 
       works.loadTokens
          .doAsync()
@@ -76,10 +75,10 @@ final class TransactScenario<Asset: AssetProtocol>:
       events.userSearchTFDidEditingChanged
          .onSuccess(setState, .userSearchTFDidEditingChangedSuccess)
          .doNext(usecase: IsEmpty())
-         .onSuccess {
-            slf?.works.getUserList
+         .onSuccess { [weak self] in
+            self?.works.getUserList
                .doAsync()
-               .onSuccess(slf?.setState) { .presentUsers($0) }
+               .onSuccess(self?.setState) { .presentUsers($0) }
          }
          .doRecover(works.searchUser)
          .onSuccess(setState) { .listOfFoundUsers($0) }
@@ -96,52 +95,32 @@ final class TransactScenario<Asset: AssetProtocol>:
 
       events.transactInputChanged
          .doNext(work: works.coinInputParsing)
-         .onFail { [weak self] text in
-            self?.works.updateAmount
+         .onFail { [weak self] (text: String) in
+            self?.works.updateAmount // было двойное использование одного ворка
                .doAsync((text, false))
-               .onSuccess(slf?.setState) {
-                  .coinInputSuccess(text, false)
-               }
+               .onSuccess(self?.setState) { .coinInputSuccess(text, false) }
          }
          .doRecover()
          .doSaveResult() // save inputString
          .doMap { ($0, true) }
-         .doNext(work: works.updateAmount)
+         .doNext(work: works.updateAmount) // 10 часов искал дефект двойного юзанья
          .doNext(work: works.isCorrect)
-         .onSuccessMixSaved(setState) { _, inputString in
-            .coinInputSuccess(inputString, true)
-         }
-         .onFailMixSaved(setState) { _, inputString in
-            .coinInputSuccess(inputString, false)
-         }
-
-//
-//         .doSaveResult()
-//         .doMap { ($0, true) }
-//         .doNext(works.updateAmount)
-//         .onSuccessMixSaved(setState) {
-//            .coinInputSuccess($0.1, false)
-//         }
-//         .doNext(work: works.isCorrect)6
-//         .onSuccessMixSaved(setState) {
-//            .coinInputSuccess($0.1, $0.0)
-//         }
+         .onSuccessMixSaved(setState) { .coinInputSuccess($1, true) }
+         .onFailMixSaved(setState) { .coinInputSuccess($1, false) }
 
       events.reasonInputChanged
          .doNext(work: works.reasonInputParsing)
-         .onSuccess { text in
-            slf?.works.updateReason
-               .doAsync((text, true))
-
-            slf?.works.isCorrect
-               .doAsync()
-               .onSuccess(slf?.setState, .reasonInputSuccess(text, true))
-               .onFail(slf?.setState, .reasonInputSuccess(text, false))
-         }
-         .onFail { (text: String) in
-            slf?.works.updateReason
+         .onFail { [weak self] (text: String) in
+            self?.works.updateReason
                .doAsync((text, false))
-               .onSuccess(slf?.setState, .reasonInputSuccess(text, false))
+               .onSuccess(self?.setState, .reasonInputSuccess(text, false))
          }
+         .doRecover()
+         .doSaveResult()
+         .doMap { ($0, true) }
+         .doNext(work: works.updateReason)
+         .doNext(work: works.isCorrect)
+         .onSuccessMixSaved(setState) { .reasonInputSuccess($1, true) }
+         .onFailMixSaved(setState) { .reasonInputSuccess($1, false) }
    }
 }
