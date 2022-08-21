@@ -20,23 +20,15 @@ final class HistoryScenario<Asset: AssetProtocol>:
 
       works.loadProfile
          .doAsync()
-         .onFail {
-            setState(.loadProfilError)
-         }
+         .onFail(setState, .loadProfilError)
          .doNext(work: works.getTransactions)
-         .onFail {
-            setState(.loadTransactionsError)
-         }
+         .onFail(setState, .loadTransactionsError)
          .doInput(0)
          .doNext(work: works.filterTransactions)
-         .onSuccess {
-            setState(.present($0))
-         }
+         .onSuccess(setState) { .present($0) }
 
       events.segmentContorlEvent
          .doNext(work: works.filterTransactions)
-         .onSuccess {
-            setState(.present($0))
-         }
+         .onSuccess(setState) { .present($0) }
    }
 }

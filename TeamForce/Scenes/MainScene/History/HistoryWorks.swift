@@ -7,8 +7,6 @@
 
 import Foundation
 import ReactiveWorks
-import RealmSwift
-import SwiftUI
 
 protocol HistoryWorksProtocol {
    var loadProfile: Work<Void, Void> { get }
