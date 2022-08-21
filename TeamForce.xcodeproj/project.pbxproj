@@ -79,7 +79,7 @@
 		197A771A28AD90B30082CD81 /* Presenting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197A771928AD90B30082CD81 /* Presenting.swift */; };
 		197A771C28AD91E20082CD81 /* HistoryPresenters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197A771B28AD91E20082CD81 /* HistoryPresenters.swift */; };
 		1985A12628B2966400B017E0 /* SegmentControlButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1985A12528B2966400B017E0 /* SegmentControlButtons.swift */; };
-		1985A12828B296FB00B017E0 /* SegmentControl3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1985A12728B296FB00B017E0 /* SegmentControl3.swift */; };
+		1985A12828B296FB00B017E0 /* SegmentControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1985A12728B296FB00B017E0 /* SegmentControl.swift */; };
 		198FE1C92899994A00BAF1A5 /* LoginUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198FE1C82899994A00BAF1A5 /* LoginUseCase.swift */; };
 		198FE1CC28999A2600BAF1A5 /* NilBlocker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198FE1CB28999A2600BAF1A5 /* NilBlocker.swift */; };
 		198FE1CE2899BB8E00BAF1A5 /* LoadBalanceUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198FE1CD2899BB8E00BAF1A5 /* LoadBalanceUseCase.swift */; };
@@ -259,7 +259,7 @@
 		197A771B28AD91E20082CD81 /* HistoryPresenters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryPresenters.swift; sourceTree = "<group>"; };
 		1985A12328B2780000B017E0 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		1985A12528B2966400B017E0 /* SegmentControlButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentControlButtons.swift; sourceTree = "<group>"; };
-		1985A12728B296FB00B017E0 /* SegmentControl3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentControl3.swift; sourceTree = "<group>"; };
+		1985A12728B296FB00B017E0 /* SegmentControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentControl.swift; sourceTree = "<group>"; };
 		198FE1C82899994A00BAF1A5 /* LoginUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUseCase.swift; sourceTree = "<group>"; };
 		198FE1CB28999A2600BAF1A5 /* NilBlocker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NilBlocker.swift; sourceTree = "<group>"; };
 		198FE1CD2899BB8E00BAF1A5 /* LoadBalanceUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadBalanceUseCase.swift; sourceTree = "<group>"; };
@@ -672,7 +672,7 @@
 			children = (
 				63A529F428A1F8AA004A858D /* SegmentedControlModel.swift */,
 				1985A12528B2966400B017E0 /* SegmentControlButtons.swift */,
-				1985A12728B296FB00B017E0 /* SegmentControl3.swift */,
+				1985A12728B296FB00B017E0 /* SegmentControl.swift */,
 			);
 			path = SegmentControls;
 			sourceTree = "<group>";
@@ -1088,7 +1088,7 @@
 				197A2DA228A9BF4B00190656 /* Combos+Configure.swift in Sources */,
 				1952EA6528A7115D003F7852 /* StackStateBuilder.swift in Sources */,
 				19D0835B286F424000F75E4A /* LabelIconX.swift in Sources */,
-				1985A12828B296FB00B017E0 /* SegmentControl3.swift in Sources */,
+				1985A12828B296FB00B017E0 /* SegmentControl.swift in Sources */,
 				198FE1CE2899BB8E00BAF1A5 /* LoadBalanceUseCase.swift in Sources */,
 				1959F27428AA8E9700DEEE5C /* LoginBackstage.swift in Sources */,
 				196750B22865190D0019A6DE /* ImageViewModel.swift in Sources */,

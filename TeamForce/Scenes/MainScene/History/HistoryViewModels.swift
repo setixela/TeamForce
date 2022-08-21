@@ -13,7 +13,7 @@ final class HistoryViewModels<Design: DesignProtocol>: Designable {
    lazy var tableModel = TableItemsModel<Design>()
       .set_backColor(Design.color.background)
 
-   lazy var segmentedControl = SegmentControl3<SegmentButton<Design>>()
+   lazy var segmentedControl = SegmentControl<SegmentButton<Design>, SegmentControl3Events>()
       .set(.height(50))
       .set(.items([
          SegmentButton<Design>.withTitle("Вся история"),
