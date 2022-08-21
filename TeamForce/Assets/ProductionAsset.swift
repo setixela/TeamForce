@@ -34,3 +34,18 @@ struct ProductionService: ServiceProtocol {
    var apiEngine: ApiEngineProtocol { ApiEngine() }
    var safeStringStorage: StringStorageProtocol { KeyChainStore() }
 }
+
+struct MockService: ServiceProtocol {
+   var apiEngine: ApiEngineProtocol { ApiEngine() }
+   var safeStringStorage: StringStorageProtocol { MockKeyChainStore() }
+}
+
+enum MockAsset: AssetProtocol {
+   typealias Router = MainRouter<Scene>
+   typealias Text = TextBuilder
+   typealias Design = DesignSystem
+   typealias Service = MockService
+   typealias Scene = Scenes
+
+   static var router: MainRouter<Scene>? = MainRouter<Scene>()
+}
