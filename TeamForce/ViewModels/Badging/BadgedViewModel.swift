@@ -42,7 +42,7 @@ extension BadgedViewModel: Stateable {
    typealias State = StackState
 }
 
-extension BadgedViewModel: Modable {
+extension BadgedViewModel: SelfModable {
    typealias Mode = BadgeMode<BadgedViewModel>
 }
 
@@ -70,7 +70,7 @@ extension BadgedTopViewModel: Stateable {
    typealias State = StackState
 }
 
-extension BadgedTopViewModel: Modable {
+extension BadgedTopViewModel: SelfModable {
    typealias Mode = BadgeMode<BadgedTopViewModel>
 }
 
@@ -98,6 +98,6 @@ extension BadgedBottomViewModel: Stateable {
    typealias State = StackState
 }
 
-extension BadgedBottomViewModel: Modable {
+extension BadgedBottomViewModel: SelfModable {
    typealias Mode = BadgeMode<BadgedBottomViewModel>
 }

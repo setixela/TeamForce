@@ -45,7 +45,7 @@ final class LoginViewModels<Asset: AssetProtocol>: Assetable {
       .set(.title(Text.button.enterButton))
 }
 
-extension LoginViewModels: SceneStateProtocol {
+extension LoginViewModels: StateMachine {
    func setState(_ state: LoginSceneState) {
       switch state {
 

@@ -1,5 +1,5 @@
 //
-//  SceneStateProtocol.swift
+//  StateMachine.swift
 //  TeamForce
 //
 //  Created by Aleksandr Solovyev on 16.08.2022.
@@ -7,13 +7,13 @@
 
 import Foundation
 
-protocol SceneStateProtocol: AnyObject {
+protocol StateMachine: AnyObject {
    associatedtype SceneState
 
    func setState(_ state: SceneState)
 }
 
-extension SceneStateProtocol {
+extension StateMachine {
 
    var stateDelegate: (SceneState) -> Void {
 

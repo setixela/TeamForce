@@ -7,7 +7,7 @@
 
 import ReactiveWorks
 
-struct SegmentButtonMode: SceneModeProtocol {
+struct SegmentButtonMode: ModeProtocol {
    var normal: Event<Void>?
    var selected: Event<Void>?
 }
@@ -69,5 +69,5 @@ extension SegmentButton {
    }
 }
 
-protocol SegmentButtonModelProtocol: ButtonModelProtocol, Designable, Stateable, SceneModable
+protocol SegmentButtonModelProtocol: ButtonModelProtocol, Designable, Stateable, Modable
    where Mode == SegmentButtonMode {}

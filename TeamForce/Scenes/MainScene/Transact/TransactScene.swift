@@ -79,7 +79,7 @@ final class TransactScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended
    }
 }
 
-extension TransactScene: SceneStateProtocol {
+extension TransactScene: StateMachine {
    func setState(_ state: TransactState) {
       switch state {
       case .loadProfilError:

@@ -43,7 +43,7 @@ extension ButtonModel: Stateable {
 
 extension ButtonModel: Communicable {}
 
-extension ButtonModel: Modable {
+extension ButtonModel: SelfModable {
    struct Mode: WeakSelfied {
       typealias WeakSelf = ButtonModel
 

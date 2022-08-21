@@ -67,7 +67,7 @@ enum HistoryState {
    case presentRecievedTransaction([TableItemsSection])
 }
 
-extension HistoryScene: SceneStateProtocol {
+extension HistoryScene: StateMachine {
    func setState(_ state: HistoryState) {
       switch state {
       case .loadProfilError:
