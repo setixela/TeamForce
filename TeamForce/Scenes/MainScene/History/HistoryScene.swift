@@ -24,7 +24,9 @@ final class HistoryScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>
       works: HistoryWorks<Asset>(),
       stateDelegate: stateDelegate,
       events: HistoryScenarioEvents(
-         segmentContorlEvent: viewModels.segmentedControl.onEvent(\.segmentChanged)
+         presentAllTransactions: viewModels.segmentedControl.onEvent(\.selected1),
+         presentSentTransactions: viewModels.segmentedControl.onEvent(\.selected2),
+         presentRecievedTransaction: viewModels.segmentedControl.onEvent(\.selected3)
       )
    )
 
@@ -50,7 +52,7 @@ private extension HistoryScene {
       set_arrangedModels([
          viewModels.segmentedControl,
          viewModels.tableModel,
-         Spacer(88)
+         Spacer(88),
       ])
    }
 }
@@ -59,7 +61,9 @@ enum HistoryState {
    case loadProfilError
    case loadTransactionsError
 
-   case present([TableItemsSection])
+   case presentAllTransactions([TableItemsSection])
+   case presentSentTransactions([TableItemsSection])
+   case presentRecievedTransaction([TableItemsSection])
 }
 
 extension HistoryScene: SceneStateProtocol {
@@ -69,10 +73,15 @@ extension HistoryScene: SceneStateProtocol {
          break
       case .loadTransactionsError:
          break
-      case .present(let sections):
+      case .presentAllTransactions(let value):
          viewModels.tableModel
-            .set(.backColor(.gray))
-            .set(.itemSections(sections))
+            .set(.itemSections(value))
+      case .presentSentTransactions(let value):
+         viewModels.tableModel
+            .set(.itemSections(value))
+      case .presentRecievedTransaction(let value):
+         viewModels.tableModel
+            .set(.itemSections(value))
       }
    }
 }

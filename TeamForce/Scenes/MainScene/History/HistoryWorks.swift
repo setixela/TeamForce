@@ -13,8 +13,9 @@ protocol HistoryWorksProtocol {
    var getTransactions: Work<Void, [Transaction]> { get }
    var getTransactionById: Work<Int, Transaction> { get }
 
-   // TODO: - Потом разобрать и перенести, никаких тут вью моделей, Саша!
-   var filterTransactions: Work<Int, [TableItemsSection]> { get }
+   var getAllTransactItems: Work<Void, [TableItemsSection]> { get }
+   var getSentTransactItems: Work<Void, [TableItemsSection]> { get }
+   var getRecievedTransactItems: Work<Void, [TableItemsSection]> { get }
 }
 
 final class HistoryWorks<Asset: AssetProtocol>: BaseSceneWorks<HistoryWorks.Temp, Asset>, HistoryWorksProtocol {
@@ -69,15 +70,67 @@ final class HistoryWorks<Asset: AssetProtocol>: BaseSceneWorks<HistoryWorks.Temp
          }
    }
 
-   // not so Fucking shit already, but shit
-   lazy var filterTransactions = Work<Int, [TableItemsSection]> { [weak self] work in
+   var getAllTransactItems: Work<Void, [TableItemsSection]> {
+      .init { [weak self] work in
+         let filtered = Self.filteredAll()
+         let items = self?.convertToItems(filtered)
 
-      let selectedSegmentIndex = work.unsafeInput
-      let transactions = Self.filteredTransactionsForIndex(selectedSegmentIndex)
+         work.success(result: items ?? [])
+      }
+   }
 
+   var getSentTransactItems: Work<Void, [TableItemsSection]> {
+      .init { [weak self] work in
+         let filtered = Self.filteredSent()
+         let items = self?.convertToItems(filtered)
+
+         work.success(result: items ?? [])
+      }
+   }
+
+   var getRecievedTransactItems: Work<Void, [TableItemsSection]> {
+      .init { [weak self] work in
+         let filtered = Self.filteredRecieved()
+         let items = self?.convertToItems(filtered)
+
+         work.success(result: items ?? [])
+      }
+   }
+}
+
+private extension HistoryWorks {
+   static func filteredAll() -> [Transaction] {
+      guard let transactions = store.transactions else {
+         return []
+      }
+
+      return transactions
+   }
+
+   static func filteredSent() -> [Transaction] {
+      guard let transactions = store.transactions else {
+         return []
+      }
+
+      return transactions.filter {
+         $0.sender.senderTgName == Self.store.currentUser
+      }
+   }
+
+   static func filteredRecieved() -> [Transaction] {
+      guard let transactions = store.transactions else {
+         return []
+      }
+
+      return transactions.filter {
+         $0.sender.senderTgName != Self.store.currentUser
+      }
+   }
+
+   private func convertToItems(_ filtered: [Transaction]) -> [TableItemsSection] {
       var prevDay = ""
 
-      let result = transactions
+      return filtered
          .reduce([TableItemsSection]()) { result, transact in
             var state = TransactionItem.State.recieved
             if transact.sender.senderTgName == Self.store.currentUser {
@@ -103,30 +156,26 @@ final class HistoryWorks<Asset: AssetProtocol>: BaseSceneWorks<HistoryWorks.Temp
             prevDay = currentDay
             return result
          }
-
-      work.success(result: result)
-
-      Self.store.sections = result
    }
 
-   private static func filteredTransactionsForIndex(_ index: Int) -> [Transaction] {
-      guard let transactions = store.transactions else {
-         return []
-      }
-
-      switch index {
-      case 1:
-         return transactions.filter {
-            $0.sender.senderTgName != Self.store.currentUser
-         }
-      case 2:
-         return transactions.filter {
-            $0.sender.senderTgName == Self.store.currentUser
-         }
-      default:
-         return transactions
-      }
-   }
+//   private static func filteredTransactionsForIndex(_ index: Int) -> [Transaction] {
+//      guard let transactions = store.transactions else {
+//         return []
+//      }
+//
+//      switch index {
+//      case 1:
+//         return transactions.filter {
+//            $0.sender.senderTgName != Self.store.currentUser
+//         }
+//      case 2:
+//         return transactions.filter {
+//            $0.sender.senderTgName == Self.store.currentUser
+//         }
+//      default:
+//         return transactions
+//      }
+//   }
 
    private static func convertToDate(time: String) -> String? {
       let inputFormatter = DateFormatter()

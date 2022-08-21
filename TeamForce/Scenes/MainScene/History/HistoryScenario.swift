@@ -9,26 +9,34 @@ import ReactiveWorks
 import UIKit
 
 struct HistoryScenarioEvents {
-   let segmentContorlEvent: VoidWork<Int>
+   let presentAllTransactions: VoidWork<Void>
+   let presentSentTransactions: VoidWork<Void>
+   let presentRecievedTransaction: VoidWork<Void>
 }
 
 final class HistoryScenario<Asset: AssetProtocol>:
    BaseScenario<HistoryScenarioEvents, HistoryState, HistoryWorks<Asset>>
 {
    override func start() {
-      let setState = setState
 
       works.loadProfile
          .doAsync()
          .onFail(setState, .loadProfilError)
          .doNext(work: works.getTransactions)
          .onFail(setState, .loadTransactionsError)
-         .doInput(0)
-         .doNext(work: works.filterTransactions)
-         .onSuccess(setState) { .present($0) }
+         .doVoidNext(works.getAllTransactItems)
+         .onSuccess(setState) { .presentAllTransactions($0) }
 
-      events.segmentContorlEvent
-         .doNext(work: works.filterTransactions)
-         .onSuccess(setState) { .present($0) }
+      events.presentAllTransactions
+         .doNext(work: works.getAllTransactItems)
+         .onSuccess(setState) { .presentAllTransactions($0) }
+
+      events.presentSentTransactions
+         .doNext(work: works.getSentTransactItems)
+         .onSuccess(setState) { .presentSentTransactions($0) }
+
+      events.presentRecievedTransaction
+         .doNext(work: works.getRecievedTransactItems)
+         .onSuccess(setState) { .presentRecievedTransaction($0) }
    }
 }

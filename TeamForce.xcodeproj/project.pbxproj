@@ -105,7 +105,7 @@
 		19C1E9942860F05F00E7976D /* PromiseKit in Frameworks */ = {isa = PBXBuildFile; productRef = 19C1E9932860F05F00E7976D /* PromiseKit */; };
 		19C1E9A128610E2800E7976D /* AssetProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C1E99B28610E2800E7976D /* AssetProtocol.swift */; };
 		19C1E9A328610E4E00E7976D /* MainRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C1E9A228610E4E00E7976D /* MainRouter.swift */; };
-		19C306D828ADF6C2002D5124 /* HistoryVMs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C306D728ADF6C2002D5124 /* HistoryVMs.swift */; };
+		19C306D828ADF6C2002D5124 /* HistoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C306D728ADF6C2002D5124 /* HistoryCell.swift */; };
 		19CF792828A54D60001531B8 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19CF792728A54D60001531B8 /* Config.swift */; };
 		19CF792C28A587B9001531B8 /* TransactWorks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19CF792B28A587B9001531B8 /* TransactWorks.swift */; };
 		19D08351286F401000F75E4A /* SideBarUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D08350286F401000F75E4A /* SideBarUserModel.swift */; };
@@ -255,6 +255,7 @@
 		197A771728AD90800082CD81 /* XelaLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XelaLog.swift; sourceTree = "<group>"; };
 		197A771928AD90B30082CD81 /* Presenting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Presenting.swift; sourceTree = "<group>"; };
 		197A771B28AD91E20082CD81 /* HistoryPresenters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryPresenters.swift; sourceTree = "<group>"; };
+		1985A12328B2780000B017E0 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		198FE1C82899994A00BAF1A5 /* LoginUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUseCase.swift; sourceTree = "<group>"; };
 		198FE1CB28999A2600BAF1A5 /* NilBlocker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NilBlocker.swift; sourceTree = "<group>"; };
 		198FE1CD2899BB8E00BAF1A5 /* LoadBalanceUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadBalanceUseCase.swift; sourceTree = "<group>"; };
@@ -281,7 +282,7 @@
 		19C1E98B285F426B00E7976D /* ApiEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiEngine.swift; sourceTree = "<group>"; };
 		19C1E99B28610E2800E7976D /* AssetProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetProtocol.swift; sourceTree = "<group>"; };
 		19C1E9A228610E4E00E7976D /* MainRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainRouter.swift; sourceTree = "<group>"; };
-		19C306D728ADF6C2002D5124 /* HistoryVMs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryVMs.swift; sourceTree = "<group>"; };
+		19C306D728ADF6C2002D5124 /* HistoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryCell.swift; sourceTree = "<group>"; };
 		19CF792728A54D60001531B8 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		19CF792B28A587B9001531B8 /* TransactWorks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactWorks.swift; sourceTree = "<group>"; };
 		19D08350286F401000F75E4A /* SideBarUserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBarUserModel.swift; sourceTree = "<group>"; };
@@ -472,6 +473,7 @@
 				19C1E983285F426B00E7976D /* Networking */,
 				190C1D41285D195800FB3518 /* Main */,
 				190C1D1F285D160000FB3518 /* Info.plist */,
+				1985A12328B2780000B017E0 /* README.md */,
 			);
 			path = TeamForce;
 			sourceTree = "<group>";
@@ -723,7 +725,7 @@
 				63EB469628AC35920070A271 /* HistoryScenario.swift */,
 				63EB469828AC35A30070A271 /* HistoryWorks.swift */,
 				197A771B28AD91E20082CD81 /* HistoryPresenters.swift */,
-				19C306D728ADF6C2002D5124 /* HistoryVMs.swift */,
+				19C306D728ADF6C2002D5124 /* HistoryCell.swift */,
 			);
 			path = History;
 			sourceTree = "<group>";
@@ -1090,7 +1092,7 @@
 				63E7A74528AFBC5300FB2C80 /* GetPeriodsFromDateApiWorker.swift in Sources */,
 				19EF32B02884B6C80078F53D /* TableViewModel.swift in Sources */,
 				19171F4B28AD23AE000926B1 /* HistoryViewModels.swift in Sources */,
-				19C306D828ADF6C2002D5124 /* HistoryVMs.swift in Sources */,
+				19C306D828ADF6C2002D5124 /* HistoryCell.swift in Sources */,
 				19BD2A8928ABB72500FCC00A /* Scenaryable.swift in Sources */,
 				63E7A74128AFA0D200FB2C80 /* GetPeriodByDateApiWorker.swift in Sources */,
 				19A73BED28A4530C000B74CF /* TextFieldBadged.swift in Sources */,

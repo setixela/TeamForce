@@ -21,61 +21,102 @@ final class HistoryViewModels<Design: DesignProtocol>: Designable {
 //         SegmentControlButton(),
 //      ])
 
-   lazy var segmentedControl = SegmentedControlModel()
-      .set(.items(["Все", "Получено", "Отправлено"]))
+   lazy var segmentedControl = SegmentControl<SegmentControl3Events, SegmentControlButton<Design>>()
       .set(.height(50))
-      .set(.selectedSegmentIndex(0))
+//
+//      .set(.items(["Все", "Получено", "Отправлено"]))
+//      .set(.height(50))
+//      .set(.selectedSegmentIndex(0))
+}
+
+protocol SegmentEventsProtocol: InitProtocol {
+   func indexToEvent(_ index: Int) -> Event<Void>?
+}
+
+struct SegmentControl3Events: SegmentEventsProtocol {
+   var selected1: Event<Void>?
+   var selected2: Event<Void>?
+   var selected3: Event<Void>?
+
+   func indexToEvent(_ index: Int) -> Event<Void>? {
+      switch index {
+      case 1:
+         return selected2
+      case 2:
+         return selected3
+      default:
+         return selected1
+      }
+   }
 }
 
 enum SegmentControlState {
    case items([UIViewModel])
 }
 
-//final class SegmentControl<Design: DSP>: BaseViewModel<StackViewExtended>, Designable, Stateable2 {
-//   typealias State = StackState
-//   typealias State2 = SegmentControlState
-//
-//}
-//
-//extension SegmentControl {
-//   func applyState(_ state: SegmentControlState) {
-//      switch state {
-//      case .items(let array):
-//       //  items = array
-//         //set_models(array)
-//         break
-//      }
-//   }
-//}
+final class SegmentControl<State2: SegmentEventsProtocol, Button: ButtonModelProtocol>:
+   BaseViewModel<StackViewExtended>,
+   Stateable2
+{
+   typealias State = StackState
 
-//struct SegmentControlButtonMode<WeakSelf>: WeakSelfied {
-//   var inactive: Event<WeakSelf?>?
-//   var selected: Event<WeakSelf?>?
-//}
+   var eventsStore: SegmentControl3Events = .init()
 
-struct SegmentControlButtonMode: SceneModeProtocol {
-   var normal: VoidEvent?
-   var selected: VoidEvent?
+   private lazy var buttons: [UIViewModel] = []
+
+   override func start() {
+      set_axis(.horizontal)
+      set_distribution(.fillEqually)
+      //  set_arrangedModels(buttons)
+   }
 }
 
-final class SegmentControlButton<Design: DSP>: BaseViewModel<StackViewExtended>, Designable, SceneModable, Stateable {
+extension SegmentControl {
+   func applyState(_ state: SegmentControlState) {
+      switch state {
+      case .items(let array):
+         buttons = array
+         set_arrangedModels(buttons)
+      }
+   }
+}
 
-   var modes: SegmentControlButtonMode = .init()
+extension SegmentControl: Communicable {}
+
+// struct SegmentControlButtonMode<WeakSelf>: WeakSelfied {
+//   var inactive: Event<WeakSelf?>?
+//   var selected: Event<WeakSelf?>?
+// }
+
+struct SegmentButtonMode: SceneModeProtocol {
+   var normal: Event<Void>?
+   var selected: Event<Void>?
+}
+
+final class SegmentControlButton<Design: DSP>: BaseViewModel<StackViewExtended>,
+   ButtonModelProtocol,
+   Designable,
+   SceneModable,
+   Stateable,
+   Communicable
+{
+   var modes: SegmentButtonMode = .init()
+   var eventsStore: ButtonEvents = .init()
 
    typealias State = StackState
 
-   private let button = ButtonModel()
+   private lazy var button = ButtonModel()
+
    private let selector = ViewModel()
       .set_height(3)
       .set_backColor(Design.color.textError)
       .set_hidden(true)
 
    override func start() {
-      set_distribution(.equalSpacing)
       onModeChanged(\.normal) { [weak self] in
          self?.button
             .set_textColor(Design.color.text)
-            .set_hidden(true)
+            .set_hidden(false)
       }
       onModeChanged(\.selected) { [weak self] in
          self?.button
@@ -85,8 +126,29 @@ final class SegmentControlButton<Design: DSP>: BaseViewModel<StackViewExtended>,
       setMode(\.normal)
       set_arrangedModels([
          button,
-         selector
+         selector,
       ])
-   }
 
+      button.onEvent(\.didTap) { [weak self]
+         in self?.sendEvent(\.didTap)
+      }
+   }
+}
+
+extension SegmentControlButton {
+   static func buttonWithTitle(_ title: String,
+                               _ closure: @escaping () -> Void) -> SegmentControlButton
+   {
+      let button = SegmentControlButton<Design>()
+      button.set {
+         $0.button
+            .set_title(title)
+            .onEvent(\.didTap) { [weak button] in
+               button?.setMode(\.selected)
+               closure()
+            }
+      }
+
+      return button
+   }
 }
