@@ -95,6 +95,7 @@
 		19A73BEF28A454AC000B74CF /* BadgeProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A73BEE28A454AC000B74CF /* BadgeProtocols.swift */; };
 		19A8229628A925760081D385 /* ViewModel+Setters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A8229528A925760081D385 /* ViewModel+Setters.swift */; };
 		19A8229828A9305D0081D385 /* UIEdgeInsets+Padding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A8229728A9305D0081D385 /* UIEdgeInsets+Padding.swift */; };
+		19A9232A28B2A8200080D491 /* SpacerPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A9232928B2A8200080D491 /* SpacerPresenter.swift */; };
 		19AE3AEF28691B2E00A0C6E4 /* MainScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19AE3AEE28691B2E00A0C6E4 /* MainScene.swift */; };
 		19AE3AF22869230C00A0C6E4 /* AuthApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19AE3AF12869230C00A0C6E4 /* AuthApiWorker.swift */; };
 		19BD2A8728ABB35C00FCC00A /* LoginScenario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19BD2A8628ABB35C00FCC00A /* LoginScenario.swift */; };
@@ -275,6 +276,7 @@
 		19A73BEE28A454AC000B74CF /* BadgeProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeProtocols.swift; sourceTree = "<group>"; };
 		19A8229528A925760081D385 /* ViewModel+Setters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewModel+Setters.swift"; sourceTree = "<group>"; };
 		19A8229728A9305D0081D385 /* UIEdgeInsets+Padding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIEdgeInsets+Padding.swift"; sourceTree = "<group>"; };
+		19A9232928B2A8200080D491 /* SpacerPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpacerPresenter.swift; sourceTree = "<group>"; };
 		19AE3AEE28691B2E00A0C6E4 /* MainScene.swift */ = {isa = PBXFileReference; indentWidth = 3; lastKnownFileType = sourcecode.swift; path = MainScene.swift; sourceTree = "<group>"; tabWidth = 3; };
 		19AE3AF12869230C00A0C6E4 /* AuthApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthApiWorker.swift; sourceTree = "<group>"; };
 		19BD2A8628ABB35C00FCC00A /* LoginScenario.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginScenario.swift; sourceTree = "<group>"; };
@@ -711,14 +713,30 @@
 			path = Badging;
 			sourceTree = "<group>";
 		};
+		19A9232828B2A8080080D491 /* Presenters */ = {
+			isa = PBXGroup;
+			children = (
+				19A9232928B2A8200080D491 /* SpacerPresenter.swift */,
+			);
+			path = Presenters;
+			sourceTree = "<group>";
+		};
+		19A9232B28B2A8390080D491 /* Archive */ = {
+			isa = PBXGroup;
+			children = (
+				63E7A73828AE5C2A00FB2C80 /* OldTransactView.swift */,
+			);
+			path = Archive;
+			sourceTree = "<group>";
+		};
 		19ACB3CA28A599D600B5AD71 /* Transact */ = {
 			isa = PBXGroup;
 			children = (
+				19A9232B28B2A8390080D491 /* Archive */,
 				190BE97A28ADDFC60062CCD5 /* TransactScene.swift */,
 				1953DE832879FDE3000DC537 /* TransactViewModels.swift */,
 				190BE97828ADDFAB0062CCD5 /* TransactScenario.swift */,
 				19CF792B28A587B9001531B8 /* TransactWorks.swift */,
-				63E7A73828AE5C2A00FB2C80 /* OldTransactView.swift */,
 			);
 			path = Transact;
 			sourceTree = "<group>";
@@ -857,6 +875,7 @@
 		19DD3D93288766770085CDA8 /* TableModels */ = {
 			isa = PBXGroup;
 			children = (
+				19A9232828B2A8080080D491 /* Presenters */,
 				19EF32AF2884B6C80078F53D /* TableViewModel.swift */,
 				19171F4C28AD663F000926B1 /* TableItemsModel.swift */,
 				19DD3D94288766860085CDA8 /* LabelCellModel.swift */,
@@ -1171,6 +1190,7 @@
 				63EB469928AC35A30070A271 /* HistoryWorks.swift in Sources */,
 				19017B8228A6A3FB00B06345 /* GetUsersListApiWorker.swift in Sources */,
 				63E7A73928AE5C2B00FB2C80 /* OldTransactView.swift in Sources */,
+				19A9232A28B2A8200080D491 /* SpacerPresenter.swift in Sources */,
 				19F153842899649900ECF000 /* LoadProfileUseCase.swift in Sources */,
 				19F15386289964AA00ECF000 /* LogoutUseCase.swift in Sources */,
 				1953DE842879FDE3000DC537 /* TransactViewModels.swift in Sources */,

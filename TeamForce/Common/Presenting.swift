@@ -13,7 +13,7 @@ protocol PresenterProtocol {
    func viewModel(for input: Any) -> UIViewModel
 }
 
-final class Presenter<In, Out: UIViewModel>: Work<In, Out>, PresenterProtocol {
+open class Presenter<In, Out: UIViewModel>: Work<In, Out>, PresenterProtocol {
    func viewModel(for input: Any) -> UIViewModel {
       doSync(input as? In)
    }

@@ -40,6 +40,7 @@ final class HistoryScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>
       viewModels.tableModel
          .set(.presenters([
             HistoryPresenters<Design>.transactToHistoryCell,
+            SpacerPresenter.presenter
          ]))
    }
 }
@@ -76,13 +77,20 @@ extension HistoryScene: StateMachine {
          break
       case .presentAllTransactions(let value):
          viewModels.tableModel
-            .set(.itemSections(value))
+            .set(.itemSections(value.addedSpacer(size: Grid.x80.value)))
       case .presentSentTransactions(let value):
          viewModels.tableModel
-            .set(.itemSections(value))
+            .set(.itemSections(value.addedSpacer(size: Grid.x80.value)))
       case .presentRecievedTransaction(let value):
          viewModels.tableModel
-            .set(.itemSections(value))
+            .set(.itemSections(value.addedSpacer(size: Grid.x80.value) ))
       }
+   }
+}
+
+extension Array where Element: TableItemsSection {
+   func addedSpacer(size: CGFloat) -> [TableItemsSection] {
+      last?.items.append(SpacerItem(size: size))
+      return self
    }
 }
