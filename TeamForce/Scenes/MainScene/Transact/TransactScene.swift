@@ -17,7 +17,7 @@ final class TransactScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended
 {
    typealias State = StackState
 
-   private lazy var viewModels = TransactViewModels<Asset>()
+   private lazy var viewModels = TransactViewModels<Design>()
 
    lazy var scenario = TransactScenario(
       works: TransactWorks<Asset>(),
@@ -50,6 +50,7 @@ final class TransactScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended
       set_alignment(.fill)
       set_spacing(8)
       set_arrangedModels([
+         viewModels.balanceInfo,
          viewModels.userSearchTextField,
          viewModels.transactInputViewModel,
          viewModels.reasonTextView,
@@ -91,8 +92,7 @@ extension TransactScene: StateMachine {
       case .loadTokensError:
          viewModels.userSearchTextField.set_hidden(true)
       case .loadBalanceSuccess(let balance):
-         viewModels.transactInputViewModel.set(.rightCaptionText(Text.title.availableThanks +
-               " " + String(balance)))
+         viewModels.balanceInfo.models.down.set_text(String(balance))
       case .loadBalanceError:
          print("balance not loaded")
       case .loadUsersListSuccess(let users):

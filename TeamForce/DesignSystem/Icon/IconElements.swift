@@ -19,6 +19,7 @@ protocol IconElements: InitProtocol, DesignElementable where DesignElement == UI
    // brand
    var logo: DesignElement { get }
    var logoTitle: DesignElement { get }
+   var logoCurrency: UIImage { get }
 
    // other
    var checkCircle: DesignElement { get }

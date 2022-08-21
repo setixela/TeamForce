@@ -22,6 +22,7 @@ struct IconBuilder: IconElements {
    // brand
    var logo: UIImage { make("dt_logo") }
    var logoTitle: UIImage { make("dt_logo_title") }
+   var logoCurrency: UIImage { make("dt_currency_logo") }
    var introlIllustrate: UIImage { make("dt_main") }
 
    // other

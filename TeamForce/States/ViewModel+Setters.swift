@@ -368,4 +368,10 @@ extension ViewModelProtocol where Self: Stateable, View: PaddingTextField {
       view.clearButtonMode = value
       return self
    }
+
+   @discardableResult func set_alignment(_ value: NSTextAlignment) -> Self {
+      view.textAlignment = value
+      return self
+   }
+
 }

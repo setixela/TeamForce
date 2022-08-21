@@ -18,6 +18,8 @@ protocol TypographyElements: InitProtocol, DesignElementable {
    var headline6: DesignElement { get }
 
    var title: DesignElement { get }
+   var title2: DesignElement  { get }
+
    var body1: DesignElement { get }
    var body2: DesignElement { get }
    var body3: DesignElement { get }
@@ -39,6 +41,7 @@ struct FontBuilder: FontProtocol {
    var headline6: UIFont { .systemFont(ofSize: 20, weight: .regular) }
 
    var title: UIFont { .systemFont(ofSize: 24, weight: .bold) }
+   var title2: UIFont { .systemFont(ofSize: 24, weight: .medium) }
 
    var body1: UIFont { .systemFont(ofSize: 16, weight: .regular) }
    var body2: UIFont { .systemFont(ofSize: 14, weight: .semibold) }

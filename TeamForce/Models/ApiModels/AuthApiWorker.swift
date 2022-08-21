@@ -71,7 +71,7 @@ struct Income: Decodable {
 
 struct Distr: Codable {
    let amount: Int
-   let expireDate: String
+   let expireDate: String?
    let frozen: Int
    let sent: Int
    let received: Int

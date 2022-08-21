@@ -17,10 +17,13 @@ protocol TextFieldStateProtocol: TextFieldElements where DesignElement == [TextF
 
 struct TextFieldStateBuilder<Design: DSP>: TextFieldStateProtocol, Designable {
    var `default`: [TextFieldState] {[
-      .padding(.init(top: 16, left: 16, bottom: 16, right: 16)),
+      .padding(Design.params.contentPadding),
       .placeholder(""),
       .backColor(Design.color.textFieldBack),
-      .height(Design.params.buttonHeight)
+      .height(Design.params.buttonHeight),
+      .cornerRadius(Design.params.cornerRadius),
+      .borderWidth(Design.params.borderWidth),
+      .borderColor(Design.color.boundary),
    ]}
 
    var invisible: [TextFieldState] {[

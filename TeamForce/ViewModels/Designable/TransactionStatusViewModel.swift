@@ -19,10 +19,10 @@ struct TransactionStatusViewEvents: InitProtocol {
    var hide: Event<Void>?
 }
 
-final class TransactionStatusViewModel<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>,
+final class TransactionStatusViewModel<Design: DSP>: BaseViewModel<StackViewExtended>,
    Communicable,
    Stateable2,
-   Assetable
+   Designable
 {
    typealias State = StackState
    typealias State2 = ViewState
@@ -45,7 +45,7 @@ final class TransactionStatusViewModel<Asset: AssetProtocol>: BaseViewModel<Stac
    }()
 
    let statusLabel = Design.label.headline5
-      .set(.text(Text.title.thanksWereSend))
+      .set(.text(Design.Text.title.thanksWereSend))
       .set(.numberOfLines(1))
       .set(.alignment(.center))
       .set(.padding(.init(top: 22, left: 0, bottom: 26, right: 0)))
@@ -65,7 +65,7 @@ final class TransactionStatusViewModel<Asset: AssetProtocol>: BaseViewModel<Stac
       .set(.alignment(.center))
 
    let button = Design.button.default
-      .set(.title(Text.button.toTheBeginingButton))
+      .set(.title(Design.Text.button.toTheBeginingButton))
 
    override func start() {
       set(Design.state.stack.default)

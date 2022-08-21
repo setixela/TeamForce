@@ -9,7 +9,9 @@ import ReactiveWorks
 import UIKit
 
 final class ImageViewModel: BaseViewModel<PaddingImageView> {
-   override func start() {}
+   override func start() {
+      set_contentMode(.scaleAspectFit)
+   }
 }
 
 extension ImageViewModel: Stateable2 {

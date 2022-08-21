@@ -14,11 +14,11 @@ enum TransactInputState {
 }
 
 final class TransactInputViewModel<Design: DesignProtocol>: BaseViewModel<StackViewExtended>,
-    Designable
+    Designable, Stateable
 {
-    private lazy var doubleLabel = DoubleLabelModel<Design>()
+   typealias State = StackState
 
-    internal lazy var textField = TextFieldModel<Design>()
+   lazy var textField = TextFieldModel<Design>()
         .set(.clearButtonMode(.never))
         .set(.font(Design.font.headline2))
         .set(.height(72))
@@ -34,21 +34,9 @@ final class TransactInputViewModel<Design: DesignProtocol>: BaseViewModel<StackV
             .height(118),
             .backColor(Design.color.backgroundSecondary),
             .models([
-                doubleLabel,
                 textField,
             ]))
     }
 }
 
-extension TransactInputViewModel: Stateable2 {
-    typealias State = StackState
-
-    func applyState(_ state: TransactInputState) {
-        switch state {
-        case .leftCaptionText(let string):
-            doubleLabel.labelLeft.set(.text(string))
-        case .rightCaptionText(let string):
-            doubleLabel.labelRight.set(.text(string))
-        }
-    }
-}
+final class Small {}

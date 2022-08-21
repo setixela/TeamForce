@@ -18,7 +18,6 @@ protocol ParamsProtocol: InitProtocol, Designable {
    //
    var borderWidth: CGFloat { get }
    //
-   var contentPadding: UIEdgeInsets { get }
    var titleSubtitleOffset: CGFloat { get }
    var globalTopOffset: CGFloat { get }
    //
@@ -31,6 +30,9 @@ protocol ParamsProtocol: InitProtocol, Designable {
    var panelShadow: Shadow { get }
    var panelButtonShadow: Shadow { get }
    var panelMainButtonShadow: Shadow { get }
+   // paddings
+   var contentPadding: UIEdgeInsets { get }
+   var infoFramePadding: UIEdgeInsets { get }
 }
 
 struct ParamBuilder<Design: DSP>: ParamsProtocol {
@@ -40,9 +42,7 @@ struct ParamBuilder<Design: DSP>: ParamsProtocol {
    var cornerRadiusMedium: CGFloat { 20 }
    //
    var borderWidth: CGFloat = 1
-   //
-   var contentPadding: UIEdgeInsets { .init(top: 12, left: 16, bottom: 12, right: 16) }
-   
+
    var titleSubtitleOffset: CGFloat { 16 }
    var globalTopOffset: CGFloat { 24 }
    //
@@ -69,4 +69,7 @@ struct ParamBuilder<Design: DSP>: ParamsProtocol {
       color: Design.color.iconContrast,
       opacity: 0.23
    ) }
+   // paddings
+   var contentPadding: UIEdgeInsets { .init(top: 12, left: 16, bottom: 12, right: 16) }
+   var infoFramePadding: UIEdgeInsets { .init(top: 16, left: 24, bottom: 24, right: 24) }
 }

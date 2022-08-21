@@ -463,6 +463,7 @@
 		190C1D10285D15FF00FB3518 /* TeamForce */ = {
 			isa = PBXGroup;
 			children = (
+				1985A12328B2780000B017E0 /* README.md */,
 				19CF792728A54D60001531B8 /* Config.swift */,
 				190C1D13285D15FF00FB3518 /* SceneDelegate.swift */,
 				197A2D9728A95D7500190656 /* States */,
@@ -479,7 +480,6 @@
 				19C1E983285F426B00E7976D /* Networking */,
 				190C1D41285D195800FB3518 /* Main */,
 				190C1D1F285D160000FB3518 /* Info.plist */,
-				1985A12328B2780000B017E0 /* README.md */,
 			);
 			path = TeamForce;
 			sourceTree = "<group>";
@@ -729,6 +729,44 @@
 			path = Archive;
 			sourceTree = "<group>";
 		};
+		19A9232C28B2DB120080D491 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				19DD3D93288766770085CDA8 /* TableModels */,
+				19466DFF289FE0B20052F0AB /* LabelModels */,
+				197A2D9C28A9B06900190656 /* Wrapping */,
+				197A2D9D28A9B08100190656 /* RuntimeCombos */,
+				1985A12428B2963C00B017E0 /* SegmentControls */,
+				19A73BE928A450EB000B74CF /* Badging */,
+				19D0835C286F428600F75E4A /* BarButtonModel.swift */,
+				19ECD54228623D30001765F6 /* StackModel.swift */,
+				199C4B6A2863292F008AD6FD /* ButtonModel.swift */,
+				196750AB2865189C0019A6DE /* TextFieldModel.swift */,
+				196750AF286518F80019A6DE /* DoubleStacksModel.swift */,
+				196750B12865190D0019A6DE /* ImageViewModel.swift */,
+				199C4B6528624B4C008AD6FD /* Spacer.swift */,
+				1953DE852879FE30000DC537 /* PickerViewModel.swift */,
+				19D0835E286F42C000F75E4A /* FrameCellModel.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		19A9232D28B2DB1B0080D491 /* Designable */ = {
+			isa = PBXGroup;
+			children = (
+				19017B7228A69CD400B06345 /* DTLogoTitleX.swift */,
+				19ACB3D128A65FDD00B5AD71 /* Combos */,
+				19EE848E28AB20A600D862EE /* MainVMs */,
+				19DD3D96288A0A8C0085CDA8 /* CoverViewModel.swift */,
+				63E1916C2889519E000FD312 /* BadgeModel.swift */,
+				6368D8292894091B0049EEAB /* TransactInputViewModel.swift */,
+				6368D82B289415EC0049EEAB /* TextViewModel.swift */,
+				63AD437A28992045000511B9 /* TransactionStatusViewModel.swift */,
+				19D08350286F401000F75E4A /* SideBarUserModel.swift */,
+			);
+			path = Designable;
+			sourceTree = "<group>";
+		};
 		19ACB3CA28A599D600B5AD71 /* Transact */ = {
 			isa = PBXGroup;
 			children = (
@@ -784,12 +822,10 @@
 				19017B6828A6986F00B06345 /* TitleSubtitleX.swift */,
 				19017B6E28A69C7800B06345 /* TitleSubtitleCaptionX.swift */,
 				19017B6C28A698BC00B06345 /* TitleSubtitleCaptionY.swift */,
-				19017B7228A69CD400B06345 /* DTLogoTitleX.swift */,
 				19017B7028A69CB100B06345 /* IconTitleY.swift */,
 				197A2DA628A9D10900190656 /* IconTextField.swift */,
 				19D08358286F41FA00F75E4A /* IconLabelX.swift */,
 				19D0835A286F424000F75E4A /* LabelIconX.swift */,
-				197A2D9D28A9B08100190656 /* RuntimeCombos */,
 			);
 			path = Combos;
 			sourceTree = "<group>";
@@ -846,28 +882,8 @@
 		19C1E9A428610E6F00E7976D /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				19EE848E28AB20A600D862EE /* MainVMs */,
-				197A2D9C28A9B06900190656 /* Wrapping */,
-				19ACB3D128A65FDD00B5AD71 /* Combos */,
-				19A73BE928A450EB000B74CF /* Badging */,
-				19466DFF289FE0B20052F0AB /* LabelModels */,
-				19DD3D93288766770085CDA8 /* TableModels */,
-				19D0835C286F428600F75E4A /* BarButtonModel.swift */,
-				19ECD54228623D30001765F6 /* StackModel.swift */,
-				199C4B6A2863292F008AD6FD /* ButtonModel.swift */,
-				196750AB2865189C0019A6DE /* TextFieldModel.swift */,
-				196750AF286518F80019A6DE /* DoubleStacksModel.swift */,
-				196750B12865190D0019A6DE /* ImageViewModel.swift */,
-				199C4B6528624B4C008AD6FD /* Spacer.swift */,
-				19D08350286F401000F75E4A /* SideBarUserModel.swift */,
-				19D0835E286F42C000F75E4A /* FrameCellModel.swift */,
-				1953DE852879FE30000DC537 /* PickerViewModel.swift */,
-				19DD3D96288A0A8C0085CDA8 /* CoverViewModel.swift */,
-				63E1916C2889519E000FD312 /* BadgeModel.swift */,
-				6368D8292894091B0049EEAB /* TransactInputViewModel.swift */,
-				6368D82B289415EC0049EEAB /* TextViewModel.swift */,
-				63AD437A28992045000511B9 /* TransactionStatusViewModel.swift */,
-				1985A12428B2963C00B017E0 /* SegmentControls */,
+				19A9232D28B2DB1B0080D491 /* Designable */,
+				19A9232C28B2DB120080D491 /* Common */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";

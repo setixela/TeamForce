@@ -26,6 +26,7 @@ struct LabelBuilder<Design: DSP>: LabelProtocol, Designable {
    var headline6: LabelModel { .init(Design.state.label.headline6) }
 
    var title: LabelModel { .init(Design.state.label.title) }
+   var title2: LabelModel { .init(Design.state.label.title2) }
 
    var body1: LabelModel { .init(Design.state.label.body1) }
    var body2: LabelModel { .init(Design.state.label.body2) }
@@ -71,6 +72,11 @@ struct LabelStateBuilder<Design: DSP>: LabelStateProtocol, Designable {
 
    var title: [LabelState] { [
       .font(Design.font.title),
+      .color(.black)
+   ] }
+
+   var title2: [LabelState] { [
+      .font(Design.font.title2),
       .color(.black)
    ] }
 

@@ -9,25 +9,39 @@ import UIKit
 
 // MARK: - View models
 
-final class TransactViewModels<Asset: AssetProtocol>: Assetable {
+final class TransactViewModels<Design: DSP>: Designable {
    //
-   lazy var digitalThanksTitle = Design.label.headline4
-      .set_text(Text.title.digitalThanks)
-      .set_numberOfLines(1)
-      .set_alignment(.left)
-      .set_padding(.init(top: 22, left: 0, bottom: 26, right: 0))
+
+   lazy var balanceInfo = Combos<SComboMDR<LabelModel, LabelModel, ImageViewModel>>()
+      .setAll { title, subtitle, currencyIcon in
+         title
+            .set_font(Design.font.caption)
+            .set_text("Доступно")
+            .set_color(Design.color.iconInvert)
+         subtitle
+            .set_font(Design.font.title2)
+            .set_text("0")
+            .set_color(Design.color.iconInvert)
+            .set_height(Grid.x20.value)
+         currencyIcon
+            .set_image(Design.icon.logoCurrency)
+            .set_width(Grid.x20.value)
+            .set_imageTintColor(Design.color.iconInvert)
+      }
+      .set_alignment(.leading)
+      .set_height(Grid.x90.value)
+      .set_backColor(Design.color.iconContrast)
+      .set_cornerRadius(Design.params.cornerRadius)
+      .set_padding(Design.params.infoFramePadding)
 
    lazy var userSearchTextField = TextFieldModel<Design>()
-      .set_backColor(.init(red: 0.33, green: 0.33, blue: 0.33, alpha: 0.08))
-      .set_height(48)
-      .set_placeholder(Text.title.chooseRecipient)
+      .set(Design.state.textField.default)
+      .set_placeholder(Design.Text.title.chooseRecipient)
       .set_hidden(true)
-      .set_padding(.init(top: 0, left: 16, bottom: 0, right: 16))
 
    lazy var transactInputViewModel = TransactInputViewModel<Design>()
-      .set(.leftCaptionText(Text.title.sendThanks))
-      .set(.rightCaptionText(Text.title.availableThanks))
       .set_hidden(true)
+      .set_alignment(.center)
 
    lazy var tableModel = TableViewModel()
       .set_borderColor(.gray)
@@ -37,7 +51,7 @@ final class TransactViewModels<Asset: AssetProtocol>: Assetable {
 
    lazy var sendButton = Design.button.default
       .set(Design.state.button.inactive)
-      .set_title(Text.button.sendButton)
+      .set_title(Design.Text.button.sendButton)
       .set_hidden(true)
 
    lazy var reasonTextView = TextViewModel<Design>()
@@ -49,6 +63,6 @@ final class TransactViewModels<Asset: AssetProtocol>: Assetable {
       .set_borderWidth(1.0)
       .set_height(200)
       .set_hidden(true)
-   
-   lazy var transactionStatusView = TransactionStatusViewModel<Asset>()
+
+   lazy var transactionStatusView = TransactionStatusViewModel<Design>()
 }
