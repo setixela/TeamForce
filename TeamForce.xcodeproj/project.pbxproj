@@ -41,7 +41,6 @@
 		194D7B5A28B17DD4002DE840 /* WorksTests2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 194D7B5928B17DD4002DE840 /* WorksTests2.swift */; };
 		1952EA6328A7102B003F7852 /* StateProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1952EA6228A7102B003F7852 /* StateProtocol.swift */; };
 		1952EA6528A7115D003F7852 /* StackStateBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1952EA6428A7115C003F7852 /* StackStateBuilder.swift */; };
-		1952EA6728A711A7003F7852 /* ButtonStateBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1952EA6628A711A7003F7852 /* ButtonStateBuilder.swift */; };
 		1952EA6928A711F2003F7852 /* Associated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1952EA6828A711F2003F7852 /* Associated.swift */; };
 		1952EA6B28A71399003F7852 /* DesignElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1952EA6A28A71399003F7852 /* DesignElements.swift */; };
 		1952EA6D28A71537003F7852 /* ButtonElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1952EA6C28A71537003F7852 /* ButtonElements.swift */; };
@@ -54,7 +53,6 @@
 		1953DE88287B4574000DC537 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1953DE87287B4574000DC537 /* Fonts.swift */; };
 		195870F228A8C8040075D505 /* KeyPathMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 195870F128A8C8040075D505 /* KeyPathMaker.swift */; };
 		1959F27428AA8E9700DEEE5C /* LoginBackstage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1959F27328AA8E9700DEEE5C /* LoginBackstage.swift */; };
-		1967509D286491190019A6DE /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1967509C286491190019A6DE /* Buttons.swift */; };
 		1967509F286492780019A6DE /* Labels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1967509E286492780019A6DE /* Labels.swift */; };
 		196750A22865169C0019A6DE /* DigitalThanksScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196750A12865169C0019A6DE /* DigitalThanksScene.swift */; };
 		196750A6286516F40019A6DE /* LoginScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196750A5286516F40019A6DE /* LoginScene.swift */; };
@@ -110,6 +108,10 @@
 		19C1E9A128610E2800E7976D /* AssetProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C1E99B28610E2800E7976D /* AssetProtocol.swift */; };
 		19C1E9A328610E4E00E7976D /* MainRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C1E9A228610E4E00E7976D /* MainRouter.swift */; };
 		19C306D828ADF6C2002D5124 /* HistoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C306D728ADF6C2002D5124 /* HistoryCell.swift */; };
+		19CAB9C528B41C1F00A0A3B1 /* Switcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19CAB9C428B41C1F00A0A3B1 /* Switcher.swift */; };
+		19CAB9C828B41C6500A0A3B1 /* LabelSwitcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19CAB9C728B41C6500A0A3B1 /* LabelSwitcher.swift */; };
+		19CAB9CA28B41C8200A0A3B1 /* TitleBodySwitcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19CAB9C928B41C8200A0A3B1 /* TitleBodySwitcher.swift */; };
+		19CAB9CC28B41CB400A0A3B1 /* TitleBodySwitcherDT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19CAB9CB28B41CB400A0A3B1 /* TitleBodySwitcherDT.swift */; };
 		19CF792828A54D60001531B8 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19CF792728A54D60001531B8 /* Config.swift */; };
 		19CF792C28A587B9001531B8 /* TransactWorks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19CF792B28A587B9001531B8 /* TransactWorks.swift */; };
 		19D08351286F401000F75E4A /* SideBarUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D08350286F401000F75E4A /* SideBarUserModel.swift */; };
@@ -227,7 +229,6 @@
 		194D7B5928B17DD4002DE840 /* WorksTests2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorksTests2.swift; sourceTree = "<group>"; };
 		1952EA6228A7102B003F7852 /* StateProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateProtocol.swift; sourceTree = "<group>"; };
 		1952EA6428A7115C003F7852 /* StackStateBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackStateBuilder.swift; sourceTree = "<group>"; };
-		1952EA6628A711A7003F7852 /* ButtonStateBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStateBuilder.swift; sourceTree = "<group>"; };
 		1952EA6828A711F2003F7852 /* Associated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Associated.swift; sourceTree = "<group>"; };
 		1952EA6A28A71399003F7852 /* DesignElements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignElements.swift; sourceTree = "<group>"; };
 		1952EA6C28A71537003F7852 /* ButtonElements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonElements.swift; sourceTree = "<group>"; };
@@ -239,7 +240,6 @@
 		1953DE87287B4574000DC537 /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
 		195870F128A8C8040075D505 /* KeyPathMaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyPathMaker.swift; sourceTree = "<group>"; };
 		1959F27328AA8E9700DEEE5C /* LoginBackstage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginBackstage.swift; sourceTree = "<group>"; };
-		1967509C286491190019A6DE /* Buttons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Buttons.swift; sourceTree = "<group>"; };
 		1967509E286492780019A6DE /* Labels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Labels.swift; sourceTree = "<group>"; };
 		196750A12865169C0019A6DE /* DigitalThanksScene.swift */ = {isa = PBXFileReference; indentWidth = 3; lastKnownFileType = sourcecode.swift; path = DigitalThanksScene.swift; sourceTree = "<group>"; tabWidth = 3; };
 		196750A5286516F40019A6DE /* LoginScene.swift */ = {isa = PBXFileReference; indentWidth = 3; lastKnownFileType = sourcecode.swift; path = LoginScene.swift; sourceTree = "<group>"; tabWidth = 3; };
@@ -293,6 +293,10 @@
 		19C1E99B28610E2800E7976D /* AssetProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetProtocol.swift; sourceTree = "<group>"; };
 		19C1E9A228610E4E00E7976D /* MainRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainRouter.swift; sourceTree = "<group>"; };
 		19C306D728ADF6C2002D5124 /* HistoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryCell.swift; sourceTree = "<group>"; };
+		19CAB9C428B41C1F00A0A3B1 /* Switcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Switcher.swift; sourceTree = "<group>"; };
+		19CAB9C728B41C6500A0A3B1 /* LabelSwitcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelSwitcher.swift; sourceTree = "<group>"; };
+		19CAB9C928B41C8200A0A3B1 /* TitleBodySwitcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleBodySwitcher.swift; sourceTree = "<group>"; };
+		19CAB9CB28B41CB400A0A3B1 /* TitleBodySwitcherDT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleBodySwitcherDT.swift; sourceTree = "<group>"; };
 		19CF792728A54D60001531B8 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		19CF792B28A587B9001531B8 /* TransactWorks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactWorks.swift; sourceTree = "<group>"; };
 		19D08350286F401000F75E4A /* SideBarUserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBarUserModel.swift; sourceTree = "<group>"; };
@@ -408,7 +412,6 @@
 			isa = PBXGroup;
 			children = (
 				1952EA6C28A71537003F7852 /* ButtonElements.swift */,
-				1967509C286491190019A6DE /* Buttons.swift */,
 			);
 			path = Button;
 			sourceTree = "<group>";
@@ -547,7 +550,6 @@
 		1952EA6028A7100D003F7852 /* ButtonStates */ = {
 			isa = PBXGroup;
 			children = (
-				1952EA6628A711A7003F7852 /* ButtonStateBuilder.swift */,
 			);
 			path = ButtonStates;
 			sourceTree = "<group>";
@@ -738,6 +740,7 @@
 		19A9232C28B2DB120080D491 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				19CAB9C628B41C4E00A0A3B1 /* CommonCombos */,
 				19DD3D93288766770085CDA8 /* TableModels */,
 				19466DFF289FE0B20052F0AB /* LabelModels */,
 				197A2D9C28A9B06900190656 /* Wrapping */,
@@ -753,6 +756,7 @@
 				199C4B6528624B4C008AD6FD /* Spacer.swift */,
 				1953DE852879FE30000DC537 /* PickerViewModel.swift */,
 				19D7BE9828B3E55F00C95053 /* ScrollViewModels.swift */,
+				19CAB9C428B41C1F00A0A3B1 /* Switcher.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -760,6 +764,7 @@
 		19A9232D28B2DB1B0080D491 /* Designable */ = {
 			isa = PBXGroup;
 			children = (
+				19CAB9CB28B41CB400A0A3B1 /* TitleBodySwitcherDT.swift */,
 				19017B7228A69CD400B06345 /* DTLogoTitleX.swift */,
 				19A9232E28B2E34E0080D491 /* CurrencyLabelDT.swift */,
 				19D7BE9628B3CC1100C95053 /* CurrencyButtonDT.swift */,
@@ -895,6 +900,15 @@
 				19A9232C28B2DB120080D491 /* Common */,
 			);
 			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		19CAB9C628B41C4E00A0A3B1 /* CommonCombos */ = {
+			isa = PBXGroup;
+			children = (
+				19CAB9C728B41C6500A0A3B1 /* LabelSwitcher.swift */,
+				19CAB9C928B41C8200A0A3B1 /* TitleBodySwitcher.swift */,
+			);
+			path = CommonCombos;
 			sourceTree = "<group>";
 		};
 		19DD3D93288766770085CDA8 /* TableModels */ = {
@@ -1126,6 +1140,7 @@
 				19C1E98F285F426B00E7976D /* TeamForceApi.swift in Sources */,
 				63D419F728AA8AA70024E22C /* GetStatByPeriodIdUseCase.swift in Sources */,
 				199C4B6928632834008AD6FD /* DesignProtocol.swift in Sources */,
+				19CAB9CA28B41C8200A0A3B1 /* TitleBodySwitcher.swift in Sources */,
 				63A529F528A1F8AB004A858D /* SegmentedControlModel.swift in Sources */,
 				63D419F128AA825F0024E22C /* GetPeriodsUseCase.swift in Sources */,
 				63E7A73F28AF9E8000FB2C80 /* ReadyWorks.swift in Sources */,
@@ -1141,7 +1156,6 @@
 				197A771A28AD90B30082CD81 /* Presenting.swift in Sources */,
 				63D419ED28AA56570024E22C /* GetFeedUseCase.swift in Sources */,
 				1977BE5528A7238F00D554EA /* TextFieldStates.swift in Sources */,
-				1967509D286491190019A6DE /* Buttons.swift in Sources */,
 				191571D1289F12350061510F /* PlaygroundScene.swift in Sources */,
 				199C4B6628624B4C008AD6FD /* Spacer.swift in Sources */,
 				63578E5E28ABA2E500423957 /* CancelTransactionByIdUseCase.swift in Sources */,
@@ -1153,6 +1167,7 @@
 				19EF32B02884B6C80078F53D /* TableViewModel.swift in Sources */,
 				19171F4B28AD23AE000926B1 /* HistoryViewModels.swift in Sources */,
 				19C306D828ADF6C2002D5124 /* HistoryCell.swift in Sources */,
+				19CAB9CC28B41CB400A0A3B1 /* TitleBodySwitcherDT.swift in Sources */,
 				19BD2A8928ABB72500FCC00A /* Scenaryable.swift in Sources */,
 				63E7A74128AFA0D200FB2C80 /* GetPeriodByDateApiWorker.swift in Sources */,
 				19A73BED28A4530C000B74CF /* TextFieldBadged.swift in Sources */,
@@ -1182,7 +1197,6 @@
 				19466E01289FE28C0052F0AB /* TitleSubtitleModel.swift in Sources */,
 				197A2DA528A9BF4B00190656 /* SCombo.swift in Sources */,
 				1952EA6B28A71399003F7852 /* DesignElements.swift in Sources */,
-				1952EA6728A711A7003F7852 /* ButtonStateBuilder.swift in Sources */,
 				190BE97B28ADDFC60062CCD5 /* TransactScene.swift in Sources */,
 				19A73BEF28A454AC000B74CF /* BadgeProtocols.swift in Sources */,
 				63CFA198289C3FB6000E4D1E /* GetTransactionsUseCase.swift in Sources */,
@@ -1215,6 +1229,7 @@
 				1918CC79286F6C69004373F3 /* VerifyApiModel.swift in Sources */,
 				63EB469928AC35A30070A271 /* HistoryWorks.swift in Sources */,
 				19017B8228A6A3FB00B06345 /* GetUsersListApiWorker.swift in Sources */,
+				19CAB9C528B41C1F00A0A3B1 /* Switcher.swift in Sources */,
 				63E7A73928AE5C2B00FB2C80 /* OldTransactView.swift in Sources */,
 				19A9232A28B2A8200080D491 /* SpacerPresenter.swift in Sources */,
 				19F153842899649900ECF000 /* LoadProfileUseCase.swift in Sources */,
@@ -1253,6 +1268,7 @@
 				1952EA6928A711F2003F7852 /* Associated.swift in Sources */,
 				19D08353286F403400F75E4A /* SideBarModel.swift in Sources */,
 				196D883628ADB74800F4C09D /* TabBarPanel.swift in Sources */,
+				19CAB9C828B41C6500A0A3B1 /* LabelSwitcher.swift in Sources */,
 				1999B6FE28A2F5D300D3570B /* DataToDecodableParser.swift in Sources */,
 				63578E5C28AB9B3E00423957 /* CancelTransactionByIdApiWorker.swift in Sources */,
 				19D08359286F41FA00F75E4A /* IconLabelX.swift in Sources */,
