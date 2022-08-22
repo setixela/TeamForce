@@ -46,4 +46,14 @@ struct ButtonStateBuilder<Design: DesignProtocol>: ButtonStateProtocol {
       .vertical(true),
    ] }
 
+   var brand: [ButtonState] { [
+      .backColor(Design.color.transparentButtonBack),
+      .textColor(Design.color.textBrand),
+      .cornerRadius(Design.params.cornerRadius),
+      .borderColor(Design.color.iconBrand),
+      .tint(Design.color.iconBrand),
+      .height(Design.params.buttonHeight),
+      .enabled(true),
+   ] }
+
 }

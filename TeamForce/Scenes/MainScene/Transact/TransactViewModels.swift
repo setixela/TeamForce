@@ -55,7 +55,8 @@ final class TransactViewModels<Design: DSP>: Designable {
       .set_maxHeight(166)
       .set_hidden(true)
 
-   lazy var addPhotoButton = 0
+   lazy var addPhotoButton = ButtonModel()
+      .set(Design.state.button)
 
    lazy var transactionStatusView = TransactionStatusViewModel<Design>()
 }
@@ -63,46 +64,42 @@ final class TransactViewModels<Design: DSP>: Designable {
 final class TransactOptions<Design: DSP>: BaseViewModel<StackViewExtended>, Designable, Stateable {
    typealias State = StackState
    //
-   private lazy var anonimParamModel = LabelSwitcherXDT<Design>.switcherWith(text: "Hello")
-   private lazy var showEveryoneParamModel = LabelSwitcherXDT<Design>.switcherWith(text: "World")
-   private lazy var addTagParamModel = LabelSwitcherXDT<Design>.switcherWith(text: "Hello")
-   private lazy var whishParamModel = LabelSwitcherXDT<Design>.switcherWith(text: "Word")
+   private lazy var anonimParamModel = LabelSwitcherXDT<Design>.switcherWith(text: "Анонимно")
+   private lazy var showEveryoneParamModel = LabelSwitcherXDT<Design>.switcherWith(text: "Показать всем")
+   private lazy var addTagParamModel = LabelSwitcherXDT<Design>.switcherWith(text: "Добавить тег")
 
-   private lazy var danonimParamModel = LabelSwitcherXDT<Design>.switcherWith(text: "Hello")
-   private lazy var dshowEveryoneParamModel = LabelSwitcherXDT<Design>.switcherWith(text: "World")
-   private lazy var daddTagParamModel = LabelSwitcherXDT<Design>.switcherWith(text: "Hello")
-   private lazy var dwhishParamModel = LabelSwitcherXDT<Design>.switcherWith(text: "Word")
-
-   private lazy var adanonimParamModel = LabelSwitcherXDT<Design>.switcherWith(text: "Hello")
-   private lazy var adshowEveryoneParamModel = LabelSwitcherXDT<Design>.switcherWith(text: "World")
-   private lazy var adaddTagParamModel = LabelSwitcherXDT<Design>.switcherWith(text: "Hello")
-   private lazy var adwhishParamModel = LabelSwitcherXDT<Design>.switcherWith(text: "Word")
+   private lazy var awaitOptionsModel = TitleBodySwitcherDT<Design>.switcherWith(titleText: "Период задержки",
+                                                                      bodyText: "Без задержки")
 
    override func start() {
       set_arrangedModels([
          anonimParamModel,
          showEveryoneParamModel,
          addTagParamModel,
-         whishParamModel,
-
-         danonimParamModel,
-         dshowEveryoneParamModel,
-         daddTagParamModel,
-         dwhishParamModel,
-
-         adanonimParamModel,
-         adshowEveryoneParamModel,
-         adaddTagParamModel,
-         adwhishParamModel,
+         awaitOptionsModel,
       ])
    }
 }
 
-class LabelSwitcherXDT<Design: DSP>: LabelSwitcherX {
+final class LabelSwitcherXDT<Design: DSP>: LabelSwitcherX {
    override func start() {
       super.start()
 
       set_padding(Design.params.contentPadding)
+   }
+}
+
+final class TitleBodySwitcherDT<Design: DSP>: TitleBodySwitcherY {
+   override func start() {
+      super.start()
+
+      set_padding(Design.params.contentPadding)
+
+      setAll { title, _ in
+         title
+            .set_color(Design.color.textSecondary)
+            .set_font(Design.font.caption)
+      }
    }
 }
 
@@ -113,6 +110,30 @@ class LabelSwitcherX: Combos<SComboMR<LabelModel, WrappedY<Switcher>>> {
    override func start() {
       set_alignment(.center)
       set_axis(.horizontal)
+
+      setAll { _, _ in }
+   }
+}
+
+class TitleBodySwitcherY: Combos<SComboMD<LabelModel, LabelSwitcherX>> {
+   var title: LabelModel { models.main }
+   var body: LabelModel { models.down.label }
+   var switcher: Switcher { models.down.switcher }
+
+   override func start() {
+      set_axis(.vertical)
+
+      setAll { _, _ in }
+   }
+}
+
+extension TitleBodySwitcherY {
+   static func switcherWith(titleText: String, bodyText: String) -> Self {
+      Self()
+         .setAll { title, bodySwitcher in
+            title.set_text(titleText)
+            bodySwitcher.label.set_text(bodyText)
+         }
    }
 }
 

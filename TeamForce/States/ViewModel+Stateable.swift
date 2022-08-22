@@ -198,6 +198,9 @@ enum ButtonState {
    case tint(UIColor)
    case vertical(Bool)
    case hidden(Bool)
+
+   case borderWidth(CGFloat)
+   case borderColor(UIColor)
 }
 
 extension ViewModelProtocol where Self: Stateable, View: ButtonExtended {
@@ -227,6 +230,11 @@ extension ViewModelProtocol where Self: Stateable, View: ButtonExtended {
          set_vertical(value)
       case .hidden(let value):
          set_hidden(value)
+
+      case .borderColor(let value):
+         set_borderColor(value)
+      case .borderWidth(let value):
+         set_borderWidth(value)
       }
    }
 }

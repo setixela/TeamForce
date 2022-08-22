@@ -45,6 +45,7 @@ protocol ColorsProtocol: InitProtocol {
     var textSecondary: UIColor { get }
     var textError: UIColor { get }
     var textInvert: UIColor { get }
+    var textBrand: UIColor { get }
     var textSecondaryInvert: UIColor { get }
     var textThird: UIColor { get }
     var textThirdInvert: UIColor { get }
@@ -99,6 +100,7 @@ struct ColorBuilder: ColorsProtocol {
     var textThirdInvert: UIColor { Token.inverse.color }
     var textInvert: UIColor { Token.inverse.color }
     var textError: UIColor { Token.error.color }
+    var textBrand: UIColor { Token.brand.color  }
 
     var background: UIColor { Token.inverse.color }
     var backgroundSecondary: UIColor { Token.inverse.color }
