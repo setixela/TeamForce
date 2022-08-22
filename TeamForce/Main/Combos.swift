@@ -60,6 +60,7 @@ extension Combos
    }
 
    // MARK: - New setAll
+
    @discardableResult func setAll<M, R>(
       _ setAll: VariadicClosure2<M, R>) -> Self where S == SComboMR<M, R>
    {
@@ -90,6 +91,7 @@ extension Combos
    }
 
    // MARK: - New setAll
+
    @discardableResult func setAll<M, R, R2>(
       _ setAll: VariadicClosure3<M, R, R2>) -> Self where S == SComboMRR<M, R, R2>
    {
@@ -129,6 +131,19 @@ extension Combos
       setMain(models.main)
       setRight(models.right)
       setDown(models.down)
+      if !isConfigured
+      {
+         configure()
+         isConfigured = true
+      }
+      return self
+   }
+
+   // MARK: - New setAll
+
+   @discardableResult func setMain<M, R, D>(_ setAll: VariadicClosure3<M, R, D>) -> Self where S == SComboMRD<M, R, D>
+   {
+      setAll(models.main, models.right, models.down)
       if !isConfigured
       {
          configure()
@@ -235,6 +250,7 @@ extension Combos
    }
 
    // MARK: - New setAll
+
    @discardableResult func setAll<M, D, R>(
       _ setAll: VariadicClosure3<M, D, R>) -> Self where S == SComboMDR<M, D, R>
    {

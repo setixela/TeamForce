@@ -114,6 +114,7 @@
 		19CAB9CC28B41CB400A0A3B1 /* TitleBodySwitcherDT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19CAB9CB28B41CB400A0A3B1 /* TitleBodySwitcherDT.swift */; };
 		19CAB9CE28B4261E00A0A3B1 /* LabelSwitchXDT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19CAB9CD28B4261E00A0A3B1 /* LabelSwitchXDT.swift */; };
 		19CAB9D128B4265C00A0A3B1 /* TransactOptionsVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19CAB9D028B4265C00A0A3B1 /* TransactOptionsVM.swift */; };
+		19CAB9D428B432CD00A0A3B1 /* AlamofireImage in Frameworks */ = {isa = PBXBuildFile; productRef = 19CAB9D328B432CD00A0A3B1 /* AlamofireImage */; };
 		19CF792828A54D60001531B8 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19CF792728A54D60001531B8 /* Config.swift */; };
 		19CF792C28A587B9001531B8 /* TransactWorks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19CF792B28A587B9001531B8 /* TransactWorks.swift */; };
 		19D08351286F401000F75E4A /* SideBarUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D08350286F401000F75E4A /* SideBarUserModel.swift */; };
@@ -383,6 +384,7 @@
 				1977519028A83395006CFAF3 /* SwiftCSSParser in Frameworks */,
 				19C1E9942860F05F00E7976D /* PromiseKit in Frameworks */,
 				1953DE7F2878BCB5000DC537 /* SwiftKeychainWrapper in Frameworks */,
+				19CAB9D428B432CD00A0A3B1 /* AlamofireImage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1047,6 +1049,7 @@
 				19D5DC39289D682700ACC440 /* Anchorage */,
 				1977518C28A8329F006CFAF3 /* ReactiveWorks */,
 				1977518F28A83395006CFAF3 /* SwiftCSSParser */,
+				19CAB9D328B432CD00A0A3B1 /* AlamofireImage */,
 			);
 			productName = TeamForce;
 			productReference = 190C1D0E285D15FF00FB3518 /* TeamForce.app */;
@@ -1105,6 +1108,7 @@
 				1969A312289D519000D44A6A /* XCRemoteSwiftPackageReference "ReactiveWorks" */,
 				19D5DC38289D682700ACC440 /* XCRemoteSwiftPackageReference "Anchorage" */,
 				1977518E28A83395006CFAF3 /* XCRemoteSwiftPackageReference "swift-css-parser" */,
+				19CAB9D228B432CC00A0A3B1 /* XCRemoteSwiftPackageReference "AlamofireImage" */,
 			);
 			productRefGroup = 190C1D0F285D15FF00FB3518 /* Products */;
 			projectDirPath = "";
@@ -1631,6 +1635,14 @@
 				minimumVersion = 6.0.0;
 			};
 		};
+		19CAB9D228B432CC00A0A3B1 /* XCRemoteSwiftPackageReference "AlamofireImage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/AlamofireImage.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.0;
+			};
+		};
 		19D5DC38289D682700ACC440 /* XCRemoteSwiftPackageReference "Anchorage" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/setixela/Anchorage.git";
@@ -1666,6 +1678,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 19C1E9922860F05F00E7976D /* XCRemoteSwiftPackageReference "PromiseKit" */;
 			productName = PromiseKit;
+		};
+		19CAB9D328B432CD00A0A3B1 /* AlamofireImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 19CAB9D228B432CC00A0A3B1 /* XCRemoteSwiftPackageReference "AlamofireImage" */;
+			productName = AlamofireImage;
 		};
 		19D5DC39289D682700ACC440 /* Anchorage */ = {
 			isa = XCSwiftPackageProductDependency;

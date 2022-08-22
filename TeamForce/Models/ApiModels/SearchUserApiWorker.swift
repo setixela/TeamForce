@@ -23,12 +23,14 @@ struct FoundUser: Codable {
   let tgName: String
   let name: String
   let surname: String
+  let photo: String?
 
   enum CodingKeys: String, CodingKey {
     case userId = "user_id"
     case tgName = "tg_name"
     case name
     case surname
+    case photo
   }
 }
 

@@ -33,17 +33,16 @@ final class TransactScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended
    private lazy var viewModels = TransactViewModels<Design>()
    private lazy var options = TransactOptionsVM<Design>()
    private lazy var viewModelsWrapper = ScrollViewModelY()
-      .set(.spacing(Grid.x8.value))
+      .set(.spacing(Grid.x16.value))
       .set(.models([
          viewModels.balanceInfo,
          viewModels.userSearchTextField,
+         viewModels.tableModel,
          viewModels.transactInputViewModel,
          viewModels.reasonTextView,
+         viewModels.addPhotoButton,
          options,
          viewModels.sendButton,
-         viewModels.tableModel,
-         viewModels.addPhotoButton,
-
          Grid.x64.spacer
       ]))
 
@@ -63,7 +62,6 @@ final class TransactScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended
       set_axis(.vertical)
       set_distribution(.fill)
       set_alignment(.fill)
-      set_spacing(8)
       set_arrangedModels([
          viewModelsWrapper
       ])
@@ -162,7 +160,22 @@ extension TransactScene: StateMachine {
    }
 }
 
+class ImageLabelLabelMRD: Combos<SComboMRD<ImageViewModel, LabelModel, LabelModel>> {}
+
 private extension TransactScene {
+   var foundUserPresenter: Presenter<FoundUser, ImageLabelLabelMRD> {
+      Presenter<FoundUser, ImageLabelLabelMRD>() { work in
+         let user = work.unsafeInput
+
+         let comboMRD = ImageLabelLabelMRD()
+            .setAll { avatar, username, nickname in
+               avatar.
+            }
+
+         work.success(result: comboMRD)
+      }
+   }
+
    func hideHUD() {
       viewModels.transactInputViewModel.set(.hidden(true))
       viewModels.sendButton.set(.hidden(true))
@@ -176,8 +189,8 @@ private extension TransactScene {
          cellModel.set(.text(name))
          return cellModel
       }
-      viewModels.tableModel.set(.models(cellModels))
-      viewModels.tableModel.set(.hidden(found.isEmpty ? true : false))
+//      viewModels.tableModel.set(.models(cellModels))
+//      viewModels.tableModel.set(.hidden(found.isEmpty ? true : false))
    }
 
    func presentAlert(text: String) {

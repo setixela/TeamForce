@@ -33,7 +33,7 @@ final class TransactViewModels<Design: DSP>: Designable {
       .set_hidden(true)
       .set_alignment(.center)
 
-   lazy var tableModel = TableViewModel()
+   lazy var tableModel = TableItemsModel<Design>()
       .set_borderColor(.gray)
       .set_borderWidth(Design.params.borderWidth)
       .set_cornerRadius(Design.params.cornerRadius)
