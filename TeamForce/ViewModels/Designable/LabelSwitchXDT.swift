@@ -9,6 +9,6 @@ final class LabelSwitcherXDT<Design: DSP>: LabelSwitcherX {
    override func start() {
       super.start()
 
-      set_padding(Design.params.contentPadding)
+      set_padding(Design.params.contentVerticalPadding)
    }
 }

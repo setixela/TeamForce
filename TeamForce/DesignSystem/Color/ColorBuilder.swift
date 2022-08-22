@@ -55,6 +55,8 @@ protocol ColorsProtocol: InitProtocol {
     var backgroundSecondary: UIColor { get }
     var backgroundBrand: UIColor { get }
     var backgroundBrandSecondary: UIColor { get }
+    var backgroundInfo: UIColor { get }
+    var backgroundInfoSecondary: UIColor { get }
 
     // Buttons
     var activeButtonBack: UIColor { get }
@@ -106,6 +108,9 @@ struct ColorBuilder: ColorsProtocol {
     var backgroundSecondary: UIColor { Token.inverse.color }
     var backgroundBrand: UIColor { Token.brand.color }
     var backgroundBrandSecondary: UIColor { Token.brandSecondary.color }
+
+    var backgroundInfo: UIColor { Token.info.color }
+    var backgroundInfoSecondary: UIColor { Token.infoSecondary.color }
 
     // button colors
     var activeButtonBack: UIColor { Token.brand.color }

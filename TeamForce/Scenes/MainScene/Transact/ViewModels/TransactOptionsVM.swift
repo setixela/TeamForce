@@ -7,7 +7,7 @@
 
 import ReactiveWorks
 
-final class TransactOptions<Design: DSP>: BaseViewModel<StackViewExtended>, Designable, Stateable {
+final class TransactOptionsVM<Design: DSP>: BaseViewModel<StackViewExtended>, Designable, Stateable {
    typealias State = StackState
    //
    private lazy var anonimParamModel = LabelSwitcherXDT<Design>.switcherWith(text: "Анонимно")
@@ -16,6 +16,8 @@ final class TransactOptions<Design: DSP>: BaseViewModel<StackViewExtended>, Desi
 
    private lazy var awaitOptionsModel = TitleBodySwitcherDT<Design>.switcherWith(titleText: "Период задержки",
                                                                                  bodyText: "Без задержки")
+      .set_backColor(Design.color.backgroundInfoSecondary)
+      .set_cornerRadius(Design.params.cornerRadius)
 
    override func start() {
       set_arrangedModels([

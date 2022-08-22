@@ -34,6 +34,7 @@ protocol ParamsProtocol: InitProtocol, Designable {
    var panelMainButtonShadow: Shadow { get }
    // paddings
    var contentPadding: UIEdgeInsets { get }
+   var contentVerticalPadding: UIEdgeInsets  { get }
    var infoFramePadding: UIEdgeInsets { get }
 }
 
@@ -75,5 +76,6 @@ struct ParamBuilder<Design: DSP>: ParamsProtocol {
    ) }
    // paddings
    var contentPadding: UIEdgeInsets { .init(top: 12, left: 16, bottom: 12, right: 16) }
+   var contentVerticalPadding: UIEdgeInsets { .init(top: 12, left: 0, bottom: 12, right: 0) }
    var infoFramePadding: UIEdgeInsets { .init(top: 16, left: 24, bottom: 24, right: 24) }
 }

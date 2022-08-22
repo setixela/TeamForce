@@ -113,7 +113,7 @@
 		19CAB9CA28B41C8200A0A3B1 /* TitleBodySwitcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19CAB9C928B41C8200A0A3B1 /* TitleBodySwitcher.swift */; };
 		19CAB9CC28B41CB400A0A3B1 /* TitleBodySwitcherDT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19CAB9CB28B41CB400A0A3B1 /* TitleBodySwitcherDT.swift */; };
 		19CAB9CE28B4261E00A0A3B1 /* LabelSwitchXDT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19CAB9CD28B4261E00A0A3B1 /* LabelSwitchXDT.swift */; };
-		19CAB9D128B4265C00A0A3B1 /* TransactOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19CAB9D028B4265C00A0A3B1 /* TransactOptions.swift */; };
+		19CAB9D128B4265C00A0A3B1 /* TransactOptionsVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19CAB9D028B4265C00A0A3B1 /* TransactOptionsVM.swift */; };
 		19CF792828A54D60001531B8 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19CF792728A54D60001531B8 /* Config.swift */; };
 		19CF792C28A587B9001531B8 /* TransactWorks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19CF792B28A587B9001531B8 /* TransactWorks.swift */; };
 		19D08351286F401000F75E4A /* SideBarUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D08350286F401000F75E4A /* SideBarUserModel.swift */; };
@@ -300,7 +300,7 @@
 		19CAB9C928B41C8200A0A3B1 /* TitleBodySwitcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleBodySwitcher.swift; sourceTree = "<group>"; };
 		19CAB9CB28B41CB400A0A3B1 /* TitleBodySwitcherDT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleBodySwitcherDT.swift; sourceTree = "<group>"; };
 		19CAB9CD28B4261E00A0A3B1 /* LabelSwitchXDT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelSwitchXDT.swift; sourceTree = "<group>"; };
-		19CAB9D028B4265C00A0A3B1 /* TransactOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactOptions.swift; sourceTree = "<group>"; };
+		19CAB9D028B4265C00A0A3B1 /* TransactOptionsVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactOptionsVM.swift; sourceTree = "<group>"; };
 		19CF792728A54D60001531B8 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		19CF792B28A587B9001531B8 /* TransactWorks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactWorks.swift; sourceTree = "<group>"; };
 		19D08350286F401000F75E4A /* SideBarUserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBarUserModel.swift; sourceTree = "<group>"; };
@@ -920,7 +920,7 @@
 			children = (
 				1953DE832879FDE3000DC537 /* TransactViewModels.swift */,
 				6368D8292894091B0049EEAB /* TransactInputViewModel.swift */,
-				19CAB9D028B4265C00A0A3B1 /* TransactOptions.swift */,
+				19CAB9D028B4265C00A0A3B1 /* TransactOptionsVM.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -1181,7 +1181,7 @@
 				63E7A74528AFBC5300FB2C80 /* GetPeriodsFromDateApiWorker.swift in Sources */,
 				19EF32B02884B6C80078F53D /* TableViewModel.swift in Sources */,
 				19171F4B28AD23AE000926B1 /* HistoryViewModels.swift in Sources */,
-				19CAB9D128B4265C00A0A3B1 /* TransactOptions.swift in Sources */,
+				19CAB9D128B4265C00A0A3B1 /* TransactOptionsVM.swift in Sources */,
 				19C306D828ADF6C2002D5124 /* HistoryCell.swift in Sources */,
 				19CAB9CC28B41CB400A0A3B1 /* TitleBodySwitcherDT.swift in Sources */,
 				19BD2A8928ABB72500FCC00A /* Scenaryable.swift in Sources */,

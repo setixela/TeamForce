@@ -31,7 +31,7 @@ final class TransactScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended
    )
 
    private lazy var viewModels = TransactViewModels<Design>()
-   private lazy var options = TransactOptions<Design>()
+   private lazy var options = TransactOptionsVM<Design>()
    private lazy var viewModelsWrapper = ScrollViewModelY()
       .set(.spacing(Grid.x8.value))
       .set(.models([
