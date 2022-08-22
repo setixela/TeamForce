@@ -1,12 +1,30 @@
 {
   "pins" : [
     {
+      "identity" : "anchorage",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/setixela/Anchorage.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "e834415c765fcd9d2189f64fe906b7de5e026415"
+      }
+    },
+    {
       "identity" : "promisekit",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/mxcl/PromiseKit",
       "state" : {
         "revision" : "ed3192004c0b00b4b3d7baa9578ee655c66faae3",
         "version" : "6.18.0"
+      }
+    },
+    {
+      "identity" : "reactiveworks",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/setixela/ReactiveWorks.git",
+      "state" : {
+        "branch" : "master",
+        "revision" : "e1cedb9c7b12da51c26ffc453c79374bb2a86a41"
       }
     },
     {

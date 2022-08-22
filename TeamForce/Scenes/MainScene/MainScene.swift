@@ -19,6 +19,7 @@ Void
    lazy var balanceViewModel = BalanceViewModel<Asset>()
    lazy var transactViewModel = TransactScene<Asset>()
    lazy var historyViewModel = HistoryScene<Asset>()
+   lazy var settingsViewModel = SettingsViewModel<Asset>()
 
    var tabBarPanel: TabBarPanel<Design> { mainVM.footerStack }
 
@@ -74,7 +75,8 @@ Void
       tabBarPanel.button4
          .onEvent(\.didTap) { [weak self] in
             self?.unlockTabButtons()
-            self?.mainVM.header.set_text("Пока пусто")
+            self?.mainVM.header.set_text("Настройки")
+            self?.presentModel(self?.settingsViewModel)
             self?.tabBarPanel.button4.setMode(\.normal)
          }
 
