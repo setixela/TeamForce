@@ -35,4 +35,8 @@ extension UIEdgeInsets {
    static func outline(_ width: CGFloat) -> UIEdgeInsets {
       .init(top: width, left: width, bottom: width, right: width)
    }
+
+   static func sideOffset(_ offset: CGFloat) -> UIEdgeInsets {
+      .init(top: 0, left: offset, bottom: 0, right: offset)
+   }
 }

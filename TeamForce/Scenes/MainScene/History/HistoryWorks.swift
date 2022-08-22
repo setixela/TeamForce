@@ -71,29 +71,29 @@ final class HistoryWorks<Asset: AssetProtocol>: BaseSceneWorks<HistoryWorks.Temp
    }
 
    var getAllTransactItems: Work<Void, [TableItemsSection]> {
-      .init { [weak self] work in
+      .init {
          let filtered = Self.filteredAll()
-         let items = self?.convertToItems(filtered)
+         let items = Self.convertToItems(filtered)
 
-         work.success(result: items ?? [])
+         $0.success(result: items)
       }
    }
 
    var getSentTransactItems: Work<Void, [TableItemsSection]> {
-      .init { [weak self] work in
+      .init {
          let filtered = Self.filteredSent()
-         let items = self?.convertToItems(filtered)
+         let items = Self.convertToItems(filtered)
 
-         work.success(result: items ?? [])
+         $0.success(result: items)
       }
    }
 
    var getRecievedTransactItems: Work<Void, [TableItemsSection]> {
-      .init { [weak self] work in
+      .init {
          let filtered = Self.filteredRecieved()
-         let items = self?.convertToItems(filtered)
+         let items = Self.convertToItems(filtered)
 
-         work.success(result: items ?? [])
+         $0.success(result: items)
       }
    }
 }
@@ -127,7 +127,7 @@ private extension HistoryWorks {
       }
    }
 
-   private func convertToItems(_ filtered: [Transaction]) -> [TableItemsSection] {
+   static func convertToItems(_ filtered: [Transaction]) -> [TableItemsSection] {
       var prevDay = ""
 
       return filtered
@@ -158,26 +158,7 @@ private extension HistoryWorks {
          }
    }
 
-//   private static func filteredTransactionsForIndex(_ index: Int) -> [Transaction] {
-//      guard let transactions = store.transactions else {
-//         return []
-//      }
-//
-//      switch index {
-//      case 1:
-//         return transactions.filter {
-//            $0.sender.senderTgName != Self.store.currentUser
-//         }
-//      case 2:
-//         return transactions.filter {
-//            $0.sender.senderTgName == Self.store.currentUser
-//         }
-//      default:
-//         return transactions
-//      }
-//   }
-
-   private static func convertToDate(time: String) -> String? {
+   static func convertToDate(time: String) -> String? {
       let inputFormatter = DateFormatter()
       inputFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
       guard let convertedDate = inputFormatter.date(from: time) else { return nil }

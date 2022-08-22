@@ -34,7 +34,7 @@ protocol FontProtocol: TypographyElements where DesignElement == UIFont {}
 struct FontBuilder: FontProtocol {
    var `default`: UIFont { .systemFont(ofSize: 14, weight: .regular) }
 
-   var headline2: UIFont { .systemFont(ofSize: 60, weight: .regular) }
+   var headline2: UIFont { .systemFont(ofSize: 54, weight: .semibold) }
    var headline3: UIFont { .systemFont(ofSize: 48, weight: .regular) }
    var headline4: UIFont { .systemFont(ofSize: 32, weight: .bold) }
    var headline5: UIFont { .systemFont(ofSize: 28, weight: .bold) }

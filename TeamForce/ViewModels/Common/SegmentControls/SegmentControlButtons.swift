@@ -7,14 +7,14 @@
 
 import ReactiveWorks
 
-struct SegmentButtonMode: ModeProtocol {
+struct ButtonMode: ModeProtocol {
    var normal: Event<Void>?
    var selected: Event<Void>?
 }
 
 final class SegmentButton<Design: DSP>: BaseViewModel<StackViewExtended>, SegmentButtonModelProtocol
 {
-   var modes: SegmentButtonMode = .init()
+   var modes: ButtonMode = .init()
    var events: ButtonEvents = .init()
 
    typealias State = StackState
@@ -70,4 +70,4 @@ extension SegmentButton {
 }
 
 protocol SegmentButtonModelProtocol: ButtonModelProtocol, Designable, Stateable, Modable
-   where Mode == SegmentButtonMode {}
+   where Mode == ButtonMode {}

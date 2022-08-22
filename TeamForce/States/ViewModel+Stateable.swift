@@ -237,6 +237,7 @@ enum TextFieldState {
    case text(String)
    case placeholder(String)
    case backColor(UIColor)
+   case textColor(UIColor)
    case font(UIFont)
    case clearButtonMode(UITextField.ViewMode)
    case padding(UIEdgeInsets)
@@ -261,6 +262,8 @@ extension ViewModelProtocol where Self: Stateable, View: PaddingTextField {
          set_placeholder(value)
       case .backColor(let value):
          set_backColor(value)
+      case .textColor(let value):
+         set_textColor(value)
       case .font(let value):
          set_font(value)
       case .clearButtonMode(let value):
@@ -286,6 +289,7 @@ extension ViewModelProtocol where Self: Stateable, View: PaddingTextField {
          set_zPosition(value)
       case .placing(let value):
          set_placing(value)
+
       }
    }
 }

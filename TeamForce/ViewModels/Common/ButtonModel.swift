@@ -28,11 +28,8 @@ class ButtonModel: BaseViewModel<ButtonExtended>, ButtonModelProtocol {
       if view.isEnabled {
          sendEvent(\.didTap)
          print("Did tap")
-         let frame = view.frame
-         view.frame = view.frame.inset(by: .init(top: 3, left: 1, bottom: -2, right: 1))
-         UIView.animate(withDuration: 0.2) {
-            self.view.frame = frame
-         }
+
+         animateTap()
       }
    }
 }
@@ -41,7 +38,7 @@ extension ButtonModel: Stateable {
    typealias State = ButtonState
 }
 
-extension ButtonModel: Communicable {}
+extension ButtonModel: Communicable, ButtonTapAnimator {}
 
 extension ButtonModel: SelfModable {
    struct Mode: WeakSelfied {
@@ -79,4 +76,16 @@ final class ButtonExtended: UIButton {
 //   }
 
    // or so: button.contentEdgeInsets = UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 16)
+}
+
+protocol ButtonTapAnimator: UIViewModel {}
+
+extension ButtonTapAnimator {
+   func animateTap() {
+      let frame = uiView.frame
+      uiView.frame = uiView.frame.inset(by: .init(top: 5, left: 2, bottom: -3, right: 3))
+      UIView.animate(withDuration: 0.3) {
+         self.uiView.frame = frame
+      }
+   }
 }

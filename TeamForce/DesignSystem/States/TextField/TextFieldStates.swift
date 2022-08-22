@@ -24,12 +24,14 @@ struct TextFieldStateBuilder<Design: DSP>: TextFieldStateProtocol, Designable {
       .cornerRadius(Design.params.cornerRadius),
       .borderWidth(Design.params.borderWidth),
       .borderColor(Design.color.boundary),
+      .textColor(Design.color.text)
    ]}
 
    var invisible: [TextFieldState] {[
       .padding(.init(top: 0, left: 0, bottom: 0, right: 0)),
       .placeholder(""),
       .backColor(Design.color.transparent),
-      .height(Design.params.buttonHeight)
+      .height(Design.params.buttonHeight),
+      .textColor(Design.color.text)
    ]}
 }

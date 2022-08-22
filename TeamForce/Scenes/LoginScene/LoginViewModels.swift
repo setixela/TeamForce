@@ -36,7 +36,6 @@ final class LoginViewModels<Asset: AssetProtocol>: Assetable {
       } setRight: {
          $0.set_placeholder(Text.title.enterSmsCode)
       }
-      .set_hidden(true)
 
    lazy var getCodeButton: ButtonModel = Design.button.inactive
       .set_title(Text.button.getCodeButton)

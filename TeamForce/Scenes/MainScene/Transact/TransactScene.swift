@@ -92,7 +92,7 @@ extension TransactScene: StateMachine {
       case .loadTokensError:
          viewModels.userSearchTextField.set_hidden(true)
       case .loadBalanceSuccess(let balance):
-         viewModels.balanceInfo.models.down.set_text(String(balance))
+         viewModels.balanceInfo.models.down.label.set_text(String(balance))
       case .loadBalanceError:
          print("balance not loaded")
       case .loadUsersListSuccess(let users):

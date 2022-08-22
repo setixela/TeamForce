@@ -12,8 +12,9 @@ import UIKit
 
 protocol ParamsProtocol: InitProtocol, Designable {
    //
-   var cornerRadius: CGFloat { get }
+   var cornerRadiusMini: CGFloat { get }
    var cornerRadiusSmall: CGFloat { get }
+   var cornerRadius: CGFloat { get }
    var cornerRadiusMedium: CGFloat { get }
    //
    var borderWidth: CGFloat { get }
@@ -24,6 +25,7 @@ protocol ParamsProtocol: InitProtocol, Designable {
    var buttonHeight: CGFloat { get }
    var buttonsSpacingX: CGFloat { get }
    var buttonsSpacingY: CGFloat { get }
+   var buttonSecondaryHeight: CGFloat { get }
    //
    var infoFrameHeight: CGFloat { get }
    //
@@ -37,8 +39,9 @@ protocol ParamsProtocol: InitProtocol, Designable {
 
 struct ParamBuilder<Design: DSP>: ParamsProtocol {
    //
-   var cornerRadius: CGFloat { 14 }
+   var cornerRadiusMini: CGFloat { 8 }
    var cornerRadiusSmall: CGFloat { 11 }
+   var cornerRadius: CGFloat { 14 }
    var cornerRadiusMedium: CGFloat { 20 }
    //
    var borderWidth: CGFloat = 1
@@ -49,6 +52,7 @@ struct ParamBuilder<Design: DSP>: ParamsProtocol {
    var buttonHeight: CGFloat { 52 }
    var buttonsSpacingX: CGFloat { 8 }
    var buttonsSpacingY: CGFloat { 16 }
+   var buttonSecondaryHeight: CGFloat { 33 }
    //
    var infoFrameHeight: CGFloat { 70 }
    //

@@ -28,7 +28,7 @@ final class LoginScenario<Asset: AssetProtocol>:
       events.userNameStringEvent
          .doNext(work: works.loginNameInputParse)
          .onSuccess(setState) { .nameInputParseSuccess($0) }
-         .onFail(setState) { .smsInputParseError($0) }
+         .onFail(setState) { .nameInputParseError($0) }
 
       // setup get code button reaction
       events.getCodeButtonEvent

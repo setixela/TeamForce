@@ -374,4 +374,10 @@ extension ViewModelProtocol where Self: Stateable, View: PaddingTextField {
       return self
    }
 
+   @discardableResult func set_textColor(_ value: UIColor) -> Self {
+      view.textColor = value
+      return self
+   }
+
+
 }

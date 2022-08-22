@@ -11,22 +11,12 @@ import UIKit
 
 final class TransactViewModels<Design: DSP>: Designable {
    //
-
-   lazy var balanceInfo = Combos<SComboMDR<LabelModel, LabelModel, ImageViewModel>>()
-      .setAll { title, subtitle, currencyIcon in
+   lazy var balanceInfo = Combos<SComboMD<LabelModel, CurrencyLabelDT<Design>>>()
+      .setAll { title, _ in
          title
             .set_font(Design.font.caption)
             .set_text("Доступно")
             .set_color(Design.color.iconInvert)
-         subtitle
-            .set_font(Design.font.title2)
-            .set_text("0")
-            .set_color(Design.color.iconInvert)
-            .set_height(Grid.x20.value)
-         currencyIcon
-            .set_image(Design.icon.logoCurrency)
-            .set_width(Grid.x20.value)
-            .set_imageTintColor(Design.color.iconInvert)
       }
       .set_alignment(.leading)
       .set_height(Grid.x90.value)

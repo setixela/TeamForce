@@ -20,7 +20,7 @@ import UIKit
 //   var tabBar: AsType { get }
 //}
 
-protocol ButtonBuilderProtocol:  ButtonElements, Designable where DesignElement == ButtonModel {}
+protocol ButtonBuilderProtocol: ButtonElements, Designable where DesignElement == ButtonModel {}
 
 // MARK: - Buttons
 
@@ -40,4 +40,6 @@ final class ButtonBuilder<Design: DesignProtocol>: ButtonBuilderProtocol {
    var tabBar: ButtonModel {
       .init(Design.state.button.tabBar)
    }
+
+
 }
