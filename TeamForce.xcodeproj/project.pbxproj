@@ -112,6 +112,8 @@
 		19CAB9C828B41C6500A0A3B1 /* LabelSwitcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19CAB9C728B41C6500A0A3B1 /* LabelSwitcher.swift */; };
 		19CAB9CA28B41C8200A0A3B1 /* TitleBodySwitcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19CAB9C928B41C8200A0A3B1 /* TitleBodySwitcher.swift */; };
 		19CAB9CC28B41CB400A0A3B1 /* TitleBodySwitcherDT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19CAB9CB28B41CB400A0A3B1 /* TitleBodySwitcherDT.swift */; };
+		19CAB9CE28B4261E00A0A3B1 /* LabelSwitchXDT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19CAB9CD28B4261E00A0A3B1 /* LabelSwitchXDT.swift */; };
+		19CAB9D128B4265C00A0A3B1 /* TransactOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19CAB9D028B4265C00A0A3B1 /* TransactOptions.swift */; };
 		19CF792828A54D60001531B8 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19CF792728A54D60001531B8 /* Config.swift */; };
 		19CF792C28A587B9001531B8 /* TransactWorks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19CF792B28A587B9001531B8 /* TransactWorks.swift */; };
 		19D08351286F401000F75E4A /* SideBarUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D08350286F401000F75E4A /* SideBarUserModel.swift */; };
@@ -297,6 +299,8 @@
 		19CAB9C728B41C6500A0A3B1 /* LabelSwitcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelSwitcher.swift; sourceTree = "<group>"; };
 		19CAB9C928B41C8200A0A3B1 /* TitleBodySwitcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleBodySwitcher.swift; sourceTree = "<group>"; };
 		19CAB9CB28B41CB400A0A3B1 /* TitleBodySwitcherDT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleBodySwitcherDT.swift; sourceTree = "<group>"; };
+		19CAB9CD28B4261E00A0A3B1 /* LabelSwitchXDT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelSwitchXDT.swift; sourceTree = "<group>"; };
+		19CAB9D028B4265C00A0A3B1 /* TransactOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactOptions.swift; sourceTree = "<group>"; };
 		19CF792728A54D60001531B8 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		19CF792B28A587B9001531B8 /* TransactWorks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactWorks.swift; sourceTree = "<group>"; };
 		19D08350286F401000F75E4A /* SideBarUserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBarUserModel.swift; sourceTree = "<group>"; };
@@ -765,6 +769,7 @@
 			isa = PBXGroup;
 			children = (
 				19CAB9CB28B41CB400A0A3B1 /* TitleBodySwitcherDT.swift */,
+				19CAB9CD28B4261E00A0A3B1 /* LabelSwitchXDT.swift */,
 				19017B7228A69CD400B06345 /* DTLogoTitleX.swift */,
 				19A9232E28B2E34E0080D491 /* CurrencyLabelDT.swift */,
 				19D7BE9628B3CC1100C95053 /* CurrencyButtonDT.swift */,
@@ -783,12 +788,11 @@
 		19ACB3CA28A599D600B5AD71 /* Transact */ = {
 			isa = PBXGroup;
 			children = (
-				19A9232B28B2A8390080D491 /* Archive */,
+				19CAB9CF28B4265000A0A3B1 /* ViewModels */,
 				190BE97A28ADDFC60062CCD5 /* TransactScene.swift */,
-				1953DE832879FDE3000DC537 /* TransactViewModels.swift */,
-				6368D8292894091B0049EEAB /* TransactInputViewModel.swift */,
 				190BE97828ADDFAB0062CCD5 /* TransactScenario.swift */,
 				19CF792B28A587B9001531B8 /* TransactWorks.swift */,
+				19A9232B28B2A8390080D491 /* Archive */,
 			);
 			path = Transact;
 			sourceTree = "<group>";
@@ -909,6 +913,16 @@
 				19CAB9C928B41C8200A0A3B1 /* TitleBodySwitcher.swift */,
 			);
 			path = CommonCombos;
+			sourceTree = "<group>";
+		};
+		19CAB9CF28B4265000A0A3B1 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				1953DE832879FDE3000DC537 /* TransactViewModels.swift */,
+				6368D8292894091B0049EEAB /* TransactInputViewModel.swift */,
+				19CAB9D028B4265C00A0A3B1 /* TransactOptions.swift */,
+			);
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 		19DD3D93288766770085CDA8 /* TableModels */ = {
@@ -1141,6 +1155,7 @@
 				63D419F728AA8AA70024E22C /* GetStatByPeriodIdUseCase.swift in Sources */,
 				199C4B6928632834008AD6FD /* DesignProtocol.swift in Sources */,
 				19CAB9CA28B41C8200A0A3B1 /* TitleBodySwitcher.swift in Sources */,
+				19CAB9CE28B4261E00A0A3B1 /* LabelSwitchXDT.swift in Sources */,
 				63A529F528A1F8AB004A858D /* SegmentedControlModel.swift in Sources */,
 				63D419F128AA825F0024E22C /* GetPeriodsUseCase.swift in Sources */,
 				63E7A73F28AF9E8000FB2C80 /* ReadyWorks.swift in Sources */,
@@ -1166,6 +1181,7 @@
 				63E7A74528AFBC5300FB2C80 /* GetPeriodsFromDateApiWorker.swift in Sources */,
 				19EF32B02884B6C80078F53D /* TableViewModel.swift in Sources */,
 				19171F4B28AD23AE000926B1 /* HistoryViewModels.swift in Sources */,
+				19CAB9D128B4265C00A0A3B1 /* TransactOptions.swift in Sources */,
 				19C306D828ADF6C2002D5124 /* HistoryCell.swift in Sources */,
 				19CAB9CC28B41CB400A0A3B1 /* TitleBodySwitcherDT.swift in Sources */,
 				19BD2A8928ABB72500FCC00A /* Scenaryable.swift in Sources */,

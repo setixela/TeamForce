@@ -361,6 +361,11 @@ extension ViewModelProtocol where Self: Stateable, View: ButtonExtended {
       view.isVertical = value
       return self
    }
+
+   @discardableResult func set_imageInset(_ value: UIEdgeInsets) -> Self {
+      view.imageEdgeInsets = value
+      return self
+   }
 }
 
 extension ViewModelProtocol where Self: Stateable, View: PaddingTextField {

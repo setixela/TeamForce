@@ -201,6 +201,9 @@ enum ButtonState {
 
    case borderWidth(CGFloat)
    case borderColor(UIColor)
+
+   case imageInset(UIEdgeInsets)
+   //myLikesButton.imageEdgeInsets = UIEdgeInsets(top: 30, left: 30, bottom: 30, right: 30)
 }
 
 extension ViewModelProtocol where Self: Stateable, View: ButtonExtended {
@@ -235,6 +238,9 @@ extension ViewModelProtocol where Self: Stateable, View: ButtonExtended {
          set_borderColor(value)
       case .borderWidth(let value):
          set_borderWidth(value)
+
+      case .imageInset(let value):
+         set_imageInset(value)
       }
    }
 }

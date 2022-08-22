@@ -62,8 +62,10 @@ struct ButtonStateBuilder<Design: DesignProtocol>: ButtonStateProtocol {
       .textColor(Design.color.textBrand),
       .cornerRadius(Design.params.cornerRadius),
       .borderColor(Design.color.iconBrand),
+      .borderWidth(Design.params.borderWidth),
       .tint(Design.color.iconBrand),
       .height(Design.params.buttonHeight),
+      .imageInset(.init(top: 14, left: 14, bottom: 14, right: 14)),
       .enabled(true),
    ] }
 }

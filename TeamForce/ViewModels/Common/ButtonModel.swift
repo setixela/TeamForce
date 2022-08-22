@@ -54,6 +54,12 @@ extension ButtonModel: SelfModable {
 final class ButtonExtended: UIButton {
    var isVertical = false
 
+   override init(frame: CGRect) {
+      super.init(frame: frame)
+
+      imageView?.contentMode = .scaleAspectFit
+   }
+
    override func layoutSubviews() {
       super.layoutSubviews()
 
@@ -61,6 +67,10 @@ final class ButtonExtended: UIButton {
          //  self.contentHorizontalAlignment = .center
          self.setButtonVertical()
       }
+   }
+
+   required init?(coder: NSCoder) {
+      fatalError("init(coder:) has not been implemented")
    }
 
    private func setButtonVertical() {

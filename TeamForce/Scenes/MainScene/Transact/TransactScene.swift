@@ -42,6 +42,8 @@ final class TransactScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended
          options,
          viewModels.sendButton,
          viewModels.tableModel,
+         viewModels.addPhotoButton,
+
          Grid.x64.spacer
       ]))
 
