@@ -26,7 +26,7 @@ struct Scenes: ScenesProtocol {
 //   var loginSuccess: SceneModelProtocol { LoginSuccessScene<ProductionAsset>() }
 //   var register: SceneModelProtocol { RegisterScene<ProductionAsset>() }
    var main: SceneModelProtocol { MainScene<ProductionAsset>() }
-   var profile: SceneModelProtocol { ProfileViewModel<ProductionAsset>() }
+//   var profile: SceneModelProtocol { ProfileViewModel<ProductionAsset>() }
    var transactionDetail: SceneModelProtocol { TransactDeatilViewModel<ProductionAsset>() }
 }
 

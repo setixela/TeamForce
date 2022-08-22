@@ -8,16 +8,73 @@
 import ReactiveWorks
 import UIKit
 
-final class ProfileViewModel<Asset: AssetProtocol>: BaseSceneModel<
-   DefaultVCModel,
-   DoubleStacksModel,
-   Asset,
-   Void
-> {
-   private lazy var userModel = SideBarUserModel<Design>()
-      .set(.backColor(UIColor.lightGray.withAlphaComponent(0.5)))
+struct ProfileViewEvent: InitProtocol {}
 
-   private lazy var infoTableModel = TableViewModel()
+final class ProfileViewModel<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>,
+   Communicable,
+   Stateable,
+   Assetable
+{
+   typealias State = StackState
+   var events: BalanceViewEvent = .init()
+
+   lazy var userModel = Combos<SComboMRD<ImageViewModel, LabelModel, LabelModel>>()
+      .setMain { image in
+         image
+            .set_image(Design.icon.avatarPlaceholder)
+            .set(.size(.init(width: 64, height: 64)))
+      } setRight: { fullName in
+         fullName
+            .set_padLeft(12)
+      } setDown: { telegram in
+         telegram
+            .set_padLeft(12)
+      }
+      .set_alignment(.center)
+      .set_distribution(.fill)
+      .set_backColor(Design.color.inactiveButtonBack)
+      .set_padding(Design.params.contentPadding)
+   
+   lazy var infoFrame = Combos<SComboMDD<LabelModel, CustomCellModel<Design>, CustomCellModel<Design>>>()
+      .setMain { header in
+         header
+            .set_text("ИНФОРМАЦИЯ")
+            .set_color(Design.color.textSecondary)
+      } setDown: { email in
+         email.title.set_text("Корпоративная почта")
+      } setDown2: { phoneNumber in
+         phoneNumber.title.set_text("Мобильный номер")
+      }
+      .set_backColor(Design.color.inactiveButtonBack)
+      .set_padding(Asset.Design.params.contentPadding)
+      .set_cornerRadius(Design.params.cornerRadiusSmall)
+   
+//   lazy var newFrame = Combos<SComboMD<LabelModel, Combos<SComboMDD<CustomCellModel<Design>, CustomCellModel<Design>, CustomCellModel<Design>>>>>()
+//      .setMain { header in
+//         header
+//            .set_text("Место работы")
+//            .set_color(Design.color.textSecondary)
+//      } setDown: { <#ViewModelProtocol#> in
+//         <#code#>
+//      }
+
+   
+   lazy var secondaryFrame = Combos<SComboMDD<CustomCellModel<Design>, CustomCellModel<Design>, CustomCellModel<Design>>>()
+      .setMain { company in
+         company.title.set_text("Компания")
+         company.set_height(Grid.x60.value)
+      } setDown: { department in
+         department.title.set_text("Подразделение")
+         department.set_height(Grid.x60.value)
+      } setDown2: { phoneNumber in
+         phoneNumber.title.set_text("Дата начала работы")
+         phoneNumber.set_height(Grid.x60.value)
+      }
+      .set_backColor(Design.color.inactiveButtonBack)
+      .set_padding(Asset.Design.params.contentPadding)
+      .set_cornerRadius(Design.params.cornerRadiusSmall)
+
+   
 
    // MARK: - Services
 
@@ -32,17 +89,20 @@ final class ProfileViewModel<Asset: AssetProtocol>: BaseSceneModel<
    }
 
    private func configure() {
-      mainVM
-         .set(Design.state.stack.default)
-         .set(.backColor(Design.color.backgroundSecondary))
-
-      mainVM
-         .set(.models([
-            userModel,
-            Spacer(16),
-            infoTableModel,
-            Spacer()
-         ]))
+      
+      set(Design.state.stack.default)
+      set(.backColor(Design.color.backgroundSecondary))
+      set(.axis(.vertical))
+      set(.distribution(.fill))
+      set(.alignment(.fill))
+      set(.models([
+         userModel,
+         Spacer(16),
+         infoFrame,
+         Spacer(8),
+         secondaryFrame,
+         Grid.xxx.spacer,
+      ]))
    }
 
    private func configureProfile() {
@@ -56,40 +116,25 @@ final class ProfileViewModel<Asset: AssetProtocol>: BaseSceneModel<
          }
          .doNext(worker: userProfileApiModel)
          .onSuccess { [weak self] userData in
-            self?.setUserModelLabels(userData: userData)
-            self?.setProfileCells(userData: userData)
+            self?.setLabels(userData: userData)
          }.onFail {
             print("load profile error")
          }
    }
 
-   private func setUserModelLabels(userData: UserData) {
-      let profile = userData.profile
-      userModel.avatar.set(.image(Design.icon.avatarPlaceholder))
-      userModel.userName.set(.text(profile.tgName))
-      userModel.nickName.set(.text(profile.tgId))
-   }
-
-   private func setProfileCells(userData: UserData) {
-      print("PROFILE: \(userData)")
+   private func setLabels(userData: UserData) {
       let profile = userData.profile
       let fullName = profile.surName + " " +
          profile.firstName + " " +
          profile.middleName
-      let cell1 = CustomCellModel<Design>(title: "ФИО", label: fullName)
-      let cell2 = CustomCellModel<Design>(title: "Юр.лицо", label: profile.organization)
-      let cell3 = CustomCellModel<Design>(title: "Подразделение", label: profile.department)
-      let cell4 = CustomCellModel<Design>(title: "Дата начала работы", label: profile.hiredAt)
-      let cell5 = CustomCellModel<Design>(title: "Телефон", label: "Нет в базе данных")
-      let cell6 = CustomCellModel<Design>(title: "Email", label: "Нет в базе данных")
-
-      infoTableModel.set(.models([
-         cell1,
-         cell2,
-         cell3,
-         cell4,
-         cell5,
-         cell6
-      ]))
+      userModel.models.right.set_text(fullName)
+      userModel.models.down.set_text("@" + profile.tgName)
+      
+      infoFrame.models.down.set(.text(profile.contacts[0].contactId))
+      infoFrame.models.down2.set(.text("Нет в базе данных"))
+      
+      secondaryFrame.models.main.set(.text(profile.organization))
+      secondaryFrame.models.down.set(.text(profile.department))
+      secondaryFrame.models.down2.set(.text(profile.hiredAt))
    }
 }
