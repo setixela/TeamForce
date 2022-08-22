@@ -13,15 +13,12 @@ struct TextViewEvents: InitProtocol {
    var didEditingChanged: Event<String>?
 }
 
-final class TextViewModel<Design: DesignProtocol>: BaseViewModel<UITextView>, Designable, UITextViewDelegate {
+final class TextViewModel: BaseViewModel<UITextView>, UITextViewDelegate {
    var events: TextViewEvents = .init()
 
    private var placeholder: String = "Placeholder"
 
    override func start() {
-      view.textColor = UIColor.lightGray
-      set(.backColor(.lightGray.withAlphaComponent(0.3)))
-      set(.cornerRadius(Design.params.cornerRadius))
       view.delegate = self
    }
 

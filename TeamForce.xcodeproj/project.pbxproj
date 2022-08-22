@@ -119,9 +119,11 @@
 		19D08359286F41FA00F75E4A /* IconLabelX.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D08358286F41FA00F75E4A /* IconLabelX.swift */; };
 		19D0835B286F424000F75E4A /* LabelIconX.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D0835A286F424000F75E4A /* LabelIconX.swift */; };
 		19D0835D286F428600F75E4A /* BarButtonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D0835C286F428600F75E4A /* BarButtonModel.swift */; };
-		19D0835F286F42C000F75E4A /* FrameCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D0835E286F42C000F75E4A /* FrameCellModel.swift */; };
+		19D0835F286F42C000F75E4A /* FrameCellModelDT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D0835E286F42C000F75E4A /* FrameCellModelDT.swift */; };
 		19D08361286F430B00F75E4A /* Designable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D08360286F430B00F75E4A /* Designable.swift */; };
 		19D5DC3A289D682700ACC440 /* Anchorage in Frameworks */ = {isa = PBXBuildFile; productRef = 19D5DC39289D682700ACC440 /* Anchorage */; };
+		19D7BE9728B3CC1100C95053 /* CurrencyButtonDT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D7BE9628B3CC1100C95053 /* CurrencyButtonDT.swift */; };
+		19D7BE9928B3E55F00C95053 /* ScrollViewModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D7BE9828B3E55F00C95053 /* ScrollViewModels.swift */; };
 		19D84E3328AC077200418B9E /* LoginViewModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D84E3228AC077200418B9E /* LoginViewModels.swift */; };
 		19DD3D95288766860085CDA8 /* LabelCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19DD3D94288766860085CDA8 /* LabelCellModel.swift */; };
 		19DD3D97288A0A8C0085CDA8 /* CoverViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19DD3D96288A0A8C0085CDA8 /* CoverViewModel.swift */; };
@@ -300,8 +302,10 @@
 		19D08358286F41FA00F75E4A /* IconLabelX.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconLabelX.swift; sourceTree = "<group>"; };
 		19D0835A286F424000F75E4A /* LabelIconX.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelIconX.swift; sourceTree = "<group>"; };
 		19D0835C286F428600F75E4A /* BarButtonModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarButtonModel.swift; sourceTree = "<group>"; };
-		19D0835E286F42C000F75E4A /* FrameCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameCellModel.swift; sourceTree = "<group>"; };
+		19D0835E286F42C000F75E4A /* FrameCellModelDT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameCellModelDT.swift; sourceTree = "<group>"; };
 		19D08360286F430B00F75E4A /* Designable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Designable.swift; sourceTree = "<group>"; };
+		19D7BE9628B3CC1100C95053 /* CurrencyButtonDT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyButtonDT.swift; sourceTree = "<group>"; };
+		19D7BE9828B3E55F00C95053 /* ScrollViewModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollViewModels.swift; sourceTree = "<group>"; };
 		19D84E3228AC077200418B9E /* LoginViewModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModels.swift; sourceTree = "<group>"; };
 		19DD3D94288766860085CDA8 /* LabelCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelCellModel.swift; sourceTree = "<group>"; };
 		19DD3D96288A0A8C0085CDA8 /* CoverViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoverViewModel.swift; sourceTree = "<group>"; };
@@ -748,7 +752,7 @@
 				196750B12865190D0019A6DE /* ImageViewModel.swift */,
 				199C4B6528624B4C008AD6FD /* Spacer.swift */,
 				1953DE852879FE30000DC537 /* PickerViewModel.swift */,
-				19D0835E286F42C000F75E4A /* FrameCellModel.swift */,
+				19D7BE9828B3E55F00C95053 /* ScrollViewModels.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -758,11 +762,12 @@
 			children = (
 				19017B7228A69CD400B06345 /* DTLogoTitleX.swift */,
 				19A9232E28B2E34E0080D491 /* CurrencyLabelDT.swift */,
+				19D7BE9628B3CC1100C95053 /* CurrencyButtonDT.swift */,
+				19D0835E286F42C000F75E4A /* FrameCellModelDT.swift */,
 				19ACB3D128A65FDD00B5AD71 /* Combos */,
 				19EE848E28AB20A600D862EE /* MainVMs */,
 				19DD3D96288A0A8C0085CDA8 /* CoverViewModel.swift */,
 				63E1916C2889519E000FD312 /* BadgeModel.swift */,
-				6368D8292894091B0049EEAB /* TransactInputViewModel.swift */,
 				6368D82B289415EC0049EEAB /* TextViewModel.swift */,
 				63AD437A28992045000511B9 /* TransactionStatusViewModel.swift */,
 				19D08350286F401000F75E4A /* SideBarUserModel.swift */,
@@ -776,6 +781,7 @@
 				19A9232B28B2A8390080D491 /* Archive */,
 				190BE97A28ADDFC60062CCD5 /* TransactScene.swift */,
 				1953DE832879FDE3000DC537 /* TransactViewModels.swift */,
+				6368D8292894091B0049EEAB /* TransactInputViewModel.swift */,
 				190BE97828ADDFAB0062CCD5 /* TransactScenario.swift */,
 				19CF792B28A587B9001531B8 /* TransactWorks.swift */,
 			);
@@ -1172,7 +1178,7 @@
 				19017B6B28A6989000B06345 /* TitleSubtitleY.swift in Sources */,
 				19D84E3328AC077200418B9E /* LoginViewModels.swift in Sources */,
 				19D08351286F401000F75E4A /* SideBarUserModel.swift in Sources */,
-				19D0835F286F42C000F75E4A /* FrameCellModel.swift in Sources */,
+				19D0835F286F42C000F75E4A /* FrameCellModelDT.swift in Sources */,
 				19466E01289FE28C0052F0AB /* TitleSubtitleModel.swift in Sources */,
 				197A2DA528A9BF4B00190656 /* SCombo.swift in Sources */,
 				1952EA6B28A71399003F7852 /* DesignElements.swift in Sources */,
@@ -1234,6 +1240,7 @@
 				19ECD54328623D30001765F6 /* StackModel.swift in Sources */,
 				19017B6D28A698BC00B06345 /* TitleSubtitleCaptionY.swift in Sources */,
 				63D419EB28AA500A0024E22C /* GetFeedsApiWorker.swift in Sources */,
+				19D7BE9928B3E55F00C95053 /* ScrollViewModels.swift in Sources */,
 				19C1E990285F426B00E7976D /* TeamForceEndpoints.swift in Sources */,
 				1953DE862879FE30000DC537 /* PickerViewModel.swift in Sources */,
 				6368D82C289415EC0049EEAB /* TextViewModel.swift in Sources */,
@@ -1251,6 +1258,7 @@
 				19D08359286F41FA00F75E4A /* IconLabelX.swift in Sources */,
 				63EB469728AC35920070A271 /* HistoryScenario.swift in Sources */,
 				63E7A73B28AF9A7500FB2C80 /* GetCurrentPeriodApiWorker.swift in Sources */,
+				19D7BE9728B3CC1100C95053 /* CurrencyButtonDT.swift in Sources */,
 				19C1E98C285F426B00E7976D /* EndpointProtocol.swift in Sources */,
 				196750B4286519660019A6DE /* ProductionAsset.swift in Sources */,
 				1918CC7B286F6C84004373F3 /* ProfileApiWorker.swift in Sources */,

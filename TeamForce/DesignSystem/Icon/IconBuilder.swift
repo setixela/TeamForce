@@ -11,6 +11,7 @@ import UIKit
 struct IconBuilder: IconElements {
    typealias DesignElement = UIImage
 
+   var attach: UIImage { make("akar-icons_attach") }
    var bell: UIImage { make("bell") }
    var calendar: UIImage { make("calendar") }
    var cross: UIImage { make("cross") }

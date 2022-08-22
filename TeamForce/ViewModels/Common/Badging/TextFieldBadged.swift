@@ -7,4 +7,4 @@
 
 import Foundation
 
-final class TextFieldBadgedViewModel<Design: DSP>: BadgedViewModel<TextFieldModel<Design>, Design> {}
+final class TextFieldBadgedViewModel<Design: DSP>: BadgedViewModel<TextFieldModel, Design> {}

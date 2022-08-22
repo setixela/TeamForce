@@ -18,9 +18,7 @@ struct TransactScenarioEvents {
    let reasonInputChanged: VoidWork<String>
 }
 
-protocol ModelState {}
-
-enum TransactState: ModelState {
+enum TransactState {
    case loadProfilError
    case loadTransactionsError
 
@@ -95,6 +93,7 @@ final class TransactScenario<Asset: AssetProtocol>:
 
       events.transactInputChanged
          .doNext(work: works.coinInputParsing)
+         .onSuccess(setState)  { .coinInputSuccess($0, true) }
          .onFail { [weak self] (text: String) in
             self?.works.updateAmount // было двойное использование одного ворка
                .doAsync((text, false))
@@ -105,7 +104,6 @@ final class TransactScenario<Asset: AssetProtocol>:
          .doMap { ($0, true) }
          .doNext(work: works.updateAmount) // 10 часов искал дефект двойного юзанья
          .doNext(work: works.isCorrect)
-         .onSuccessMixSaved(setState) { .coinInputSuccess($1, true) }
          .onFailMixSaved(setState) { .coinInputSuccess($1, false) }
 
       events.reasonInputChanged

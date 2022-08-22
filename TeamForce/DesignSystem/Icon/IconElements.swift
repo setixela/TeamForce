@@ -9,6 +9,7 @@ import ReactiveWorks
 import UIKit
 
 protocol IconElements: InitProtocol, DesignElementable where DesignElement == UIImage {
+   var attach: DesignElement { get }
    var bell: DesignElement { get }
    var calendar: DesignElement { get }
    var cross: DesignElement { get }

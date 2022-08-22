@@ -33,11 +33,11 @@ final class BalanceViewModel<Asset: AssetProtocol>: BaseViewModel<StackViewExten
             .set_imageTintColor(Design.color.iconBrand)
       }
 
-   private lazy var myAccountFrame = FrameCellModel<Design>()
+   private lazy var myAccountFrame = FrameCellModelDT<Design>()
       .set(.backColor(Design.color.frameCellBackground))
       .set(.header(Text.title.myAccount))
 
-   private lazy var leftToSendFrame = FrameCellModel<Design>()
+   private lazy var leftToSendFrame = FrameCellModelDT<Design>()
       .set(.header(Text.title.leftToSend))
       .set(.borderWidth(1))
       .set(.backColor(Design.color.frameCellBackgroundSecondary))
@@ -66,7 +66,7 @@ final class BalanceViewModel<Asset: AssetProtocol>: BaseViewModel<StackViewExten
 //         leftToSendFrame
 //      ])
 
-   private lazy var annulationFrame = BalanceStatusFrame<Design>()
+   private lazy var annulationFrame = BalanceStatusFrameDT<Design>()
       .setMain {
          $0
             .set_image(Design.icon.cross)
@@ -81,7 +81,7 @@ final class BalanceViewModel<Asset: AssetProtocol>: BaseViewModel<StackViewExten
       }
       .set_backColor(Design.color.errorSecondary)
 
-   private lazy var inProgessFrame = BalanceStatusFrame<Design>()
+   private lazy var inProgessFrame = BalanceStatusFrameDT<Design>()
       .setMain {
          $0
             .set_image(Design.icon.inProgress)

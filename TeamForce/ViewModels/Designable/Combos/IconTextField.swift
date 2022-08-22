@@ -9,11 +9,11 @@ import Foundation
 
 final class IconTextField<Design: DesignProtocol>:
    Combos<SComboMR<
-      ImageViewModel, TextFieldModel<Design>
+      ImageViewModel, TextFieldModel
    >>
 {
 
-   var textField: TextFieldModel<Design> { models.right }
+   var textField: TextFieldModel { models.right }
    var icon: ImageViewModel { models.main }
 
    required init() {

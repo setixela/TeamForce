@@ -14,7 +14,7 @@ enum FrameCellState {
    case caption(String)
 }
 
-final class FrameCellModel<Design: DesignProtocol>: BaseViewModel<StackViewExtended>,
+final class FrameCellModelDT<Design: DesignProtocol>: BaseViewModel<StackViewExtended>,
    Designable
 {
    typealias State = StackState
@@ -45,7 +45,7 @@ final class FrameCellModel<Design: DesignProtocol>: BaseViewModel<StackViewExten
    }
 }
 
-extension FrameCellModel: Stateable2 {
+extension FrameCellModelDT: Stateable2 {
    func applyState(_ state: FrameCellState) {
       switch state {
       case .text(let string):
@@ -58,7 +58,7 @@ extension FrameCellModel: Stateable2 {
    }
 }
 
-final class BalanceStatusFrame<Design: DSP>:
+final class BalanceStatusFrameDT<Design: DSP>:
    Combos<SComboMRDD<ImageViewModel, LabelModel, LabelModel, ViewModel>>, Designable
 {
    required init() {
@@ -85,38 +85,6 @@ final class BalanceStatusFrame<Design: DSP>:
    }
 }
 
-enum ScrollState {
-   case models([UIViewModel])
-   case spacing(CGFloat)
-}
 
-final class ScrollViewModelX: BaseViewModel<UIScrollView> {
-   private lazy var stack = StackModel()
-      .set_axis(.horizontal)
 
-   private var spacing: CGFloat = 0
-
-   override func start() {
-      view.addSubview(stack.uiView)
-
-      stack.view.translatesAutoresizingMaskIntoConstraints = false
-      stack.view.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-      stack.view.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-      stack.view.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-      stack.view.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
-   }
-}
-
-extension ScrollViewModelX: Stateable2 {
-   func applyState(_ state: ScrollState) {
-      switch state {
-      case .models(let array):
-         array.enumerated().forEach {
-            stack.view.addArrangedSubview($0.1.uiView)
-         }
-      case .spacing(let value):
-         stack.view.spacing = value
-      }
-   }
-}
 

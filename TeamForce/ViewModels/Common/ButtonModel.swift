@@ -88,4 +88,31 @@ extension ButtonTapAnimator {
          self.uiView.frame = frame
       }
    }
+
+   func animateTapWithShadow() {
+      let frame = uiView.frame
+      uiView.frame = uiView.frame.inset(by: .init(top: 5, left: 2, bottom: -3, right: 3))
+      let layer = uiView.layer
+      let radius = layer.shadowRadius
+      let color = layer.shadowColor
+      let opacity = layer.shadowOpacity
+      let masksToBounds = layer.masksToBounds
+      let clipsToBounds = uiView.clipsToBounds
+      layer.masksToBounds = false
+      uiView.clipsToBounds = false
+      layer.shadowOpacity = 0.11
+      layer.shadowColor = UIColor.black.cgColor
+      layer.shadowRadius = 5
+      UIView.animate(withDuration: 0.3) {
+         self.uiView.frame = frame
+         layer.shadowOpacity = opacity
+         layer.shadowColor = color
+         layer.shadowRadius = 100
+         self.uiView.setNeedsDisplay()
+      } completion: { _ in
+         layer.shadowRadius = radius
+         layer.masksToBounds = masksToBounds
+         self.uiView.clipsToBounds = clipsToBounds
+      }
+   }
 }

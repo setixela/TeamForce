@@ -107,6 +107,7 @@ final class StackViewExtended: UIStackView, Communicable {
    override init(frame: CGRect) {
       super.init(frame: frame)
 
+      axis = .vertical
       clipsToBounds = false
       layer.masksToBounds = false
    }
@@ -136,3 +137,5 @@ final class StackViewExtended: UIStackView, Communicable {
       }
    }
 }
+
+

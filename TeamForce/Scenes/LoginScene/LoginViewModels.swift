@@ -31,11 +31,11 @@ final class LoginViewModels<Asset: AssetProtocol>: Assetable {
       }
 
    lazy var smsCodeInputModel: IconTextField<Design> = .init()
-      .setMain {
+      .setAll({
          $0.set_image(Design.icon.lock)
-      } setRight: {
-         $0.set_placeholder(Text.title.enterSmsCode)
-      }
+         $1.set_placeholder(Text.title.enterSmsCode)
+         $1.set_keyboardType(.numberPad)
+      })
 
    lazy var getCodeButton: ButtonModel = Design.button.inactive
       .set_title(Text.button.getCodeButton)

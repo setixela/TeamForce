@@ -17,8 +17,6 @@ final class TransactScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended
 {
    typealias State = StackState
 
-   private lazy var viewModels = TransactViewModels<Design>()
-
    lazy var scenario = TransactScenario(
       works: TransactWorks<Asset>(),
       stateDelegate: stateDelegate,
@@ -31,6 +29,21 @@ final class TransactScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended
          reasonInputChanged: viewModels.reasonTextView.onEvent(\.didEditingChanged)
       )
    )
+
+   private lazy var viewModels = TransactViewModels<Design>()
+   private lazy var options = TransactOptions<Design>()
+   private lazy var viewModelsWrapper = ScrollViewModelY()
+      .set(.spacing(Grid.x8.value))
+      .set(.models([
+         viewModels.balanceInfo,
+         viewModels.userSearchTextField,
+         viewModels.transactInputViewModel,
+         viewModels.reasonTextView,
+         options,
+         viewModels.sendButton,
+         viewModels.tableModel,
+         Grid.x64.spacer
+      ]))
 
    // MARK: - Start
 
@@ -50,13 +63,7 @@ final class TransactScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended
       set_alignment(.fill)
       set_spacing(8)
       set_arrangedModels([
-         viewModels.balanceInfo,
-         viewModels.userSearchTextField,
-         viewModels.transactInputViewModel,
-         viewModels.reasonTextView,
-         viewModels.sendButton,
-         viewModels.tableModel,
-         Spacer(),
+         viewModelsWrapper
       ])
    }
 
@@ -134,8 +141,10 @@ extension TransactScene: StateMachine {
       case .coinInputSuccess(let text, let isCorrect):
          viewModels.transactInputViewModel.textField.set(.text(text))
          if isCorrect {
+            viewModels.transactInputViewModel.setState(.normal)
             viewModels.sendButton.set(Design.state.button.default)
          } else {
+            viewModels.transactInputViewModel.setState(.noInput)
             viewModels.transactInputViewModel.textField.set(.text(text))
             viewModels.sendButton.set(Design.state.button.inactive)
          }

@@ -24,7 +24,7 @@ final class TransactViewModels<Design: DSP>: Designable {
       .set_cornerRadius(Design.params.cornerRadius)
       .set_padding(Design.params.infoFramePadding)
 
-   lazy var userSearchTextField = TextFieldModel<Design>()
+   lazy var userSearchTextField = TextFieldModel()
       .set(Design.state.textField.default)
       .set_placeholder(Design.Text.title.chooseRecipient)
       .set_hidden(true)
@@ -35,8 +35,9 @@ final class TransactViewModels<Design: DSP>: Designable {
 
    lazy var tableModel = TableViewModel()
       .set_borderColor(.gray)
-      .set_borderWidth(1)
+      .set_borderWidth(Design.params.borderWidth)
       .set_cornerRadius(Design.params.cornerRadius)
+      .set_minHeight(300)
       .set_hidden(true)
 
    lazy var sendButton = Design.button.default
@@ -44,15 +45,122 @@ final class TransactViewModels<Design: DSP>: Designable {
       .set_title(Design.Text.button.sendButton)
       .set_hidden(true)
 
-   lazy var reasonTextView = TextViewModel<Design>()
-      .set(.padding(.init(top: 16, left: 16, bottom: 16, right: 16)))
+   lazy var reasonTextView = TextViewModel()
+      .set(.padding(Design.params.contentPadding))
       .set(.placeholder(TextBuilder.title.reasonPlaceholder))
       .set(.font(Design.font.body1))
-      .set_backColor(UIColor.clear)
-      .set_borderColor(.lightGray.withAlphaComponent(0.4))
-      .set_borderWidth(1.0)
-      .set_height(200)
+      .set_backColor(Design.color.background)
+      .set_borderColor(Design.color.boundary)
+      .set_borderWidth(Design.params.borderWidth)
+      .set_maxHeight(166)
       .set_hidden(true)
 
+   lazy var addPhotoButton = 0
+
    lazy var transactionStatusView = TransactionStatusViewModel<Design>()
+}
+
+final class TransactOptions<Design: DSP>: BaseViewModel<StackViewExtended>, Designable, Stateable {
+   typealias State = StackState
+   //
+   private lazy var anonimParamModel = LabelSwitcherXDT<Design>.switcherWith(text: "Hello")
+   private lazy var showEveryoneParamModel = LabelSwitcherXDT<Design>.switcherWith(text: "World")
+   private lazy var addTagParamModel = LabelSwitcherXDT<Design>.switcherWith(text: "Hello")
+   private lazy var whishParamModel = LabelSwitcherXDT<Design>.switcherWith(text: "Word")
+
+   private lazy var danonimParamModel = LabelSwitcherXDT<Design>.switcherWith(text: "Hello")
+   private lazy var dshowEveryoneParamModel = LabelSwitcherXDT<Design>.switcherWith(text: "World")
+   private lazy var daddTagParamModel = LabelSwitcherXDT<Design>.switcherWith(text: "Hello")
+   private lazy var dwhishParamModel = LabelSwitcherXDT<Design>.switcherWith(text: "Word")
+
+   private lazy var adanonimParamModel = LabelSwitcherXDT<Design>.switcherWith(text: "Hello")
+   private lazy var adshowEveryoneParamModel = LabelSwitcherXDT<Design>.switcherWith(text: "World")
+   private lazy var adaddTagParamModel = LabelSwitcherXDT<Design>.switcherWith(text: "Hello")
+   private lazy var adwhishParamModel = LabelSwitcherXDT<Design>.switcherWith(text: "Word")
+
+   override func start() {
+      set_arrangedModels([
+         anonimParamModel,
+         showEveryoneParamModel,
+         addTagParamModel,
+         whishParamModel,
+
+         danonimParamModel,
+         dshowEveryoneParamModel,
+         daddTagParamModel,
+         dwhishParamModel,
+
+         adanonimParamModel,
+         adshowEveryoneParamModel,
+         adaddTagParamModel,
+         adwhishParamModel,
+      ])
+   }
+}
+
+class LabelSwitcherXDT<Design: DSP>: LabelSwitcherX {
+   override func start() {
+      super.start()
+
+      set_padding(Design.params.contentPadding)
+   }
+}
+
+class LabelSwitcherX: Combos<SComboMR<LabelModel, WrappedY<Switcher>>> {
+   var label: LabelModel { models.main }
+   var switcher: Switcher { models.right.subModel }
+
+   override func start() {
+      set_alignment(.center)
+      set_axis(.horizontal)
+   }
+}
+
+extension LabelSwitcherX {
+   static func switcherWith(text: String) -> Self {
+      Self()
+         .setAll { label, _ in
+            label.set_text(text)
+         }
+   }
+}
+
+struct SwitchEvent: InitProtocol {
+   var turnedOn: Event<Void>?
+   var turnedOff: Event<Void>?
+}
+
+enum SwitcherState {
+   case turnOn
+   case turnOff
+}
+
+final class Switcher: BaseViewModel<UISwitch>, Communicable, Stateable2 {
+   typealias State = ViewState
+   typealias State2 = SwitcherState
+
+   var events = SwitchEvent()
+
+   override func start() {
+      view.addTarget(self, action: #selector(didSwitch), for: .valueChanged)
+   }
+
+   @objc private func didSwitch() {
+      if view.isOn {
+         sendEvent(\.turnedOn)
+      } else {
+         sendEvent(\.turnedOff)
+      }
+   }
+}
+
+extension Switcher {
+   func applyState(_ state: SwitcherState) {
+      switch state {
+      case .turnOn:
+         view.setOn(true, animated: true)
+      case .turnOff:
+         view.setOn(false, animated: true)
+      }
+   }
 }

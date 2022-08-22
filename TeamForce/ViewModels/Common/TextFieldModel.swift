@@ -15,8 +15,7 @@ struct TextFieldEvents: InitProtocol {
    var didBeginEditing: Event<String>?
 }
 
-final class TextFieldModel<Design: DSP>: BaseViewModel<PaddingTextField>,
-   Designable,
+final class TextFieldModel: BaseViewModel<PaddingTextField>,
    Stateable2,
    UITextFieldDelegate
 {
@@ -25,7 +24,6 @@ final class TextFieldModel<Design: DSP>: BaseViewModel<PaddingTextField>,
    override func start() {
       set(.backColor(.lightGray.withAlphaComponent(0.3)))
       set(.clearButtonMode(.whileEditing))
-      set(.cornerRadius(Design.params.cornerRadius))
       view.delegate = self
       view.addTarget(self, action: #selector(changValue), for: .editingChanged)
       view.addTarget(self, action: #selector(didEditingBegin), for: .editingDidBegin)

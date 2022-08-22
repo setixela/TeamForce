@@ -39,4 +39,8 @@ extension UIEdgeInsets {
    static func sideOffset(_ offset: CGFloat) -> UIEdgeInsets {
       .init(top: 0, left: offset, bottom: 0, right: offset)
    }
+
+   static func verticalOffset(_ offset: CGFloat) -> UIEdgeInsets {
+      .init(top: offset, left: 0, bottom: offset, right: 0)
+   }
 }

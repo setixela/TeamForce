@@ -47,6 +47,26 @@ extension ViewModelProtocol where Self: Stateable {
       return self
    }
 
+   @discardableResult func set_maxHeight(_ value: CGFloat) -> Self {
+      view.addAnchors.maxHeight(value)
+      return self
+   }
+
+   @discardableResult func set_maxWidth(_ value: CGFloat) -> Self {
+      view.addAnchors.maxWidth(value)
+      return self
+   }
+
+   @discardableResult func set_minHeight(_ value: CGFloat) -> Self {
+      view.addAnchors.minHeight(value)
+      return self
+   }
+
+   @discardableResult func set_minWidth(_ value: CGFloat) -> Self {
+      view.addAnchors.minHeight(value)
+      return self
+   }
+
    @discardableResult func set_sizeAspect(_ value: CGSize) -> Self {
       set_widthAspect(value.width)
       set_heightAspect(value.height)
@@ -379,5 +399,8 @@ extension ViewModelProtocol where Self: Stateable, View: PaddingTextField {
       return self
    }
 
-
+   @discardableResult func set_keyboardType(_ value: UIKeyboardType) -> Self {
+      view.keyboardType = value
+      return self
+   }
 }

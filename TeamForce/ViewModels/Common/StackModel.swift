@@ -9,6 +9,13 @@ import ReactiveWorks
 import UIKit
 
 final class StackModel: BaseViewModel<StackViewExtended> {
+
+   convenience init(_ models: UIViewModel...) {
+      self.init()
+
+      set_arrangedModels(models)
+   }
+
    override func start() {
       set(.axis(.vertical))
    }
@@ -32,3 +39,4 @@ extension StackViewExtended {
       subviews.forEach { $0.removeFromSuperview() }
    }
 }
+
