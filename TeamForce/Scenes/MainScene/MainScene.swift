@@ -10,11 +10,11 @@ import UIKit
 
 final class MainScene<Asset: AssetProtocol>:
    BaseSceneModel<
-DefaultVCModel,
-TripleStacksBrandedVM<Asset.Design>,
-Asset,
-Void
->
+      DefaultVCModel,
+      TripleStacksBrandedVM<Asset.Design>,
+      Asset,
+      Void
+   >
 {
    lazy var balanceViewModel = BalanceViewModel<Asset>()
    lazy var transactViewModel = TransactScene<Asset>()
@@ -22,12 +22,19 @@ Void
    lazy var settingsViewModel = SettingsViewModel<Asset>()
    lazy var profileViewModel = ProfileViewModel<Asset>()
 
+   lazy var feedViewModel = FeedScene<Asset>()
+
    var tabBarPanel: TabBarPanel<Design> { mainVM.footerStack }
 
    // MARK: - Side bar
 
    private let sideBarModel = SideBarModel<Asset>()
    private let menuButton = BarButtonModel()
+
+   private lazy var useCase = Asset.apiUseCase
+
+   private lazy var userProfileApiModel = ProfileApiWorker(apiEngine: Asset.service.apiEngine)
+   private lazy var safeStringStorageModel = StringStorageWorker(engine: Asset.service.safeStringStorage)
 
    // MARK: - Start
 
@@ -41,12 +48,11 @@ Void
 
       presentModel(balanceViewModel)
 
-
       tabBarPanel.button1
          .onEvent(\.didTap) { [weak self] in
             self?.unlockTabButtons()
-            self?.mainVM.header.set_text("Профиль")
-            self?.presentModel(self?.profileViewModel)
+            self?.mainVM.header.set_text("Лента событий")
+            self?.presentModel(self?.feedViewModel)
             self?.tabBarPanel.button1.setMode(\.normal)
          }
 
@@ -82,18 +88,11 @@ Void
             self?.tabBarPanel.button4.setMode(\.normal)
          }
 
-      //      menuButton
-      //         .onEvent(\.initiated) { [weak self] item in
-      //            self?.vcModel?.sendEvent(\.setLeftBarItems, [item])
-      //         }
-      //         .onEvent(\.didTap) { [weak self] in
-      //            guard let self = self else { return }
-      //
-      //            self.sideBarModel.sendEvent(\.presentOnScene, self.mainVM.view)
-      //         }
-
-
-      configureSideBarItemsEvents()
+      mainVM.profileButton.onEvent(\.didTap) { [weak self] in
+         self?.unlockTabButtons()
+         self?.mainVM.header.set_text("Профиль")
+         self?.presentModel(self?.profileViewModel)
+      }
    }
 
    private func unlockTabButtons() {
@@ -133,5 +132,25 @@ extension MainScene {
          .set_arrangedModels([
             model
          ])
+   }
+}
+
+private extension MainScene {
+   func loadProfile() {
+      safeStringStorageModel
+         .doAsync("token")
+         .onFail {
+            print("token not found")
+         }
+         .doMap {
+            TokenRequest(token: $0)
+         }
+         .doNext(worker: userProfileApiModel)
+         .onSuccess { [weak self] userData in
+//            self?.
+//            self?.setLabels(userData: userData)
+         }.onFail {
+            print("load profile error")
+         }
    }
 }

@@ -93,7 +93,7 @@ protocol ButtonTapAnimator: UIViewModel {}
 extension ButtonTapAnimator {
    func animateTap() {
       let frame = uiView.frame
-      uiView.frame = uiView.frame.inset(by: .init(top: 5, left: 2, bottom: -3, right: 3))
+      uiView.frame = uiView.frame.inset(by: .init(top: 3, left: 2, bottom: -2, right: 3))
       UIView.animate(withDuration: 0.3) {
          self.uiView.frame = frame
       }

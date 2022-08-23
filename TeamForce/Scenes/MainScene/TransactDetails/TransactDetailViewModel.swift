@@ -106,25 +106,25 @@ Transaction
       guard let input = wS?.inputValue else { return }
       wS?.input = input
       
-      switch(input.sender.senderTgName == currentUser) {
+      switch(input.sender?.senderTgName == currentUser) {
       case true:
          transactionOwnerLabel
-            .set(.text("Перевод для " + input.recipient.recipientTgName))
+            .set(.text("Перевод для " + (input.recipient?.recipientTgName ?? "")))
          amountLabel
-            .set(.text(input.amount))
+            .set(.text(input.amount ?? ""))
          statusImage
             .set(.image(Design.icon.sendCoinIcon))
       case false:
          transactionOwnerLabel
-            .set(.text("Перевод от " + input.sender.senderTgName))
+            .set(.text("Перевод от " + (input.sender?.senderTgName ?? "")))
          amountLabel
-            .set(.text("+" + input.amount))
+            .set(.text("+" + (input.amount ?? "")))
          statusImage
             .set(.image(Design.icon.recieveCoinIcon))
       }
       
       var textColor = UIColor.black
-      switch(input.transactionStatus.id) {
+      switch(input.transactionStatus?.id) {
       case "A":
          textColor = UIColor.systemGreen
       case "D":
@@ -138,11 +138,11 @@ Transaction
       amountLabel.set(.color(textColor))
       
       statusLabel
-         .set(.text(input.transactionStatus.name))
+         .set(.text(input.transactionStatus?.name ?? ""))
       reasonLabel
-         .set(.text(input.reason))
+         .set(.text(input.reason ?? ""))
       
-      guard let convertedDate = input.createdAt.convertToDate() else { return }
+      guard let convertedDate = (input.createdAt ?? "").convertToDate() else { return }
       dateLabel
          .set(.text(convertedDate))
    }

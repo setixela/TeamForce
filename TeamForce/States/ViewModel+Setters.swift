@@ -283,6 +283,12 @@ extension ViewModelProtocol where Self: Stateable, View: PaddingLabel {
       view.padding.bottom = value
       return self
    }
+
+   @discardableResult func set_cornerRadius(_ value: CGFloat) -> Self {
+      view.layer.cornerRadius = value
+      view.clipsToBounds = true
+      return self
+   }
 }
 
 import AlamofireImage
@@ -311,7 +317,6 @@ extension ViewModelProtocol where Self: Stateable, View: PaddingImageView {
 
    @discardableResult func set_cornerRadius(_ value: CGFloat) -> Self {
       view.layer.cornerRadius = value
-      //  view.layer.masksToBounds = true
       view.clipsToBounds = true
       return self
    }

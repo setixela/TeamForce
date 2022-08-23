@@ -19,4 +19,16 @@ struct DataToDecodableParser {
 
       return result
    }
+
+//   func parseArray<T: Decodable>(_ data: Data) -> [T]? {
+//      let decoder = JSONDecoder()
+//
+//      guard
+//         let result = try? decoder.decode([T].self, from: data)
+//      else {
+//         return nil
+//      }
+//
+//      return result
+//   }
 }

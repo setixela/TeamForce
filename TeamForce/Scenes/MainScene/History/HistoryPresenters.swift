@@ -22,14 +22,14 @@ struct HistoryPresenters<Design: DesignProtocol>: Designable {
 
          switch item.state {
          case .recieved:
-            userNameText = item.sender.senderTgName
+            userNameText = item.sender.senderTgName ?? ""
             statusText = ""
             sumText = "+" + item.amount
             statusColor = .clear
             statusHidden = true
             image = Design.icon.recieveCoinIcon
          default:
-            userNameText = item.recipient.recipientTgName
+            userNameText = item.recipient.recipientTgName ?? ""
             statusText = "   Выполнен   "
             sumText = "-" + item.amount
             statusColor = Design.color.success

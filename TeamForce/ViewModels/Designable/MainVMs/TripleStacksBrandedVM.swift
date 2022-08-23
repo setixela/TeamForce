@@ -5,9 +5,8 @@
 //  Created by Aleksandr Solovyev on 18.08.2022.
 //
 
-import ReactiveWorks
 import CoreGraphics
-
+import ReactiveWorks
 
 // MARK: - View Models --------------------------------------------------------------
 
@@ -22,16 +21,38 @@ final class TripleStacksBrandedVM<Design: DesignProtocol>:
    var bodyStack: StackModel { models.down.subModel }
    var footerStack: TabBarPanel<Design> { models.down2 }
 
+   lazy var profileButton = ImageViewModel()
+      .set_image(Design.icon.avatarPlaceholder)
+      .set_url("https://picsum.photos/200")
+      .set_size(.square(Grid.x36.value))
+      .set_cornerRadius(Grid.x36.value / 2)
+      .set_borderColor(Design.color.backgroundBrandSecondary.withAlphaComponent(0.85))
+      .set_borderWidth(3)
+
+
+   private lazy var topButtonsStack = StackModel()
+      .set_axis(.horizontal)
+      .set_spacing(Grid.x8.value)
+      .set_arrangedModels([
+         BrandLogoIcon<Design>(),
+         Grid.xxx.spacer,
+         ButtonModel()
+            .set(Design.state.button.transparent)
+            .set(.image(Design.icon.alarm))
+            .set_size(.square(Grid.x36.value)),
+         profileButton
+      ])
+
    required init() {
       super.init()
 
       setMain {
          $0
             .set(Design.state.stack.header)
-            .set_alignment(.leading)
+            .set_alignment(.fill)
             .set_arrangedModels([
                Grid.x1.spacer,
-               BrandLogoIcon<Design>(),
+               topButtonsStack,
                Grid.x16.spacer,
                header,
                Grid.x36.spacer
@@ -44,7 +65,10 @@ final class TripleStacksBrandedVM<Design: DesignProtocol>:
             .subModel
             .set(Design.state.stack.bodyStack)
       } setDown2: { _ in }
+      
+   }
+
+   override func start() {
+      profileButton.set(.tapGesturing)
    }
 }
-
-

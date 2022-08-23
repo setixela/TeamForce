@@ -113,7 +113,7 @@ private extension HistoryWorks {
       }
 
       return transactions.filter {
-         $0.sender.senderTgName == Self.store.currentUser
+         $0.sender?.senderTgName == Self.store.currentUser
       }
    }
 
@@ -123,7 +123,7 @@ private extension HistoryWorks {
       }
 
       return transactions.filter {
-         $0.sender.senderTgName != Self.store.currentUser
+         $0.sender?.senderTgName != Self.store.currentUser
       }
    }
 
@@ -133,16 +133,24 @@ private extension HistoryWorks {
       return filtered
          .reduce([TableItemsSection]()) { result, transact in
             var state = TransactionItem.State.recieved
-            if transact.sender.senderTgName == Self.store.currentUser {
+            if transact.sender?.senderTgName == Self.store.currentUser {
                state = .sendSuccess
             }
 
             let item = TransactionItem(
                state: state,
-               sender: transact.sender,
-               recipient: transact.recipient,
-               amount: transact.amount,
-               createdAt: transact.createdAt
+               sender: transact.sender ?? Sender(senderId: nil,
+                                                 senderTgName: nil,
+                                                 senderFirstName: nil,
+                                                 senderSurname: nil,
+                                                 senderPhoto: nil),
+               recipient: transact.recipient ?? Recipient(recipientId: nil,
+                                                          recipientTgName: nil,
+                                                          recipientFirstName: nil,
+                                                          recipientSurname: nil,
+                                                          recipientPhoto: nil),
+               amount: transact.amount ?? "",
+               createdAt: transact.createdAt ?? ""
             )
 
             var result = result

@@ -146,6 +146,7 @@
 		19F15386289964AA00ECF000 /* LogoutUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F15385289964AA00ECF000 /* LogoutUseCase.swift */; };
 		19F15389289964D200ECF000 /* ApiUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F15388289964D200ECF000 /* ApiUseCase.swift */; };
 		19F1538E2899692D00ECF000 /* ApiUseCaseRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F1538D2899692D00ECF000 /* ApiUseCaseRegistry.swift */; };
+		19FF0D9028B4999000B78346 /* FeedScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FF0D8F28B4999000B78346 /* FeedScene.swift */; };
 		63352DE7289AA69A00489F5F /* SendCoinUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63352DE6289AA69A00489F5F /* SendCoinUseCase.swift */; };
 		634F4333288F4EE9003B2256 /* LogoutApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634F4332288F4EE9003B2256 /* LogoutApiWorker.swift */; };
 		63578E5828AB8DA000423957 /* GetTransactionsByPeriodApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63578E5728AB8DA000423957 /* GetTransactionsByPeriodApiWorker.swift */; };
@@ -335,6 +336,7 @@
 		19F15385289964AA00ECF000 /* LogoutUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutUseCase.swift; sourceTree = "<group>"; };
 		19F15388289964D200ECF000 /* ApiUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiUseCase.swift; sourceTree = "<group>"; };
 		19F1538D2899692D00ECF000 /* ApiUseCaseRegistry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiUseCaseRegistry.swift; sourceTree = "<group>"; };
+		19FF0D8F28B4999000B78346 /* FeedScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedScene.swift; sourceTree = "<group>"; };
 		63352DE6289AA69A00489F5F /* SendCoinUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendCoinUseCase.swift; sourceTree = "<group>"; };
 		634F4332288F4EE9003B2256 /* LogoutApiWorker.swift */ = {isa = PBXFileReference; indentWidth = 3; lastKnownFileType = sourcecode.swift; path = LogoutApiWorker.swift; sourceTree = "<group>"; tabWidth = 3; };
 		63578E5728AB8DA000423957 /* GetTransactionsByPeriodApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTransactionsByPeriodApiWorker.swift; sourceTree = "<group>"; };
@@ -777,14 +779,14 @@
 		19A9232D28B2DB1B0080D491 /* Designable */ = {
 			isa = PBXGroup;
 			children = (
+				19ACB3D128A65FDD00B5AD71 /* Combos */,
+				19EE848E28AB20A600D862EE /* MainVMs */,
 				19CAB9CB28B41CB400A0A3B1 /* TitleBodySwitcherDT.swift */,
 				19CAB9CD28B4261E00A0A3B1 /* LabelSwitchXDT.swift */,
 				19017B7228A69CD400B06345 /* DTLogoTitleX.swift */,
 				19A9232E28B2E34E0080D491 /* CurrencyLabelDT.swift */,
 				19D7BE9628B3CC1100C95053 /* CurrencyButtonDT.swift */,
 				19D0835E286F42C000F75E4A /* FrameCellModelDT.swift */,
-				19ACB3D128A65FDD00B5AD71 /* Combos */,
-				19EE848E28AB20A600D862EE /* MainVMs */,
 				19DD3D96288A0A8C0085CDA8 /* CoverViewModel.swift */,
 				63E1916C2889519E000FD312 /* BadgeModel.swift */,
 				6368D82B289415EC0049EEAB /* TextViewModel.swift */,
@@ -830,6 +832,7 @@
 		19ACB3CD28A599ED00B5AD71 /* Feed */ = {
 			isa = PBXGroup;
 			children = (
+				19FF0D8F28B4999000B78346 /* FeedScene.swift */,
 			);
 			path = Feed;
 			sourceTree = "<group>";
@@ -1300,6 +1303,7 @@
 				1953DE862879FE30000DC537 /* PickerViewModel.swift in Sources */,
 				6368D82C289415EC0049EEAB /* TextViewModel.swift in Sources */,
 				190C1D12285D15FF00FB3518 /* AppDelegate.swift in Sources */,
+				19FF0D9028B4999000B78346 /* FeedScene.swift in Sources */,
 				190C1D14285D15FF00FB3518 /* SceneDelegate.swift in Sources */,
 				1953DE812879FC55000DC537 /* SearchUserApiWorker.swift in Sources */,
 				19EF32AE287E08F80078F53D /* ColorBuilder.swift in Sources */,

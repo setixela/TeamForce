@@ -8,6 +8,59 @@
 import ReactiveWorks
 import UIKit
 
+protocol IconElements: InitProtocol, DesignElementable where DesignElement == UIImage {
+   var attach: DesignElement { get }
+   var bell: DesignElement { get }
+   var calendar: DesignElement { get }
+   var cross: DesignElement { get }
+   var inProgress: DesignElement { get }
+   var lock: DesignElement { get }
+   var mail: DesignElement { get }
+   var user: DesignElement { get }
+   //
+   var alarm: UIImage { get }
+   var messageCloud: UIImage { get }
+   var like: UIImage { get }
+   var dislike: UIImage { get }
+   // brand
+   var logo: DesignElement { get }
+   var logoTitle: DesignElement { get }
+   var logoCurrency: UIImage { get }
+   var logoCurrencyBig: UIImage { get }
+
+   // other
+   var checkCircle: DesignElement { get }
+   var coinLine: DesignElement { get }
+   var coinBackground: DesignElement { get }
+   var historyLine: DesignElement { get }
+   var upload2Fill: DesignElement { get }
+   var calendarLine: DesignElement { get }
+
+   var avatarPlaceholder: DesignElement { get }
+
+   var sideMenu: DesignElement { get }
+
+   var arrowDropDownLine: DesignElement { get }
+   var arrowDropUpLine: DesignElement { get }
+
+   var clapHands: DesignElement { get }
+
+   var introlIllustrate: DesignElement { get }
+
+   var girlOnSkateboard: DesignElement { get }
+
+   var sendCoinIcon: DesignElement { get }
+   var recieveCoinIcon: DesignElement { get }
+
+   // bottom panel
+   var bottomPanel: DesignElement { get }
+   var tabBarMainButton: DesignElement { get }
+   var tabBarButton1: UIImage { get }
+   var tabBarButton2: UIImage { get }
+   var tabBarButton3: UIImage { get }
+   var tabBarButton4: UIImage { get }
+}
+
 struct IconBuilder: IconElements {
    typealias DesignElement = UIImage
 
@@ -18,7 +71,13 @@ struct IconBuilder: IconElements {
    var inProgress: UIImage { make("in_progress") }
    var lock: UIImage { make("lock") }
    var mail: UIImage { make("mail") }
+
    var user: UIImage { make("user") }
+
+   var alarm: UIImage { make("alarm") }
+   var messageCloud: UIImage { make("message_cloud") }
+   var like: UIImage { make("like") }
+   var dislike: UIImage { make("dislike") }
 
    // brand
    var logo: UIImage { make("dt_logo") }

@@ -18,6 +18,7 @@ struct GetTransactionsUseCase: UseCaseProtocol {
          safeStringStorage
             .doAsync("token")
             .onFail {
+               log("No token")
                work.fail(())
             }
             .doNext(worker: getTransactionsApiWorker)

@@ -31,7 +31,7 @@ struct ButtonStateBuilder<Design: DesignProtocol>: ButtonStateProtocol {
    ] }
 
    var transparent: [ButtonState] { [
-      .backColor(Design.color.inactiveButtonBack),
+      .backColor(Design.color.transparent),
       .cornerRadius(Design.params.cornerRadius),
       .height(Design.params.buttonHeight),
       .textColor(Design.color.text),

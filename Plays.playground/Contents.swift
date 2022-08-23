@@ -33,86 +33,43 @@ if true {
 }
 
 // let scene = MainScene<ProductionAsset>()
-let model = TransactOptions<ProductionAsset.Design>()
+let model = FeedScene<ProductionAsset>()
 
 // MARK: - Experiments --------------------------------------------------------------
-
-final class TransactOptions<Design: DSP>: BaseViewModel<StackViewExtended>, Designable, Stateable {
-   typealias State = StackState
-   //
-   private lazy var anonimParamModel = LabelSwitcherX.switcherWith(text: "Hello")
-
-   private lazy var showEveryoneParamModel = LabelSwitcherX.switcherWith(text: "World")
-
-   private lazy var addTagParamModel = LabelSwitcherX.switcherWith(text: "Hello")
-
-   private lazy var whishParamModel = LabelSwitcherX.switcherWith(text: "Word")
-
-   override func start() {
-      set_arrangedModels([
-         anonimParamModel,
-         showEveryoneParamModel,
-         addTagParamModel,
-         whishParamModel
-      ])
-   }
-}
-
-final class LabelSwitcherX: Combos<SComboMR<LabelModel, WrappedY<Switcher>>> {
-   var label: LabelModel { models.main }
-   var switcher: Switcher { models.right.subModel }
-
-   override func start() {
-      set_alignment(.center)
-      set_axis(.horizontal)
-   }
-}
-
-extension LabelSwitcherX {
-   static func switcherWith(text: String) -> Self {
-      Self()
-         .setAll { label, _ in
-            label.set_text(text)
-         }
-   }
-}
-
-struct SwitchEvent: InitProtocol {
-   var turnedOn: Event<Void>?
-   var turnedOff: Event<Void>?
-}
-
-enum SwitcherState {
-   case turnOn
-   case turnOff
-}
-
-final class Switcher: BaseViewModel<UISwitch>, Communicable, Stateable2 {
+final class FeedScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>, Assetable, Stateable2 {
    typealias State = ViewState
-   typealias State2 = SwitcherState
+   typealias State2 = StackState
 
-   var events = SwitchEvent()
+   private lazy var feedTableModel = TableItemsModel<Design>()
+      .set_backColor(Design.color.background)
+
+   private lazy var useCase = Asset.apiUseCase
 
    override func start() {
-      view.addTarget(self, action: #selector(didSwitch), for: .valueChanged)
+      set_axis(.vertical)
+      set_arrangedModels([
+         Grid.x16.spacer,
+         feedTableModel,
+         //Spacer(88),
+      ])
+
+//      useCase.getFeed.work
+//         .retainBy(useCase.retainer)
+//         .doAsync()
+//         .onSuccess {
+//            log($0)
+//         }
+//         .onFail {
+//            errorLog("Feed load API ERROR")
+//         }
    }
 
-   @objc private func didSwitch() {
-      if view.isOn {
-         sendEvent(\.turnedOn)
-      } else {
-         sendEvent(\.turnedOff)
-      }
-   }
-}
+   lazy var feedCellPresenter: Presenter<Feed, ViewModel> = Presenter<Feed, ViewModel> { work in
 
-extension Switcher {
-   func applyState(_ state: SwitcherState) {
-      switch state {
-      case .turnOn:
-         view.setOn(true, animated: true)
-      case .turnOff:
-         view.setOn(false, animated: true)
-      }
+
+      let comboMR = Combos<SComboMR<ImageViewModel, ViewModel>>()
+         .setAll { avatar, infoBlock in
+
+         }
    }
 }
