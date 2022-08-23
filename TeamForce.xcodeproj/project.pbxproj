@@ -153,7 +153,7 @@
 		63578E5A28AB8F6000423957 /* GetTransactionsByPeriodUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63578E5928AB8F6000423957 /* GetTransactionsByPeriodUseCase.swift */; };
 		63578E5C28AB9B3E00423957 /* CancelTransactionByIdApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63578E5B28AB9B3E00423957 /* CancelTransactionByIdApiWorker.swift */; };
 		63578E5E28ABA2E500423957 /* CancelTransactionByIdUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63578E5D28ABA2E500423957 /* CancelTransactionByIdUseCase.swift */; };
-		6368D8222891508C0049EEAB /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6368D8212891508C0049EEAB /* ProfileViewModel.swift */; };
+		6368D8222891508C0049EEAB /* ProfileScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6368D8212891508C0049EEAB /* ProfileScene.swift */; };
 		6368D824289168740049EEAB /* CustomCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6368D823289168740049EEAB /* CustomCellModel.swift */; };
 		6368D826289187B50049EEAB /* SendCoinApiModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6368D825289187B50049EEAB /* SendCoinApiModel.swift */; };
 		6368D8282891E7C40049EEAB /* UserDefault+helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6368D8272891E7C30049EEAB /* UserDefault+helpers.swift */; };
@@ -343,7 +343,7 @@
 		63578E5928AB8F6000423957 /* GetTransactionsByPeriodUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTransactionsByPeriodUseCase.swift; sourceTree = "<group>"; };
 		63578E5B28AB9B3E00423957 /* CancelTransactionByIdApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelTransactionByIdApiWorker.swift; sourceTree = "<group>"; };
 		63578E5D28ABA2E500423957 /* CancelTransactionByIdUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelTransactionByIdUseCase.swift; sourceTree = "<group>"; };
-		6368D8212891508C0049EEAB /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
+		6368D8212891508C0049EEAB /* ProfileScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileScene.swift; sourceTree = "<group>"; };
 		6368D823289168740049EEAB /* CustomCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCellModel.swift; sourceTree = "<group>"; };
 		6368D825289187B50049EEAB /* SendCoinApiModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendCoinApiModel.swift; sourceTree = "<group>"; };
 		6368D8272891E7C30049EEAB /* UserDefault+helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefault+helpers.swift"; sourceTree = "<group>"; };
@@ -840,7 +840,7 @@
 		19ACB3CE28A59A2900B5AD71 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
-				6368D8212891508C0049EEAB /* ProfileViewModel.swift */,
+				6368D8212891508C0049EEAB /* ProfileScene.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -1329,7 +1329,7 @@
 				19D0835D286F428600F75E4A /* BarButtonModel.swift in Sources */,
 				196750AC2865189C0019A6DE /* TextFieldModel.swift in Sources */,
 				63E7A74728AFBDE500FB2C80 /* GetPeriodsFromDateUseCase.swift in Sources */,
-				6368D8222891508C0049EEAB /* ProfileViewModel.swift in Sources */,
+				6368D8222891508C0049EEAB /* ProfileScene.swift in Sources */,
 				198FE1C92899994A00BAF1A5 /* LoginUseCase.swift in Sources */,
 				1952EA7128A718AE003F7852 /* Params.swift in Sources */,
 				1952EA6F28A71590003F7852 /* IconElements.swift in Sources */,

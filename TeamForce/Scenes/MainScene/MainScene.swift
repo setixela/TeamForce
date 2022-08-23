@@ -20,7 +20,7 @@ final class MainScene<Asset: AssetProtocol>:
    lazy var transactViewModel = TransactScene<Asset>()
    lazy var historyViewModel = HistoryScene<Asset>()
    lazy var settingsViewModel = SettingsViewModel<Asset>()
-   lazy var profileViewModel = ProfileViewModel<Asset>()
+  // lazy var profileViewModel = ProfileViewModel<Asset>()
 
    lazy var feedViewModel = FeedScene<Asset>()
 
@@ -89,9 +89,10 @@ final class MainScene<Asset: AssetProtocol>:
          }
 
       mainVM.profileButton.onEvent(\.didTap) { [weak self] in
-         self?.unlockTabButtons()
-         self?.mainVM.header.set_text("Профиль")
-         self?.presentModel(self?.profileViewModel)
+         //self?.unlockTabButtons()
+         Asset.router?.route(\.profile, navType: .push)
+//         self?.mainVM.header.set_text("Профиль")
+//         self?.presentModel(self?.profileViewModel)
       }
    }
 
