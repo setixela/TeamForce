@@ -22,19 +22,25 @@ final class ProfileViewModel<Asset: AssetProtocol>: BaseViewModel<StackViewExten
       .setMain { image in
          image
             .set_image(Design.icon.avatarPlaceholder)
-            .set(.size(.init(width: 64, height: 64)))
+            .set_url(String.randomUrlImage)
+            .set_cornerRadius(52/2)
+            .set(.size(.square(52)))
       } setRight: { fullName in
          fullName
             .set_padLeft(12)
       } setDown: { telegram in
          telegram
+            .set_color(Design.color.textBrand)
             .set_padLeft(12)
       }
       .set_alignment(.center)
       .set_distribution(.fill)
       .set_backColor(Design.color.inactiveButtonBack)
-      .set_padding(Design.params.contentPadding)
-   
+      .set_cornerRadius(Design.params.cornerRadius)
+      .set_padding(Design.params.cellContentPadding)
+      .set_shadow(Design.params.panelMainButtonShadow)
+      .set_height(76)
+
    lazy var infoFrame = Combos<SComboMDD<LabelModel, CustomCellModel<Design>, CustomCellModel<Design>>>()
       .setMain { header in
          header
@@ -48,7 +54,7 @@ final class ProfileViewModel<Asset: AssetProtocol>: BaseViewModel<StackViewExten
       .set_backColor(Design.color.inactiveButtonBack)
       .set_padding(Asset.Design.params.contentPadding)
       .set_cornerRadius(Design.params.cornerRadiusSmall)
-   
+
 //   lazy var newFrame = Combos<SComboMD<LabelModel, Combos<SComboMDD<CustomCellModel<Design>, CustomCellModel<Design>, CustomCellModel<Design>>>>>()
 //      .setMain { header in
 //         header
@@ -58,7 +64,6 @@ final class ProfileViewModel<Asset: AssetProtocol>: BaseViewModel<StackViewExten
 //         <#code#>
 //      }
 
-   
    lazy var secondaryFrame = Combos<SComboMDD<CustomCellModel<Design>, CustomCellModel<Design>, CustomCellModel<Design>>>()
       .setMain { company in
          company.title.set_text("Компания")
@@ -74,8 +79,6 @@ final class ProfileViewModel<Asset: AssetProtocol>: BaseViewModel<StackViewExten
       .set_padding(Asset.Design.params.contentPadding)
       .set_cornerRadius(Design.params.cornerRadiusSmall)
 
-   
-
    // MARK: - Services
 
    private lazy var userProfileApiModel = ProfileApiWorker(apiEngine: Asset.service.apiEngine)
@@ -89,12 +92,12 @@ final class ProfileViewModel<Asset: AssetProtocol>: BaseViewModel<StackViewExten
    }
 
    private func configure() {
-      
       set(Design.state.stack.default)
       set(.backColor(Design.color.backgroundSecondary))
       set(.axis(.vertical))
       set(.distribution(.fill))
       set(.alignment(.fill))
+      set_padTop(-50)
       set(.models([
          userModel,
          Spacer(16),
@@ -134,7 +137,7 @@ final class ProfileViewModel<Asset: AssetProtocol>: BaseViewModel<StackViewExten
 
       infoFrame.models.down.set(.text(profile.contacts[0].contactId))
       infoFrame.models.down2.set(.text("Нет в базе данных"))
-      
+
       secondaryFrame.models.main.set(.text(profile.organization))
       secondaryFrame.models.down.set(.text(profile.department))
       secondaryFrame.models.down2.set(.text(profile.hiredAt))

@@ -393,6 +393,11 @@ extension ViewModelProtocol where Self: Stateable, View: ButtonExtended {
       view.imageEdgeInsets = value
       return self
    }
+
+   @discardableResult func set_padding(_ value: UIEdgeInsets) -> Self {
+      view.contentEdgeInsets = value
+      return self
+   }
 }
 
 extension ViewModelProtocol where Self: Stateable, View: PaddingTextField {

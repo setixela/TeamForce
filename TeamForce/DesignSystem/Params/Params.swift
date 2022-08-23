@@ -37,6 +37,7 @@ protocol ParamsProtocol: InitProtocol, Designable {
    var contentPadding: UIEdgeInsets { get }
    var contentVerticalPadding: UIEdgeInsets  { get }
    var cellContentPadding: UIEdgeInsets { get }
+   var userInfoHeaderPadding: UIEdgeInsets { get }
    var infoFramePadding: UIEdgeInsets { get }
 }
 
@@ -77,8 +78,8 @@ struct ParamBuilder<Design: DSP>: ParamsProtocol {
       opacity: 0.23
    ) }
    var cellShadow: Shadow { .init(
-      radius: 6,
-      offset: .init(x: 0, y: 10),
+      radius: 7,
+      offset: .init(x: 0, y: 4),
       color: Design.color.iconContrast,
       opacity: 0.12
    ) }
@@ -86,5 +87,6 @@ struct ParamBuilder<Design: DSP>: ParamsProtocol {
    var contentPadding: UIEdgeInsets { .init(top: 12, left: 16, bottom: 12, right: 16) }
    var contentVerticalPadding: UIEdgeInsets { .init(top: 12, left: 0, bottom: 12, right: 0) }
    var cellContentPadding: UIEdgeInsets { .init(top: 12, left: 16, bottom: 12, right: 16) }
+   var userInfoHeaderPadding: UIEdgeInsets { .init(top: 12, left: 12, bottom: 12, right: 12) }
    var infoFramePadding: UIEdgeInsets { .init(top: 16, left: 24, bottom: 24, right: 24) }
 }
