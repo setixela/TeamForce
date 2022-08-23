@@ -19,6 +19,8 @@ final class HistoryCellModel<Design: DSP>:
       setAll { icon, nameStatus, summa in
          icon
             .set_image(Design.icon.avatarPlaceholder)
+            .set_url("https://picsum.photos/200")
+            .set_cornerRadius(52/2)
             .set_size(.square(52))
          nameStatus
             .set_padLeft(18)

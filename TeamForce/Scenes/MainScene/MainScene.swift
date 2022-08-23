@@ -66,7 +66,7 @@ final class MainScene<Asset: AssetProtocol>:
 
       tabBarPanel.buttonMain
          .onEvent(\.didTap) { [weak self] in
-            Asset.router?.route(\.transaction, navType: .presentModally)
+            Asset.router?.route(\.transaction, navType: .presentModally(.formSheet))
          }
 
       tabBarPanel.button3

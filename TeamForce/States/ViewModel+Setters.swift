@@ -318,6 +318,7 @@ extension ViewModelProtocol where Self: Stateable, View: PaddingImageView {
    @discardableResult func set_cornerRadius(_ value: CGFloat) -> Self {
       view.layer.cornerRadius = value
       view.clipsToBounds = true
+      view.layer.masksToBounds = true
       return self
    }
 

@@ -76,19 +76,26 @@ extension HistoryScene: StateMachine {
       switch state {
       case .loadProfilError:
          log("loadProfilError")
+         //
       case .loadTransactionsError:
          log("loadTransactionsError")
+         //
       case .presentAllTransactions(let value):
          viewModels.tableModel
             .set(.itemSections(value.addedSpacer(size: Grid.x80.value)))
+         //
       case .presentSentTransactions(let value):
          viewModels.tableModel
             .set(.itemSections(value.addedSpacer(size: Grid.x80.value)))
+         //
       case .presentRecievedTransaction(let value):
          viewModels.tableModel
             .set(.itemSections(value.addedSpacer(size: Grid.x80.value) ))
+         //
       case .presentDetailView(let value):
-         ProductionAsset.router?.route(\.transactionDetail, navType: .push, payload: value)
+         ProductionAsset.router?.route(\.transactionDetail,
+                                        navType: .presentModally(.automatic),
+                                        payload: value)
       }
    }
 }

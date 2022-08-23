@@ -47,8 +47,8 @@ private extension SceneDelegate {
          .onEvent(\.present) { vc in
             nc.viewControllers = [vc]
          }
-         .onEvent(\.presentModally) { (vc: UIViewController) in
-            vc.modalPresentationStyle = .formSheet
+         .onEvent(\.presentModally) { (vc: UIViewController, value) in
+            vc.modalPresentationStyle = value
             nc.present(vc, animated: true)
          }
 

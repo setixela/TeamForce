@@ -14,7 +14,7 @@ enum NavType {
    case present
    case pop
    case popToRoot
-   case presentModally
+   case presentModally(UIModalPresentationStyle)
 }
 
 protocol RouterProtocol: InitProtocol {}
@@ -29,7 +29,7 @@ final class MainRouter<Scene: InitProtocol>: RouterProtocol, Communicable {
       var pop: Event<Void>?
       var popToRoot: Event<Void>?
       var present: Event<UIViewController>?
-      var presentModally: Event<UIViewController>?
+      var presentModally: Event<(UIViewController, UIModalPresentationStyle)>?
    }
 
    func route(_ keypath: KeyPath<Scene, SceneModelProtocol>, navType: NavType, payload: Any? = nil) {
@@ -42,8 +42,8 @@ final class MainRouter<Scene: InitProtocol>: RouterProtocol, Communicable {
          sendEvent(\.popToRoot)
       case .present:
          sendEvent(\.present, payload: makeVC())
-      case .presentModally:
-         sendEvent(\.presentModally, payload: makeVC())
+      case .presentModally(let value):
+         sendEvent(\.presentModally, payload: (makeVC(), value))
       }
 
       // local func
