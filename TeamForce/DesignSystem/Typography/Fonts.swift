@@ -26,6 +26,7 @@ protocol TypographyElements: InitProtocol, DesignElementable {
 
    var subtitle: DesignElement { get }
    var caption: DesignElement { get }
+   var caption2: DesignElement { get }
    var counter: DesignElement { get }
 }
 
@@ -49,5 +50,6 @@ struct FontBuilder: FontProtocol {
 
    var subtitle: UIFont { .systemFont(ofSize: 16, weight: .regular) }
    var caption: UIFont { .systemFont(ofSize: 12, weight: .regular) }
+   var caption2: UIFont { .systemFont(ofSize: 10, weight: .regular) }
    var counter: UIFont { .systemFont(ofSize: 48, weight: .regular) }
 }

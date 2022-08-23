@@ -43,6 +43,8 @@ protocol ColorsProtocol: InitProtocol {
     // Text colors
     var text: UIColor { get }
     var textSecondary: UIColor { get }
+    var textSuccess: UIColor { get }
+    var textInfo: UIColor { get }
     var textError: UIColor { get }
     var textInvert: UIColor { get }
     var textBrand: UIColor { get }
@@ -100,6 +102,8 @@ struct ColorBuilder: ColorsProtocol {
     var text: UIColor { Token.contrast.color }
     var textSecondary: UIColor { Token.contrastSecondary.color }
     var textSecondaryInvert: UIColor { Token.inverse.color }
+    var textSuccess: UIColor { Token.success.color }
+    var textInfo: UIColor { Token.info.color }
     var textThird: UIColor { Token.contrast.color }
     var textThirdInvert: UIColor { Token.inverse.color }
     var textInvert: UIColor { Token.inverse.color }
@@ -190,7 +194,7 @@ private extension ColorToken {
     }()
 }
 
-private extension UIColor {
+extension UIColor {
     convenience init(_ hex: String, alpha: CGFloat = 1.0) {
         var hexFormatted: String = hex.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).uppercased()
 

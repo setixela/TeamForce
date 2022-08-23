@@ -18,7 +18,7 @@ struct ButtonEvents: InitProtocol {
 class ButtonModel: BaseViewModel<ButtonExtended>, ButtonModelProtocol {
    //
    var events: ButtonEvents = .init()
-   var modes: Mode = .init()
+
 
    override func start() {
       view.addTarget(self, action: #selector(self.didTap), for: .touchUpInside)
@@ -40,9 +40,12 @@ extension ButtonModel: Stateable {
 
 extension ButtonModel: Communicable, ButtonTapAnimator {}
 
-extension ButtonModel: SelfModable {
+class ButtonModelModableOld: ButtonModel, SelfModable {
+
+   var modes: Mode = .init()
+
    struct Mode: WeakSelfied {
-      typealias WeakSelf = ButtonModel
+      typealias WeakSelf = ButtonModelModableOld
 
       var normal: Event<WeakSelf?>?
       var inactive: Event<WeakSelf?>?

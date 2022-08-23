@@ -53,6 +53,7 @@ final class TransactViewModels<Design: DSP>: Designable {
       .set_backColor(Design.color.background)
       .set_borderColor(Design.color.boundary)
       .set_borderWidth(Design.params.borderWidth)
+      .set_cornerRadius(Design.params.cornerRadius)
       .set_minHeight(166)
       .set_hidden(true)
 

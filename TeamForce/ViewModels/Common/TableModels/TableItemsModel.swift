@@ -45,7 +45,7 @@ final class TableItemsModel<Design: DSP>: BaseViewModel<UITableView>,
    override func start() {
       view.delegate = self
       view.dataSource = self
-      view.separatorColor = .clear
+   //   view.separatorColor = .clear
       view.clipsToBounds = false
       view.layer.masksToBounds = true
 
@@ -82,6 +82,7 @@ final class TableItemsModel<Design: DSP>: BaseViewModel<UITableView>,
       cell.contentView.subviews.forEach { $0.removeFromSuperview() }
       cell.contentView.addSubview(modelView)
       modelView.addAnchors.fitToView(cell.contentView)
+      cell.selectionStyle = .none
 
       return cell
    }

@@ -38,6 +38,7 @@ struct Feed: Codable {
       let status: String
       let isAnonymous: Bool
       let reason: String
+      let amount: Float
       
       enum CodingKeys: String, CodingKey {
          case id
@@ -46,6 +47,7 @@ struct Feed: Codable {
          case status
          case isAnonymous = "is_anonymous"
          case reason
+         case amount
       }
    }
    

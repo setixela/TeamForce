@@ -51,3 +51,4 @@ final class CurrencyButtonDT<Design: DSP>: CurrencyLabelDT<Design>, Communicable
       animateTapWithShadow()
    }
 }
+

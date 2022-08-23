@@ -154,7 +154,7 @@ private extension HistoryWorks {
             )
 
             var result = result
-            let currentDay = Self.convertToDate(time: item.createdAt) ?? ""
+            let currentDay = item.createdAt.dateConverted
 
             if prevDay != currentDay {
                result.append(TableItemsSection(title: currentDay))
@@ -165,11 +165,13 @@ private extension HistoryWorks {
             return result
          }
    }
+}
 
-   static func convertToDate(time: String) -> String? {
+extension String {
+   var dateConverted: String {
       let inputFormatter = DateFormatter()
       inputFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
-      guard let convertedDate = inputFormatter.date(from: time) else { return nil }
+      guard let convertedDate = inputFormatter.date(from: self) else { return "" }
 
       let outputFormatter = DateFormatter()
       outputFormatter.dateFormat = "d MMM y"
