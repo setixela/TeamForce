@@ -27,6 +27,7 @@ final class HistoryWorks<Asset: AssetProtocol>: BaseSceneWorks<HistoryWorks.Temp
       var transactions: [Transaction]?
       var sections: [TableItemsSection]?
       var currentTransaction: Transaction?
+      var segmentId: Int?
    }
 
    // MARK: - Works
@@ -56,6 +57,22 @@ final class HistoryWorks<Asset: AssetProtocol>: BaseSceneWorks<HistoryWorks.Temp
             work.fail(())
          }
    }
+   
+   lazy var getTransactionByRowNumber = Work<(IndexPath, Int), Transaction>() { [weak self] work in
+      
+      let segmentId = Self.store.segmentId
+      var filtered: [Transaction] = []
+      if segmentId == 0 { filtered = Self.filteredAll() }
+      else if segmentId == 1 { filtered = Self.filteredRecieved() }
+      else if segmentId == 2 { filtered = Self.filteredSent() }
+      
+      if let index = work.input?.1 {
+         let transaction = filtered[index]
+         work.success(result: transaction)
+      } else {
+         work.fail(())
+      }
+   }
 
    lazy var loadProfile = Work<Void, Void>() { [weak self] work in
       self?.useCase.loadProfile.work
@@ -74,7 +91,8 @@ final class HistoryWorks<Asset: AssetProtocol>: BaseSceneWorks<HistoryWorks.Temp
       .init {
          let filtered = Self.filteredAll()
          let items = Self.convertToItems(filtered)
-
+         Self.store.segmentId = 0
+         
          $0.success(result: items)
       }
    }
@@ -83,6 +101,7 @@ final class HistoryWorks<Asset: AssetProtocol>: BaseSceneWorks<HistoryWorks.Temp
       .init {
          let filtered = Self.filteredSent()
          let items = Self.convertToItems(filtered)
+         Self.store.segmentId = 2
 
          $0.success(result: items)
       }
@@ -92,7 +111,8 @@ final class HistoryWorks<Asset: AssetProtocol>: BaseSceneWorks<HistoryWorks.Temp
       .init {
          let filtered = Self.filteredRecieved()
          let items = Self.convertToItems(filtered)
-
+         Self.store.segmentId = 1
+         
          $0.success(result: items)
       }
    }

@@ -12,6 +12,7 @@ struct HistoryScenarioEvents {
    let presentAllTransactions: VoidWork<Void>
    let presentSentTransactions: VoidWork<Void>
    let presentRecievedTransaction: VoidWork<Void>
+   let presentDetailView: VoidWork<(IndexPath, Int)>
 }
 
 final class HistoryScenario<Asset: AssetProtocol>:
@@ -38,5 +39,9 @@ final class HistoryScenario<Asset: AssetProtocol>:
       events.presentRecievedTransaction
          .doNext(work: works.getRecievedTransactItems)
          .onSuccess(setState) { .presentRecievedTransaction($0) }
+      
+      events.presentDetailView
+         .doNext(work: works.getTransactionByRowNumber)
+         .onSuccess(setState) { .presentDetailView($0)}
    }
 }
