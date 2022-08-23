@@ -16,6 +16,9 @@ struct TransactScenarioEvents {
 
    let transactInputChanged: VoidWork<String>
    let reasonInputChanged: VoidWork<String>
+   
+   let anonymousSetOff: VoidWork<Void>
+   let anonymousSetOn: VoidWork<Void>
 }
 
 enum TransactState {
@@ -123,5 +126,11 @@ final class TransactScenario<Asset: AssetProtocol>:
          .doNext(work: works.isCorrect)
          .onSuccessMixSaved(setState) { .reasonInputSuccess($1, true) }
          .onFailMixSaved(setState) { .reasonInputSuccess($1, false) }
+      
+      events.anonymousSetOff
+         .doNext(work: works.anonymousOff)
+      
+      events.anonymousSetOn
+         .doNext(work: works.anonymousOn)
    }
 }
