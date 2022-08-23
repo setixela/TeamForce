@@ -49,6 +49,7 @@ protocol ColorsProtocol: InitProtocol {
     var textSecondaryInvert: UIColor { get }
     var textThird: UIColor { get }
     var textThirdInvert: UIColor { get }
+    var textContrastSecondary: UIColor { get }
 
     // Backs
     var background: UIColor { get }
@@ -57,6 +58,7 @@ protocol ColorsProtocol: InitProtocol {
     var backgroundBrandSecondary: UIColor { get }
     var backgroundInfo: UIColor { get }
     var backgroundInfoSecondary: UIColor { get }
+    var infoSecondary: UIColor { get }
 
     // Buttons
     var activeButtonBack: UIColor { get }
@@ -102,12 +104,14 @@ struct ColorBuilder: ColorsProtocol {
     var textThirdInvert: UIColor { Token.inverse.color }
     var textInvert: UIColor { Token.inverse.color }
     var textError: UIColor { Token.error.color }
+    var textContrastSecondary: UIColor { Token.contrastSecondary.color }
     var textBrand: UIColor { Token.brand.color  }
 
     var background: UIColor { Token.inverse.color }
     var backgroundSecondary: UIColor { Token.inverse.color }
     var backgroundBrand: UIColor { Token.brand.color }
     var backgroundBrandSecondary: UIColor { Token.brandSecondary.color }
+    var infoSecondary: UIColor {Token.infoSecondary.color}
 
     var backgroundInfo: UIColor { Token.info.color }
     var backgroundInfoSecondary: UIColor { Token.infoSecondary.color }

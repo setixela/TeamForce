@@ -26,6 +26,7 @@ protocol ButtonTextsProtocol: InitProtocol {
    var changeUserButton: String { get }
    var sendButton: String { get }
    var toTheBeginingButton: String { get }
+   var logoutButton: String { get }
 }
 
 // MARK: - Title texts
@@ -83,6 +84,7 @@ struct ButtonTexts: ButtonTextsProtocol {
    var changeUserButton: String { "СМЕНИТЬ ПОЛЬЗОВАТЕЛЯ" }
    var sendButton: String { "ОТПРАВИТЬ" }
    var toTheBeginingButton: String { "В НАЧАЛО" }
+   var logoutButton: String { "ВЫЙТИ" }
 }
 
 struct TitleTexts: TitleTextsProtocol {
