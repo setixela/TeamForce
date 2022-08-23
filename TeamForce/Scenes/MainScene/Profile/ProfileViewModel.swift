@@ -27,11 +27,14 @@ final class ProfileViewModel<Asset: AssetProtocol>: BaseViewModel<StackViewExten
             .set(.size(.square(52)))
       } setRight: { fullName in
          fullName
+            .set_color(Design.color.text)
+            .set_padTop(-8)
             .set_padLeft(12)
       } setDown: { telegram in
          telegram
             .set_color(Design.color.textBrand)
             .set_padLeft(12)
+            .set_font(Design.font.body2)
       }
       .set_alignment(.center)
       .set_distribution(.fill)
@@ -97,7 +100,7 @@ final class ProfileViewModel<Asset: AssetProtocol>: BaseViewModel<StackViewExten
       set(.axis(.vertical))
       set(.distribution(.fill))
       set(.alignment(.fill))
-      set_padTop(-50)
+      set_padTop(-72)
       set(.models([
          userModel,
          Spacer(16),
