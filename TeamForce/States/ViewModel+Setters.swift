@@ -16,8 +16,8 @@ extension ViewModelProtocol where Self: Stateable {
 
    @discardableResult func set_cornerRadius(_ value: CGFloat) -> Self {
       view.layer.cornerRadius = value
-      view.layer.masksToBounds = true
-      view.clipsToBounds = true
+    //  view.layer.masksToBounds = true
+    //  view.clipsToBounds = true
       return self
    }
 
@@ -287,6 +287,8 @@ extension ViewModelProtocol where Self: Stateable, View: PaddingLabel {
    }
 }
 
+import AlamofireImage
+
 extension ViewModelProtocol where Self: Stateable, View: PaddingImageView {
    @discardableResult func set_image(_ value: UIImage) -> Self {
       view.image = value
@@ -306,6 +308,21 @@ extension ViewModelProtocol where Self: Stateable, View: PaddingImageView {
    @discardableResult func set_imageTintColor(_ value: UIColor) -> Self {
       view.image = view.image?.withRenderingMode(UIImage.RenderingMode.alwaysTemplate)
       view.tintColor = value
+      return self
+   }
+
+   @discardableResult func set_url(_ value: String?) -> Self {
+      guard
+         let str = value,
+         let url = URL(string: str) else { return self }
+
+      let urlRequest = URLRequest(url: url)
+
+      view.downloader.download(urlRequest, completion: { [weak view] response in
+         if case .success(let image) = response.result {
+            view?.image = image
+         }
+      })
       return self
    }
 }

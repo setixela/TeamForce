@@ -115,6 +115,7 @@
 		19CAB9CE28B4261E00A0A3B1 /* LabelSwitchXDT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19CAB9CD28B4261E00A0A3B1 /* LabelSwitchXDT.swift */; };
 		19CAB9D128B4265C00A0A3B1 /* TransactOptionsVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19CAB9D028B4265C00A0A3B1 /* TransactOptionsVM.swift */; };
 		19CAB9D428B432CD00A0A3B1 /* AlamofireImage in Frameworks */ = {isa = PBXBuildFile; productRef = 19CAB9D328B432CD00A0A3B1 /* AlamofireImage */; };
+		19CAB9D628B44C4700A0A3B1 /* StackItemsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19CAB9D528B44C4700A0A3B1 /* StackItemsModel.swift */; };
 		19CF792828A54D60001531B8 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19CF792728A54D60001531B8 /* Config.swift */; };
 		19CF792C28A587B9001531B8 /* TransactWorks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19CF792B28A587B9001531B8 /* TransactWorks.swift */; };
 		19D08351286F401000F75E4A /* SideBarUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D08350286F401000F75E4A /* SideBarUserModel.swift */; };
@@ -302,6 +303,7 @@
 		19CAB9CB28B41CB400A0A3B1 /* TitleBodySwitcherDT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleBodySwitcherDT.swift; sourceTree = "<group>"; };
 		19CAB9CD28B4261E00A0A3B1 /* LabelSwitchXDT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelSwitchXDT.swift; sourceTree = "<group>"; };
 		19CAB9D028B4265C00A0A3B1 /* TransactOptionsVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactOptionsVM.swift; sourceTree = "<group>"; };
+		19CAB9D528B44C4700A0A3B1 /* StackItemsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackItemsModel.swift; sourceTree = "<group>"; };
 		19CF792728A54D60001531B8 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		19CF792B28A587B9001531B8 /* TransactWorks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactWorks.swift; sourceTree = "<group>"; };
 		19D08350286F401000F75E4A /* SideBarUserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBarUserModel.swift; sourceTree = "<group>"; };
@@ -931,10 +933,11 @@
 			isa = PBXGroup;
 			children = (
 				19A9232828B2A8080080D491 /* Presenters */,
-				19EF32AF2884B6C80078F53D /* TableViewModel.swift */,
 				19171F4C28AD663F000926B1 /* TableItemsModel.swift */,
+				19CAB9D528B44C4700A0A3B1 /* StackItemsModel.swift */,
 				19DD3D94288766860085CDA8 /* LabelCellModel.swift */,
 				6368D823289168740049EEAB /* CustomCellModel.swift */,
+				19EF32AF2884B6C80078F53D /* TableViewModel.swift */,
 			);
 			path = TableModels;
 			sourceTree = "<group>";
@@ -1253,6 +1256,7 @@
 				63E7A73928AE5C2B00FB2C80 /* OldTransactView.swift in Sources */,
 				19A9232A28B2A8200080D491 /* SpacerPresenter.swift in Sources */,
 				19F153842899649900ECF000 /* LoadProfileUseCase.swift in Sources */,
+				19CAB9D628B44C4700A0A3B1 /* StackItemsModel.swift in Sources */,
 				19F15386289964AA00ECF000 /* LogoutUseCase.swift in Sources */,
 				1953DE842879FDE3000DC537 /* TransactViewModels.swift in Sources */,
 				19BD2A8728ABB35C00FCC00A /* LoginScenario.swift in Sources */,

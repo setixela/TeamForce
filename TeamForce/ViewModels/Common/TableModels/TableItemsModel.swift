@@ -25,11 +25,11 @@ enum TableItemsState {
 
 struct TableItemsEvents: InitProtocol {
    var didSelectRow: Event<IndexPath>?
-   var reloadData: Event<Void>?
 }
 
 final class TableItemsModel<Design: DSP>: BaseViewModel<UITableView>,
    Designable,
+   Presenting,
    UITableViewDelegate,
    UITableViewDataSource
 {
@@ -37,7 +37,7 @@ final class TableItemsModel<Design: DSP>: BaseViewModel<UITableView>,
 
    private var isMultiSection: Bool = false
 
-   private var presenters: [String: PresenterProtocol] = [:]
+   var presenters: [String: PresenterProtocol] = [:]
 
    private var items: [Any] = []
    private var itemSections: [TableItemsSection] = []
@@ -45,6 +45,9 @@ final class TableItemsModel<Design: DSP>: BaseViewModel<UITableView>,
    override func start() {
       view.delegate = self
       view.dataSource = self
+      view.separatorColor = .clear
+      view.clipsToBounds = false
+      view.layer.masksToBounds = false
 
       if #available(iOS 15.0, *) {
          view.sectionHeaderTopPadding = 0

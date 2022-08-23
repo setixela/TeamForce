@@ -23,7 +23,7 @@ final class TransactScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended
       events: TransactScenarioEvents(
          userSearchTXTFLDBeginEditing: viewModels.userSearchTextField.onEvent(\.didBeginEditing),
          userSearchTFDidEditingChanged: viewModels.userSearchTextField.onEvent(\.didEditingChanged),
-         userSelected: viewModels.tableModel.onEvent(\.didSelectRow),
+         userSelected: viewModels.foundUsersList.onEvent(\.didSelectRow),
          sendButtonEvent: viewModels.sendButton.onEvent(\.didTap),
          transactInputChanged: viewModels.transactInputViewModel.textField.onEvent(\.didEditingChanged),
          reasonInputChanged: viewModels.reasonTextView.onEvent(\.didEditingChanged)
@@ -37,7 +37,7 @@ final class TransactScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended
       .set(.models([
          viewModels.balanceInfo,
          viewModels.userSearchTextField,
-         viewModels.tableModel,
+         viewModels.foundUsersList,
          viewModels.transactInputViewModel,
          viewModels.reasonTextView,
          viewModels.addPhotoButton,
@@ -45,6 +45,8 @@ final class TransactScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended
          viewModels.sendButton,
          Grid.x64.spacer
       ]))
+
+   private var currentState = TransactState.initial
 
    // MARK: - Start
 
@@ -67,12 +69,22 @@ final class TransactScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended
       ])
    }
 
+
+
    private func setToInitialCondition() {
       clearFields()
       scenario.works.reset.doSync()
       hideViews()
       viewModels.sendButton.set(Design.state.button.inactive)
    }
+
+//   private func setToSelectedUserState() {
+//      clearFields()
+//      scenario.works.reset.doSync()
+//      hideViews()
+//      viewModels.sendButton.set(Design.state.button.inactive)
+//   }
+
 
    private func hideViews() {
       viewModels.transactInputViewModel.set(.hidden(true))
@@ -89,7 +101,11 @@ final class TransactScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended
 
 extension TransactScene: StateMachine {
    func setState(_ state: TransactState) {
+
+
       switch state {
+      case .initial:
+         break
       case .loadProfilError:
          break
       case .loadTransactionsError:
@@ -105,24 +121,39 @@ extension TransactScene: StateMachine {
       case .loadUsersListSuccess(let users):
          presentFoundUsers(users: users)
       case .loadUsersListError:
-         viewModels.tableModel.set_hidden(true)
+         viewModels.foundUsersList.set_hidden(true)
       case .presentFoundUser(let users):
-         viewModels.tableModel.set_hidden(true)
+         viewModels.foundUsersList.set_hidden(true)
          presentFoundUsers(users: users)
       case .presentUsers(let users):
-         viewModels.tableModel.set_hidden(true)
+         viewModels.foundUsersList.set_hidden(true)
          presentFoundUsers(users: users)
       case .listOfFoundUsers(let users):
          presentFoundUsers(users: users)
-      case .userSelectedSuccess(let foundUser):
-         clearFields()
-         setToInitialCondition()
-         let fullName = foundUser.name + " " + foundUser.surname
-         viewModels.userSearchTextField.set(.text(fullName))
-         viewModels.tableModel.set_hidden(true)
-         viewModels.transactInputViewModel.set_hidden(false)
-         viewModels.sendButton.set_hidden(false)
-         viewModels.reasonTextView.set_hidden(false)
+      case .userSelectedSuccess(let foundUser, let index):
+
+         if case .userSelectedSuccess = currentState  {
+            viewModels.userSearchTextField.set_hidden(false)
+            viewModels.foundUsersList.set_hidden(true)
+            currentState = .initial
+            return
+         }
+
+         UIView.animate(withDuration: 0.5) {
+
+            self.setToInitialCondition()
+            self.clearFields()
+
+            self.viewModels.foundUsersList.set(.removeAllExceptIndex(index))
+
+            let fullName = foundUser.name + " " + foundUser.surname
+            self.viewModels.userSearchTextField.set_hidden(true)
+            self.viewModels.transactInputViewModel.set_hidden(false)
+            self.viewModels.sendButton.set_hidden(false)
+            self.viewModels.reasonTextView.set_hidden(false)
+            self.view.layoutIfNeeded()
+         }
+
       case .userSearchTFDidEditingChangedSuccess:
          hideHUD()
       case .sendCoinSuccess(let tuple):
@@ -156,26 +187,16 @@ extension TransactScene: StateMachine {
             viewModels.reasonTextView.set(.text(text))
             viewModels.sendButton.set(Design.state.button.inactive)
          }
+
       }
+
+      currentState = state
    }
 }
 
 class ImageLabelLabelMRD: Combos<SComboMRD<ImageViewModel, LabelModel, LabelModel>> {}
 
 private extension TransactScene {
-   var foundUserPresenter: Presenter<FoundUser, ImageLabelLabelMRD> {
-      Presenter<FoundUser, ImageLabelLabelMRD>() { work in
-         let user = work.unsafeInput
-
-         let comboMRD = ImageLabelLabelMRD()
-            .setAll { avatar, username, nickname in
-               avatar.
-            }
-
-         work.success(result: comboMRD)
-      }
-   }
-
    func hideHUD() {
       viewModels.transactInputViewModel.set(.hidden(true))
       viewModels.sendButton.set(.hidden(true))
@@ -183,14 +204,8 @@ private extension TransactScene {
    }
 
    func presentFoundUsers(users: [FoundUser]) {
-      let found = users.map { $0.name + " " + $0.surname }
-      let cellModels = found.map { name -> LabelCellModel in
-         let cellModel = LabelCellModel()
-         cellModel.set(.text(name))
-         return cellModel
-      }
-//      viewModels.tableModel.set(.models(cellModels))
-//      viewModels.tableModel.set(.hidden(found.isEmpty ? true : false))
+      viewModels.foundUsersList.set(.items(users))
+      viewModels.foundUsersList.set(.hidden(users.isEmpty ? true : false))
    }
 
    func presentAlert(text: String) {

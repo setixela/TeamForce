@@ -11,7 +11,7 @@ import ReactiveWorks
 struct TransactScenarioEvents {
    let userSearchTXTFLDBeginEditing: VoidWork<String>
    let userSearchTFDidEditingChanged: VoidWork<String>
-   let userSelected: VoidWork<IndexPath>
+   let userSelected: VoidWork<Int>
    let sendButtonEvent: VoidWork<Void>
 
    let transactInputChanged: VoidWork<String>
@@ -19,6 +19,7 @@ struct TransactScenarioEvents {
 }
 
 enum TransactState {
+   case initial
    case loadProfilError
    case loadTransactionsError
 
@@ -35,7 +36,7 @@ enum TransactState {
    case presentUsers([FoundUser])
    case listOfFoundUsers([FoundUser])
 
-   case userSelectedSuccess(FoundUser)
+   case userSelectedSuccess(FoundUser, Int)
 
    case userSearchTFDidEditingChangedSuccess
 
@@ -82,8 +83,9 @@ final class TransactScenario<Asset: AssetProtocol>:
          .onSuccess(setState) { .listOfFoundUsers($0) }
 
       events.userSelected
+         .doSaveResult()
          .doNext(work: works.mapIndexToUser)
-         .onSuccess(setState) { .userSelectedSuccess($0) }
+         .onSuccessMixSaved(setState) { .userSelectedSuccess($0, $1) }
 
       events.sendButtonEvent
          .doNext(work: works.sendCoins)

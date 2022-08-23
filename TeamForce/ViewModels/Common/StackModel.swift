@@ -8,7 +8,7 @@
 import ReactiveWorks
 import UIKit
 
-final class StackModel: BaseViewModel<StackViewExtended> {
+class StackModel: BaseViewModel<StackViewExtended> {
 
    convenience init(_ models: UIViewModel...) {
       self.init()

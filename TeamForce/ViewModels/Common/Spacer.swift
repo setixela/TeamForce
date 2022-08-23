@@ -20,6 +20,7 @@ enum Grid: CGFloat {
    case x16 = 16
    case x20 = 20
    case x24 = 24
+   case x26 = 26
    case x30 = 30
    case x32 = 32
    case x36 = 36

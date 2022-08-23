@@ -32,9 +32,11 @@ protocol ParamsProtocol: InitProtocol, Designable {
    var panelShadow: Shadow { get }
    var panelButtonShadow: Shadow { get }
    var panelMainButtonShadow: Shadow { get }
+   var cellShadow: Shadow { get }
    // paddings
    var contentPadding: UIEdgeInsets { get }
    var contentVerticalPadding: UIEdgeInsets  { get }
+   var cellContentPadding: UIEdgeInsets { get }
    var infoFramePadding: UIEdgeInsets { get }
 }
 
@@ -74,8 +76,15 @@ struct ParamBuilder<Design: DSP>: ParamsProtocol {
       color: Design.color.iconContrast,
       opacity: 0.23
    ) }
+   var cellShadow: Shadow { .init(
+      radius: 6,
+      offset: .init(x: 0, y: 10),
+      color: Design.color.iconContrast,
+      opacity: 0.12
+   ) }
    // paddings
    var contentPadding: UIEdgeInsets { .init(top: 12, left: 16, bottom: 12, right: 16) }
    var contentVerticalPadding: UIEdgeInsets { .init(top: 12, left: 0, bottom: 12, right: 0) }
+   var cellContentPadding: UIEdgeInsets { .init(top: 12, left: 16, bottom: 12, right: 16) }
    var infoFramePadding: UIEdgeInsets { .init(top: 16, left: 24, bottom: 24, right: 24) }
 }

@@ -141,7 +141,7 @@ extension Combos
 
    // MARK: - New setAll
 
-   @discardableResult func setMain<M, R, D>(_ setAll: VariadicClosure3<M, R, D>) -> Self where S == SComboMRD<M, R, D>
+   @discardableResult func setAll<M, R, D>(_ setAll: VariadicClosure3<M, R, D>) -> Self where S == SComboMRD<M, R, D>
    {
       setAll(models.main, models.right, models.down)
       if !isConfigured

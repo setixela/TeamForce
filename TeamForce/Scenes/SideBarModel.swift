@@ -57,12 +57,12 @@ final class SideBarModel<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>
          .set_distribution(.fill)
          .set_alignment(.leading)
          .set_arrangedModels([
-            userModel,
-            item1,
-            item2,
-            item3,
-            item4,
-            Spacer()
+//            userModel,
+//            item1,
+//            item2,
+//            item3,
+//            item4,
+//            Spacer()
          ])
 
       onEvent(\.presentOnScene) { [weak self] baseView in

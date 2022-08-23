@@ -68,8 +68,12 @@ final class PaddingTextField: UITextField, Marginable {
 
 // MARK: - PaddinPaddingImageViewgLabel -------------------------
 
+import AlamofireImage
+
 final class PaddingImageView: UIImageView, Marginable {
    var padding: UIEdgeInsets = .init()
+
+   lazy var downloader = ImageDownloader()
 
    override var alignmentRectInsets: UIEdgeInsets {
       return .init(top: -padding.top,

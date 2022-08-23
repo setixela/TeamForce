@@ -17,7 +17,7 @@ protocol TransactWorksProtocol: SceneWorks {
    // data works
    var loadTokens: Work<Void, Void> { get }
    // index mapper
-   var mapIndexToUser: Work<IndexPath, FoundUser> { get }
+   var mapIndexToUser: Work<Int, FoundUser> { get }
    // parsing input
    var coinInputParsing: Work<String, String> { get }
    var reasonInputParsing: Work<String, String> { get }
@@ -60,7 +60,8 @@ final class TransactWorks<Asset: AssetProtocol>: BaseSceneWorks<TransactWorks.Te
             Self.store.tokens.token = $0
          }.onFail {
             work.fail(())
-         }.doInput("csrftoken")
+         }
+         .doInput("csrftoken")
          .doNext(worker: self?.apiUseCase.safeStringStorage)
          .onSuccess {
             Self.store.tokens.csrf = $0
@@ -122,10 +123,10 @@ final class TransactWorks<Asset: AssetProtocol>: BaseSceneWorks<TransactWorks.Te
          }
    }
 
-   lazy var mapIndexToUser = Work<IndexPath, FoundUser> { work in
+   lazy var mapIndexToUser = Work<Int, FoundUser> { work in
 
       // TODO: - 2d sections mapping to 1d array error
-      let user = Self.store.foundUsers[work.unsafeInput.row]
+      let user = Self.store.foundUsers[work.unsafeInput]
 
       Self.store.recipientUsername = user.name
       Self.store.recipientID = user.userId
