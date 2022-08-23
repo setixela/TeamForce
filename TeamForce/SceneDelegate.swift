@@ -47,6 +47,10 @@ private extension SceneDelegate {
          .onEvent(\.present) { vc in
             nc.viewControllers = [vc]
          }
+         .onEvent(\.presentModally) { (vc: UIViewController) in
+            vc.modalPresentationStyle = .formSheet
+            nc.present(vc, animated: true)
+         }
 
       if Config.isDebug {
          ProductionAsset.router?.route(Config.startDebugScene, navType: .push, payload: ())

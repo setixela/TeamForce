@@ -44,7 +44,7 @@ final class TransactViewModels<Design: DSP>: Designable {
    lazy var sendButton = Design.button.default
       .set(Design.state.button.inactive)
       .set_title(Design.Text.button.sendButton)
-      .set_hidden(true)
+    //  .set_hidden(true)
 
    lazy var reasonTextView = TextViewModel()
       .set(.padding(Design.params.contentPadding))
@@ -54,7 +54,7 @@ final class TransactViewModels<Design: DSP>: Designable {
       .set_borderColor(Design.color.boundary)
       .set_borderWidth(Design.params.borderWidth)
       .set_cornerRadius(Design.params.cornerRadius)
-      .set_minHeight(166)
+      .set_minHeight(144)
       .set_hidden(true)
 
    lazy var addPhotoButton = ButtonModel()

@@ -10,11 +10,12 @@ import UIKit
 
 struct TransactViewEvent: InitProtocol {}
 
-final class TransactScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>,
-   Assetable,
-   Stateable,
-   Scenaryable
-{
+final class TransactScene<Asset: AssetProtocol>: BaseSceneModel<
+   DefaultVCModel,
+   DoubleStacksModel,
+   Asset,
+   Void
+>, Scenaryable {
    typealias State = StackState
 
    lazy var scenario = TransactScenario(
@@ -42,8 +43,8 @@ final class TransactScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended
          viewModels.reasonTextView,
          viewModels.addPhotoButton,
          options,
-         viewModels.sendButton,
-         Grid.x64.spacer
+//         viewModels.sendButton,
+         Grid.x32.spacer
       ]))
 
    private var currentState = TransactState.initial
@@ -53,20 +54,28 @@ final class TransactScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended
    override func start() {
       configure()
 
-      view
-         .onEvent(\.willAppear) { [weak self] in
+      vcModel?
+         .onEvent(\.viewWillAppear) { [weak self] in
             self?.setToInitialCondition()
             self?.scenario.start()
          }
    }
 
    func configure() {
-      set_axis(.vertical)
-      set_distribution(.fill)
-      set_alignment(.fill)
-      set_arrangedModels([
-         viewModelsWrapper
-      ])
+      mainVM.topStackModel.set(Design.state.stack.bodyStack)
+      mainVM.topStackModel
+         .set_axis(.vertical)
+         .set_distribution(.fill)
+         .set_alignment(.fill)
+         .set_arrangedModels([
+            viewModelsWrapper
+         ])
+
+      mainVM.bottomStackModel
+         .set(Design.state.stack.bottomPanel)
+         .set_arrangedModels([
+            viewModels.sendButton
+         ])
    }
 
    private func setToInitialCondition() {
@@ -78,7 +87,7 @@ final class TransactScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended
 
    private func hideViews() {
       viewModels.transactInputViewModel.set(.hidden(true))
-      viewModels.sendButton.set(.hidden(true))
+      viewModels.sendButton.set(Design.state.button.inactive)
       viewModels.reasonTextView.set(.hidden(true))
    }
 
@@ -91,7 +100,6 @@ final class TransactScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended
 
 extension TransactScene: StateMachine {
    func setState(_ state: TransactState) {
-
       debug(state)
 
       switch state {
@@ -121,10 +129,10 @@ extension TransactScene: StateMachine {
          presentFoundUsers(users: users)
       case .listOfFoundUsers(let users):
          presentFoundUsers(users: users)
-      case .userSelectedSuccess(let _, let index):
-         self.viewModels.userSearchTextField.set_hidden(true)
+      case .userSelectedSuccess(_, let index):
+         viewModels.userSearchTextField.set_hidden(true)
 
-         if case .userSelectedSuccess = currentState  {
+         if case .userSelectedSuccess = currentState {
             viewModels.userSearchTextField.set_hidden(false)
             viewModels.foundUsersList.set_hidden(true)
             currentState = .initial
@@ -132,9 +140,8 @@ extension TransactScene: StateMachine {
             return
          }
 
-  //       options.set(.hidden(false))
+         //       options.set(.hidden(false))
          UIView.animate(withDuration: 0.33) {
-
             self.setToInitialCondition()
             self.clearFields()
 
@@ -142,24 +149,28 @@ extension TransactScene: StateMachine {
 
             self.viewModels.userSearchTextField.set_hidden(true)
             self.viewModels.transactInputViewModel.set_hidden(false)
-            self.viewModels.sendButton.set_hidden(false)
             self.viewModels.reasonTextView.set_hidden(false)
-            self.view.layoutIfNeeded()
+            self.mainVM.view.layoutIfNeeded()
          }
+
+//         self.viewModels.sendButton.set_hidden(false)
 
       case .userSearchTFDidEditingChangedSuccess:
          hideHUD()
       case .sendCoinSuccess(let tuple):
          viewModels.transactionStatusView.start()
          guard
-            let superview = view.superview?.superview?.superview?.superview?.superview
+            let superview = vcModel?.view.superview?.superview
          else { return }
 
          let input = StatusViewInput(baseView: superview,
                                      sendCoinInfo: tuple.1,
                                      username: tuple.0)
          viewModels.transactionStatusView.sendEvent(\.presentOnScene, input)
-         setToInitialCondition()
+
+         viewModels.transactionStatusView.onEvent(\.didHide) { [weak self] in
+            self?.vcModel?.dismiss(animated: true)
+         }
       case .sendCoinError:
          presentAlert(text: "Не могу послать деньгу")
       case .coinInputSuccess(let text, let isCorrect):
@@ -180,7 +191,6 @@ extension TransactScene: StateMachine {
             viewModels.reasonTextView.set(.text(text))
             viewModels.sendButton.set(Design.state.button.inactive)
          }
-
       }
 
       currentState = state
@@ -192,7 +202,8 @@ class ImageLabelLabelMRD: Combos<SComboMRD<ImageViewModel, LabelModel, LabelMode
 private extension TransactScene {
    func hideHUD() {
       viewModels.transactInputViewModel.set(.hidden(true))
-      viewModels.sendButton.set(.hidden(true))
+//      viewModels.sendButton.set(.hidden(true))
+      viewModels.sendButton.set(Design.state.button.inactive)
       viewModels.reasonTextView.set(.hidden(true))
    }
 

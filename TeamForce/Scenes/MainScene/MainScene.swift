@@ -17,7 +17,7 @@ final class MainScene<Asset: AssetProtocol>:
    >
 {
    lazy var balanceViewModel = BalanceViewModel<Asset>()
-   lazy var transactViewModel = TransactScene<Asset>()
+//   lazy var transactViewModel = TransactScene<Asset>()
    lazy var historyViewModel = HistoryScene<Asset>()
    lazy var settingsViewModel = SettingsViewModel<Asset>()
   // lazy var profileViewModel = ProfileViewModel<Asset>()
@@ -66,10 +66,7 @@ final class MainScene<Asset: AssetProtocol>:
 
       tabBarPanel.buttonMain
          .onEvent(\.didTap) { [weak self] in
-            self?.unlockTabButtons()
-            self?.mainVM.header.set_text("Тра")
-            self?.presentModel(self?.transactViewModel)
-            self?.tabBarPanel.button2.setMode(\.normal)
+            Asset.router?.route(\.transaction, navType: .presentModally)
          }
 
       tabBarPanel.button3
@@ -115,7 +112,7 @@ final class MainScene<Asset: AssetProtocol>:
       sideBarModel.item2
          .onEvent(\.didTap) {
             weakSelf?.sideBarModel.sendEvent(\.hide)
-            weakSelf?.presentModel(weakSelf?.transactViewModel)
+        //    weakSelf?.presentModel(weakSelf?.transactViewModel)
          }
 
       sideBarModel.item3

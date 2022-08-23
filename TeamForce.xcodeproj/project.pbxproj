@@ -489,6 +489,7 @@
 				1985A12328B2780000B017E0 /* README.md */,
 				19CF792728A54D60001531B8 /* Config.swift */,
 				190C1D13285D15FF00FB3518 /* SceneDelegate.swift */,
+				19C1E9A228610E4E00E7976D /* MainRouter.swift */,
 				197A2D9728A95D7500190656 /* States */,
 				6368D8272891E7C30049EEAB /* UserDefault+helpers.swift */,
 				195870F328A8CDD90075D505 /* Assets */,
@@ -799,8 +800,8 @@
 		19ACB3CA28A599D600B5AD71 /* Transact */ = {
 			isa = PBXGroup;
 			children = (
-				19CAB9CF28B4265000A0A3B1 /* ViewModels */,
 				190BE97A28ADDFC60062CCD5 /* TransactScene.swift */,
+				19CAB9CF28B4265000A0A3B1 /* ViewModels */,
 				190BE97828ADDFAB0062CCD5 /* TransactScenario.swift */,
 				19CF792B28A587B9001531B8 /* TransactWorks.swift */,
 				19A9232B28B2A8390080D491 /* Archive */,
@@ -898,7 +899,6 @@
 				19E9F30E28AC14D100AD951F /* SceneStateProtocol.swift */,
 				19A8229728A9305D0081D385 /* UIEdgeInsets+Padding.swift */,
 				19D08360286F430B00F75E4A /* Designable.swift */,
-				19C1E9A228610E4E00E7976D /* MainRouter.swift */,
 				1999B6FD28A2F5D300D3570B /* DataToDecodableParser.swift */,
 				1952EA6828A711F2003F7852 /* Associated.swift */,
 				195870F128A8C8040075D505 /* KeyPathMaker.swift */,

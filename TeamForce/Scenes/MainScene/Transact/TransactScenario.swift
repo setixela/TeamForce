@@ -106,6 +106,7 @@ final class TransactScenario<Asset: AssetProtocol>:
          .doMap { ($0, true) }
          .doNext(work: works.updateAmount) // 10 часов искал дефект двойного юзанья
          .doNext(work: works.isCorrect)
+         .onSuccessMixSaved(setState) { .coinInputSuccess($1, true) }
          .onFailMixSaved(setState) { .coinInputSuccess($1, false) }
 
       events.reasonInputChanged

@@ -17,6 +17,7 @@ struct StatusViewInput {
 struct TransactionStatusViewEvents: InitProtocol {
    var presentOnScene: Event<StatusViewInput>?
    var hide: Event<Void>?
+   var didHide: Event<Void>?
 }
 
 final class TransactionStatusViewModel<Design: DSP>: BaseViewModel<StackViewExtended>,
@@ -109,29 +110,26 @@ final class TransactionStatusViewModel<Design: DSP>: BaseViewModel<StackViewExte
 extension TransactionStatusViewModel {
    private func show(baseView: UIView) {
       view.removeFromSuperview()
-      let size = baseView.frame.size
-      let origin = baseView.frame.origin
-      view.frame.size = CGSize(width: size.width * 0.85, height: size.height * 0.85)
-      view.frame.origin = CGPoint(x: -size.width, y: origin.y)
 
-      backgroundView.frame = baseView.bounds
+
       baseView.addSubview(backgroundView)
       baseView.addSubview(view)
+      view.addAnchors.fitToView(backgroundView)
+      view.addAnchors.fitToView(baseView)
+
       UIView.animate(withDuration: 0.25, animations: {
          self.backgroundView.alpha = 0.6
       })
-
-      UIView.animate(withDuration: 0.25) {
-         self.view.center = baseView.center
-      }
    }
 
    private func hide() {
       print("\nHIDE\n")
 
       UIView.animate(withDuration: 0.25) {
-         self.view.frame.origin = CGPoint(x: -self.view.frame.size.width, y: 0)
+      //   self.view.frame.origin = CGPoint(x: -self.view.frame.size.width, y: 0)
          self.backgroundView.alpha = 0
+      } completion: {_ in 
+         self.sendEvent(\.didHide)
       }
    }
 }
