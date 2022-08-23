@@ -25,8 +25,8 @@ final class HistoryScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>
       stateDelegate: stateDelegate,
       events: HistoryScenarioEvents(
          presentAllTransactions: viewModels.segmentedControl.onEvent(\.selected0),
-         presentSentTransactions: viewModels.segmentedControl.onEvent(\.selected1),
-         presentRecievedTransaction: viewModels.segmentedControl.onEvent(\.selected2),
+         presentSentTransactions: viewModels.segmentedControl.onEvent(\.selected2),
+         presentRecievedTransaction: viewModels.segmentedControl.onEvent(\.selected1),
          presentDetailView: viewModels.tableModel.onEvent(\.didSelectRow)
       )
    )

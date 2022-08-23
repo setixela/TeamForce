@@ -149,13 +149,32 @@ private extension HistoryWorks {
 
    static func convertToItems(_ filtered: [Transaction]) -> [TableItemsSection] {
       var prevDay = ""
-
+      print("Filtered \(filtered[0])")
       return filtered
          .reduce([TableItemsSection]()) { result, transact in
-            var state = TransactionItem.State.recieved
-            if transact.sender?.senderTgName == Self.store.currentUser {
-               state = .sendSuccess
+            var state = TransactionItem.State.waiting
+            let transactionStatus = transact.transactionStatus?.id
+            switch transactionStatus {
+            case "W":
+               state = TransactionItem.State.waiting
+            case "A":
+               state = TransactionItem.State.approved
+            case "D":
+               state = TransactionItem.State.declined
+            case "I":
+               state = TransactionItem.State.ingrace
+            case "R":
+               state = TransactionItem.State.ready
+            case "C":
+               state = TransactionItem.State.cancelled
+            default:
+               state = TransactionItem.State.waiting
             }
+            if transact.sender?.senderTgName != Self.store.currentUser {
+               state = .recieved
+            }
+            print(transactionStatus)
+            print(state)
 
             let item = TransactionItem(
                state: state,

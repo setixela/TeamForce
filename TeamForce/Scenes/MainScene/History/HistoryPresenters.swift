@@ -12,7 +12,7 @@ struct HistoryPresenters<Design: DesignProtocol>: Designable {
    static var transactToHistoryCell: Presenter<TransactionItem, HistoryCellModel<Design>> {
       Presenter { work in
          let item = work.unsafeInput
-
+         //print(work.input)
          var userNameText: String
          var statusHidden: Bool
          var statusText: String
@@ -28,6 +28,34 @@ struct HistoryPresenters<Design: DesignProtocol>: Designable {
             statusColor = .clear
             statusHidden = true
             image = Design.icon.recieveCoinIcon
+         case .waiting:
+            userNameText = item.recipient.recipientTgName ?? ""
+            statusText = "   Выполняется   "
+            sumText = "-" + item.amount
+            statusColor = Design.color.iconBrand
+            statusHidden = false
+            image = Design.icon.sendCoinIcon
+         case .approved:
+            userNameText = item.recipient.recipientTgName ?? ""
+            statusText = "   Выполнен   "
+            sumText = "-" + item.amount
+            statusColor = Design.color.success
+            statusHidden = false
+            image = Design.icon.sendCoinIcon
+         case .cancelled:
+            userNameText = item.recipient.recipientTgName ?? ""
+            statusText = "   Отменен   "
+            sumText = "-" + item.amount
+            statusColor = Design.color.textSecondary
+            statusHidden = false
+            image = Design.icon.sendCoinIcon
+         case .declined:
+            userNameText = item.recipient.recipientTgName ?? ""
+            statusText = "   Отклонен   "
+            sumText = "-" + item.amount
+            statusColor = Design.color.textError
+            statusHidden = false
+            image = Design.icon.sendCoinIcon
          default:
             userNameText = item.recipient.recipientTgName ?? ""
             statusText = "   Выполнен   "
@@ -82,10 +110,17 @@ struct HistoryPresenters<Design: DesignProtocol>: Designable {
 
 struct TransactionItem {
    enum State {
-      case sendSuccess
-      case sendDeclined
-      case sendInProgress
-      case sendCanceled
+      case waiting
+      case approved
+      case declined
+      case ingrace
+      case ready
+      case cancelled
+      
+//      case sendSuccess
+//      case sendDeclined
+//      case sendInProgress
+//      case sendCanceled
 
       case recieved
    }
