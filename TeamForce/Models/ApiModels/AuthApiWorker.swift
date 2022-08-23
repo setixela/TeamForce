@@ -34,6 +34,7 @@ struct UserData: Codable {
 
    struct Profile: Codable {
       let id: Int
+      let contacts: [Contact]
       let organization: String
       let department: String
       let tgId: String
@@ -47,6 +48,7 @@ struct UserData: Codable {
 
       enum CodingKeys: String, CodingKey {
          case id
+         case contacts
          case organization
          case department
          case tgId = "tg_id"
@@ -58,6 +60,18 @@ struct UserData: Codable {
          case middleName = "middle_name"
          case nickName = "nickname"
       }
+   }
+}
+
+struct Contact: Codable {
+   let id: Int
+   let contactType: String
+   let contactId: String
+   
+   enum CodingKeys: String, CodingKey {
+      case id
+      case contactType = "contact_type"
+      case contactId = "contact_id"
    }
 }
 

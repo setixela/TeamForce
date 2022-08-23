@@ -78,7 +78,7 @@ final class SideBarModel<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>
       userModel
          .onEvent(\.didTap) {
             print("User model did tap")
-            ProductionAsset.router?.route(\.profile, navType: .push, payload: ())
+//            ProductionAsset.router?.route(\.profile, navType: .push, payload: ())
          }
    }
 }

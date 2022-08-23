@@ -20,6 +20,7 @@ Void
    lazy var transactViewModel = TransactScene<Asset>()
    lazy var historyViewModel = HistoryScene<Asset>()
    lazy var settingsViewModel = SettingsViewModel<Asset>()
+   lazy var profileViewModel = ProfileViewModel<Asset>()
 
    var tabBarPanel: TabBarPanel<Design> { mainVM.footerStack }
 
