@@ -61,7 +61,7 @@ final class TransactInputViewModel<Design: DesignProtocol>: BaseViewModel<StackV
    // MARK: - Implements
 
    override func start() {
-      set_padding(.top(Grid.x24.value))
+      set_padding(.top(Grid.x8.value))
       set_alignment(.fill)
       set_distribution(.fill)
       set_axis(.vertical)

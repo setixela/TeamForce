@@ -45,7 +45,8 @@ Void
       tabBarPanel.button1
          .onEvent(\.didTap) { [weak self] in
             self?.unlockTabButtons()
-            self?.mainVM.header.set_text("Пока пусто")
+            self?.mainVM.header.set_text("Профиль")
+            self?.presentModel(self?.profileViewModel)
             self?.tabBarPanel.button1.setMode(\.normal)
          }
 

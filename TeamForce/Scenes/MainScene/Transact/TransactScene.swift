@@ -69,22 +69,12 @@ final class TransactScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended
       ])
    }
 
-
-
    private func setToInitialCondition() {
       clearFields()
       scenario.works.reset.doSync()
       hideViews()
       viewModels.sendButton.set(Design.state.button.inactive)
    }
-
-//   private func setToSelectedUserState() {
-//      clearFields()
-//      scenario.works.reset.doSync()
-//      hideViews()
-//      viewModels.sendButton.set(Design.state.button.inactive)
-//   }
-
 
    private func hideViews() {
       viewModels.transactInputViewModel.set(.hidden(true))
@@ -131,7 +121,9 @@ extension TransactScene: StateMachine {
          presentFoundUsers(users: users)
       case .listOfFoundUsers(let users):
          presentFoundUsers(users: users)
-      case .userSelectedSuccess(let foundUser, let index):
+      case .userSelectedSuccess(let _, let index):
+         self.viewModels.userSearchTextField.set_hidden(true)
+
          if case .userSelectedSuccess = currentState  {
             viewModels.userSearchTextField.set_hidden(false)
             viewModels.foundUsersList.set_hidden(true)
@@ -141,7 +133,7 @@ extension TransactScene: StateMachine {
          }
 
   //       options.set(.hidden(false))
-         UIView.animate(withDuration: 0.5) {
+         UIView.animate(withDuration: 0.33) {
 
             self.setToInitialCondition()
             self.clearFields()

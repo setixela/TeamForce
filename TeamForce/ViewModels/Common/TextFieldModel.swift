@@ -46,7 +46,7 @@ final class TextFieldModel: BaseViewModel<PaddingTextField>,
    }
 
    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-      guard view.isOnlyDigitsMode else { return false }
+      guard view.isOnlyDigitsMode else { return true }
 
       let allowedCharacters = CharacterSet.decimalDigits
       let characterSet = CharacterSet(charactersIn: string)

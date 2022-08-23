@@ -72,9 +72,9 @@ extension HistoryScene: StateMachine {
    func setState(_ state: HistoryState) {
       switch state {
       case .loadProfilError:
-         break
+         log("loadProfilError")
       case .loadTransactionsError:
-         break
+         log("loadTransactionsError")
       case .presentAllTransactions(let value):
          viewModels.tableModel
             .set(.itemSections(value.addedSpacer(size: Grid.x80.value)))

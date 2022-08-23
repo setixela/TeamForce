@@ -129,7 +129,9 @@ final class ProfileViewModel<Asset: AssetProtocol>: BaseViewModel<StackViewExten
          profile.middleName
       userModel.models.right.set_text(fullName)
       userModel.models.down.set_text("@" + profile.tgName)
-      
+
+      guard !profile.contacts.isEmpty else { return }
+
       infoFrame.models.down.set(.text(profile.contacts[0].contactId))
       infoFrame.models.down2.set(.text("Нет в базе данных"))
       

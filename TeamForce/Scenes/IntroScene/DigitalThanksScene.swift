@@ -52,7 +52,9 @@ final class DigitalThanksScene<Asset: AssetProtocol>: BaseSceneModel<
             TitleSubtitleY<Design>()
                .set_padding(.top(Design.params.titleSubtitleOffset))
                .setMain {
-                  $0.set_text(Text.title.digitalThanks)
+                  $0
+                     .set_text(Text.title.digitalThanks)
+                     .set_padBottom(Grid.x8.value)
                } setDown: {
                   $0.set_text(Text.title.digitalThanksAbout)
                },
