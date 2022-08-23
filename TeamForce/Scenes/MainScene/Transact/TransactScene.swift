@@ -27,7 +27,9 @@ final class TransactScene<Asset: AssetProtocol>: BaseSceneModel<
          userSelected: viewModels.foundUsersList.onEvent(\.didSelectRow),
          sendButtonEvent: viewModels.sendButton.onEvent(\.didTap),
          transactInputChanged: viewModels.transactInputViewModel.textField.onEvent(\.didEditingChanged),
-         reasonInputChanged: viewModels.reasonTextView.onEvent(\.didEditingChanged)
+         reasonInputChanged: viewModels.reasonTextView.onEvent(\.didEditingChanged),
+         anonymousSetOff: options.anonimParamModel.switcher.onEvent(\.turnedOff),
+         anonymousSetOn: options.anonimParamModel.switcher.onEvent(\.turnedOn)
       )
    )
 
