@@ -26,7 +26,8 @@ final class HistoryScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>
       events: HistoryScenarioEvents(
          presentAllTransactions: viewModels.segmentedControl.onEvent(\.selected0),
          presentSentTransactions: viewModels.segmentedControl.onEvent(\.selected1),
-         presentRecievedTransaction: viewModels.segmentedControl.onEvent(\.selected2)
+         presentRecievedTransaction: viewModels.segmentedControl.onEvent(\.selected2),
+         presentDetailView: viewModels.tableModel.onEvent(\.didSelectRow)
       )
    )
 
@@ -66,6 +67,8 @@ enum HistoryState {
    case presentAllTransactions([TableItemsSection])
    case presentSentTransactions([TableItemsSection])
    case presentRecievedTransaction([TableItemsSection])
+   
+   case presentDetailView(Transaction)
 }
 
 extension HistoryScene: StateMachine {
@@ -84,6 +87,8 @@ extension HistoryScene: StateMachine {
       case .presentRecievedTransaction(let value):
          viewModels.tableModel
             .set(.itemSections(value.addedSpacer(size: Grid.x80.value) ))
+      case .presentDetailView(let value):
+         ProductionAsset.router?.route(\.transactionDetail, navType: .push, payload: value)
       }
    }
 }

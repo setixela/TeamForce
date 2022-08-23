@@ -24,7 +24,7 @@ enum TableItemsState {
 }
 
 struct TableItemsEvents: InitProtocol {
-   var didSelectRow: Event<IndexPath>?
+   var didSelectRow: Event<(IndexPath, Int)>?
 }
 
 final class TableItemsModel<Design: DSP>: BaseViewModel<UITableView>,
@@ -55,7 +55,13 @@ final class TableItemsModel<Design: DSP>: BaseViewModel<UITableView>,
    }
 
    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-      sendEvent(\.didSelectRow, payload: indexPath)
+      var rowNumber = indexPath.row
+      
+      for i in 0..<indexPath.section {
+         rowNumber += view.numberOfRows(inSection: i)
+      }
+      
+      sendEvent(\.didSelectRow, payload: (indexPath, rowNumber))
       tableView.deselectRow(at: indexPath, animated: true)
    }
 
