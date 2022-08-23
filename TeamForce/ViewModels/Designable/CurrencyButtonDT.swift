@@ -9,9 +9,10 @@ import UIKit
 import ReactiveWorks
 
 extension CurrencyButtonDT {
-   static func makeWithTitle(_ text: String) -> Self {
+   static func makeWithValue(_ text: Int) -> Self {
       let button = Self()
-      button.models.main.set_text(text)
+      button.currencyValue = text
+      button.models.main.set_text(String(text))
       return button
    }
 }
@@ -19,6 +20,8 @@ extension CurrencyButtonDT {
 final class CurrencyButtonDT<Design: DSP>: CurrencyLabelDT<Design>, Communicable, Modable {
    var events = ButtonEvents()
    var modes = ButtonMode()
+
+   var currencyValue = 0
 
    override func start() {
       setAll {

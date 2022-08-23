@@ -53,6 +53,8 @@ final class PaddingTextField: UITextField, Marginable {
    // padding extension
    var padding: UIEdgeInsets = .init()
 
+   var isOnlyDigitsMode = false
+
    override func textRect(forBounds bounds: CGRect) -> CGRect {
       return bounds.inset(by: padding)
    }
@@ -141,5 +143,3 @@ final class StackViewExtended: UIStackView, Communicable {
       }
    }
 }
-
-

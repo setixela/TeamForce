@@ -57,7 +57,11 @@ extension StackItemsModel {
             $0.element.removeFromSuperview()
          }
 
-         items = [items[index]]
+         if index < items.count {
+            items = [items[index]]
+         } else {
+            items = []
+         }
       }
    }
 

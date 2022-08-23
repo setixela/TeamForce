@@ -82,6 +82,7 @@ extension TransactViewModels {
                   .setAll { avatar, username, nickname in
                      avatar
                         .set_size(.square(Grid.x26.value))
+                        .set_cornerRadius(Grid.x26.value / 2)
                         .set_url(urlString)
                      username
                         .set_text("\(name) \(surname)")

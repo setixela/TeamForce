@@ -110,7 +110,7 @@ extension ButtonTapAnimator {
       let clipsToBounds = uiView.clipsToBounds
       layer.masksToBounds = false
       uiView.clipsToBounds = false
-      layer.shadowOpacity = 0.11
+      layer.shadowOpacity = 0.15
       layer.shadowColor = UIColor.black.cgColor
       layer.shadowRadius = 5
       UIView.animate(withDuration: 0.3) {

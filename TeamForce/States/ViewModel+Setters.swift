@@ -16,8 +16,6 @@ extension ViewModelProtocol where Self: Stateable {
 
    @discardableResult func set_cornerRadius(_ value: CGFloat) -> Self {
       view.layer.cornerRadius = value
-    //  view.layer.masksToBounds = true
-    //  view.clipsToBounds = true
       return self
    }
 
@@ -311,6 +309,13 @@ extension ViewModelProtocol where Self: Stateable, View: PaddingImageView {
       return self
    }
 
+   @discardableResult func set_cornerRadius(_ value: CGFloat) -> Self {
+      view.layer.cornerRadius = value
+      //  view.layer.masksToBounds = true
+      view.clipsToBounds = true
+      return self
+   }
+
    @discardableResult func set_url(_ value: String?) -> Self {
       guard
          let str = value,
@@ -423,6 +428,11 @@ extension ViewModelProtocol where Self: Stateable, View: PaddingTextField {
 
    @discardableResult func set_keyboardType(_ value: UIKeyboardType) -> Self {
       view.keyboardType = value
+      return self
+   }
+
+   @discardableResult func set_onlyDigitsMode() -> Self {
+      view.isOnlyDigitsMode = true
       return self
    }
 }

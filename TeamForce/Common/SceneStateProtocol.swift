@@ -23,5 +23,9 @@ extension StateMachine {
 
       return fun
    }
+
+   func debug(_ state: SceneState) {
+      log(state, self)
+   }
 }
 

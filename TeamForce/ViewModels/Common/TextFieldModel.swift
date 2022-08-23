@@ -44,6 +44,14 @@ final class TextFieldModel: BaseViewModel<PaddingTextField>,
    func textFieldDidBeginEditing(_ textField: UITextField) {
       // view.becomeFirstResponder()
    }
+
+   func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+      guard view.isOnlyDigitsMode else { return false }
+
+      let allowedCharacters = CharacterSet.decimalDigits
+      let characterSet = CharacterSet(charactersIn: string)
+      return allowedCharacters.isSuperset(of: characterSet)
+   }
 }
 
 extension TextFieldModel {

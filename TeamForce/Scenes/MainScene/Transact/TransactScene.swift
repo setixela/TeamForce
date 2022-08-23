@@ -102,6 +102,7 @@ final class TransactScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended
 extension TransactScene: StateMachine {
    func setState(_ state: TransactState) {
 
+      debug(state)
 
       switch state {
       case .initial:
@@ -131,14 +132,15 @@ extension TransactScene: StateMachine {
       case .listOfFoundUsers(let users):
          presentFoundUsers(users: users)
       case .userSelectedSuccess(let foundUser, let index):
-
          if case .userSelectedSuccess = currentState  {
             viewModels.userSearchTextField.set_hidden(false)
             viewModels.foundUsersList.set_hidden(true)
             currentState = .initial
+//            options.set(.hidden(false))
             return
          }
 
+  //       options.set(.hidden(false))
          UIView.animate(withDuration: 0.5) {
 
             self.setToInitialCondition()
@@ -146,7 +148,6 @@ extension TransactScene: StateMachine {
 
             self.viewModels.foundUsersList.set(.removeAllExceptIndex(index))
 
-            let fullName = foundUser.name + " " + foundUser.surname
             self.viewModels.userSearchTextField.set_hidden(true)
             self.viewModels.transactInputViewModel.set_hidden(false)
             self.viewModels.sendButton.set_hidden(false)
@@ -172,7 +173,7 @@ extension TransactScene: StateMachine {
       case .coinInputSuccess(let text, let isCorrect):
          viewModels.transactInputViewModel.textField.set(.text(text))
          if isCorrect {
-            viewModels.transactInputViewModel.setState(.normal)
+            viewModels.transactInputViewModel.setState(.normal(text))
             viewModels.sendButton.set(Design.state.button.default)
          } else {
             viewModels.transactInputViewModel.setState(.noInput)
@@ -204,6 +205,7 @@ private extension TransactScene {
    }
 
    func presentFoundUsers(users: [FoundUser]) {
+//      options.set(.hidden(true))
       viewModels.foundUsersList.set(.items(users))
       viewModels.foundUsersList.set(.hidden(users.isEmpty ? true : false))
    }
