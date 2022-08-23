@@ -14,6 +14,7 @@ struct SendCoinRequest {
    let recipient: Int
    let amount: String
    let reason: String
+   let isAnonymous: Bool
 }
 
 protocol Failuring {
@@ -37,7 +38,8 @@ final class SendCoinApiWorker: BaseApiWorker<SendCoinRequest, Void> {
          .process(endpoint: TeamForceEndpoints.SendCoin(
             body: ["recipient": sendCoinRequest.recipient,
                    "amount": sendCoinRequest.amount,
-                   "reason": sendCoinRequest.reason],
+                   "reason": sendCoinRequest.reason,
+                   "is_anonymous": sendCoinRequest.isAnonymous],
             headers: ["Authorization": sendCoinRequest.token,
                       "X-CSRFToken": cookie.value]))
          .done { result in

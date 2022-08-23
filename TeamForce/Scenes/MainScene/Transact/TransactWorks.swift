@@ -7,6 +7,7 @@
 
 import Foundation
 import ReactiveWorks
+import ImageIO
 
 protocol TransactWorksProtocol: SceneWorks {
    // api works
@@ -41,6 +42,7 @@ final class TransactWorks<Asset: AssetProtocol>: BaseSceneWorks<TransactWorks.Te
       var foundUsers: [FoundUser] = []
       var recipientID = 0
       var recipientUsername = ""
+      var isAnonymous = false
 
       var inputAmountText = ""
       var inputReasonText = ""
@@ -97,7 +99,8 @@ final class TransactWorks<Asset: AssetProtocol>: BaseSceneWorks<TransactWorks.Te
          csrfToken: Self.store.tokens.csrf,
          recipient: Self.store.recipientID,
          amount: Self.store.inputAmountText,
-         reason: Self.store.inputReasonText
+         reason: Self.store.inputReasonText,
+         isAnonymous: Self.store.isAnonymous
       )
 
       self?.apiUseCase.sendCoin.work
@@ -170,6 +173,17 @@ final class TransactWorks<Asset: AssetProtocol>: BaseSceneWorks<TransactWorks.Te
       Self.store.inputReasonText = ""
       Self.store.isCorrectCoinInput = false
       Self.store.isCorrectReasonInput = false
+      Self.store.isAnonymous = false
+      work.success(result: ())
+   }
+   
+   lazy var anonymousOn = VoidWork<Void> { [weak self] work in
+      Self.store.isAnonymous = true
+      work.success(result: ())
+   }
+   
+   lazy var anonymousOff = VoidWork<Void> { [weak self] work in
+      Self.store.isAnonymous = false
       work.success(result: ())
    }
 
