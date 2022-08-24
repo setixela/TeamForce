@@ -92,7 +92,7 @@ final class TransactDeatilViewModel<Asset: AssetProtocol>: BaseSceneModel<
 
    private lazy var image = WrappedY(ImageViewModel()
       .set_image(Design.icon.avatarPlaceholder)
-      .set_url(String.randomUrlImage)
+      //.set_url(String.randomUrlImage)
       .set_size(.square(64))
    )
    .set_shadow(Design.params.cellShadow)
@@ -155,6 +155,11 @@ final class TransactDeatilViewModel<Asset: AssetProtocol>: BaseSceneModel<
          .set(.text(input.transactionStatus?.name ?? ""))
       reasonLabel
          .set(.text(input.reason ?? ""))
+      
+      if let urlSuffix = input.photo {
+         let urlString = "http://176.99.6.251:8888" + urlSuffix
+         image.subModel.set_url(urlString)
+      }
 
       guard let convertedDate = (input.createdAt ?? "").convertToDate() else { return }
       dateLabel

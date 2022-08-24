@@ -42,6 +42,7 @@ final class MainScene<Asset: AssetProtocol>:
       sideBarModel.start()
 
       mainVM.header.set_text("Баланс")
+      //mainVM.profileButton.set_url(Self.)
 
       menuButton
          .sendEvent(\.initWithImage, Design.icon.sideMenu)

@@ -18,7 +18,8 @@ struct HistoryPresenters<Design: DesignProtocol>: Designable {
          var statusText: String
          var statusColor: UIColor
          var sumText: String
-         var image: UIImage
+         //var image = ImageViewModel()
+         
 
          switch item.state {
          case .recieved:
@@ -27,46 +28,51 @@ struct HistoryPresenters<Design: DesignProtocol>: Designable {
             sumText = "+" + item.amount
             statusColor = .clear
             statusHidden = true
-            image = Design.icon.recieveCoinIcon
+//            image = Design.icon.recieveCoinIcon
          case .waiting:
             userNameText = item.recipient.recipientTgName ?? ""
             statusText = "   Выполняется   "
             sumText = "-" + item.amount
             statusColor = Design.color.iconBrand
             statusHidden = false
-            image = Design.icon.sendCoinIcon
+//            image = Design.icon.sendCoinIcon
          case .approved:
             userNameText = item.recipient.recipientTgName ?? ""
             statusText = "   Выполнен   "
             sumText = "-" + item.amount
             statusColor = Design.color.success
             statusHidden = false
-            image = Design.icon.sendCoinIcon
+//            image = Design.icon.sendCoinIcon
          case .cancelled:
             userNameText = item.recipient.recipientTgName ?? ""
             statusText = "   Отменен   "
             sumText = "-" + item.amount
             statusColor = Design.color.textSecondary
             statusHidden = false
-            image = Design.icon.sendCoinIcon
+//            image = Design.icon.sendCoinIcon
          case .declined:
             userNameText = item.recipient.recipientTgName ?? ""
             statusText = "   Отклонен   "
             sumText = "-" + item.amount
             statusColor = Design.color.textError
             statusHidden = false
-            image = Design.icon.sendCoinIcon
+//            image = Design.icon.sendCoinIcon
          default:
             userNameText = item.recipient.recipientTgName ?? ""
             statusText = "   Выполнен   "
             sumText = "-" + item.amount
             statusColor = Design.color.success
             statusHidden = false
-            image = Design.icon.sendCoinIcon
+//            image = Design.icon.sendCoinIcon
          }
 
          let cell = HistoryCellModel<Design>()
-            .setAll { _, userAndStatus, sumLabelAndCancelButton in
+            .setAll { icon, userAndStatus, sumLabelAndCancelButton in
+               if let urlSuffix = item.photo {
+                  print("photo \(urlSuffix)")
+                  icon
+                     .set_url("http://176.99.6.251:8888" + urlSuffix)
+               }
                userAndStatus
                   .set_padLeft(18)
                   .set_alignment(.leading)
@@ -130,4 +136,5 @@ struct TransactionItem {
    let recipient: Recipient
    let amount: String
    let createdAt: String
+   let photo: String?
 }
