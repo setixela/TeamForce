@@ -98,7 +98,7 @@
 		19AE3AEF28691B2E00A0C6E4 /* MainScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19AE3AEE28691B2E00A0C6E4 /* MainScene.swift */; };
 		19AE3AF22869230C00A0C6E4 /* AuthApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19AE3AF12869230C00A0C6E4 /* AuthApiWorker.swift */; };
 		19BD2A8728ABB35C00FCC00A /* LoginScenario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19BD2A8628ABB35C00FCC00A /* LoginScenario.swift */; };
-		19BD2A8928ABB72500FCC00A /* Scenaryable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19BD2A8828ABB72500FCC00A /* Scenaryable.swift */; };
+		19BD2A8928ABB72500FCC00A /* Scenarible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19BD2A8828ABB72500FCC00A /* Scenarible.swift */; };
 		19C1E98C285F426B00E7976D /* EndpointProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C1E985285F426B00E7976D /* EndpointProtocol.swift */; };
 		19C1E98E285F426B00E7976D /* ApiEngineProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C1E987285F426B00E7976D /* ApiEngineProtocol.swift */; };
 		19C1E98F285F426B00E7976D /* TeamForceApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C1E988285F426B00E7976D /* TeamForceApi.swift */; };
@@ -291,7 +291,7 @@
 		19AE3AEE28691B2E00A0C6E4 /* MainScene.swift */ = {isa = PBXFileReference; indentWidth = 3; lastKnownFileType = sourcecode.swift; path = MainScene.swift; sourceTree = "<group>"; tabWidth = 3; };
 		19AE3AF12869230C00A0C6E4 /* AuthApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthApiWorker.swift; sourceTree = "<group>"; };
 		19BD2A8628ABB35C00FCC00A /* LoginScenario.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginScenario.swift; sourceTree = "<group>"; };
-		19BD2A8828ABB72500FCC00A /* Scenaryable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scenaryable.swift; sourceTree = "<group>"; };
+		19BD2A8828ABB72500FCC00A /* Scenarible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scenarible.swift; sourceTree = "<group>"; };
 		19C1E985285F426B00E7976D /* EndpointProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EndpointProtocol.swift; sourceTree = "<group>"; };
 		19C1E987285F426B00E7976D /* ApiEngineProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiEngineProtocol.swift; sourceTree = "<group>"; };
 		19C1E988285F426B00E7976D /* TeamForceApi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamForceApi.swift; sourceTree = "<group>"; };
@@ -801,9 +801,9 @@
 			isa = PBXGroup;
 			children = (
 				190BE97A28ADDFC60062CCD5 /* TransactScene.swift */,
-				19CAB9CF28B4265000A0A3B1 /* ViewModels */,
 				190BE97828ADDFAB0062CCD5 /* TransactScenario.swift */,
 				19CF792B28A587B9001531B8 /* TransactWorks.swift */,
+				19CAB9CF28B4265000A0A3B1 /* ViewModels */,
 				19A9232B28B2A8390080D491 /* Archive */,
 			);
 			path = Transact;
@@ -903,7 +903,7 @@
 				1952EA6828A711F2003F7852 /* Associated.swift */,
 				195870F128A8C8040075D505 /* KeyPathMaker.swift */,
 				197A2D9828A98F4300190656 /* UIColor+Random.swift */,
-				19BD2A8828ABB72500FCC00A /* Scenaryable.swift */,
+				19BD2A8828ABB72500FCC00A /* Scenarible.swift */,
 				197A771728AD90800082CD81 /* XelaLog.swift */,
 				197A771928AD90B30082CD81 /* Presenting.swift */,
 			);
@@ -1208,7 +1208,7 @@
 				19CAB9D128B4265C00A0A3B1 /* TransactOptionsVM.swift in Sources */,
 				19C306D828ADF6C2002D5124 /* HistoryCell.swift in Sources */,
 				19CAB9CC28B41CB400A0A3B1 /* TitleBodySwitcherDT.swift in Sources */,
-				19BD2A8928ABB72500FCC00A /* Scenaryable.swift in Sources */,
+				19BD2A8928ABB72500FCC00A /* Scenarible.swift in Sources */,
 				63E7A74128AFA0D200FB2C80 /* GetPeriodByDateApiWorker.swift in Sources */,
 				63C6D11428B2E1F200887AD1 /* SettingsViewModel.swift in Sources */,
 				19A73BED28A4530C000B74CF /* TextFieldBadged.swift in Sources */,

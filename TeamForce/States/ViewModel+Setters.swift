@@ -103,7 +103,6 @@ extension ViewModelProtocol where Self: Stateable {
       view.layer.shadowOffset = .init(width: value.offset.x, height: value.offset.y)
       view.layer.shadowRadius = value.radius
       view.layer.shadowOpacity = Float(value.opacity)
-      view.layer.shouldRasterize = false
       return self
    }
 

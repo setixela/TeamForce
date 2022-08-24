@@ -8,7 +8,7 @@
 import Foundation
 import ReactiveWorks
 
-struct ApiUseCase<Asset: AssetProtocol>: Assetable, WorkBasket {
+struct ApiUseCase<Asset: AssetProtocol>: InitProtocol, Assetable, WorkBasket {
    //
    let retainer = Retainer()
 

@@ -8,14 +8,41 @@
 import ReactiveWorks
 import UIKit
 
-struct TransactViewEvent: InitProtocol {}
+enum TransactState {
+   case initial
+   case loadProfilError
+   case loadTransactionsError
+
+   case loadTokensSuccess
+   case loadTokensError
+
+   case loadBalanceSuccess(Int)
+   case loadBalanceError
+
+   case loadUsersListSuccess([FoundUser])
+   case loadUsersListError
+
+   case presentFoundUser([FoundUser])
+   case presentUsers([FoundUser])
+   case listOfFoundUsers([FoundUser])
+
+   case userSelectedSuccess(FoundUser, Int)
+
+   case userSearchTFDidEditingChangedSuccess
+
+   case sendCoinSuccess((String, SendCoinRequest))
+   case sendCoinError
+
+   case coinInputSuccess(String, Bool)
+   case reasonInputSuccess(String, Bool)
+}
 
 final class TransactScene<Asset: AssetProtocol>: BaseSceneModel<
    DefaultVCModel,
    DoubleStacksModel,
    Asset,
    Void
->, Scenaryable {
+>, Scenarible {
    typealias State = StackState
 
    lazy var scenario = TransactScenario(
@@ -107,30 +134,42 @@ extension TransactScene: StateMachine {
       switch state {
       case .initial:
          break
+         //
       case .loadProfilError:
          break
+         //
       case .loadTransactionsError:
          break
+         //
       case .loadTokensSuccess:
          viewModels.userSearchTextField.set_hidden(false)
+         //
       case .loadTokensError:
          viewModels.userSearchTextField.set_hidden(true)
+         //
       case .loadBalanceSuccess(let balance):
          viewModels.balanceInfo.models.down.label.set_text(String(balance))
+         //
       case .loadBalanceError:
          print("balance not loaded")
+         //
       case .loadUsersListSuccess(let users):
          presentFoundUsers(users: users)
+         //
       case .loadUsersListError:
          viewModels.foundUsersList.set_hidden(true)
+         //
       case .presentFoundUser(let users):
          viewModels.foundUsersList.set_hidden(true)
          presentFoundUsers(users: users)
+         //
       case .presentUsers(let users):
          viewModels.foundUsersList.set_hidden(true)
          presentFoundUsers(users: users)
+         //
       case .listOfFoundUsers(let users):
          presentFoundUsers(users: users)
+         //
       case .userSelectedSuccess(_, let index):
          viewModels.userSearchTextField.set_hidden(true)
 
@@ -138,11 +177,9 @@ extension TransactScene: StateMachine {
             viewModels.userSearchTextField.set_hidden(false)
             viewModels.foundUsersList.set_hidden(true)
             currentState = .initial
-//            options.set(.hidden(false))
             return
          }
 
-         //       options.set(.hidden(false))
          UIView.animate(withDuration: 0.33) {
             self.setToInitialCondition()
             self.clearFields()
@@ -154,11 +191,10 @@ extension TransactScene: StateMachine {
             self.viewModels.reasonTextView.set_hidden(false)
             self.mainVM.view.layoutIfNeeded()
          }
-
-//         self.viewModels.sendButton.set_hidden(false)
-
+         //
       case .userSearchTFDidEditingChangedSuccess:
          hideHUD()
+         //
       case .sendCoinSuccess(let tuple):
          viewModels.transactionStatusView.start()
          guard
@@ -173,8 +209,10 @@ extension TransactScene: StateMachine {
          viewModels.transactionStatusView.onEvent(\.didHide) { [weak self] in
             self?.vcModel?.dismiss(animated: true)
          }
+         //
       case .sendCoinError:
          presentAlert(text: "Не могу послать деньгу")
+         //
       case .coinInputSuccess(let text, let isCorrect):
          viewModels.transactInputViewModel.textField.set(.text(text))
          if isCorrect {
@@ -185,6 +223,7 @@ extension TransactScene: StateMachine {
             viewModels.transactInputViewModel.textField.set(.text(text))
             viewModels.sendButton.set(Design.state.button.inactive)
          }
+         //
       case .reasonInputSuccess(let text, let isCorrect):
          viewModels.reasonTextView.set(.text(text))
          if isCorrect {

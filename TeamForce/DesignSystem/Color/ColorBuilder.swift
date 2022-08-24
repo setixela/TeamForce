@@ -13,21 +13,29 @@ protocol ColorTokenProtocol {}
 // imported from Figma via "Colors to Code" Figma's plugin
 enum ColorToken: String, ColorTokenProtocol {
     //
-    case brand = "--general-brand"
-    case brandSecondary = "--general-brand-secondary"
-    case inverse = "--general-background"
     case contrast = "--general-contrast"
     case contrastSecondary = "--general-secondary"
+
     case midpoint = "--general-corol-grey"
+    case midpointSecondary = "--minor---grey"
+
+    case negative = "--general-background"
+    case negativeSecondary = ""
+
+    case brand = "--general-brand"
+    case brandSecondary = "--general-brand-secondary"
+
     case success = "--minor-success"
     case successSecondary = "--minor-success-secondary"
+
     case error = "--minor-error"
     case errorSecondary = "--minor-error-secondary"
+
     case warning = "--minor-warning"
     case warningSecondary = "--minor-warning-secondary"
+
     case info = "--minor-info"
     case infoSecondary = "--minor-info-secondary"
-    case midpointSecondary = "--minor---grey"
 
     case extra1 = "--color-blue"
     case extra2 = "--color-yellow"
@@ -101,18 +109,18 @@ struct ColorBuilder: ColorsProtocol {
 
     var text: UIColor { Token.contrast.color }
     var textSecondary: UIColor { Token.contrastSecondary.color }
-    var textSecondaryInvert: UIColor { Token.inverse.color }
+    var textSecondaryInvert: UIColor { Token.negative.color }
     var textSuccess: UIColor { Token.success.color }
     var textInfo: UIColor { Token.info.color }
     var textThird: UIColor { Token.contrast.color }
-    var textThirdInvert: UIColor { Token.inverse.color }
-    var textInvert: UIColor { Token.inverse.color }
+    var textThirdInvert: UIColor { Token.negative.color }
+    var textInvert: UIColor { Token.negative.color }
     var textError: UIColor { Token.error.color }
     var textContrastSecondary: UIColor { Token.contrastSecondary.color }
     var textBrand: UIColor { Token.brand.color  }
 
-    var background: UIColor { Token.inverse.color }
-    var backgroundSecondary: UIColor { Token.inverse.color }
+    var background: UIColor { Token.negative.color }
+    var backgroundSecondary: UIColor { Token.negative.color }
     var backgroundBrand: UIColor { Token.brand.color }
     var backgroundBrandSecondary: UIColor { Token.brandSecondary.color }
     var infoSecondary: UIColor {Token.infoSecondary.color}
@@ -126,7 +134,7 @@ struct ColorBuilder: ColorsProtocol {
     var transparentButtonBack: UIColor { transparent }
 
     // textfield colors
-    var textFieldBack: UIColor { Token.inverse.color }
+    var textFieldBack: UIColor { Token.negative.color }
 
     // boundaries
     var boundary: UIColor { Token.midpoint.color }
@@ -135,7 +143,7 @@ struct ColorBuilder: ColorsProtocol {
     // icons
     var iconContrast: UIColor { Token.contrast.color }
     var iconSecondary: UIColor { Token.contrastSecondary.color }
-    var iconInvert: UIColor { Token.inverse.color }
+    var iconInvert: UIColor { Token.negative.color }
     var iconBrand: UIColor { Token.brand.color }
 
     // Frame cell color

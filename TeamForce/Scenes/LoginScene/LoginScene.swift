@@ -14,7 +14,7 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
    DoubleStacksBrandedVM<Asset.Design>,
    Asset,
    Void
->, Scenaryable {
+>, Scenarible {
    //
 
    private lazy var viewModels = LoginViewModels<Asset>()

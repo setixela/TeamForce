@@ -77,6 +77,7 @@ protocol TitleTextsProtocol: InitProtocol {
 // MARK: - Button texts implements
 
 struct ButtonTexts: ButtonTextsProtocol {
+
    var enterButton: String { "ВОЙТИ" }
    var nextButton: String { "ДАЛЕЕ" }
    var registerButton: String { "РЕГИСТРАЦИЯ" }
