@@ -82,15 +82,12 @@ final class FeedScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>, A
       if let recipientPhoto = feed.transaction.recipientPhoto {
          icon.set_url("http://176.99.6.251:8888" + recipientPhoto)
       } else {
-         print("Hi I am here")
          if let nameFirstLetter = feed.transaction.recipientFirstName?.first,
             let surnameFirstLetter = feed.transaction.recipientSurname?.first {
             let text = String(nameFirstLetter) + String(surnameFirstLetter)
             let image = text.drawImage()
             icon.set_image(image)
          }
-         
-         //userModel.models.main
       }
 
       let tagBlock = StackModel()

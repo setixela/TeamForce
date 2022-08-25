@@ -180,7 +180,7 @@ private extension HistoryWorks {
             
             print(transactionStatus)
             print(state)
-
+            //transact.isAnonymous
             let item = TransactionItem(
                state: state,
                sender: transact.sender ?? Sender(senderId: nil,
@@ -195,7 +195,8 @@ private extension HistoryWorks {
                                                           recipientPhoto: nil),
                amount: transact.amount ?? "",
                createdAt: transact.createdAt ?? "",
-               photo: authorPhoto
+               photo: authorPhoto,
+               isAnonymous: transact.isAnonymous ?? false
             )
 
             var result = result
