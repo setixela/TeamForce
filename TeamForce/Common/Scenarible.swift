@@ -28,7 +28,7 @@ protocol Scenarible3: Scenarible2 {
 // MARK: - Scenario protocol and base scenario
 
 protocol Scenario {
-   associatedtype Works: SceneWorks
+   associatedtype Works: TempStorage
    associatedtype Events
    associatedtype State
 
@@ -40,7 +40,7 @@ protocol Scenario {
    func start()
 }
 
-class BaseScenario<Events, State, Works: SceneWorks>: Scenario {
+class BaseScenario<Events, State, Works: TempStorage>: Scenario {
    var works: Works
    var events: Events
    var setState: (State) -> Void = { _ in log("fuck") }

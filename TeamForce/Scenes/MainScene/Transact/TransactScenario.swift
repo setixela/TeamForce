@@ -72,7 +72,7 @@ final class TransactScenario<Asset: AssetProtocol>:
          .doNext(work: works.coinInputParsing)
          .onSuccess(setState)  { .coinInputSuccess($0, true) }
          .onFail { [weak self] (text: String) in
-            self?.works.updateAmount // было двойное использование одного ворка
+            self?.works.updateAmount
                .doAsync((text, false))
                .onSuccess(self?.setState) { .coinInputSuccess(text, false) }
          }

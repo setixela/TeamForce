@@ -18,7 +18,7 @@ protocol LoginBackstageProtocol: Assetable {
    var saveLoginResults: Work<VerifyResultBody, Void> { get }
 }
 
-final class LoginBackstage<Asset: AssetProtocol>: BaseSceneWorks<LoginBackstage.Temp, Asset>, LoginBackstageProtocol {
+final class LoginWorks<Asset: AssetProtocol>: BaseSceneWorks<LoginWorks.Temp, Asset>, LoginBackstageProtocol {
    //
    private lazy var useCase = Asset.apiUseCase
 
@@ -34,8 +34,8 @@ final class LoginBackstage<Asset: AssetProtocol>: BaseSceneWorks<LoginBackstage.
 
    // MARK: - Works
 
-   lazy var authByName = VoidWork<AuthResult> { [weak self] work in
-      self?.useCase.login.work
+   var authByName: VoidWork<AuthResult> { .init { [weak self] work in
+      self?.useCase.login
          .doAsync(Self.store.loginName)
          .onSuccess {
             Self.store.authResult = $0
@@ -44,10 +44,9 @@ final class LoginBackstage<Asset: AssetProtocol>: BaseSceneWorks<LoginBackstage.
          .onFail {
             work.fail(())
          }
-         .retainBy(self?.retainer)
-   }
+   }}
 
-   lazy var verifyCode = VoidWork<VerifyResultBody> { [weak self] work in
+   var verifyCode: VoidWork<VerifyResultBody> { .init { [weak self] work in
 
       guard
          let inputCode = Self.store.smsCodeInput,
@@ -62,8 +61,7 @@ final class LoginBackstage<Asset: AssetProtocol>: BaseSceneWorks<LoginBackstage.
          xCode: authResult.xCode,
          smsCode: inputCode)
 
-      self?.useCase.verifyCode.work
-         .retainBy(self?.retainer)
+      self?.useCase.verifyCode
          .doAsync(request)
          .onSuccess {
             work.success(result: $0)
@@ -71,9 +69,9 @@ final class LoginBackstage<Asset: AssetProtocol>: BaseSceneWorks<LoginBackstage.
          .onFail {
             work.fail(())
          }
-   }
+   }}
 
-   lazy var loginNameInputParse = Work<String, String> { [weak self] work in
+   var loginNameInputParse: Work<String, String> { .init { [weak self] work in
       self?.loginParser.work
          .retainBy(self?.retainer)
          .doAsync(work.input)
@@ -85,9 +83,9 @@ final class LoginBackstage<Asset: AssetProtocol>: BaseSceneWorks<LoginBackstage.
             Self.store.loginName = nil
             work.fail(text)
          }
-   }
+   }}
 
-   lazy var smsCodeInputParse = Work<String, String> { [weak self] work in
+   var smsCodeInputParse: Work<String, String> { .init { [weak self] work in
       self?.smsParser.work
          .retainBy(self?.retainer)
          .doAsync(work.input)
@@ -99,9 +97,9 @@ final class LoginBackstage<Asset: AssetProtocol>: BaseSceneWorks<LoginBackstage.
             Self.store.smsCodeInput = nil
             work.fail(text)
          }
-   }
+   }}
 
-   lazy var saveLoginResults = Work<VerifyResultBody, Void> { [weak self] work in
+   var saveLoginResults: Work<VerifyResultBody, Void> { .init { [weak self] work in
 
       self?.useCase.safeStringStorage
          .set(.save((value: work.unsafeInput.token, key: "token")))
@@ -110,5 +108,5 @@ final class LoginBackstage<Asset: AssetProtocol>: BaseSceneWorks<LoginBackstage.
       UserDefaults.standard.setIsLoggedIn(value: true)
 
       work.success(result: ())
-   }
+   }}
 }

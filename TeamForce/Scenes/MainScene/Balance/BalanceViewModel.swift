@@ -117,7 +117,7 @@ final class BalanceViewModel<Asset: AssetProtocol>: BaseViewModel<StackViewExten
          Grid.xxx.spacer,
       ]))
 
-      useCase.retainedWork(\.loadBalance)
+      useCase.loadBalance
          .doAsync()
          .onSuccess { [weak self] balance in
             self?.setBalance(balance)

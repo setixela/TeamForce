@@ -19,7 +19,6 @@ protocol AssetProtocol: AssetRoot
    Design: DesignProtocol
 {
    static var router: MainRouter<Scene>? { get set }
-   static var apiUseCase: ApiUseCase<Asset> { get }
 
    typealias Asset = Self
    typealias Text = Design.Text
@@ -27,6 +26,10 @@ protocol AssetProtocol: AssetRoot
 
 extension AssetProtocol {
    static var apiUseCase: ApiUseCase<Asset> {
+      .init()
+   }
+
+   static var storageUseCase: StorageWorks<Asset> {
       .init()
    }
 }

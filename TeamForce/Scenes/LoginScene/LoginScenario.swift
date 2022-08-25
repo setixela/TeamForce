@@ -20,7 +20,7 @@ final class LoginScenario<Asset: AssetProtocol>:
    BaseScenario<
       LoginScenarioEvents,
       LoginSceneState,
-      LoginBackstage<Asset>
+      LoginWorks<Asset>
    >
 {
    override func start() {
