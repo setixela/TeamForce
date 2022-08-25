@@ -20,11 +20,11 @@ final class FrameCellModelDT<Design: DesignProtocol>: BaseViewModel<StackViewExt
    typealias State = StackState
 
    private lazy var headerLabel = Design.label.body2
-      .set_color(Design.color.textInvert)
+      .set_textColor(Design.color.textInvert)
    private lazy var textLabel = Design.label.headline4
-      .set_color(Design.color.textInvert)
+      .set_textColor(Design.color.textInvert)
    private lazy var captionLabel = Design.label.default
-      .set_color(Design.color.textInvert)
+      .set_textColor(Design.color.textInvert)
 
    override func start() {
       set(.axis(.vertical))
@@ -72,11 +72,11 @@ final class BalanceStatusFrameDT<Design: DSP>:
          $0.set_size(.square(24))
       } setRight: {
          $0
-            .set_font(Design.font.default)
+            .set(Design.state.label.default)
             .set_padLeft(15)
       } setDown: {
          $0
-            .set_font(Design.font.default)
+            .set(Design.state.label.default)
             .set_padLeft(15)
       } setDown2: {
          $0

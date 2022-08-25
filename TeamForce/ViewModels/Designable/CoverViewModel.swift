@@ -34,7 +34,7 @@ final class CoverViewModel<Asset: AssetProtocol>: BaseViewModel<StackViewExtende
          .set(.size(.init(width: 48, height: 48)))
 
       titleModel.label
-         .set(.font(Design.font.headline5))
+         .set(Design.state.label.headline5)
    }
 }
 

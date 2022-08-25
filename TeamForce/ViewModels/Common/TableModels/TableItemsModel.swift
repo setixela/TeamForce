@@ -106,7 +106,7 @@ final class TableItemsModel<Design: DSP>: BaseViewModel<UITableView>,
 
       let text = itemSections[section].title
       let view = LabelModel()
-         .set_font(Design.font.title)
+         .set(Design.state.label.title)
          .set_padding(.init(top: 4, left: 16, bottom: 4, right: 16))
          .set_text(text)
          .set_backColor(Design.color.background)

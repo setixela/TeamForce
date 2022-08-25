@@ -16,7 +16,7 @@ struct TextFieldEvents: InitProtocol {
 }
 
 final class TextFieldModel: BaseViewModel<PaddingTextField>,
-   Stateable2,
+   Stateable3,
    UITextFieldDelegate
 {
    var events: TextFieldEvents = .init()
@@ -57,6 +57,7 @@ final class TextFieldModel: BaseViewModel<PaddingTextField>,
 extension TextFieldModel {
    typealias State = TextFieldState
    typealias State2 = ViewState
+   typealias State3 = LabelState
 }
 
 extension TextFieldModel: Communicable {}

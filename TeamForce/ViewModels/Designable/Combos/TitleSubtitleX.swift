@@ -22,7 +22,7 @@ class TitleSubtitleX<Design: DesignProtocol>:
          $0
             .set(Design.state.label.subtitle)
             .set_alignment(.center)
-            .set_color(Design.color.textSecondary)
+            .set_textColor(Design.color.textSecondary)
       }
    }
 }

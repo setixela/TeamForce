@@ -17,9 +17,9 @@ class CurrencyLabelDT<Design: DSP>: Combos<SComboMR<LabelModel, ImageViewModel>>
 
       setAll {
          $0
-            .set_font(Design.font.title2)
+            .set(Design.state.label.title2)
             .set_text("0")
-            .set_color(Design.color.iconInvert)
+            .set_textColor(Design.color.iconInvert)
             .set_height(Grid.x20.value)
          $1
             .set_image(Design.icon.logoCurrency)

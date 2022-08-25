@@ -7,6 +7,28 @@
 
 import ReactiveWorks
 
+protocol TypographyElements: InitProtocol, DesignElementable {
+   var `default`: DesignElement { get }
+
+   var headline2: DesignElement { get }
+   var headline3: DesignElement { get }
+   var headline4: DesignElement { get }
+   var headline5: DesignElement { get }
+   var headline6: DesignElement { get }
+
+   var title: DesignElement { get }
+   var title2: DesignElement { get }
+
+   var body1: DesignElement { get }
+   var body2: DesignElement { get }
+   var body3: DesignElement { get }
+
+   var subtitle: DesignElement { get }
+   var caption: DesignElement { get }
+   var caption2: DesignElement { get }
+   var counter: DesignElement { get }
+}
+
 // MARK: - Labels Protocol
 
 protocol LabelProtocol: TypographyElements
@@ -15,7 +37,6 @@ protocol LabelProtocol: TypographyElements
 // MARK: - Labels
 
 struct LabelBuilder<Design: DSP>: LabelProtocol, Designable {
-
    var subtitle: LabelModel { .init(Design.state.label.subtitle) }
    var `default`: LabelModel { .init(Design.state.label.default) }
 
@@ -40,79 +61,78 @@ struct LabelBuilder<Design: DSP>: LabelProtocol, Designable {
 protocol LabelStateProtocol: TypographyElements where DesignElement == [LabelState] {}
 
 struct LabelStateBuilder<Design: DSP>: LabelStateProtocol, Designable {
-
    var `default`: [LabelState] { [
-      .font(Design.font.default),
-      .color(.black)
+      .font(.systemFont(ofSize: 14, weight: .regular)),
+      .textColor(.black)
    ] }
 
    var headline2: [LabelState] { [
-      .font(Design.font.headline2),
-      .color(.black)
+      .font(.systemFont(ofSize: 54, weight: .semibold)),
+      .textColor(.black)
    ] }
 
    var headline3: [LabelState] { [
-      .font(Design.font.headline3),
-      .color(.black)
+      .font(.systemFont(ofSize: 48, weight: .regular)),
+      .textColor(.black)
    ] }
 
    var headline4: [LabelState] { [
-      .font(Design.font.headline4),
-      .color(.black)
+      .font(.systemFont(ofSize: 32, weight: .bold)),
+      .textColor(.black)
    ] }
 
    var headline5: [LabelState] { [
-      .font(Design.font.headline5),
-      .color(.black)
+      .font(.systemFont(ofSize: 28, weight: .bold)),
+      .textColor(.black)
    ] }
 
    var headline6: [LabelState] { [
-      .font(Design.font.headline6),
-      .color(.black)
+      .font(.systemFont(ofSize: 20, weight: .regular)),
+      .textColor(.black)
    ] }
 
    var title: [LabelState] { [
-      .font(Design.font.title),
-      .color(.black)
+      .font(.systemFont(ofSize: 24, weight: .bold)),
+      .textColor(.black)
    ] }
 
    var title2: [LabelState] { [
-      .font(Design.font.title2),
-      .color(.black)
+      .font(.systemFont(ofSize: 24, weight: .medium)),
+      .textColor(.black)
    ] }
 
    var body1: [LabelState] { [
-      .font(Design.font.body1),
-      .color(.black)
+      .font(.systemFont(ofSize: 16, weight: .regular)),
+      .textColor(.black)
    ] }
 
    var body2: [LabelState] { [
-      .font(Design.font.body2),
-      .color(.black)
+      .font(.systemFont(ofSize: 14, weight: .semibold)),
+      .textColor(.black)
    ] }
 
    var body3: [LabelState] { [
-      .font(Design.font.body3),
-      .color(.black)
+      .font(.systemFont(ofSize: 16, weight: .semibold)),
+      .textColor(.black)
    ] }
 
    var subtitle: [LabelState] { [
-      .font(Design.font.subtitle),
-      .color(.black)
+      .font(.systemFont(ofSize: 16, weight: .regular)),
+      .textColor(.black)
    ] }
 
    var caption: [LabelState] { [
-      .font(Design.font.caption),
-      .color(.black)
+      .font(.systemFont(ofSize: 12, weight: .regular)),
+      .textColor(.black)
    ] }
 
    var caption2: [LabelState] { [
-      .font(Design.font.caption2),
-      .color(.black)
+      .font(.systemFont(ofSize: 10, weight: .regular)),
+      .textColor(.black)
    ] }
 
    var counter: [LabelState] { [
-      .font(Design.font.counter),
-      .color(.black)
+      .font(.systemFont(ofSize: 48, weight: .regular)),
+      .textColor(.black)
    ] }
 }

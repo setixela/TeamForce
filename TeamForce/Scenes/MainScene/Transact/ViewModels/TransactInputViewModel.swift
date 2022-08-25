@@ -23,7 +23,7 @@ final class TransactInputViewModel<Design: DesignProtocol>: BaseViewModel<StackV
       .set_keyboardType(.numberPad)
       .set_onlyDigitsMode()
       .set(.clearButtonMode(.never))
-      .set(.font(Design.font.headline2))
+      .set(Design.state.label.headline2)
       .set(.height(72))
       .set(.placeholder("0"))
       .set(.padding(.init(top: 0, left: 0, bottom: 0, right: 0)))

@@ -56,24 +56,26 @@ enum TextViewState {
    case width(CGFloat)
 }
 
-extension TextViewModel: Stateable2 {
+extension TextViewModel: Stateable3 {
    typealias State = ViewState
+   typealias State2 = TextViewState
+   typealias State3 = LabelState
 
    func applyState(_ state: TextViewState) {
       switch state {
       case .text(let string):
-         view.text = string
+         set_text(string)
       case .placeholder(let string):
          self.placeholder = string
-         view.text = self.placeholder
+         set_text(string)
       case .font(let font):
-         view.font = font
+         set_font(font)
       case .padding(let value):
-         view.textContainerInset = value
+         set_padding(value)
       case .height(let value):
-         view.addAnchors.constHeight(value)
+         set_height(value)
       case .width(let value):
-         view.addAnchors.constWidth(value)
+         set_width(value)
       }
    }
 }

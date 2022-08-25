@@ -18,12 +18,12 @@ final class PlaygroundScene<Asset: AssetProtocol>: BaseSceneModel<
    private let badgedModel = BadgedViewModel<ComboMRD, Design>()
       .onModeChanged(\.error) { model in
          [model?.topBadge, model?.bottomBadge].forEach {
-            $0?.set_color(Design.color.boundaryError)
+            $0?.set_textColor(Design.color.boundaryError)
          }
       }
       .onModeChanged(\.normal) { model in
          [model?.topBadge, model?.bottomBadge].forEach {
-            $0?.set_color(Design.color.text)
+            $0?.set_textColor(Design.color.text)
          }
       }
 

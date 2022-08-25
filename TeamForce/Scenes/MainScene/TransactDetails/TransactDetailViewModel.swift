@@ -20,14 +20,14 @@ final class TransactDeatilViewModel<Asset: AssetProtocol>: BaseSceneModel<
       .set(.numberOfLines(0))
    private lazy var statusLabel = LabelModel()
    private lazy var dateLabel = LabelModel()
-      .set(.color(UIColor.gray))
+      .set(.textColor(UIColor.gray))
    private lazy var amountLabel = LabelModel()
-      .set(.font(Design.font.headline3))
+      .set(Design.state.label.headline3)
    private lazy var statusImage = ImageViewModel()
       .set(.size(.init(width: 48, height: 48)))
    private lazy var reasonLabel = LabelModel()
       .set(.numberOfLines(0))
-      .set(.color(UIColor.gray))
+      .set(.textColor(UIColor.gray))
 
    private lazy var firstStack = StackModel()
       .set(.distribution(.equalCentering))
@@ -148,8 +148,8 @@ final class TransactDeatilViewModel<Asset: AssetProtocol>: BaseSceneModel<
       default:
          textColor = UIColor.black
       }
-      statusLabel.set(.color(textColor))
-      amountLabel.set(.color(textColor))
+      statusLabel.set(.textColor(textColor))
+      amountLabel.set(.textColor(textColor))
 
       statusLabel
          .set(.text(input.transactionStatus?.name ?? ""))

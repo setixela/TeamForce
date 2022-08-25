@@ -56,19 +56,19 @@ final class FeedScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>, A
 
       let dateLabel = LabelModel()
          .set_numberOfLines(0)
-         .set_color(Design.color.textSecondary)
-         .set_font(Design.font.caption)
+         .set(Design.state.label.caption)
+         .set_textColor(Design.color.textSecondary)
          .set_text(feed.time.dateConverted + " * " + texts[texts.count - 1])
 
       let infoLabel = LabelModel()
          .set_numberOfLines(0)
-         .set_color(
+         .set(Design.state.label.caption)
+         .set_textColor(
             Int.random(in: 0 ..< 2) == 1
                ? Design.color.text
                : Int.random(in: 0 ..< 2) == 1
                ? Design.color.textBrand
                : Design.color.success)
-         .set_font(Design.font.caption)
          .set_text(
             "@" + feed.transaction.recipient + " \(Int.random(in: 0 ..< 2) == 1 ? "получил" : "отправил") \(feed.transaction.amount) спасибок от \(feed.transaction.sender)" + "\n"
          )
@@ -172,8 +172,8 @@ final class FeedScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>, A
 
    private var randomButton: LabelModel {
       LabelModel()
-         .set_font(Design.font.caption2)
-         .set_color(Design.color.textInfo)
+         .set(Design.state.label.caption2)
+         .set_textColor(Design.color.textInfo)
          .set_backColor(Design.color.backgroundInfoSecondary)
          .set_cornerRadius(Design.params.cornerRadiusMini)
          .set_height(26)
@@ -198,7 +198,7 @@ final class ReactionButton<Design: DSP>: Combos<SComboMR<ImageViewModel, LabelMo
 
       setAll {
          $0.set_size(.square(Grid.x16.value))
-         $1.set_font(Design.font.caption2)
+         $1.set(Design.state.label.caption2)
       }
       set_spacing(8)
       set_backColor(Design.color.backgroundInfoSecondary)

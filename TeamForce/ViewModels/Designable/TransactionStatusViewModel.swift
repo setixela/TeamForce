@@ -55,12 +55,12 @@ final class TransactionStatusViewModel<Design: DSP>: BaseViewModel<StackViewExte
       .set(.numberOfLines(1))
       .set(.alignment(.center))
       .set(.padding(.init(top: 22, left: 0, bottom: 26, right: 0)))
-      .set(.color(Design.color.activeButtonBack))
+      .set(.textColor(Design.color.activeButtonBack))
 
    let reasonLabel = Design.label.body1
       .set(.alignment(.center))
       .set(.numberOfLines(5))
-      .set(.color(UIColor.lightGray))
+      .set(.textColor(UIColor.lightGray))
 
    let recipientLabel = Design.label.body1
       .set(.alignment(.center))

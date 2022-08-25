@@ -14,9 +14,9 @@ final class TransactViewModels<Design: DSP>: Designable {
    lazy var balanceInfo = Combos<SComboMD<LabelModel, CurrencyLabelDT<Design>>>()
       .setAll { title, _ in
          title
-            .set_font(Design.font.caption)
+            .set(Design.state.label.caption)
             .set_text("Доступно")
-            .set_color(Design.color.iconInvert)
+            .set_textColor(Design.color.iconInvert)
       }
       .set_alignment(.leading)
       .set_height(Grid.x90.value)
@@ -49,7 +49,7 @@ final class TransactViewModels<Design: DSP>: Designable {
    lazy var reasonTextView = TextViewModel()
       .set(.padding(Design.params.contentPadding))
       .set(.placeholder(TextBuilder.title.reasonPlaceholder))
-      .set(.font(Design.font.body1))
+      .set(Design.state.label.body1)
       .set_backColor(Design.color.background)
       .set_borderColor(Design.color.boundary)
       .set_borderWidth(Design.params.borderWidth)
@@ -93,12 +93,12 @@ extension TransactViewModels {
                         .set_url(urlString)
                      username
                         .set_text("\(name) \(surname)")
-                        .set_color(Design.color.text)
+                        .set_textColor(Design.color.text)
                         .set_padLeft(Grid.x14.value)
                         .set_height(Grid.x24.value)
                      nickname
-                        .set_font(Design.font.caption)
-                        .set_color(Design.color.textSecondary)
+                        .set(Design.state.label.caption)
+                        .set_textColor(Design.color.textSecondary)
                         .set_text(thName)
                         .set_padLeft(Grid.x14.value)
                         //.set_height(Grid.x20.value)

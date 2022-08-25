@@ -15,7 +15,7 @@ final class TripleStacksBrandedVM<Design: DesignProtocol>:
    Designable
 {
    lazy var header = Design.label.headline5
-      .set_color(Design.color.textInvert)
+      .set_textColor(Design.color.textInvert)
 
    var headerStack: StackModel { models.main }
    var bodyStack: StackModel { models.down.subModel }

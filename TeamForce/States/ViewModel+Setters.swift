@@ -126,29 +126,6 @@ extension ViewModelProtocol where Self: Stateable {
    }
 }
 
-struct Shadow {
-   let radius: CGFloat
-   let offset: CGPoint
-   let color: UIColor
-   let opacity: CGFloat
-
-   init(
-      radius: CGFloat = 1,
-      offset: CGPoint = .zero,
-      color: UIColor = .label,
-      opacity: CGFloat = 1
-   ) {
-      self.radius = radius
-      self.offset = offset
-      self.color = color
-      self.opacity = opacity
-   }
-
-   static var noShadow: Shadow {
-      Shadow(radius: 0, offset: .zero, color: .clear, opacity: 0)
-   }
-}
-
 extension ViewModelProtocol where Self: Stateable, View: StackViewExtended {
    @discardableResult func set_distribution(_ value: StackViewExtended.Distribution) -> Self {
       view.distribution = value
@@ -243,7 +220,7 @@ extension ViewModelProtocol where Self: Stateable, View: PaddingLabel {
       return self
    }
 
-   @discardableResult func set_color(_ value: UIColor) -> Self {
+   @discardableResult func set_textColor(_ value: UIColor) -> Self {
       view.textColor = value
       return self
    }
@@ -443,6 +420,43 @@ extension ViewModelProtocol where Self: Stateable, View: PaddingTextField {
 
    @discardableResult func set_onlyDigitsMode() -> Self {
       view.isOnlyDigitsMode = true
+      return self
+   }
+}
+
+extension ViewModelProtocol where Self: Stateable, View: UITextView {
+   @discardableResult func set_text(_ value: String) -> Self {
+      view.text = value
+      return self
+   }
+
+   @discardableResult func set_placeholder(_ value: String) -> Self {
+      view.text = value
+      return self
+   }
+
+   @discardableResult func set_font(_ value: UIFont) -> Self {
+      view.font = value
+      return self
+   }
+
+   @discardableResult func set_padding(_ value: UIEdgeInsets) -> Self {
+      view.textContainerInset = value
+      return self
+   }
+
+   @discardableResult func set_alignment(_ value: NSTextAlignment) -> Self {
+      view.textAlignment = value
+      return self
+   }
+
+   @discardableResult func set_textColor(_ value: UIColor) -> Self {
+      view.textColor = value
+      return self
+   }
+
+   @discardableResult func set_keyboardType(_ value: UIKeyboardType) -> Self {
+      view.keyboardType = value
       return self
    }
 }

@@ -21,14 +21,16 @@ class BadgedViewModel<VM: VMPS, Design: DSP>: BVM<StackViewExtended>, Designable
    let mainModel: VM = .init()
 
    let topBadge: LabelModel = .init()
+      .set(Design.state.label.caption)
       .set(.text("Title label"))
       .set(.backColor(Design.color.background))
-      .set(.font(Design.font.caption))
+
 
    let bottomBadge: LabelModel = .init()
+      .set(Design.state.label.caption)
       .set(.text("Error label"))
       .set(.backColor(Design.color.background))
-      .set(.font(Design.font.caption))
+
 
    override func start() {
       set(.axis(.vertical))
@@ -54,9 +56,9 @@ class BadgedTopViewModel<VM: VMPS, Asset: AssetProtocol>: BVM<StackViewExtended>
    let mainModel: VM = .init()
 
    let topBadge: LabelModel = .init()
+      .set(Design.state.label.caption)
       .set(.text("Title label"))
       .set(.backColor(Design.color.background))
-      .set(.font(Design.font.caption))
 
    override func start() {
       set(.axis(.vertical))
@@ -84,7 +86,7 @@ class BadgedBottomViewModel<VM: VMPS, Asset: AssetProtocol>: BVM<StackViewExtend
    let bottomBadge: LabelModel = .init()
       .set(.text("Title label"))
       .set(.backColor(Design.color.background))
-      .set(.font(Design.font.caption))
+      .set(Design.state.label.caption)
 
    override func start() {
       set(.axis(.vertical))

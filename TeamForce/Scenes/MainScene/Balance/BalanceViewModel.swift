@@ -27,7 +27,7 @@ final class BalanceViewModel<Asset: AssetProtocol>: BaseViewModel<StackViewExten
       .set {
          $0.label
             .set_text(Text.title.selectPeriod)
-            .set_color(Design.color.textSecondary)
+            .set_textColor(Design.color.textSecondary)
          $0.iconModel
             .set_image(Design.icon.calendarLine)
             .set_imageTintColor(Design.color.iconBrand)
@@ -74,7 +74,7 @@ final class BalanceViewModel<Asset: AssetProtocol>: BaseViewModel<StackViewExten
       } setRight: {
          $0
             .set_text("Аннулировано")
-            .set_color(Design.color.textError)
+            .set_textColor(Design.color.textError)
       } setDown: {
          $0
             .set_text("0")
@@ -89,7 +89,7 @@ final class BalanceViewModel<Asset: AssetProtocol>: BaseViewModel<StackViewExten
       } setRight: {
          $0
             .set_text("На согласовании")
-            .set_color(Design.color.success)
+            .set_textColor(Design.color.success)
       } setDown: {
          $0
             .set_text("0")

@@ -17,12 +17,12 @@ class BadgeModel<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>, Asseta
 
     internal let titleLabel = LabelModel()
         .set(.text("Title label"))
-        .set(.font(Design.font.caption))
+        .set(Design.state.label.caption)
         .set(.hidden(true))
 
     internal let errorLabel = LabelModel()
         .set(.text("Error label"))
-        .set(.font(Design.font.caption))
+        .set(Design.state.label.caption)
         .set(.hidden(true))
 
     override func start() {
@@ -53,15 +53,15 @@ class BadgeModel<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>, Asseta
             errorLabel
                 .set(.hidden(true))
             titleLabel
-                .set(.color(.black))
+                .set(.textColor(.black))
             textFieldModel
                 .set(.borderColor(.lightGray.withAlphaComponent(0.4)))
         case .error:
             errorLabel
                 .set(.hidden(false))
-                .set(.color(Design.color.boundaryError))
+                .set(.textColor(Design.color.boundaryError))
             titleLabel
-                .set(.color(Design.color.boundaryError))
+                .set(.textColor(Design.color.boundaryError))
             textFieldModel
                 .set(.borderColor(Design.color.boundaryError))
         }

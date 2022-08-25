@@ -25,14 +25,14 @@ final class ProfileScene<Asset: AssetProtocol>: BaseSceneModel<
             .set(.size(.square(52)))
       } setRight: { fullName in
          fullName
-            .set_color(Design.color.text)
+            .set_textColor(Design.color.text)
             .set_padTop(-8)
             .set_padLeft(12)
       } setDown: { telegram in
          telegram
-            .set_color(Design.color.textBrand)
+            .set_textColor(Design.color.textBrand)
             .set_padLeft(12)
-            .set_font(Design.font.body2)
+            .set(Design.state.label.body2)
       }
       .set_alignment(.center)
       .set_distribution(.fill)
@@ -46,7 +46,7 @@ final class ProfileScene<Asset: AssetProtocol>: BaseSceneModel<
       .set_arrangedModels([
          LabelModel()
             .set_text("ИНФОРМАЦИЯ")
-            .set_font(Design.font.caption2),
+            .set(Design.state.label.caption2),
          SettingsTitleBodyDT<Design>()
             .setAll {
                $0.set_text("Корпоративная почта")
@@ -63,7 +63,7 @@ final class ProfileScene<Asset: AssetProtocol>: BaseSceneModel<
       .set_arrangedModels([
          LabelModel()
             .set_text("МЕСТО РАБОТЫ")
-            .set_font(Design.font.caption2),
+            .set(Design.state.label.caption2),
          SettingsTitleBodyDT<Design>()
             .setAll {
                $0.set_text("Компания")
@@ -159,12 +159,12 @@ final class SettingsTitleBodyDT<Design: DSP>: TitleSubtitleY<Design> {
       setAll { main, down in
          main
             .set_alignment(.left)
-            .set_font(Design.font.caption)
-            .set_color(Design.color.textSecondary)
+            .set(Design.state.label.caption)
+            .set_textColor(Design.color.textSecondary)
          down
             .set_alignment(.left)
-            .set_font(Design.font.default)
-            .set_color(Design.color.text)
+            .set(Design.state.label.default)
+            .set_textColor(Design.color.text)
       }
    }
 }

@@ -24,17 +24,17 @@ final class SettingsViewModel<Asset: AssetProtocol>: BaseViewModel<StackViewExte
       .setMain { header in
          header
             .set_text("Общие")
-            .set_color(Design.color.textContrastSecondary)
+            .set_textColor(Design.color.textContrastSecondary)
       } setDown: {
          $0
             .setMain {
                $0
                   .set_text("Язык")
-                  .set_color(Design.color.text)
+                  .set_textColor(Design.color.text)
             } setRight: {
                $0
                   .set_text("Русский")
-                  .set_color(Design.color.textContrastSecondary)
+                  .set_textColor(Design.color.textContrastSecondary)
             }
             .set_height(Grid.x60.value)
 
@@ -43,11 +43,11 @@ final class SettingsViewModel<Asset: AssetProtocol>: BaseViewModel<StackViewExte
             .setMain {
                $0
                   .set_text("Тема")
-                  .set_color(Design.color.text)
+                  .set_textColor(Design.color.text)
             } setRight: {
                $0
                   .set_text("Как в системе")
-                  .set_color(Design.color.textContrastSecondary)
+                  .set_textColor(Design.color.textContrastSecondary)
             }
             .set_distribution(.equalCentering)
             .set_height(Grid.x60.value)
@@ -60,17 +60,17 @@ final class SettingsViewModel<Asset: AssetProtocol>: BaseViewModel<StackViewExte
       .setMain { header in
          header
             .set_text("Помощь")
-            .set_color(Design.color.textContrastSecondary)
+            .set_textColor(Design.color.textContrastSecondary)
       } setDown: {
          $0
             .setMain {
                $0
                   .set_text("Обратная связь")
-                  .set_color(Design.color.text)
+                  .set_textColor(Design.color.text)
             } setRight: {
                $0
                   .set_text(">")
-                  .set_color(Design.color.textContrastSecondary)
+                  .set_textColor(Design.color.textContrastSecondary)
             }
             .set_height(Grid.x60.value)
 
@@ -79,11 +79,11 @@ final class SettingsViewModel<Asset: AssetProtocol>: BaseViewModel<StackViewExte
             .setMain {
                $0
                   .set_text("О приложении")
-                  .set_color(Design.color.text)
+                  .set_textColor(Design.color.text)
             } setRight: {
                $0
                   .set_text(">")
-                  .set_color(Design.color.textContrastSecondary)
+                  .set_textColor(Design.color.textContrastSecondary)
             }
             .set_distribution(.equalCentering)
             .set_height(Grid.x60.value)

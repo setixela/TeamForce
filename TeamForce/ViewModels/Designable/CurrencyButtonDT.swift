@@ -25,7 +25,7 @@ final class CurrencyButtonDT<Design: DSP>: CurrencyLabelDT<Design>, Communicable
 
    override func start() {
       setAll {
-         $0.set_font(Design.font.body2)
+         $0.set(Design.state.label.body2)
          $1.set_width(Grid.x14.value)
       }
 
@@ -34,12 +34,12 @@ final class CurrencyButtonDT<Design: DSP>: CurrencyLabelDT<Design>, Communicable
       set_padding(.sideOffset(Grid.x10.value))
       onModeChanged(\.normal) { [weak self] in
          self?.set_backColor(Design.color.backgroundBrandSecondary)
-         self?.label.set_color(Design.color.textError)
+         self?.label.set_textColor(Design.color.textError)
          self?.models.right.set_imageTintColor(Design.color.textError)
       }
       onModeChanged(\.selected) { [weak self] in
          self?.set_backColor(Design.color.textError)
-         self?.label.set_color(Design.color.backgroundSecondary)
+         self?.label.set_textColor(Design.color.backgroundSecondary)
          self?.models.right.set_imageTintColor(Design.color.backgroundSecondary)
       }
       setMode(\.normal)

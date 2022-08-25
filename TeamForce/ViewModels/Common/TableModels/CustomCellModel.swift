@@ -17,7 +17,7 @@ final class CustomCellModel<Design: DesignProtocol>: BaseViewModel<StackViewExte
     Designable
 {
     let title = LabelModel()
-        .set(.font(Design.font.caption))
+        .set(Design.state.label.caption)
     let label = LabelModel()
 
     required init() {

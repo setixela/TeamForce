@@ -25,7 +25,7 @@ class TitleSubtitleCaptionX<Design: DesignProtocol>:
             .set(Design.state.label.subtitle)
             .set(.numberOfLines(0))
             .set(.alignment(.center))
-            .set(.color(Design.color.textSecondary))
+            .set(.textColor(Design.color.textSecondary))
       } setRight2: {
          $0
             .set(Design.state.label.caption)

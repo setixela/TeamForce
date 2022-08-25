@@ -15,8 +15,9 @@ final class TitleBodySwitcherDT<Design: DSP>: TitleBodySwitcherY {
 
       setAll { title, _ in
          title
-            .set_color(Design.color.textSecondary)
-            .set_font(Design.font.caption)
+            .set(Design.state.label.caption)
+            .set_textColor(Design.color.textSecondary)
+
       }
    }
 }

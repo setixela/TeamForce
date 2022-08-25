@@ -61,7 +61,7 @@
 //   private lazy var reasonTextView = TextViewModel<Design>()
 //      .set(.padding(.init(top: 16, left: 16, bottom: 16, right: 16)))
 //      .set(.placeholder(TextBuilder.title.reasonPlaceholder))
-//      .set(.font(Design.font.body1))
+//      .set(Design.state.label.body1))
 //      .set_backColor(UIColor.clear)
 //      .set_borderColor(.lightGray.withAlphaComponent(0.4))
 //      .set_borderWidth(1.0)

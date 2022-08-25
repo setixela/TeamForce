@@ -121,7 +121,7 @@ extension ViewModelProtocol where Self: Stateable, View: StackViewExtended {
 enum LabelState {
    case text(String)
    case font(UIFont)
-   case color(UIColor)
+   case textColor(UIColor)
    case numberOfLines(Int)
    case alignment(NSTextAlignment)
    // Padding
@@ -139,8 +139,8 @@ extension ViewModelProtocol where Self: Stateable, View: PaddingLabel {
          set_text(value)
       case .font(let value):
          set_font(value)
-      case .color(let value):
-         set_color(value)
+      case .textColor(let value):
+         set_textColor(value)
       case .numberOfLines(let value):
          set_numberOfLines(value)
       case .alignment(let value):
@@ -203,7 +203,6 @@ enum ButtonState {
    case borderColor(UIColor)
 
    case imageInset(UIEdgeInsets)
-   //myLikesButton.imageEdgeInsets = UIEdgeInsets(top: 30, left: 30, bottom: 30, right: 30)
 }
 
 extension ViewModelProtocol where Self: Stateable, View: ButtonExtended {
@@ -303,27 +302,81 @@ extension ViewModelProtocol where Self: Stateable, View: PaddingTextField {
          set_zPosition(value)
       case .placing(let value):
          set_placing(value)
-
       }
    }
 }
 
-// MARK: - Default conforms
+extension ViewModelProtocol where Self: Stateable, View: PaddingTextField {
+   func applyState(_ state: LabelState) {
+      switch state {
+      case .text(let value):
+         set_text(value)
+      case .font(let value):
+         set_font(value)
+      case .textColor(let value):
+         set_textColor(value)
+      case .numberOfLines:
+         break
+      case .alignment(let value):
+         set_alignment(value)
+      case .padding(let value):
+         set_padding(value)
+      case .padLeft:
+         break
+      case .padRight:
+         break
+      case .padUp:
+         break
+      case .padBottom:
+         break
+      }
+   }
+}
 
-// extension ViewModelProtocol where Self: Stateable {
-//   typealias State = ViewState
-// }
+// MARK: - Text View
 
-// extension ViewModelProtocol where Self: Stateable2, View: StackViewExtended {
-//   typealias State = ViewState
-//   typealias State2 = StackState
-// }
-//
-// extension ViewModelProtocol where Self: Stateable, View: StackViewExtended {
-//   typealias State = StackState
-// }
+extension ViewModelProtocol where Self: Stateable, View: UITextView {
+   func applyState(_ state: TextViewState) {
+      switch state {
+      case .text(let string):
+         set_text(string)
+      case .placeholder(let string):
+         set_text(string)
+      case .font(let font):
+         set_font(font)
+      case .padding(let value):
+         set_padding(value)
+      case .height(let value):
+         set_height(value)
+      case .width(let value):
+         set_width(value)
+      }
+   }
+}
 
-// extension Combos: Stateable2 {
-//   typealias State = ViewState
-//   typealias State2 = StackState
-// }
+extension ViewModelProtocol where Self: Stateable, View: UITextView {
+   func applyState(_ state: LabelState) {
+      switch state {
+      case .text(let value):
+         set_text(value)
+      case .font(let value):
+         set_font(value)
+      case .textColor(let value):
+         set_textColor(value)
+      case .numberOfLines:
+         break
+      case .alignment(let value):
+         set_alignment(value)
+      case .padding(let value):
+         set_padding(value)
+      case .padLeft:
+         break
+      case .padRight:
+         break
+      case .padUp:
+         break
+      case .padBottom:
+         break
+      }
+   }
+}

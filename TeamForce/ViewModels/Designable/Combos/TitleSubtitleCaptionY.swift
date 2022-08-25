@@ -25,7 +25,7 @@ class TitleSubtitleCaptionY<Design: DesignProtocol>:
             .set_numberOfLines(0)
             .set_alignment(.center)
             .set_padTop(Design.params.titleSubtitleOffset)
-            .set_color(Design.color.textSecondary)
+            .set_textColor(Design.color.textSecondary)
       } setDown2: {
          $0
             .set(Design.state.label.caption)

@@ -28,10 +28,10 @@ final class HistoryCellModel<Design: DSP>:
             .setAll { username, status in
                username
                   .set_padBottom(10)
-                  .set_font(Design.font.body1)
+                  .set(Design.state.label.body1)
                   .set_alignment(.left)
                status
-                  .set_color(Design.color.textInvert)
+                  .set_textColor(Design.color.textInvert)
                   .set_alignment(.left)
                   .set_height(Design.params.cornerRadiusSmall * 2)
                   .set_cornerRadius(Design.params.cornerRadiusSmall)
@@ -40,7 +40,7 @@ final class HistoryCellModel<Design: DSP>:
             .set_alignment(.trailing)
             .setAll { sumText, cancelButton in
                sumText
-                  .set_font(Design.font.body3)
+                  .set(Design.state.label.body3)
                   .set_alignment(.right)
                cancelButton
                   .set_size(.square(32))
