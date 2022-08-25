@@ -22,7 +22,6 @@ final class FeedScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>, A
    private lazy var filterButtons = FeedFilterButtons<Design>()
 
    private lazy var useCase = Asset.apiUseCase
-   
 
    override func start() {
       set_axis(.vertical)
@@ -32,8 +31,7 @@ final class FeedScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>, A
          // Spacer(88),
       ])
 
-      useCase.getFeed.work
-         .retainBy(useCase.retainer)
+      useCase.getFeed
          .doAsync()
          .onSuccess { [weak self] in
             self?.feedTableModel.set(.items($0 + [SpacerItem(size: Grid.x64.value)]))
@@ -68,8 +66,8 @@ final class FeedScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>, A
             Int.random(in: 0 ..< 2) == 1
                ? Design.color.text
                : Int.random(in: 0 ..< 2) == 1
-                  ? Design.color.textBrand
-                  : Design.color.success)
+               ? Design.color.textBrand
+               : Design.color.success)
          .set_font(Design.font.caption)
          .set_text(
             "@" + feed.transaction.recipient + " \(Int.random(in: 0 ..< 2) == 1 ? "получил" : "отправил") \(feed.transaction.amount) спасибок от \(feed.transaction.sender)" + "\n"
@@ -231,6 +229,7 @@ final class FeedFilterButtons<Design: DSP>: StackModel, Designable {
       .onEvent(\.didTap) { [weak self] in
          self?.select(1)
       }
+
    lazy var buttonPublic = SecondaryButtonDT<Design>()
       .set_title("Публичные")
       .onEvent(\.didTap) { [weak self] in

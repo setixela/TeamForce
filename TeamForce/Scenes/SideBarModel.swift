@@ -87,7 +87,7 @@ final class SideBarModel<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>
 
 extension SideBarModel {
    private func configureLoadProfileUseCase() {
-      useCase.loadProfile.work
+      useCase.loadProfile
          .onSuccess { [weak self] user in
             self?.userModel.userName.set(.text(user.profile.tgName))
             self?.userModel.nickName.set(.text(user.profile.tgId))
@@ -100,7 +100,7 @@ extension SideBarModel {
    private func configureLogoutUseCase() {
       item4
          .onEvent(\.didTap)
-         .doNext(usecase: useCase.logout)
+         .doNext(work: useCase.logout)
          .onSuccess {
             UserDefaults.standard.setIsLoggedIn(value: false)
             Asset.router?.route(\.digitalThanks, navType: .present, payload: ())

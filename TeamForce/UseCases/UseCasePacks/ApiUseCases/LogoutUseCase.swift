@@ -9,15 +9,15 @@ import Foundation
 import ReactiveWorks
 
 struct LogoutUseCase: UseCaseProtocol {
-   let safeStringStorage: StringStorageWorker
+   let loadToken: LoadTokenUseCase.WRK
    let logoutApiModel: LogoutApiWorker
 
    var work: Work<Void, Void> {
       Work<Void, Void> { work in
-         safeStringStorage
-            .doAsync("token") // TODO: - Token key input
+         loadToken
+            .doAsync()
             .onFail {
-               work.fail(()) // TODO: - Error
+               work.fail(())
             }
             .doMap {
                TokenRequest(token: $0)
@@ -27,7 +27,7 @@ struct LogoutUseCase: UseCaseProtocol {
                work.success(result: ())
             }
             .onFail {
-               work.fail(()) // TODO: - Error
+               work.fail(())
             }
       }
    }

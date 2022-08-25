@@ -73,13 +73,13 @@ final class TransactDeatilViewModel<Asset: AssetProtocol>: BaseSceneModel<
 
    // MARK: - Services
 
-   private lazy var loadProfileUseCase = Asset.apiUseCase.loadProfile.work
+   private lazy var apiUseCase = Asset.apiUseCase
    private lazy var currentUser: String = ""
 
    override func start() {
       weak var wS = self
       configure()
-      loadProfileUseCase
+      apiUseCase.loadProfile
          .doAsync()
          .onSuccess { user in
             wS?.currentUser = user.profile.tgName

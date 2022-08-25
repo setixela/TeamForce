@@ -6,12 +6,12 @@
 //
 
 import Foundation
-import ReactiveWorks
 import ImageIO
+import ReactiveWorks
 
-protocol TransactWorksProtocol: SceneWorks {
+protocol TransactWorksProtocol: TempStorage {
    // api works
-   var loadBalance: Work<Void, Balance> { get }
+   var loadBalance: VoidWork<Balance> { get }
    var searchUser: Work<String, [FoundUser]> { get }
    var sendCoins: VoidWork<(recipient: String, info: SendCoinRequest)> { get }
    var getUserList: Work<Void, [FoundUser]> { get }
@@ -53,7 +53,7 @@ final class TransactWorks<Asset: AssetProtocol>: BaseSceneWorks<TransactWorks.Te
 
    // MARK: - Works
 
-   lazy var loadBalance = apiUseCase.loadBalance.work
+   var loadBalance: VoidWork<Balance> { apiUseCase.loadBalance }
 
    lazy var loadTokens = Work<Void, Void> { [weak self] work in
       self?.apiUseCase.safeStringStorage
@@ -73,102 +73,109 @@ final class TransactWorks<Asset: AssetProtocol>: BaseSceneWorks<TransactWorks.Te
          }
    }
 
-   lazy var searchUser = Work<String, [FoundUser]> { [weak self] work in
+   var searchUser: Work<String, [FoundUser]> {
+      .init { [weak self] work in
+         let request = SearchUserRequest(
+            data: work.unsafeInput,
+            token: Self.store.tokens.token,
+            csrfToken: Self.store.tokens.csrf
+         )
 
-      let request = SearchUserRequest(
-         data: work.unsafeInput,
-         token: Self.store.tokens.token,
-         csrfToken: Self.store.tokens.csrf
-      )
-
-      self?.apiUseCase.userSearch.work
-         .retainBy(self?.retainer)
-         .doAsync(request)
-         .onSuccess { result in
-            Self.store.foundUsers = result
-            work.success(result: result)
-         }.onFail {
-            work.fail(())
-         }
+         self?.apiUseCase.userSearch
+            .doAsync(request)
+            .onSuccess { result in
+               Self.store.foundUsers = result
+               work.success(result: result)
+            }.onFail {
+               work.fail(())
+            }
+      }
    }
 
-   lazy var sendCoins = VoidWork<(recipient: String, info: SendCoinRequest)> { [weak self] work in
+   var sendCoins: VoidWork<(recipient: String, info: SendCoinRequest)> {
+      .init { [weak self] work in
+         let request = SendCoinRequest(
+            token: Self.store.tokens.token,
+            csrfToken: Self.store.tokens.csrf,
+            recipient: Self.store.recipientID,
+            amount: Self.store.inputAmountText,
+            reason: Self.store.inputReasonText,
+            isAnonymous: Self.store.isAnonymous
+         )
 
-      let request = SendCoinRequest(
-         token: Self.store.tokens.token,
-         csrfToken: Self.store.tokens.csrf,
-         recipient: Self.store.recipientID,
-         amount: Self.store.inputAmountText,
-         reason: Self.store.inputReasonText,
-         isAnonymous: Self.store.isAnonymous
-      )
-
-      self?.apiUseCase.sendCoin.work
-         .retainBy(self?.retainer)
-         .doAsync(request)
-         .onSuccess {
-            let tuple = (Self.store.recipientUsername, request)
-            work.success(result: tuple)
-         }.onFail { (_: String) in
-            work.fail(())
-         }
+         self?.apiUseCase.sendCoin
+            .doAsync(request)
+            .onSuccess {
+               let tuple = (Self.store.recipientUsername, request)
+               work.success(result: tuple)
+            }.onFail { (_: String) in
+               work.fail(())
+            }
+      }
    }
 
-   lazy var getUserList = Work<Void, [FoundUser]> { [weak self] work in
-      self?.apiUseCase.getUsersList.work
-         .retainBy(self?.retainer)
-         .doAsync()
-         .onSuccess { result in
-            Self.store.foundUsers = result
-            work.success(result: result)
-         }.onFail {
-            work.fail(())
-         }
+   var getUserList: Work<Void, [FoundUser]> {
+      .init { [weak self] work in
+         self?.apiUseCase.getUsersList
+            .doAsync()
+            .onSuccess { result in
+               Self.store.foundUsers = result
+               work.success(result: result)
+            }.onFail {
+               work.fail(())
+            }
+      }
    }
 
-   lazy var mapIndexToUser = Work<Int, FoundUser> { work in
+   var mapIndexToUser: Work<Int, FoundUser> {
+      .init { work in
 
-      // TODO: - 2d sections mapping to 1d array error
-      let user = Self.store.foundUsers[work.unsafeInput]
+         // TODO: - 2d sections mapping to 1d array error
+         let user = Self.store.foundUsers[work.unsafeInput]
 
-      Self.store.recipientUsername = user.name
-      Self.store.recipientID = user.userId
-      work.success(result: user)
+         Self.store.recipientUsername = user.name
+         Self.store.recipientID = user.userId
+         work.success(result: user)
+      }
    }
 
-   lazy var coinInputParsing = Work<String, String> { [weak self] work in
-      self?.coinInputParser.work
-         .retainBy(self?.retainer)
-         .doAsync(work.input)
-         .onSuccess {
-            Self.store.inputAmountText = $0
-            Self.store.isCorrectCoinInput = true
-            work.success(result: $0)
-         }
-         .onFail { (text: String) in
-            Self.store.inputAmountText = ""
-            Self.store.isCorrectCoinInput = false
-            work.fail(text)
-         }
+   var coinInputParsing: Work<String, String> {
+      .init { [weak self] work in
+         self?.coinInputParser.work
+            .retainBy(self?.retainer)
+            .doAsync(work.input)
+            .onSuccess {
+               Self.store.inputAmountText = $0
+               Self.store.isCorrectCoinInput = true
+               work.success(result: $0)
+            }
+            .onFail { (text: String) in
+               Self.store.inputAmountText = ""
+               Self.store.isCorrectCoinInput = false
+               work.fail(text)
+            }
+      }
    }
 
-   lazy var reasonInputParsing = Work<String, String> { [weak self] work in
-      self?.reasonInputParser.work
-         .retainBy(self?.retainer)
-         .doAsync(work.input)
-         .onSuccess {
-            Self.store.inputReasonText = $0
-            Self.store.isCorrectReasonInput = true
-            work.success(result: $0)
-         }
-         .onFail { (text: String) in
-            Self.store.inputReasonText = ""
-            Self.store.isCorrectReasonInput = false
-            work.fail(text)
-         }
+   var reasonInputParsing: Work<String, String> {
+      .init { [weak self] work in
+         self?.reasonInputParser.work
+            .retainBy(self?.retainer)
+            .doAsync(work.input)
+            .onSuccess {
+               Self.store.inputReasonText = $0
+               Self.store.isCorrectReasonInput = true
+               work.success(result: $0)
+            }
+            .onFail { (text: String) in
+               Self.store.inputReasonText = ""
+               Self.store.isCorrectReasonInput = false
+               work.fail(text)
+            }
+      }
    }
 
-   lazy var reset = VoidWork<Void> { [weak self] work in
+   lazy var reset = VoidWork<Void> { work in
       Self.store.inputAmountText = ""
       Self.store.inputReasonText = ""
       Self.store.isCorrectCoinInput = false
@@ -176,13 +183,13 @@ final class TransactWorks<Asset: AssetProtocol>: BaseSceneWorks<TransactWorks.Te
       Self.store.isAnonymous = false
       work.success(result: ())
    }
-   
-   lazy var anonymousOn = VoidWork<Void> { [weak self] work in
+
+   lazy var anonymousOn = VoidWork<Void> { work in
       Self.store.isAnonymous = true
       work.success(result: ())
    }
-   
-   lazy var anonymousOff = VoidWork<Void> { [weak self] work in
+
+   lazy var anonymousOff = VoidWork<Void> { work in
       Self.store.isAnonymous = false
       work.success(result: ())
    }
@@ -194,7 +201,6 @@ final class TransactWorks<Asset: AssetProtocol>: BaseSceneWorks<TransactWorks.Te
          Self.store.inputAmountText = input.0
          Self.store.isCorrectCoinInput = input.1
          work.success(result: ())
-
       }
       .retainBy(retainer) // hmm
    }
@@ -209,7 +215,7 @@ final class TransactWorks<Asset: AssetProtocol>: BaseSceneWorks<TransactWorks.Te
       .retainBy(retainer)
    }
 
-   lazy var isCorrect = Work<Void, Void> { [weak self] work in
+   lazy var isCorrect = Work<Void, Void> { work in
       if Self.store.isCorrectReasonInput, Self.store.isCorrectCoinInput {
          work.success(result: ())
       } else {

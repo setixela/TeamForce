@@ -14,13 +14,13 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
    DoubleStacksBrandedVM<Asset.Design>,
    Asset,
    Void
->, Scenaryable {
+>, Scenarible {
    //
 
    private lazy var viewModels = LoginViewModels<Asset>()
 
    lazy var scenario = LoginScenario(
-      works: LoginBackstage<Asset>(),
+      works: LoginWorks<Asset>(),
       stateDelegate: viewModels.setState,
       events: LoginScenarioEvents(
          userNameStringEvent: viewModels.userNameInputModel.textField.onEvent(\.didEditingChanged),

@@ -32,59 +32,68 @@ final class HistoryWorks<Asset: AssetProtocol>: BaseSceneWorks<HistoryWorks.Temp
 
    // MARK: - Works
 
-   lazy var getTransactions = Work<Void, [Transaction]>() { [weak self] work in
-      self?.useCase.getTransactions.work
-         .retainBy(self?.retainer)
-         .doAsync()
-         .onSuccess {
-            Self.store.transactions = $0
-            work.success(result: $0)
-         }
-         .onFail {
-            work.fail(())
-         }
-   }
-
-   lazy var getTransactionById = Work<Int, Transaction>() { [weak self] work in
-      self?.useCase.getTransactionById.work
-         .retainBy(self?.retainer)
-         .doAsync()
-         .onSuccess {
-            Self.store.currentTransaction = $0
-            work.success(result: $0)
-         }
-         .onFail {
-            work.fail(())
-         }
-   }
-   
-   lazy var getTransactionByRowNumber = Work<(IndexPath, Int), Transaction>() { [weak self] work in
-      
-      let segmentId = Self.store.segmentId
-      var filtered: [Transaction] = []
-      if segmentId == 0 { filtered = Self.filteredAll() }
-      else if segmentId == 1 { filtered = Self.filteredRecieved() }
-      else if segmentId == 2 { filtered = Self.filteredSent() }
-      
-      if let index = work.input?.1 {
-         let transaction = filtered[index]
-         work.success(result: transaction)
-      } else {
-         work.fail(())
+   var getTransactions: Work<Void, [Transaction]> {
+      .init { [weak self] work in
+         self?.useCase.getTransactions
+            .doAsync()
+            .onSuccess {
+               Self.store.transactions = $0
+               work.success(result: $0)
+            }
+            .onFail {
+               work.fail(())
+            }
       }
+      .retainBy(retainer)
    }
 
-   lazy var loadProfile = Work<Void, Void>() { [weak self] work in
-      self?.useCase.loadProfile.work
-         .retainBy(self?.retainer)
-         .doAsync()
-         .onSuccess {
-            Self.store.currentUser = $0.profile.tgName
-            work.success(result: ())
-         }
-         .onFail {
+   var getTransactionById: Work<Int, Transaction> {
+      .init { [weak self] work in
+         self?.useCase.getTransactionById
+            .doAsync()
+            .onSuccess {
+               Self.store.currentTransaction = $0
+               work.success(result: $0)
+            }
+            .onFail {
+               work.fail(())
+            }
+      }
+      .retainBy(retainer)
+   }
+
+   var getTransactionByRowNumber: Work<(IndexPath, Int), Transaction> {
+      .init { work in
+
+         let segmentId = Self.store.segmentId
+         var filtered: [Transaction] = []
+         if segmentId == 0 { filtered = Self.filteredAll() }
+         else if segmentId == 1 { filtered = Self.filteredRecieved() }
+         else if segmentId == 2 { filtered = Self.filteredSent() }
+
+         if let index = work.input?.1 {
+            let transaction = filtered[index]
+            work.success(result: transaction)
+         } else {
             work.fail(())
          }
+      }
+      .retainBy(retainer)
+   }
+
+   var loadProfile: Work<Void, Void> {
+      .init { [weak self] work in
+         self?.useCase.loadProfile
+            .doAsync()
+            .onSuccess {
+               Self.store.currentUser = $0.profile.tgName
+               work.success(result: ())
+            }
+            .onFail {
+               work.fail(())
+            }
+      }
+      .retainBy(retainer)
    }
 
    var getAllTransactItems: Work<Void, [TableItemsSection]> {
@@ -92,9 +101,10 @@ final class HistoryWorks<Asset: AssetProtocol>: BaseSceneWorks<HistoryWorks.Temp
          let filtered = Self.filteredAll()
          let items = Self.convertToItems(filtered)
          Self.store.segmentId = 0
-         
+
          $0.success(result: items)
       }
+      .retainBy(retainer)
    }
 
    var getSentTransactItems: Work<Void, [TableItemsSection]> {
@@ -105,6 +115,7 @@ final class HistoryWorks<Asset: AssetProtocol>: BaseSceneWorks<HistoryWorks.Temp
 
          $0.success(result: items)
       }
+      .retainBy(retainer)
    }
 
    var getRecievedTransactItems: Work<Void, [TableItemsSection]> {
@@ -112,9 +123,10 @@ final class HistoryWorks<Asset: AssetProtocol>: BaseSceneWorks<HistoryWorks.Temp
          let filtered = Self.filteredRecieved()
          let items = Self.convertToItems(filtered)
          Self.store.segmentId = 1
-         
+
          $0.success(result: items)
       }
+      .retainBy(retainer)
    }
 }
 
@@ -148,8 +160,10 @@ private extension HistoryWorks {
    }
 
    static func convertToItems(_ filtered: [Transaction]) -> [TableItemsSection] {
+      guard !filtered.isEmpty else { return [] }
+
       var prevDay = ""
-      print("Filtered \(filtered[0])")
+
       return filtered
          .reduce([TableItemsSection]()) { result, transact in
             var state = TransactionItem.State.waiting
@@ -177,10 +191,7 @@ private extension HistoryWorks {
                state = .recieved
                authorPhoto = transact.sender?.senderPhoto
             }
-            
-            print(transactionStatus)
-            print(state)
-            //transact.isAnonymous
+
             let item = TransactionItem(
                state: state,
                sender: transact.sender ?? Sender(senderId: nil,

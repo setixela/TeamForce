@@ -13,7 +13,7 @@ import UIKit
 final class HistoryScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>,
    Assetable,
    Stateable,
-   Scenaryable
+   Scenarible
 {
    //
    typealias State = StackState

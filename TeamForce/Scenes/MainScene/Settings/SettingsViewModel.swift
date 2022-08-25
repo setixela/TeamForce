@@ -113,7 +113,7 @@ final class SettingsViewModel<Asset: AssetProtocol>: BaseViewModel<StackViewExte
 
       logoutButton
          .onEvent(\.didTap)
-         .doNext(usecase: useCase.logout)
+         .doNext(work: useCase.logout)
          .onSuccess {
             UserDefaults.standard.setIsLoggedIn(value: false)
             Asset.router?.route(\.digitalThanks, navType: .present, payload: ())

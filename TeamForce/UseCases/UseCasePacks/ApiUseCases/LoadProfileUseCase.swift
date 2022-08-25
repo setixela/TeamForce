@@ -9,13 +9,13 @@ import Foundation
 import ReactiveWorks
 
 struct LoadProfileUseCase: UseCaseProtocol {
-   let safeStringStorage: StringStorageWorker
+   let loadToken: LoadTokenUseCase.WRK
    let userProfileApiModel: ProfileApiWorker
 
    var work: Work<Void, UserData> {
       Work<Void, UserData> { work in
-         safeStringStorage
-            .doAsync("token")
+         loadToken
+            .doAsync()
             .onFail {
                work.fail(())
             }.doMap {

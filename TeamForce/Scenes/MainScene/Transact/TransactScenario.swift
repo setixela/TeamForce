@@ -21,40 +21,12 @@ struct TransactScenarioEvents {
    let anonymousSetOn: VoidWork<Void>
 }
 
-enum TransactState {
-   case initial
-   case loadProfilError
-   case loadTransactionsError
-
-   case loadTokensSuccess
-   case loadTokensError
-
-   case loadBalanceSuccess(Int)
-   case loadBalanceError
-
-   case loadUsersListSuccess([FoundUser])
-   case loadUsersListError
-
-   case presentFoundUser([FoundUser])
-   case presentUsers([FoundUser])
-   case listOfFoundUsers([FoundUser])
-
-   case userSelectedSuccess(FoundUser, Int)
-
-   case userSearchTFDidEditingChangedSuccess
-
-   case sendCoinSuccess((String, SendCoinRequest))
-   case sendCoinError
-
-   case coinInputSuccess(String, Bool)
-   case reasonInputSuccess(String, Bool)
-}
-
 final class TransactScenario<Asset: AssetProtocol>:
    BaseScenario<TransactScenarioEvents, TransactState, TransactWorks<Asset>>
 {
    override func start() {
 
+      // load token
       works.loadTokens
          .doAsync()
          .onSuccess(setState, .loadTokensSuccess)
@@ -100,7 +72,7 @@ final class TransactScenario<Asset: AssetProtocol>:
          .doNext(work: works.coinInputParsing)
          .onSuccess(setState)  { .coinInputSuccess($0, true) }
          .onFail { [weak self] (text: String) in
-            self?.works.updateAmount // было двойное использование одного ворка
+            self?.works.updateAmount
                .doAsync((text, false))
                .onSuccess(self?.setState) { .coinInputSuccess(text, false) }
          }

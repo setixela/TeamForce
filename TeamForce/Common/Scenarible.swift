@@ -7,14 +7,28 @@
 
 import ReactiveWorks
 
-protocol Scenaryable {
+protocol Scenarible {
    associatedtype Scenery: Scenario
 
    var scenario: Scenery { get }
 }
 
+protocol Scenarible2: Scenarible {
+   associatedtype Scenery2: Scenario
+
+   var scenario2: Scenery2 { get }
+}
+
+protocol Scenarible3: Scenarible2 {
+   associatedtype Scenery3: Scenario
+
+   var scenario3: Scenery3 { get }
+}
+
+// MARK: - Scenario protocol and base scenario
+
 protocol Scenario {
-   associatedtype Works: SceneWorks
+   associatedtype Works: TempStorage
    associatedtype Events
    associatedtype State
 
@@ -26,10 +40,10 @@ protocol Scenario {
    func start()
 }
 
-class BaseScenario<Events, State, Works: SceneWorks>: Scenario {
+class BaseScenario<Events, State, Works: TempStorage>: Scenario {
    var works: Works
    var events: Events
-   var setState: (State) -> Void = {  _ in log("fuck") }
+   var setState: (State) -> Void = { _ in log("fuck") }
 
    required init(works: Works, stateDelegate: ((State) -> Void)? = nil, events: Events) {
       self.events = events
@@ -45,4 +59,3 @@ class BaseScenario<Events, State, Works: SceneWorks>: Scenario {
 
    open func start() {}
 }
-

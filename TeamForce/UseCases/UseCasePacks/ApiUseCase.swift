@@ -8,9 +8,20 @@
 import Foundation
 import ReactiveWorks
 
-struct ApiUseCase<Asset: AssetProtocol>: Assetable, WorkBasket {
+protocol Retainable {
+   var retainer: Retainer { get }
+}
+
+// Не забываем Ретайнить ворки
+
+final class ApiUseCase<Asset: AssetProtocol>: InitProtocol, Assetable, WorkBasket, Retainable {
    //
+
+   init() {}
+
    let retainer = Retainer()
+
+   private var storageUseCase = Asset.storageUseCase
 
    var safeStringStorage: StringStorageWorker {
       StringStorageWorker(engine: Asset.service.safeStringStorage)
@@ -18,97 +29,172 @@ struct ApiUseCase<Asset: AssetProtocol>: Assetable, WorkBasket {
 
    // MARK: - UseCases
 
-   var loadProfile: LoadProfileUseCase {
-      .init(safeStringStorage: safeStringStorage, userProfileApiModel: userProfileApiModel)
+   // Login / Logout
+   var login: LoginUseCase.WRK {
+      LoginUseCase(
+         authApiWorker: loginApiModel
+      )
+      .retainedWork(retainer)
    }
 
-   var loadBalance: LoadBalanceUseCase {
-      .init(safeStringStorage: safeStringStorage, balanceApiModel: balanceApiModel)
+   var verifyCode: VerifyCodeUseCase.WRK {
+      VerifyCodeUseCase(
+         verifyCodeApiWorker: verifyCodeApiWorker
+      )
+      .retainedWork(retainer)
    }
 
-   var login: LoginUseCase {
-      .init(authApiWorker: loginApiModel)
+   var logout: LogoutUseCase.WRK {
+      LogoutUseCase(
+         loadToken: storageUseCase.loadToken,
+         logoutApiModel: logoutApiModel
+      )
+      .retainedWork(retainer)
    }
 
-   var verifyCode: VerifyCodeUseCase {
-      .init(verifyCodeApiWorker: verifyCodeApiWorker)
+   // Profile
+
+   var loadProfile: LoadProfileUseCase.WRK {
+      LoadProfileUseCase(
+         loadToken: storageUseCase.loadToken,
+         userProfileApiModel: userProfileApiModel
+      )
+      .retainedWork(retainer)
    }
 
-   var logout: LogoutUseCase {
-      .init(safeStringStorage: safeStringStorage, logoutApiModel: logoutApiModel)
+   var loadBalance: LoadBalanceUseCase.WRK {
+      LoadBalanceUseCase(
+         loadToken: storageUseCase.loadToken,
+         balanceApiModel: balanceApiModel
+      )
+      .retainedWork(retainer)
    }
 
-   var userSearch: UserSearchUseCase {
-      .init(searchUserApiModel: searchUserApiWorker)
+   var userSearch: UserSearchUseCase.WRK {
+      UserSearchUseCase(
+         searchUserApiModel: searchUserApiWorker
+      )
+      .retainedWork(retainer)
    }
 
-   var getTransactions: GetTransactionsUseCase {
-      .init(safeStringStorage: safeStringStorage, getTransactionsApiWorker: getTransactionsApiWorker)
+   var getTransactions: GetTransactionsUseCase.WRK {
+      GetTransactionsUseCase(
+         safeStringStorage: safeStringStorage,
+         getTransactionsApiWorker: getTransactionsApiWorker
+      )
+      .retainedWork(retainer)
    }
 
-   var sendCoin: SendCoinUseCase {
-      .init(sendCoinApiModel: sendCoinApiWorker)
+   var sendCoin: SendCoinUseCase.WRK {
+      SendCoinUseCase(
+         sendCoinApiModel: sendCoinApiWorker
+      )
+      .retainedWork(retainer)
    }
 
-   var getTransactionById: GetTransactionByIdUseCase {
-      .init(safeStringStorage: safeStringStorage, getTransactionByIdApiModel: getTransactionByIdApiWorker)
+   var getTransactionById: GetTransactionByIdUseCase.WRK {
+      GetTransactionByIdUseCase(
+         safeStringStorage: safeStringStorage,
+         getTransactionByIdApiModel: getTransactionByIdApiWorker
+      )
+      .retainedWork(retainer)
    }
 
-   var getTransactionsByPeriod: GetTransactionsByPeriodUseCase {
-      .init(safeStringStorage: safeStringStorage, getTransactionsByPeriodApiModel: getTransactionsByPeriodApiWorker)
+   var getTransactionsByPeriod: GetTransactionsByPeriodUseCase.WRK {
+      GetTransactionsByPeriodUseCase(
+         safeStringStorage: safeStringStorage,
+         getTransactionsByPeriodApiModel: getTransactionsByPeriodApiWorker
+      )
+      .retainedWork(retainer)
    }
 
-   var cancelTransactionById: CancelTransactionByIdUseCase {
-      .init(safeStringStorage: safeStringStorage, cancelTransactionByIdApiWorker: cancelTransactionByIdApiWorker)
+   var cancelTransactionById: CancelTransactionByIdUseCase.WRK {
+      CancelTransactionByIdUseCase(
+         safeStringStorage: safeStringStorage,
+         cancelTransactionByIdApiWorker: cancelTransactionByIdApiWorker
+      )
+      .retainedWork(retainer)
    }
 
-   var getUsersList: GetUsersListUseCase {
-      .init(safeStringStorage: safeStringStorage, getUsersListApiWorker: getUsersListApiWorker)
+   var getUsersList: GetUsersListUseCase.WRK {
+      GetUsersListUseCase(
+         safeStringStorage: safeStringStorage,
+         getUsersListApiWorker: getUsersListApiWorker
+      )
+      .retainedWork(retainer)
    }
 
-   var getFeed: GetFeedUseCase {
-      .init(safeStringStorage: safeStringStorage, getFeedsApiWorker: getFeedsApiWorker)
+   var getFeed: GetFeedUseCase.WRK {
+      GetFeedUseCase(
+         safeStringStorage: safeStringStorage,
+         getFeedsApiWorker: getFeedsApiWorker
+      )
+      .retainedWork(retainer)
    }
 
-   var getPeriods: GetPeriodsUseCase {
-      .init(safeStringStorage: safeStringStorage, getPeriodsApiWorker: getPeriodsApiWorker)
+   var getPeriods: GetPeriodsUseCase.WRK {
+      GetPeriodsUseCase(
+         safeStringStorage: safeStringStorage,
+         getPeriodsApiWorker: getPeriodsApiWorker
+      )
+      .retainedWork(retainer)
    }
 
-   var getStatByPeriodId: GetStatByPeriodIdUseCase {
-      .init(safeStringStorage: safeStringStorage, getStatByPeriodIdApiWorker: getStatByPeriodIdApiWorker)
+   var getStatByPeriodId: GetStatByPeriodIdUseCase.WRK {
+      GetStatByPeriodIdUseCase(
+         safeStringStorage: safeStringStorage,
+         getStatByPeriodIdApiWorker: getStatByPeriodIdApiWorker
+      )
+      .retainedWork(retainer)
    }
-   
-   var getCurrentPeriod: GetCurrentPeriodUseCase {
-      .init(safeStringStorage: safeStringStorage, getCurrentPeriodApiWorker: getCurrentPeriodApiWorker)
+
+   var getCurrentPeriod: GetCurrentPeriodUseCase.WRK {
+      GetCurrentPeriodUseCase(
+         safeStringStorage: safeStringStorage,
+         getCurrentPeriodApiWorker: getCurrentPeriodApiWorker
+      )
+      .retainedWork(retainer)
    }
-   
-   var getPeriodByDate: GetPeriodByDateUseCase {
-      .init(safeStringStorage: safeStringStorage, getPeriodByDateApiWorker: getPeriodByDateApiWorker)
+
+   var getPeriodByDate: GetPeriodByDateUseCase.WRK {
+      GetPeriodByDateUseCase(
+         safeStringStorage: safeStringStorage,
+         getPeriodByDateApiWorker: getPeriodByDateApiWorker
+      )
+      .retainedWork(retainer)
    }
-   
-   var getPeriodsFromDate: GetPeriodsFromDateUseCase {
-      .init(safeStringStorage: safeStringStorage, getPeriodsFromDateApiWorker: getPeriodsFromDateApiWorker)
+
+   var getPeriodsFromDate: GetPeriodsFromDateUseCase.WRK {
+      GetPeriodsFromDateUseCase(
+         safeStringStorage: safeStringStorage,
+         getPeriodsFromDateApiWorker: getPeriodsFromDateApiWorker
+      )
+      .retainedWork(retainer)
    }
-   
-   var updateProfileImage: UpdateProfileImageUseCase {
-      .init(safeStringStorage: safeStringStorage, updateProfileImageApiWorker: updateProfileImageApiWorker)
+
+   var updateProfileImage: UpdateProfileImageUseCase.WRK {
+      UpdateProfileImageUseCase(
+         safeStringStorage: safeStringStorage,
+         updateProfileImageApiWorker: updateProfileImageApiWorker
+      )
+      .retainedWork(retainer)
    }
 
    // MARK: - Dependencies
 
-   private var userProfileApiModel: ProfileApiWorker { ProfileApiWorker(apiEngine: Asset.service.apiEngine) }
-   private var loginApiModel: AuthApiWorker { AuthApiWorker(apiEngine: Asset.service.apiEngine) }
-   private var verifyCodeApiWorker: VerifyApiModel { VerifyApiModel(apiEngine: Asset.service.apiEngine) }
-   private var logoutApiModel: LogoutApiWorker { LogoutApiWorker(apiEngine: Asset.service.apiEngine) }
-   private var balanceApiModel: GetBalanceApiWorker { GetBalanceApiWorker(apiEngine: Asset.service.apiEngine) }
-   private var searchUserApiWorker: SearchUserApiWorker { SearchUserApiWorker(apiEngine: Asset.service.apiEngine) }
-   private var sendCoinApiWorker: SendCoinApiWorker { SendCoinApiWorker(apiEngine: Asset.service.apiEngine) }
-   private var getTransactionsApiWorker: GetTransactionsApiWorker { GetTransactionsApiWorker(apiEngine: Asset.service.apiEngine) }
-   private var getTransactionByIdApiWorker: GetTransactionByIdApiWorker { GetTransactionByIdApiWorker(apiEngine: Asset.service.apiEngine) }
-   private var getUsersListApiWorker: GetUsersListApiWorker { GetUsersListApiWorker(apiEngine: Asset.service.apiEngine) }
-   private var getFeedsApiWorker: GetFeedsApiWorker { GetFeedsApiWorker(apiEngine: Asset.service.apiEngine) }
-   private var getPeriodsApiWorker: GetPeriodsApiWorker { GetPeriodsApiWorker(apiEngine: Asset.service.apiEngine) }
-   private var getStatByPeriodIdApiWorker: GetStatByPeriodIdApiWorker { GetStatByPeriodIdApiWorker(apiEngine: Asset.service.apiEngine) }
+   private var userProfileApiModel: ProfileApiWorker { .init(apiEngine: Asset.service.apiEngine) }
+   private var loginApiModel: AuthApiWorker { .init(apiEngine: Asset.service.apiEngine) }
+   private var verifyCodeApiWorker: VerifyApiModel { .init(apiEngine: Asset.service.apiEngine) }
+   private var logoutApiModel: LogoutApiWorker { .init(apiEngine: Asset.service.apiEngine) }
+   private var balanceApiModel: GetBalanceApiWorker { .init(apiEngine: Asset.service.apiEngine) }
+   private var searchUserApiWorker: SearchUserApiWorker { .init(apiEngine: Asset.service.apiEngine) }
+   private var sendCoinApiWorker: SendCoinApiWorker { .init(apiEngine: Asset.service.apiEngine) }
+   private var getTransactionsApiWorker: GetTransactionsApiWorker { .init(apiEngine: Asset.service.apiEngine) }
+   private var getTransactionByIdApiWorker: GetTransactionByIdApiWorker { .init(apiEngine: Asset.service.apiEngine) }
+   private var getUsersListApiWorker: GetUsersListApiWorker { .init(apiEngine: Asset.service.apiEngine) }
+   private var getFeedsApiWorker: GetFeedsApiWorker { .init(apiEngine: Asset.service.apiEngine) }
+   private var getPeriodsApiWorker: GetPeriodsApiWorker { .init(apiEngine: Asset.service.apiEngine) }
+   private var getStatByPeriodIdApiWorker: GetStatByPeriodIdApiWorker { .init(apiEngine: Asset.service.apiEngine) }
    private var getTransactionsByPeriodApiWorker: GetTransactionsByPeriodApiWorker { .init(apiEngine: Asset.service.apiEngine) }
    private var cancelTransactionByIdApiWorker: CancelTransactionByIdApiWorker { .init(apiEngine: Asset.service.apiEngine) }
    private var getCurrentPeriodApiWorker: GetCurrentPeriodApiWorker { .init(apiEngine: Asset.service.apiEngine) }
