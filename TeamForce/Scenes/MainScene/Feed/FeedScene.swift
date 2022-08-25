@@ -304,18 +304,17 @@ final class SecondaryButtonDT<Design: DSP>: ButtonModel, Designable, Modable {
 extension String {
    func drawImage() -> UIImage {
       let text = self
-     
       let attributes = [
           NSAttributedString.Key.foregroundColor: UIColor.white,
-          NSAttributedString.Key.font: UIFont.systemFont(ofSize: 18),
+          NSAttributedString.Key.font: UIFont.systemFont(ofSize: 22),
           NSAttributedString.Key.backgroundColor: UIColor.orange
       ]
       let textSize = text.size(withAttributes: attributes)
 
-      UIGraphicsBeginImageContextWithOptions(textSize, true, 0)
-      text.draw(at: CGPoint.zero, withAttributes: attributes)
-      let image = UIGraphicsGetImageFromCurrentImageContext()
-      UIGraphicsEndImageContext()
-      return image!
+      let renderer = UIGraphicsImageRenderer(size: textSize)
+      let image = renderer.image(actions: { context in
+          text.draw(at: CGPoint.zero, withAttributes: attributes)
+      })
+      return image
    }
 }
