@@ -20,7 +20,7 @@ final class ProfileScene<Asset: AssetProtocol>: BaseSceneModel<
       .setMain { image in
          image
             .set_image(Design.icon.avatarPlaceholder)
-            .set_url(String.randomUrlImage)
+//            .set_url(String.randomUrlImage)
             .set_cornerRadius(52 / 2)
             .set(.size(.square(52)))
       } setRight: { fullName in
@@ -137,7 +137,10 @@ final class ProfileScene<Asset: AssetProtocol>: BaseSceneModel<
          profile.middleName
       userModel.models.right.set_text(fullName)
       userModel.models.down.set_text("@" + profile.tgName)
-
+      if let urlSuffix = profile.photo {
+         userModel.models.main.set_url("http://176.99.6.251:8888" + urlSuffix)
+      }
+      
       guard !profile.contacts.isEmpty else { return }
 
 //      infoFrame.models.down.set(.text(profile.contacts[0].contactId))

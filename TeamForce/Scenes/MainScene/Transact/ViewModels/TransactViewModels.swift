@@ -70,7 +70,13 @@ extension TransactViewModels {
       Presenter<FoundUser, WrappedY<ImageLabelLabelMRD>>() { work in
          let user = work.unsafeInput
 
-         let urlString = "https://picsum.photos/200" // user.photo
+         var urlString = "https://picsum.photos/200" // user.photo
+         if let photo = user.photo {
+            if photo.count != 0 {
+               urlString = "http://176.99.6.251:8888/media/" + photo
+               print("photo of \(urlString)")
+            }
+         }
          let name = user.name
          let surname = user.surname
          let thName = "@" + user.tgName

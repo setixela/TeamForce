@@ -23,7 +23,7 @@ final class TripleStacksBrandedVM<Design: DesignProtocol>:
 
    lazy var profileButton = ImageViewModel()
       .set_image(Design.icon.avatarPlaceholder)
-      .set_url("https://picsum.photos/200")
+      //.set_url("https://picsum.photos/200")
       .set_size(.square(Grid.x36.value))
       .set_cornerRadius(Grid.x36.value / 2)
       .set_borderColor(Design.color.backgroundBrandSecondary.withAlphaComponent(0.85))

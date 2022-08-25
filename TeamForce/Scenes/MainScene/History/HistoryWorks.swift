@@ -184,8 +184,12 @@ private extension HistoryWorks {
             default:
                state = TransactionItem.State.waiting
             }
+            
+            var authorPhoto = transact.recipient?.recipientPhoto
+            
             if transact.sender?.senderTgName != Self.store.currentUser {
                state = .recieved
+               authorPhoto = transact.sender?.senderPhoto
             }
 
             let item = TransactionItem(
@@ -201,7 +205,8 @@ private extension HistoryWorks {
                                                           recipientSurname: nil,
                                                           recipientPhoto: nil),
                amount: transact.amount ?? "",
-               createdAt: transact.createdAt ?? ""
+               createdAt: transact.createdAt ?? "",
+               photo: authorPhoto
             )
 
             var result = result
