@@ -39,6 +39,9 @@ struct Feed: Codable {
       let isAnonymous: Bool
       let reason: String
       let amount: Float
+      let recipientPhoto: String?
+      let recipientFirstName: String?
+      let recipientSurname: String?
       
       enum CodingKeys: String, CodingKey {
          case id
@@ -48,6 +51,9 @@ struct Feed: Codable {
          case isAnonymous = "is_anonymous"
          case reason
          case amount
+         case recipientPhoto = "recipient_photo"
+         case recipientFirstName = "recipient_first_name"
+         case recipientSurname = "recipient_surname"
       }
    }
    
@@ -66,6 +72,8 @@ final class GetFeedsApiWorker: BaseApiWorker<String, [Feed]> {
             "Authorization": work.input ?? "",
          ]))
          .done { result in
+//            let str = String(decoding: result.data!, as: UTF8.self)
+//            print("feed \(str)")
             let decoder = DataToDecodableParser()
             guard
                let data = result.data,

@@ -14,12 +14,17 @@ struct HistoryPresenters<Design: DesignProtocol>: Designable {
          let item = work.unsafeInput
          //print(work.input)
          var userNameText: String
+         var userIconText: String = ""
          var statusHidden: Bool
          var statusText: String
          var statusColor: UIColor
          var sumText: String
          //var image = ImageViewModel()
          
+         if let nameFirstLetter = item.recipient.recipientFirstName?.first,
+            let surnameFirstLetter = item.recipient.recipientSurname?.first {
+            userIconText = String(nameFirstLetter) + String(surnameFirstLetter)
+         }
 
          switch item.state {
          case .recieved:
@@ -28,6 +33,10 @@ struct HistoryPresenters<Design: DesignProtocol>: Designable {
             sumText = "+" + item.amount
             statusColor = .clear
             statusHidden = true
+            if let nameFirstLetter = item.sender.senderFirstName?.first,
+               let surnameFirstLetter = item.sender.senderSurname?.first {
+               userIconText = String(nameFirstLetter) + String(surnameFirstLetter)
+            }
 //            image = Design.icon.recieveCoinIcon
          case .waiting:
             userNameText = item.recipient.recipientTgName ?? ""
@@ -68,10 +77,13 @@ struct HistoryPresenters<Design: DesignProtocol>: Designable {
 
          let cell = HistoryCellModel<Design>()
             .setAll { icon, userAndStatus, sumLabelAndCancelButton in
-               if let urlSuffix = item.photo {
-                  print("photo \(urlSuffix)")
-                  icon
-                     .set_url("http://176.99.6.251:8888" + urlSuffix)
+               if !item.isAnonymous || (item.isAnonymous && item.state != .recieved) {
+                  if let urlSuffix = item.photo {
+                     icon.set_url("http://176.99.6.251:8888" + urlSuffix)
+                  } else {
+                     let image = userIconText.drawImage()
+                     icon.set_image(image)
+                  }
                }
                userAndStatus
                   .set_padLeft(18)
@@ -137,4 +149,5 @@ struct TransactionItem {
    let amount: String
    let createdAt: String
    let photo: String?
+   let isAnonymous: Bool
 }

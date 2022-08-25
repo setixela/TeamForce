@@ -71,12 +71,7 @@ extension TransactViewModels {
          let user = work.unsafeInput
 
          var urlString = "https://picsum.photos/200" // user.photo
-         if let photo = user.photo {
-            if photo.count != 0 {
-               urlString = "http://176.99.6.251:8888/media/" + photo
-               print("photo of \(urlString)")
-            }
-         }
+         
          let name = user.name
          let surname = user.surname
          let thName = "@" + user.tgName
@@ -90,7 +85,19 @@ extension TransactViewModels {
                      avatar
                         .set_size(.square(Grid.x26.value))
                         .set_cornerRadius(Grid.x26.value / 2)
-                        .set_url(urlString)
+                        //.set_url(urlString)
+                     if let photo = user.photo, photo.count != 0 {
+                        urlString = "http://176.99.6.251:8888/media/" + photo
+                        avatar.set_url(urlString)
+                        print("hello \(urlString)")
+                     } else {
+                        if let nameFirstLetter = user.name.first,
+                           let surnameFirstLetter = user.surname.first {
+                           let text = String(nameFirstLetter) + String(surnameFirstLetter)
+                           let image = text.drawImage()
+                           avatar.set_image(image)
+                        }
+                     }
                      username
                         .set_text("\(name) \(surname)")
                         .set_textColor(Design.color.text)

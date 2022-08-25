@@ -206,7 +206,8 @@ private extension HistoryWorks {
                                                           recipientPhoto: nil),
                amount: transact.amount ?? "",
                createdAt: transact.createdAt ?? "",
-               photo: authorPhoto
+               photo: authorPhoto,
+               isAnonymous: transact.isAnonymous ?? false
             )
 
             var result = result
