@@ -77,9 +77,21 @@ final class FeedScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>, A
 
       let icon = ImageViewModel()
          .set_image(Design.icon.avatarPlaceholder)
-         .set_url(String.randomUrlImage)
          .set_size(.square(Grid.x36.value))
          .set_cornerRadius(Grid.x36.value / 2)
+      if let recipientPhoto = feed.transaction.recipientPhoto {
+         icon.set_url("http://176.99.6.251:8888" + recipientPhoto)
+      } else {
+         print("Hi I am here")
+         if let nameFirstLetter = feed.transaction.recipientFirstName?.first,
+            let surnameFirstLetter = feed.transaction.recipientSurname?.first {
+            let text = String(nameFirstLetter) + String(surnameFirstLetter)
+            let image = text.drawImage()
+            icon.set_image(image)
+         }
+         
+         //userModel.models.main
+      }
 
       let tagBlock = StackModel()
          .set_axis(.horizontal)
@@ -289,5 +301,24 @@ final class SecondaryButtonDT<Design: DSP>: ButtonModel, Designable, Modable {
          self?.set_textColor(Design.color.textInvert)
       }
       setMode(\.normal)
+   }
+}
+
+extension String {
+   func drawImage() -> UIImage {
+      let text = self
+     
+      let attributes = [
+          NSAttributedString.Key.foregroundColor: UIColor.white,
+          NSAttributedString.Key.font: UIFont.systemFont(ofSize: 18),
+          NSAttributedString.Key.backgroundColor: UIColor.orange
+      ]
+      let textSize = text.size(withAttributes: attributes)
+
+      UIGraphicsBeginImageContextWithOptions(textSize, true, 0)
+      text.draw(at: CGPoint.zero, withAttributes: attributes)
+      let image = UIGraphicsGetImageFromCurrentImageContext()
+      UIGraphicsEndImageContext()
+      return image!
    }
 }
