@@ -595,8 +595,8 @@
 			isa = PBXGroup;
 			children = (
 				196750A5286516F40019A6DE /* LoginScene.swift */,
-				19BD2A8628ABB35C00FCC00A /* LoginScenario.swift */,
 				19D84E3228AC077200418B9E /* LoginViewModels.swift */,
+				19BD2A8628ABB35C00FCC00A /* LoginScenario.swift */,
 				1959F27328AA8E9700DEEE5C /* LoginWorks.swift */,
 			);
 			path = LoginScene;
@@ -794,6 +794,7 @@
 			isa = PBXGroup;
 			children = (
 				190BE97A28ADDFC60062CCD5 /* TransactScene.swift */,
+				1953DE832879FDE3000DC537 /* TransactViewModels.swift */,
 				190BE97828ADDFAB0062CCD5 /* TransactScenario.swift */,
 				19CF792B28A587B9001531B8 /* TransactWorks.swift */,
 				19CAB9CF28B4265000A0A3B1 /* ViewModels */,
@@ -925,7 +926,6 @@
 		19CAB9CF28B4265000A0A3B1 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				1953DE832879FDE3000DC537 /* TransactViewModels.swift */,
 				6368D8292894091B0049EEAB /* TransactInputViewModel.swift */,
 				19CAB9D028B4265C00A0A3B1 /* TransactOptionsVM.swift */,
 			);

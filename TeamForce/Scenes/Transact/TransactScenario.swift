@@ -26,7 +26,7 @@ final class TransactScenario<Asset: AssetProtocol>:
 {
    override func start() {
 
-      // load token
+      // load token, balance, userList
       works.loadTokens
          .doAsync()
          .onSuccess(setState, .loadTokensSuccess)
@@ -79,7 +79,7 @@ final class TransactScenario<Asset: AssetProtocol>:
          .doRecover()
          .doSaveResult() // save inputString
          .doMap { ($0, true) }
-         .doNext(work: works.updateAmount) // 10 часов искал дефект двойного юзанья
+         .doNext(work: works.updateAmount)
          .doNext(work: works.isCorrect)
          .onSuccessMixSaved(setState) { .coinInputSuccess($1, true) }
          .onFailMixSaved(setState) { .coinInputSuccess($1, false) }

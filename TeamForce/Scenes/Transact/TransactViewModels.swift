@@ -27,6 +27,7 @@ final class TransactViewModels<Design: DSP>: Designable {
    lazy var userSearchTextField = TextFieldModel()
       .set(Design.state.textField.default)
       .set_placeholder(Design.Text.title.chooseRecipient)
+      .set_placeholderColor(Design.color.textFieldPlaceholder)
       .set_hidden(true)
 
    lazy var transactInputViewModel = TransactInputViewModel<Design>()

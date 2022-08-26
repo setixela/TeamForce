@@ -71,10 +71,8 @@ final class ApiUseCase<Asset: AssetProtocol>: InitProtocol, Assetable, WorkBaske
    }
 
    var userSearch: UserSearchUseCase.WRK {
-      UserSearchUseCase(
-         searchUserApiModel: searchUserApiWorker
-      )
-      .retainedWork(retainer)
+      UserSearchUseCase(searchUserApiModel: searchUserApiWorker)
+         .retainedWork(retainer)
    }
 
    var getTransactions: GetTransactionsUseCase.WRK {

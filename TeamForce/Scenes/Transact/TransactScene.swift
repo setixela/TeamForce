@@ -72,7 +72,6 @@ final class TransactScene<Asset: AssetProtocol>: BaseSceneModel<
          viewModels.reasonTextView,
          viewModels.addPhotoButton,
          options,
-//         viewModels.sendButton,
          Grid.x32.spacer
       ]))
 
@@ -118,6 +117,8 @@ final class TransactScene<Asset: AssetProtocol>: BaseSceneModel<
       viewModels.transactInputViewModel.set(.hidden(true))
       viewModels.sendButton.set(Design.state.button.inactive)
       viewModels.reasonTextView.set(.hidden(true))
+      options.set_hidden(true)
+      viewModels.addPhotoButton.set_hidden(true)
    }
 
    private func clearFields() {
@@ -189,6 +190,8 @@ extension TransactScene: StateMachine {
             self.viewModels.userSearchTextField.set_hidden(true)
             self.viewModels.transactInputViewModel.set_hidden(false)
             self.viewModels.reasonTextView.set_hidden(false)
+            self.options.set_hidden(false)
+            self.viewModels.addPhotoButton.set_hidden(false)
             self.mainVM.view.layoutIfNeeded()
          }
          //
@@ -246,6 +249,8 @@ private extension TransactScene {
 //      viewModels.sendButton.set(.hidden(true))
       viewModels.sendButton.set(Design.state.button.inactive)
       viewModels.reasonTextView.set(.hidden(true))
+      options.set_hidden(true)
+      viewModels.addPhotoButton.set_hidden(true)
    }
 
    func presentFoundUsers(users: [FoundUser]) {

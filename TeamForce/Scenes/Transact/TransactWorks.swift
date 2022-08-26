@@ -30,6 +30,7 @@ protocol TransactWorksProtocol: TempStorage {
 final class TransactWorks<Asset: AssetProtocol>: BaseSceneWorks<TransactWorks.Temp, Asset>, TransactWorksProtocol {
    // api works
    private lazy var apiUseCase = Asset.apiUseCase
+   private lazy var storageUseCase = Asset.storageUseCase
    // parsing input
    private lazy var coinInputParser = CoinInputCheckerModel()
    private lazy var reasonInputParser = ReasonCheckerModel()
@@ -55,23 +56,17 @@ final class TransactWorks<Asset: AssetProtocol>: BaseSceneWorks<TransactWorks.Te
 
    var loadBalance: VoidWork<Balance> { apiUseCase.loadBalance }
 
-   lazy var loadTokens = Work<Void, Void> { [weak self] work in
-      self?.apiUseCase.safeStringStorage
-         .doAsync("token")
+   var loadTokens: Work<Void, Void> { .init { [weak self] work in
+      self?.storageUseCase.loadBothTokens
+         .doAsync()
          .onSuccess {
             Self.store.tokens.token = $0
-         }.onFail {
-            work.fail(())
-         }
-         .doInput("csrftoken")
-         .doNext(worker: self?.apiUseCase.safeStringStorage)
-         .onSuccess {
-            Self.store.tokens.csrf = $0
+            Self.store.tokens.csrf = $1
             work.success(result: ())
          }.onFail {
             work.fail(())
          }
-   }
+   }.retainBy(retainer) }
 
    var searchUser: Work<String, [FoundUser]> {
       .init { [weak self] work in
