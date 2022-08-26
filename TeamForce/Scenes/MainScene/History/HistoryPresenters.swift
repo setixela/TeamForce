@@ -81,10 +81,13 @@ struct HistoryPresenters<Design: DesignProtocol>: Designable {
                   if let urlSuffix = item.photo {
                      icon.set_url("http://176.99.6.251:8888" + urlSuffix)
                   } else {
-                     let image = userIconText.drawImage()
+                     let image = userIconText.drawImage(backColor: Design.color.backgroundBrand)
                      icon.set_image(image)
                   }
                }
+
+               icon.set_backColor(Design.color.backgroundBrand)
+
                userAndStatus
                   .set_padLeft(18)
                   .set_alignment(.leading)

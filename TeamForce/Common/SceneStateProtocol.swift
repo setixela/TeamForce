@@ -8,23 +8,23 @@
 import Foundation
 
 protocol StateMachine: AnyObject {
-   associatedtype SceneState
+   associatedtype ModelState
 
-   func setState(_ state: SceneState)
+   func setState(_ state: ModelState)
 }
 
 extension StateMachine {
 
-   var stateDelegate: (SceneState) -> Void {
+   var stateDelegate: (ModelState) -> Void {
 
-      let fun: (SceneState) -> Void = { [weak self] in
+      let fun: (ModelState) -> Void = { [weak self] in
          self?.setState($0)
       }
 
       return fun
    }
 
-   func debug(_ state: SceneState) {
+   func debug(_ state: ModelState) {
       log(state, self)
    }
 }

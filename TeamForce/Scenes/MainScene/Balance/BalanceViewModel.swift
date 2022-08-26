@@ -9,8 +9,6 @@ import CoreFoundation
 import ReactiveWorks
 import UIKit
 
-struct BalanceViewEvent: InitProtocol {}
-
 ///////// """ STATEABLE -> PARAMETRIC """
 
 final class BalanceViewModel<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>,
@@ -19,7 +17,7 @@ final class BalanceViewModel<Asset: AssetProtocol>: BaseViewModel<StackViewExten
    Assetable
 {
    typealias State = StackState
-   var events: BalanceViewEvent = .init()
+   var events: MainSceneEvents = .init()
 
    // MARK: - Frame Cells
 

@@ -95,7 +95,7 @@ extension TransactViewModels {
                         if let nameFirstLetter = user.name.first,
                            let surnameFirstLetter = user.surname.first {
                            let text = String(nameFirstLetter) + String(surnameFirstLetter)
-                           let image = text.drawImage()
+                           let image = text.drawImage(backColor: Design.color.backgroundBrand)
                            avatar.set_image(image)
                         }
                      }

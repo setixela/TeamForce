@@ -73,6 +73,7 @@
 		197A2DA428A9BF4B00190656 /* Combos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197A2DA028A9BF4B00190656 /* Combos.swift */; };
 		197A2DA528A9BF4B00190656 /* SCombo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197A2DA128A9BF4B00190656 /* SCombo.swift */; };
 		197A2DA728A9D10900190656 /* IconTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197A2DA628A9D10900190656 /* IconTextField.swift */; };
+		197A360428B90BD3006E44C1 /* MainSceneEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197A360328B90BD3006E44C1 /* MainSceneEvents.swift */; };
 		197A771828AD90800082CD81 /* XelaLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197A771728AD90800082CD81 /* XelaLog.swift */; };
 		197A771A28AD90B30082CD81 /* Presenting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197A771928AD90B30082CD81 /* Presenting.swift */; };
 		197A771C28AD91E20082CD81 /* HistoryPresenters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197A771B28AD91E20082CD81 /* HistoryPresenters.swift */; };
@@ -269,6 +270,7 @@
 		197A2DA028A9BF4B00190656 /* Combos.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Combos.swift; sourceTree = "<group>"; };
 		197A2DA128A9BF4B00190656 /* SCombo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCombo.swift; sourceTree = "<group>"; };
 		197A2DA628A9D10900190656 /* IconTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconTextField.swift; sourceTree = "<group>"; };
+		197A360328B90BD3006E44C1 /* MainSceneEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainSceneEvents.swift; sourceTree = "<group>"; };
 		197A771728AD90800082CD81 /* XelaLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XelaLog.swift; sourceTree = "<group>"; };
 		197A771928AD90B30082CD81 /* Presenting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Presenting.swift; sourceTree = "<group>"; };
 		197A771B28AD91E20082CD81 /* HistoryPresenters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryPresenters.swift; sourceTree = "<group>"; };
@@ -563,6 +565,7 @@
 			isa = PBXGroup;
 			children = (
 				19AE3AEE28691B2E00A0C6E4 /* MainScene.swift */,
+				197A360328B90BD3006E44C1 /* MainSceneEvents.swift */,
 				19ACB3CB28A599DF00B5AD71 /* Balance */,
 				19ACB3CD28A599ED00B5AD71 /* Feed */,
 				19ACB3CC28A599E600B5AD71 /* History */,
@@ -1318,6 +1321,7 @@
 				63EB469728AC35920070A271 /* HistoryScenario.swift in Sources */,
 				63E7A73B28AF9A7500FB2C80 /* GetCurrentPeriodApiWorker.swift in Sources */,
 				19D7BE9728B3CC1100C95053 /* CurrencyButtonDT.swift in Sources */,
+				197A360428B90BD3006E44C1 /* MainSceneEvents.swift in Sources */,
 				19C1E98C285F426B00E7976D /* EndpointProtocol.swift in Sources */,
 				196750B4286519660019A6DE /* ProductionAsset.swift in Sources */,
 				1918CC7B286F6C84004373F3 /* ProfileApiWorker.swift in Sources */,

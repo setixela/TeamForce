@@ -10,5 +10,8 @@ final class LabelSwitcherXDT<Design: DSP>: LabelSwitcherX {
       super.start()
 
       set_padding(Design.params.contentVerticalPadding)
+      label
+         .set(Design.state.label.body1)
+         .set_backColor(Design.color.background)
    }
 }

@@ -25,6 +25,10 @@ enum TableItemsState {
 
 struct TableItemsEvents: InitProtocol {
    var didSelectRow: Event<(IndexPath, Int)>?
+
+   // TODO: - Обьединять ивенты как Стейты
+   var didScroll: Event<CGFloat>?
+   var willEndDragging: Event<CGFloat>?
 }
 
 final class TableItemsModel<Design: DSP>: BaseViewModel<UITableView>,
@@ -42,10 +46,15 @@ final class TableItemsModel<Design: DSP>: BaseViewModel<UITableView>,
    private var items: [Any] = []
    private var itemSections: [TableItemsSection] = []
 
+   private var prevScrollOffset: CGFloat = 0
+  // private var velocity: CGFloat = 0
+
+   // MARK: - Start
+
    override func start() {
       view.delegate = self
       view.dataSource = self
-   //   view.separatorColor = .clear
+      view.separatorColor = .clear
       view.clipsToBounds = false
       view.layer.masksToBounds = true
 
@@ -54,13 +63,15 @@ final class TableItemsModel<Design: DSP>: BaseViewModel<UITableView>,
       }
    }
 
+   // MARK: -  UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate
+
    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
       var rowNumber = indexPath.row
-      
-      for i in 0..<indexPath.section {
+
+      for i in 0 ..< indexPath.section {
          rowNumber += view.numberOfRows(inSection: i)
       }
-      
+
       sendEvent(\.didSelectRow, payload: (indexPath, rowNumber))
       tableView.deselectRow(at: indexPath, animated: true)
    }
@@ -121,6 +132,21 @@ final class TableItemsModel<Design: DSP>: BaseViewModel<UITableView>,
 
       return 36
    }
+
+   func scrollViewDidScroll(_ scrollView: UIScrollView) {
+      let velocity = scrollView.contentOffset.y - prevScrollOffset
+      prevScrollOffset = scrollView.contentOffset.y
+      sendEvent(\.didScroll, velocity)
+   }
+
+   func scrollViewWillEndDragging(_ scrollView: UIScrollView,
+                                  withVelocity velocity: CGPoint,
+                                  targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+      sendEvent(\.willEndDragging, velocity.y)
+   }
+//   {
+//      sendEvent(\.didEndDragging, velocity)
+//   }
 }
 
 extension TableItemsModel: Stateable2 {

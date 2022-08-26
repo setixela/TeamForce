@@ -8,6 +8,10 @@
 import ReactiveWorks
 import UIKit
 
+// 177
+
+typealias CommunicableUIViewModel = UIViewModel & Communicable
+
 final class MainScene<Asset: AssetProtocol>:
    BaseSceneModel<
       DefaultVCModel,
@@ -20,7 +24,7 @@ final class MainScene<Asset: AssetProtocol>:
 //   lazy var transactViewModel = TransactScene<Asset>()
    lazy var historyViewModel = HistoryScene<Asset>()
    lazy var settingsViewModel = SettingsViewModel<Asset>()
-  // lazy var profileViewModel = ProfileViewModel<Asset>()
+   // lazy var profileViewModel = ProfileViewModel<Asset>()
 
    lazy var feedViewModel = FeedScene<Asset>()
 
@@ -28,7 +32,6 @@ final class MainScene<Asset: AssetProtocol>:
 
    // MARK: - Side bar
 
-   private let sideBarModel = SideBarModel<Asset>()
    private let menuButton = BarButtonModel()
 
    private lazy var useCase = Asset.apiUseCase
@@ -39,10 +42,8 @@ final class MainScene<Asset: AssetProtocol>:
    // MARK: - Start
 
    override func start() {
-      sideBarModel.start()
-
       mainVM.header.set_text("Баланс")
-      //mainVM.profileButton.set_url(Self.)
+      // mainVM.profileButton.set_url(Self.)
 
       menuButton
          .sendEvent(\.initWithImage, Design.icon.sideMenu)
@@ -87,7 +88,7 @@ final class MainScene<Asset: AssetProtocol>:
          }
 
       mainVM.profileButton.onEvent(\.didTap) { [weak self] in
-         //self?.unlockTabButtons()
+         // self?.unlockTabButtons()
          Asset.router?.route(\.profile, navType: .push)
 //         self?.mainVM.header.set_text("Профиль")
 //         self?.presentModel(self?.profileViewModel)
@@ -100,33 +101,34 @@ final class MainScene<Asset: AssetProtocol>:
       tabBarPanel.button3.setMode(\.inactive)
       tabBarPanel.button4.setMode(\.inactive)
    }
-
-   private func configureSideBarItemsEvents() {
-      weak var weakSelf = self
-
-      sideBarModel.item1
-         .onEvent(\.didTap) {
-            weakSelf?.sideBarModel.sendEvent(\.hide)
-            weakSelf?.presentModel(weakSelf?.balanceViewModel)
-         }
-
-      sideBarModel.item2
-         .onEvent(\.didTap) {
-            weakSelf?.sideBarModel.sendEvent(\.hide)
-        //    weakSelf?.presentModel(weakSelf?.transactViewModel)
-         }
-
-      sideBarModel.item3
-         .onEvent(\.didTap) {
-            weakSelf?.sideBarModel.sendEvent(\.hide)
-            weakSelf?.presentModel(weakSelf?.historyViewModel)
-         }
-   }
 }
 
 extension MainScene {
-   private func presentModel(_ model: UIViewModel?) {
+   private func presentModel<M: UIViewModel & Communicable>(_ model: M?) where M.Events == MainSceneEvents {
       guard let model = model else { return }
+      model.onEvent(\.willEndDragging) { [weak self] velocity in
+         if velocity > 0 {
+            UIView.animate(withDuration: 0.36) {
+               self?.mainVM.setState(.hideHeaderTitle)
+               self?.vcModel?.sendEvent(\.setTitle, "История")
+            }
+
+         } else if velocity < 0 {
+            UIView.animate(withDuration: 0.36) {
+               self?.vcModel?.sendEvent(\.setTitle, "")
+               self?.mainVM.setState(.presentHeaderTitle)
+            }
+         }
+      }
+      mainVM.bodyStack
+         .set_arrangedModels([
+            model
+         ])
+   }
+
+   private func presentModel<M: UIViewModel>(_ model: M?) {
+      guard let model = model else { return }
+
       mainVM.bodyStack
          .set_arrangedModels([
             model
@@ -145,7 +147,7 @@ private extension MainScene {
             TokenRequest(token: $0)
          }
          .doNext(worker: userProfileApiModel)
-         .onSuccess { [weak self] userData in
+         .onSuccess { [weak self] _ in
 //            self?.
 //            self?.setLabels(userData: userData)
          }.onFail {

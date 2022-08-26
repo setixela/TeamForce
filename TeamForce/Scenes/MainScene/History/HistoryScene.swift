@@ -13,10 +13,13 @@ import UIKit
 final class HistoryScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>,
    Assetable,
    Stateable,
-   Scenarible
+   Scenarible,
+   Communicable
 {
    //
    typealias State = StackState
+
+   var events = MainSceneEvents()
 
    private lazy var viewModels = HistoryViewModels<Design>()
 
@@ -41,8 +44,15 @@ final class HistoryScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>
       viewModels.tableModel
          .set(.presenters([
             HistoryPresenters<Design>.transactToHistoryCell,
-            SpacerPresenter.presenter
+            SpacerPresenter.presenter,
          ]))
+
+      viewModels.tableModel.onEvent(\.didScroll) { [weak self] in
+         self?.sendEvent(\.didScroll, $0)
+      }
+      viewModels.tableModel.onEvent(\.willEndDragging) { [weak self] in
+         self?.sendEvent(\.willEndDragging, $0)
+      }
    }
 }
 
@@ -55,7 +65,7 @@ private extension HistoryScene {
          viewModels.segmentedControl,
          Grid.x16.spacer,
          viewModels.tableModel,
-         //Spacer(88),
+         // Spacer(88),
       ])
    }
 }
@@ -67,7 +77,7 @@ enum HistoryState {
    case presentAllTransactions([TableItemsSection])
    case presentSentTransactions([TableItemsSection])
    case presentRecievedTransaction([TableItemsSection])
-   
+
    case presentDetailView(Transaction)
 }
 
@@ -76,26 +86,26 @@ extension HistoryScene: StateMachine {
       switch state {
       case .loadProfilError:
          log("loadProfilError")
-         //
+      //
       case .loadTransactionsError:
          log("loadTransactionsError")
-         //
+      //
       case .presentAllTransactions(let value):
          viewModels.tableModel
             .set(.itemSections(value.addedSpacer(size: Grid.x80.value)))
-         //
+      //
       case .presentSentTransactions(let value):
          viewModels.tableModel
             .set(.itemSections(value.addedSpacer(size: Grid.x80.value)))
-         //
+      //
       case .presentRecievedTransaction(let value):
          viewModels.tableModel
-            .set(.itemSections(value.addedSpacer(size: Grid.x80.value) ))
-         //
+            .set(.itemSections(value.addedSpacer(size: Grid.x80.value)))
+      //
       case .presentDetailView(let value):
          ProductionAsset.router?.route(\.transactionDetail,
-                                        navType: .presentModally(.automatic),
-                                        payload: value)
+                                       navType: .presentModally(.automatic),
+                                       payload: value)
       }
    }
 }

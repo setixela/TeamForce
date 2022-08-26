@@ -14,8 +14,11 @@ final class TripleStacksBrandedVM<Design: DesignProtocol>:
    Combos<SComboMDD<StackModel, WrappedY<StackModel>, TabBarPanel<Design>>>,
    Designable
 {
+
    lazy var header = Design.label.headline5
       .set_textColor(Design.color.textInvert)
+      .set_padTop(Grid.x16.value)
+      .set_padBottom(Grid.x6.value)
 
    var headerStack: StackModel { models.main }
    var bodyStack: StackModel { models.down.subModel }
@@ -23,7 +26,6 @@ final class TripleStacksBrandedVM<Design: DesignProtocol>:
 
    lazy var profileButton = ImageViewModel()
       .set_image(Design.icon.avatarPlaceholder)
-      //.set_url("https://picsum.photos/200")
       .set_size(.square(Grid.x36.value))
       .set_cornerRadius(Grid.x36.value / 2)
       .set_borderColor(Design.color.backgroundBrandSecondary.withAlphaComponent(0.85))
@@ -51,11 +53,10 @@ final class TripleStacksBrandedVM<Design: DesignProtocol>:
             .set(Design.state.stack.header)
             .set_alignment(.fill)
             .set_arrangedModels([
-               Grid.x1.spacer,
+             //x  Grid.x1.spacer,
                topButtonsStack,
-               Grid.x16.spacer,
                header,
-               Grid.x36.spacer
+               Grid.x30.spacer
             ])
       } setDown: {
          $0
@@ -72,3 +73,23 @@ final class TripleStacksBrandedVM<Design: DesignProtocol>:
       profileButton.set(.tapGesturing)
    }
 }
+
+enum TripleStacksState {
+   case hideHeaderTitle
+   case presentHeaderTitle
+}
+
+extension TripleStacksBrandedVM: StateMachine {
+   func setState(_ state: TripleStacksState) {
+      switch state {
+      case .hideHeaderTitle:
+         header.set_alpha(0)
+         header.set_hidden(true)
+      case .presentHeaderTitle:
+         header.set_hidden(false)
+         header.set_alpha(1)
+      }
+   }
+
+}
+

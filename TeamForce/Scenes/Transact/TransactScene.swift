@@ -134,6 +134,7 @@ extension TransactScene: StateMachine {
 
       switch state {
       case .initial:
+         hideHUD()
          break
          //
       case .loadProfilError:
@@ -177,7 +178,7 @@ extension TransactScene: StateMachine {
          if case .userSelectedSuccess = currentState {
             viewModels.userSearchTextField.set_hidden(false)
             viewModels.foundUsersList.set_hidden(true)
-            currentState = .initial
+            setState(.initial)
             return
          }
 
@@ -246,7 +247,6 @@ class ImageLabelLabelMRD: Combos<SComboMRD<ImageViewModel, LabelModel, LabelMode
 private extension TransactScene {
    func hideHUD() {
       viewModels.transactInputViewModel.set(.hidden(true))
-//      viewModels.sendButton.set(.hidden(true))
       viewModels.sendButton.set(Design.state.button.inactive)
       viewModels.reasonTextView.set(.hidden(true))
       options.set_hidden(true)

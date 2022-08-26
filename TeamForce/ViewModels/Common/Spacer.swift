@@ -13,6 +13,7 @@ enum Grid: CGFloat {
    case x1 = 1
    case x2 = 2
    case x4 = 4
+   case x6 = 6
    case x8 = 8
    case x10 = 10
    case x12 = 12
@@ -46,6 +47,7 @@ enum GridAsp: CGFloat {
    case x1 = 1
    case x2 = 2
    case x4 = 4
+   case x6 = 6
    case x8 = 8
    case x10 = 10
    case x12 = 12

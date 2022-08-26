@@ -39,7 +39,7 @@ struct StackStateBuilder<Design: DesignProtocol>: StackStatesProtocol {
       .spacing(0),
       .alignment(.leading),
       .distribution(.fill),
-      .padding(UIEdgeInsets(top: -32, left: 16, bottom: 0, right: 16)),
+      .padding(.init(top: -40, left: 16, bottom: 0, right: 16)),
       .backColor(Design.color.backgroundBrand)
    ] }
 

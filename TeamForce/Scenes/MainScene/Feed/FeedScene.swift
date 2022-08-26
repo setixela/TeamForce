@@ -8,9 +8,15 @@
 import ReactiveWorks
 import UIKit
 
-final class FeedScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>, Assetable, Stateable2 {
+final class FeedScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>,
+   Assetable,
+   Stateable2,
+   Communicable
+{
    typealias State = ViewState
    typealias State2 = StackState
+
+   var events = MainSceneEvents()
 
    private lazy var feedTableModel = TableItemsModel<Design>()
       .set_backColor(Design.color.background)
@@ -39,6 +45,13 @@ final class FeedScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>, A
          .onFail {
             errorLog("Feed load API ERROR")
          }
+
+      feedTableModel.onEvent(\.didScroll) { [weak self] in
+         self?.sendEvent(\.didScroll, $0)
+      }
+      feedTableModel.onEvent(\.willEndDragging) { [weak self] in
+         self?.sendEvent(\.willEndDragging, $0)
+      }
    }
 
    lazy var feedCellPresenter: Presenter<Feed, WrappedX<StackModel>> = Presenter<Feed, WrappedX<StackModel>> { [weak self] work in
@@ -81,9 +94,10 @@ final class FeedScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>, A
          icon.set_url("http://176.99.6.251:8888" + recipientPhoto)
       } else {
          if let nameFirstLetter = feed.transaction.recipientFirstName?.first,
-            let surnameFirstLetter = feed.transaction.recipientSurname?.first {
+            let surnameFirstLetter = feed.transaction.recipientSurname?.first
+         {
             let text = String(nameFirstLetter) + String(surnameFirstLetter)
-            let image = text.drawImage()
+            let image = text.drawImage(backColor: Design.color.backgroundBrand)
             icon.set_image(image)
          }
       }
@@ -301,18 +315,18 @@ final class SecondaryButtonDT<Design: DSP>: ButtonModel, Designable, Modable {
 }
 
 extension String {
-   func drawImage() -> UIImage {
+   func drawImage(backColor: UIColor) -> UIImage {
       let text = self
       let attributes = [
-          NSAttributedString.Key.foregroundColor: UIColor.white,
-          NSAttributedString.Key.font: UIFont.systemFont(ofSize: 22),
-          NSAttributedString.Key.backgroundColor: UIColor.orange
+         NSAttributedString.Key.foregroundColor: UIColor.white,
+         NSAttributedString.Key.font: UIFont.systemFont(ofSize: 22),
+         NSAttributedString.Key.backgroundColor: backColor
       ]
       let textSize = text.size(withAttributes: attributes)
 
       let renderer = UIGraphicsImageRenderer(size: textSize)
-      let image = renderer.image(actions: { context in
-          text.draw(at: CGPoint.zero, withAttributes: attributes)
+      let image = renderer.image(actions: { _ in
+         text.draw(at: CGPoint.zero, withAttributes: attributes)
       })
       return image
    }
