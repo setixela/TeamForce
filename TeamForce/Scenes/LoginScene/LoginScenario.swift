@@ -34,6 +34,7 @@ final class LoginScenario<Asset: AssetProtocol>:
       events.getCodeButtonEvent
          .doNext(work: works.authByName)
          .onSuccess(setState, .inputSmsCode)
+         .onFail(setState, .invalidUserName)
 
       // setup input field reactions
       events.smsCodeStringEvent
@@ -46,15 +47,10 @@ final class LoginScenario<Asset: AssetProtocol>:
       events.loginButtonEvent
          //
          .doNext(work: works.verifyCode)
-         .onFail {
-            print("Verify api error")
-         }
+         .onFail(setState, .invalidSmsCode)
          .doNext(work: works.saveLoginResults)
          .onSuccess {
             Asset.router?.route(\.main, navType: .present, payload: ())
-         }
-         .onFail {
-            print("Save login results to persistence error")
          }
    }
 }

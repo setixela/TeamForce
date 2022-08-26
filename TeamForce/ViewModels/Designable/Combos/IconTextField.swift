@@ -22,7 +22,6 @@ final class IconTextField<Design: DesignProtocol>:
       setMain {
          $0
             .set_size(.square(Grid.x24.value))
-            .set_image(Design.icon.user)
       } setRight: {
          $0
             .set(Design.state.textField.invisible)

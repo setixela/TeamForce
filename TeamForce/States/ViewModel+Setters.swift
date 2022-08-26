@@ -86,8 +86,14 @@ extension ViewModelProtocol where Self: Stateable {
       return self
    }
 
+   @discardableResult func set_alpha(_ value: CGFloat) -> Self {
+      view.alpha = value
+      return self
+   }
+
    @discardableResult func set_zPosition(_ value: CGFloat) -> Self {
       view.layer.masksToBounds = false
+      view.clipsToBounds = false
       view.layer.zPosition = value
       view.setNeedsLayout()
       return self
@@ -385,6 +391,15 @@ extension ViewModelProtocol where Self: Stateable, View: PaddingTextField {
 
    @discardableResult func set_placeholder(_ value: String) -> Self {
       view.placeholder = value
+      return self
+   }
+
+   @discardableResult func set_placeholderColor(_ value: UIColor) -> Self {
+      let placeholder = view.placeholder ?? ""
+      view.attributedPlaceholder = NSAttributedString(
+         string: placeholder,
+         attributes: [NSAttributedString.Key.foregroundColor: value]
+      )
       return self
    }
 

@@ -77,6 +77,7 @@ protocol ColorsProtocol: InitProtocol {
 
     // Textfield
     var textFieldBack: UIColor { get }
+    var textFieldPlaceholder: UIColor { get }
 
     // Boundaries
     var boundary: UIColor { get }
@@ -135,6 +136,7 @@ struct ColorBuilder: ColorsProtocol {
 
     // textfield colors
     var textFieldBack: UIColor { Token.negative.color }
+    var textFieldPlaceholder: UIColor { Token.midpoint.color }
 
     // boundaries
     var boundary: UIColor { Token.midpoint.color }

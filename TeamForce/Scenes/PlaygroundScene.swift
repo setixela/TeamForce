@@ -15,17 +15,6 @@ final class PlaygroundScene<Asset: AssetProtocol>: BaseSceneModel<
    Void
 > {
    private let combo = ComboMRD()
-   private let badgedModel = BadgedViewModel<ComboMRD, Design>()
-      .onModeChanged(\.error) { model in
-         [model?.topBadge, model?.bottomBadge].forEach {
-            $0?.set_textColor(Design.color.boundaryError)
-         }
-      }
-      .onModeChanged(\.normal) { model in
-         [model?.topBadge, model?.bottomBadge].forEach {
-            $0?.set_textColor(Design.color.text)
-         }
-      }
 
    private let logoTitle = DTLogoTitleX<Design>()
 
@@ -85,8 +74,6 @@ final class PlaygroundScene<Asset: AssetProtocol>: BaseSceneModel<
             logoTitleSubtitle,
             Spacer(32),
             comboC,
-            Spacer(32),
-            badgedModel,
             Spacer(32),
             combo,
             Spacer()

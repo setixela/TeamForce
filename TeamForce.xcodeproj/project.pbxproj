@@ -94,8 +94,6 @@
 		199C4B6D2863299E008AD6FD /* DesignSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199C4B6C2863299E008AD6FD /* DesignSystem.swift */; };
 		19A097FE28AEC4C700D8FFF2 /* MemoryLeakTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A097FD28AEC4C700D8FFF2 /* MemoryLeakTests.swift */; };
 		19A73BEB28A4510E000B74CF /* BadgedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A73BEA28A4510E000B74CF /* BadgedViewModel.swift */; };
-		19A73BED28A4530C000B74CF /* TextFieldBadged.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A73BEC28A4530C000B74CF /* TextFieldBadged.swift */; };
-		19A73BEF28A454AC000B74CF /* BadgeProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A73BEE28A454AC000B74CF /* BadgeProtocols.swift */; };
 		19A8229628A925760081D385 /* ViewModel+Setters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A8229528A925760081D385 /* ViewModel+Setters.swift */; };
 		19A8229828A9305D0081D385 /* UIEdgeInsets+Padding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A8229728A9305D0081D385 /* UIEdgeInsets+Padding.swift */; };
 		19A9232A28B2A8200080D491 /* SpacerPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A9232928B2A8200080D491 /* SpacerPresenter.swift */; };
@@ -293,8 +291,6 @@
 		199C4B6C2863299E008AD6FD /* DesignSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignSystem.swift; sourceTree = "<group>"; };
 		19A097FD28AEC4C700D8FFF2 /* MemoryLeakTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryLeakTests.swift; sourceTree = "<group>"; };
 		19A73BEA28A4510E000B74CF /* BadgedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgedViewModel.swift; sourceTree = "<group>"; };
-		19A73BEC28A4530C000B74CF /* TextFieldBadged.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldBadged.swift; sourceTree = "<group>"; };
-		19A73BEE28A454AC000B74CF /* BadgeProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeProtocols.swift; sourceTree = "<group>"; };
 		19A8229528A925760081D385 /* ViewModel+Setters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewModel+Setters.swift"; sourceTree = "<group>"; };
 		19A8229728A9305D0081D385 /* UIEdgeInsets+Padding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIEdgeInsets+Padding.swift"; sourceTree = "<group>"; };
 		19A9232928B2A8200080D491 /* SpacerPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpacerPresenter.swift; sourceTree = "<group>"; };
@@ -568,11 +564,8 @@
 			children = (
 				19AE3AEE28691B2E00A0C6E4 /* MainScene.swift */,
 				19ACB3CB28A599DF00B5AD71 /* Balance */,
-				19ACB3CA28A599D600B5AD71 /* Transact */,
-				19017B8328A6C79400B06345 /* TransactDetails */,
 				19ACB3CD28A599ED00B5AD71 /* Feed */,
 				19ACB3CC28A599E600B5AD71 /* History */,
-				19ACB3CE28A59A2900B5AD71 /* Profile */,
 				63C6D11228B2E1A600887AD1 /* Settings */,
 			);
 			path = MainScene;
@@ -623,6 +616,9 @@
 				1953DE822879FDB3000DC537 /* MainScene */,
 				1959F27228AA8E7400DEEE5C /* IntroScene */,
 				1959F27128AA8E5C00DEEE5C /* LoginScene */,
+				19ACB3CA28A599D600B5AD71 /* Transact */,
+				19017B8328A6C79400B06345 /* TransactDetails */,
+				19ACB3CE28A59A2900B5AD71 /* Profile */,
 				19D08352286F403400F75E4A /* SideBarModel.swift */,
 				191571D0289F12350061510F /* PlaygroundScene.swift */,
 			);
@@ -730,8 +726,6 @@
 			isa = PBXGroup;
 			children = (
 				19A73BEA28A4510E000B74CF /* BadgedViewModel.swift */,
-				19A73BEC28A4530C000B74CF /* TextFieldBadged.swift */,
-				19A73BEE28A454AC000B74CF /* BadgeProtocols.swift */,
 			);
 			path = Badging;
 			sourceTree = "<group>";
@@ -1214,7 +1208,6 @@
 				19BD2A8928ABB72500FCC00A /* Scenarible.swift in Sources */,
 				63E7A74128AFA0D200FB2C80 /* GetPeriodByDateApiWorker.swift in Sources */,
 				63C6D11428B2E1F200887AD1 /* SettingsViewModel.swift in Sources */,
-				19A73BED28A4530C000B74CF /* TextFieldBadged.swift in Sources */,
 				19017B8128A6A39800B06345 /* TransactDetailViewModel.swift in Sources */,
 				63EB469528AC35720070A271 /* HistoryScene.swift in Sources */,
 				63E7A74328AFA35E00FB2C80 /* GetPeriodByDateUseCase.swift in Sources */,
@@ -1244,7 +1237,6 @@
 				197A2DA528A9BF4B00190656 /* SCombo.swift in Sources */,
 				1952EA6B28A71399003F7852 /* DesignElements.swift in Sources */,
 				190BE97B28ADDFC60062CCD5 /* TransactScene.swift in Sources */,
-				19A73BEF28A454AC000B74CF /* BadgeProtocols.swift in Sources */,
 				63CFA198289C3FB6000E4D1E /* GetTransactionsUseCase.swift in Sources */,
 				1977BE5828A7343400D554EA /* InputCheckers.swift in Sources */,
 				19017B7328A69CD400B06345 /* DTLogoTitleX.swift in Sources */,

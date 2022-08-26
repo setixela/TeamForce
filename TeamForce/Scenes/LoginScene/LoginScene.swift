@@ -17,14 +17,14 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
 >, Scenarible {
    //
 
-   private lazy var viewModels = LoginViewModels<Asset>()
+   private lazy var viewModels = LoginViewModels<Design>()
 
    lazy var scenario = LoginScenario(
       works: LoginWorks<Asset>(),
       stateDelegate: viewModels.setState,
       events: LoginScenarioEvents(
-         userNameStringEvent: viewModels.userNameInputModel.textField.onEvent(\.didEditingChanged),
-         smsCodeStringEvent: viewModels.smsCodeInputModel.textField.onEvent(\.didEditingChanged),
+         userNameStringEvent: viewModels.userNameInputModel.mainModel.textField.onEvent(\.didEditingChanged),
+         smsCodeStringEvent: viewModels.smsCodeInputModel.mainModel.textField.onEvent(\.didEditingChanged),
          getCodeButtonEvent: viewModels.getCodeButton.onEvent(\.didTap),
          loginButtonEvent: viewModels.loginButton.onEvent(\.didTap)
       )
@@ -50,6 +50,7 @@ private extension LoginScene {
          .set_arrangedModels([
             viewModels.userNameInputModel,
             viewModels.smsCodeInputModel,
+            Spacer(Design.params.buttonsSpacingY),
             viewModels.getCodeButton,
             viewModels.loginButton,
             Grid.xxx.spacer

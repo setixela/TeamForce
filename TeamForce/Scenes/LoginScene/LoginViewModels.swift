@@ -17,37 +17,48 @@ enum LoginSceneState {
    //
    case smsInputParseSuccess(String)
    case smsInputParseError(String)
+   //
+   case invalidUserName
+   case invalidSmsCode
 }
 
 // MARK: - View models
 
-final class LoginViewModels<Asset: AssetProtocol>: Assetable {
+final class LoginViewModels<Design: DSP>: BaseModel, Designable {
    //
-   lazy var userNameInputModel: IconTextField<Design> = .init()
-      .setMain {
-         $0.set_image(Design.icon.user)
-      } setRight: {
-         $0.set_placeholder(Text.title.userName)
+   lazy var userNameInputModel = TopBadger<IconTextField<Design>>()
+      .set(.badgeLabelStates(Design.state.label.defaultError))
+      .set(.badgeState(.backColor(Design.color.background)))
+      .set(.hideBadge)
+      .set {
+         $0.mainModel.icon.set_image(Design.icon.user)
+         $0.mainModel.textField
+            .set_placeholder(Design.Text.title.userName)
+            .set_placeholderColor(Design.color.textFieldPlaceholder)
       }
 
-   lazy var smsCodeInputModel: IconTextField<Design> = .init()
-      .setAll({
-         $0.set_image(Design.icon.lock)
-         $1.set_placeholder(Text.title.enterSmsCode)
-         $1.set_keyboardType(.numberPad)
-      })
+   lazy var smsCodeInputModel = TopBadger<IconTextField<Design>>()
+      .set(.badgeLabelStates(Design.state.label.defaultError))
+      .set(.badgeState(.backColor(Design.color.background)))
+      .set(.hideBadge)
+      .set {
+         $0.mainModel.icon.set_image(Design.icon.lock)
+         $0.mainModel.textField
+            .set_placeholder(Design.Text.title.enterSmsCode)
+            .set_placeholderColor(Design.color.textFieldPlaceholder)
+            .set_keyboardType(.numberPad)
+      }
 
    lazy var getCodeButton: ButtonModel = Design.button.inactive
-      .set_title(Text.button.getCodeButton)
+      .set_title(Design.Text.button.getCodeButton)
 
    lazy var loginButton: ButtonModel = .init(Design.state.button.inactive)
-      .set(.title(Text.button.enterButton))
+      .set(.title(Design.Text.button.enterButton))
 }
 
 extension LoginViewModels: StateMachine {
    func setState(_ state: LoginSceneState) {
       switch state {
-
       case .inputUserName:
          smsCodeInputModel.set_hidden(true)
          userNameInputModel.set_hidden(false)
@@ -60,20 +71,28 @@ extension LoginViewModels: StateMachine {
          getCodeButton.set_hidden(true)
 
       case .nameInputParseSuccess(let value):
-         userNameInputModel.textField.set_text(value)
-         getCodeButton.set(Asset.Design.state.button.default)
+         userNameInputModel.mainModel.textField.set_text(value)
+         getCodeButton.set(Design.state.button.default)
+         userNameInputModel.set(.hideBadge)
 
       case .nameInputParseError(let value):
-         userNameInputModel.textField.set_text(value)
-         getCodeButton.set(Asset.Design.state.button.inactive)
+         userNameInputModel.mainModel.textField.set_text(value)
+         getCodeButton.set(Design.state.button.inactive)
+         userNameInputModel.set(.hideBadge)
 
       case .smsInputParseSuccess(let value):
-         smsCodeInputModel.textField.set(.text(value))
-         loginButton.set(Asset.Design.state.button.default)
+         smsCodeInputModel.mainModel.textField.set(.text(value))
+         loginButton.set(Design.state.button.default)
 
       case .smsInputParseError(let value):
-         smsCodeInputModel.textField.set(.text(value))
-         loginButton.set(Asset.Design.state.button.inactive)
+         smsCodeInputModel.mainModel.textField.set(.text(value))
+         loginButton.set(Design.state.button.inactive)
+
+      case .invalidUserName:
+         userNameInputModel.set(.presentBadge(" " + Design.Text.title.wrongUsername + " "))
+
+      case .invalidSmsCode:
+         smsCodeInputModel.set(.presentBadge(" " + Design.Text.title.wrongCode + " "))
       }
    }
 }

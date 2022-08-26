@@ -85,6 +85,7 @@ final class TableItemsModel<Design: DSP>: BaseViewModel<UITableView>,
       let presenter = presenters[cellName]
       let modelView = presenter?.viewModel(for: item).uiView ?? UIView()
 
+      cell.backgroundColor = .clear
       cell.contentView.subviews.forEach { $0.removeFromSuperview() }
       cell.contentView.addSubview(modelView)
       modelView.addAnchors.fitToView(cell.contentView)

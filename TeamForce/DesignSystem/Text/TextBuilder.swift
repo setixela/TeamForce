@@ -101,7 +101,7 @@ struct TitleTexts: TitleTextsProtocol {
    var enterTelegramName: String { "Для входа введите имя пользователя" }
    var enterSmsCode: String { "Введите код" }
    var pressGetCode: String { "Для входа нажмите ”получить код”, или смените пользователя" }
-   var userName: String { "Имя пользователя" }
+   var userName: String { "Введите имя пользователя" }
    var smsCode: String { "Код подтверждения" }
    var loginSuccess: String { "Вы успешно зарегистрированы" }
 
