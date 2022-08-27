@@ -6,6 +6,7 @@
 //
 
 import ReactiveWorks
+import SwiftUI
 import UIKit
 
 enum TransactState {
@@ -61,6 +62,10 @@ final class TransactScene<Asset: AssetProtocol>: BaseSceneModel<
    )
 
    private lazy var viewModels = TransactViewModels<Design>()
+   private lazy var closeButton = ButtonModel()
+      .set_title(Design.Text.title.close)
+      .set_textColor(Design.color.textBrand)
+
    private lazy var options = TransactOptionsVM<Design>()
    private lazy var viewModelsWrapper = ScrollViewModelY()
       .set(.spacing(Grid.x16.value))
@@ -87,6 +92,10 @@ final class TransactScene<Asset: AssetProtocol>: BaseSceneModel<
             self?.setToInitialCondition()
             self?.scenario.start()
          }
+
+      closeButton.onEvent(\.didTap) { [weak self] in
+         self?.vcModel?.dismiss(animated: true)
+      }
    }
 
    func configure() {
@@ -96,6 +105,20 @@ final class TransactScene<Asset: AssetProtocol>: BaseSceneModel<
          .set_distribution(.fill)
          .set_alignment(.fill)
          .set_arrangedModels([
+            Wrapped3X(
+               Spacer(50),
+               LabelModel()
+                  .set_alignment(.center)
+                  .set(Design.state.label.body3)
+                  .set_text(Design.Text.title.newTransact),
+               closeButton
+            )
+            .set_height(Grid.x32.value)
+            .set_distribution(.equalCentering)
+            .set_padTop(-Grid.x4.value)
+            .set_padBottom(Grid.x20.value),
+            //            .set_zPosition(1000),
+
             viewModelsWrapper
          ])
 
@@ -135,43 +158,42 @@ extension TransactScene: StateMachine {
       switch state {
       case .initial:
          hideHUD()
-         break
-         //
+      //
       case .loadProfilError:
          break
-         //
+      //
       case .loadTransactionsError:
          break
-         //
+      //
       case .loadTokensSuccess:
          viewModels.userSearchTextField.set_hidden(false)
-         //
+      //
       case .loadTokensError:
          viewModels.userSearchTextField.set_hidden(true)
-         //
+      //
       case .loadBalanceSuccess(let balance):
          viewModels.balanceInfo.models.down.label.set_text(String(balance))
-         //
+      //
       case .loadBalanceError:
          print("balance not loaded")
-         //
+      //
       case .loadUsersListSuccess(let users):
          presentFoundUsers(users: users)
-         //
+      //
       case .loadUsersListError:
          viewModels.foundUsersList.set_hidden(true)
-         //
+      //
       case .presentFoundUser(let users):
          viewModels.foundUsersList.set_hidden(true)
          presentFoundUsers(users: users)
-         //
+      //
       case .presentUsers(let users):
          viewModels.foundUsersList.set_hidden(true)
          presentFoundUsers(users: users)
-         //
+      //
       case .listOfFoundUsers(let users):
          presentFoundUsers(users: users)
-         //
+      //
       case .userSelectedSuccess(_, let index):
          viewModels.userSearchTextField.set_hidden(true)
 
@@ -195,10 +217,10 @@ extension TransactScene: StateMachine {
             self.viewModels.addPhotoButton.set_hidden(false)
             self.mainVM.view.layoutIfNeeded()
          }
-         //
+      //
       case .userSearchTFDidEditingChangedSuccess:
          hideHUD()
-         //
+      //
       case .sendCoinSuccess(let tuple):
          viewModels.transactionStatusView.start()
          guard
@@ -213,10 +235,10 @@ extension TransactScene: StateMachine {
          viewModels.transactionStatusView.onEvent(\.didHide) { [weak self] in
             self?.vcModel?.dismiss(animated: true)
          }
-         //
+      //
       case .sendCoinError:
          presentAlert(text: "Не могу послать деньгу")
-         //
+      //
       case .coinInputSuccess(let text, let isCorrect):
          viewModels.transactInputViewModel.textField.set(.text(text))
          if isCorrect {
@@ -227,7 +249,7 @@ extension TransactScene: StateMachine {
             viewModels.transactInputViewModel.textField.set(.text(text))
             viewModels.sendButton.set(Design.state.button.inactive)
          }
-         //
+      //
       case .reasonInputSuccess(let text, let isCorrect):
          viewModels.reasonTextView.set(.text(text))
          if isCorrect {

@@ -59,6 +59,8 @@ protocol TitleTextsProtocol: InitProtocol {
    var sended: String { get }
 
    // transact
+   var newTransact: String { get }
+   var close: String { get }
    var chooseRecipient: String { get }
    var sendThanks: String { get }
    var availableThanks: String { get }
@@ -114,6 +116,8 @@ struct TitleTexts: TitleTextsProtocol {
    var sended: String { "Распределено" }
 
    // transact
+   var newTransact: String { "Новый перевод" }
+   var close: String { "Закрыть" }
    var chooseRecipient: String { "Выберите получателя" }
    var sendThanks: String { "Перевести спасибок" }
    var availableThanks: String { "Доступно" }

@@ -19,6 +19,7 @@ protocol AssetProtocol: AssetRoot
    Design: DesignProtocol
 {
    static var router: MainRouter<Scene>? { get set }
+   static var globalRetainer: Retainer? { get set }
 
    typealias Asset = Self
    typealias Text = Design.Text

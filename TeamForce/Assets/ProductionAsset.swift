@@ -15,6 +15,7 @@ enum ProductionAsset: AssetProtocol {
    typealias Scene = Scenes
 
    static var router: MainRouter<Scene>? = MainRouter<Scene>()
+   static var globalRetainer: Retainer? = Retainer()
 }
 
 struct Scenes: ScenesProtocol {
@@ -49,4 +50,5 @@ enum MockAsset: AssetProtocol {
    typealias Scene = Scenes
 
    static var router: MainRouter<Scene>? = MainRouter<Scene>()
+   static var globalRetainer: Retainer? = Retainer()
 }
