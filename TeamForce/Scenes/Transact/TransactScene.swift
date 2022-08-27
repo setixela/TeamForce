@@ -117,7 +117,6 @@ final class TransactScene<Asset: AssetProtocol>: BaseSceneModel<
             .set_distribution(.equalCentering)
             .set_padTop(-Grid.x4.value)
             .set_padBottom(Grid.x20.value),
-            //            .set_zPosition(1000),
 
             viewModelsWrapper
          ])
@@ -147,7 +146,7 @@ final class TransactScene<Asset: AssetProtocol>: BaseSceneModel<
    private func clearFields() {
       viewModels.userSearchTextField.set_text("")
       viewModels.transactInputViewModel.textField.set_text("")
-      viewModels.reasonTextView.set(.text(""))
+      viewModels.reasonTextView.set_text("")
    }
 }
 

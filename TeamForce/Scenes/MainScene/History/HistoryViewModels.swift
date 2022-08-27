@@ -9,7 +9,7 @@ import Foundation
 import ReactiveWorks
 import UIKit
 
-final class HistoryViewModels<Design: DesignProtocol>: Designable {
+struct HistoryViewModels<Design: DesignProtocol>: Designable {
    lazy var tableModel = TableItemsModel<Design>()
       .set_backColor(Design.color.background)
 
