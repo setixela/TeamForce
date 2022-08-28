@@ -9,6 +9,10 @@ import ReactiveWorks
 
 struct FeedScenarioInputEvents {
    let loadFeedForCurrentUser: VoidWork<UserData?>
+
+   let presentAllFeed: VoidWork<Void>
+   let presentMyFeed: VoidWork<Void>
+   let presentPublicFeed: VoidWork<Void>
 }
 
 final class FeedScenario<Asset: AssetProtocol>:
@@ -18,6 +22,21 @@ final class FeedScenario<Asset: AssetProtocol>:
       events.loadFeedForCurrentUser
          .doNext(work: works.loadFeedForCurrentUser)
          .onSuccess(setState) { .presentAllFeed($0) }
+         .onFail(setState, .loadFeedError)
+
+      events.presentAllFeed
+         .doNext(work: works.getAllFeed)
+         .onSuccess(setState) { .presentAllFeed($0) }
+         .onFail(setState, .loadFeedError)
+
+      events.presentMyFeed
+         .doNext(work: works.getMyFeed)
+         .onSuccess(setState) { .presentMyFeed($0) }
+         .onFail(setState, .loadFeedError)
+
+      events.presentPublicFeed
+         .doNext(work: works.getPublicFeed)
+         .onSuccess(setState) { .presentPublicFeed($0) }
          .onFail(setState, .loadFeedError)
    }
 }

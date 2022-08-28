@@ -22,7 +22,12 @@ final class FeedScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>,
    lazy var scenario = FeedScenario<Asset>(
       works: FeedWorks<Asset>(),
       stateDelegate: stateDelegate,
-      events: FeedScenarioInputEvents(loadFeedForCurrentUser: onEvent(\.userDidLoad))
+      events: FeedScenarioInputEvents(
+         loadFeedForCurrentUser: onEvent(\.userDidLoad),
+         presentAllFeed: viewModels.filterButtons.buttonAll.onEvent(\.didTap),
+         presentMyFeed: viewModels.filterButtons.buttonMy.onEvent(\.didTap),
+         presentPublicFeed: viewModels.filterButtons.buttonPublic.onEvent(\.didTap)
+      )
    )
 
    private lazy var viewModels = FeedViewModels<Design>()
@@ -48,6 +53,9 @@ final class FeedScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>,
 
 enum FeedSceneState {
    case presentAllFeed([Feed])
+   case presentMyFeed([Feed])
+   case presentPublicFeed([Feed])
+
    case loadFeedError
 }
 
@@ -57,8 +65,11 @@ extension FeedScene: StateMachine {
       case .presentAllFeed(let array):
          viewModels.feedTableModel.set(.items(array + [SpacerItem(size: Grid.x64.value)]))
       case .loadFeedError:
-         break
+         log("Feed Error!")
+      case .presentMyFeed(let array):
+         viewModels.feedTableModel.set(.items(array + [SpacerItem(size: Grid.x64.value)]))
+      case .presentPublicFeed(let array):
+         viewModels.feedTableModel.set(.items(array + [SpacerItem(size: Grid.x64.value)]))
       }
    }
 }
-

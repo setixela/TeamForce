@@ -27,7 +27,7 @@ final class FeedWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedWorksTempStorage
    var loadFeedForCurrentUser: Work<UserData?, [Feed]> { .init { [weak self] work in
       guard
          let user = work.input,
-         let userName = user?.userName
+         let userName = user?.profile.nickName
       else {
          work.fail(())
          return
@@ -45,21 +45,23 @@ final class FeedWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedWorksTempStorage
          }
    }}
 
-   var getAllFeed: VoidWork<[Feed]> { .init { [weak self] work in
+   var getAllFeed: VoidWork<[Feed]> { .init { work in
       work.success(result: Self.store.feed)
 
    }}
 
-   var getMyFeed: VoidWork<[Feed]> { .init { [weak self] work in
+   var getMyFeed: VoidWork<[Feed]> { .init { work in
       let filtered = Self.store.feed.filter {
-         $0.transaction.sender == Self.store.currentUserName
+         let senderName = $0.transaction.sender
+         let myName = Self.store.currentUserName
+         return myName == senderName
       }
       work.success(result: filtered)
    }}
 
-   var getPublicFeed: VoidWork<[Feed]> { .init { [weak self] work in
+   var getPublicFeed: VoidWork<[Feed]> { .init { work in
       let filtered = Self.store.feed.filter {
-         $0.transaction.sender == Self.store.currentUserName
+         $0.transaction.isAnonymous == false
       }
       work.success(result: filtered)
    }}
