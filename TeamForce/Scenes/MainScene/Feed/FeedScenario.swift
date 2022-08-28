@@ -8,19 +8,16 @@
 import ReactiveWorks
 
 struct FeedScenarioInputEvents {
-   let loadFeed: VoidWork<Void>
+   let loadFeedForCurrentUser: VoidWork<UserData?>
 }
 
 final class FeedScenario<Asset: AssetProtocol>:
    BaseScenario<FeedScenarioInputEvents, FeedSceneState, FeedWorks<Asset>>, Assetable
 {
    override func start() {
-      events.loadFeed
-         .doNext(work: works.getFeed)
-         .onSuccess(setState) {
-            .presentAllFeed($0)
-
-         }
+      events.loadFeedForCurrentUser
+         .doNext(work: works.loadFeedForCurrentUser)
+         .onSuccess(setState) { .presentAllFeed($0) }
          .onFail(setState, .loadFeedError)
    }
 }

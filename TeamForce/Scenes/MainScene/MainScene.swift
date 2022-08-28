@@ -18,81 +18,29 @@ final class MainScene<Asset: AssetProtocol>:
       TripleStacksBrandedVM<Asset.Design>,
       Asset,
       Void
-   >
+   >, Scenarible
 {
+   lazy var scenario = MainScenario(
+      works: MainWorks<Asset>(),
+      stateDelegate: stateDelegate,
+      events: MainScenarioInputEvents()
+   )
+
    lazy var balanceViewModel = BalanceViewModel<Asset>()
-//   lazy var transactViewModel = TransactScene<Asset>()
    lazy var historyViewModel = HistoryScene<Asset>()
    lazy var settingsViewModel = SettingsViewModel<Asset>()
-   // lazy var profileViewModel = ProfileViewModel<Asset>()
-
    lazy var feedViewModel = FeedScene<Asset>()
 
    var tabBarPanel: TabBarPanel<Design> { mainVM.footerStack }
 
-   // MARK: - Side bar
-
-   private let menuButton = BarButtonModel()
-
-   private lazy var useCase = Asset.apiUseCase
-
-   private lazy var userProfileApiModel = ProfileApiWorker(apiEngine: Asset.service.apiEngine)
-   private lazy var safeStringStorageModel = StringStorageWorker(engine: Asset.service.safeStringStorage)
+   private var currentUser: UserData?
 
    // MARK: - Start
 
    override func start() {
       mainVM.header.set_text("Баланс")
-      // mainVM.profileButton.set_url(Self.)
 
-      menuButton
-         .sendEvent(\.initWithImage, Design.icon.sideMenu)
-
-      presentModel(balanceViewModel)
-
-      tabBarPanel.button1
-         .onEvent(\.didTap) { [weak self] in
-            self?.unlockTabButtons()
-            self?.mainVM.header.set_text("Лента событий")
-            self?.presentModel(self?.feedViewModel)
-            self?.tabBarPanel.button1.setMode(\.normal)
-         }
-
-      tabBarPanel.button2
-         .onEvent(\.didTap) { [weak self] in
-            self?.unlockTabButtons()
-            self?.mainVM.header.set_text("Баланс")
-            self?.presentModel(self?.balanceViewModel)
-            self?.tabBarPanel.button2.setMode(\.normal)
-         }
-
-      tabBarPanel.buttonMain
-         .onEvent(\.didTap) { [weak self] in
-            Asset.router?.route(\.transaction, navType: .presentModally(.formSheet))
-         }
-
-      tabBarPanel.button3
-         .onEvent(\.didTap) { [weak self] in
-            self?.unlockTabButtons()
-            self?.mainVM.header.set_text("История")
-            self?.presentModel(self?.historyViewModel)
-            self?.tabBarPanel.button3.setMode(\.normal)
-         }
-
-      tabBarPanel.button4
-         .onEvent(\.didTap) { [weak self] in
-            self?.unlockTabButtons()
-            self?.mainVM.header.set_text("Настройки")
-            self?.presentModel(self?.settingsViewModel)
-            self?.tabBarPanel.button4.setMode(\.normal)
-         }
-
-      mainVM.profileButton.onEvent(\.didTap) { [weak self] in
-         // self?.unlockTabButtons()
-         Asset.router?.route(\.profile, navType: .push)
-//         self?.mainVM.header.set_text("Профиль")
-//         self?.presentModel(self?.profileViewModel)
-      }
+      scenario.start()
    }
 
    private func unlockTabButtons() {
@@ -107,24 +55,17 @@ extension MainScene {
    private func presentModel<M: UIViewModel & Communicable>(_ model: M?) where M.Events == MainSceneEvents {
       guard let model = model else { return }
       model.onEvent(\.willEndDragging) { [weak self] velocity in
-         if velocity > 0 {
-            UIView.animate(withDuration: 0.36) {
-               self?.mainVM.setState(.hideHeaderTitle)
-               self?.vcModel?.sendEvent(\.setTitle, "История")
-            }
-
-         } else if velocity < 0 {
-            UIView.animate(withDuration: 0.36) {
-               self?.vcModel?.sendEvent(\.setTitle, "")
-               self?.mainVM.setState(.presentHeaderTitle)
-            }
+         if velocity < 0 {
+            self?.presentHeader()
+         } else if velocity > 0 {
+            self?.hideHeader()
          }
       }
       mainVM.bodyStack
          .set_arrangedModels([
             model
          ])
-      model.sendEvent(\.didAppear)
+      model.sendEvent(\.userDidLoad, currentUser)
    }
 
    private func presentModel<M: UIViewModel>(_ model: M?) {
@@ -135,24 +76,77 @@ extension MainScene {
             model
          ])
    }
+
+   private func presentHeader() {
+      UIView.animate(withDuration: 0.36) {
+         self.mainVM.setState(.hideHeaderTitle)
+         self.vcModel?.sendEvent(\.setTitle, "История")
+      }
+   }
+
+   private func hideHeader() {
+      UIView.animate(withDuration: 0.36) {
+         self.vcModel?.sendEvent(\.setTitle, "")
+         self.mainVM.setState(.presentHeaderTitle)
+      }
+   }
 }
 
-private extension MainScene {
-   func loadProfile() {
-      safeStringStorageModel
-         .doAsync("token")
-         .onFail {
-            print("token not found")
+enum MainSceneState {
+   case profileDidLoad(UserData)
+   case loadProfileError
+}
+
+extension MainScene: StateMachine {
+   func setState(_ state: MainSceneState) {
+      switch state {
+      case .profileDidLoad(let userData):
+         currentUser = userData
+
+         presentModel(balanceViewModel)
+
+         tabBarPanel.button1
+            .onEvent(\.didTap) { [weak self] in
+               self?.unlockTabButtons()
+               self?.mainVM.header.set_text("Лента событий")
+               self?.presentModel(self?.feedViewModel)
+               self?.tabBarPanel.button1.setMode(\.normal)
+            }
+
+         tabBarPanel.button2
+            .onEvent(\.didTap) { [weak self] in
+               self?.unlockTabButtons()
+               self?.mainVM.header.set_text("Баланс")
+               self?.presentModel(self?.balanceViewModel)
+               self?.tabBarPanel.button2.setMode(\.normal)
+            }
+
+         tabBarPanel.buttonMain
+            .onEvent(\.didTap) { [weak self] in
+               Asset.router?.route(\.transaction, navType: .presentModally(.formSheet))
+            }
+
+         tabBarPanel.button3
+            .onEvent(\.didTap) { [weak self] in
+               self?.unlockTabButtons()
+               self?.mainVM.header.set_text("История")
+               self?.presentModel(self?.historyViewModel)
+               self?.tabBarPanel.button3.setMode(\.normal)
+            }
+
+         tabBarPanel.button4
+            .onEvent(\.didTap) { [weak self] in
+               self?.unlockTabButtons()
+               self?.mainVM.header.set_text("Настройки")
+               self?.presentModel(self?.settingsViewModel)
+               self?.tabBarPanel.button4.setMode(\.normal)
+            }
+
+         mainVM.profileButton.onEvent(\.didTap) { [weak self] in
+            Asset.router?.route(\.profile, navType: .push)
          }
-         .doMap {
-            TokenRequest(token: $0)
-         }
-         .doNext(worker: userProfileApiModel)
-         .onSuccess { [weak self] _ in
-//            self?.
-//            self?.setLabels(userData: userData)
-         }.onFail {
-            print("load profile error")
-         }
+      case .loadProfileError:
+         break
+      }
    }
 }

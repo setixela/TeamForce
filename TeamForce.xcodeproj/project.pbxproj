@@ -82,6 +82,8 @@
 		197A361228BBB221006E44C1 /* FeedFilterButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197A361128BBB221006E44C1 /* FeedFilterButtons.swift */; };
 		197A361428BBB25B006E44C1 /* ReactionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197A361328BBB25A006E44C1 /* ReactionButton.swift */; };
 		197A361628BBB282006E44C1 /* String+Random.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197A361528BBB282006E44C1 /* String+Random.swift */; };
+		197A361828BBC9AC006E44C1 /* MainScenario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197A361728BBC9AC006E44C1 /* MainScenario.swift */; };
+		197A361A28BBC9B3006E44C1 /* MainWorks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197A361928BBC9B3006E44C1 /* MainWorks.swift */; };
 		197A771828AD90800082CD81 /* XelaLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197A771728AD90800082CD81 /* XelaLog.swift */; };
 		197A771A28AD90B30082CD81 /* Presenting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197A771928AD90B30082CD81 /* Presenting.swift */; };
 		197A771C28AD91E20082CD81 /* HistoryPresenters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197A771B28AD91E20082CD81 /* HistoryPresenters.swift */; };
@@ -287,6 +289,8 @@
 		197A361128BBB221006E44C1 /* FeedFilterButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedFilterButtons.swift; sourceTree = "<group>"; };
 		197A361328BBB25A006E44C1 /* ReactionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionButton.swift; sourceTree = "<group>"; };
 		197A361528BBB282006E44C1 /* String+Random.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Random.swift"; sourceTree = "<group>"; };
+		197A361728BBC9AC006E44C1 /* MainScenario.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScenario.swift; sourceTree = "<group>"; };
+		197A361928BBC9B3006E44C1 /* MainWorks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWorks.swift; sourceTree = "<group>"; };
 		197A771728AD90800082CD81 /* XelaLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XelaLog.swift; sourceTree = "<group>"; };
 		197A771928AD90B30082CD81 /* Presenting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Presenting.swift; sourceTree = "<group>"; };
 		197A771B28AD91E20082CD81 /* HistoryPresenters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryPresenters.swift; sourceTree = "<group>"; };
@@ -581,6 +585,8 @@
 			isa = PBXGroup;
 			children = (
 				19AE3AEE28691B2E00A0C6E4 /* MainScene.swift */,
+				197A361728BBC9AC006E44C1 /* MainScenario.swift */,
+				197A361928BBC9B3006E44C1 /* MainWorks.swift */,
 				197A360328B90BD3006E44C1 /* MainSceneEvents.swift */,
 				19ACB3CB28A599DF00B5AD71 /* Balance */,
 				19ACB3CD28A599ED00B5AD71 /* Feed */,
@@ -1246,6 +1252,7 @@
 				19EF32B02884B6C80078F53D /* TableViewModel.swift in Sources */,
 				19171F4B28AD23AE000926B1 /* HistoryViewModels.swift in Sources */,
 				19CAB9D128B4265C00A0A3B1 /* TransactOptionsVM.swift in Sources */,
+				197A361828BBC9AC006E44C1 /* MainScenario.swift in Sources */,
 				19C306D828ADF6C2002D5124 /* HistoryCell.swift in Sources */,
 				19CAB9CC28B41CB400A0A3B1 /* TitleBodySwitcherDT.swift in Sources */,
 				19BD2A8928ABB72500FCC00A /* Scenarible.swift in Sources */,
@@ -1298,6 +1305,7 @@
 				19D08357286F41B200F75E4A /* DoubleLabelPairModel.swift in Sources */,
 				1952EA6D28A71537003F7852 /* ButtonElements.swift in Sources */,
 				19DD3D95288766860085CDA8 /* LabelCellModel.swift in Sources */,
+				197A361A28BBC9B3006E44C1 /* MainWorks.swift in Sources */,
 				197A771C28AD91E20082CD81 /* HistoryPresenters.swift in Sources */,
 				63CFA196289C38A9000E4D1E /* GetTransactionsApiWorker.swift in Sources */,
 				197A2DA328A9BF4B00190656 /* Combos+Init.swift in Sources */,

@@ -22,7 +22,7 @@ final class FeedScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>,
    lazy var scenario = FeedScenario<Asset>(
       works: FeedWorks<Asset>(),
       stateDelegate: stateDelegate,
-      events: FeedScenarioInputEvents(loadFeed: onEvent(\.didAppear))
+      events: FeedScenarioInputEvents(loadFeedForCurrentUser: onEvent(\.userDidLoad))
    )
 
    private lazy var viewModels = FeedViewModels<Design>()
@@ -61,3 +61,4 @@ extension FeedScene: StateMachine {
       }
    }
 }
+
