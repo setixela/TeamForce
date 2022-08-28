@@ -11,4 +11,5 @@ import ReactiveWorks
 struct MainSceneEvents: InitProtocol {
    var didScroll: Event<CGFloat>?
    var willEndDragging: Event<CGFloat>?
+   var didAppear: Event<Void>?
 }

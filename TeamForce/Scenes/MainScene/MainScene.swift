@@ -124,6 +124,7 @@ extension MainScene {
          .set_arrangedModels([
             model
          ])
+      model.sendEvent(\.didAppear)
    }
 
    private func presentModel<M: UIViewModel>(_ model: M?) {

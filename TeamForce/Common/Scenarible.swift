@@ -43,7 +43,9 @@ protocol Scenario {
 class BaseScenario<Events, State, Works: TempStorage>: Scenario {
    var works: Works
    var events: Events
-   var setState: (State) -> Void = { _ in log("fuck") }
+   var setState: (State) -> Void = { _ in
+      log("stateDelegate (setState:) did not injected into Scenario")
+   }
 
    required init(works: Works, stateDelegate: ((State) -> Void)? = nil, events: Events) {
       self.events = events
