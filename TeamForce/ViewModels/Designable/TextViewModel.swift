@@ -16,10 +16,12 @@ struct TextViewEvents: InitProtocol {
 final class TextViewModel: BaseViewModel<UITextView>, UITextViewDelegate {
    var events: TextViewEvents = .init()
 
-   private var placeholder: String = "Placeholder"
+   private var placeholder: String = ""
+   private var isPlaceholded = false
 
    override func start() {
       view.delegate = self
+      
    }
 
    @objc func changValue() {
@@ -33,9 +35,11 @@ final class TextViewModel: BaseViewModel<UITextView>, UITextViewDelegate {
    }
 
    func textViewDidBeginEditing(_ textView: UITextView) {
-      if textView.textColor == UIColor.lightGray {
+
+      if textView.text == placeholder {
          textView.text = nil
          textView.textColor = UIColor.black
+         isPlaceholded = false
       }
    }
 
@@ -43,6 +47,7 @@ final class TextViewModel: BaseViewModel<UITextView>, UITextViewDelegate {
       if textView.text.isEmpty {
          textView.text = self.placeholder
          textView.textColor = UIColor.lightGray
+         isPlaceholded = true
       }
    }
 }

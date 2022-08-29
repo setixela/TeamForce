@@ -26,6 +26,7 @@ final class TransactInputViewModel<Design: DesignProtocol>: BaseViewModel<StackV
       .set(Design.state.label.headline2)
       .set(.height(72))
       .set(.placeholder("0"))
+      .set_placeholderColor(Design.color.textSecondary)
       .set(.padding(.init(top: 0, left: 0, bottom: 0, right: 0)))
       .set(.backColor(Design.color.backgroundSecondary))
 
