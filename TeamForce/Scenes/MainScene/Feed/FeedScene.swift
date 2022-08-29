@@ -24,9 +24,9 @@ final class FeedScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>,
       stateDelegate: stateDelegate,
       events: FeedScenarioInputEvents(
          loadFeedForCurrentUser: onEvent(\.userDidLoad),
-         presentAllFeed: viewModels.filterButtons.buttonAll.onEvent(\.didTap),
-         presentMyFeed: viewModels.filterButtons.buttonMy.onEvent(\.didTap),
-         presentPublicFeed: viewModels.filterButtons.buttonPublic.onEvent(\.didTap)
+         presentAllFeed: viewModels.filterButtons.onEvent(\.didTapAll),
+         presentMyFeed: viewModels.filterButtons.onEvent(\.didTapMy),
+         presentPublicFeed: viewModels.filterButtons.onEvent(\.didTapPublic)
       )
    )
 
@@ -52,24 +52,18 @@ final class FeedScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>,
 }
 
 enum FeedSceneState {
-   case presentAllFeed([Feed])
-   case presentMyFeed([Feed])
-   case presentPublicFeed([Feed])
-
+   case presentFeed(([Feed], String))
    case loadFeedError
 }
 
 extension FeedScene: StateMachine {
    func setState(_ state: FeedSceneState) {
       switch state {
-      case .presentAllFeed(let array):
-         viewModels.feedTableModel.set(.items(array + [SpacerItem(size: Grid.x64.value)]))
+      case .presentFeed(let tuple):
+         viewModels.set(.userName(tuple.1))
+         viewModels.feedTableModel.set(.items(tuple.0 + [SpacerItem(size: Grid.x64.value)]))
       case .loadFeedError:
          log("Feed Error!")
-      case .presentMyFeed(let array):
-         viewModels.feedTableModel.set(.items(array + [SpacerItem(size: Grid.x64.value)]))
-      case .presentPublicFeed(let array):
-         viewModels.feedTableModel.set(.items(array + [SpacerItem(size: Grid.x64.value)]))
       }
    }
 }

@@ -124,6 +124,7 @@ enum LabelState {
    case textColor(UIColor)
    case numberOfLines(Int)
    case alignment(NSTextAlignment)
+   case attributedText(NSAttributedString)
    // Padding
    case padding(UIEdgeInsets)
    case padLeft(CGFloat)
@@ -145,6 +146,8 @@ extension ViewModelProtocol where Self: Stateable, View: PaddingLabel {
          set_numberOfLines(value)
       case .alignment(let value):
          set_alignment(value)
+      case .attributedText(let value):
+         set_attributedText(value)
       case .padding(let value):
          set_padding(value)
       case .padLeft(let value):
@@ -329,6 +332,8 @@ extension ViewModelProtocol where Self: Stateable, View: PaddingTextField {
          break
       case .padBottom:
          break
+      case .attributedText(_):
+         break
       }
    }
 }
@@ -376,6 +381,8 @@ extension ViewModelProtocol where Self: Stateable, View: UITextView {
       case .padUp:
          break
       case .padBottom:
+         break
+      case .attributedText(_):
          break
       }
    }

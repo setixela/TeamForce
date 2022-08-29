@@ -9,11 +9,11 @@ import Foundation
 import ReactiveWorks
 
 protocol FeedWorksProtocol {
-   var loadFeedForCurrentUser: Work<UserData?, [Feed]> { get }
+   var loadFeedForCurrentUser: Work<UserData?, Void> { get }
 
-   var getAllFeed: VoidWork<[Feed]> { get }
-   var getMyFeed: VoidWork<[Feed]> { get }
-   var getPublicFeed: VoidWork<[Feed]> { get }
+   var getAllFeed: VoidWork<([Feed], String)> { get }
+   var getMyFeed: VoidWork<([Feed], String)> { get }
+   var getPublicFeed: VoidWork<([Feed], String)> { get }
 }
 
 final class FeedWorksTempStorage: InitProtocol {
@@ -24,7 +24,7 @@ final class FeedWorksTempStorage: InitProtocol {
 final class FeedWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedWorksTempStorage, Asset>, FeedWorksProtocol {
    private lazy var apiUseCase = Asset.apiUseCase
 
-   var loadFeedForCurrentUser: Work<UserData?, [Feed]> { .init { [weak self] work in
+   var loadFeedForCurrentUser: Work<UserData?, Void> { .init { [weak self] work in
       guard
          let user = work.input,
          let userName = user?.profile.nickName
@@ -38,31 +38,32 @@ final class FeedWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedWorksTempStorage
          .doAsync()
          .onSuccess {
             Self.store.feed = $0
-            work.success(result: $0)
+            work.success(result: ())
          }
          .onFail {
             work.fail(())
          }
    }}
 
-   var getAllFeed: VoidWork<[Feed]> { .init { work in
-      work.success(result: Self.store.feed)
+   var getAllFeed: VoidWork<([Feed], String)> { .init { work in
+      work.success(result: (Self.store.feed, Self.store.currentUserName))
 
    }}
 
-   var getMyFeed: VoidWork<[Feed]> { .init { work in
+   var getMyFeed: VoidWork<([Feed], String)> { .init { work in
       let filtered = Self.store.feed.filter {
          let senderName = $0.transaction.sender
+         let recipientName = $0.transaction.recipient
          let myName = Self.store.currentUserName
-         return myName == senderName
+         return myName == senderName || myName == recipientName
       }
-      work.success(result: filtered)
+      work.success(result: (filtered, Self.store.currentUserName))
    }}
 
-   var getPublicFeed: VoidWork<[Feed]> { .init { work in
+   var getPublicFeed: VoidWork<([Feed], String)> { .init { work in
       let filtered = Self.store.feed.filter {
          $0.transaction.isAnonymous == false
       }
-      work.success(result: filtered)
+      work.success(result: (filtered, Self.store.currentUserName))
    }}
 }

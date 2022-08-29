@@ -8,7 +8,11 @@
 import ReactiveWorks
 import UIKit
 
-final class FeedViewModels<Design: DSP>: Designable {
+final class FeedViewModels<Design: DSP>: BaseModel, Designable, Stateable {
+   enum State {
+      case userName(String)
+   }
+
    lazy var filterButtons = FeedFilterButtons<Design>()
 
    lazy var feedTableModel = TableItemsModel<Design>()
@@ -17,6 +21,19 @@ final class FeedViewModels<Design: DSP>: Designable {
          feedCellPresenter,
          SpacerPresenter.presenter
       ]))
+
+   private var userName = ""
+
+   override func start() {
+      filterButtons.buttonAll.setMode(\.selected)
+   }
+
+   func applyState(_ state: State) {
+      switch state {
+      case .userName(let value):
+         userName = value
+      }
+   }
 
    private lazy var feedCellPresenter: Presenter<Feed, WrappedX<StackModel>> = Presenter<Feed, WrappedX<StackModel>> { [weak self] work in
 
@@ -27,44 +44,12 @@ final class FeedViewModels<Design: DSP>: Designable {
       let isPersonal = feed.eventType.isPersonal
       let hasScope = feed.eventType.hasScope
       let isAnonTransact = feed.transaction.isAnonymous
-      let texts = [feed.eventType.name,
-                   feed.transaction.status,
-                   feed.transaction.reason]
 
-      let dateLabel = LabelModel()
-         .set_numberOfLines(0)
-         .set(Design.state.label.caption)
-         .set_textColor(Design.color.textSecondary)
-         .set_text(feed.time.dateConverted + " * " + texts[texts.count - 1])
+      let type = FeedTransactType.make(feed: feed, currentUserName: self.userName)
 
-      let infoLabel = LabelModel()
-         .set_numberOfLines(0)
-         .set(Design.state.label.caption)
-         .set_textColor(
-            Int.random(in: 0 ..< 2) == 1
-               ? Design.color.text
-               : Int.random(in: 0 ..< 2) == 1
-               ? Design.color.textBrand
-               : Design.color.success)
-         .set_text(
-            "@" + feed.transaction.recipient + " \(Int.random(in: 0 ..< 2) == 1 ? "получил" : "отправил") \(feed.transaction.amount) спасибок от \(feed.transaction.sender)" + "\n"
-         )
-
-      let icon = ImageViewModel()
-         .set_image(Design.icon.avatarPlaceholder)
-         .set_size(.square(Grid.x36.value))
-         .set_cornerRadius(Grid.x36.value / 2)
-      if let recipientPhoto = feed.transaction.recipientPhoto {
-         icon.set_url("http://176.99.6.251:8888" + recipientPhoto)
-      } else {
-         if let nameFirstLetter = feed.transaction.recipientFirstName?.first,
-            let surnameFirstLetter = feed.transaction.recipientSurname?.first
-         {
-            let text = String(nameFirstLetter) + String(surnameFirstLetter)
-            let image = text.drawImage(backColor: Design.color.backgroundBrand)
-            icon.set_image(image)
-         }
-      }
+      let dateLabel = self.makeInfoDateLabel(feed: feed)
+      let infoLabel = self.makeInfoLabel(feed: feed, type: type)
+      let icon = self.makeIcon(feed: feed)
 
       let tagBlock = StackModel()
          .set_axis(.horizontal)
@@ -73,19 +58,19 @@ final class FeedViewModels<Design: DSP>: Designable {
       let messageButton = ReactionButton<Design>()
          .setAll {
             $0.set_image(Design.icon.messageCloud)
-            $1.set_text(String.randomInt(500))
+            $1.set_text("0")
          }
 
       let likeButton = ReactionButton<Design>()
          .setAll {
             $0.set_image(Design.icon.like)
-            $1.set_text(String.randomInt(500))
+            $1.set_text("0")
          }
 
       let dislikeButton = ReactionButton<Design>()
          .setAll {
             $0.set_image(Design.icon.dislike)
-            $1.set_text(String.randomInt(500))
+            $1.set_text("0")
          }
 
       let reactionsBlock = StackModel()
@@ -121,6 +106,11 @@ final class FeedViewModels<Design: DSP>: Designable {
             hashTagBlock
          ])
 
+      var backColor = Design.color.background
+      if type == .youGotAmountFromSome || type == .youGotAmountFromAnonym {
+         backColor = Design.color.successSecondary
+      }
+
       let cellStack = WrappedX(
          StackModel()
             .set_padding(.outline(Grid.x8.value))
@@ -131,7 +121,7 @@ final class FeedViewModels<Design: DSP>: Designable {
                icon,
                infoBlock
             ])
-            .set_backColor(Int.random(in: 0 ..< 4) == 1 ? UIColor("#EDF8ED") : Design.color.background)
+            .set_backColor(backColor)
             .set_cornerRadius(Design.params.cornerRadiusSmall)
       )
       .set_padding(.verticalOffset(Grid.x16.value))
@@ -140,7 +130,117 @@ final class FeedViewModels<Design: DSP>: Designable {
    }
 }
 
+fileprivate enum FeedTransactType {
+   static func make(feed: Feed, currentUserName: String) -> Self {
+      if feed.transaction.recipient == currentUserName {
+         if feed.transaction.isAnonymous {
+            return .youGotAmountFromAnonym
+         } else {
+            return .someGotAmountFromSome
+         }
+      }
+      if feed.transaction.isAnonymous {
+         return .someGotAmountFromAnonym
+      }
+      return .someGotAmountFromSome
+   }
+
+   case youGotAmountFromSome
+   case youGotAmountFromAnonym
+
+   case someGotAmountFromSome
+   case someGotAmountFromAnonym
+}
+
 private extension FeedViewModels {
+   func makeInfoDateLabel(feed: Feed) -> LabelModel {
+      let dateAgoText = feed.time.timeAgoConverted
+      let eventText = feed.transaction.isAnonymous ? "" : " • " + "Публичный перевод"
+      let titleText = dateAgoText + eventText
+
+      let dateLabel = LabelModel()
+         .set_numberOfLines(0)
+         .set(Design.state.label.caption)
+         .set_textColor(Design.color.textSecondary)
+         .set_text(titleText)
+
+      return dateLabel
+   }
+
+   func makeInfoLabel(feed: Feed, type: FeedTransactType) -> LabelModel {
+      let recipientName = "@" + feed.transaction.recipient
+      let senderName = "@" + feed.transaction.sender
+      let amountText = "\(feed.transaction.amount)" + " " + "спасибок"
+      let infoText: NSMutableAttributedString = .init(string: "")
+
+      switch type {
+      case .youGotAmountFromSome:
+         infoText.append("Вы получили ".colored(Design.color.text))
+         infoText.append(amountText.colored(Design.color.textSuccess))
+         infoText.append(" от ".colored(Design.color.text))
+         infoText.append(senderName.colored(Design.color.textBrand))
+      case .youGotAmountFromAnonym:
+         infoText.append("Вы получили ".colored(Design.color.text))
+         infoText.append(amountText.colored(Design.color.textSuccess))
+         infoText.append(" от аноним".colored(Design.color.text))
+      case .someGotAmountFromSome:
+         infoText.append(recipientName.colored(Design.color.textBrand))
+         infoText.append(" получил ".colored(Design.color.text))
+         infoText.append(amountText.colored(Design.color.textSuccess))
+         infoText.append(" от ".colored(Design.color.text))
+         infoText.append(senderName.colored(Design.color.textBrand))
+      case .someGotAmountFromAnonym:
+         infoText.append(recipientName.colored(Design.color.textBrand))
+         infoText.append(" получил ".colored(Design.color.text))
+         infoText.append(amountText.colored(Design.color.textSuccess))
+         infoText.append(" от аноним".colored(Design.color.text))
+      }
+
+      let infoLabel = LabelModel()
+         .set_numberOfLines(0)
+         .set(Design.state.label.caption)
+         .set_textColor(Design.color.iconBrand)
+         .set_attributedText(infoText)
+
+      return infoLabel
+   }
+
+   func makeIcon(feed: Feed) -> ImageViewModel {
+      let icon = ImageViewModel()
+         .set_contentMode(.scaleAspectFill)
+         .set_image(Design.icon.avatarPlaceholder)
+         .set_size(.square(Grid.x36.value))
+         .set_cornerRadius(Grid.x36.value / 2)
+      if let recipientPhoto = feed.transaction.recipientPhoto {
+         // TODO: - Ohohoho
+         icon.set_url("http://176.99.6.251:8888" + recipientPhoto)
+      } else {
+         if let nameFirstLetter = feed.transaction.recipientFirstName?.first,
+            let surnameFirstLetter = feed.transaction.recipientSurname?.first
+         {
+            let text = String(nameFirstLetter) + String(surnameFirstLetter)
+            let image = text.drawImage(backColor: Design.color.backgroundBrand)
+            icon
+               .set_backColor(Design.color.backgroundBrand)
+               .set_image(image)
+         }
+      }
+
+      return icon
+   }
+
+   func makeIGet(sender: String, amount: String) -> NSAttributedString {
+      NSAttributedString()
+   }
+
+   func makeSomeGetFromSome(sender: String, recipient: String, amount: String) -> NSAttributedString {
+      NSAttributedString()
+   }
+
+   func makeSomeGetFromAnonym(recipient: String, amount: String) -> NSAttributedString {
+      NSAttributedString()
+   }
+
    var randomButton: LabelModel {
       LabelModel()
          .set(Design.state.label.caption2)
@@ -169,4 +269,11 @@ private extension FeedViewModels {
       Design.Text.button.toTheBeginingButton,
       Design.Text.button.logoutButton
    ] }
+}
+
+extension String {
+   func colored(_ color: UIColor) -> NSAttributedString {
+      let attrStr = NSAttributedString(string: self, attributes: [.foregroundColor: color])
+      return attrStr
+   }
 }

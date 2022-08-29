@@ -241,6 +241,11 @@ extension ViewModelProtocol where Self: Stateable, View: PaddingLabel {
       return self
    }
 
+   @discardableResult func set_attributedText(_ value: NSAttributedString) -> Self {
+      view.attributedText = value
+      return self
+   }
+
    @discardableResult func set_padding(_ value: UIEdgeInsets) -> Self {
       view.padding = value
       return self

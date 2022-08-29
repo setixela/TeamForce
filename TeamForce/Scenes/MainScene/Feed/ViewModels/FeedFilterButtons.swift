@@ -5,26 +5,37 @@
 //  Created by Aleksandr Solovyev on 28.08.2022.
 //
 
-import ReactiveWorks
 import Foundation
+import ReactiveWorks
 
-final class FeedFilterButtons<Design: DSP>: StackModel, Designable {
+final class FeedFilterButtons<Design: DSP>: StackModel, Designable, Communicable {
+   struct Events: InitProtocol {
+      var didTapAll: Event<Void>?
+      var didTapMy: Event<Void>?
+      var didTapPublic: Event<Void>?
+   }
+
+   var events: Events = .init()
+
    lazy var buttonAll = SecondaryButtonDT<Design>()
       .set_title("Все")
       .onEvent(\.didTap) { [weak self] in
          self?.select(0)
+         self?.sendEvent(\.didTapAll)
       }
 
    lazy var buttonMy = SecondaryButtonDT<Design>()
       .set_title("Мои")
       .onEvent(\.didTap) { [weak self] in
          self?.select(1)
+         self?.sendEvent(\.didTapMy)
       }
 
    lazy var buttonPublic = SecondaryButtonDT<Design>()
       .set_title("Публичные")
       .onEvent(\.didTap) { [weak self] in
          self?.select(2)
+         self?.sendEvent(\.didTapPublic)
       }
 
    lazy var buttonCalendar = SecondaryButtonDT<Design>()

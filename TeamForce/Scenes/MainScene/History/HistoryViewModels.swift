@@ -22,7 +22,3 @@ struct HistoryViewModels<Design: DesignProtocol>: Designable {
       ]))
       .set(.selected(0))
 }
-
-
-
-

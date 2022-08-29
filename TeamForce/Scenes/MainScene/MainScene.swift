@@ -55,9 +55,9 @@ extension MainScene {
    private func presentModel<M: UIViewModel & Communicable>(_ model: M?) where M.Events == MainSceneEvents {
       guard let model = model else { return }
       model.onEvent(\.willEndDragging) { [weak self] velocity in
-         if velocity < 0 {
+         if velocity > 0 {
             self?.presentHeader()
-         } else if velocity > 0 {
+         } else if velocity < 0 {
             self?.hideHeader()
          }
       }

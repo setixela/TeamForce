@@ -18,25 +18,28 @@ struct FeedScenarioInputEvents {
 final class FeedScenario<Asset: AssetProtocol>:
    BaseScenario<FeedScenarioInputEvents, FeedSceneState, FeedWorks<Asset>>, Assetable
 {
+   private var userName: String = ""
+
    override func start() {
       events.loadFeedForCurrentUser
          .doNext(work: works.loadFeedForCurrentUser)
-         .onSuccess(setState) { .presentAllFeed($0) }
+         .doNext(work: works.getAllFeed)
+         .onSuccess(setState) { .presentFeed($0) }
          .onFail(setState, .loadFeedError)
 
       events.presentAllFeed
          .doNext(work: works.getAllFeed)
-         .onSuccess(setState) { .presentAllFeed($0) }
+         .onSuccess(setState) { .presentFeed($0) }
          .onFail(setState, .loadFeedError)
 
       events.presentMyFeed
          .doNext(work: works.getMyFeed)
-         .onSuccess(setState) { .presentMyFeed($0) }
+         .onSuccess(setState) { .presentFeed($0) }
          .onFail(setState, .loadFeedError)
 
       events.presentPublicFeed
          .doNext(work: works.getPublicFeed)
-         .onSuccess(setState) { .presentPublicFeed($0) }
+         .onSuccess(setState) { .presentFeed($0) }
          .onFail(setState, .loadFeedError)
    }
 }

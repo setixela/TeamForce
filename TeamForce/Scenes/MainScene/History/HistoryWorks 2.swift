@@ -32,68 +32,59 @@ final class HistoryWorks<Asset: AssetProtocol>: BaseSceneWorks<HistoryWorks.Temp
 
    // MARK: - Works
 
-   var getTransactions: Work<Void, [Transaction]> {
-      .init { [weak self] work in
-         self?.useCase.getTransactions
-            .doAsync()
-            .onSuccess {
-               Self.store.transactions = $0
-               work.success(result: $0)
-            }
-            .onFail {
-               work.fail(())
-            }
-      }
-      .retainBy(retainer)
-   }
-
-   var getTransactionById: Work<Int, Transaction> {
-      .init { [weak self] work in
-         self?.useCase.getTransactionById
-            .doAsync()
-            .onSuccess {
-               Self.store.currentTransaction = $0
-               work.success(result: $0)
-            }
-            .onFail {
-               work.fail(())
-            }
-      }
-      .retainBy(retainer)
-   }
-
-   var getTransactionByRowNumber: Work<(IndexPath, Int), Transaction> {
-      .init { work in
-
-         let segmentId = Self.store.segmentId
-         var filtered: [Transaction] = []
-         if segmentId == 0 { filtered = Self.filteredAll() }
-         else if segmentId == 1 { filtered = Self.filteredRecieved() }
-         else if segmentId == 2 { filtered = Self.filteredSent() }
-
-         if let index = work.input?.1 {
-            let transaction = filtered[index]
-            work.success(result: transaction)
-         } else {
+   lazy var getTransactions = Work<Void, [Transaction]>() { [weak self] work in
+      self?.useCase.getTransactions.work
+         .retainBy(self?.retainer)
+         .doAsync()
+         .onSuccess {
+            Self.store.transactions = $0
+            work.success(result: $0)
+         }
+         .onFail {
             work.fail(())
          }
-      }
-      .retainBy(retainer)
    }
 
-   var loadProfile: Work<Void, Void> {
-      .init { [weak self] work in
-         self?.useCase.loadProfile
-            .doAsync()
-            .onSuccess {
-               Self.store.currentUser = $0.profile.tgName
-               work.success(result: ())
-            }
-            .onFail {
-               work.fail(())
-            }
+   lazy var getTransactionById = Work<Int, Transaction>() { [weak self] work in
+      self?.useCase.getTransactionById.work
+         .retainBy(self?.retainer)
+         .doAsync()
+         .onSuccess {
+            Self.store.currentTransaction = $0
+            work.success(result: $0)
+         }
+         .onFail {
+            work.fail(())
+         }
+   }
+   
+   lazy var getTransactionByRowNumber = Work<(IndexPath, Int), Transaction>() { [weak self] work in
+      
+      let segmentId = Self.store.segmentId
+      var filtered: [Transaction] = []
+      if segmentId == 0 { filtered = Self.filteredAll() }
+      else if segmentId == 1 { filtered = Self.filteredRecieved() }
+      else if segmentId == 2 { filtered = Self.filteredSent() }
+      
+      if let index = work.input?.1 {
+         let transaction = filtered[index]
+         work.success(result: transaction)
+      } else {
+         work.fail(())
       }
-      .retainBy(retainer)
+   }
+
+   lazy var loadProfile = Work<Void, Void>() { [weak self] work in
+      self?.useCase.loadProfile.work
+         .retainBy(self?.retainer)
+         .doAsync()
+         .onSuccess {
+            Self.store.currentUser = $0.profile.tgName
+            work.success(result: ())
+         }
+         .onFail {
+            work.fail(())
+         }
    }
 
    var getAllTransactItems: Work<Void, [TableItemsSection]> {
@@ -101,10 +92,9 @@ final class HistoryWorks<Asset: AssetProtocol>: BaseSceneWorks<HistoryWorks.Temp
          let filtered = Self.filteredAll()
          let items = Self.convertToItems(filtered)
          Self.store.segmentId = 0
-
+         
          $0.success(result: items)
       }
-      .retainBy(retainer)
    }
 
    var getSentTransactItems: Work<Void, [TableItemsSection]> {
@@ -115,7 +105,6 @@ final class HistoryWorks<Asset: AssetProtocol>: BaseSceneWorks<HistoryWorks.Temp
 
          $0.success(result: items)
       }
-      .retainBy(retainer)
    }
 
    var getRecievedTransactItems: Work<Void, [TableItemsSection]> {
@@ -123,10 +112,9 @@ final class HistoryWorks<Asset: AssetProtocol>: BaseSceneWorks<HistoryWorks.Temp
          let filtered = Self.filteredRecieved()
          let items = Self.convertToItems(filtered)
          Self.store.segmentId = 1
-
+         
          $0.success(result: items)
       }
-      .retainBy(retainer)
    }
 }
 
@@ -160,10 +148,8 @@ private extension HistoryWorks {
    }
 
    static func convertToItems(_ filtered: [Transaction]) -> [TableItemsSection] {
-      guard !filtered.isEmpty else { return [] }
-
       var prevDay = ""
-
+      print("Filtered \(filtered[0])")
       return filtered
          .reduce([TableItemsSection]()) { result, transact in
             var state = TransactionItem.State.waiting
@@ -184,13 +170,11 @@ private extension HistoryWorks {
             default:
                state = TransactionItem.State.waiting
             }
-
-            var authorPhoto = transact.recipient?.recipientPhoto
-
             if transact.sender?.senderTgName != Self.store.currentUser {
                state = .recieved
-               authorPhoto = transact.sender?.senderPhoto
             }
+            print(transactionStatus)
+            print(state)
 
             let item = TransactionItem(
                state: state,
@@ -205,9 +189,7 @@ private extension HistoryWorks {
                                                           recipientSurname: nil,
                                                           recipientPhoto: nil),
                amount: transact.amount ?? "",
-               createdAt: transact.createdAt ?? "",
-               photo: authorPhoto,
-               isAnonymous: transact.isAnonymous ?? false
+               createdAt: transact.createdAt ?? ""
             )
 
             var result = result
@@ -221,5 +203,18 @@ private extension HistoryWorks {
             prevDay = currentDay
             return result
          }
+   }
+}
+
+extension String {
+   var dateConverted: String {
+      let inputFormatter = DateFormatter()
+      inputFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+      guard let convertedDate = inputFormatter.date(from: self) else { return "" }
+
+      let outputFormatter = DateFormatter()
+      outputFormatter.dateFormat = "d MMM y"
+
+      return outputFormatter.string(from: convertedDate)
    }
 }
