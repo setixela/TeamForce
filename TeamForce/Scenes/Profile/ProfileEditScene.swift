@@ -1,18 +1,18 @@
 //
-//  ProfileViewModel.swift
+//  ProfileEditScene.swift
 //  TeamForce
 //
-//  Created by Yerzhan Gapurinov on 27.07.2022.
+//  Created by Yerzhan Gapurinov on 30.08.2022.
 //
 
 import ReactiveWorks
 import UIKit
 
-struct ProfileViewEvent: InitProtocol {}
+struct ProfileEditViewEvent: InitProtocol {}
 
-final class ProfileScene<Asset: AssetProtocol>: BaseSceneModel<
+final class ProfileEditScene<Asset: AssetProtocol>: BaseSceneModel<
    DefaultVCModel,
-   TripleStacksBrandedVM<Asset.Design>,
+   DoubleStacksModel,
    Asset,
    Void
 > {
@@ -41,13 +41,13 @@ final class ProfileScene<Asset: AssetProtocol>: BaseSceneModel<
       .set_shadow(Design.params.panelMainButtonShadow)
       .set_height(76)
 
-   lazy var email = SettingsTitleBodyDT<Design>()
+   lazy var email = ProfileEditTitleBodyDT<Design>()
       .setAll {
          $0.set_text("Корпоративная почта")
          $1.set_text("-")
       }
    
-   lazy var phone = SettingsTitleBodyDT<Design>()
+   lazy var phone = ProfileEditTitleBodyDT<Design>()
       .setAll {
          $0.set_text("Мобильный номер")
          $1.set_text("-")
@@ -56,7 +56,7 @@ final class ProfileScene<Asset: AssetProtocol>: BaseSceneModel<
    lazy var infoStack = UserProfileStack<Design>()
       .set_arrangedModels([
          LabelModel()
-            .set_text("ИНФОРМАЦИЯ")
+            .set_text("Контакты")
             .set(Design.state.label.caption2),
          email,
          phone,
@@ -90,15 +90,18 @@ final class ProfileScene<Asset: AssetProtocol>: BaseSceneModel<
          hiredAt,
       ])
    
-   lazy var editButton = Design.button.default
-      .set_title("Edit")
+   lazy var saveButton = Design.button.default
+      .set_title("Сохранить")
 
    // MARK: - Services
 
    private lazy var userProfileApiModel = ProfileApiWorker(apiEngine: Asset.service.apiEngine)
    private lazy var safeStringStorageModel = StringStorageWorker(engine: Asset.service.safeStringStorage)
 
+//   private lazy var works = ProfileEditWorks<Asset>
    private var balance: Balance?
+   
+   private var currentUser: UserData?
 
    override func start() {
       vcModel?.sendEvent(\.setTitle, "Профиль")
@@ -107,28 +110,27 @@ final class ProfileScene<Asset: AssetProtocol>: BaseSceneModel<
    }
 
    private func configure() {
-      mainVM.footerStack.view.removeFromSuperview()
-      mainVM.headerStack.set_arrangedModels([Grid.x128.spacer])
-      mainVM.bodyStack
+      mainVM.topStackModel.set(Design.state.stack.bodyStack)
+      mainVM.topStackModel
          .set(.backColor(Design.color.backgroundSecondary))
          .set(.axis(.vertical))
          .set(.distribution(.fill))
          .set(.alignment(.fill))
-         .set_padTop(-32)
+         //.set_padTop(-32)
          .set(.models([
             userModel,
             Spacer(32),
             infoStack,
             Spacer(8),
             infoStackSecondary,
-            Spacer(8),
-            editButton,
             Grid.xxx.spacer,
          ]))
       
-      editButton.onEvent(\.didTap) {
-         Asset.router?.route(\.profileEdit, navType: .presentModally(.formSheet))
-      }
+      mainVM.bottomStackModel
+         .set(Design.state.stack.bottomPanel)
+         .set_arrangedModels([
+            saveButton
+         ])
    }
 
    private func configureProfile() {
@@ -143,9 +145,32 @@ final class ProfileScene<Asset: AssetProtocol>: BaseSceneModel<
          .doNext(worker: userProfileApiModel)
          .onSuccess { [weak self] userData in
             self?.setLabels(userData: userData)
+            self?.currentUser = userData
          }.onFail {
             print("load profile error")
          }
+   }
+   
+   private func configureButton() {
+//      saveButton.onEvent(\.didTap) {
+//         self.safeStringStorageModel
+//            .doAsync("token")
+//            .onFail {
+//               print("token not found")
+//            }
+//            .doMap {
+//               if let id = self.currentUser?.profile.id {
+//                  UpdateContactRequest(token: $0, id: id, contactId: self.phone.models.down.view.text ?? "77777")
+//               }
+//               
+//            }
+//            .doNext(worker: )
+//            .onSuccess { [weak self] userData in
+//               self?.setLabels(userData: userData)
+//            }.onFail {
+//               print("load profile error")
+//            }
+//      }
    }
 
    private func setLabels(userData: UserData) {
@@ -191,7 +216,7 @@ final class ProfileScene<Asset: AssetProtocol>: BaseSceneModel<
    }
 }
 
-final class SettingsTitleBodyDT<Design: DSP>: TitleSubtitleY<Design> {
+final class ProfileEditTitleBodyDT<Design: DSP>: TitleSubtitleTextFieldY<Design> {
    required init() {
       super.init()
       set_spacing(4)
@@ -205,18 +230,5 @@ final class SettingsTitleBodyDT<Design: DSP>: TitleSubtitleY<Design> {
             .set(Design.state.label.default)
             .set_textColor(Design.color.text)
       }
-   }
-}
-
-final class UserProfileStack<Design: DSP>: StackModel, Designable {
-   override func start() {
-      super.start()
-
-      set_backColor(Design.color.backgroundInfoSecondary)
-      set_padding(.init(top: 16, left: 16, bottom: 16, right: 16))
-      set_cornerRadius(Design.params.cornerRadiusSmall)
-      set_spacing(12)
-      set_distribution(.equalSpacing)
-      set_alignment(.leading)
    }
 }

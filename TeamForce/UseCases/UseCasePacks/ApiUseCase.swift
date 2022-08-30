@@ -177,6 +177,14 @@ final class ApiUseCase<Asset: AssetProtocol>: InitProtocol, Assetable, WorkBaske
       )
       .retainedWork(retainer)
    }
+   
+   var updateContact: UpdateContactUseCase.WRK {
+      UpdateContactUseCase(
+         safeStringStorage: safeStringStorage,
+         updateContactApiWorker: updateContactApiWorker
+      )
+      .retainedWork(retainer)
+   }
 
    // MARK: - Dependencies
 
@@ -199,4 +207,6 @@ final class ApiUseCase<Asset: AssetProtocol>: InitProtocol, Assetable, WorkBaske
    private var getPeriodByDateApiWorker: GetPeriodByDateApiWorker { .init(apiEngine: Asset.service.apiEngine) }
    private var getPeriodsFromDateApiWorker: GetPeriodsFromDateApiWorker { .init(apiEngine: Asset.service.apiEngine) }
    private var updateProfileImageApiWorker: UpdateProfileImageApiWorker { .init(apiEngine: Asset.service.apiEngine) }
+   private var updateContactApiWorker: UpdateContactApiWorker { .init(apiEngine:
+       Asset.service.apiEngine) }
 }

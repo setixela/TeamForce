@@ -145,6 +145,10 @@ extension MainScene: StateMachine {
          mainVM.profileButton.onEvent(\.didTap) { [weak self] in
             Asset.router?.route(\.profile, navType: .push)
          }
+         
+         if let photoUrl = currentUser?.profile.photo {
+            mainVM.profileButton.set_url("http://176.99.6.251:8888" + photoUrl)
+         }
       case .loadProfileError:
          break
       }

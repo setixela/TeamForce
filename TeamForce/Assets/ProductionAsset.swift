@@ -30,6 +30,7 @@ struct Scenes: ScenesProtocol {
    var profile: SceneModelProtocol { ProfileScene<ProductionAsset>() }
    var transaction: SceneModelProtocol { TransactScene<ProductionAsset> () }
    var transactionDetail: SceneModelProtocol { TransactDeatilViewModel<ProductionAsset>() }
+   var profileEdit: SceneModelProtocol { ProfileEditScene<ProductionAsset>() }
 }
 
 struct ProductionService: ServiceProtocol {

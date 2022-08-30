@@ -221,4 +221,46 @@ enum TeamForceEndpoints {
          self.body = body
       }
    }
+   
+   struct UpdateProfile: EndpointProtocol {
+      let method = HTTPMethod.put
+      
+      var endPoint: String = urlBase + "/update-profile-by-user" 
+      
+      var body: [String : Any]
+      
+      var headers: [String : String]
+      
+      init(id: String, headers: [String : String], body: [String : Any]) {
+         endPoint = endPoint + id + "/"
+         self.headers = headers
+         self.body = body
+      }
+   }
+   
+   struct UpdateContact: EndpointProtocol {
+      let method = HTTPMethod.put
+      
+      var endPoint: String = urlBase + "/update-contact-by-user/"
+      
+      var body: [String : Any]
+      
+      var headers: [String : String]
+      
+      init(id: String, headers: [String : String], body: [String : Any]) {
+         endPoint = endPoint + id + "/"
+         self.headers = headers
+         self.body = body
+      }
+   }
+   
+   struct CreateContact: EndpointProtocol {
+      let method = HTTPMethod.post
+      
+      var endPoint: String { urlBase + "/create-contact-by-user/" }
+      
+      let body: [String : Any]
+      
+      let headers: [String : String]
+   }
 }
