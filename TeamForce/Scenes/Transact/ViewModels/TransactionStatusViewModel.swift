@@ -11,6 +11,7 @@ import UIKit
 struct StatusViewInput {
    var sendCoinInfo: SendCoinRequest
    var username: String
+   var foundUser: FoundUser
 }
 
 struct TransactionStatusViewEvents: InitProtocol {
@@ -38,15 +39,23 @@ final class TransactionStatusViewModel<Design: DSP>: BaseViewModel<StackViewExte
          avatar
             .set_size(.square(44))
             .set_cornerRadius(44/2)
+            .set_contentMode(.scaleAspectFill)
          userName
             .set_text("hello")
          nickName
             .set_text("world")
          amount
+            .label
+            .set_textColor(Design.color.textError)
+            .set_text("100")
       }
       .set_padding(.outline(Grid.x16.value))
       .set_cornerRadius(Design.params.cornerRadius)
       .set_shadow(Design.params.cellShadow)
+      .set_borderWidth(1.0)
+      .set_borderColor(.black)
+      .set_alignment(.center)
+      .set_distribution(.equalCentering)
 
    let button = Design.button.default
       .set(.title(Design.Text.button.toTheBeginingButton))
@@ -74,11 +83,36 @@ final class TransactionStatusViewModel<Design: DSP>: BaseViewModel<StackViewExte
       }
    }
 
-   private func setup(info: SendCoinRequest, username: String) {
-
-//      amountLabel.set(.text("-" + info.amount))
-//      reasonLabel.set(.text(info.reason))
-//      recipientLabel.set(.text(TextBuilder.title.recipient + username))
+   func setup(info: SendCoinRequest, username: String, foundUser: FoundUser) {
+      var userIconText: String = ""
+      
+      if let nameFirstLetter = foundUser.name.first,
+         let surnameFirstLetter = foundUser.surname.first {
+         userIconText = String(nameFirstLetter) + String(surnameFirstLetter)
+      }
+      
+      recipientCell.setAll { avatar, userName, nickName, amount in
+         avatar
+            .set_size(.square(44))
+            .set_cornerRadius(44/2)
+         if let urlSuffix = foundUser.photo, urlSuffix.count != 0 {
+            avatar.set_url(TeamForceEndpoints.urlBase + "/media/" + urlSuffix)
+         } else {
+            print("icon text \(userIconText)")
+            let image = userIconText.drawImage(backColor: Design.color.backgroundBrand)
+            avatar
+               .set_backColor(Design.color.backgroundBrand)
+               .set_image(image)
+         }
+         
+         userName
+            .set_text(foundUser.name + " " + foundUser.surname)
+         nickName
+            .set_text("@" + foundUser.tgName)
+         amount.label
+            .set_text("-" + info.amount)
+         amount.models.right.set_image(Design.icon.logoCurrencyRed)
+      }
    }
 }
 

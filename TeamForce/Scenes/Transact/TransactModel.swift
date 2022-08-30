@@ -192,8 +192,10 @@ extension TransactModel: StateMachine {
          applySelectUserMode()
       //
       case .sendCoinSuccess(let tuple):
+         
          let sended = StatusViewInput(sendCoinInfo: tuple.1,
-                                      username: tuple.0)
+                                      username: tuple.0,
+                                      foundUser: self.viewModels.foundUsersList.items.first as! FoundUser)
          sendEvent(\.finishWithSuccess, sended)
          view.removeFromSuperview()
       //
