@@ -38,24 +38,28 @@ final class TransactionStatusViewModel<Design: DSP>: BaseViewModel<StackViewExte
       .setAll { avatar, userName, nickName, amount in
          avatar
             .set_size(.square(44))
-            .set_cornerRadius(44/2)
+            .set_cornerRadius(44 / 2)
             .set_contentMode(.scaleAspectFill)
          userName
-            .set_text("hello")
+            .set(Design.state.label.body4)
+            .set_alignment(.left)
          nickName
-            .set_text("world")
-         amount
-            .label
+            .set(Design.state.label.captionSecondary)
+            .set_alignment(.left)
+         amount.label
+            .set_height(Grid.x32.value)
+            .set(Design.state.label.headline4)
             .set_textColor(Design.color.textError)
-            .set_text("100")
+         amount.currencyLogo
+            .set_width(Grid.x20.value)
       }
       .set_padding(.outline(Grid.x16.value))
+      .set_backColor(Design.color.background)
       .set_cornerRadius(Design.params.cornerRadius)
       .set_shadow(Design.params.cellShadow)
-      .set_borderWidth(1.0)
       .set_borderColor(.black)
       .set_alignment(.center)
-      .set_distribution(.equalCentering)
+      .set_distribution(.equalSpacing)
 
    let button = Design.button.default
       .set(.title(Design.Text.button.toTheBeginingButton))
@@ -84,19 +88,18 @@ final class TransactionStatusViewModel<Design: DSP>: BaseViewModel<StackViewExte
    }
 
    func setup(info: SendCoinRequest, username: String, foundUser: FoundUser) {
-      var userIconText: String = ""
-      
+      var userIconText = ""
+
       if let nameFirstLetter = foundUser.name.first,
-         let surnameFirstLetter = foundUser.surname.first {
+         let surnameFirstLetter = foundUser.surname.first
+      {
          userIconText = String(nameFirstLetter) + String(surnameFirstLetter)
       }
-      
+
       recipientCell.setAll { avatar, userName, nickName, amount in
-         avatar
-            .set_size(.square(44))
-            .set_cornerRadius(44/2)
+
          if let urlSuffix = foundUser.photo, urlSuffix.count != 0 {
-            avatar.set_url(TeamForceEndpoints.urlBase + "/media/" + urlSuffix)
+            avatar.set_url(TeamForceEndpoints.urlMediaBase + urlSuffix)
          } else {
             print("icon text \(userIconText)")
             let image = userIconText.drawImage(backColor: Design.color.backgroundBrand)
@@ -104,20 +107,21 @@ final class TransactionStatusViewModel<Design: DSP>: BaseViewModel<StackViewExte
                .set_backColor(Design.color.backgroundBrand)
                .set_image(image)
          }
-         
+
          userName
             .set_text(foundUser.name + " " + foundUser.surname)
          nickName
             .set_text("@" + foundUser.tgName)
          amount.label
             .set_text("-" + info.amount)
-         amount.models.right.set_image(Design.icon.logoCurrencyRed)
+         amount.models.right
+            .set_image(Design.icon.logoCurrencyRed)
+            .set_imageTintColor(Design.color.iconError)
       }
    }
 }
 
 extension TransactionStatusViewModel {
-
    private func hide() {
       print("\nHIDE\n")
 
@@ -127,6 +131,4 @@ extension TransactionStatusViewModel {
    }
 }
 
-final class SendCoinRecipentCell<Design: DSP>: Combos<SComboMRDR<ImageViewModel, LabelModel, LabelModel, CurrencyLabelDT<Design>>> {
-
-}
+final class SendCoinRecipentCell<Design: DSP>: Combos<SComboMRDR<ImageViewModel, LabelModel, LabelModel, CurrencyLabelDT<Design>>> {}

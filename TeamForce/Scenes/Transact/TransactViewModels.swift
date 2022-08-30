@@ -12,11 +12,14 @@ import UIKit
 final class TransactViewModels<Design: DSP>: Designable {
    //
    lazy var balanceInfo = Combos<SComboMD<LabelModel, CurrencyLabelDT<Design>>>()
-      .setAll { title, _ in
+      .setAll { title, amount in
          title
             .set(Design.state.label.caption)
+            .set_height(Grid.x20.value)
             .set_text("Доступно")
             .set_textColor(Design.color.iconInvert)
+         amount.currencyLogo
+            .set_width(Grid.x20.value)
       }
       .set_alignment(.leading)
       .set_height(Grid.x90.value)
@@ -98,6 +101,7 @@ extension TransactViewModels {
                            let text = String(nameFirstLetter) + String(surnameFirstLetter)
                            let image = text.drawImage(backColor: Design.color.backgroundBrand)
                            avatar
+                              .set_backColor(Design.color.backgroundBrand)
                               .set_image(image)
                         }
                      }

@@ -43,7 +43,7 @@ protocol ScenesProtocol: InitProtocol {
 //   var register: SceneModelProtocol { get }
    var main: SceneModelProtocol { get }
    var profile: SceneModelProtocol { get }
-   var transaction: SceneModelProtocol { get }
+//   var transaction: SceneModelProtocol { get }
 
    // plays
    var playground: SceneModelProtocol { get }

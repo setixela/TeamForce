@@ -13,6 +13,35 @@ struct TransactEvents: InitProtocol {
    var finishWithSuccess: Event<StatusViewInput>?
 }
 
+enum TransactState {
+   case initial
+   case loadProfilError
+   case loadTransactionsError
+
+   case loadTokensSuccess
+   case loadTokensError
+
+   case loadBalanceSuccess(Int)
+   case loadBalanceError
+
+   case loadUsersListSuccess([FoundUser])
+   case loadUsersListError
+
+   case presentFoundUser([FoundUser])
+   case presentUsers([FoundUser])
+   case listOfFoundUsers([FoundUser])
+
+   case userSelectedSuccess(FoundUser, Int)
+
+   case userSearchTFDidEditingChangedSuccess
+
+   case sendCoinSuccess((String, SendCoinRequest))
+   case sendCoinError
+
+   case coinInputSuccess(String, Bool)
+   case reasonInputSuccess(String, Bool)
+}
+
 final class TransactModel<Asset: AssetProtocol>: DoubleStacksModel, Assetable, Scenarible, Communicable {
    typealias State = StackState
 
@@ -43,7 +72,6 @@ final class TransactModel<Asset: AssetProtocol>: DoubleStacksModel, Assetable, S
       .set(.spacing(Grid.x16.value))
       .set(.models([
          viewModels.balanceInfo,
-         viewModels.userSearchTextField,
          viewModels.foundUsersList,
          viewModels.transactInputViewModel,
          viewModels.reasonTextView,
@@ -81,6 +109,7 @@ final class TransactModel<Asset: AssetProtocol>: DoubleStacksModel, Assetable, S
          .set_padding(UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16))
          .set_cornerRadius(Design.params.cornerRadiusMedium)
          .set_arrangedModels([
+            //
             Wrapped3X(
                Spacer(50),
                LabelModel()
@@ -89,11 +118,12 @@ final class TransactModel<Asset: AssetProtocol>: DoubleStacksModel, Assetable, S
                   .set_text(Design.Text.title.newTransact),
                closeButton
             )
-            // .set_height(48)
-            .set_distribution(.equalCentering)
-            .set_padTop(-Grid.x16.value)
-            .set_padBottom(Grid.x16.value),
-
+            .set_height(64)
+            .set_alignment(.center)
+            .set_distribution(.equalCentering),
+            //
+            viewModels.userSearchTextField,
+            Grid.x8.spacer,
             viewModelsWrapper
          ])
 
@@ -173,29 +203,23 @@ extension TransactModel: StateMachine {
             return
          }
 
-         view.layoutIfNeeded()
+         viewModelsWrapper.set(.scrollToTop(animated: true))
 
          UIView.animate(withDuration: 0.1) {
-            self.setToInitialCondition()
-            self.clearFields()
-
             self.viewModels.foundUsersList.set(.removeAllExceptIndex(index))
-
-            self.applyUserSelectedMode()
-
             self.view.layoutIfNeeded()
          } completion: { _ in
-            self.applyUserSelectedMode()
+            self.applyReadyToSendMode()
          }
       //
       case .userSearchTFDidEditingChangedSuccess:
          applySelectUserMode()
       //
       case .sendCoinSuccess(let tuple):
-         
+
          let sended = StatusViewInput(sendCoinInfo: tuple.1,
                                       username: tuple.0,
-                                      foundUser: self.viewModels.foundUsersList.items.first as! FoundUser)
+                                      foundUser: viewModels.foundUsersList.items.first as! FoundUser)
          sendEvent(\.finishWithSuccess, sended)
          view.removeFromSuperview()
       //
@@ -237,7 +261,7 @@ private extension TransactModel {
       bottomStackModel.set_hidden(true)
    }
 
-   func applyUserSelectedMode() {
+   func applyReadyToSendMode() {
       viewModels.balanceInfo.set(.hidden(false))
       viewModels.transactInputViewModel.set(.hidden(false))
       viewModels.reasonTextView.set(.hidden(false))
@@ -265,3 +289,5 @@ extension UIView {
       removeConstraints(constraints)
    }
 }
+
+class ImageLabelLabelMRD: Combos<SComboMRD<ImageViewModel, LabelModel, LabelModel>> {}

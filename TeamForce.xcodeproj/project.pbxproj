@@ -18,7 +18,6 @@
 		19017B8228A6A3FB00B06345 /* GetUsersListApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D419E628A50F730024E22C /* GetUsersListApiWorker.swift */; };
 		190991E628AA9D2A00371909 /* VerifyCodeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190991E528AA9D2A00371909 /* VerifyCodeUseCase.swift */; };
 		190BE97928ADDFAB0062CCD5 /* TransactScenario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190BE97828ADDFAB0062CCD5 /* TransactScenario.swift */; };
-		190BE97B28ADDFC60062CCD5 /* TransactScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190BE97A28ADDFC60062CCD5 /* TransactScene.swift */; };
 		190C1D12285D15FF00FB3518 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190C1D11285D15FF00FB3518 /* AppDelegate.swift */; };
 		190C1D14285D15FF00FB3518 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190C1D13285D15FF00FB3518 /* SceneDelegate.swift */; };
 		190C1D16285D15FF00FB3518 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190C1D15285D15FF00FB3518 /* ViewController.swift */; };
@@ -228,7 +227,6 @@
 		19017B7A28A6A2F900B06345 /* TransactDetailViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactDetailViewModel.swift; sourceTree = "<group>"; };
 		190991E528AA9D2A00371909 /* VerifyCodeUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyCodeUseCase.swift; sourceTree = "<group>"; };
 		190BE97828ADDFAB0062CCD5 /* TransactScenario.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactScenario.swift; sourceTree = "<group>"; };
-		190BE97A28ADDFC60062CCD5 /* TransactScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactScene.swift; sourceTree = "<group>"; };
 		190C1D0E285D15FF00FB3518 /* TeamForce.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TeamForce.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		190C1D11285D15FF00FB3518 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		190C1D13285D15FF00FB3518 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -843,7 +841,6 @@
 		19ACB3CA28A599D600B5AD71 /* Transact */ = {
 			isa = PBXGroup;
 			children = (
-				190BE97A28ADDFC60062CCD5 /* TransactScene.swift */,
 				199E321528BD3A790088BA71 /* TransactModel.swift */,
 				1953DE832879FDE3000DC537 /* TransactViewModels.swift */,
 				190BE97828ADDFAB0062CCD5 /* TransactScenario.swift */,
@@ -1295,7 +1292,6 @@
 				197A360F28BBB1D2006E44C1 /* SecondaryButtonDT.swift in Sources */,
 				197A2DA528A9BF4B00190656 /* SCombo.swift in Sources */,
 				1952EA6B28A71399003F7852 /* DesignElements.swift in Sources */,
-				190BE97B28ADDFC60062CCD5 /* TransactScene.swift in Sources */,
 				63CFA198289C3FB6000E4D1E /* GetTransactionsUseCase.swift in Sources */,
 				1977BE5828A7343400D554EA /* InputCheckers.swift in Sources */,
 				19017B7328A69CD400B06345 /* DTLogoTitleX.swift in Sources */,

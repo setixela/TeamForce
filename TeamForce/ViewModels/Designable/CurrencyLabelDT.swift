@@ -8,9 +8,11 @@
 import ReactiveWorks
 import UIKit
 
+
 class CurrencyLabelDT<Design: DSP>: Combos<SComboMR<LabelModel, ImageViewModel>>, Designable, ButtonTapAnimator {
    //
    var label: LabelModel { models.main }
+   var currencyLogo: ImageViewModel { models.right }
 
    required init() {
       super.init()
@@ -20,10 +22,8 @@ class CurrencyLabelDT<Design: DSP>: Combos<SComboMR<LabelModel, ImageViewModel>>
             .set(Design.state.label.title2)
             .set_text("0")
             .set_textColor(Design.color.iconInvert)
-            .set_height(Grid.x20.value)
          $1
             .set_image(Design.icon.logoCurrency)
-            .set_width(Grid.x20.value)
             .set_imageTintColor(Design.color.iconInvert)
       }
       set_axis(.horizontal)

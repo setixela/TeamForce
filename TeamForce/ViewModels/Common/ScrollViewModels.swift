@@ -11,6 +11,7 @@ import UIKit
 enum ScrollState {
    case models([UIViewModel])
    case spacing(CGFloat)
+   case scrollToTop(animated: Bool)
 }
 
 final class ScrollViewModelY: BaseViewModel<UIScrollView> {
@@ -29,7 +30,6 @@ final class ScrollViewModelY: BaseViewModel<UIScrollView> {
          .trailing(view.trailingAnchor)
          .bottom(view.bottomAnchor)
          .width(view.widthAnchor)
-
    }
 }
 
@@ -42,6 +42,8 @@ extension ScrollViewModelY: Stateable2 {
          }
       case .spacing(let value):
          stack.view.spacing = value
+      case .scrollToTop(let value):
+         view.setContentOffset(.zero, animated: value)
       }
    }
 }
@@ -72,6 +74,8 @@ extension ScrollViewModelX: Stateable2 {
          }
       case .spacing(let value):
          stack.view.spacing = value
+      case .scrollToTop(let value):
+         view.setContentOffset(.zero, animated: value)
       }
    }
 }

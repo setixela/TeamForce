@@ -88,6 +88,7 @@ protocol ColorsProtocol: InitProtocol {
     var iconSecondary: UIColor { get }
     var iconInvert: UIColor { get }
     var iconBrand: UIColor { get }
+    var iconError: UIColor { get }
 
     // Frame cell color
     var frameCellBackground: UIColor { get }
@@ -147,6 +148,7 @@ struct ColorBuilder: ColorsProtocol {
     var iconSecondary: UIColor { Token.contrastSecondary.color }
     var iconInvert: UIColor { Token.negative.color }
     var iconBrand: UIColor { Token.brand.color }
+    var iconError: UIColor { Token.error.color }
 
     // Frame cell color
     var frameCellBackground: UIColor { Token.extra1.color }

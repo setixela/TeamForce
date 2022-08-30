@@ -23,10 +23,12 @@ protocol TypographyElements: InitProtocol, DesignElementable {
    var body1: DesignElement { get }
    var body2: DesignElement { get }
    var body3: DesignElement { get }
+   var body4: DesignElement { get }
 
    var subtitle: DesignElement { get }
 
    var caption: DesignElement { get }
+   var captionSecondary: DesignElement { get }
    var captionError: DesignElement { get }
    var caption2: DesignElement { get }
 
@@ -59,8 +61,11 @@ struct LabelBuilder<Design: DSP>: LabelProtocol, Designable {
    var body1: LabelModel { .init(Design.state.label.body1) }
    var body2: LabelModel { .init(Design.state.label.body2) }
    var body3: LabelModel { .init(Design.state.label.body3) }
+   var body4: LabelModel { .init(Design.state.label.body4) }
 
    var caption: LabelModel { .init(Design.state.label.caption) }
+   var captionSecondary: LabelModel { .init(Design.state.label.captionSecondary) }
+
    var captionError: LabelModel { .init(Design.state.label.captionError)  }
    var caption2: LabelModel { .init(Design.state.label.caption2) }
    var counter: LabelModel { .init(Design.state.label.counter) }
@@ -130,6 +135,11 @@ struct LabelStateBuilder<Design: DSP>: LabelStateProtocol, Designable {
       .textColor(Design.color.text)
    ] }
 
+   var body4: [LabelState] { [
+      .font(.systemFont(ofSize: 16, weight: .medium)),
+      .textColor(Design.color.text)
+   ] }
+
    var subtitle: [LabelState] { [
       .font(.systemFont(ofSize: 16, weight: .regular)),
       .textColor(Design.color.text)
@@ -138,6 +148,11 @@ struct LabelStateBuilder<Design: DSP>: LabelStateProtocol, Designable {
    var caption: [LabelState] { [
       .font(.systemFont(ofSize: 12, weight: .regular)),
       .textColor(Design.color.text)
+   ] }
+
+   var captionSecondary: [LabelState] { [
+      .font(.systemFont(ofSize: 12, weight: .regular)),
+      .textColor(Design.color.textSecondary)
    ] }
 
    var captionError:  [LabelState] { [
