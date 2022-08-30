@@ -204,8 +204,8 @@ private extension HistoryWorks {
                                                           recipientFirstName: nil,
                                                           recipientSurname: nil,
                                                           recipientPhoto: nil),
-               amount: transact.amount ?? "",
-               createdAt: transact.createdAt ?? "",
+               amount: transact.amount.string,
+               createdAt: transact.createdAt.string,
                photo: authorPhoto,
                isAnonymous: transact.isAnonymous ?? false
             )

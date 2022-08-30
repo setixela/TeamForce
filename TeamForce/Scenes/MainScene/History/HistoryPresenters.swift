@@ -28,7 +28,7 @@ struct HistoryPresenters<Design: DesignProtocol>: Designable {
 
          switch item.state {
          case .recieved:
-            userNameText = item.sender.senderTgName ?? ""
+            userNameText = item.sender.senderTgName.string
             statusText = ""
             sumText = "+" + item.amount
             statusColor = .clear
@@ -39,35 +39,35 @@ struct HistoryPresenters<Design: DesignProtocol>: Designable {
             }
 //            image = Design.icon.recieveCoinIcon
          case .waiting:
-            userNameText = item.recipient.recipientTgName ?? ""
+            userNameText = item.recipient.recipientTgName.string
             statusText = "   Выполняется   "
             sumText = "-" + item.amount
             statusColor = Design.color.iconBrand
             statusHidden = false
 //            image = Design.icon.sendCoinIcon
          case .approved:
-            userNameText = item.recipient.recipientTgName ?? ""
+            userNameText = item.recipient.recipientTgName.string
             statusText = "   Выполнен   "
             sumText = "-" + item.amount
             statusColor = Design.color.success
             statusHidden = false
 //            image = Design.icon.sendCoinIcon
          case .cancelled:
-            userNameText = item.recipient.recipientTgName ?? ""
+            userNameText = item.recipient.recipientTgName.string
             statusText = "   Отменен   "
             sumText = "-" + item.amount
             statusColor = Design.color.textSecondary
             statusHidden = false
 //            image = Design.icon.sendCoinIcon
          case .declined:
-            userNameText = item.recipient.recipientTgName ?? ""
+            userNameText = item.recipient.recipientTgName.string
             statusText = "   Отклонен   "
             sumText = "-" + item.amount
             statusColor = Design.color.textError
             statusHidden = false
 //            image = Design.icon.sendCoinIcon
          default:
-            userNameText = item.recipient.recipientTgName ?? ""
+            userNameText = item.recipient.recipientTgName.string
             statusText = "   Выполнен   "
             sumText = "-" + item.amount
             statusColor = Design.color.success

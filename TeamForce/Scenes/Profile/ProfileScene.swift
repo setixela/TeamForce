@@ -151,8 +151,7 @@ final class ProfileScene<Asset: AssetProtocol>: BaseSceneModel<
    private func setLabels(userData: UserData) {
       let profile = userData.profile
       let fullName = profile.surName + " " +
-         profile.firstName + " " +
-      (profile.middleName ?? "")
+         profile.firstName + " " + profile.middleName.string
       userModel.models.right.set_text(fullName)
       userModel.models.down.set_text("@" + profile.tgName)
       if let urlSuffix = profile.photo {
@@ -167,7 +166,7 @@ final class ProfileScene<Asset: AssetProtocol>: BaseSceneModel<
          $1.set_text(profile.department)
       }
       hiredAt.setAll {
-         $1.set_text(profile.hiredAt)
+         $1.set_text(profile.hiredAt.string)
       }
       print("contacts \(profile.contacts)")
       

@@ -137,7 +137,7 @@ final class TransactScene<Asset: AssetProtocol>: DoubleStacksModel, Assetable, S
             viewModels.userSearchTextField,
             Grid.x8.spacer,
 
-            notFoundBlock,
+            notFoundBlock.set_hidden(true),
 
             viewModelsWrapper
          ])
@@ -171,7 +171,7 @@ extension TransactScene: StateMachine {
 
       switch state {
       case .initial:
-         applySelectUserMode()
+         break
       //
       case .loadProfilError:
          break
@@ -214,9 +214,12 @@ extension TransactScene: StateMachine {
          if case .userSelectedSuccess = currentState {
             viewModels.userSearchTextField.set_hidden(false)
             viewModels.foundUsersList.set_hidden(true)
-            setState(.initial)
+            currentState = .initial
+            applySelectUserMode()
             return
          }
+
+         currentState = state
 
          viewModelsWrapper.set(.scrollToTop(animated: true))
          presentBalanceInfo()
@@ -227,6 +230,7 @@ extension TransactScene: StateMachine {
          } completion: { _ in
             self.applyReadyToSendMode()
          }
+
       //
       case .userSearchTFDidEditingChangedSuccess:
          applySelectUserMode()
@@ -262,8 +266,6 @@ extension TransactScene: StateMachine {
             viewModels.sendButton.set(Design.state.button.inactive)
          }
       }
-
-      currentState = state
    }
 }
 
@@ -284,7 +286,6 @@ private extension TransactScene {
    }
 
    func applyReadyToSendMode() {
-      notFoundBlock.set_hidden(true)
       viewModels.transactInputViewModel.set(.hidden(false))
       viewModels.reasonTextView.set(.hidden(false))
       options.set_hidden(false)
@@ -295,12 +296,15 @@ private extension TransactScene {
 
 private extension TransactScene {
    func presentFoundUsers(users: [FoundUser]) {
-      //      options.set(.hidden(true))
       viewModels.foundUsersList.set(.items(users))
       viewModels.foundUsersList.set(.hidden(users.isEmpty ? true : false))
 
       if users.isEmpty {
+         notFoundBlock.set_alpha(0)
          notFoundBlock.set_hidden(false)
+         UIView.animate(withDuration: 0.3) {
+            self.notFoundBlock.set_alpha(1)
+         }
       } else {
          notFoundBlock.set_hidden(true)
       }

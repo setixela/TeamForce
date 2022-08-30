@@ -46,9 +46,10 @@ final class TransactInputViewModel<Design: DesignProtocol>: BaseViewModel<StackV
       .set_contentMode(.scaleAspectFit)
 
    private lazy var currencyButtons = [
-      CurrencyButtonDT<Design>.makeWithValue(50),
-      CurrencyButtonDT<Design>.makeWithValue(100),
-      CurrencyButtonDT<Design>.makeWithValue(500)
+      CurrencyButtonDT<Design>.makeWithValue(1),
+      CurrencyButtonDT<Design>.makeWithValue(5),
+      CurrencyButtonDT<Design>.makeWithValue(10),
+      CurrencyButtonDT<Design>.makeWithValue(25)
    ]
 
    private lazy var currencyButtonsStack = StackModel()

@@ -118,7 +118,7 @@ final class GetTransactionsApiWorker: BaseApiWorker<String, [Transaction]> {
    override func doAsync(work: Wrk) {
       apiEngine?
          .process(endpoint: TeamForceEndpoints.GetTransactions(headers: [
-            "Authorization": work.input ?? "",
+            "Authorization": work.input.string,
          ]))
          .done { result in
             let decoder = DataToDecodableParser()

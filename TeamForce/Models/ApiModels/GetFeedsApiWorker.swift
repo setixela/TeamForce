@@ -75,7 +75,7 @@ final class GetFeedsApiWorker: BaseApiWorker<String, [Feed]> {
    override func doAsync(work: Wrk) {
       apiEngine?
          .process(endpoint: TeamForceEndpoints.Feed(headers: [
-            "Authorization": work.input ?? "",
+            "Authorization": work.input.string,
          ]))
          .done { result in
 //            let str = String(decoding: result.data!, as: UTF8.self)

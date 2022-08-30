@@ -210,7 +210,7 @@ final class ProfileEditScene<Asset: AssetProtocol>: BaseSceneModel<
       let profile = userData.profile
       let fullName = profile.surName + " " +
          profile.firstName + " " +
-         profile.middleName
+         profile.middleName.string
       userModel.models.right.set_text(fullName)
       userModel.models.down.set_text("@" + profile.tgName)
       if let urlSuffix = profile.photo {
@@ -220,7 +220,7 @@ final class ProfileEditScene<Asset: AssetProtocol>: BaseSceneModel<
       // infoStack
       firstname.models.down.set_text(profile.firstName)
       surname.models.down.set_text(profile.surName)
-      middleName.models.down.set_text(profile.middleName)
+      middleName.models.down.set_text(profile.middleName.string)
       
       for contact in profile.contacts {
          switch contact.contactType {
@@ -256,4 +256,8 @@ final class ProfileEditTitleBodyDT<Design: DSP>: TitleSubtitleTextFieldY<Design>
             .set_textColor(Design.color.text)
       }
    }
+}
+
+extension Optional where Wrapped == String {
+   var string: String { self ?? "" }
 }

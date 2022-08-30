@@ -408,7 +408,7 @@ extension ViewModelProtocol where Self: Stateable, View: PaddingTextField {
    }
 
    @discardableResult func set_placeholderColor(_ value: UIColor) -> Self {
-      let placeholder = view.placeholder ?? ""
+      let placeholder = view.placeholder.string
       view.attributedPlaceholder = NSAttributedString(
          string: placeholder,
          attributes: [NSAttributedString.Key.foregroundColor: value]

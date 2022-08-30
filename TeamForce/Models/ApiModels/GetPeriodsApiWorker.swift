@@ -26,7 +26,7 @@ final class GetPeriodsApiWorker: BaseApiWorker<String, [Period]> {
    override func doAsync(work: Wrk) {
       apiEngine?
          .process(endpoint: TeamForceEndpoints.Periods(headers: [
-            "Authorization": work.input ?? "",
+            "Authorization": work.input.string,
          ]))
          .done { result in
             let decoder = DataToDecodableParser()
