@@ -29,3 +29,25 @@ class TitleSubtitleY<Design: DesignProtocol>:
       }
    }
 }
+
+class TitleSubtitleTextFieldY<Design: DesignProtocol>:
+   Combos<SComboMD<LabelModel, TextFieldModel>>,
+   Designable
+{
+   required init() {
+      super.init()
+      
+      setMain {
+         $0
+            .set(Design.state.label.title)
+            .set(.numberOfLines(0))
+            .set(.alignment(.center))
+      } setDown: {
+         $0
+            .set(Design.state.label.subtitle)
+            .set_textColor(Design.color.textSecondary)
+            .set_clearButtonMode(.never)
+            //.set_placeholder()
+      }
+   }
+}

@@ -20,7 +20,6 @@ final class ProfileScene<Asset: AssetProtocol>: BaseSceneModel<
       .setMain { image in
          image
             .set_image(Design.icon.avatarPlaceholder)
-//            .set_url(String.randomUrlImage)
             .set_cornerRadius(52 / 2)
             .set(.size(.square(52)))
       } setRight: { fullName in
@@ -42,44 +41,57 @@ final class ProfileScene<Asset: AssetProtocol>: BaseSceneModel<
       .set_shadow(Design.params.panelMainButtonShadow)
       .set_height(76)
 
+   lazy var email = SettingsTitleBodyDT<Design>()
+      .setAll {
+         $0.set_text("Корпоративная почта")
+         $1.set_text("-")
+      }
+   
+   lazy var phone = SettingsTitleBodyDT<Design>()
+      .setAll {
+         $0.set_text("Мобильный номер")
+         $1.set_text("-")
+      }
+   
    lazy var infoStack = UserProfileStack<Design>()
       .set_arrangedModels([
          LabelModel()
             .set_text("ИНФОРМАЦИЯ")
             .set(Design.state.label.caption2),
-         SettingsTitleBodyDT<Design>()
-            .setAll {
-               $0.set_text("Корпоративная почта")
-               $1.set_text("setixela@gmail.com")
-            },
-         SettingsTitleBodyDT<Design>()
-            .setAll {
-               $0.set_text("Мобильный номер")
-               $1.set_text("+7 (964) 843-69-96")
-            },
+         email,
+         phone,
       ])
 
+   lazy var organization = SettingsTitleBodyDT<Design>()
+      .setAll {
+         $0.set_text("Компания")
+         $1.set_text("-")
+      }
+   
+   lazy var department = SettingsTitleBodyDT<Design>()
+      .setAll {
+         $0.set_text("Подразделение")
+         $1.set_text("-")
+      }
+   
+   lazy var hiredAt = SettingsTitleBodyDT<Design>()
+      .setAll {
+         $0.set_text("Дата начала работы")
+         $1.set_text("-")
+      }
+   
    lazy var infoStackSecondary = UserProfileStack<Design>()
       .set_arrangedModels([
          LabelModel()
             .set_text("МЕСТО РАБОТЫ")
             .set(Design.state.label.caption2),
-         SettingsTitleBodyDT<Design>()
-            .setAll {
-               $0.set_text("Компания")
-               $1.set_text("ООО Тим-Форс")
-            },
-         SettingsTitleBodyDT<Design>()
-            .setAll {
-               $0.set_text("Подразделение")
-               $1.set_text("Мобильная разработка")
-            },
-         SettingsTitleBodyDT<Design>()
-            .setAll {
-               $0.set_text("Дата начала работы")
-               $1.set_text("24.12.2018")
-            },
+         organization,
+         department,
+         hiredAt,
       ])
+   
+   lazy var editButton = Design.button.default
+      .set_title("Edit")
 
    // MARK: - Services
 
@@ -109,8 +121,14 @@ final class ProfileScene<Asset: AssetProtocol>: BaseSceneModel<
             infoStack,
             Spacer(8),
             infoStackSecondary,
+            Spacer(8),
+            editButton,
             Grid.xxx.spacer,
          ]))
+      
+      editButton.onEvent(\.didTap) {
+         Asset.router?.route(\.profileEdit, navType: .presentModally(.formSheet))
+      }
    }
 
    private func configureProfile() {
@@ -138,17 +156,39 @@ final class ProfileScene<Asset: AssetProtocol>: BaseSceneModel<
       userModel.models.right.set_text(fullName)
       userModel.models.down.set_text("@" + profile.tgName)
       if let urlSuffix = profile.photo {
-         userModel.models.main.set_url(TeamForceEndpoints.urlBase + urlSuffix)
-      } 
+         userModel.models.main.set_url("http://176.99.6.251:8888" + urlSuffix)
+      }
+
+      // infoStackSecondary
+      organization.setAll {
+         $1.set_text(profile.organization)
+      }
+      department.setAll {
+         $1.set_text(profile.department)
+      }
+      hiredAt.setAll {
+         $1.set_text(profile.hiredAt)
+      }
+      print("contacts \(profile.contacts)")
       
-      guard !profile.contacts.isEmpty else { return }
-
-//      infoFrame.models.down.set(.text(profile.contacts[0].contactId))
-//      infoFrame.models.down2.set(.text("Нет в базе данных"))
-
-//      secondaryFrame.models.main.set(.text(profile.organization))
-//      secondaryFrame.models.down.set(.text(profile.department))
-//      secondaryFrame.models.down2.set(.text(profile.hiredAt))
+      //infoStack
+      
+      for contact in profile.contacts {
+         switch contact.contactType {
+         case "@":
+            email.setAll {
+               $1.set_text(contact.contactId)
+            }
+         case "P":
+            phone.setAll {
+               $1.set_text(contact.contactId)
+            }
+         case "T":
+            userModel.models.down.set_text("@" + contact.contactId)
+         default:
+            print("Contact error")
+         }
+      }
    }
 }
 

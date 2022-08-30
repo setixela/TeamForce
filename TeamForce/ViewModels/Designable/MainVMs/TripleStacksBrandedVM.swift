@@ -30,6 +30,7 @@ final class TripleStacksBrandedVM<Design: DesignProtocol>:
       .set_cornerRadius(Grid.x36.value / 2)
       .set_borderColor(Design.color.backgroundBrandSecondary.withAlphaComponent(0.85))
       .set_borderWidth(3)
+      .set_backColor(Design.color.background)
 
 
    private lazy var topButtonsStack = StackModel()
