@@ -38,12 +38,17 @@ final class ApiEngine: ApiEngineProtocol {
             request.setValue(value, forHTTPHeaderField: key)
          }
 
-         request.httpBody = params
-            .map { (key: String, value: Any) in
-               key + "=\(value)"
-            }
-            .joined(separator: "&")
-            .data(using: .utf8)
+         if method == .get {
+            request.httpBody = params
+               .map { (key: String, value: Any) in
+                  key + "=\(value)"
+               }
+               .joined(separator: "&")
+               .data(using: .utf8)
+         } else {
+            let jsonData = try? JSONSerialization.data(withJSONObject: params)
+            request.httpBody = jsonData
+         }
 
          let task = URLSession.shared.dataTask(with: request) { data, response, error in
 
