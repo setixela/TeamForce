@@ -134,7 +134,7 @@ final class ProfileScene<Asset: AssetProtocol>: BaseSceneModel<
       let profile = userData.profile
       let fullName = profile.surName + " " +
          profile.firstName + " " +
-         profile.middleName
+      (profile.middleName ?? "")
       userModel.models.right.set_text(fullName)
       userModel.models.down.set_text("@" + profile.tgName)
       if let urlSuffix = profile.photo {

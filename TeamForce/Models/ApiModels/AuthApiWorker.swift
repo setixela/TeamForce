@@ -43,7 +43,7 @@ struct UserData: Codable {
       let hiredAt: String?
       let surName: String
       let firstName: String
-      let middleName: String
+      let middleName: String?
       let nickName: String
 
       enum CodingKeys: String, CodingKey {
