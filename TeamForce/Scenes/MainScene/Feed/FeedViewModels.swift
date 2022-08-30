@@ -211,9 +211,9 @@ private extension FeedViewModels {
          .set_image(Design.icon.avatarPlaceholder)
          .set_size(.square(Grid.x36.value))
          .set_cornerRadius(Grid.x36.value / 2)
-      if let recipientPhoto = feed.transaction.recipientPhoto {
+      if let recipientPhoto = feed.transaction.photoUrl {
          // TODO: - Ohohoho
-         icon.set_url("http://176.99.6.251:8888" + recipientPhoto)
+         icon.set_url(recipientPhoto)
       } else {
          if let nameFirstLetter = feed.transaction.recipientFirstName?.first,
             let surnameFirstLetter = feed.transaction.recipientSurname?.first

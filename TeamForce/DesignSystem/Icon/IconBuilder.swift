@@ -47,8 +47,6 @@ protocol IconElements: InitProtocol, DesignElementable where DesignElement == UI
 
    var introlIllustrate: DesignElement { get }
 
-   var girlOnSkateboard: DesignElement { get }
-
    var sendCoinIcon: DesignElement { get }
    var recieveCoinIcon: DesignElement { get }
 
@@ -59,6 +57,9 @@ protocol IconElements: InitProtocol, DesignElementable where DesignElement == UI
    var tabBarButton2: UIImage { get }
    var tabBarButton3: UIImage { get }
    var tabBarButton4: UIImage { get }
+
+   // transact
+   var transactSuccess: UIImage { get }
 }
 
 struct IconBuilder: IconElements {
@@ -104,8 +105,6 @@ struct IconBuilder: IconElements {
 
    var clapHands: UIImage { make("bloom_woman_and_man_clapped_their_hands_1") }
 
-   var girlOnSkateboard: UIImage { make("girl_on_skateboard") }
-
    var recieveCoinIcon: UIImage { make("recieve_coin_icon") }
    var sendCoinIcon: UIImage { make("send_coin_icon") }
 
@@ -116,6 +115,9 @@ struct IconBuilder: IconElements {
    var tabBarButton2: UIImage { make("dt_bttm_bttn_2") }
    var tabBarButton3: UIImage { make("dt_bttm_bttn_3") }
    var tabBarButton4: UIImage { make("dt_bttm_bttn_4") }
+
+   // transact
+   var transactSuccess: UIImage { make("dt_transact_success") }
 }
 
 private extension IconBuilder {

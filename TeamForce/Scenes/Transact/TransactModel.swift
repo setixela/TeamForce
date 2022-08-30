@@ -1,50 +1,22 @@
 //
-//  TransactScene.swift
+//  TransactModel.swift
 //  TeamForce
 //
-//  Created by Aleksandr Solovyev on 18.08.2022.
+//  Created by Aleksandr Solovyev on 29.08.2022.
 //
 
 import ReactiveWorks
-import SwiftUI
 import UIKit
 
-enum TransactState {
-   case initial
-   case loadProfilError
-   case loadTransactionsError
-
-   case loadTokensSuccess
-   case loadTokensError
-
-   case loadBalanceSuccess(Int)
-   case loadBalanceError
-
-   case loadUsersListSuccess([FoundUser])
-   case loadUsersListError
-
-   case presentFoundUser([FoundUser])
-   case presentUsers([FoundUser])
-   case listOfFoundUsers([FoundUser])
-
-   case userSelectedSuccess(FoundUser, Int)
-
-   case userSearchTFDidEditingChangedSuccess
-
-   case sendCoinSuccess((String, SendCoinRequest))
-   case sendCoinError
-
-   case coinInputSuccess(String, Bool)
-   case reasonInputSuccess(String, Bool)
+struct TransactEvents: InitProtocol {
+   var cancelled: Event<Void>?
+   var finishWithSuccess: Event<StatusViewInput>?
 }
 
-final class TransactScene<Asset: AssetProtocol>: BaseSceneModel<
-   DefaultVCModel,
-   DoubleStacksModel,
-   Asset,
-   Void
->, Scenarible {
+final class TransactModel<Asset: AssetProtocol>: DoubleStacksModel, Assetable, Scenarible, Communicable {
    typealias State = StackState
+
+   var events = TransactEvents()
 
    lazy var scenario = TransactScenario(
       works: TransactWorks<Asset>(),
@@ -76,8 +48,7 @@ final class TransactScene<Asset: AssetProtocol>: BaseSceneModel<
          viewModels.transactInputViewModel,
          viewModels.reasonTextView,
          viewModels.addPhotoButton,
-         options,
-         Grid.x32.spacer
+         options
       ]))
 
    private var currentState = TransactState.initial
@@ -85,25 +56,30 @@ final class TransactScene<Asset: AssetProtocol>: BaseSceneModel<
    // MARK: - Start
 
    override func start() {
+      super.start()
+
       configure()
 
-      vcModel?
-         .onEvent(\.viewWillAppear) { [weak self] in
-            self?.setToInitialCondition()
-            self?.scenario.start()
-         }
-
       closeButton.onEvent(\.didTap) { [weak self] in
-         self?.vcModel?.dismiss(animated: true)
+         self?.sendEvent(\.cancelled)
+         self?.view.removeFromSuperview()
+      }
+
+      view.onEvent(\.willAppear) { [weak self] in
+         self?.setToInitialCondition()
+         self?.scenario.start()
       }
    }
 
    func configure() {
-      mainVM.topStackModel.set(Design.state.stack.bodyStack)
-      mainVM.topStackModel
+      topStackModel
+         .set_safeAreaOffsetDisabled()
          .set_axis(.vertical)
          .set_distribution(.fill)
          .set_alignment(.fill)
+         .set_backColor(Design.color.background)
+         .set_padding(UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16))
+         .set_cornerRadius(Design.params.cornerRadiusMedium)
          .set_arrangedModels([
             Wrapped3X(
                Spacer(50),
@@ -113,15 +89,15 @@ final class TransactScene<Asset: AssetProtocol>: BaseSceneModel<
                   .set_text(Design.Text.title.newTransact),
                closeButton
             )
-            .set_height(Grid.x32.value)
+            // .set_height(48)
             .set_distribution(.equalCentering)
-            .set_padTop(-Grid.x4.value)
-            .set_padBottom(Grid.x20.value),
+            .set_padTop(-Grid.x16.value)
+            .set_padBottom(Grid.x16.value),
 
             viewModelsWrapper
          ])
 
-      mainVM.bottomStackModel
+      bottomStackModel
          .set(Design.state.stack.bottomPanel)
          .set_arrangedModels([
             viewModels.sendButton
@@ -131,16 +107,10 @@ final class TransactScene<Asset: AssetProtocol>: BaseSceneModel<
    private func setToInitialCondition() {
       clearFields()
       scenario.works.reset.doSync()
-      hideViews()
-      viewModels.sendButton.set(Design.state.button.inactive)
-   }
 
-   private func hideViews() {
-      viewModels.transactInputViewModel.set(.hidden(true))
       viewModels.sendButton.set(Design.state.button.inactive)
-      viewModels.reasonTextView.set(.hidden(true))
-      options.set_hidden(true)
-      viewModels.addPhotoButton.set_hidden(true)
+
+      applySelectUserMode()
    }
 
    private func clearFields() {
@@ -150,13 +120,13 @@ final class TransactScene<Asset: AssetProtocol>: BaseSceneModel<
    }
 }
 
-extension TransactScene: StateMachine {
+extension TransactModel: StateMachine {
    func setState(_ state: TransactState) {
       debug(state)
 
       switch state {
       case .initial:
-         hideHUD()
+         applySelectUserMode()
       //
       case .loadProfilError:
          break
@@ -203,37 +173,29 @@ extension TransactScene: StateMachine {
             return
          }
 
-         UIView.animate(withDuration: 0.33) {
+         view.layoutIfNeeded()
+
+         UIView.animate(withDuration: 0.1) {
             self.setToInitialCondition()
             self.clearFields()
 
             self.viewModels.foundUsersList.set(.removeAllExceptIndex(index))
 
-            self.viewModels.userSearchTextField.set_hidden(true)
-            self.viewModels.transactInputViewModel.set_hidden(false)
-            self.viewModels.reasonTextView.set_hidden(false)
-            self.options.set_hidden(false)
-            self.viewModels.addPhotoButton.set_hidden(false)
-            self.mainVM.view.layoutIfNeeded()
+            self.applyUserSelectedMode()
+
+            self.view.layoutIfNeeded()
+         } completion: { _ in
+            self.applyUserSelectedMode()
          }
       //
       case .userSearchTFDidEditingChangedSuccess:
-         hideHUD()
+         applySelectUserMode()
       //
       case .sendCoinSuccess(let tuple):
-         viewModels.transactionStatusView.start()
-//         guard
-//            let superview = vcModel?.view.superview?.superview
-//         else { return }
-//
-//         let input = StatusViewInput(baseView: superview,
-//                                     sendCoinInfo: tuple.1,
-//                                     username: tuple.0)
-//         viewModels.transactionStatusView.sendEvent(\.presentOnScene, input)
-//
-//         viewModels.transactionStatusView.onEvent(\.didHide) { [weak self] in
-//            self?.vcModel?.dismiss(animated: true)
-//         }
+         let sended = StatusViewInput(sendCoinInfo: tuple.1,
+                                      username: tuple.0)
+         sendEvent(\.finishWithSuccess, sended)
+         view.removeFromSuperview()
       //
       case .sendCoinError:
          presentAlert(text: "Не могу послать деньгу")
@@ -263,32 +225,41 @@ extension TransactScene: StateMachine {
    }
 }
 
-private extension TransactScene {
-   func hideHUD() {
+private extension TransactModel {
+   func applySelectUserMode() {
+      viewModels.balanceInfo.set(.hidden(true))
       viewModels.transactInputViewModel.set(.hidden(true))
-      viewModels.sendButton.set(Design.state.button.inactive)
       viewModels.reasonTextView.set(.hidden(true))
       options.set_hidden(true)
       viewModels.addPhotoButton.set_hidden(true)
+      bottomStackModel.set_hidden(true)
    }
 
+   func applyUserSelectedMode() {
+      viewModels.balanceInfo.set(.hidden(false))
+      viewModels.transactInputViewModel.set(.hidden(false))
+      viewModels.reasonTextView.set(.hidden(false))
+      options.set_hidden(false)
+      viewModels.addPhotoButton.set_hidden(false)
+      bottomStackModel.set_hidden(false)
+   }
+}
+
+private extension TransactModel {
    func presentFoundUsers(users: [FoundUser]) {
-//      options.set(.hidden(true))
+      //      options.set(.hidden(true))
       viewModels.foundUsersList.set(.items(users))
       viewModels.foundUsersList.set(.hidden(users.isEmpty ? true : false))
    }
 
-   func presentAlert(text: String) {
-      let alert = UIAlertController(title: "Ошибка",
-                                    message: text,
-                                    preferredStyle: .alert)
-
-      alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"),
-                                    style: .default))
-
-      UIApplication.shared.keyWindow?.rootViewController?
-         .present(alert, animated: true, completion: nil)
-   }
+   func presentAlert(text: String) {}
 }
 
-class ImageLabelLabelMRD: Combos<SComboMRD<ImageViewModel, LabelModel, LabelModel>> {}
+extension UIView {
+   func clearConstraints() {
+//      for subview in self.subviews {
+//         subview.clearConstraints()
+//      }
+      removeConstraints(constraints)
+   }
+}

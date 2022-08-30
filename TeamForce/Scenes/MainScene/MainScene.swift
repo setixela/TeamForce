@@ -31,6 +31,11 @@ final class MainScene<Asset: AssetProtocol>:
    lazy var settingsViewModel = SettingsViewModel<Asset>()
    lazy var feedViewModel = FeedScene<Asset>()
 
+   lazy var transactModel = TransactModel<Asset>()
+//      .onEvent(\.willDisappear) { [weak self] in
+//         self?.vcModel?.view.layoutIfNeeded()
+//      }
+
    var tabBarPanel: TabBarPanel<Design> { mainVM.footerStack }
 
    private var currentUser: UserData?
@@ -75,6 +80,40 @@ extension MainScene {
          .set_arrangedModels([
             model
          ])
+   }
+
+   private func presentBottomPopupModel<M: UIViewModel & Communicable>(_ model: M?) where M.Events == TransactEvents {
+      guard
+         let model = model,
+         let baseView = vcModel?.view
+      else { return }
+
+      let offset: CGFloat = 40
+      let view = model.uiView
+
+      model.onEvent(\.finishWithSuccess) { [weak self] in
+         self?.presentTransactSuccessView($0)
+      }
+
+      baseView.addSubview(view)
+      view.addAnchors.fitToViewInsetted(baseView, .init(top: offset, left: 0, bottom: 0, right: 0))
+   }
+
+   private func presentTransactSuccessView(_ data: StatusViewInput) {
+      let model = TransactionStatusViewModel<Design>()
+      model.onEvent(\.didHide) {
+         print()
+      }
+
+      guard
+         let baseView = vcModel?.view
+      else { return }
+
+      let offset: CGFloat = 40
+      let view = model.uiView
+
+      baseView.addSubview(view)
+      view.addAnchors.fitToViewInsetted(baseView, .init(top: offset, left: 0, bottom: 0, right: 0))
    }
 
    private func presentHeader() {
@@ -123,7 +162,9 @@ extension MainScene: StateMachine {
 
          tabBarPanel.buttonMain
             .onEvent(\.didTap) { [weak self] in
-               Asset.router?.route(\.transaction, navType: .presentModally(.formSheet))
+
+               self?.presentBottomPopupModel(self?.transactModel)
+               // Asset.router?.route(\.transaction, navType: .presentModally(.formSheet))
             }
 
          tabBarPanel.button3
@@ -142,7 +183,7 @@ extension MainScene: StateMachine {
                self?.tabBarPanel.button4.setMode(\.normal)
             }
 
-         mainVM.profileButton.onEvent(\.didTap) { [weak self] in
+         mainVM.profileButton.onEvent(\.didTap) {
             Asset.router?.route(\.profile, navType: .push)
          }
       case .loadProfileError:

@@ -79,7 +79,7 @@ struct HistoryPresenters<Design: DesignProtocol>: Designable {
             .setAll { icon, userAndStatus, sumLabelAndCancelButton in
                if !item.isAnonymous || (item.isAnonymous && item.state != .recieved) {
                   if let urlSuffix = item.photo {
-                     icon.set_url("http://176.99.6.251:8888" + urlSuffix)
+                     icon.set_url(TeamForceEndpoints.urlBase + urlSuffix)
                   } else {
                      let image = userIconText.drawImage(backColor: Design.color.backgroundBrand)
                      icon

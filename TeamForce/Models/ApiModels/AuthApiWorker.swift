@@ -40,7 +40,7 @@ struct UserData: Codable {
       let tgId: String
       let tgName: String
       let photo: String?
-      let hiredAt: String
+      let hiredAt: String?
       let surName: String
       let firstName: String
       let middleName: String

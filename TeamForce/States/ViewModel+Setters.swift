@@ -112,6 +112,14 @@ extension ViewModelProtocol where Self: Stateable {
       return self
    }
 
+   @discardableResult func set_subviewModel(_ value: UIViewModel) -> Self {
+      let subview = value.uiView
+      view.addSubview(subview)
+      subview.addAnchors.fitToView(view)
+
+      return self
+   }
+
    @discardableResult func set_subviewModels(_ value: [UIViewModel]) -> Self {
       value.forEach {
          let subview = $0.uiView

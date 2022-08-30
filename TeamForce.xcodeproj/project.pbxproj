@@ -104,6 +104,7 @@
 		199C4B6B2863292F008AD6FD /* ButtonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199C4B6A2863292F008AD6FD /* ButtonModel.swift */; };
 		199C4B6D2863299E008AD6FD /* DesignSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199C4B6C2863299E008AD6FD /* DesignSystem.swift */; };
 		199E321428BC1A560088BA71 /* String+DateFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199E321328BC1A560088BA71 /* String+DateFormat.swift */; };
+		199E321628BD3A790088BA71 /* TransactModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199E321528BD3A790088BA71 /* TransactModel.swift */; };
 		19A097FE28AEC4C700D8FFF2 /* MemoryLeakTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A097FD28AEC4C700D8FFF2 /* MemoryLeakTests.swift */; };
 		19A73BEB28A4510E000B74CF /* BadgedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A73BEA28A4510E000B74CF /* BadgedViewModel.swift */; };
 		19A8229628A925760081D385 /* ViewModel+Setters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A8229528A925760081D385 /* ViewModel+Setters.swift */; };
@@ -313,6 +314,7 @@
 		199C4B6A2863292F008AD6FD /* ButtonModel.swift */ = {isa = PBXFileReference; indentWidth = 3; lastKnownFileType = sourcecode.swift; path = ButtonModel.swift; sourceTree = "<group>"; tabWidth = 3; };
 		199C4B6C2863299E008AD6FD /* DesignSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignSystem.swift; sourceTree = "<group>"; };
 		199E321328BC1A560088BA71 /* String+DateFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+DateFormat.swift"; sourceTree = "<group>"; };
+		199E321528BD3A790088BA71 /* TransactModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactModel.swift; sourceTree = "<group>"; };
 		19A097FD28AEC4C700D8FFF2 /* MemoryLeakTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryLeakTests.swift; sourceTree = "<group>"; };
 		19A73BEA28A4510E000B74CF /* BadgedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgedViewModel.swift; sourceTree = "<group>"; };
 		19A8229528A925760081D385 /* ViewModel+Setters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewModel+Setters.swift"; sourceTree = "<group>"; };
@@ -833,7 +835,6 @@
 				19DD3D96288A0A8C0085CDA8 /* CoverViewModel.swift */,
 				63E1916C2889519E000FD312 /* BadgeModel.swift */,
 				6368D82B289415EC0049EEAB /* TextViewModel.swift */,
-				63AD437A28992045000511B9 /* TransactionStatusViewModel.swift */,
 				19D08350286F401000F75E4A /* SideBarUserModel.swift */,
 			);
 			path = Designable;
@@ -843,6 +844,7 @@
 			isa = PBXGroup;
 			children = (
 				190BE97A28ADDFC60062CCD5 /* TransactScene.swift */,
+				199E321528BD3A790088BA71 /* TransactModel.swift */,
 				1953DE832879FDE3000DC537 /* TransactViewModels.swift */,
 				190BE97828ADDFAB0062CCD5 /* TransactScenario.swift */,
 				19CF792B28A587B9001531B8 /* TransactWorks.swift */,
@@ -978,6 +980,7 @@
 		19CAB9CF28B4265000A0A3B1 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				63AD437A28992045000511B9 /* TransactionStatusViewModel.swift */,
 				6368D8292894091B0049EEAB /* TransactInputViewModel.swift */,
 				19CAB9D028B4265C00A0A3B1 /* TransactOptionsVM.swift */,
 			);
@@ -1234,6 +1237,7 @@
 				63E7A73F28AF9E8000FB2C80 /* ReadyWorks.swift in Sources */,
 				1953DE88287B4574000DC537 /* Fonts.swift in Sources */,
 				197A2DA228A9BF4B00190656 /* Combos+Configure.swift in Sources */,
+				199E321628BD3A790088BA71 /* TransactModel.swift in Sources */,
 				1952EA6528A7115D003F7852 /* StackStateBuilder.swift in Sources */,
 				19D0835B286F424000F75E4A /* LabelIconX.swift in Sources */,
 				1985A12828B296FB00B017E0 /* SegmentControl.swift in Sources */,

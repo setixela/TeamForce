@@ -88,7 +88,7 @@ extension TransactViewModels {
                         .set_cornerRadius(Grid.x26.value / 2)
                         //.set_url(urlString)
                      if let photo = user.photo, photo.count != 0 {
-                        urlString = "http://176.99.6.251:8888/media/" + photo
+                        urlString = TeamForceEndpoints.urlMediaBase + photo
                         avatar.set_url(urlString)
                         print("hello \(urlString)")
                      } else {

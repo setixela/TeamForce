@@ -13,15 +13,15 @@ struct Feed: Codable {
    let time: String
    let eventType: EventType
    let transaction: Transaction
-   //   let scope: 
-   
+   //   let scope:
+
    struct EventType: Codable {
       let id: Int
       let name: String
       let objectType: String
       let isPersonal: Bool
       let hasScope: Bool
-      
+
       enum CodingKeys: String, CodingKey {
          case id
          case name
@@ -30,7 +30,7 @@ struct Feed: Codable {
          case hasScope = "has_scope"
       }
    }
-   
+
    struct Transaction: Codable {
       let id: Int
       let sender: String
@@ -42,7 +42,7 @@ struct Feed: Codable {
       let recipientPhoto: String?
       let recipientFirstName: String?
       let recipientSurname: String?
-      
+
       enum CodingKeys: String, CodingKey {
          case id
          case sender
@@ -55,8 +55,14 @@ struct Feed: Codable {
          case recipientFirstName = "recipient_first_name"
          case recipientSurname = "recipient_surname"
       }
+
+      var photoUrl: String? {
+         guard let photo = recipientPhoto else { return nil }
+
+         return TeamForceEndpoints.urlBase + photo
+      }
    }
-   
+
    enum CodingKeys: String, CodingKey {
       case id
       case time

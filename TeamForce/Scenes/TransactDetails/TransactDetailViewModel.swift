@@ -157,7 +157,7 @@ final class TransactDeatilViewModel<Asset: AssetProtocol>: BaseSceneModel<
          .set(.text(input.reason ?? ""))
       
       if let urlSuffix = input.photo {
-         let urlString = "http://176.99.6.251:8888" + urlSuffix
+         let urlString = TeamForceEndpoints.urlBase + urlSuffix
          image.subModel.set_url(urlString)
       }
 

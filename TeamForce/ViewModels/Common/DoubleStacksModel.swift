@@ -8,7 +8,7 @@
 import UIKit
 import ReactiveWorks
 
-final class DoubleStacksModel: BaseViewModel<StackViewExtended> {
+class DoubleStacksModel: BaseViewModel<StackViewExtended> {
     let topStackModel = StackModel(.axis(.vertical),
                                    .alignment(.fill),
                                    .distribution(.fill))
