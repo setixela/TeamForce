@@ -43,7 +43,6 @@
 		1952EA6928A711F2003F7852 /* Associated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1952EA6828A711F2003F7852 /* Associated.swift */; };
 		1952EA6B28A71399003F7852 /* DesignElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1952EA6A28A71399003F7852 /* DesignElements.swift */; };
 		1952EA6D28A71537003F7852 /* ButtonElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1952EA6C28A71537003F7852 /* ButtonElements.swift */; };
-		1952EA6F28A71590003F7852 /* IconElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1952EA6E28A71590003F7852 /* IconElements.swift */; };
 		1952EA7128A718AE003F7852 /* Params.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1952EA7028A718AE003F7852 /* Params.swift */; };
 		1953DE7F2878BCB5000DC537 /* SwiftKeychainWrapper in Frameworks */ = {isa = PBXBuildFile; productRef = 1953DE7E2878BCB5000DC537 /* SwiftKeychainWrapper */; };
 		1953DE812879FC55000DC537 /* SearchUserApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1953DE802879FC55000DC537 /* SearchUserApiWorker.swift */; };
@@ -103,7 +102,7 @@
 		199C4B6B2863292F008AD6FD /* ButtonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199C4B6A2863292F008AD6FD /* ButtonModel.swift */; };
 		199C4B6D2863299E008AD6FD /* DesignSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199C4B6C2863299E008AD6FD /* DesignSystem.swift */; };
 		199E321428BC1A560088BA71 /* String+DateFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199E321328BC1A560088BA71 /* String+DateFormat.swift */; };
-		199E321628BD3A790088BA71 /* TransactModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199E321528BD3A790088BA71 /* TransactModel.swift */; };
+		199E321628BD3A790088BA71 /* TransactScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199E321528BD3A790088BA71 /* TransactScene.swift */; };
 		19A097FE28AEC4C700D8FFF2 /* MemoryLeakTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A097FD28AEC4C700D8FFF2 /* MemoryLeakTests.swift */; };
 		19A73BEB28A4510E000B74CF /* BadgedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A73BEA28A4510E000B74CF /* BadgedViewModel.swift */; };
 		19A8229628A925760081D385 /* ViewModel+Setters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A8229528A925760081D385 /* ViewModel+Setters.swift */; };
@@ -254,7 +253,6 @@
 		1952EA6828A711F2003F7852 /* Associated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Associated.swift; sourceTree = "<group>"; };
 		1952EA6A28A71399003F7852 /* DesignElements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignElements.swift; sourceTree = "<group>"; };
 		1952EA6C28A71537003F7852 /* ButtonElements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonElements.swift; sourceTree = "<group>"; };
-		1952EA6E28A71590003F7852 /* IconElements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconElements.swift; sourceTree = "<group>"; };
 		1952EA7028A718AE003F7852 /* Params.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Params.swift; sourceTree = "<group>"; };
 		1953DE802879FC55000DC537 /* SearchUserApiWorker.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = SearchUserApiWorker.swift; sourceTree = "<group>"; tabWidth = 2; };
 		1953DE832879FDE3000DC537 /* TransactViewModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactViewModels.swift; sourceTree = "<group>"; };
@@ -312,7 +310,7 @@
 		199C4B6A2863292F008AD6FD /* ButtonModel.swift */ = {isa = PBXFileReference; indentWidth = 3; lastKnownFileType = sourcecode.swift; path = ButtonModel.swift; sourceTree = "<group>"; tabWidth = 3; };
 		199C4B6C2863299E008AD6FD /* DesignSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignSystem.swift; sourceTree = "<group>"; };
 		199E321328BC1A560088BA71 /* String+DateFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+DateFormat.swift"; sourceTree = "<group>"; };
-		199E321528BD3A790088BA71 /* TransactModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactModel.swift; sourceTree = "<group>"; };
+		199E321528BD3A790088BA71 /* TransactScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactScene.swift; sourceTree = "<group>"; };
 		19A097FD28AEC4C700D8FFF2 /* MemoryLeakTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryLeakTests.swift; sourceTree = "<group>"; };
 		19A73BEA28A4510E000B74CF /* BadgedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgedViewModel.swift; sourceTree = "<group>"; };
 		19A8229528A925760081D385 /* ViewModel+Setters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewModel+Setters.swift"; sourceTree = "<group>"; };
@@ -457,7 +455,6 @@
 		19017B8828A6FFA000B06345 /* Icon */ = {
 			isa = PBXGroup;
 			children = (
-				1952EA6E28A71590003F7852 /* IconElements.swift */,
 				191B0C262865E5C1001CF3D9 /* IconBuilder.swift */,
 			);
 			path = Icon;
@@ -841,7 +838,7 @@
 		19ACB3CA28A599D600B5AD71 /* Transact */ = {
 			isa = PBXGroup;
 			children = (
-				199E321528BD3A790088BA71 /* TransactModel.swift */,
+				199E321528BD3A790088BA71 /* TransactScene.swift */,
 				1953DE832879FDE3000DC537 /* TransactViewModels.swift */,
 				190BE97828ADDFAB0062CCD5 /* TransactScenario.swift */,
 				19CF792B28A587B9001531B8 /* TransactWorks.swift */,
@@ -1234,7 +1231,7 @@
 				63E7A73F28AF9E8000FB2C80 /* ReadyWorks.swift in Sources */,
 				1953DE88287B4574000DC537 /* Fonts.swift in Sources */,
 				197A2DA228A9BF4B00190656 /* Combos+Configure.swift in Sources */,
-				199E321628BD3A790088BA71 /* TransactModel.swift in Sources */,
+				199E321628BD3A790088BA71 /* TransactScene.swift in Sources */,
 				1952EA6528A7115D003F7852 /* StackStateBuilder.swift in Sources */,
 				19D0835B286F424000F75E4A /* LabelIconX.swift in Sources */,
 				1985A12828B296FB00B017E0 /* SegmentControl.swift in Sources */,
@@ -1396,7 +1393,6 @@
 				6368D8222891508C0049EEAB /* ProfileScene.swift in Sources */,
 				198FE1C92899994A00BAF1A5 /* LoginUseCase.swift in Sources */,
 				1952EA7128A718AE003F7852 /* Params.swift in Sources */,
-				1952EA6F28A71590003F7852 /* IconElements.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

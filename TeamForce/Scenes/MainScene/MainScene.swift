@@ -31,7 +31,7 @@ final class MainScene<Asset: AssetProtocol>:
    lazy var settingsViewModel = SettingsViewModel<Asset>()
    lazy var feedViewModel = FeedScene<Asset>()
 
-   lazy var transactModel = TransactModel<Asset>()
+   lazy var transactModel = TransactScene<Asset>()
 //      .onEvent(\.willDisappear) { [weak self] in
 //         self?.vcModel?.view.layoutIfNeeded()
 //      }

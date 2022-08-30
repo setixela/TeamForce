@@ -56,6 +56,7 @@ final class TransactScenario<Asset: AssetProtocol>:
          }
          .doRecover(works.searchUser)
          .onSuccess(setState) { .listOfFoundUsers($0) }
+         .onFail(setState) { .loadUsersListError }
 
       events.userSelected
          .doSaveResult()

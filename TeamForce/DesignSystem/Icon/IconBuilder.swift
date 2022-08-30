@@ -61,6 +61,7 @@ protocol IconElements: InitProtocol, DesignElementable where DesignElement == UI
 
    // transact
    var transactSuccess: UIImage { get }
+   var userNotFound: UIImage { get }
 }
 
 struct IconBuilder: IconElements {
@@ -120,6 +121,7 @@ struct IconBuilder: IconElements {
 
    // transact
    var transactSuccess: UIImage { make("dt_transact_success") }
+   var userNotFound: UIImage { make("dt_not_found") }
 }
 
 private extension IconBuilder {

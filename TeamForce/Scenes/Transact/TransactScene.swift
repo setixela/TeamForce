@@ -42,7 +42,7 @@ enum TransactState {
    case reasonInputSuccess(String, Bool)
 }
 
-final class TransactModel<Asset: AssetProtocol>: DoubleStacksModel, Assetable, Scenarible, Communicable {
+final class TransactScene<Asset: AssetProtocol>: DoubleStacksModel, Assetable, Scenarible, Communicable {
    typealias State = StackState
 
    var events = TransactEvents()
@@ -79,6 +79,16 @@ final class TransactModel<Asset: AssetProtocol>: DoubleStacksModel, Assetable, S
          options
       ]))
 
+   private lazy var notFoundBlock = Wrapped2Y(
+      ImageViewModel()
+         .set_image(Design.icon.userNotFound)
+         .set_size(.square(275)),
+      Design.label.body1
+         .set_numberOfLines(0)
+         .set_alignment(.center)
+         .set_text(Design.Text.title.userNotFound)
+   )
+
    private var currentState = TransactState.initial
 
    // MARK: - Start
@@ -97,6 +107,8 @@ final class TransactModel<Asset: AssetProtocol>: DoubleStacksModel, Assetable, S
          self?.setToInitialCondition()
          self?.scenario.start()
       }
+
+      setState(.initial)
    }
 
    func configure() {
@@ -124,6 +136,9 @@ final class TransactModel<Asset: AssetProtocol>: DoubleStacksModel, Assetable, S
             //
             viewModels.userSearchTextField,
             Grid.x8.spacer,
+
+            notFoundBlock,
+
             viewModelsWrapper
          ])
 
@@ -150,7 +165,7 @@ final class TransactModel<Asset: AssetProtocol>: DoubleStacksModel, Assetable, S
    }
 }
 
-extension TransactModel: StateMachine {
+extension TransactScene: StateMachine {
    func setState(_ state: TransactState) {
       debug(state)
 
@@ -252,7 +267,7 @@ extension TransactModel: StateMachine {
    }
 }
 
-private extension TransactModel {
+private extension TransactScene {
    func applySelectUserMode() {
       viewModels.balanceInfo.set(.hidden(true))
       viewModels.transactInputViewModel.set(.hidden(true))
@@ -260,13 +275,16 @@ private extension TransactModel {
       options.set_hidden(true)
       viewModels.addPhotoButton.set_hidden(true)
       bottomStackModel.set_hidden(true)
+      notFoundBlock.set_hidden(true)
    }
 
    func presentBalanceInfo() {
+      notFoundBlock.set_hidden(true)
       viewModels.balanceInfo.set(.hidden(false))
    }
 
    func applyReadyToSendMode() {
+      notFoundBlock.set_hidden(true)
       viewModels.transactInputViewModel.set(.hidden(false))
       viewModels.reasonTextView.set(.hidden(false))
       options.set_hidden(false)
@@ -275,11 +293,17 @@ private extension TransactModel {
    }
 }
 
-private extension TransactModel {
+private extension TransactScene {
    func presentFoundUsers(users: [FoundUser]) {
       //      options.set(.hidden(true))
       viewModels.foundUsersList.set(.items(users))
       viewModels.foundUsersList.set(.hidden(users.isEmpty ? true : false))
+
+      if users.isEmpty {
+         notFoundBlock.set_hidden(false)
+      } else {
+         notFoundBlock.set_hidden(true)
+      }
    }
 
    func presentAlert(text: String) {}
