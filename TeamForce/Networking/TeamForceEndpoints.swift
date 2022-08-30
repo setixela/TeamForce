@@ -239,7 +239,7 @@ enum TeamForceEndpoints {
    }
    
    struct UpdateContact: EndpointProtocol {
-      let method = HTTPMethod.put
+      let method = HTTPMethod.patch
       
       var endPoint: String = urlBase + "/update-contact-by-user/"
       

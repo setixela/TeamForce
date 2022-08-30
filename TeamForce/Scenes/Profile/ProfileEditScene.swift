@@ -41,55 +41,84 @@ final class ProfileEditScene<Asset: AssetProtocol>: BaseSceneModel<
       .set_shadow(Design.params.panelMainButtonShadow)
       .set_height(76)
 
+   lazy var firstname = ProfileEditTitleBodyDT<Design>()
+      .setAll {
+         $0.set_text("Имя")
+         $1
+            .set_placeholder("Имя")
+            .set_backColor(.clear)
+      }
+      .set_borderColor(Design.color.textSecondary)
+      .set_borderWidth(1.0)
+      .set_padding(Design.params.contentPadding)
+      .set_cornerRadius(Design.params.cornerRadius)
+      .set_alignment(.fill)
+   
+   lazy var surname = ProfileEditTitleBodyDT<Design>()
+      .setAll {
+         $0.set_text("Фамилия")
+         $1
+            .set_placeholder("Фамилия")
+            .set_backColor(.clear)
+      }
+      .set_borderColor(Design.color.textSecondary)
+      .set_borderWidth(1.0)
+      .set_padding(Design.params.contentPadding)
+      .set_cornerRadius(Design.params.cornerRadius)
+      .set_alignment(.fill)
+   
+   lazy var middleName = ProfileEditTitleBodyDT<Design>()
+      .setAll {
+         $0.set_text("Отчество")
+         $1
+            .set_placeholder("Отчество")
+            .set_backColor(.clear)
+      }
+      .set_borderColor(Design.color.textSecondary)
+      .set_borderWidth(1.0)
+      .set_padding(Design.params.contentPadding)
+      .set_cornerRadius(Design.params.cornerRadius)
+      .set_alignment(.fill)
+   
    lazy var email = ProfileEditTitleBodyDT<Design>()
       .setAll {
          $0.set_text("Корпоративная почта")
-         $1.set_text("-")
+         $1
+            .set_placeholder("Корпоративная почта")
+            .set_backColor(.clear)
       }
-   
+      .set_borderColor(Design.color.textSecondary)
+      .set_borderWidth(1.0)
+      .set_padding(Design.params.contentPadding)
+      .set_cornerRadius(Design.params.cornerRadius)
+      .set_alignment(.fill)
+      
    lazy var phone = ProfileEditTitleBodyDT<Design>()
       .setAll {
          $0.set_text("Мобильный номер")
-         $1.set_text("-")
+         $1
+            .set_placeholder("Мобильный номер")
+            .set_backColor(.clear)
       }
+      .set_borderColor(Design.color.textSecondary)
+      .set_borderWidth(1.0)
+      .set_padding(Design.params.contentPadding)
+      .set_cornerRadius(Design.params.cornerRadius)
+      .set_alignment(.fill)
    
    lazy var infoStack = UserProfileStack<Design>()
       .set_arrangedModels([
          LabelModel()
             .set_text("Контакты")
             .set(Design.state.label.caption2),
+         surname,
+         firstname,
+         middleName,
          email,
          phone,
       ])
-
-   lazy var organization = SettingsTitleBodyDT<Design>()
-      .setAll {
-         $0.set_text("Компания")
-         $1.set_text("-")
-      }
-   
-   lazy var department = SettingsTitleBodyDT<Design>()
-      .setAll {
-         $0.set_text("Подразделение")
-         $1.set_text("-")
-      }
-   
-   lazy var hiredAt = SettingsTitleBodyDT<Design>()
-      .setAll {
-         $0.set_text("Дата начала работы")
-         $1.set_text("-")
-      }
-   
-   lazy var infoStackSecondary = UserProfileStack<Design>()
-      .set_arrangedModels([
-         LabelModel()
-            .set_text("МЕСТО РАБОТЫ")
-            .set(Design.state.label.caption2),
-         organization,
-         department,
-         hiredAt,
-      ])
-   
+      .set_alignment(.fill)
+      
    lazy var saveButton = Design.button.default
       .set_title("Сохранить")
 
@@ -98,7 +127,7 @@ final class ProfileEditScene<Asset: AssetProtocol>: BaseSceneModel<
    private lazy var userProfileApiModel = ProfileApiWorker(apiEngine: Asset.service.apiEngine)
    private lazy var safeStringStorageModel = StringStorageWorker(engine: Asset.service.safeStringStorage)
 
-//   private lazy var works = ProfileEditWorks<Asset>
+   private lazy var works = ProfileEditWorks<Asset>()
    private var balance: Balance?
    
    private var currentUser: UserData?
@@ -116,20 +145,18 @@ final class ProfileEditScene<Asset: AssetProtocol>: BaseSceneModel<
          .set(.axis(.vertical))
          .set(.distribution(.fill))
          .set(.alignment(.fill))
-         //.set_padTop(-32)
+         // .set_padTop(-32)
          .set(.models([
             userModel,
             Spacer(32),
             infoStack,
-            Spacer(8),
-            infoStackSecondary,
             Grid.xxx.spacer,
          ]))
       
       mainVM.bottomStackModel
          .set(Design.state.stack.bottomPanel)
          .set_arrangedModels([
-            saveButton
+            saveButton,
          ])
    }
 
@@ -146,31 +173,37 @@ final class ProfileEditScene<Asset: AssetProtocol>: BaseSceneModel<
          .onSuccess { [weak self] userData in
             self?.setLabels(userData: userData)
             self?.currentUser = userData
+            self?.configureButton()
          }.onFail {
             print("load profile error")
          }
    }
    
    private func configureButton() {
-//      saveButton.onEvent(\.didTap) {
-//         self.safeStringStorageModel
-//            .doAsync("token")
-//            .onFail {
-//               print("token not found")
-//            }
-//            .doMap {
-//               if let id = self.currentUser?.profile.id {
-//                  UpdateContactRequest(token: $0, id: id, contactId: self.phone.models.down.view.text ?? "77777")
-//               }
-//               
-//            }
-//            .doNext(worker: )
-//            .onSuccess { [weak self] userData in
-//               self?.setLabels(userData: userData)
-//            }.onFail {
-//               print("load profile error")
-//            }
-//      }
+      print("I am here")
+      var emailId: Int?
+      var phoneId: Int?
+      guard let contacts = self.currentUser?.profile.contacts else { return }
+      
+      for contact in contacts {
+         if contact.contactType == "@" {
+            emailId = contact.id
+         }
+         if contact.contactType == "P" {
+            phoneId = contact.id
+         }
+      }
+      print("I am here 2")
+      saveButton.onEvent(\.didTap) {
+         self.works.updateContact
+            .doAsync((emailId!, self.email.models.down.view.text ?? "email@gmail.com"))
+            .onSuccess {
+               print("Succeessss")
+            }
+            .onFail {
+               print("FAIIIL")
+            }
+      }
    }
 
    private func setLabels(userData: UserData) {
@@ -183,20 +216,12 @@ final class ProfileEditScene<Asset: AssetProtocol>: BaseSceneModel<
       if let urlSuffix = profile.photo {
          userModel.models.main.set_url("http://176.99.6.251:8888" + urlSuffix)
       }
-
-      // infoStackSecondary
-      organization.setAll {
-         $1.set_text(profile.organization)
-      }
-      department.setAll {
-         $1.set_text(profile.department)
-      }
-      hiredAt.setAll {
-         $1.set_text(profile.hiredAt)
-      }
-      print("contacts \(profile.contacts)")
       
-      //infoStack
+      // infoStack
+      firstname.models.down.set_text(profile.firstName)
+      surname.models.down.set_text(profile.surName)
+      middleName.models.down.set_text(profile.middleName)
+      
       for contact in profile.contacts {
          switch contact.contactType {
          case "@":

@@ -172,6 +172,7 @@ final class ProfileScene<Asset: AssetProtocol>: BaseSceneModel<
       print("contacts \(profile.contacts)")
       
       //infoStack
+      
       for contact in profile.contacts {
          switch contact.contactType {
          case "@":
