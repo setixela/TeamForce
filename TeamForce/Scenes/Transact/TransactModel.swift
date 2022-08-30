@@ -204,6 +204,7 @@ extension TransactModel: StateMachine {
          }
 
          viewModelsWrapper.set(.scrollToTop(animated: true))
+         presentBalanceInfo()
 
          UIView.animate(withDuration: 0.1) {
             self.viewModels.foundUsersList.set(.removeAllExceptIndex(index))
@@ -261,8 +262,11 @@ private extension TransactModel {
       bottomStackModel.set_hidden(true)
    }
 
-   func applyReadyToSendMode() {
+   func presentBalanceInfo() {
       viewModels.balanceInfo.set(.hidden(false))
+   }
+
+   func applyReadyToSendMode() {
       viewModels.transactInputViewModel.set(.hidden(false))
       viewModels.reasonTextView.set(.hidden(false))
       options.set_hidden(false)
