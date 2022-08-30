@@ -78,12 +78,13 @@ extension TransactViewModels {
          let thName = "@" + user.tgName
 
          log(urlString)
-
+         
          let comboMRD =
             WrappedY(
                ImageLabelLabelMRD()
                   .setAll { avatar, username, nickname in
                      avatar
+                        .set_contentMode(.scaleAspectFill)
                         .set_size(.square(Grid.x26.value))
                         .set_cornerRadius(Grid.x26.value / 2)
                         //.set_url(urlString)
@@ -96,7 +97,8 @@ extension TransactViewModels {
                            let surnameFirstLetter = user.surname.first {
                            let text = String(nameFirstLetter) + String(surnameFirstLetter)
                            let image = text.drawImage(backColor: Design.color.backgroundBrand)
-                           avatar.set_image(image)
+                           avatar
+                              .set_image(image)
                         }
                      }
                      username

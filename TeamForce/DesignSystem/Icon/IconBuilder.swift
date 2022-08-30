@@ -26,6 +26,7 @@ protocol IconElements: InitProtocol, DesignElementable where DesignElement == UI
    var logo: DesignElement { get }
    var logoTitle: DesignElement { get }
    var logoCurrency: UIImage { get }
+   var logoCurrencyRed: UIImage { get }
    var logoCurrencyBig: UIImage { get }
 
    // other
@@ -84,6 +85,7 @@ struct IconBuilder: IconElements {
    var logo: UIImage { make("dt_logo") }
    var logoTitle: UIImage { make("dt_logo_title") }
    var logoCurrency: UIImage { make("dt_currency_logo") }
+   var logoCurrencyRed: UIImage { make("dt_currency_logo_red") }
    var logoCurrencyBig: UIImage { make("dt_currency_logo_big") }
    var introlIllustrate: UIImage { make("dt_main") }
 
