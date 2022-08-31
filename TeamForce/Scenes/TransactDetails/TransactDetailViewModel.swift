@@ -120,13 +120,6 @@ final class TransactDeatilViewModel<Asset: AssetProtocol>: BaseSceneModel<
          .set(Design.state.stack.default)
          .set_alignment(.center)
          .set(.backColor(Design.color.backgroundSecondary))
-//         .set_safeAreaOffsetDisabled()
-//         .set_axis(.vertical)
-//         .set_distribution(.fill)
-//         .set_alignment(.fill)
-//         .set_backColor(Design.color.background)
-//         .set_padding(UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16))
-//         .set_cornerRadius(Design.params.cornerRadiusMedium)
          .set_arrangedModels([
             //
             Grid.x64.spacer,
@@ -200,6 +193,7 @@ final class TransactDeatilViewModel<Asset: AssetProtocol>: BaseSceneModel<
          textColor = UIColor.systemGreen
       case "D":
          textColor = Design.color.boundaryError
+         statusLabel.models.main.set_text("Причина отказа")
       case "W":
          textColor = UIColor.orange
       default:
