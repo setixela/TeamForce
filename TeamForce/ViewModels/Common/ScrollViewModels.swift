@@ -12,6 +12,8 @@ enum ScrollState {
    case models([UIViewModel])
    case spacing(CGFloat)
    case scrollToTop(animated: Bool)
+   case hideHorizontalScrollIndicator
+   case hideVerticalScrollIndicator
 }
 
 final class ScrollViewModelY: BaseViewModel<UIScrollView> {
@@ -44,6 +46,10 @@ extension ScrollViewModelY: Stateable2 {
          stack.view.spacing = value
       case .scrollToTop(let value):
          view.setContentOffset(.zero, animated: value)
+      case .hideHorizontalScrollIndicator:
+         view.showsHorizontalScrollIndicator = false
+      case .hideVerticalScrollIndicator:
+         view.showsVerticalScrollIndicator = false
       }
    }
 }
@@ -76,6 +82,10 @@ extension ScrollViewModelX: Stateable2 {
          stack.view.spacing = value
       case .scrollToTop(let value):
          view.setContentOffset(.zero, animated: value)
+      case .hideHorizontalScrollIndicator:
+         view.showsHorizontalScrollIndicator = false
+      case .hideVerticalScrollIndicator:
+         view.showsVerticalScrollIndicator = false
       }
    }
 }

@@ -7,6 +7,7 @@
 
 import Foundation
 import ReactiveWorks
+import UIKit
 
 struct SendCoinRequest {
    let token: String
@@ -15,6 +16,7 @@ struct SendCoinRequest {
    let amount: String
    let reason: String
    let isAnonymous: Bool
+   let photo: UIImage?
 }
 
 protocol Failuring {
@@ -34,35 +36,71 @@ final class SendCoinApiWorker: BaseApiWorker<SendCoinRequest, Void> {
          return
       }
 
-      apiEngine?
-         .process(endpoint: TeamForceEndpoints.SendCoin(
-            body: ["recipient": sendCoinRequest.recipient,
-                   "amount": sendCoinRequest.amount,
-                   "reason": sendCoinRequest.reason,
-                   "is_anonymous": sendCoinRequest.isAnonymous],
-            headers: ["Authorization": sendCoinRequest.token,
-                      "X-CSRFToken": cookie.value]))
-         .done { result in
-            if let response = result.response as? HTTPURLResponse {
-               if response.statusCode == 400 {
-                  print("400 happened")
-                  guard let data = result.data else {
-                     work.fail(())
+      let body: [String: Any] = [
+         "recipient": sendCoinRequest.recipient,
+         "amount": sendCoinRequest.amount,
+         "reason": sendCoinRequest.reason,
+         "is_anonymous": sendCoinRequest.isAnonymous
+      ]
+
+      if let photo = sendCoinRequest.photo {
+         /// body["photo": photo]
+
+         apiEngine?
+            .processWithImage(endpoint: TeamForceEndpoints.SendCoin(
+               body: body,
+               headers: ["Authorization": sendCoinRequest.token,
+                         "X-CSRFToken": cookie.value]),
+            image: photo)
+            .done { result in
+               if let response = result.response as? HTTPURLResponse {
+                  if response.statusCode == 400 {
+                     print("400 happened")
+                     guard let data = result.data else {
+                        work.fail(())
+                        return
+                     }
+
+                     let errorArray = try JSONSerialization.jsonObject(with: data) as? [String]
+
+                     work.fail(errorArray?.first)
                      return
                   }
-
-                  let errorArray = try JSONSerialization.jsonObject(with: data) as? [String]
-
-                  work.fail(errorArray?.first)
-                  return
                }
+               work.success(result: ())
             }
-            work.success(result: ())
-         }
-         .catch { error in
-            print("error coin sending: \(error)")
-            work.fail(error)
-         }
+            .catch { error in
+               print("error coin sending: \(error)")
+               work.fail(error)
+            }
+      } else {
+         apiEngine?
+            .process(endpoint: TeamForceEndpoints.SendCoin(
+               body: body,
+               headers: ["Authorization": sendCoinRequest.token,
+                         "X-CSRFToken": cookie.value]))
+            .done { result in
+               if let response = result.response as? HTTPURLResponse {
+                  if response.statusCode == 400 {
+                     print("400 happened")
+                     guard let data = result.data else {
+                        work.fail(())
+                        return
+                     }
+
+                     let errorArray = try JSONSerialization.jsonObject(with: data) as? [String]
+
+                     work.fail(errorArray?.first)
+                     return
+                  }
+               }
+               work.success(result: ())
+            }
+            .catch { error in
+               print("error coin sending: \(error)")
+               work.fail(error)
+            }
+      }
    }
 }
 

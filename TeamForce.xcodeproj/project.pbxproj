@@ -109,6 +109,7 @@
 		19A8229828A9305D0081D385 /* UIEdgeInsets+Padding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A8229728A9305D0081D385 /* UIEdgeInsets+Padding.swift */; };
 		19A9232A28B2A8200080D491 /* SpacerPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A9232928B2A8200080D491 /* SpacerPresenter.swift */; };
 		19A9232F28B2E34E0080D491 /* CurrencyLabelDT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A9232E28B2E34E0080D491 /* CurrencyLabelDT.swift */; };
+		19A9BE6528BEB57C0099F8EA /* ImagePickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A9BE6428BEB57C0099F8EA /* ImagePickerViewModel.swift */; };
 		19AE3AEF28691B2E00A0C6E4 /* MainScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19AE3AEE28691B2E00A0C6E4 /* MainScene.swift */; };
 		19AE3AF22869230C00A0C6E4 /* AuthApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19AE3AF12869230C00A0C6E4 /* AuthApiWorker.swift */; };
 		19B2C5D428B7D37A00E7B47D /* Shadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B2C5D328B7D37A00E7B47D /* Shadow.swift */; };
@@ -325,6 +326,7 @@
 		19A8229728A9305D0081D385 /* UIEdgeInsets+Padding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIEdgeInsets+Padding.swift"; sourceTree = "<group>"; };
 		19A9232928B2A8200080D491 /* SpacerPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpacerPresenter.swift; sourceTree = "<group>"; };
 		19A9232E28B2E34E0080D491 /* CurrencyLabelDT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyLabelDT.swift; sourceTree = "<group>"; };
+		19A9BE6428BEB57C0099F8EA /* ImagePickerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerViewModel.swift; sourceTree = "<group>"; };
 		19AE3AEE28691B2E00A0C6E4 /* MainScene.swift */ = {isa = PBXFileReference; indentWidth = 3; lastKnownFileType = sourcecode.swift; path = MainScene.swift; sourceTree = "<group>"; tabWidth = 3; };
 		19AE3AF12869230C00A0C6E4 /* AuthApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthApiWorker.swift; sourceTree = "<group>"; };
 		19B2C5D328B7D37A00E7B47D /* Shadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shadow.swift; sourceTree = "<group>"; };
@@ -820,6 +822,7 @@
 				19D0835C286F428600F75E4A /* BarButtonModel.swift */,
 				19ECD54228623D30001765F6 /* StackModel.swift */,
 				199C4B6A2863292F008AD6FD /* ButtonModel.swift */,
+				19A9BE6428BEB57C0099F8EA /* ImagePickerViewModel.swift */,
 				196750AB2865189C0019A6DE /* TextFieldModel.swift */,
 				196750AF286518F80019A6DE /* DoubleStacksModel.swift */,
 				196750B12865190D0019A6DE /* ImageViewModel.swift */,
@@ -1236,6 +1239,7 @@
 			files = (
 				194C095628759FD900D88D5B /* ViewModel+Stateable.swift in Sources */,
 				19A8229628A925760081D385 /* ViewModel+Setters.swift in Sources */,
+				19A9BE6528BEB57C0099F8EA /* ImagePickerViewModel.swift in Sources */,
 				199C4B6D2863299E008AD6FD /* DesignSystem.swift in Sources */,
 				63578E5828AB8DA000423957 /* GetTransactionsByPeriodApiWorker.swift in Sources */,
 				197A771828AD90800082CD81 /* XelaLog.swift in Sources */,
@@ -1581,11 +1585,13 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = B9QL37WADD;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = TeamForce/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = DigThanks;
+				INFOPLIST_KEY_NSCameraUsageDescription = Allow;
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = Allow;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -1613,11 +1619,13 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = B9QL37WADD;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = TeamForce/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = DigThanks;
+				INFOPLIST_KEY_NSCameraUsageDescription = Allow;
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = Allow;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;

@@ -8,6 +8,7 @@
 import Foundation
 import ImageIO
 import ReactiveWorks
+import UIKit
 
 protocol TransactWorksProtocol: TempStorage {
    // api works
@@ -24,6 +25,9 @@ protocol TransactWorksProtocol: TempStorage {
    var reasonInputParsing: Work<String, String> { get }
    //
    var reset: VoidWork<Void> { get }
+   //
+   var addImage: Work<UIImage, UIImage> { get}
+   var removeImage: Work<UIImage, Void> { get }
 }
 
 // Transact Works - (если нужно хранилище временное, то наследуемся от BaseSceneWorks)
@@ -50,6 +54,8 @@ final class TransactWorks<Asset: AssetProtocol>: BaseSceneWorks<TransactWorks.Te
 
       var isCorrectCoinInput = false
       var isCorrectReasonInput = false
+
+      var images: [UIImage] = []
    }
 
    // MARK: - Works
@@ -95,7 +101,8 @@ final class TransactWorks<Asset: AssetProtocol>: BaseSceneWorks<TransactWorks.Te
             recipient: Self.store.recipientID,
             amount: Self.store.inputAmountText,
             reason: Self.store.inputReasonText,
-            isAnonymous: Self.store.isAnonymous
+            isAnonymous: Self.store.isAnonymous,
+            photo: Self.store.images.first
          )
 
          self?.apiUseCase.sendCoin
@@ -217,4 +224,15 @@ final class TransactWorks<Asset: AssetProtocol>: BaseSceneWorks<TransactWorks.Te
          work.fail(())
       }
    }
+}
+
+extension TransactWorks {
+   var addImage: Work<UIImage, UIImage> { .init { work in
+      Self.store.images.append(work.unsafeInput)
+      work.success(result: work.unsafeInput)
+   } }
+   var removeImage: Work<UIImage, Void> { .init { work in
+      Self.store.images = Self.store.images.filter { $0 !== work.unsafeInput }
+      work.success(result: ())
+   } }
 }

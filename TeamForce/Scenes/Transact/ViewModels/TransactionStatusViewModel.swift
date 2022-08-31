@@ -51,7 +51,7 @@ final class TransactionStatusViewModel<Design: DSP>: BaseViewModel<StackViewExte
             .set(Design.state.label.headline4)
             .set_textColor(Design.color.textError)
          amount.currencyLogo
-            .set_width(Grid.x20.value)
+            .set_width(22)
       }
       .set_padding(.outline(Grid.x16.value))
       .set_backColor(Design.color.background)

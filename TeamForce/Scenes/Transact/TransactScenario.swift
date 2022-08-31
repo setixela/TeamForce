@@ -7,6 +7,30 @@
 
 import Foundation
 import ReactiveWorks
+import UIKit
+
+struct ImagePickingScenarioEvents {
+   let addImageToBasket: VoidWork<UIImage>
+   let removeImageFromBasket: VoidWork<UIImage>
+   let didMaximumReach: VoidWork<Void>
+}
+
+final class ImagePickingScenario<Asset: AssetProtocol>:
+   BaseScenario<ImagePickingScenarioEvents, TransactState, TransactWorks<Asset>>
+{
+   override func start() {
+      events.addImageToBasket
+         .doNext(work: works.addImage)
+         .onSuccess(setState) { .presentPickedImage($0) }
+
+      events.removeImageFromBasket
+         .doNext(work: works.removeImage)
+         .onSuccess(setState, .setHideAddPhotoButton(false))
+
+      events.didMaximumReach
+         .onSuccess(setState, .setHideAddPhotoButton(true))
+   }
+}
 
 struct TransactScenarioEvents {
    let userSearchTXTFLDBeginEditing: VoidWork<String>
@@ -16,7 +40,7 @@ struct TransactScenarioEvents {
 
    let transactInputChanged: VoidWork<String>
    let reasonInputChanged: VoidWork<String>
-   
+
    let anonymousSetOff: VoidWork<Void>
    let anonymousSetOn: VoidWork<Void>
 }
@@ -25,7 +49,6 @@ final class TransactScenario<Asset: AssetProtocol>:
    BaseScenario<TransactScenarioEvents, TransactState, TransactWorks<Asset>>
 {
    override func start() {
-
       // load token, balance, userList
       works.loadTokens
          .doAsync()
@@ -71,7 +94,7 @@ final class TransactScenario<Asset: AssetProtocol>:
 
       events.transactInputChanged
          .doNext(work: works.coinInputParsing)
-         .onSuccess(setState)  { .coinInputSuccess($0, true) }
+         .onSuccess(setState) { .coinInputSuccess($0, true) }
          .onFail { [weak self] (text: String) in
             self?.works.updateAmount
                .doAsync((text, false))
@@ -99,10 +122,10 @@ final class TransactScenario<Asset: AssetProtocol>:
          .doNext(work: works.isCorrect)
          .onSuccessMixSaved(setState) { .reasonInputSuccess($1, true) }
          .onFailMixSaved(setState) { .reasonInputSuccess($1, false) }
-      
+
       events.anonymousSetOff
          .doNext(work: works.anonymousOff)
-      
+
       events.anonymousSetOn
          .doNext(work: works.anonymousOn)
    }

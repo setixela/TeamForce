@@ -195,8 +195,12 @@ final class ProfileEditScene<Asset: AssetProtocol>: BaseSceneModel<
       }
       print("I am here 2")
       saveButton.onEvent(\.didTap) {
+         guard let emailId = emailId else {
+            return
+         }
+
          self.works.updateContact
-            .doAsync((emailId!, self.email.models.down.view.text ?? "email@gmail.com"))
+            .doAsync((emailId, self.email.models.down.view.text ?? "email@gmail.com"))
             .onSuccess {
                print("Succeessss")
             }

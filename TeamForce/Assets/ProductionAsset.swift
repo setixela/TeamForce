@@ -15,7 +15,6 @@ enum ProductionAsset: AssetProtocol {
    typealias Scene = Scenes
 
    static var router: MainRouter<Scene>? = MainRouter<Scene>()
-   static var globalRetainer: Retainer? = Retainer()
 }
 
 struct Scenes: ScenesProtocol {
@@ -23,14 +22,15 @@ struct Scenes: ScenesProtocol {
    //
    var digitalThanks: SceneModelProtocol { DigitalThanksScene<ProductionAsset>() }
    var login: SceneModelProtocol { LoginScene<ProductionAsset>() }
-//   var verifyCode: SceneModelProtocol { VerifyCodeScene<ProductionAsset>() }
-//   var loginSuccess: SceneModelProtocol { LoginSuccessScene<ProductionAsset>() }
-//   var register: SceneModelProtocol { RegisterScene<ProductionAsset>() }
+   //
    var main: SceneModelProtocol { MainScene<ProductionAsset>() }
+   //
    var profile: SceneModelProtocol { ProfileScene<ProductionAsset>() }
-//   var transaction: SceneModelProtocol { TransactScene<ProductionAsset> () }
    var transactionDetail: SceneModelProtocol { TransactDeatilViewModel<ProductionAsset>() }
    var profileEdit: SceneModelProtocol { ProfileEditScene<ProductionAsset>() }
+
+   // camera
+   var imagePicker: SceneModelProtocol { ImagePickerScene<ProductionAsset>() }
 }
 
 struct ProductionService: ServiceProtocol {

@@ -40,15 +40,20 @@ enum TransactState {
 
    case coinInputSuccess(String, Bool)
    case reasonInputSuccess(String, Bool)
+
+   case presentPickedImage(UIImage)
+   case setHideAddPhotoButton(Bool)
 }
 
-final class TransactScene<Asset: AssetProtocol>: DoubleStacksModel, Assetable, Scenarible, Communicable {
+final class TransactScene<Asset: AssetProtocol>: DoubleStacksModel, Assetable, Scenarible2, Communicable {
    typealias State = StackState
 
    var events = TransactEvents()
 
+   private lazy var works = TransactWorks<Asset>()
+
    lazy var scenario = TransactScenario(
-      works: TransactWorks<Asset>(),
+      works: works,
       stateDelegate: stateDelegate,
       events: TransactScenarioEvents(
          userSearchTXTFLDBeginEditing: viewModels.userSearchTextField.onEvent(\.didBeginEditing),
@@ -62,7 +67,20 @@ final class TransactScene<Asset: AssetProtocol>: DoubleStacksModel, Assetable, S
       )
    )
 
+   lazy var scenario2 = ImagePickingScenario(
+      works: works,
+      stateDelegate: stateDelegate,
+      events: ImagePickingScenarioEvents(
+         addImageToBasket: imagePicker.onEvent(\.didImagePicked),
+         removeImageFromBasket: pickedImages.onEvent(\.didCloseImage),
+         didMaximumReach: pickedImages.onEvent(\.didMaximumReached)
+      )
+   )
+
    private lazy var viewModels = TransactViewModels<Design>()
+
+   private lazy var pickedImages = PickedImagePanel<Design>()
+
    private lazy var closeButton = ButtonModel()
       .set_title(Design.Text.title.close)
       .set_textColor(Design.color.textBrand)
@@ -75,6 +93,7 @@ final class TransactScene<Asset: AssetProtocol>: DoubleStacksModel, Assetable, S
          viewModels.foundUsersList,
          viewModels.transactInputViewModel,
          viewModels.reasonTextView,
+         pickedImages.lefted(),
          viewModels.addPhotoButton,
          options
       ]))
@@ -89,7 +108,17 @@ final class TransactScene<Asset: AssetProtocol>: DoubleStacksModel, Assetable, S
          .set_text(Design.Text.title.userNotFound)
    )
 
+   private lazy var imagePicker = ImagePickerViewModel()
+
    private var currentState = TransactState.initial
+
+   private weak var vcModel: UIViewController?
+
+   convenience init(vcModel: UIViewController?) {
+      self.init()
+
+      self.vcModel = vcModel
+   }
 
    // MARK: - Start
 
@@ -106,9 +135,21 @@ final class TransactScene<Asset: AssetProtocol>: DoubleStacksModel, Assetable, S
       view.onEvent(\.willAppear) { [weak self] in
          self?.setToInitialCondition()
          self?.scenario.start()
+         self?.scenario2.start()
       }
 
       setState(.initial)
+
+      viewModels.addPhotoButton
+         .onEvent(\.didTap) { [weak self] in
+            guard let baseVC = self?.vcModel else { return }
+
+            self?.imagePicker
+//               .onEvent(\.didImagePicked) { [weak self] image in
+//                  self?.pickedImages.addButton(image: image)
+//               }
+               .sendEvent(\.presentOn, baseVC)
+         }
    }
 
    func configure() {
@@ -265,6 +306,10 @@ extension TransactScene: StateMachine {
             viewModels.reasonTextView.set(.text(text))
             viewModels.sendButton.set(Design.state.button.inactive)
          }
+      case .presentPickedImage(let image):
+         pickedImages.addButton(image: image)
+      case .setHideAddPhotoButton(let value):
+         viewModels.addPhotoButton.set_hidden(value)
       }
    }
 }
@@ -315,11 +360,78 @@ private extension TransactScene {
 
 extension UIView {
    func clearConstraints() {
-//      for subview in self.subviews {
-//         subview.clearConstraints()
-//      }
+      for subview in subviews {
+         subview.clearConstraints()
+      }
       removeConstraints(constraints)
    }
 }
 
 class ImageLabelLabelMRD: Combos<SComboMRD<ImageViewModel, LabelModel, LabelModel>> {}
+
+struct PickedImagePanelEvents: InitProtocol {
+   var didCloseImage: Event<UIImage>?
+   var didMaximumReached: Event<Void>?
+}
+
+final class PickedImagePanel<Design: DSP>: StackModel, Designable, Communicable {
+   var events = PickedImagePanelEvents()
+
+   private var picked = [UIImage: UIViewModel]()
+
+   private let maxCount = 4
+
+   override func start() {
+      set_axis(.horizontal)
+      set_alignment(.leading)
+      set_distribution(.equalSpacing)
+      set_spacing(8)
+   }
+
+   func addButton(image: UIImage) {
+      guard picked.count < maxCount else { return }
+
+      let pickedImage = PickedImage<Design>()
+      picked[image] = pickedImage
+      pickedImage.image.set_image(image)
+
+      set_arrangedModels(Array(picked.values))
+
+      pickedImage.closeButton.onEvent(\.didTap) { [weak self] in
+         guard let self = self else { return }
+
+         self.sendEvent(\.didCloseImage, image)
+         let model = self.picked[image]
+         model?.uiView.removeFromSuperview()
+         self.picked[image] = nil
+      }
+
+      if picked.count >= maxCount {
+         sendEvent(\.didMaximumReached)
+      }
+   }
+}
+
+final class PickedImage<Design: DSP>: StackModel, Designable {
+   let closeButton = ButtonModel()
+      .set_image(Design.icon.cross.withTintColor(.white))
+      .set_size(.square(23))
+
+   let image = ImageViewModel()
+      .set_size(.square(Grid.x80.value))
+      .set_cornerRadius(Design.params.cornerRadius)
+
+   override func start() {
+      super.start()
+      set_backColor(Design.color.background)
+      set_axis(.horizontal)
+      set_alignment(.top)
+      set_size(.square(Grid.x80.value))
+      set_cornerRadius(Design.params.cornerRadius)
+      set_arrangedModels([
+         Grid.xxx.spacer,
+         closeButton
+      ])
+      set_backViewModel(image)
+   }
+}

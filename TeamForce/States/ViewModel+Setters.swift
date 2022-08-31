@@ -206,6 +206,9 @@ extension ViewModelProtocol where Self: Stateable, View: StackViewExtended {
       view.insertSubview(value, at: 0)
       view.backView = value
       value.addAnchors.fitToViewInsetted(view, inset)
+      value.contentMode = .scaleAspectFill
+      value.clipsToBounds = true
+      value.layer.masksToBounds = true
       return self
    }
 
