@@ -61,6 +61,11 @@ final class ApiEngine: ApiEngineProtocol {
             }
 
             let apiResult = ApiEngineResult(data: data, response: response)
+
+            let str = String(decoding: data, as: UTF8.self)
+            print("result body \(str)")
+            print("response status \(String(describing: apiResult.response as? HTTPURLResponse))")
+
             seal.fulfill(apiResult)
          }
 
@@ -103,12 +108,15 @@ final class ApiEngine: ApiEngineProtocol {
 
          data.append("\r\n--\(boundary)--\r\n".data(using: .utf8)!)
 
-         request.httpBody = params
-            .map { (key: String, value: Any) in
-               key + "=\(value)"
-            }
-            .joined(separator: "&")
-            .data(using: .utf8)
+         let jsonData = try JSONSerialization.data(withJSONObject: params, options: .prettyPrinted)
+
+         request.httpBody = jsonData
+//         params
+//            .map { (key: String, value: Any) in
+//               key + "=\(value)"
+//            }
+//            .joined(separator: "&")
+//            .data(using: .utf8)
 
          log(request)
 
@@ -128,6 +136,11 @@ final class ApiEngine: ApiEngineProtocol {
             }
 
             let apiResult = ApiEngineResult(data: data, response: response)
+
+            let str = String(decoding: data, as: UTF8.self)
+            print("result body \(str)")
+            print("response status \(String(describing: apiResult.response as? HTTPURLResponse))")
+
             seal.fulfill(apiResult)
          }
 

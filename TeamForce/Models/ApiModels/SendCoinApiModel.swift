@@ -40,7 +40,7 @@ final class SendCoinApiWorker: BaseApiWorker<SendCoinRequest, Void> {
          "recipient": sendCoinRequest.recipient,
          "amount": sendCoinRequest.amount,
          "reason": sendCoinRequest.reason,
-         "is_anonymous": sendCoinRequest.isAnonymous
+         "is_anonymous": sendCoinRequest.isAnonymous,
       ]
 
       if let photo = sendCoinRequest.photo {
@@ -49,8 +49,10 @@ final class SendCoinApiWorker: BaseApiWorker<SendCoinRequest, Void> {
          apiEngine?
             .processWithImage(endpoint: TeamForceEndpoints.SendCoin(
                body: body,
-               headers: ["Authorization": sendCoinRequest.token,
-                         "X-CSRFToken": cookie.value]),
+               headers: [
+                  "Authorization": sendCoinRequest.token,
+                  //  "X-CSRFToken": cookie.value
+               ]),
             image: photo)
             .done { result in
                if let response = result.response as? HTTPURLResponse {
@@ -77,8 +79,10 @@ final class SendCoinApiWorker: BaseApiWorker<SendCoinRequest, Void> {
          apiEngine?
             .process(endpoint: TeamForceEndpoints.SendCoin(
                body: body,
-               headers: ["Authorization": sendCoinRequest.token,
-                         "X-CSRFToken": cookie.value]))
+               headers: [
+                  "Authorization": sendCoinRequest.token,
+               //   "X-CSRFToken": cookie.value,
+               ]))
             .done { result in
                if let response = result.response as? HTTPURLResponse {
                   if response.statusCode == 400 {

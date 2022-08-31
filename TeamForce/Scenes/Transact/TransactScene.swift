@@ -144,11 +144,7 @@ final class TransactScene<Asset: AssetProtocol>: DoubleStacksModel, Assetable, S
          .onEvent(\.didTap) { [weak self] in
             guard let baseVC = self?.vcModel else { return }
 
-            self?.imagePicker
-//               .onEvent(\.didImagePicked) { [weak self] image in
-//                  self?.pickedImages.addButton(image: image)
-//               }
-               .sendEvent(\.presentOn, baseVC)
+            self?.imagePicker.sendEvent(\.presentOn, baseVC)
          }
    }
 
@@ -195,7 +191,9 @@ final class TransactScene<Asset: AssetProtocol>: DoubleStacksModel, Assetable, S
       scenario.works.reset.doSync()
 
       viewModels.sendButton.set(Design.state.button.inactive)
+      viewModels.transactInputViewModel.setState(.noInput)
 
+      currentState = .initial
       applySelectUserMode()
    }
 
@@ -282,6 +280,7 @@ extension TransactScene: StateMachine {
                                       username: tuple.0,
                                       foundUser: viewModels.foundUsersList.items.first as! FoundUser)
          sendEvent(\.finishWithSuccess, sended)
+         setToInitialCondition()
          view.removeFromSuperview()
       //
       case .sendCoinError:
@@ -316,6 +315,7 @@ extension TransactScene: StateMachine {
 
 private extension TransactScene {
    func applySelectUserMode() {
+      pickedImages.set_hidden(true)
       viewModels.balanceInfo.set(.hidden(true))
       viewModels.transactInputViewModel.set(.hidden(true))
       viewModels.reasonTextView.set(.hidden(true))
@@ -331,6 +331,8 @@ private extension TransactScene {
    }
 
    func applyReadyToSendMode() {
+      viewModels.foundUsersList.set_hidden(true)
+      pickedImages.set_hidden(false)
       viewModels.transactInputViewModel.set(.hidden(false))
       viewModels.reasonTextView.set(.hidden(false))
       options.set_hidden(false)

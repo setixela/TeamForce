@@ -31,10 +31,7 @@ final class MainScene<Asset: AssetProtocol>:
    lazy var settingsViewModel = SettingsViewModel<Asset>()
    lazy var feedViewModel = FeedScene<Asset>()
 
-   lazy var transactModel = TransactScene<Asset>(vcModel: vcModel)
-      .onEvent(\.cancelled) { [weak self] in
-         self?.vcModel?.view.layoutIfNeeded()
-      }
+   lazy var transactModel: TransactScene = TransactScene<Asset>(vcModel: vcModel)
 
    var tabBarPanel: TabBarPanel<Design> { mainVM.footerStack }
 
@@ -91,13 +88,17 @@ extension MainScene {
       let offset: CGFloat = 40
       let view = model.uiView
 
-      model.onEvent(\.finishWithSuccess) { [weak self] in
-         self?.presentTransactSuccessView($0)
-      }
+      model
+         .onEvent(\.finishWithSuccess) { [weak self] in
+            self?.presentTransactSuccessView($0)
+         }
+         .onEvent(\.cancelled) { [weak self] in
+         }
 
       baseView.addSubview(view)
       view.addAnchors.fitToViewInsetted(baseView, .init(top: offset, left: 0, bottom: 0, right: 0))
    }
+
 
    private func presentTransactSuccessView(_ data: StatusViewInput) {
       let model = TransactionStatusViewModel<Design>()
@@ -187,9 +188,9 @@ extension MainScene: StateMachine {
          mainVM.profileButton.onEvent(\.didTap) {
             Asset.router?.route(\.profile, navType: .push)
          }
-         
+
          if let photoUrl = currentUser?.profile.photo {
-            mainVM.profileButton.set_url("http://176.99.6.251:8888" + photoUrl)
+            mainVM.profileButton.set_url(TeamForceEndpoints.urlBase + photoUrl)
          }
       case .loadProfileError:
          break

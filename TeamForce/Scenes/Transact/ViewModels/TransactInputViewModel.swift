@@ -98,6 +98,8 @@ extension TransactInputViewModel: StateMachine {
          defaultValues.enumerated().forEach {
             if $0.element == text {
                currencyButtons[$0.offset].setMode(\.selected)
+            } else {
+               currencyButtons[$0.offset].setMode(\.normal)
             }
          }
          textField.set_textColor(Design.color.text)

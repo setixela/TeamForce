@@ -218,7 +218,7 @@ final class ProfileEditScene<Asset: AssetProtocol>: BaseSceneModel<
       userModel.models.right.set_text(fullName)
       userModel.models.down.set_text("@" + profile.tgName)
       if let urlSuffix = profile.photo {
-         userModel.models.main.set_url("http://176.99.6.251:8888" + urlSuffix)
+         userModel.models.main.set_url(TeamForceEndpoints.urlBase + urlSuffix)
       }
       
       // infoStack
