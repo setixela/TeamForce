@@ -1590,8 +1590,8 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = TeamForce/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = DigThanks;
-				INFOPLIST_KEY_NSCameraUsageDescription = Allow;
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = Allow;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Allow Camera Use";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Allow Photo Library Use";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -1624,8 +1624,8 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = TeamForce/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = DigThanks;
-				INFOPLIST_KEY_NSCameraUsageDescription = Allow;
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = Allow;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Allow Camera Use";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Allow Photo Library Use";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;

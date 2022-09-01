@@ -228,7 +228,7 @@ extension TransactScene: StateMachine {
       case .loadTransactionsError:
         activityIndicator.set_hidden(true)
       //
-      case .loadTokensSuccess:
+    //  case .loadTokensSuccess:
    //      activityIndicator.set_hidden(false)
       //
          break
