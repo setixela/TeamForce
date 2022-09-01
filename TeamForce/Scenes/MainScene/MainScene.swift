@@ -26,7 +26,7 @@ final class MainScene<Asset: AssetProtocol>:
       events: MainScenarioInputEvents()
    )
 
-   private lazy var balanceViewModel = BalanceViewModel<Asset>()
+   private lazy var balanceViewModel = BalanceScene<Asset>()
    private lazy var historyViewModel = HistoryScene<Asset>()
    private lazy var settingsViewModel = SettingsViewModel<Asset>()
    private lazy var feedViewModel = FeedScene<Asset>()
@@ -37,7 +37,7 @@ final class MainScene<Asset: AssetProtocol>:
 
    private var currentUser: UserData?
 
-   private weak var activeScreen: ModelProtocol?
+   //private weak var activeScreen: ModelProtocol?
 
    // MARK: - Start
 
@@ -60,8 +60,9 @@ final class MainScene<Asset: AssetProtocol>:
 }
 
 extension MainScene {
-   private func presentModel<M: UIViewModel & Communicable>(_ model: M?) where M.Events == MainSceneEvents {
+   private func presentModel<M: UIViewModel & Communicable & Scenarible>(_ model: M?) where M.Events == MainSceneEvents {
       guard let model = model else { return }
+      model.scenario.start()
       model.onEvent(\.willEndDragging) { [weak self] velocity in
          if velocity > 0 {
             self?.presentHeader()
@@ -74,20 +75,20 @@ extension MainScene {
             model
          ])
       model.sendEvent(\.userDidLoad, currentUser)
-      activeScreen = model
+      //activeScreen = model
    }
 
    private func presentModel<M: UIViewModel>(_ model: M?) {
       guard let model = model else { return }
-
+      
       mainVM.bodyStack
          .set_arrangedModels([
             model
          ])
-      activeScreen = model
+      //activeScreen = model
    }
 
-   private func presentBottomPopupModel<M: UIViewModel & Communicable>(_ model: M?) where M.Events == TransactEvents {
+   private func presentBottomPopupModel<M: UIViewModel & Communicable & Scenarible>(_ model: M?) where M.Events == TransactEvents {
       guard
          let model = model,
          let baseView = vcModel?.view
@@ -99,10 +100,10 @@ extension MainScene {
       model
          .onEvent(\.finishWithSuccess) { [weak self] in
             self?.presentTransactSuccessView($0)
-            self?.activeScreen?.start()
+            //self?.activeScreen?.start()
          }
          .onEvent(\.cancelled) { [weak self] in
-            self?.activeScreen?.start()
+            //self?.activeScreen?.start()
          }
 
       baseView.addSubview(view)

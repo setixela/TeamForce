@@ -8,9 +8,7 @@
 import Foundation
 import ReactiveWorks
 
-final class MainWorksStorage: InitProtocol {
-   var currentUser: UserData?
-}
+final class MainWorksStorage: InitProtocol {}
 
 protocol MainWorksProtocol {
    var loadProfile: VoidWork<UserData> { get }
