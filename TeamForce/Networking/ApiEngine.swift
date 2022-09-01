@@ -82,7 +82,7 @@ final class ApiEngine: ApiEngineProtocol {
 
          let size = image.size
          let image = image.resized(to: .init(width: size.width/4, height: size.height/4))
-
+         guard let mediaImage = Media(withImage: image, forKey: "photo") else { return }
          let boundary = UUID().uuidString
 
          let method = endpoint.method
@@ -98,23 +98,25 @@ final class ApiEngine: ApiEngineProtocol {
          }
          request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
 
-         var data = Data()
+//         var data = Data()
+//
+//         // Add the image data to the raw http request data
+//         data.append("\r\n--\(boundary)\r\n".data(using: .utf8)!)
+//         data.append("Content-Disposition: form-data; name=\"image\"; filename=\"\(image.hashValue)\"\r\n".data(using: .utf8)!)
+//         data.append("Content-Type: image/png\r\n\r\n".data(using: .utf8)!)
+//         data.append(image.pngData()!)
+//
+//         data.append("\r\n--\(boundary)--\r\n".data(using: .utf8)!)
+         let dataBody = createDataBody(withParameters: params, media: [mediaImage], boundary: boundary)
+         request.httpBody = dataBody
 
-         // Add the image data to the raw http request data
-         data.append("\r\n--\(boundary)\r\n".data(using: .utf8)!)
-         data.append("Content-Disposition: form-data; name=\"image\"; filename=\"\(image.hashValue)\"\r\n".data(using: .utf8)!)
-         data.append("Content-Type: image/png\r\n\r\n".data(using: .utf8)!)
-         data.append(image.pngData()!)
-
-         data.append("\r\n--\(boundary)--\r\n".data(using: .utf8)!)
-
-         let jsonData = try JSONSerialization.data(withJSONObject: params, options: .prettyPrinted)
-
-         request.httpBody = jsonData
+//         let jsonData = try JSONSerialization.data(withJSONObject: params, options: .prettyPrinted)
+//
+//         request.httpBody = jsonData
 
          log(request)
 
-         let task = URLSession.shared.uploadTask(with: request, from: data) { data, response, error in
+         let task = URLSession.shared.dataTask(with: request) {  data, response, error in
 
             guard let data = data else {
                guard let error = error else {
@@ -141,6 +143,37 @@ final class ApiEngine: ApiEngineProtocol {
          task.resume()
       }
    }
+   
+   func createDataBody(withParameters params: [String: Any]?, media: [Media]?, boundary: String) -> Data {
+
+       let lineBreak = "\r\n"
+       var body = Data()
+
+       if let parameters = params {
+           for (key, value) in parameters {
+               body.append("--\(boundary + lineBreak)")
+               body.append("Content-Disposition: form-data; name=\"\(key)\"\(lineBreak + lineBreak)")
+              // body.append("\(value) + lineBreak)")
+              let s = String(describing: value)
+              body.append(s)
+              body.append(lineBreak)
+           }
+       }
+
+       if let media = media {
+           for photo in media {
+               body.append("--\(boundary + lineBreak)")
+               body.append("Content-Disposition: form-data; name=\"\(photo.key)\"; filename=\"\(photo.fileName)\"\(lineBreak)")
+               body.append("Content-Type: \(photo.mimeType + lineBreak + lineBreak)")
+               body.append(photo.data)
+               body.append(lineBreak)
+           }
+       }
+
+       body.append("--\(boundary)--\(lineBreak)")
+
+       return body
+   }
 }
 
 extension UIImage {
@@ -149,4 +182,29 @@ extension UIImage {
          draw(in: CGRect(origin: .zero, size: size))
       }
    }
+}
+
+extension Data {
+    mutating func append(_ string: String) {
+        if let data = string.data(using: .utf8) {
+            append(data)
+        }
+    }   
+}
+
+
+struct Media {
+    let key: String
+    let fileName: String
+    let data: Data
+    let mimeType: String
+
+    init?(withImage image: UIImage, forKey key: String) {
+        self.key = key
+        self.mimeType = "image/jpg"
+        self.fileName = "\(arc4random()).jpeg"
+
+        guard let data = image.jpegData(compressionQuality: 0.1) else { return nil }
+        self.data = data
+    }
 }
