@@ -78,8 +78,6 @@ final class GetFeedsApiWorker: BaseApiWorker<String, [Feed]> {
             "Authorization": work.input.string,
          ]))
          .done { result in
-//            let str = String(decoding: result.data!, as: UTF8.self)
-//            print("feed \(str)")
             let decoder = DataToDecodableParser()
             guard
                let data = result.data,

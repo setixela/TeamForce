@@ -11,12 +11,22 @@ import UIKit
 
 ///////// """ STATEABLE -> PARAMETRIC """
 
-final class BalanceViewModel<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>,
+final class BalanceScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>,
    Communicable,
    Stateable,
-   Assetable
+   Assetable,
+   Scenarible
 {
+   typealias State2 = ViewState
    typealias State = StackState
+   
+   lazy var scenario = BalanceScenario(
+      works: BalanceWorks<Asset>(),
+      stateDelegate: stateDelegate,
+      events: BalanceScenarioInputEvents()
+   )
+   
+   
    var events: MainSceneEvents = .init()
 
    // MARK: - Frame Cells
@@ -117,7 +127,7 @@ final class BalanceViewModel<Asset: AssetProtocol>: BaseViewModel<StackViewExten
    }
 }
 
-extension BalanceViewModel {
+extension BalanceScene {
    private func setBalance(_ balance: Balance) {
       setIncome(balance.income)
       setDistr(balance.distr)
@@ -145,3 +155,18 @@ extension BalanceViewModel {
 }
 
 ///////// """ STATEABLE -> PARAMETRIC """
+enum BalanceSceneState {
+   case balanceDidLoad(Balance)
+   case loadBalanceError
+}
+
+extension BalanceScene: StateMachine {
+   func setState(_ state: BalanceSceneState) {
+      switch state {
+      case .balanceDidLoad(let balance):
+         setBalance(balance)
+      case .loadBalanceError:
+         log("Balance Error!")
+      }
+   }
+}
