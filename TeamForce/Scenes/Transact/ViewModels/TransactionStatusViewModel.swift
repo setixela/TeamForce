@@ -90,8 +90,8 @@ final class TransactionStatusViewModel<Design: DSP>: BaseViewModel<StackViewExte
    func setup(info: SendCoinRequest, username: String, foundUser: FoundUser) {
       var userIconText = ""
 
-      if let nameFirstLetter = foundUser.name.first,
-         let surnameFirstLetter = foundUser.surname.first
+      if let nameFirstLetter = foundUser.name.string.first,
+         let surnameFirstLetter = foundUser.surname.string.first
       {
          userIconText = String(nameFirstLetter) + String(surnameFirstLetter)
       }
@@ -109,9 +109,9 @@ final class TransactionStatusViewModel<Design: DSP>: BaseViewModel<StackViewExte
          }
 
          userName
-            .set_text(foundUser.name + " " + foundUser.surname)
+            .set_text(foundUser.name.string + " " + foundUser.surname.string)
          nickName
-            .set_text("@" + foundUser.tgName)
+            .set_text("@" + foundUser.tgName.string)
          amount.label
             .set_text("-" + info.amount)
          amount.models.right

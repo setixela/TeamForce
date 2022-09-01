@@ -20,9 +20,9 @@ struct SearchUserResult {
 
 struct FoundUser: Codable {
   let userId: Int
-  let tgName: String
-  let name: String
-  let surname: String
+  let tgName: String?
+  let name: String?
+  let surname: String?
   let photo: String?
 
   enum CodingKeys: String, CodingKey {

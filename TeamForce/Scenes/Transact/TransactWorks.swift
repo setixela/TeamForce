@@ -135,7 +135,7 @@ final class TransactWorks<Asset: AssetProtocol>: BaseSceneWorks<TransactWorks.Te
          // TODO: - 2d sections mapping to 1d array error
          let user = Self.store.foundUsers[work.unsafeInput]
 
-         Self.store.recipientUsername = user.name
+         Self.store.recipientUsername = user.name.string
          Self.store.recipientID = user.userId
          work.success(result: user)
       }
@@ -183,6 +183,7 @@ final class TransactWorks<Asset: AssetProtocol>: BaseSceneWorks<TransactWorks.Te
       Self.store.isCorrectCoinInput = false
       Self.store.isCorrectReasonInput = false
       Self.store.isAnonymous = false
+      Self.store.images = []
       work.success(result: ())
    }
 

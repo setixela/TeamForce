@@ -111,12 +111,6 @@ final class ApiEngine: ApiEngineProtocol {
          let jsonData = try JSONSerialization.data(withJSONObject: params, options: .prettyPrinted)
 
          request.httpBody = jsonData
-//         params
-//            .map { (key: String, value: Any) in
-//               key + "=\(value)"
-//            }
-//            .joined(separator: "&")
-//            .data(using: .utf8)
 
          log(request)
 

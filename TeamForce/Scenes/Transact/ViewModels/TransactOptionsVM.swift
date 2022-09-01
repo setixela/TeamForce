@@ -22,9 +22,9 @@ final class TransactOptionsVM<Design: DSP>: BaseViewModel<StackViewExtended>, De
    override func start() {
       set_arrangedModels([
          anonimParamModel,
-         showEveryoneParamModel,
-         addTagParamModel,
-         awaitOptionsModel,
+//         showEveryoneParamModel,
+//         addTagParamModel,
+//         awaitOptionsModel,
       ])
    }
 }

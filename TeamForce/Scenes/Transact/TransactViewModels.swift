@@ -78,7 +78,7 @@ extension TransactViewModels {
          
          let name = user.name
          let surname = user.surname
-         let thName = "@" + user.tgName
+         let thName = "@" + user.tgName.string
 
          log(urlString)
          
@@ -96,8 +96,8 @@ extension TransactViewModels {
                         avatar.set_url(urlString)
                         print("hello \(urlString)")
                      } else {
-                        if let nameFirstLetter = user.name.first,
-                           let surnameFirstLetter = user.surname.first {
+                        if let nameFirstLetter = user.name.string.first,
+                           let surnameFirstLetter = user.surname.string.first {
                            let text = String(nameFirstLetter) + String(surnameFirstLetter)
                            let image = text.drawImage(backColor: Design.color.backgroundBrand)
                            avatar
@@ -106,7 +106,7 @@ extension TransactViewModels {
                         }
                      }
                      username
-                        .set_text("\(name) \(surname)")
+                        .set_text("\(name.string) \(surname.string)")
                         .set_textColor(Design.color.text)
                         .set_padLeft(Grid.x14.value)
                         .set_height(Grid.x24.value)

@@ -132,13 +132,13 @@ final class TransactScene<Asset: AssetProtocol>: DoubleStacksModel, Assetable, S
          self?.view.removeFromSuperview()
       }
 
+
+
       view.onEvent(\.willAppear) { [weak self] in
-         self?.setToInitialCondition()
+
          self?.scenario.start()
          self?.scenario2.start()
       }
-
-      setState(.initial)
 
       viewModels.addPhotoButton
          .onEvent(\.didTap) { [weak self] in
@@ -146,6 +146,8 @@ final class TransactScene<Asset: AssetProtocol>: DoubleStacksModel, Assetable, S
 
             self?.imagePicker.sendEvent(\.presentOn, baseVC)
          }
+
+      setToInitialCondition()
    }
 
    func configure() {
@@ -381,7 +383,7 @@ final class PickedImagePanel<Design: DSP>: StackModel, Designable, Communicable 
 
    private var picked = [UIImage: UIViewModel]()
 
-   private let maxCount = 4
+   private let maxCount = 1
 
    override func start() {
       set_axis(.horizontal)
