@@ -165,6 +165,8 @@ extension MainScene {
          let baseView = vcModel?.view
       else { return }
 
+//      model.scenario.start()
+
       let offset: CGFloat = 40
       let view = model.uiView
 

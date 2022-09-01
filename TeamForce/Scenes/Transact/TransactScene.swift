@@ -138,9 +138,9 @@ final class TransactScene<Asset: AssetProtocol>: DoubleStacksModel, Assetable, S
       }
 
       view.onEvent(\.willAppear) { [weak self] in
-
-         self?.scenario.start()
          self?.scenario2.start()
+         self?.scenario.start()
+         self?.setToInitialCondition()
       }
 
       viewModels.addPhotoButton
@@ -149,8 +149,6 @@ final class TransactScene<Asset: AssetProtocol>: DoubleStacksModel, Assetable, S
 
             self?.imagePicker.sendEvent(\.presentOn, baseVC)
          }
-
-      setToInitialCondition()
    }
 
    func configure() {
@@ -194,7 +192,6 @@ final class TransactScene<Asset: AssetProtocol>: DoubleStacksModel, Assetable, S
 
    private func setToInitialCondition() {
       clearFields()
-      scenario.start()
 
       viewModels.sendButton.set(Design.state.button.inactive)
       viewModels.transactInputViewModel.setState(.noInput)
@@ -266,10 +263,12 @@ extension TransactScene: StateMachine {
          viewModels.userSearchTextField.set_hidden(true)
 
          if case .userSelectedSuccess = currentState {
-            viewModels.userSearchTextField.set_hidden(false)
-            viewModels.foundUsersList.set_hidden(true)
-            currentState = .initial
-            applySelectUserMode()
+            UIView.animate(withDuration: 0.3) {
+               self.viewModels.userSearchTextField.set_hidden(false)
+               self.viewModels.foundUsersList.set_hidden(true)
+               self.currentState = .initial
+            }
+            self.applySelectUserMode()
             return
          }
 
