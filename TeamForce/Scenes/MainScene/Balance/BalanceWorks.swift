@@ -7,9 +7,7 @@
 
 import ReactiveWorks
 
-final class BalanceWorksStorage: InitProtocol {
-   var currentUser: UserData?
-}
+final class BalanceWorksStorage: InitProtocol {}
 
 protocol BalanceWorksProtocol {
    var loadBalance: VoidWork<Balance> { get }
