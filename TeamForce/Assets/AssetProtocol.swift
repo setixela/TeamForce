@@ -18,7 +18,7 @@ protocol AssetProtocol: AssetRoot
    Service: ServiceProtocol,
    Design: DesignProtocol
 {
-   static var router: MainRouter<Scene>? { get set }
+   static var router: MainRouter<Self>? { get set }
 
    typealias Asset = Self
    typealias Text = Design.Text
@@ -45,7 +45,4 @@ protocol ScenesProtocol: InitProtocol {
 
    // plays
    var playground: SceneModelProtocol { get }
-
-   // camera
-   var imagePicker: SceneModelProtocol { get }
 }

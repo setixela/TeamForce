@@ -8,13 +8,13 @@
 import ReactiveWorks
 
 enum ProductionAsset: AssetProtocol {
-   typealias Router = MainRouter<Scene>
+   typealias Router = MainRouter<ProductionAsset>
    typealias Text = TextBuilder
    typealias Design = DesignSystem
    typealias Service = ProductionService
    typealias Scene = Scenes
 
-   static var router: MainRouter<Scene>? = MainRouter<Scene>()
+   static weak var router: MainRouter<ProductionAsset>?
 }
 
 struct Scenes: ScenesProtocol {
@@ -22,15 +22,10 @@ struct Scenes: ScenesProtocol {
    //
    var digitalThanks: SceneModelProtocol { DigitalThanksScene<ProductionAsset>() }
    var login: SceneModelProtocol { LoginScene<ProductionAsset>() }
-   //
    var main: SceneModelProtocol { MainScene<ProductionAsset>() }
-   //
    var profile: SceneModelProtocol { ProfileScene<ProductionAsset>() }
    var transactionDetail: SceneModelProtocol { TransactDeatilViewModel<ProductionAsset>() }
    var profileEdit: SceneModelProtocol { ProfileEditScene<ProductionAsset>() }
-
-   // camera
-   var imagePicker: SceneModelProtocol { ImagePickerScene<ProductionAsset>() }
 }
 
 struct ProductionService: ServiceProtocol {
@@ -44,12 +39,12 @@ struct MockService: ServiceProtocol {
 }
 
 enum MockAsset: AssetProtocol {
-   typealias Router = MainRouter<Scene>
+   typealias Router = MainRouter<MockAsset>
    typealias Text = TextBuilder
    typealias Design = DesignSystem
    typealias Service = MockService
    typealias Scene = Scenes
 
-   static var router: MainRouter<Scene>? = MainRouter<Scene>()
-   static var globalRetainer: Retainer? = Retainer()
+   static weak var router: MainRouter<MockAsset>?
 }
+

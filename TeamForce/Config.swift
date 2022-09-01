@@ -11,7 +11,7 @@ import UIKit
 
 struct Config {
    static let isDebug = false
-   static let startDebugScene: KeyPath<ProductionAsset.Scene, SceneModelProtocol> = \.login
+//   static let startDebugScene: KeyPath<ProductionAsset.Scene, SceneModelProtocol> = \.login
 
    static let isDebugView = true
 

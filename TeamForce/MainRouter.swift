@@ -17,33 +17,39 @@ enum NavType {
    case presentModally(UIModalPresentationStyle)
 }
 
-protocol RouterProtocol: InitProtocol {}
+final class MainRouter<Asset: AssetProtocol>: RouterProtocol, Assetable {
+   let nc: UINavigationController
 
-final class MainRouter<Scene: InitProtocol>: RouterProtocol, Communicable {
-   var events: Events = .init()
+   init(nc: UINavigationController) {
+      self.nc = nc
+   }
 
-   func start() {}
-
-   struct Events: InitProtocol {
-      var push: Event<UIViewController>?
-      var pop: Event<Void>?
-      var popToRoot: Event<Void>?
-      var present: Event<UIViewController>?
-      var presentModally: Event<(UIViewController, UIModalPresentationStyle)>?
+   func start() {
+      if Config.isDebug {
+         route(\.login, navType: .push, payload: ())
+      } else {
+         if UserDefaults.standard.isLoggedIn() {
+            route(\.main, navType: .push, payload: ())
+         } else {
+            route(\.digitalThanks, navType: .push, payload: ())
+         }
+      }
    }
 
    func route(_ keypath: KeyPath<Scene, SceneModelProtocol>, navType: NavType, payload: Any? = nil) {
       switch navType {
       case .push:
-         sendEvent(\.push, payload: makeVC())
+         nc.pushViewController(makeVC(), animated: true)
       case .pop:
-         sendEvent(\.pop)
+         nc.popViewController(animated: true)
       case .popToRoot:
-         sendEvent(\.popToRoot)
+         nc.popToRootViewController(animated: true)
       case .present:
-         sendEvent(\.present, payload: makeVC())
+         nc.viewControllers = [makeVC()]
       case .presentModally(let value):
-         sendEvent(\.presentModally, payload: (makeVC(), value))
+         let vc = makeVC()
+         vc.modalPresentationStyle = value
+         nc.present(vc, animated: true)
       }
 
       // local func

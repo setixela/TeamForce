@@ -11,6 +11,8 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
    var window: UIWindow?
 
+   var router: RouterProtocol?
+
    func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
       guard let windowScene = (scene as? UIWindowScene) else { return }
 
@@ -34,32 +36,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 private extension SceneDelegate {
    func startDispatcher(_ nc: UINavigationController) {
       nc.navigationBar.tintColor = .white
-      ProductionAsset.router?
-         .onEvent(\.push) { vc in
-            nc.pushViewController(vc, animated: true)
-         }
-         .onEvent(\.pop) {
-            nc.popViewController(animated: true)
-         }
-         .onEvent(\.popToRoot) {
-            nc.popToRootViewController(animated: true)
-         }
-         .onEvent(\.present) { vc in
-            nc.viewControllers = [vc]
-         }
-         .onEvent(\.presentModally) { (vc: UIViewController, value) in
-            vc.modalPresentationStyle = value
-            nc.present(vc, animated: true)
-         }
-
-      if Config.isDebug {
-         ProductionAsset.router?.route(Config.startDebugScene, navType: .push, payload: ())
-      } else {
-         if UserDefaults.standard.isLoggedIn() {
-            ProductionAsset.router?.route(\.main, navType: .push, payload: ())
-         } else {
-            ProductionAsset.router?.route(\.digitalThanks, navType: .push, payload: ())
-         }
-      }
+      router = ProductionAsset.makeRouter(with: nc)
+      router?.start()
    }
 }
+
+extension AssetProtocol {
+   static func makeRouter(with nc: UINavigationController) -> RouterProtocol {
+      let router = MainRouter<Asset>(nc: nc)
+      self.router = router
+      return router
+   }
+}
+

@@ -19,6 +19,7 @@ final class ImagePickingScenario<Asset: AssetProtocol>:
    BaseScenario<ImagePickingScenarioEvents, TransactState, TransactWorks<Asset>>
 {
    override func start() {
+
       events.addImageToBasket
          .doNext(work: works.addImage)
          .onSuccess(setState) { .presentPickedImage($0) }
@@ -49,6 +50,8 @@ final class TransactScenario<Asset: AssetProtocol>:
    BaseScenario<TransactScenarioEvents, TransactState, TransactWorks<Asset>>
 {
    override func start() {
+      works.reset.doSync()
+
       // load token, balance, userList
       works.loadTokens
          .doAsync()
