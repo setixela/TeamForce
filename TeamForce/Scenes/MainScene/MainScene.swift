@@ -155,7 +155,8 @@ extension MainScene: StateMachine {
          currentUser = userData
 
          presentModel(balanceViewModel)
-
+         tabBarPanel.button2.setMode(\.normal)
+         
          tabBarPanel.button1
             .onEvent(\.didTap) { [weak self] in
                self?.unlockTabButtons()
