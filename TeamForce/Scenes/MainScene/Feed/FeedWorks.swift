@@ -27,7 +27,7 @@ final class FeedWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedWorksTempStorage
    var loadFeedForCurrentUser: Work<UserData?, Void> { .init { [weak self] work in
       guard
          let user = work.input,
-         let userName = user?.profile.nickName
+         let userName = user?.profile.tgName
       else {
          work.fail(())
          return
