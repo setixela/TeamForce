@@ -228,9 +228,9 @@ extension TransactScene: StateMachine {
       case .loadTransactionsError:
         activityIndicator.set_hidden(true)
       //
-    //  case .loadTokensSuccess:
-   //      activityIndicator.set_hidden(false)
-      //
+      case .loadTokensSuccess:
+         activityIndicator.set_hidden(false)
+
          break
       case .loadTokensError:
          viewModels.userSearchTextField.set_hidden(true)
