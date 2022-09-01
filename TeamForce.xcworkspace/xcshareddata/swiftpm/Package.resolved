@@ -1,30 +1,12 @@
 {
   "pins" : [
     {
-      "identity" : "alamofire",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/Alamofire/Alamofire.git",
-      "state" : {
-        "revision" : "8dd85aee02e39dd280c75eef88ffdb86eed4b07b",
-        "version" : "5.6.2"
-      }
-    },
-    {
-      "identity" : "alamofireimage",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/Alamofire/AlamofireImage.git",
-      "state" : {
-        "revision" : "98cbb00ce0ec5fc8e52a5b50a6bfc08d3e5aee10",
-        "version" : "4.2.0"
-      }
-    },
-    {
       "identity" : "promisekit",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/mxcl/PromiseKit",
       "state" : {
-        "revision" : "ed3192004c0b00b4b3d7baa9578ee655c66faae3",
-        "version" : "6.18.0"
+        "revision" : "c946b7561fbe11379a874e59faa2c5f8077ae0e1",
+        "version" : "6.17.1"
       }
     },
     {
@@ -43,24 +25,6 @@
       "state" : {
         "branch" : "master",
         "revision" : "d949715c09767dbe1b9924a2d187624811fc5cd9"
-      }
-    },
-    {
-      "identity" : "swift-css-parser",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/stackotter/swift-css-parser.git",
-      "state" : {
-        "branch" : "main",
-        "revision" : "e776e4bd5031a0485accd06d2b8478df9e4ccdce"
-      }
-    },
-    {
-      "identity" : "swiftkeychainwrapper",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/jrendel/SwiftKeychainWrapper",
-      "state" : {
-        "revision" : "185a3165346a03767101c4f62e9a545a0fe0530f",
-        "version" : "4.0.1"
       }
     }
   ],
