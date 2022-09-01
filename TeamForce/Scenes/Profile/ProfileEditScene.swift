@@ -212,8 +212,8 @@ final class ProfileEditScene<Asset: AssetProtocol>: BaseSceneModel<
 
    private func setLabels(userData: UserData) {
       let profile = userData.profile
-      let fullName = profile.surName + " " +
-         profile.firstName + " " +
+      let fullName = profile.surName.string + " " +
+      profile.firstName.string + " " +
          profile.middleName.string
       userModel.models.right.set_text(fullName)
       userModel.models.down.set_text("@" + profile.tgName)
@@ -222,24 +222,25 @@ final class ProfileEditScene<Asset: AssetProtocol>: BaseSceneModel<
       }
       
       // infoStack
-      firstname.models.down.set_text(profile.firstName)
-      surname.models.down.set_text(profile.surName)
+      firstname.models.down.set_text(profile.firstName.string)
+      surname.models.down.set_text(profile.surName.string)
       middleName.models.down.set_text(profile.middleName.string)
-      
-      for contact in profile.contacts {
-         switch contact.contactType {
-         case "@":
-            email.setAll {
-               $1.set_text(contact.contactId)
+      if let contacts = profile.contacts {
+         for contact in contacts {
+            switch contact.contactType {
+            case "@":
+               email.setAll {
+                  $1.set_text(contact.contactId)
+               }
+            case "P":
+               phone.setAll {
+                  $1.set_text(contact.contactId)
+               }
+            case "T":
+               userModel.models.down.set_text("@" + contact.contactId)
+            default:
+               print("Contact error")
             }
-         case "P":
-            phone.setAll {
-               $1.set_text(contact.contactId)
-            }
-         case "T":
-            userModel.models.down.set_text("@" + contact.contactId)
-         default:
-            print("Contact error")
          }
       }
    }

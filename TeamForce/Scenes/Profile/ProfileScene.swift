@@ -150,8 +150,8 @@ final class ProfileScene<Asset: AssetProtocol>: BaseSceneModel<
 
    private func setLabels(userData: UserData) {
       let profile = userData.profile
-      let fullName = profile.surName + " " +
-         profile.firstName + " " + profile.middleName.string
+      let fullName = profile.surName.string + " " +
+      profile.firstName.string + " " + profile.middleName.string
       userModel.models.right.set_text(fullName)
       userModel.models.down.set_text("@" + profile.tgName)
       if let urlSuffix = profile.photo {
@@ -171,23 +171,25 @@ final class ProfileScene<Asset: AssetProtocol>: BaseSceneModel<
       print("contacts \(profile.contacts)")
       
       //infoStack
-      
-      for contact in profile.contacts {
-         switch contact.contactType {
-         case "@":
-            email.setAll {
-               $1.set_text(contact.contactId)
+      if let contacts = profile.contacts {
+         for contact in contacts {
+            switch contact.contactType {
+            case "@":
+               email.setAll {
+                  $1.set_text(contact.contactId)
+               }
+            case "P":
+               phone.setAll {
+                  $1.set_text(contact.contactId)
+               }
+            case "T":
+               userModel.models.down.set_text("@" + contact.contactId)
+            default:
+               print("Contact error")
             }
-         case "P":
-            phone.setAll {
-               $1.set_text(contact.contactId)
-            }
-         case "T":
-            userModel.models.down.set_text("@" + contact.contactId)
-         default:
-            print("Contact error")
          }
       }
+      
    }
 }
 

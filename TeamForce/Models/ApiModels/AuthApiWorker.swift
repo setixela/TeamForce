@@ -34,17 +34,17 @@ struct UserData: Codable {
 
    struct Profile: Codable {
       let id: Int
-      let contacts: [Contact]
+      let contacts: [Contact]?
       let organization: String
       let department: String
       let tgId: String
       let tgName: String
       let photo: String?
       let hiredAt: String?
-      let surName: String
-      let firstName: String
+      let surName: String?
+      let firstName: String?
       let middleName: String?
-      let nickName: String
+      let nickName: String?
 
       enum CodingKeys: String, CodingKey {
          case id
