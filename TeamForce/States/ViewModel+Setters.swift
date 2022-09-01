@@ -327,9 +327,12 @@ extension ViewModelProtocol where Self: Stateable, View: PaddingImageView {
 
       let urlRequest = URLRequest(url: url)
 
-      view.downloader.download(urlRequest, completion: { [weak view] response in
+      view.downloader.download(urlRequest, progressQueue: .global(qos: .background), completion: { [weak view] response in
          if case .success(let image) = response.result {
-            view?.image = image
+            let image = image.resized(to: .square(48))
+            DispatchQueue.main.async {
+               view?.image = image
+            }
          }
       })
       return self

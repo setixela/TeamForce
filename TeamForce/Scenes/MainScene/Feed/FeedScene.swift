@@ -51,8 +51,6 @@ final class FeedScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>,
          }
 
       scenario.start()
-
-      let asdff = NSNumber(value: false)
    }
 }
 

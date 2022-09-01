@@ -84,16 +84,16 @@ final class FeedViewModels<Design: DSP>: BaseModel, Designable, Stateable {
             dislikeButton
          ])
 
-      let hashTagBlock = StackModel()
-         .set_axis(.horizontal)
-         .set_alignment(.leading)
-         .set_distribution(.equalSpacing)
-         .set_spacing(4)
-         .set_arrangedModels(
-            (0 ..< Int.random(in: 0 ..< 5)).map { _ -> UIViewModel in
-               self.randomButton
-            }
-         )
+//      let hashTagBlock = StackModel()
+//         .set_axis(.horizontal)
+//         .set_alignment(.leading)
+//         .set_distribution(.equalSpacing)
+//         .set_spacing(4)
+//         .set_arrangedModels(
+//            (0 ..< Int.random(in: 0 ..< 5)).map { _ -> UIViewModel in
+//               self.randomButton
+//            }
+//         )
 
       let infoBlock = StackModel()
          .set_spacing(Grid.x10.value)
@@ -102,8 +102,8 @@ final class FeedViewModels<Design: DSP>: BaseModel, Designable, Stateable {
          .set_arrangedModels([
             dateLabel,
             infoLabel,
-            reactionsBlock,
-            hashTagBlock
+            reactionsBlock
+            //  hashTagBlock
          ])
 
       var backColor = Design.color.background
@@ -130,7 +130,7 @@ final class FeedViewModels<Design: DSP>: BaseModel, Designable, Stateable {
    }
 }
 
-fileprivate enum FeedTransactType {
+private enum FeedTransactType {
    static func make(feed: Feed, currentUserName: String) -> Self {
       if feed.transaction.recipient == currentUserName {
          if feed.transaction.isAnonymous {
@@ -219,10 +219,14 @@ private extension FeedViewModels {
             let surnameFirstLetter = feed.transaction.recipientSurname?.first
          {
             let text = String(nameFirstLetter) + String(surnameFirstLetter)
-            let image = text.drawImage(backColor: Design.color.backgroundBrand)
-            icon
-               .set_backColor(Design.color.backgroundBrand)
-               .set_image(image)
+            DispatchQueue.global(qos: .background).async {
+               let image = text.drawImage(backColor: Design.color.backgroundBrand)
+               DispatchQueue.main.async {
+                  icon
+                     .set_backColor(Design.color.backgroundBrand)
+                     .set_image(image)
+               }
+            }
          }
       }
 
