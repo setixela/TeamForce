@@ -32,11 +32,14 @@ final class FeedScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>,
 
    private lazy var viewModels = FeedViewModels<Design>()
 
+   private lazy var activityIndicator = ActivityIndicator<Design>()
+
    override func start() {
       set_axis(.vertical)
       set_arrangedModels([
          viewModels.filterButtons,
-         viewModels.feedTableModel
+         activityIndicator,
+         viewModels.feedTableModel,
       ])
 
       viewModels.feedTableModel
@@ -48,6 +51,8 @@ final class FeedScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>,
          }
 
       scenario.start()
+
+      let asdff = NSNumber(value: false)
    }
 }
 
@@ -60,6 +65,7 @@ extension FeedScene: StateMachine {
    func setState(_ state: FeedSceneState) {
       switch state {
       case .presentFeed(let tuple):
+         activityIndicator.set_hidden(true)
          viewModels.set(.userName(tuple.1))
          viewModels.feedTableModel.set(.items(tuple.0 + [SpacerItem(size: Grid.x64.value)]))
       case .loadFeedError:

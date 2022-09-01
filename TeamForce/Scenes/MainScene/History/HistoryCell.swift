@@ -44,7 +44,8 @@ final class HistoryCellModel<Design: DSP>:
                   .set(Design.state.label.body3)
                   .set_alignment(.right)
                cancelButton
-                  .set_size(.square(32))
+                  .set_size(.square(1)) // TODO: - change to SVG
+                  .set_hidden(true) // TODO: - change to SVG
             }
       }
    }

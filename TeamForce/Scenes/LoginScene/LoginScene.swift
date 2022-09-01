@@ -53,6 +53,7 @@ private extension LoginScene {
             Spacer(Design.params.buttonsSpacingY),
             viewModels.getCodeButton,
             viewModels.loginButton,
+            viewModels.activityIndicator,
             Grid.xxx.spacer
          ])
    }

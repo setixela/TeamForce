@@ -34,6 +34,8 @@ final class HistoryScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>
       )
    )
 
+   private lazy var activityIndicator = ActivityIndicator<Design>()
+
    // MARK: - Start
 
    override func start() {
@@ -64,6 +66,7 @@ private extension HistoryScene {
       set_arrangedModels([
          viewModels.segmentedControl,
          Grid.x16.spacer,
+         activityIndicator,
          viewModels.tableModel,
          // Spacer(88),
       ])
@@ -85,20 +88,24 @@ extension HistoryScene: StateMachine {
    func setState(_ state: HistoryState) {
       switch state {
       case .loadProfilError:
+
          log("loadProfilError")
       //
       case .loadTransactionsError:
          log("loadTransactionsError")
       //
       case .presentAllTransactions(let value):
+         activityIndicator.set_hidden(true)
          viewModels.tableModel
             .set(.itemSections(value.addedSpacer(size: Grid.x80.value)))
       //
       case .presentSentTransactions(let value):
+         activityIndicator.set_hidden(true)
          viewModels.tableModel
             .set(.itemSections(value.addedSpacer(size: Grid.x80.value)))
       //
       case .presentRecievedTransaction(let value):
+         activityIndicator.set_hidden(true)
          viewModels.tableModel
             .set(.itemSections(value.addedSpacer(size: Grid.x80.value)))
       //

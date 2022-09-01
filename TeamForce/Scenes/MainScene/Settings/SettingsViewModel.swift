@@ -106,7 +106,7 @@ final class SettingsViewModel<Asset: AssetProtocol>: BaseViewModel<StackViewExte
          general,
          Spacer(8),
          help,
-         Spacer(8),
+         Spacer(16),
          logoutButton,
          Grid.xxx.spacer,
       ]))

@@ -43,6 +43,10 @@ final class MainScene<Asset: AssetProtocol>:
 
    override func start() {
       mainVM.header.set_text("Баланс")
+      mainVM.bodyStack.set_arrangedModels([
+         ActivityIndicator<Design>(),
+         Spacer()
+      ])
 
       scenario.start()
    }
@@ -103,7 +107,7 @@ extension MainScene {
 
       baseView.addSubview(view)
       view.addAnchors.fitToViewInsetted(baseView, .init(top: offset, left: 0, bottom: 0, right: 0))
-      //activeScreen = model
+      // activeScreen = model
    }
 
    private func presentTransactSuccessView(_ data: StatusViewInput) {
@@ -171,6 +175,7 @@ extension MainScene: StateMachine {
          tabBarPanel.buttonMain
             .onEvent(\.didTap) { [weak self] in
 
+               self?.transactModel.start()
                self?.presentBottomPopupModel(self?.transactModel)
                // Asset.router?.route(\.transaction, navType: .presentModally(.formSheet))
             }
@@ -201,5 +206,16 @@ extension MainScene: StateMachine {
       case .loadProfileError:
          break
       }
+   }
+}
+
+final class ActivityIndicator<Design: DSP>: BaseViewModel<UIActivityIndicatorView>, Stateable {
+   typealias State = ViewState
+
+   override func start() {
+      set_size(.square(100))
+      view.startAnimating()
+      view.color = Design.color.iconBrand
+      view.contentScaleFactor = 1.33
    }
 }

@@ -32,6 +32,7 @@ final class LoginScenario<Asset: AssetProtocol>:
 
       // setup get code button reaction
       events.getCodeButtonEvent
+         .onSuccess(setState, .startActivityIndicator)
          .doNext(work: works.authByName)
          .onSuccess(setState, .inputSmsCode)
          .onFail(setState, .invalidUserName)
@@ -45,6 +46,7 @@ final class LoginScenario<Asset: AssetProtocol>:
 
       // setup login button reactions
       events.loginButtonEvent
+         .onSuccess(setState, .startActivityIndicator)
          //
          .doNext(work: works.verifyCode)
          .onFail(setState, .invalidSmsCode)

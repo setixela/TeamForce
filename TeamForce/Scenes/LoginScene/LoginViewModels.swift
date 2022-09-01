@@ -20,11 +20,16 @@ enum LoginSceneState {
    //
    case invalidUserName
    case invalidSmsCode
+   //
+   case startActivityIndicator
 }
 
 // MARK: - View models
 
 final class LoginViewModels<Design: DSP>: BaseModel, Designable {
+   //
+   lazy var activityIndicator = ActivityIndicator<Design>()
+      .set_hidden(true)
    //
    lazy var userNameInputModel = TopBadger<IconTextField<Design>>()
       .set(.badgeLabelStates(Design.state.label.defaultError))
@@ -64,35 +69,45 @@ extension LoginViewModels: StateMachine {
          userNameInputModel.set_hidden(false)
          loginButton.set_hidden(true)
          getCodeButton.set_hidden(false)
+         activityIndicator.set_hidden(true)
 
       case .inputSmsCode:
          smsCodeInputModel.set_hidden(false)
          loginButton.set_hidden(false)
          getCodeButton.set_hidden(true)
+         activityIndicator.set_hidden(true)
 
       case .nameInputParseSuccess(let value):
          userNameInputModel.mainModel.textField.set_text(value)
          getCodeButton.set(Design.state.button.default)
          userNameInputModel.set(.hideBadge)
+         activityIndicator.set_hidden(true)
 
       case .nameInputParseError(let value):
          userNameInputModel.mainModel.textField.set_text(value)
          getCodeButton.set(Design.state.button.inactive)
          userNameInputModel.set(.hideBadge)
+         activityIndicator.set_hidden(true)
 
       case .smsInputParseSuccess(let value):
          smsCodeInputModel.mainModel.textField.set(.text(value))
          loginButton.set(Design.state.button.default)
+         activityIndicator.set_hidden(true)
 
       case .smsInputParseError(let value):
          smsCodeInputModel.mainModel.textField.set(.text(value))
          loginButton.set(Design.state.button.inactive)
+         activityIndicator.set_hidden(true)
 
       case .invalidUserName:
          userNameInputModel.set(.presentBadge(" " + Design.Text.title.wrongUsername + " "))
+         activityIndicator.set_hidden(true)
 
       case .invalidSmsCode:
          smsCodeInputModel.set(.presentBadge(" " + Design.Text.title.wrongCode + " "))
+         activityIndicator.set_hidden(true)
+      case .startActivityIndicator:
+         activityIndicator.set_hidden(false)
       }
    }
 }
