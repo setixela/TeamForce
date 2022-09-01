@@ -9,8 +9,8 @@ import ReactiveWorks
 import UIKit
 
 struct TransactEvents: InitProtocol {
-   var cancelled: Event<Void>?
-   var finishWithSuccess: Event<StatusViewInput>?
+   var cancelled: Void?
+   var finishWithSuccess: StatusViewInput?
 }
 
 enum TransactState {
@@ -47,10 +47,11 @@ enum TransactState {
    case startActivityIndicator
 }
 
-final class TransactScene<Asset: AssetProtocol>: DoubleStacksModel, Assetable, Scenarible2, Communicable {
+final class TransactScene<Asset: AssetProtocol>: DoubleStacksModel, Assetable, Scenarible2, Eventable {
+   typealias Events = TransactEvents
    typealias State = StackState
 
-   var events = TransactEvents()
+   var events: [Int : LambdaProtocol?] = [:]
 
    private lazy var works = TransactWorks<Asset>()
 
@@ -132,7 +133,7 @@ final class TransactScene<Asset: AssetProtocol>: DoubleStacksModel, Assetable, S
       configure()
 
       closeButton.onEvent(\.didTap) { [weak self] in
-         self?.sendEvent(\.cancelled)
+         self?.send(\.cancelled)
          self?.viewModels.foundUsersList.set(.items([]))
          self?.view.removeFromSuperview()
       }
@@ -295,7 +296,7 @@ extension TransactScene: StateMachine {
          let sended = StatusViewInput(sendCoinInfo: tuple.1,
                                       username: tuple.0,
                                       foundUser: viewModels.foundUsersList.items.first as! FoundUser)
-         sendEvent(\.finishWithSuccess, sended)
+         send(\.finishWithSuccess, sended)
          setToInitialCondition()
          view.removeFromSuperview()
       //

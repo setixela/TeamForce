@@ -165,17 +165,15 @@ extension MainScene {
          let baseView = vcModel?.view
       else { return }
 
-//      model.scenario.start()
-
       let offset: CGFloat = 40
       let view = model.uiView
 
       model
-         .onEvent(\.finishWithSuccess) { [weak self] in
+         .on(\.finishWithSuccess) { [weak self] in
             self?.presentTransactSuccessView($0)
             self?.activeScreen?.scenario.start()
          }
-         .onEvent(\.cancelled) { [weak self] in
+         .on(\.cancelled) { [weak self] in
             self?.activeScreen?.scenario.start()
          }
 

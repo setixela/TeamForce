@@ -11,7 +11,7 @@ import ReactiveWorks
 
 enum NavType {
    case push
-   case present
+   case presentInitial
    case pop
    case popToRoot
    case presentModally(UIModalPresentationStyle)
@@ -44,7 +44,7 @@ final class MainRouter<Asset: AssetProtocol>: RouterProtocol, Assetable {
          nc.popViewController(animated: true)
       case .popToRoot:
          nc.popToRootViewController(animated: true)
-      case .present:
+      case .presentInitial:
          nc.viewControllers = [makeVC()]
       case .presentModally(let value):
          let vc = makeVC()
@@ -60,4 +60,10 @@ final class MainRouter<Asset: AssetProtocol>: RouterProtocol, Assetable {
          return vc
       }
    }
+}
+
+protocol Alert {}
+
+protocol AlertPresenter {
+   func presentAlert(_ alert: Alert, on model: UIViewModel)
 }

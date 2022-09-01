@@ -110,6 +110,7 @@
 		19A9232A28B2A8200080D491 /* SpacerPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A9232928B2A8200080D491 /* SpacerPresenter.swift */; };
 		19A9232F28B2E34E0080D491 /* CurrencyLabelDT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A9232E28B2E34E0080D491 /* CurrencyLabelDT.swift */; };
 		19A9BE6528BEB57C0099F8EA /* ImagePickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A9BE6428BEB57C0099F8EA /* ImagePickerViewModel.swift */; };
+		19A9BE6728C139CA0099F8EA /* EventableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A9BE6628C139CA0099F8EA /* EventableTests.swift */; };
 		19AE3AEF28691B2E00A0C6E4 /* MainScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19AE3AEE28691B2E00A0C6E4 /* MainScene.swift */; };
 		19AE3AF22869230C00A0C6E4 /* AuthApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19AE3AF12869230C00A0C6E4 /* AuthApiWorker.swift */; };
 		19B2C5D428B7D37A00E7B47D /* Shadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B2C5D328B7D37A00E7B47D /* Shadow.swift */; };
@@ -329,6 +330,7 @@
 		19A9232928B2A8200080D491 /* SpacerPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpacerPresenter.swift; sourceTree = "<group>"; };
 		19A9232E28B2E34E0080D491 /* CurrencyLabelDT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyLabelDT.swift; sourceTree = "<group>"; };
 		19A9BE6428BEB57C0099F8EA /* ImagePickerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerViewModel.swift; sourceTree = "<group>"; };
+		19A9BE6628C139CA0099F8EA /* EventableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventableTests.swift; sourceTree = "<group>"; };
 		19AE3AEE28691B2E00A0C6E4 /* MainScene.swift */ = {isa = PBXFileReference; indentWidth = 3; lastKnownFileType = sourcecode.swift; path = MainScene.swift; sourceTree = "<group>"; tabWidth = 3; };
 		19AE3AF12869230C00A0C6E4 /* AuthApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthApiWorker.swift; sourceTree = "<group>"; };
 		19B2C5D328B7D37A00E7B47D /* Shadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shadow.swift; sourceTree = "<group>"; };
@@ -557,6 +559,7 @@
 				190C1D28285D160000FB3518 /* WorksTests.swift */,
 				194D7B5928B17DD4002DE840 /* WorksTests2.swift */,
 				19A097FD28AEC4C700D8FFF2 /* MemoryLeakTests.swift */,
+				19A9BE6628C139CA0099F8EA /* EventableTests.swift */,
 			);
 			path = TeamForceTests;
 			sourceTree = "<group>";
@@ -1444,6 +1447,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				19A9BE6728C139CA0099F8EA /* EventableTests.swift in Sources */,
 				194D7B5A28B17DD4002DE840 /* WorksTests2.swift in Sources */,
 				190C1D29285D160000FB3518 /* WorksTests.swift in Sources */,
 				19A097FE28AEC4C700D8FFF2 /* MemoryLeakTests.swift in Sources */,
