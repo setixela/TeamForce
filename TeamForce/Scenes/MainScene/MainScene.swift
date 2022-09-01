@@ -26,16 +26,18 @@ final class MainScene<Asset: AssetProtocol>:
       events: MainScenarioInputEvents()
    )
 
-   lazy var balanceViewModel = BalanceViewModel<Asset>()
-   lazy var historyViewModel = HistoryScene<Asset>()
-   lazy var settingsViewModel = SettingsViewModel<Asset>()
-   lazy var feedViewModel = FeedScene<Asset>()
+   private lazy var balanceViewModel = BalanceViewModel<Asset>()
+   private lazy var historyViewModel = HistoryScene<Asset>()
+   private lazy var settingsViewModel = SettingsViewModel<Asset>()
+   private lazy var feedViewModel = FeedScene<Asset>()
 
-   lazy var transactModel: TransactScene = TransactScene<Asset>(vcModel: vcModel)
+   private lazy var transactModel: TransactScene = TransactScene<Asset>(vcModel: vcModel)
 
-   var tabBarPanel: TabBarPanel<Design> { mainVM.footerStack }
+   private var tabBarPanel: TabBarPanel<Design> { mainVM.footerStack }
 
    private var currentUser: UserData?
+
+   private weak var activeScreen: ModelProtocol?
 
    // MARK: - Start
 
@@ -68,6 +70,7 @@ extension MainScene {
             model
          ])
       model.sendEvent(\.userDidLoad, currentUser)
+      activeScreen = model
    }
 
    private func presentModel<M: UIViewModel>(_ model: M?) {
@@ -77,6 +80,7 @@ extension MainScene {
          .set_arrangedModels([
             model
          ])
+      activeScreen = model
    }
 
    private func presentBottomPopupModel<M: UIViewModel & Communicable>(_ model: M?) where M.Events == TransactEvents {
@@ -91,14 +95,16 @@ extension MainScene {
       model
          .onEvent(\.finishWithSuccess) { [weak self] in
             self?.presentTransactSuccessView($0)
+            self?.activeScreen?.start()
          }
          .onEvent(\.cancelled) { [weak self] in
+            self?.activeScreen?.start()
          }
 
       baseView.addSubview(view)
       view.addAnchors.fitToViewInsetted(baseView, .init(top: offset, left: 0, bottom: 0, right: 0))
+      //activeScreen = model
    }
-
 
    private func presentTransactSuccessView(_ data: StatusViewInput) {
       let model = TransactionStatusViewModel<Design>()
