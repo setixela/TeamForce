@@ -19,14 +19,13 @@ final class BalanceScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>
 {
    typealias State2 = ViewState
    typealias State = StackState
-   
-   lazy var scenario = BalanceScenario(
+
+   lazy var scenario: Scenario = BalanceScenario(
       works: BalanceWorks<Asset>(),
       stateDelegate: stateDelegate,
       events: BalanceScenarioInputEvents()
    )
-   
-   
+
    var events: MainSceneEvents = .init()
 
    // MARK: - Frame Cells
@@ -115,15 +114,6 @@ final class BalanceScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>
          inProgessFrame,
          Grid.xxx.spacer,
       ]))
-
-      useCase.loadBalance
-         .doAsync()
-         .onSuccess { [weak self] balance in
-            self?.setBalance(balance)
-         }
-         .onFail {
-            print("balance not loaded")
-         }
    }
 }
 
@@ -154,7 +144,6 @@ extension BalanceScene {
    }
 }
 
-///////// """ STATEABLE -> PARAMETRIC """
 enum BalanceSceneState {
    case balanceDidLoad(Balance)
    case loadBalanceError

@@ -19,7 +19,7 @@ final class FeedScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>,
 
    var events = MainSceneEvents()
 
-   lazy var scenario = FeedScenario<Asset>(
+   lazy var scenario: Scenario = FeedScenario<Asset>(
       works: FeedWorks<Asset>(),
       stateDelegate: stateDelegate,
       events: FeedScenarioInputEvents(
@@ -49,8 +49,6 @@ final class FeedScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>,
          .onEvent(\.willEndDragging) { [weak self] in
             self?.sendEvent(\.willEndDragging, $0)
          }
-
-      scenario.start()
    }
 }
 

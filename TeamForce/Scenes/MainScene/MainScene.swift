@@ -8,9 +8,13 @@
 import ReactiveWorks
 import UIKit
 
-// 177
-
 typealias CommunicableUIViewModel = UIViewModel & Communicable
+typealias ScenaribleCommunicableUIViewModel = Scenarible & Communicable & UIViewModel
+
+enum MainSceneState {
+   case profileDidLoad(UserData)
+   case loadProfileError
+}
 
 final class MainScene<Asset: AssetProtocol>:
    BaseSceneModel<
@@ -20,7 +24,7 @@ final class MainScene<Asset: AssetProtocol>:
       Void
    >, Scenarible
 {
-   lazy var scenario = MainScenario(
+   lazy var scenario: Scenario = MainScenario(
       works: MainWorks<Asset>(),
       stateDelegate: stateDelegate,
       events: MainScenarioInputEvents()
@@ -37,7 +41,7 @@ final class MainScene<Asset: AssetProtocol>:
 
    private var currentUser: UserData?
 
-   //private weak var activeScreen: ModelProtocol?
+   private weak var activeScreen: Scenarible?
 
    // MARK: - Start
 
@@ -59,95 +63,7 @@ final class MainScene<Asset: AssetProtocol>:
    }
 }
 
-extension MainScene {
-   private func presentModel<M: UIViewModel & Communicable & Scenarible>(_ model: M?) where M.Events == MainSceneEvents {
-      guard let model = model else { return }
-      model.scenario.start()
-      model.onEvent(\.willEndDragging) { [weak self] velocity in
-         if velocity > 0 {
-            self?.presentHeader()
-         } else if velocity < 0 {
-            self?.hideHeader()
-         }
-      }
-      mainVM.bodyStack
-         .set_arrangedModels([
-            model
-         ])
-      model.sendEvent(\.userDidLoad, currentUser)
-      //activeScreen = model
-   }
-
-   private func presentModel<M: UIViewModel>(_ model: M?) {
-      guard let model = model else { return }
-      
-      mainVM.bodyStack
-         .set_arrangedModels([
-            model
-         ])
-      //activeScreen = model
-   }
-
-   private func presentBottomPopupModel<M: UIViewModel & Communicable & Scenarible>(_ model: M?) where M.Events == TransactEvents {
-      guard
-         let model = model,
-         let baseView = vcModel?.view
-      else { return }
-
-      let offset: CGFloat = 40
-      let view = model.uiView
-
-      model
-         .onEvent(\.finishWithSuccess) { [weak self] in
-            self?.presentTransactSuccessView($0)
-            //self?.activeScreen?.start()
-         }
-         .onEvent(\.cancelled) { [weak self] in
-            //self?.activeScreen?.start()
-         }
-
-      baseView.addSubview(view)
-      view.addAnchors.fitToViewInsetted(baseView, .init(top: offset, left: 0, bottom: 0, right: 0))
-      // activeScreen = model
-   }
-
-   private func presentTransactSuccessView(_ data: StatusViewInput) {
-      let model = TransactionStatusViewModel<Design>()
-      model.onEvent(\.didHide) {
-         print()
-      }
-
-      guard
-         let baseView = vcModel?.view
-      else { return }
-      let offset: CGFloat = 40
-      let view = model.uiView
-
-      model.setup(info: data.sendCoinInfo, username: data.username, foundUser: data.foundUser)
-
-      baseView.addSubview(view)
-      view.addAnchors.fitToViewInsetted(baseView, .init(top: offset, left: 0, bottom: 0, right: 0))
-   }
-
-   private func presentHeader() {
-      UIView.animate(withDuration: 0.36) {
-         self.mainVM.setState(.hideHeaderTitle)
-         self.vcModel?.sendEvent(\.setTitle, "История")
-      }
-   }
-
-   private func hideHeader() {
-      UIView.animate(withDuration: 0.36) {
-         self.vcModel?.sendEvent(\.setTitle, "")
-         self.mainVM.setState(.presentHeaderTitle)
-      }
-   }
-}
-
-enum MainSceneState {
-   case profileDidLoad(UserData)
-   case loadProfileError
-}
+// MARK: - State machine
 
 extension MainScene: StateMachine {
    func setState(_ state: MainSceneState) {
@@ -157,7 +73,7 @@ extension MainScene: StateMachine {
 
          presentModel(balanceViewModel)
          tabBarPanel.button2.setMode(\.normal)
-         
+
          tabBarPanel.button1
             .onEvent(\.didTap) { [weak self] in
                self?.unlockTabButtons()
@@ -176,10 +92,7 @@ extension MainScene: StateMachine {
 
          tabBarPanel.buttonMain
             .onEvent(\.didTap) { [weak self] in
-
-               self?.transactModel.start()
-               self?.presentBottomPopupModel(self?.transactModel)
-               // Asset.router?.route(\.transaction, navType: .presentModally(.formSheet))
+               self?.presentTransactModel(self?.transactModel)
             }
 
          tabBarPanel.button3
@@ -207,6 +120,100 @@ extension MainScene: StateMachine {
          }
       case .loadProfileError:
          break
+      }
+   }
+}
+
+// MARK: - Presenting sub scenes
+
+extension MainScene {
+   // Presenting Balance, Feed, History
+   private func presentModel<M: Scenarible & Communicable & UIViewModel>(_ model: M?) where M.Events == MainSceneEvents {
+      guard let model = model else { return }
+      model.scenario.start()
+
+      model.onEvent(\.willEndDragging) { [weak self] velocity in
+         if velocity > 0 {
+            self?.presentHeader()
+         } else if velocity < 0 {
+            self?.hideHeader()
+         }
+      }
+      mainVM.bodyStack
+         .set_arrangedModels([
+            model
+         ])
+      model.sendEvent(\.userDidLoad, currentUser)
+
+      activeScreen = model
+   }
+
+   // Presenting Settings
+   private func presentModel<M: UIViewModel>(_ model: M?) {
+      guard let model = model else { return }
+
+      mainVM.bodyStack
+         .set_arrangedModels([
+            model
+         ])
+   }
+
+   // Presenting Transact
+   private func presentTransactModel(_ model: TransactScene<Asset>?) {
+      guard
+         let model = model,
+         let baseView = vcModel?.view
+      else { return }
+
+      let offset: CGFloat = 40
+      let view = model.uiView
+
+      model
+         .onEvent(\.finishWithSuccess) { [weak self] in
+            self?.presentTransactSuccessView($0)
+            self?.activeScreen?.scenario.start()
+         }
+         .onEvent(\.cancelled) { [weak self] in
+            self?.activeScreen?.scenario.start()
+         }
+
+      baseView.addSubview(view)
+      view.addAnchors.fitToViewInsetted(baseView, .init(top: offset, left: 0, bottom: 0, right: 0))
+   }
+
+   private func presentTransactSuccessView(_ data: StatusViewInput) {
+      let model = TransactionStatusViewModel<Design>()
+      model.onEvent(\.didHide) {
+         print()
+      }
+
+      guard
+         let baseView = vcModel?.view
+      else { return }
+      let offset: CGFloat = 40
+      let view = model.uiView
+
+      model.setup(info: data.sendCoinInfo, username: data.username, foundUser: data.foundUser)
+
+      baseView.addSubview(view)
+      view.addAnchors.fitToViewInsetted(baseView, .init(top: offset, left: 0, bottom: 0, right: 0))
+   }
+}
+
+// MARK: - Header animation
+
+extension MainScene {
+   private func presentHeader() {
+      UIView.animate(withDuration: 0.36) {
+         self.mainVM.setState(.hideHeaderTitle)
+         self.vcModel?.sendEvent(\.setTitle, "История")
+      }
+   }
+
+   private func hideHeader() {
+      UIView.animate(withDuration: 0.36) {
+         self.vcModel?.sendEvent(\.setTitle, "")
+         self.mainVM.setState(.presentHeaderTitle)
       }
    }
 }

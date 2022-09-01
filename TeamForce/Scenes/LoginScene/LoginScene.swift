@@ -19,7 +19,7 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
 
    private lazy var viewModels = LoginViewModels<Design>()
 
-   lazy var scenario = LoginScenario(
+   lazy var scenario: Scenario = LoginScenario(
       works: LoginWorks<Asset>(),
       stateDelegate: viewModels.setState,
       events: LoginScenarioEvents(

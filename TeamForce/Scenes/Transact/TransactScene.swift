@@ -54,7 +54,7 @@ final class TransactScene<Asset: AssetProtocol>: DoubleStacksModel, Assetable, S
 
    private lazy var works = TransactWorks<Asset>()
 
-   lazy var scenario = TransactScenario(
+   lazy var scenario: Scenario = TransactScenario(
       works: works,
       stateDelegate: stateDelegate,
       events: TransactScenarioEvents(
@@ -69,7 +69,7 @@ final class TransactScene<Asset: AssetProtocol>: DoubleStacksModel, Assetable, S
       )
    )
 
-   lazy var scenario2 = ImagePickingScenario(
+   lazy var scenario2: Scenario = ImagePickingScenario(
       works: works,
       stateDelegate: stateDelegate,
       events: ImagePickingScenarioEvents(
@@ -128,10 +128,7 @@ final class TransactScene<Asset: AssetProtocol>: DoubleStacksModel, Assetable, S
 
    override func start() {
       super.start()
-//
-//      view.alpha = 1
-      activityIndicator.uiView.removeFromSuperview()
-      view.isUserInteractionEnabled = true
+
       configure()
 
       closeButton.onEvent(\.didTap) { [weak self] in
@@ -197,7 +194,7 @@ final class TransactScene<Asset: AssetProtocol>: DoubleStacksModel, Assetable, S
 
    private func setToInitialCondition() {
       clearFields()
-      scenario.works.reset.doSync()
+      scenario.start()
 
       viewModels.sendButton.set(Design.state.button.inactive)
       viewModels.transactInputViewModel.setState(.noInput)
@@ -226,12 +223,11 @@ extension TransactScene: StateMachine {
          activityIndicator.set_hidden(true)
       //
       case .loadTransactionsError:
-        activityIndicator.set_hidden(true)
+         activityIndicator.set_hidden(true)
       //
       case .loadTokensSuccess:
          activityIndicator.set_hidden(false)
 
-         break
       case .loadTokensError:
          viewModels.userSearchTextField.set_hidden(true)
          activityIndicator.set_hidden(true)
@@ -331,10 +327,7 @@ extension TransactScene: StateMachine {
       case .setHideAddPhotoButton(let value):
          viewModels.addPhotoButton.set_hidden(value)
       case .startActivityIndicator:
-         view.isUserInteractionEnabled = false
-         activityIndicator.uiView.removeFromSuperview()
-         view.addSubview(activityIndicator.uiView)
-         activityIndicator.uiView.addAnchors.fitToView(view)
+         break
       }
    }
 }

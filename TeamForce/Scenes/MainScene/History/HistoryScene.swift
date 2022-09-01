@@ -23,7 +23,7 @@ final class HistoryScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>
 
    private lazy var viewModels = HistoryViewModels<Design>()
 
-   lazy var scenario = HistoryScenario(
+   lazy var scenario: Scenario = HistoryScenario(
       works: HistoryWorks<Asset>(),
       stateDelegate: stateDelegate,
       events: HistoryScenarioEvents(
@@ -40,8 +40,6 @@ final class HistoryScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>
 
    override func start() {
       configure()
-
-      scenario.start()
 
       viewModels.tableModel
          .set(.presenters([
