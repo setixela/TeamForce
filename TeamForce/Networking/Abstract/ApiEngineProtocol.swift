@@ -7,15 +7,9 @@
 
 import Foundation
 import PromiseKit
+import UIKit
 
 protocol ApiEngineProtocol {
-    //	func process(url: URL,
-    //	             method: HTTPMethod,
-    //	             headers: [String: String],
-//                 jsonBody: [String: Any],
-//                 completion: @escaping GenericClosure<Result<ApiEngineResult, ApiEngineError>>)
-
-//    func process(url: URL, method: HTTPMethod, headers: [String: String], params: [String: Any]) -> Promise<ApiEngineResult>
-
-    func process(endpoint: EndpointProtocol) -> Promise<ApiEngineResult>
+   func process(endpoint: EndpointProtocol) -> Promise<ApiEngineResult>
+   func processWithImage(endpoint: EndpointProtocol, image: UIImage) -> Promise<ApiEngineResult>
 }

@@ -13,6 +13,8 @@ typealias TeamForceResult<T> = Swift.Result<T, TeamForceApiError>
 enum HTTPMethod: String {
     case get = "GET"
     case post = "POST"
+    case put = "PUT"
+    case patch = "PATCH"
 }
 
 enum TeamForceApiError: Error {
@@ -26,124 +28,59 @@ protocol TeamForceApiProtocol {}
 enum CommonError: Error {
     case error
 }
-
-final class TeamForceApi: TeamForceApiProtocol {
-    func auth(loginName: String) -> Promise<AuthResult> {
-        Promise { seal in
-            apiEngine
-                .process(endpoint: TeamForceEndpoints.AuthEndpoint(
-                    body: ["type": "authorize",
-                           "login": loginName]
-                ))
-                .done { result in
-                    guard
-                        let xId = result.response?.headerValueFor("X-ID"),
-                        let xCode = result.response?.headerValueFor("X-Code")
-                    else {
-                        seal.reject(ApiEngineError.unknown)
-                        return
-                    }
-                    seal.fulfill(AuthResult(xId: xId,
-                                            xCode: xCode))
-                }
-                .catch { error in
-                    seal.reject(error)
-                }
-        }
-    }
-
-    func verify(authResult: AuthResult) -> Promise<VerifyResult> {
-        Promise { seal in
-            apiEngine
-                .process(endpoint: TeamForceEndpoints.VerifyEndpoint(body: ["X-ID": authResult.xId,
-                                                                            "X-Code": authResult.xCode], headers: ["1" : "2"]))
-                .done { result in
-                    print(result)
-                    seal.fulfill(VerifyResult(type: "", isSuccess: true))
-                }
-                .catch { error in
-                    seal.reject(error)
-                }
-        }
-    }
-
-    private let apiEngine: ApiEngineProtocol
-
-    init(engine: ApiEngineProtocol) {
-        apiEngine = engine
-    }
-}
-
-extension TeamForceApi {
-//    private func processEndpoint<T: Decodable>(_ endpoint: EndpointProtocol) -> Promise<TeamForceApiResult<T>>
-//    {
-//        guard let url = URL(string: endpoint.endPoint) else {
-//            completion(Swift.Result.failure(.wrongEndpoint))
-//            return
-//        }
 //
-//        apiEngine.process(
-//            url: url,
-//            method: endpoint.method,
-//            headers: endpoint.headers,
-//            jsonBody: endpoint.body,
-//            completion: { result in
-//
-//                switch result {
-//                case let .success(apiResult):
-//                    let decoder = JSONDecoder()
-//
+//final class TeamForceApi: TeamForceApiProtocol {
+//    func auth(loginName: String) -> Promise<AuthResult> {
+//        Promise { seal in
+//            apiEngine
+//                .process(endpoint: TeamForceEndpoints.AuthEndpoint(
+//                    body: ["type": "authorize",
+//                           "login": loginName]
+//                ))
+//                .done { result in
 //                    guard
-//                        let data = apiResult.data,
-//                        let result = try? decoder.decode(T.self, from: data)
+//                        let xId = result.response?.headerValueFor("X-ID"),
+//                        let xCode = result.response?.headerValueFor("X-Code")
 //                    else {
-//                        print(apiResult)
-//
-//                        completion(Swift.Result.failure(.jsonParsing))
-//
+//                        seal.reject(ApiEngineError.unknown)
 //                        return
 //                    }
-//
-//                    completion(.success(ApiResult(data: result, response: apiResult.response)))
-//
-//                case let .failure(error):
-//
-//                    completion(.failure(.error(error)))
+//                    seal.fulfill(AuthResult(xId: xId,
+//                                            xCode: xCode, account: <#Account#>))
 //                }
-//            }
-//        )
+//                .catch { error in
+//                    seal.reject(error)
+//                }
+//        }
 //    }
-}
+//
+//    func verify(authResult: AuthResult) -> Promise<VerifyResult> {
+//        Promise { seal in
+//            apiEngine
+//                .process(endpoint: TeamForceEndpoints.VerifyEndpoint(body: ["X-ID": authResult.xId,
+//                                                                            "X-Code": authResult.xCode], headers: ["1" : "2"]))
+//                .done { result in
+//                    print(result)
+//                    seal.fulfill(VerifyResult(type: "", isSuccess: true))
+//                }
+//                .catch { error in
+//                    seal.reject(error)
+//                }
+//        }
+//    }
+//
+//    private let apiEngine: ApiEngineProtocol
+//
+//    init(engine: ApiEngineProtocol) {
+//        apiEngine = engine
+//    }
+//}
+
 
 struct AuthResult {
     let xId: String
     let xCode: String
-}
-
-struct VerifyRequest {
-    let xId: String
-    let xCode: String
-    let smsCode: String
-}
-
-struct VerifyResult {
-    let type: String //  "authresult",
-    let isSuccess: Bool //  false
-}
-
-
-struct VerifyResultBody: Codable {
-    let type: String
-    let isSuccess: Bool
-    let token: String
-    let sessionId: String
-
-    enum CodingKeys: String, CodingKey  {
-        case sessionId = "sessionid"
-        case isSuccess = "is_success"
-        case type
-        case token
-    }
+    let account: Account
 }
 
 struct AuthResultBody: Decodable {

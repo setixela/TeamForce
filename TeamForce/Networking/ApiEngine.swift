@@ -5,112 +5,206 @@
 //  Created by Aleksandr Solovyev on 11.04.2022.
 //
 
-import Foundation
 import PromiseKit
+import UIKit
 
 enum ApiEngineError: Error {
-    case unknown
-    case error(Error)
+   case unknown
+   case error(Error)
 }
 
 struct ApiEngineResult {
-    let data: Data?
-    let response: URLResponse?
+   let data: Data?
+   let response: URLResponse?
 }
 
-//typealias ApiEngineCallback = GenericClosure<Swift.Result<ApiEngineResult, ApiEngineError>>
-
 final class ApiEngine: ApiEngineProtocol {
-//    func process(url: URL,
-//                 method: HTTPMethod,
-//                 headers: [String: String] = [:],
-//                 params: [String: Any] = [:]) -> Promise<ApiEngineResult>
+   func process(endpoint: EndpointProtocol) -> Promise<ApiEngineResult> {
+      return Promise { seal in
+         guard let url = URL(string: endpoint.endPoint) else {
+            seal.reject(ApiEngineError.unknown)
+            return
+         }
+
+         let method = endpoint.method
+         let params = endpoint.body
+         let headers = endpoint.headers
+
+         var request = URLRequest(url: url)
+
+         request.httpMethod = method.rawValue
+
+         for (key, value) in headers {
+            request.setValue(value, forHTTPHeaderField: key)
+         }
+
+         request.httpBody = params
+            .map { (key: String, value: Any) in
+               key + "=\(value)"
+            }
+            .joined(separator: "&")
+            .data(using: .utf8)
+
+         let task = URLSession.shared.dataTask(with: request) { data, response, error in
+
+            guard let data = data else {
+               guard let error = error else {
+                  seal.reject(ApiEngineError.unknown)
+                  print("\nResponse:\n\(String(describing: response))\n\nData:\n\(String(describing: data))\n\nError:\n\(String(describing: error)))")
+                  return
+               }
+
+               print("\nResponse:\n\(String(describing: response))\n\nData:\n\(String(describing: data))\n\nError:\n\(String(describing: error)))")
+               print(error)
+               seal.reject(ApiEngineError.error(error))
+               return
+            }
+
+            let apiResult = ApiEngineResult(data: data, response: response)
+
+            let str = String(decoding: data, as: UTF8.self)
+            print("result body \(str)")
+            print("response status \(String(describing: apiResult.response as? HTTPURLResponse))")
+
+            seal.fulfill(apiResult)
+         }
+
+         task.resume()
+      }
+   }
+
+   func processWithImage(endpoint: EndpointProtocol, image: UIImage) -> Promise<ApiEngineResult> {
+      return Promise { seal in
+         guard let url = URL(string: endpoint.endPoint) else {
+            seal.reject(ApiEngineError.unknown)
+            return
+         }
+
+         let size = image.size
+         let image = image.resized(to: .init(width: size.width/4, height: size.height/4))
+         guard let mediaImage = Media(withImage: image, forKey: "photo") else { return }
+         let boundary = UUID().uuidString
+
+         let method = endpoint.method
+         let params = endpoint.body
+         let headers = endpoint.headers
+
+         var request = URLRequest(url: url)
+
+         request.httpMethod = method.rawValue
+
+         for (key, value) in headers {
+            request.setValue(value, forHTTPHeaderField: key)
+         }
+         request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
+
+//         var data = Data()
 //
+//         // Add the image data to the raw http request data
+//         data.append("\r\n--\(boundary)\r\n".data(using: .utf8)!)
+//         data.append("Content-Disposition: form-data; name=\"image\"; filename=\"\(image.hashValue)\"\r\n".data(using: .utf8)!)
+//         data.append("Content-Type: image/png\r\n\r\n".data(using: .utf8)!)
+//         data.append(image.pngData()!)
+//
+//         data.append("\r\n--\(boundary)--\r\n".data(using: .utf8)!)
+         let dataBody = createDataBody(withParameters: params, media: [mediaImage], boundary: boundary)
+         request.httpBody = dataBody
 
-    func process(endpoint: EndpointProtocol) -> Promise<ApiEngineResult> {
-        return Promise { seal in
-            guard let url = URL(string: endpoint.endPoint) else {
-                seal.reject(ApiEngineError.unknown)
-                return
+//         let jsonData = try JSONSerialization.data(withJSONObject: params, options: .prettyPrinted)
+//
+//         request.httpBody = jsonData
+
+         log(request)
+
+         let task = URLSession.shared.dataTask(with: request) {  data, response, error in
+
+            guard let data = data else {
+               guard let error = error else {
+                  seal.reject(ApiEngineError.unknown)
+                  print("\nResponse:\n\(String(describing: response))\n\nData:\n\(String(describing: data))\n\nError:\n\(String(describing: error)))")
+                  return
+               }
+
+               print("\nResponse:\n\(String(describing: response))\n\nData:\n\(String(describing: data))\n\nError:\n\(String(describing: error)))")
+               print(error)
+               seal.reject(ApiEngineError.error(error))
+               return
             }
 
-            let method = endpoint.method
-            let params = endpoint.body
-            let headers = endpoint.headers
+            let apiResult = ApiEngineResult(data: data, response: response)
 
-            var request = URLRequest(url: url)
+            let str = String(decoding: data, as: UTF8.self)
+            print("result body \(str)")
+            print("response status \(String(describing: apiResult.response as? HTTPURLResponse))")
 
-            request.httpMethod = method.rawValue
+            seal.fulfill(apiResult)
+         }
 
-            for (key, value) in headers {
-                request.setValue(value, forHTTPHeaderField: key)
-            }
+         task.resume()
+      }
+   }
+   
+   func createDataBody(withParameters params: [String: Any]?, media: [Media]?, boundary: String) -> Data {
 
-            request.httpBody = params
-                .map { (key: String, value: Any) in
-                    key + "=\(value)"
-                }
-                .joined(separator: "&")
-                .data(using: .utf8)
+       let lineBreak = "\r\n"
+       var body = Data()
 
-            let task = URLSession.shared.dataTask(with: request) { data, response, error in
-                print("\nResponse:\n\(response)\n\nData:\n\(data)\n\nError:\n\(error))")
-                guard let data = data else {
-                    guard let error = error else {
-                        seal.reject(ApiEngineError.unknown)
-                        return
-                    }
+       if let parameters = params {
+           for (key, value) in parameters {
+               body.append("--\(boundary + lineBreak)")
+               body.append("Content-Disposition: form-data; name=\"\(key)\"\(lineBreak + lineBreak)")
+              // body.append("\(value) + lineBreak)")
+              let s = String(describing: value)
+              body.append(s)
+              body.append(lineBreak)
+           }
+       }
 
-                    print(error)
-                    seal.reject(ApiEngineError.error(error))
-                    return
-                }
+       if let media = media {
+           for photo in media {
+               body.append("--\(boundary + lineBreak)")
+               body.append("Content-Disposition: form-data; name=\"\(photo.key)\"; filename=\"\(photo.fileName)\"\(lineBreak)")
+               body.append("Content-Type: \(photo.mimeType + lineBreak + lineBreak)")
+               body.append(photo.data)
+               body.append(lineBreak)
+           }
+       }
 
-                let apiResult = ApiEngineResult(data: data, response: response)
-                seal.fulfill(apiResult)
-            }
+       body.append("--\(boundary)--\(lineBreak)")
 
-            task.resume()
+       return body
+   }
+}
+
+extension UIImage {
+   func resized(to size: CGSize) -> UIImage {
+      return UIGraphicsImageRenderer(size: size).image { _ in
+         draw(in: CGRect(origin: .zero, size: size))
+      }
+   }
+}
+
+extension Data {
+    mutating func append(_ string: String) {
+        if let data = string.data(using: .utf8) {
+            append(data)
         }
-    }
+    }   
+}
 
-//    func process(url: URL,
-//                 method: HTTPMethod,
-//                 headers: [String: String] = [:],
-//                 jsonBody: [String: Any] = [:],
-//                 completion: @escaping ApiEngineCallback)
-//    {
-//        var request = URLRequest(url: url)
-//
-//        request.httpMethod = method.rawValue
-//
-//        for (key, value) in headers {
-//            request.setValue(value, forHTTPHeaderField: key)
-//        }
-//
-//        request.httpBody = jsonBody
-//            .map { (key: String, value: Any) in
-//                key + "=\(value)"
-//            }
-//            .joined(separator: "&")
-//            .data(using: .utf8)
-//
-//        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-//            guard let data = data else {
-//                guard let error = error else {
-//                    completion(Swift.Result.failure(.unknown))
-//                    return
-//                }
-//
-//                print(error)
-//                completion(Swift.Result.failure(.error(error)))
-//                return
-//            }
-//
-//            let apiResult = ApiEngineResult(data: data, response: response)
-//            completion(Swift.Result.success(apiResult))
-//        }
-//
-//        task.resume()
-//    }
+
+struct Media {
+    let key: String
+    let fileName: String
+    let data: Data
+    let mimeType: String
+
+    init?(withImage image: UIImage, forKey key: String) {
+        self.key = key
+        self.mimeType = "image/jpg"
+        self.fileName = "\(arc4random()).jpeg"
+
+        guard let data = image.jpegData(compressionQuality: 0.1) else { return nil }
+        self.data = data
+    }
 }

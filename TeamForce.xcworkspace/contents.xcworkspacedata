@@ -7,4 +7,10 @@
    <FileRef
       location = "container:TeamForce.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:../ReactiveWorks">
+   </FileRef>
+   <FileRef
+      location = "group:../Anchorage">
+   </FileRef>
 </Workspace>
