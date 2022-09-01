@@ -51,7 +51,7 @@ final class SendCoinApiWorker: BaseApiWorker<SendCoinRequest, Void> {
                body: body,
                headers: [
                   "Authorization": sendCoinRequest.token,
-                  //  "X-CSRFToken": cookie.value
+                    "X-CSRFToken": cookie.value
                ]),
             image: photo)
             .done { result in
@@ -81,7 +81,7 @@ final class SendCoinApiWorker: BaseApiWorker<SendCoinRequest, Void> {
                body: body,
                headers: [
                   "Authorization": sendCoinRequest.token,
-               //   "X-CSRFToken": cookie.value,
+                  "X-CSRFToken": cookie.value,
                ]))
             .done { result in
                if let response = result.response as? HTTPURLResponse {
