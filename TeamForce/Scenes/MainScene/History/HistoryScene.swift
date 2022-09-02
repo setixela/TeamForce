@@ -35,6 +35,7 @@ final class HistoryScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>
    )
 
    private lazy var activityIndicator = ActivityIndicator<Design>()
+   private lazy var errorBlock = CommonErrorBlock<Design>()
 
    // MARK: - Start
 
@@ -53,6 +54,8 @@ final class HistoryScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>
       viewModels.tableModel.onEvent(\.willEndDragging) { [weak self] in
          self?.sendEvent(\.willEndDragging, $0)
       }
+
+      setState(.initial)
    }
 }
 
@@ -65,6 +68,7 @@ private extension HistoryScene {
          viewModels.segmentedControl,
          Grid.x16.spacer,
          activityIndicator,
+         errorBlock,
          viewModels.tableModel,
          // Spacer(88),
       ])
@@ -72,6 +76,8 @@ private extension HistoryScene {
 }
 
 enum HistoryState {
+   case initial
+
    case loadProfilError
    case loadTransactionsError
 
@@ -85,24 +91,31 @@ enum HistoryState {
 extension HistoryScene: StateMachine {
    func setState(_ state: HistoryState) {
       switch state {
+      case .initial:
+         activityIndicator.set_hidden(false)
+         errorBlock.set_hidden(true)
       case .loadProfilError:
-
-         log("loadProfilError")
+         errorBlock.set_hidden(false)
+         scenario.start()
       //
       case .loadTransactionsError:
-         log("loadTransactionsError")
+         errorBlock.set_hidden(false)
+         scenario.start()
       //
       case .presentAllTransactions(let value):
+         errorBlock.set_hidden(true)
          activityIndicator.set_hidden(true)
          viewModels.tableModel
             .set(.itemSections(value.addedSpacer(size: Grid.x80.value)))
       //
       case .presentSentTransactions(let value):
+         errorBlock.set_hidden(true)
          activityIndicator.set_hidden(true)
          viewModels.tableModel
             .set(.itemSections(value.addedSpacer(size: Grid.x80.value)))
       //
       case .presentRecievedTransaction(let value):
+         errorBlock.set_hidden(true)
          activityIndicator.set_hidden(true)
          viewModels.tableModel
             .set(.itemSections(value.addedSpacer(size: Grid.x80.value)))

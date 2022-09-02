@@ -21,8 +21,10 @@ final class FeedScenario<Asset: AssetProtocol>:
    private var userName: String = ""
 
    override func start() {
+      
       events.loadFeedForCurrentUser
          .doNext(work: works.loadFeedForCurrentUser)
+         .onFail(setState, .loadFeedError)
          .doNext(work: works.getAllFeed)
          .onSuccess(setState) { .presentFeed($0) }
          .onFail(setState, .loadFeedError)

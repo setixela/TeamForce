@@ -12,6 +12,7 @@ typealias CommunicableUIViewModel = UIViewModel & Communicable
 typealias ScenaribleCommunicableUIViewModel = Scenarible & Communicable & UIViewModel
 
 enum MainSceneState {
+   case initial
    case profileDidLoad(UserData)
    case loadProfileError
 }
@@ -41,7 +42,11 @@ final class MainScene<Asset: AssetProtocol>:
 
    private var currentUser: UserData?
 
+   private lazy var errorBlock = CommonErrorBlock<Design>()
+
    private weak var activeScreen: Scenarible?
+
+   private var currentState = MainSceneState.initial
 
    // MARK: - Start
 
@@ -63,53 +68,63 @@ final class MainScene<Asset: AssetProtocol>:
    }
 }
 
+private extension MainScene {
+   func configButtons() {
+      tabBarPanel.button1
+         .onEvent(\.didTap) { [weak self] in
+            self?.unlockTabButtons()
+            self?.mainVM.header.set_text("Лента событий")
+            self?.presentModel(self?.feedViewModel)
+            self?.tabBarPanel.button1.setMode(\.normal)
+         }
+
+      tabBarPanel.button2
+         .onEvent(\.didTap) { [weak self] in
+            self?.unlockTabButtons()
+            self?.mainVM.header.set_text("Баланс")
+            self?.presentModel(self?.balanceViewModel)
+            self?.tabBarPanel.button2.setMode(\.normal)
+         }
+
+      tabBarPanel.buttonMain
+         .onEvent(\.didTap) { [weak self] in
+            self?.presentTransactModel(self?.transactModel)
+         }
+
+      tabBarPanel.button3
+         .onEvent(\.didTap) { [weak self] in
+            self?.unlockTabButtons()
+            self?.mainVM.header.set_text("История")
+            self?.presentModel(self?.historyViewModel)
+            self?.tabBarPanel.button3.setMode(\.normal)
+         }
+
+      tabBarPanel.button4
+         .onEvent(\.didTap) { [weak self] in
+            self?.unlockTabButtons()
+            self?.mainVM.header.set_text("Настройки")
+            self?.presentModel(self?.settingsViewModel)
+            self?.tabBarPanel.button4.setMode(\.normal)
+         }
+   }
+}
+
 // MARK: - State machine
 
 extension MainScene: StateMachine {
    func setState(_ state: MainSceneState) {
+      currentState = state
+
       switch state {
+      case .initial:
+         break
       case .profileDidLoad(let userData):
          currentUser = userData
 
          presentModel(balanceViewModel)
          tabBarPanel.button2.setMode(\.normal)
 
-         tabBarPanel.button1
-            .onEvent(\.didTap) { [weak self] in
-               self?.unlockTabButtons()
-               self?.mainVM.header.set_text("Лента событий")
-               self?.presentModel(self?.feedViewModel)
-               self?.tabBarPanel.button1.setMode(\.normal)
-            }
-
-         tabBarPanel.button2
-            .onEvent(\.didTap) { [weak self] in
-               self?.unlockTabButtons()
-               self?.mainVM.header.set_text("Баланс")
-               self?.presentModel(self?.balanceViewModel)
-               self?.tabBarPanel.button2.setMode(\.normal)
-            }
-
-         tabBarPanel.buttonMain
-            .onEvent(\.didTap) { [weak self] in
-               self?.presentTransactModel(self?.transactModel)
-            }
-
-         tabBarPanel.button3
-            .onEvent(\.didTap) { [weak self] in
-               self?.unlockTabButtons()
-               self?.mainVM.header.set_text("История")
-               self?.presentModel(self?.historyViewModel)
-               self?.tabBarPanel.button3.setMode(\.normal)
-            }
-
-         tabBarPanel.button4
-            .onEvent(\.didTap) { [weak self] in
-               self?.unlockTabButtons()
-               self?.mainVM.header.set_text("Настройки")
-               self?.presentModel(self?.settingsViewModel)
-               self?.tabBarPanel.button4.setMode(\.normal)
-            }
+         configButtons()
 
          mainVM.profileButton.onEvent(\.didTap) {
             Asset.router?.route(\.profile, navType: .push)
@@ -119,7 +134,8 @@ extension MainScene: StateMachine {
             mainVM.profileButton.set_url(TeamForceEndpoints.urlBase + photoUrl)
          }
       case .loadProfileError:
-         break
+         presentModel(errorBlock)
+         scenario.start()
       }
    }
 }
@@ -130,7 +146,6 @@ extension MainScene {
    // Presenting Balance, Feed, History
    private func presentModel<M: Scenarible & Communicable & UIViewModel>(_ model: M?) where M.Events == MainSceneEvents {
       guard let model = model else { return }
-      model.scenario.start()
 
       model.onEvent(\.willEndDragging) { [weak self] velocity in
          if velocity > 0 {
@@ -143,6 +158,8 @@ extension MainScene {
          .set_arrangedModels([
             model
          ])
+
+      model.scenario.start()
       model.sendEvent(\.userDidLoad, currentUser)
 
       activeScreen = model
@@ -215,16 +232,5 @@ extension MainScene {
          self.vcModel?.sendEvent(\.setTitle, "")
          self.mainVM.setState(.presentHeaderTitle)
       }
-   }
-}
-
-final class ActivityIndicator<Design: DSP>: BaseViewModel<UIActivityIndicatorView>, Stateable {
-   typealias State = ViewState
-
-   override func start() {
-      set_size(.square(100))
-      view.startAnimating()
-      view.color = Design.color.iconBrand
-      view.contentScaleFactor = 1.33
    }
 }

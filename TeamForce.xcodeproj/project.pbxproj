@@ -111,6 +111,8 @@
 		19A9232F28B2E34E0080D491 /* CurrencyLabelDT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A9232E28B2E34E0080D491 /* CurrencyLabelDT.swift */; };
 		19A9BE6528BEB57C0099F8EA /* ImagePickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A9BE6428BEB57C0099F8EA /* ImagePickerViewModel.swift */; };
 		19A9BE6728C139CA0099F8EA /* EventableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A9BE6628C139CA0099F8EA /* EventableTests.swift */; };
+		19A9BE6928C167E30099F8EA /* AtivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A9BE6828C167E30099F8EA /* AtivityIndicator.swift */; };
+		19A9BE6B28C1685F0099F8EA /* CommonErrorBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A9BE6A28C1685F0099F8EA /* CommonErrorBlock.swift */; };
 		19AE3AEF28691B2E00A0C6E4 /* MainScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19AE3AEE28691B2E00A0C6E4 /* MainScene.swift */; };
 		19AE3AF22869230C00A0C6E4 /* AuthApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19AE3AF12869230C00A0C6E4 /* AuthApiWorker.swift */; };
 		19B2C5D428B7D37A00E7B47D /* Shadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B2C5D328B7D37A00E7B47D /* Shadow.swift */; };
@@ -331,6 +333,8 @@
 		19A9232E28B2E34E0080D491 /* CurrencyLabelDT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyLabelDT.swift; sourceTree = "<group>"; };
 		19A9BE6428BEB57C0099F8EA /* ImagePickerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerViewModel.swift; sourceTree = "<group>"; };
 		19A9BE6628C139CA0099F8EA /* EventableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventableTests.swift; sourceTree = "<group>"; };
+		19A9BE6828C167E30099F8EA /* AtivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AtivityIndicator.swift; sourceTree = "<group>"; };
+		19A9BE6A28C1685F0099F8EA /* CommonErrorBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonErrorBlock.swift; sourceTree = "<group>"; };
 		19AE3AEE28691B2E00A0C6E4 /* MainScene.swift */ = {isa = PBXFileReference; indentWidth = 3; lastKnownFileType = sourcecode.swift; path = MainScene.swift; sourceTree = "<group>"; tabWidth = 3; };
 		19AE3AF12869230C00A0C6E4 /* AuthApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthApiWorker.swift; sourceTree = "<group>"; };
 		19B2C5D328B7D37A00E7B47D /* Shadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shadow.swift; sourceTree = "<group>"; };
@@ -844,6 +848,8 @@
 		19A9232D28B2DB1B0080D491 /* Designable */ = {
 			isa = PBXGroup;
 			children = (
+				19A9BE6828C167E30099F8EA /* AtivityIndicator.swift */,
+				19A9BE6A28C1685F0099F8EA /* CommonErrorBlock.swift */,
 				19ACB3D128A65FDD00B5AD71 /* Combos */,
 				19EE848E28AB20A600D862EE /* MainVMs */,
 				19CAB9CB28B41CB400A0A3B1 /* TitleBodySwitcherDT.swift */,
@@ -1309,6 +1315,7 @@
 				63AD132628A39B4900CFF75B /* GetTransactionByIdApiWorker.swift in Sources */,
 				197A2DA728A9D10900190656 /* IconTextField.swift in Sources */,
 				198BBEE928B6957C0006CD30 /* StorageUseCase.swift in Sources */,
+				19A9BE6B28C1685F0099F8EA /* CommonErrorBlock.swift in Sources */,
 				63D419F328AA85560024E22C /* GetStatByPeriodIdApiWorker.swift in Sources */,
 				6368D8282891E7C40049EEAB /* UserDefault+helpers.swift in Sources */,
 				19017B6928A6986F00B06345 /* TitleSubtitleX.swift in Sources */,
@@ -1330,6 +1337,7 @@
 				197A2DA528A9BF4B00190656 /* SCombo.swift in Sources */,
 				1952EA6B28A71399003F7852 /* DesignElements.swift in Sources */,
 				63AB071528BD8E6200FD650F /* ProfileEditWorks.swift in Sources */,
+				19A9BE6928C167E30099F8EA /* AtivityIndicator.swift in Sources */,
 				63CFA198289C3FB6000E4D1E /* GetTransactionsUseCase.swift in Sources */,
 				1977BE5828A7343400D554EA /* InputCheckers.swift in Sources */,
 				63AB070F28BD552A00FD650F /* CreateContactApiWorker.swift in Sources */,

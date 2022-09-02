@@ -8,6 +8,7 @@
 import ReactiveWorks
 
 typealias VoidWork<T> = Work<Void, T>
+typealias VoidWorkVoid = Work<Void, Void>
 
 struct LoginScenarioEvents {
    let userNameStringEvent: VoidWork<String>

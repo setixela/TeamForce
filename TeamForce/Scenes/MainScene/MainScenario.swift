@@ -8,7 +8,9 @@
 import Foundation
 import ReactiveWorks
 
-struct MainScenarioInputEvents {}
+struct MainScenarioInputEvents {
+//   var didButtonTapped: VoidWorkVoid
+}
 
 final class MainScenario<Asset: AssetProtocol>:
    BaseScenario<MainScenarioInputEvents, MainSceneState, MainWorks<Asset>>, Assetable

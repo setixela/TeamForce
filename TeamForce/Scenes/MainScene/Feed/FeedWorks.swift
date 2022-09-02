@@ -47,7 +47,6 @@ final class FeedWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedWorksTempStorage
 
    var getAllFeed: VoidWork<([Feed], String)> { .init { work in
       work.success(result: (Self.store.feed, Self.store.currentUserName))
-
    }}
 
    var getMyFeed: VoidWork<([Feed], String)> { .init { work in

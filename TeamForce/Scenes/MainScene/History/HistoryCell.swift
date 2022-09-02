@@ -20,7 +20,6 @@ final class HistoryCellModel<Design: DSP>:
          icon
             .set_image(Design.icon.avatarPlaceholder)
             .set_contentMode(.scaleAspectFill)
-            //.set_url("https://picsum.photos/200")
             .set_cornerRadius(52.aspected/2)
             .set_size(.square(52.aspected))
          nameStatus

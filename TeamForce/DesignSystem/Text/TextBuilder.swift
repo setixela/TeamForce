@@ -32,7 +32,6 @@ protocol ButtonTextsProtocol: InitProtocol {
 // MARK: - Title texts
 
 protocol TitleTextsProtocol: InitProtocol {
-
    // new
    var autorisation: String { get }
 
@@ -70,6 +69,8 @@ protocol TitleTextsProtocol: InitProtocol {
    // errors
    var wrongUsername: String { get }
    var wrongCode: String { get }
+   var loadPageError: String { get }
+   var connectionError: String { get }
 
    // verifyScene
    var noCode: String { get }
@@ -80,7 +81,6 @@ protocol TitleTextsProtocol: InitProtocol {
 // MARK: - Button texts implements
 
 struct ButtonTexts: ButtonTextsProtocol {
-
    var enterButton: String { "ВОЙТИ" }
    var nextButton: String { "ДАЛЕЕ" }
    var registerButton: String { "РЕГИСТРАЦИЯ" }
@@ -130,6 +130,8 @@ struct TitleTexts: TitleTextsProtocol {
    // errors
    var wrongUsername: String { "Ошибка. Пользователь не найден" }
    var wrongCode: String { "Ошибка. Неверный код" }
+   var loadPageError: String { "Не удалось загрузить страницу" }
+   var connectionError: String { "Ошибка соединения" }
 
    // verifyScene
    var noCode: String { "Не приходит код?" }

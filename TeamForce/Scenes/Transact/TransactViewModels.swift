@@ -39,7 +39,7 @@ final class TransactViewModels<Design: DSP>: Designable {
 
    lazy var foundUsersList = StackItemsModel() //   TableItemsModel<Design>()
       .set(.activateSelector)
-      //.set_minHeight(300)
+      // .set_minHeight(300)
       .set_hidden(true)
       .set(.presenters([
          foundUserPresenter
@@ -48,7 +48,7 @@ final class TransactViewModels<Design: DSP>: Designable {
    lazy var sendButton = Design.button.default
       .set(Design.state.button.inactive)
       .set_title(Design.Text.button.sendButton)
-    //  .set_hidden(true)
+   //  .set_hidden(true)
 
    lazy var reasonTextView = TextViewModel()
       .set(.padding(Design.params.contentPadding))
@@ -74,14 +74,10 @@ extension TransactViewModels {
       Presenter<FoundUser, WrappedY<ImageLabelLabelMRD>>() { work in
          let user = work.unsafeInput
 
-         var urlString = "https://picsum.photos/200" // user.photo
-         
          let name = user.name
          let surname = user.surname
          let thName = "@" + user.tgName.string
 
-         log(urlString)
-         
          let comboMRD =
             WrappedY(
                ImageLabelLabelMRD()
@@ -90,14 +86,13 @@ extension TransactViewModels {
                         .set_contentMode(.scaleAspectFill)
                         .set_size(.square(Grid.x26.value))
                         .set_cornerRadius(Grid.x26.value / 2)
-                        //.set_url(urlString)
                      if let photo = user.photo, photo.count != 0 {
-                        urlString = TeamForceEndpoints.urlMediaBase + photo
+                        let urlString = TeamForceEndpoints.urlMediaBase + photo
                         avatar.set_url(urlString)
-                        print("hello \(urlString)")
                      } else {
                         if let nameFirstLetter = user.name.string.first,
-                           let surnameFirstLetter = user.surname.string.first {
+                           let surnameFirstLetter = user.surname.string.first
+                        {
                            let text = String(nameFirstLetter) + String(surnameFirstLetter)
                            let image = text.drawImage(backColor: Design.color.backgroundBrand)
                            avatar
@@ -115,7 +110,6 @@ extension TransactViewModels {
                         .set_textColor(Design.color.textSecondary)
                         .set_text(thName)
                         .set_padLeft(Grid.x14.value)
-                        //.set_height(Grid.x20.value)
                   }
                   .set_padding(Design.params.cellContentPadding)
                   .set_alignment(.center)
@@ -126,7 +120,6 @@ extension TransactViewModels {
                   .set_zPosition(1000)
             )
             .set_padding(.outline(4))
-
 
          work.success(result: comboMRD)
       }

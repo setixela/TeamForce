@@ -1,0 +1,20 @@
+//
+//  AtivityIndicator.swift
+//  TeamForce
+//
+//  Created by Aleksandr Solovyev on 02.09.2022.
+//
+
+import ReactiveWorks
+import UIKit
+
+final class ActivityIndicator<Design: DSP>: BaseViewModel<UIActivityIndicatorView>, Stateable {
+   typealias State = ViewState
+
+   override func start() {
+      set_size(.square(100))
+      view.startAnimating()
+      view.color = Design.color.iconBrand
+      view.contentScaleFactor = 1.33
+   }
+}

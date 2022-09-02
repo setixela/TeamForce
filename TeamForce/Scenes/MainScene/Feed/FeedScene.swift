@@ -33,12 +33,16 @@ final class FeedScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>,
    private lazy var viewModels = FeedViewModels<Design>()
 
    private lazy var activityIndicator = ActivityIndicator<Design>()
+   private lazy var errorBlock = CommonErrorBlock<Design>()
+
+   private var state = FeedSceneState.initial
 
    override func start() {
       set_axis(.vertical)
       set_arrangedModels([
          viewModels.filterButtons,
          activityIndicator,
+         errorBlock,
          viewModels.feedTableModel,
       ])
 
@@ -49,23 +53,34 @@ final class FeedScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>,
          .onEvent(\.willEndDragging) { [weak self] in
             self?.sendEvent(\.willEndDragging, $0)
          }
+
+      setState(.initial)
    }
 }
 
 enum FeedSceneState {
+   case initial
    case presentFeed(([Feed], String))
    case loadFeedError
 }
 
 extension FeedScene: StateMachine {
    func setState(_ state: FeedSceneState) {
+      self.state = state
       switch state {
+      case .initial:
+         activityIndicator.set_hidden(false)
+         errorBlock.set_hidden(true)
+         break
       case .presentFeed(let tuple):
          activityIndicator.set_hidden(true)
+         errorBlock.set_hidden(true)
          viewModels.set(.userName(tuple.1))
          viewModels.feedTableModel.set(.items(tuple.0 + [SpacerItem(size: Grid.x64.value)]))
       case .loadFeedError:
          log("Feed Error!")
+         activityIndicator.set_hidden(true)
+         errorBlock.set_hidden(false)
       }
    }
 }
