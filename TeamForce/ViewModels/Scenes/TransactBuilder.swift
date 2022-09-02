@@ -50,7 +50,7 @@ struct TransactBuilder<Design: DSP>: TransactModelBuilder {
       .hidden(true)
    }
 
-   var balanceInfo: Combos<SComboMD<LabelModel, CurrencyLabelDT<Design>>> { .init()
+   var balanceInfo: Main<LabelModel>.Right<CurrencyLabelDT<Design>>.Combo { .init()
       .setAll { title, amount in
          title
             .set(Design.state.label.caption)
@@ -117,7 +117,7 @@ struct TransactBuilder<Design: DSP>: TransactModelBuilder {
 
    var recipientCell: SendCoinRecipentCell<Design> { .init() }
 
-   var transactSuccessViewModel: TransactionStatusViewModel<Design> { .init()  }
+   var transactSuccessViewModel: TransactionStatusViewModel<Design> { .init() }
 
    var transactErrorViewModel: TransactionStatusViewModel<Design> { .init() }
 
