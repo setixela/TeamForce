@@ -191,8 +191,15 @@ extension MainScene {
       else { return }
 
       model
+         .on(\.sendButtonPressed) { [weak self] in
+            self?.bottomPopupPresenter.send(\.hide)
+            self?.activeScreen?.scenario.start()
+         }
          .on(\.finishWithSuccess) { [weak self] in
             self?.presentTransactSuccessView($0)
+            self?.activeScreen?.scenario.start()
+         }
+         .on(\.finishWithError) { [weak self] in
             self?.activeScreen?.scenario.start()
          }
          .on(\.cancelled) { [weak self] in
@@ -204,8 +211,9 @@ extension MainScene {
    }
 
    private func presentTransactSuccessView(_ data: StatusViewInput) {
-      let model = TransactionStatusViewModel<Design>()
-      model.onEvent(\.didHide) { [weak self] in
+      let model = Design.model.transact.transactSuccessViewModel
+
+      model.onEvent(\.finished) { [weak self] in
          self?.bottomPopupPresenter.send(\.hide)
       }
 

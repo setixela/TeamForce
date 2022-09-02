@@ -48,6 +48,8 @@ struct TransactScenarioEvents {
 
    let anonymousSetOff: VoidWork<Void>
    let anonymousSetOn: VoidWork<Void>
+
+   let cancelButtonDidTap: VoidWorkVoid
 }
 
 final class TransactScenario<Asset: AssetProtocol>:
@@ -136,5 +138,8 @@ final class TransactScenario<Asset: AssetProtocol>:
 
       events.anonymousSetOn
          .doNext(work: works.anonymousOn)
+
+      events.cancelButtonDidTap
+         .onSuccess(setState, .cancelButtonPressed)
    }
 }

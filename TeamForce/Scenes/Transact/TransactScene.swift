@@ -10,7 +10,9 @@ import UIKit
 
 struct TransactEvents: InitProtocol {
    var cancelled: Void?
+   var sendButtonPressed: Void?
    var finishWithSuccess: StatusViewInput?
+   var finishWithError: Void?
 }
 
 enum TransactState {
@@ -46,6 +48,7 @@ enum TransactState {
    case setHideAddPhotoButton(Bool)
 
    case sendButtonPressed
+   case cancelButtonPressed
 }
 
 final class TransactScene<Asset: AssetProtocol>: DoubleStacksModel, Assetable, Scenarible2, Eventable {
@@ -67,7 +70,8 @@ final class TransactScene<Asset: AssetProtocol>: DoubleStacksModel, Assetable, S
          transactInputChanged: viewModels.amountInputModel.textField.onEvent(\.didEditingChanged),
          reasonInputChanged: viewModels.reasonTextView.onEvent(\.didEditingChanged),
          anonymousSetOff: viewModels.options.anonimParamModel.switcher.onEvent(\.turnedOff),
-         anonymousSetOn: viewModels.options.anonimParamModel.switcher.onEvent(\.turnedOn)
+         anonymousSetOn: viewModels.options.anonimParamModel.switcher.onEvent(\.turnedOn),
+         cancelButtonDidTap: viewModels.closeButton.onEvent(\.didTap)
       )
    )
 
@@ -96,10 +100,9 @@ final class TransactScene<Asset: AssetProtocol>: DoubleStacksModel, Assetable, S
          viewModels.options
       ]))
 
-   private lazy var activityIndicator = ActivityIndicator<Design>()
-   private lazy var errorInfoBlock = CommonErrorBlock<Design>()
-
-   private lazy var imagePicker = ImagePickerViewModel()
+   private lazy var activityIndicator = Design.model.common.activityIndicator
+   private lazy var errorInfoBlock = Design.model.common.connectionErrorBlock
+   private lazy var imagePicker = Design.model.common.imagePicker
 
    private var currentState = TransactState.initial
 
@@ -267,7 +270,6 @@ extension TransactScene: StateMachine {
          } completion: { _ in
             self.applyReadyToSendMode()
          }
-
       //
       case .userSearchTFDidEditingChangedSuccess:
          activityIndicator.hidden(false)
@@ -283,7 +285,8 @@ extension TransactScene: StateMachine {
          setToInitialCondition()
       //
       case .sendCoinError:
-         errorInfoBlock.hidden(false)
+         send(\.finishWithError)
+      // errorInfoBlock.hidden(false)
       //
       case .coinInputSuccess(let text, let isCorrect):
          viewModels.amountInputModel.textField.set(.text(text))
@@ -312,8 +315,10 @@ extension TransactScene: StateMachine {
          viewModels.addPhotoButton.hidden(value)
       //
       case .sendButtonPressed:
-         view.removeFromSuperview()
+         send(\.sendButtonPressed)
       //
+      case .cancelButtonPressed:
+         send(\.cancelled)
       case .presentImagePicker:
          guard let baseVC = vcModel else { return }
          imagePicker.sendEvent(\.presentOn, baseVC)

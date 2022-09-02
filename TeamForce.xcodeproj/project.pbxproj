@@ -117,6 +117,8 @@
 		19A9BE6F28C1B2A20099F8EA /* PickedImagePanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A9BE6E28C1B2A20099F8EA /* PickedImagePanel.swift */; };
 		19A9BE7128C1B34E0099F8EA /* ImageLabelLabelMRD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A9BE7028C1B34E0099F8EA /* ImageLabelLabelMRD.swift */; };
 		19A9BE7328C255690099F8EA /* TransactBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A9BE7228C255680099F8EA /* TransactBuilder.swift */; };
+		19A9BE7628C283270099F8EA /* CommonModelBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A9BE7528C283270099F8EA /* CommonModelBuilder.swift */; };
+		19A9BE7828C283650099F8EA /* ModelBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A9BE7728C283650099F8EA /* ModelBuilder.swift */; };
 		19AE3AEF28691B2E00A0C6E4 /* MainScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19AE3AEE28691B2E00A0C6E4 /* MainScene.swift */; };
 		19AE3AF22869230C00A0C6E4 /* AuthApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19AE3AF12869230C00A0C6E4 /* AuthApiWorker.swift */; };
 		19B2C5D428B7D37A00E7B47D /* Shadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B2C5D328B7D37A00E7B47D /* Shadow.swift */; };
@@ -342,6 +344,8 @@
 		19A9BE6E28C1B2A20099F8EA /* PickedImagePanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickedImagePanel.swift; sourceTree = "<group>"; };
 		19A9BE7028C1B34E0099F8EA /* ImageLabelLabelMRD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLabelLabelMRD.swift; sourceTree = "<group>"; };
 		19A9BE7228C255680099F8EA /* TransactBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactBuilder.swift; sourceTree = "<group>"; };
+		19A9BE7528C283270099F8EA /* CommonModelBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonModelBuilder.swift; sourceTree = "<group>"; };
+		19A9BE7728C283650099F8EA /* ModelBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelBuilder.swift; sourceTree = "<group>"; };
 		19AE3AEE28691B2E00A0C6E4 /* MainScene.swift */ = {isa = PBXFileReference; indentWidth = 3; lastKnownFileType = sourcecode.swift; path = MainScene.swift; sourceTree = "<group>"; tabWidth = 3; };
 		19AE3AF12869230C00A0C6E4 /* AuthApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthApiWorker.swift; sourceTree = "<group>"; };
 		19B2C5D328B7D37A00E7B47D /* Shadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shadow.swift; sourceTree = "<group>"; };
@@ -870,6 +874,7 @@
 		19A9BE7428C255800099F8EA /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				19A9BE7528C283270099F8EA /* CommonModelBuilder.swift */,
 				19A9BE7228C255680099F8EA /* TransactBuilder.swift */,
 			);
 			path = Scenes;
@@ -1000,6 +1005,7 @@
 		19C1E9A428610E6F00E7976D /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				19A9BE7728C283650099F8EA /* ModelBuilder.swift */,
 				19A9BE7428C255800099F8EA /* Scenes */,
 				19A9232D28B2DB1B0080D491 /* Designable */,
 				19A9232C28B2DB120080D491 /* Common */,
@@ -1306,6 +1312,7 @@
 				19017B7128A69CB100B06345 /* IconTitleY.swift in Sources */,
 				63E7A74528AFBC5300FB2C80 /* GetPeriodsFromDateApiWorker.swift in Sources */,
 				19EF32B02884B6C80078F53D /* TableViewModel.swift in Sources */,
+				19A9BE7828C283650099F8EA /* ModelBuilder.swift in Sources */,
 				19171F4B28AD23AE000926B1 /* HistoryViewModels.swift in Sources */,
 				19CAB9D128B4265C00A0A3B1 /* TransactOptionsVM.swift in Sources */,
 				197A361828BBC9AC006E44C1 /* MainScenario.swift in Sources */,
@@ -1417,6 +1424,7 @@
 				19ECD54328623D30001765F6 /* StackModel.swift in Sources */,
 				19017B6D28A698BC00B06345 /* TitleSubtitleCaptionY.swift in Sources */,
 				63D419EB28AA500A0024E22C /* GetFeedsApiWorker.swift in Sources */,
+				19A9BE7628C283270099F8EA /* CommonModelBuilder.swift in Sources */,
 				19D7BE9928B3E55F00C95053 /* ScrollViewModels.swift in Sources */,
 				197A360628BADC83006E44C1 /* FeedViewModels.swift in Sources */,
 				19C1E990285F426B00E7976D /* TeamForceEndpoints.swift in Sources */,

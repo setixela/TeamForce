@@ -16,7 +16,7 @@ struct StatusViewInput {
 
 struct TransactionStatusViewEvents: InitProtocol {
    var hide: Event<Void>?
-   var didHide: Event<Void>?
+   var finished: Event<Void>?
 }
 
 final class TransactionStatusViewModel<Design: DSP>: BaseViewModel<StackViewExtended>,
@@ -30,36 +30,11 @@ final class TransactionStatusViewModel<Design: DSP>: BaseViewModel<StackViewExte
    var events: TransactionStatusViewEvents = .init()
 
    private lazy var image: ImageViewModel = .init()
-      .set(.size(.init(width: 275, height: 275)))
-      .set(.image(Design.icon.transactSuccess))
-      .set(.contentMode(.scaleAspectFit))
+     .size(.init(width: 275, height: 275))
+     .image(Design.icon.transactSuccess)
+     .contentMode(.scaleAspectFit)
 
-   private lazy var recipientCell = SendCoinRecipentCell<Design>()
-      .setAll { avatar, userName, nickName, amount in
-         avatar
-            .size(.square(44))
-            .cornerRadius(44 / 2)
-            .contentMode(.scaleAspectFill)
-         userName
-            .set(Design.state.label.body4)
-            .alignment(.left)
-         nickName
-            .set(Design.state.label.captionSecondary)
-            .alignment(.left)
-         amount.label
-            .height(Grid.x32.value)
-            .set(Design.state.label.headline4)
-            .textColor(Design.color.textError)
-         amount.currencyLogo
-            .width(22)
-      }
-      .padding(.outline(Grid.x16.value))
-      .backColor(Design.color.background)
-      .cornerRadius(Design.params.cornerRadius)
-      .shadow(Design.params.cellShadow)
-      .borderColor(.black)
-      .alignment(.center)
-      .distribution(.equalSpacing)
+   private lazy var recipientCell = Design.model.transact.recipientCell
 
    let button = Design.button.default
       .set(.title(Design.Text.button.toTheBeginingButton))
@@ -123,12 +98,38 @@ final class TransactionStatusViewModel<Design: DSP>: BaseViewModel<StackViewExte
 
 extension TransactionStatusViewModel {
    private func hide() {
-      print("\nHIDE\n")
-
-      view.removeFromSuperview()
-
-      sendEvent(\.didHide)
+      sendEvent(\.finished)
    }
 }
 
-final class SendCoinRecipentCell<Design: DSP>: Combos<SComboMRDR<ImageViewModel, LabelModel, LabelModel, CurrencyLabelDT<Design>>> {}
+final class SendCoinRecipentCell<Design: DSP>: Combos<SComboMRDR<ImageViewModel, LabelModel, LabelModel, CurrencyLabelDT<Design>>> {
+   required init() {
+      super.init()
+
+      setAll { avatar, userName, nickName, amount in
+         avatar
+            .size(.square(44))
+            .cornerRadius(44 / 2)
+            .contentMode(.scaleAspectFill)
+         userName
+            .set(Design.state.label.body4)
+            .alignment(.left)
+         nickName
+            .set(Design.state.label.captionSecondary)
+            .alignment(.left)
+         amount.label
+            .height(Grid.x32.value)
+            .set(Design.state.label.headline4)
+            .textColor(Design.color.textError)
+         amount.currencyLogo
+            .width(22)
+      }
+      .padding(.outline(Grid.x16.value))
+      .backColor(Design.color.background)
+      .cornerRadius(Design.params.cornerRadius)
+      .shadow(Design.params.cellShadow)
+      .borderColor(.black)
+      .alignment(.center)
+      .distribution(.equalSpacing)
+   }
+}

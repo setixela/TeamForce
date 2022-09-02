@@ -22,151 +22,159 @@ protocol TransactModelBuilder: InitProtocol, Designable {
    var closeButton: ButtonModel { get }
    var userNotFoundInfoBlock: Wrapped2Y<ImageViewModel, LabelModel> { get }
    var transactOptionsBlock: TransactOptionsVM<Design> { get }
+   var recipientCell: SendCoinRecipentCell<Design> { get }
+   //
+   var transactSuccessViewModel: TransactionStatusViewModel<Design> { get }
+   var transactErrorViewModel: TransactionStatusViewModel<Design> { get }
 }
 
-struct ModelBuilder<Design: DSP>: ModelBuilderProtocol {
-   struct Transact: TransactModelBuilder {
-      //
-      var reasonInputTextView: TextViewModel { .init()
-         .padding(Design.params.contentPadding)
-         .placeholder(TextBuilder.title.reasonPlaceholder)
-         .set(Design.state.label.body1)
-         .backColor(Design.color.background)
-         .borderColor(Design.color.boundary)
-         .borderWidth(Design.params.borderWidth)
-         .cornerRadius(Design.params.cornerRadius)
-         .minHeight(144)
-         .hidden(true)
+struct TransactBuilder<Design: DSP>: TransactModelBuilder {
+   //
+   var reasonInputTextView: TextViewModel { .init()
+      .padding(Design.params.contentPadding)
+      .placeholder(TextBuilder.title.reasonPlaceholder)
+      .set(Design.state.label.body1)
+      .backColor(Design.color.background)
+      .borderColor(Design.color.boundary)
+      .borderWidth(Design.params.borderWidth)
+      .cornerRadius(Design.params.cornerRadius)
+      .minHeight(144)
+      .hidden(true)
+   }
+
+   var userSearchTextField: TextFieldModel { .init()
+      .set(Design.state.textField.default)
+      .placeholder(Design.Text.title.chooseRecipient)
+      .placeholderColor(Design.color.textFieldPlaceholder)
+      .disableAutocorrection()
+      .hidden(true)
+   }
+
+   var balanceInfo: Combos<SComboMD<LabelModel, CurrencyLabelDT<Design>>> { .init()
+      .setAll { title, amount in
+         title
+            .set(Design.state.label.caption)
+            .height(Grid.x20.value)
+            .text("Доступно")
+            .textColor(Design.color.iconInvert)
+         amount.currencyLogo
+            .width(Grid.x20.value)
       }
+      .alignment(.leading)
+      .height(Grid.x90.value)
+      .backColor(Design.color.iconContrast)
+      .cornerRadius(Design.params.cornerRadius)
+      .padding(Design.params.infoFramePadding)
+      .hidden(true)
+   }
 
-      var userSearchTextField: TextFieldModel { .init()
-         .set(Design.state.textField.default)
-         .placeholder(Design.Text.title.chooseRecipient)
-         .placeholderColor(Design.color.textFieldPlaceholder)
-         .disableAutocorrection()
-         .hidden(true)
-      }
+   var amountIputViewModel: TransactInputViewModel<Design> { .init()
+      .hidden(true)
+   }
 
-      var balanceInfo: Combos<SComboMD<LabelModel, CurrencyLabelDT<Design>>> { .init()
-         .setAll { title, amount in
-            title
-               .set(Design.state.label.caption)
-               .height(Grid.x20.value)
-               .text("Доступно")
-               .textColor(Design.color.iconInvert)
-            amount.currencyLogo
-               .width(Grid.x20.value)
-         }
-         .alignment(.leading)
-         .height(Grid.x90.value)
-         .backColor(Design.color.iconContrast)
-         .cornerRadius(Design.params.cornerRadius)
-         .padding(Design.params.infoFramePadding)
-         .hidden(true)
-      }
+   var sendButton: ButtonModel { .init()
+      .set(Design.state.button.inactive)
+      .title(Design.Text.button.sendButton)
+   }
 
-      var amountIputViewModel: TransactInputViewModel<Design> { .init()
-         .hidden(true)
-      }
+   var addPhotoButton: ButtonModel { .init()
+      .title("Добавить фото")
+      .image(Design.icon.attach.withTintColor(Design.color.iconBrand))
+      .set(Design.state.button.brandTransparent)
+      .hidden(true)
+   }
 
-      var sendButton: ButtonModel { .init()
-         .set(Design.state.button.inactive)
-         .title(Design.Text.button.sendButton)
-      }
+   var foundUsersList: StackItemsModel { .init()
+      .set(.activateSelector)
+      .hidden(true)
+      .set(.presenters([
+         foundUserPresenter
+      ]))
+   }
 
-      var addPhotoButton: ButtonModel { .init()
-         .title("Добавить фото")
-         .image(Design.icon.attach.withTintColor(Design.color.iconBrand))
-         .set(Design.state.button.brandTransparent)
-         .hidden(true)
-      }
+   var pickedImagesPanel: PickedImagePanel<Design> { .init() }
 
-      var foundUsersList: StackItemsModel { .init()
-         .set(.activateSelector)
-         .hidden(true)
-         .set(.presenters([
-            foundUserPresenter
-         ]))
-      }
+   var closeButton: ButtonModel { .init()
+      .title(Design.Text.title.close)
+      .textColor(Design.color.textBrand)
+   }
 
-      var pickedImagesPanel: PickedImagePanel<Design> { .init() }
+   var userNotFoundInfoBlock: Wrapped2Y<ImageViewModel, LabelModel> {
+      Wrapped2Y(
+         ImageViewModel()
+            .image(Design.icon.userNotFound)
+            .size(.square(275)),
+         Design.label.body1
+            .numberOfLines(0)
+            .alignment(.center)
+            .text(Design.Text.title.userNotFound)
+      )
+   }
 
-      var closeButton: ButtonModel { .init()
-         .title(Design.Text.title.close)
-         .textColor(Design.color.textBrand)
-      }
+   var transactOptionsBlock: TransactOptionsVM<Design> { .init()
+      .hidden(true)
+   }
 
-      var userNotFoundInfoBlock: Wrapped2Y<ImageViewModel, LabelModel> {
-         Wrapped2Y(
-            ImageViewModel()
-               .image(Design.icon.userNotFound)
-               .size(.square(275)),
-            Design.label.body1
-               .numberOfLines(0)
-               .alignment(.center)
-               .text(Design.Text.title.userNotFound)
-         )
-      }
+   var recipientCell: SendCoinRecipentCell<Design> { .init() }
 
-      var transactOptionsBlock: TransactOptionsVM<Design> { .init()
-         .hidden(true)
-      }
+   var transactSuccessViewModel: TransactionStatusViewModel<Design> { .init()  }
 
-      // MARK: - Private
+   var transactErrorViewModel: TransactionStatusViewModel<Design> { .init() }
 
-      private var foundUserPresenter: Presenter<FoundUser, WrappedY<ImageLabelLabelMRD>> {
-         Presenter<FoundUser, WrappedY<ImageLabelLabelMRD>>() { work in
-            let user = work.unsafeInput
+   // MARK: - Private
 
-            let name = user.name
-            let surname = user.surname
-            let thName = "@" + user.tgName.string
+   private var foundUserPresenter: Presenter<FoundUser, WrappedY<ImageLabelLabelMRD>> {
+      Presenter<FoundUser, WrappedY<ImageLabelLabelMRD>>() { work in
+         let user = work.unsafeInput
 
-            let comboMRD =
-               WrappedY(
-                  ImageLabelLabelMRD()
-                     .setAll { avatar, username, nickname in
-                        avatar
-                           .contentMode(.scaleAspectFill)
-                           .size(.square(Grid.x26.value))
-                           .cornerRadius(Grid.x26.value / 2)
-                        if let photo = user.photo, photo.count != 0 {
-                           let urlString = TeamForceEndpoints.urlMediaBase + photo
-                           avatar.url(urlString)
-                        } else {
-                           if let nameFirstLetter = user.name.string.first,
-                              let surnameFirstLetter = user.surname.string.first
-                           {
-                              let text = String(nameFirstLetter) + String(surnameFirstLetter)
-                              let image = text.drawImage(backColor: Design.color.backgroundBrand)
-                              avatar
-                                 .backColor(Design.color.backgroundBrand)
-                                 .image(image)
-                           }
+         let name = user.name
+         let surname = user.surname
+         let thName = "@" + user.tgName.string
+
+         let comboMRD =
+            WrappedY(
+               ImageLabelLabelMRD()
+                  .setAll { avatar, username, nickname in
+                     avatar
+                        .contentMode(.scaleAspectFill)
+                        .size(.square(Grid.x26.value))
+                        .cornerRadius(Grid.x26.value / 2)
+                     if let photo = user.photo, photo.count != 0 {
+                        let urlString = TeamForceEndpoints.urlMediaBase + photo
+                        avatar.url(urlString)
+                     } else {
+                        if let nameFirstLetter = user.name.string.first,
+                           let surnameFirstLetter = user.surname.string.first
+                        {
+                           let text = String(nameFirstLetter) + String(surnameFirstLetter)
+                           let image = text.drawImage(backColor: Design.color.backgroundBrand)
+                           avatar
+                              .backColor(Design.color.backgroundBrand)
+                              .image(image)
                         }
-                        username
-                           .text("\(name.string) \(surname.string)")
-                           .textColor(Design.color.text)
-                           .padLeft(Grid.x14.value)
-                           .height(Grid.x24.value)
-                        nickname
-                           .set(Design.state.label.caption)
-                           .textColor(Design.color.textSecondary)
-                           .text(thName)
-                           .padLeft(Grid.x14.value)
                      }
-                     .padding(Design.params.cellContentPadding)
-                     .alignment(.center)
-                     .backColor(Design.color.background)
-                     .shadow(Design.params.cellShadow)
-                     .height(68)
-                     .cornerRadius(Design.params.cornerRadius)
-                     .zPosition(1000)
-               )
-               .padding(.outline(4))
+                     username
+                        .text("\(name.string) \(surname.string)")
+                        .textColor(Design.color.text)
+                        .padLeft(Grid.x14.value)
+                        .height(Grid.x24.value)
+                     nickname
+                        .set(Design.state.label.caption)
+                        .textColor(Design.color.textSecondary)
+                        .text(thName)
+                        .padLeft(Grid.x14.value)
+                  }
+                  .padding(Design.params.cellContentPadding)
+                  .alignment(.center)
+                  .backColor(Design.color.background)
+                  .shadow(Design.params.cellShadow)
+                  .height(68)
+                  .cornerRadius(Design.params.cornerRadius)
+                  .zPosition(1000)
+            )
+            .padding(.outline(4))
 
-            work.success(result: comboMRD)
-         }
+         work.success(result: comboMRD)
       }
    }
 }
