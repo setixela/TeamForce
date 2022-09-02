@@ -38,7 +38,23 @@ protocol DesignProtocol: DesignRoot where
 
    State: StateProtocol,
 
-   Params: ParamsProtocol
-{}
+   Params: ParamsProtocol,
 
+   Model: ModelBuilderProtocol
+{
+   static var text: Text { get }
+   static var model: Model { get }
+}
 
+extension DesignProtocol {
+   static var text: Text { .init() }
+   static var model: Model { .init() }
+}
+
+protocol ModelBuilderProtocol: InitProtocol, Designable {
+   associatedtype Transact: TransactModelBuilder
+}
+
+extension ModelBuilderProtocol {
+   var transact: Transact { .init() }
+}

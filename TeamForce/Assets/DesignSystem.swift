@@ -18,6 +18,8 @@ struct DesignSystem: DesignProtocol {
 
    typealias Params = ParamBuilder<Self>
    typealias State = StateBuilders<Self>
+
+   typealias Model = ModelBuilder<Self>
 }
 
 struct StateBuilders<Design: DesignProtocol>: StateProtocol {

@@ -63,7 +63,7 @@ final class TransactScene<Asset: AssetProtocol>: DoubleStacksModel, Assetable, S
          userSearchTFDidEditingChanged: viewModels.userSearchTextField.onEvent(\.didEditingChanged),
          userSelected: viewModels.foundUsersList.onEvent(\.didSelectRow),
          sendButtonEvent: viewModels.sendButton.onEvent(\.didTap),
-         transactInputChanged: viewModels.transactInputViewModel.textField.onEvent(\.didEditingChanged),
+         transactInputChanged: viewModels.amountInputModel.textField.onEvent(\.didEditingChanged),
          reasonInputChanged: viewModels.reasonTextView.onEvent(\.didEditingChanged),
          anonymousSetOff: options.anonimParamModel.switcher.onEvent(\.turnedOff),
          anonymousSetOn: options.anonimParamModel.switcher.onEvent(\.turnedOn)
@@ -96,7 +96,7 @@ final class TransactScene<Asset: AssetProtocol>: DoubleStacksModel, Assetable, S
       .set(.models([
          viewModels.balanceInfo,
          viewModels.foundUsersList,
-         viewModels.transactInputViewModel,
+         viewModels.amountInputModel,
          viewModels.reasonTextView,
          pickedImages.lefted(),
          viewModels.addPhotoButton,
@@ -200,7 +200,7 @@ final class TransactScene<Asset: AssetProtocol>: DoubleStacksModel, Assetable, S
       clearFields()
 
       viewModels.sendButton.set(Design.state.button.inactive)
-      viewModels.transactInputViewModel.setState(.noInput)
+      viewModels.amountInputModel.setState(.noInput)
 
       currentState = .initial
       setState(.initial)
@@ -209,7 +209,7 @@ final class TransactScene<Asset: AssetProtocol>: DoubleStacksModel, Assetable, S
 
    private func clearFields() {
       viewModels.userSearchTextField.text("")
-      viewModels.transactInputViewModel.textField.text("")
+      viewModels.amountInputModel.textField.text("")
       viewModels.reasonTextView.text("")
    }
 }
@@ -308,13 +308,13 @@ extension TransactScene: StateMachine {
          presentAlert(text: "Не могу послать деньгу")
       //
       case .coinInputSuccess(let text, let isCorrect):
-         viewModels.transactInputViewModel.textField.set(.text(text))
+         viewModels.amountInputModel.textField.set(.text(text))
          if isCorrect {
-            viewModels.transactInputViewModel.setState(.normal(text))
+            viewModels.amountInputModel.setState(.normal(text))
             viewModels.sendButton.set(Design.state.button.default)
          } else {
-            viewModels.transactInputViewModel.setState(.noInput)
-            viewModels.transactInputViewModel.textField.set(.text(text))
+            viewModels.amountInputModel.setState(.noInput)
+            viewModels.amountInputModel.textField.set(.text(text))
             viewModels.sendButton.set(Design.state.button.inactive)
          }
       //
@@ -340,7 +340,7 @@ private extension TransactScene {
    func applySelectUserMode() {
       pickedImages.hidden(true)
       viewModels.balanceInfo.set(.hidden(true))
-      viewModels.transactInputViewModel.set(.hidden(true))
+      viewModels.amountInputModel.set(.hidden(true))
       viewModels.reasonTextView.set(.hidden(true))
       options.hidden(true)
       viewModels.addPhotoButton.hidden(true)
@@ -356,7 +356,7 @@ private extension TransactScene {
 
    func applyReadyToSendMode() {
       pickedImages.hidden(false)
-      viewModels.transactInputViewModel.set(.hidden(false))
+      viewModels.amountInputModel.set(.hidden(false))
       viewModels.reasonTextView.set(.hidden(false))
       options.hidden(false)
       viewModels.addPhotoButton.hidden(false)
