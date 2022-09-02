@@ -48,6 +48,8 @@ final class MainScene<Asset: AssetProtocol>:
 
    private var currentState = MainSceneState.initial
 
+   private var darkView: UIView?
+
    // MARK: - Start
 
    override func start() {
@@ -99,8 +101,11 @@ final class MainScene<Asset: AssetProtocol>:
 
    private func hideView(_ view: UIView) {
       UIView.animate(withDuration: 0.23) {
+         self.darkView?.alpha = 0
          view.transform = CGAffineTransform(translationX: 0, y: view.frame.height)
       } completion: { _ in
+         self.darkView?.removeFromSuperview()
+         self.darkView = nil
          view.removeFromSuperview()
          view.transform = .identity
       }
@@ -242,6 +247,10 @@ extension MainScene {
 
       view.translatesAutoresizingMaskIntoConstraints = true
 
+      darkView = UIView(frame: baseView.frame)
+      darkView?.backgroundColor = Design.color.iconContrast
+      darkView?.alpha = 0
+      baseView.rootSuperview.addSubview(darkView!)
       baseView.rootSuperview.addSubview(view)
 
       view.frame.size = .init(width: baseView.frame.width, height: height - offset)
@@ -249,6 +258,7 @@ extension MainScene {
 
       UIView.animate(withDuration: 0.5) {
          view.frame.origin = .init(x: 0, y: offset)
+         self.darkView?.alpha = 0.75
       } completion: { _ in
          view.addAnchors.fitToViewInsetted(baseView, .init(top: offset, left: 0, bottom: 0, right: 0))
          view.layoutIfNeeded()
