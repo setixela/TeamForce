@@ -230,6 +230,17 @@ extension ViewModelProtocol where Self: Stateable, View: StackViewExtended {
       set_backView(backView)
       return self
    }
+
+   @discardableResult func set_disableBottomRadius(_ value: CGFloat) -> Self {
+      let backView = UIView()
+      backView.backgroundColor = view.backgroundColor
+      view.insertSubview(backView, at: 0)
+      backView.addAnchors
+         .constHeight(value)
+         .width(view.widthAnchor)
+         .bottom(view.bottomAnchor)
+      return self
+   }
 }
 
 extension ViewModelProtocol where Self: Stateable, View: PaddingLabel {

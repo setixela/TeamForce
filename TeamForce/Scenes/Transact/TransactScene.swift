@@ -184,8 +184,10 @@ final class TransactScene<Asset: AssetProtocol>: DoubleStacksModel, Assetable, S
             notFoundBlock.set_hidden(true),
             activityIndicator.set_hidden(false),
 
-            viewModelsWrapper
+            viewModelsWrapper,
+            Spacer(16)
          ])
+         .set_disableBottomRadius(Design.params.cornerRadiusMedium)
 
       bottomStackModel
          .set(Design.state.stack.bottomPanel)
