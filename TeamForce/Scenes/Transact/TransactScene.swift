@@ -367,17 +367,9 @@ private extension TransactScene {
 private extension TransactScene {
    func presentFoundUsers(users: [FoundUser]) {
       viewModels.foundUsersList.set(.items(users))
-      viewModels.foundUsersList.set(.hidden(users.isEmpty ? true : false))
+      viewModels.foundUsersList.hiddenAnimated((users.isEmpty ? true : false), duration: 0.5)
 
-      if users.isEmpty {
-         notFoundBlock.alpha(0)
-         notFoundBlock.hidden(false)
-         UIView.animate(withDuration: 0.3) {
-            self.notFoundBlock.alpha(1)
-         }
-      } else {
-         notFoundBlock.hidden(true)
-      }
+      notFoundBlock.hiddenAnimated(!users.isEmpty, duration: 0.5)
    }
 
    func presentAlert(text: String) {}

@@ -86,6 +86,19 @@ extension ViewModelProtocol where Self: Stateable {
       return self
    }
 
+   @discardableResult func hiddenAnimated(_ isHidden: Bool, duration: CGFloat) -> Self {
+      if isHidden == false {
+         view.isHidden = false
+      }
+      UIView.animate(withDuration: duration) {
+         self.view.alpha = isHidden ? 0 : 1
+      } completion: { _ in
+         self.view.isHidden = isHidden
+      }
+
+      return self
+   }
+
    @discardableResult func alpha(_ value: CGFloat) -> Self {
       view.alpha = value
       return self
