@@ -12,13 +12,13 @@ final class ReactionButton<Design: DSP>: Combos<SComboMR<ImageViewModel, LabelMo
       super.init()
 
       setAll {
-         $0.set_size(.square(Grid.x16.value))
+         $0.size(.square(Grid.x16.value))
          $1.set(Design.state.label.caption2)
       }
-      set_spacing(8)
-      set_backColor(Design.color.backgroundInfoSecondary)
-      set_cornerRadius(Design.params.cornerRadiusMini)
-      set_height(26)
-      set_padding(.sideOffset(8))
+      spacing(8)
+      backColor(Design.color.backgroundInfoSecondary)
+      cornerRadius(Design.params.cornerRadiusMini)
+      height(26)
+      padding(.sideOffset(8))
    }
 }

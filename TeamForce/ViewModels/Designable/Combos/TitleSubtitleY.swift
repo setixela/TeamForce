@@ -45,9 +45,9 @@ class TitleSubtitleTextFieldY<Design: DesignProtocol>:
       } setDown: {
          $0
             .set(Design.state.label.subtitle)
-            .set_textColor(Design.color.textSecondary)
-            .set_clearButtonMode(.never)
-            //.set_placeholder()
+            .textColor(Design.color.textSecondary)
+            .clearButtonMode(.never)
+            //.placeholder()
       }
    }
 }

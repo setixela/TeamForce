@@ -16,18 +16,18 @@ final class BalanceInfo<Design: DSP>: Combos<SComboMD<LabelModel, CurrencyLabelD
       setAll { title, amount in
          title
             .set(Design.state.label.caption)
-            .set_height(Grid.x20.value)
-            .set_text("Доступно")
-            .set_textColor(Design.color.iconInvert)
+            .height(Grid.x20.value)
+            .text("Доступно")
+            .textColor(Design.color.iconInvert)
          amount.currencyLogo
-            .set_width(Grid.x20.value)
+            .width(Grid.x20.value)
       }
-      .set_alignment(.leading)
-      .set_height(Grid.x90.value)
-      .set_backColor(Design.color.iconContrast)
-      .set_cornerRadius(Design.params.cornerRadius)
-      .set_padding(Design.params.infoFramePadding)
-      .set_hidden(true)
+      .alignment(.leading)
+      .height(Grid.x90.value)
+      .backColor(Design.color.iconContrast)
+      .cornerRadius(Design.params.cornerRadius)
+      .padding(Design.params.infoFramePadding)
+      .hidden(true)
    }
 }
 
@@ -36,10 +36,10 @@ final class UserSearchTextField<Design: DSP>: TextFieldModel, Designable {
       super.init()
 
       set(Design.state.textField.default)
-         .set_placeholder(Design.Text.title.chooseRecipient)
-         .set_placeholderColor(Design.color.textFieldPlaceholder)
-         .set_disableAutocorrection()
-         .set_hidden(true)
+         .placeholder(Design.Text.title.chooseRecipient)
+         .placeholderColor(Design.color.textFieldPlaceholder)
+         .disableAutocorrection()
+         .hidden(true)
    }
 }
 
@@ -50,12 +50,12 @@ final class ReasonTextView<Design: DSP>: TextViewModel, Designable {
       set(.padding(Design.params.contentPadding))
          .set(.placeholder(TextBuilder.title.reasonPlaceholder))
          .set(Design.state.label.body1)
-         .set_backColor(Design.color.background)
-         .set_borderColor(Design.color.boundary)
-         .set_borderWidth(Design.params.borderWidth)
-         .set_cornerRadius(Design.params.cornerRadius)
-         .set_minHeight(144)
-         .set_hidden(true)
+         .backColor(Design.color.background)
+         .borderColor(Design.color.boundary)
+         .borderWidth(Design.params.borderWidth)
+         .cornerRadius(Design.params.cornerRadius)
+         .minHeight(144)
+         .hidden(true)
    }
 }
 
@@ -66,26 +66,26 @@ final class TransactViewModels<Design: DSP>: Designable {
    lazy var balanceInfo = BalanceInfo<Design>()
    lazy var userSearchTextField = UserSearchTextField<Design>()
    lazy var transactInputViewModel = TransactInputViewModel<Design>()
-      .set_hidden(true)
+      .hidden(true)
    lazy var reasonTextView = ReasonTextView<Design>()
 
    lazy var foundUsersList = StackItemsModel() //   TableItemsModel<Design>()
       .set(.activateSelector)
-      // .set_minHeight(300)
-      .set_hidden(true)
+      // .minHeight(300)
+      .hidden(true)
       .set(.presenters([
          foundUserPresenter
       ]))
 
    lazy var sendButton = Design.button.default
       .set(Design.state.button.inactive)
-      .set_title(Design.Text.button.sendButton)
+      .title(Design.Text.button.sendButton)
 
    lazy var addPhotoButton = ButtonModel()
-      .set_title("Добавить фото")
-      .set_image(Design.icon.attach.withTintColor(Design.color.iconBrand))
+      .title("Добавить фото")
+      .image(Design.icon.attach.withTintColor(Design.color.iconBrand))
       .set(Design.state.button.brandTransparent)
-      .set_hidden(true)
+      .hidden(true)
 }
 
 extension TransactViewModels {
@@ -102,12 +102,12 @@ extension TransactViewModels {
                ImageLabelLabelMRD()
                   .setAll { avatar, username, nickname in
                      avatar
-                        .set_contentMode(.scaleAspectFill)
-                        .set_size(.square(Grid.x26.value))
-                        .set_cornerRadius(Grid.x26.value / 2)
+                        .contentMode(.scaleAspectFill)
+                        .size(.square(Grid.x26.value))
+                        .cornerRadius(Grid.x26.value / 2)
                      if let photo = user.photo, photo.count != 0 {
                         let urlString = TeamForceEndpoints.urlMediaBase + photo
-                        avatar.set_url(urlString)
+                        avatar.url(urlString)
                      } else {
                         if let nameFirstLetter = user.name.string.first,
                            let surnameFirstLetter = user.surname.string.first
@@ -115,30 +115,30 @@ extension TransactViewModels {
                            let text = String(nameFirstLetter) + String(surnameFirstLetter)
                            let image = text.drawImage(backColor: Design.color.backgroundBrand)
                            avatar
-                              .set_backColor(Design.color.backgroundBrand)
-                              .set_image(image)
+                              .backColor(Design.color.backgroundBrand)
+                              .image(image)
                         }
                      }
                      username
-                        .set_text("\(name.string) \(surname.string)")
-                        .set_textColor(Design.color.text)
-                        .set_padLeft(Grid.x14.value)
-                        .set_height(Grid.x24.value)
+                        .text("\(name.string) \(surname.string)")
+                        .textColor(Design.color.text)
+                        .padLeft(Grid.x14.value)
+                        .height(Grid.x24.value)
                      nickname
                         .set(Design.state.label.caption)
-                        .set_textColor(Design.color.textSecondary)
-                        .set_text(thName)
-                        .set_padLeft(Grid.x14.value)
+                        .textColor(Design.color.textSecondary)
+                        .text(thName)
+                        .padLeft(Grid.x14.value)
                   }
-                  .set_padding(Design.params.cellContentPadding)
-                  .set_alignment(.center)
-                  .set_backColor(Design.color.background)
-                  .set_shadow(Design.params.cellShadow)
-                  .set_height(68)
-                  .set_cornerRadius(Design.params.cornerRadius)
-                  .set_zPosition(1000)
+                  .padding(Design.params.cellContentPadding)
+                  .alignment(.center)
+                  .backColor(Design.color.background)
+                  .shadow(Design.params.cellShadow)
+                  .height(68)
+                  .cornerRadius(Design.params.cornerRadius)
+                  .zPosition(1000)
             )
-            .set_padding(.outline(4))
+            .padding(.outline(4))
 
          work.success(result: comboMRD)
       }

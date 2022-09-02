@@ -19,97 +19,97 @@ final class ProfileEditScene<Asset: AssetProtocol>: BaseSceneModel<
    lazy var userModel = Combos<SComboMRD<ImageViewModel, LabelModel, LabelModel>>()
       .setMain { image in
          image
-            .set_image(Design.icon.avatarPlaceholder)
-            .set_cornerRadius(52 / 2)
+            .image(Design.icon.avatarPlaceholder)
+            .cornerRadius(52 / 2)
             .set(.size(.square(52)))
       } setRight: { fullName in
          fullName
-            .set_textColor(Design.color.text)
-            .set_padTop(-8)
-            .set_padLeft(12)
+            .textColor(Design.color.text)
+            .padTop(-8)
+            .padLeft(12)
       } setDown: { telegram in
          telegram
-            .set_textColor(Design.color.textBrand)
-            .set_padLeft(12)
+            .textColor(Design.color.textBrand)
+            .padLeft(12)
             .set(Design.state.label.body2)
       }
-      .set_alignment(.center)
-      .set_distribution(.fill)
-      .set_backColor(Design.color.backgroundInfoSecondary)
-      .set_cornerRadius(Design.params.cornerRadius)
-      .set_padding(Design.params.cellContentPadding)
-      .set_shadow(Design.params.panelMainButtonShadow)
-      .set_height(76)
+      .alignment(.center)
+      .distribution(.fill)
+      .backColor(Design.color.backgroundInfoSecondary)
+      .cornerRadius(Design.params.cornerRadius)
+      .padding(Design.params.cellContentPadding)
+      .shadow(Design.params.panelMainButtonShadow)
+      .height(76)
 
    lazy var firstname = ProfileEditTitleBodyDT<Design>()
       .setAll {
-         $0.set_text("Имя")
+         $0.text("Имя")
          $1
-            .set_placeholder("Имя")
-            .set_backColor(.clear)
+            .placeholder("Имя")
+            .backColor(.clear)
       }
-      .set_borderColor(Design.color.textSecondary)
-      .set_borderWidth(1.0)
-      .set_padding(Design.params.contentPadding)
-      .set_cornerRadius(Design.params.cornerRadius)
-      .set_alignment(.fill)
+      .borderColor(Design.color.textSecondary)
+      .borderWidth(1.0)
+      .padding(Design.params.contentPadding)
+      .cornerRadius(Design.params.cornerRadius)
+      .alignment(.fill)
    
    lazy var surname = ProfileEditTitleBodyDT<Design>()
       .setAll {
-         $0.set_text("Фамилия")
+         $0.text("Фамилия")
          $1
-            .set_placeholder("Фамилия")
-            .set_backColor(.clear)
+            .placeholder("Фамилия")
+            .backColor(.clear)
       }
-      .set_borderColor(Design.color.textSecondary)
-      .set_borderWidth(1.0)
-      .set_padding(Design.params.contentPadding)
-      .set_cornerRadius(Design.params.cornerRadius)
-      .set_alignment(.fill)
+      .borderColor(Design.color.textSecondary)
+      .borderWidth(1.0)
+      .padding(Design.params.contentPadding)
+      .cornerRadius(Design.params.cornerRadius)
+      .alignment(.fill)
    
    lazy var middleName = ProfileEditTitleBodyDT<Design>()
       .setAll {
-         $0.set_text("Отчество")
+         $0.text("Отчество")
          $1
-            .set_placeholder("Отчество")
-            .set_backColor(.clear)
+            .placeholder("Отчество")
+            .backColor(.clear)
       }
-      .set_borderColor(Design.color.textSecondary)
-      .set_borderWidth(1.0)
-      .set_padding(Design.params.contentPadding)
-      .set_cornerRadius(Design.params.cornerRadius)
-      .set_alignment(.fill)
+      .borderColor(Design.color.textSecondary)
+      .borderWidth(1.0)
+      .padding(Design.params.contentPadding)
+      .cornerRadius(Design.params.cornerRadius)
+      .alignment(.fill)
    
    lazy var email = ProfileEditTitleBodyDT<Design>()
       .setAll {
-         $0.set_text("Корпоративная почта")
+         $0.text("Корпоративная почта")
          $1
-            .set_placeholder("Корпоративная почта")
-            .set_backColor(.clear)
+            .placeholder("Корпоративная почта")
+            .backColor(.clear)
       }
-      .set_borderColor(Design.color.textSecondary)
-      .set_borderWidth(1.0)
-      .set_padding(Design.params.contentPadding)
-      .set_cornerRadius(Design.params.cornerRadius)
-      .set_alignment(.fill)
+      .borderColor(Design.color.textSecondary)
+      .borderWidth(1.0)
+      .padding(Design.params.contentPadding)
+      .cornerRadius(Design.params.cornerRadius)
+      .alignment(.fill)
       
    lazy var phone = ProfileEditTitleBodyDT<Design>()
       .setAll {
-         $0.set_text("Мобильный номер")
+         $0.text("Мобильный номер")
          $1
-            .set_placeholder("Мобильный номер")
-            .set_backColor(.clear)
+            .placeholder("Мобильный номер")
+            .backColor(.clear)
       }
-      .set_borderColor(Design.color.textSecondary)
-      .set_borderWidth(1.0)
-      .set_padding(Design.params.contentPadding)
-      .set_cornerRadius(Design.params.cornerRadius)
-      .set_alignment(.fill)
+      .borderColor(Design.color.textSecondary)
+      .borderWidth(1.0)
+      .padding(Design.params.contentPadding)
+      .cornerRadius(Design.params.cornerRadius)
+      .alignment(.fill)
    
    lazy var infoStack = UserProfileStack<Design>()
-      .set_arrangedModels([
+      .arrangedModels([
          LabelModel()
-            .set_text("Контакты")
+            .text("Контакты")
             .set(Design.state.label.caption2),
          surname,
          firstname,
@@ -117,10 +117,10 @@ final class ProfileEditScene<Asset: AssetProtocol>: BaseSceneModel<
          email,
          phone,
       ])
-      .set_alignment(.fill)
+      .alignment(.fill)
       
    lazy var saveButton = Design.button.default
-      .set_title("Сохранить")
+      .title("Сохранить")
 
    // MARK: - Services
 
@@ -145,7 +145,7 @@ final class ProfileEditScene<Asset: AssetProtocol>: BaseSceneModel<
          .set(.axis(.vertical))
          .set(.distribution(.fill))
          .set(.alignment(.fill))
-         // .set_padTop(-32)
+         // .padTop(-32)
          .set(.models([
             userModel,
             Spacer(32),
@@ -155,7 +155,7 @@ final class ProfileEditScene<Asset: AssetProtocol>: BaseSceneModel<
       
       mainVM.bottomStackModel
          .set(Design.state.stack.bottomPanel)
-         .set_arrangedModels([
+         .arrangedModels([
             saveButton,
          ])
    }
@@ -215,29 +215,29 @@ final class ProfileEditScene<Asset: AssetProtocol>: BaseSceneModel<
       let fullName = profile.surName.string + " " +
       profile.firstName.string + " " +
          profile.middleName.string
-      userModel.models.right.set_text(fullName)
-      userModel.models.down.set_text("@" + profile.tgName)
+      userModel.models.right.text(fullName)
+      userModel.models.down.text("@" + profile.tgName)
       if let urlSuffix = profile.photo {
-         userModel.models.main.set_url(TeamForceEndpoints.urlBase + urlSuffix)
+         userModel.models.main.url(TeamForceEndpoints.urlBase + urlSuffix)
       }
       
       // infoStack
-      firstname.models.down.set_text(profile.firstName.string)
-      surname.models.down.set_text(profile.surName.string)
-      middleName.models.down.set_text(profile.middleName.string)
+      firstname.models.down.text(profile.firstName.string)
+      surname.models.down.text(profile.surName.string)
+      middleName.models.down.text(profile.middleName.string)
       if let contacts = profile.contacts {
          for contact in contacts {
             switch contact.contactType {
             case "@":
                email.setAll {
-                  $1.set_text(contact.contactId)
+                  $1.text(contact.contactId)
                }
             case "P":
                phone.setAll {
-                  $1.set_text(contact.contactId)
+                  $1.text(contact.contactId)
                }
             case "T":
-               userModel.models.down.set_text("@" + contact.contactId)
+               userModel.models.down.text("@" + contact.contactId)
             default:
                print("Contact error")
             }
@@ -249,16 +249,16 @@ final class ProfileEditScene<Asset: AssetProtocol>: BaseSceneModel<
 final class ProfileEditTitleBodyDT<Design: DSP>: TitleSubtitleTextFieldY<Design> {
    required init() {
       super.init()
-      set_spacing(4)
+      spacing(4)
       setAll { main, down in
          main
-            .set_alignment(.left)
+            .alignment(.left)
             .set(Design.state.label.caption)
-            .set_textColor(Design.color.textSecondary)
+            .textColor(Design.color.textSecondary)
          down
-            .set_alignment(.left)
+            .alignment(.left)
             .set(Design.state.label.default)
-            .set_textColor(Design.color.text)
+            .textColor(Design.color.text)
       }
    }
 }

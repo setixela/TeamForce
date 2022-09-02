@@ -19,44 +19,44 @@ final class ProfileScene<Asset: AssetProtocol>: BaseSceneModel<
    lazy var userModel = Combos<SComboMRD<ImageViewModel, LabelModel, LabelModel>>()
       .setMain { image in
          image
-            .set_image(Design.icon.avatarPlaceholder)
-            .set_cornerRadius(52 / 2)
+            .image(Design.icon.avatarPlaceholder)
+            .cornerRadius(52 / 2)
             .set(.size(.square(52)))
       } setRight: { fullName in
          fullName
-            .set_textColor(Design.color.text)
-            .set_padTop(-8)
-            .set_padLeft(12)
+            .textColor(Design.color.text)
+            .padTop(-8)
+            .padLeft(12)
       } setDown: { telegram in
          telegram
-            .set_textColor(Design.color.textBrand)
-            .set_padLeft(12)
+            .textColor(Design.color.textBrand)
+            .padLeft(12)
             .set(Design.state.label.body2)
       }
-      .set_alignment(.center)
-      .set_distribution(.fill)
-      .set_backColor(Design.color.backgroundInfoSecondary)
-      .set_cornerRadius(Design.params.cornerRadius)
-      .set_padding(Design.params.cellContentPadding)
-      .set_shadow(Design.params.panelMainButtonShadow)
-      .set_height(76)
+      .alignment(.center)
+      .distribution(.fill)
+      .backColor(Design.color.backgroundInfoSecondary)
+      .cornerRadius(Design.params.cornerRadius)
+      .padding(Design.params.cellContentPadding)
+      .shadow(Design.params.panelMainButtonShadow)
+      .height(76)
 
    lazy var email = SettingsTitleBodyDT<Design>()
       .setAll {
-         $0.set_text("Корпоративная почта")
-         $1.set_text("-")
+         $0.text("Корпоративная почта")
+         $1.text("-")
       }
    
    lazy var phone = SettingsTitleBodyDT<Design>()
       .setAll {
-         $0.set_text("Мобильный номер")
-         $1.set_text("-")
+         $0.text("Мобильный номер")
+         $1.text("-")
       }
    
    lazy var infoStack = UserProfileStack<Design>()
-      .set_arrangedModels([
+      .arrangedModels([
          LabelModel()
-            .set_text("ИНФОРМАЦИЯ")
+            .text("ИНФОРМАЦИЯ")
             .set(Design.state.label.caption2),
          email,
          phone,
@@ -64,26 +64,26 @@ final class ProfileScene<Asset: AssetProtocol>: BaseSceneModel<
 
    lazy var organization = SettingsTitleBodyDT<Design>()
       .setAll {
-         $0.set_text("Компания")
-         $1.set_text("-")
+         $0.text("Компания")
+         $1.text("-")
       }
    
    lazy var department = SettingsTitleBodyDT<Design>()
       .setAll {
-         $0.set_text("Подразделение")
-         $1.set_text("-")
+         $0.text("Подразделение")
+         $1.text("-")
       }
    
    lazy var hiredAt = SettingsTitleBodyDT<Design>()
       .setAll {
-         $0.set_text("Дата начала работы")
-         $1.set_text("-")
+         $0.text("Дата начала работы")
+         $1.text("-")
       }
    
    lazy var infoStackSecondary = UserProfileStack<Design>()
-      .set_arrangedModels([
+      .arrangedModels([
          LabelModel()
-            .set_text("МЕСТО РАБОТЫ")
+            .text("МЕСТО РАБОТЫ")
             .set(Design.state.label.caption2),
          organization,
          department,
@@ -91,7 +91,7 @@ final class ProfileScene<Asset: AssetProtocol>: BaseSceneModel<
       ])
    
    lazy var editButton = Design.button.default
-      .set_title("Edit")
+      .title("Edit")
 
    // MARK: - Services
 
@@ -108,13 +108,13 @@ final class ProfileScene<Asset: AssetProtocol>: BaseSceneModel<
 
    private func configure() {
       mainVM.footerStack.view.removeFromSuperview()
-      mainVM.headerStack.set_arrangedModels([Grid.x128.spacer])
+      mainVM.headerStack.arrangedModels([Grid.x128.spacer])
       mainVM.bodyStack
          .set(.backColor(Design.color.backgroundSecondary))
          .set(.axis(.vertical))
          .set(.distribution(.fill))
          .set(.alignment(.fill))
-         .set_padTop(-32)
+         .padTop(-32)
          .set(.models([
             userModel,
             Spacer(32),
@@ -152,21 +152,21 @@ final class ProfileScene<Asset: AssetProtocol>: BaseSceneModel<
       let profile = userData.profile
       let fullName = profile.surName.string + " " +
       profile.firstName.string + " " + profile.middleName.string
-      userModel.models.right.set_text(fullName)
-      userModel.models.down.set_text("@" + profile.tgName)
+      userModel.models.right.text(fullName)
+      userModel.models.down.text("@" + profile.tgName)
       if let urlSuffix = profile.photo {
-         userModel.models.main.set_url(TeamForceEndpoints.urlBase + urlSuffix)
+         userModel.models.main.url(TeamForceEndpoints.urlBase + urlSuffix)
       }
 
       // infoStackSecondary
       organization.setAll {
-         $1.set_text(profile.organization)
+         $1.text(profile.organization)
       }
       department.setAll {
-         $1.set_text(profile.department)
+         $1.text(profile.department)
       }
       hiredAt.setAll {
-         $1.set_text(profile.hiredAt.string)
+         $1.text(profile.hiredAt.string)
       }
       print("contacts \(profile.contacts)")
       
@@ -176,14 +176,14 @@ final class ProfileScene<Asset: AssetProtocol>: BaseSceneModel<
             switch contact.contactType {
             case "@":
                email.setAll {
-                  $1.set_text(contact.contactId)
+                  $1.text(contact.contactId)
                }
             case "P":
                phone.setAll {
-                  $1.set_text(contact.contactId)
+                  $1.text(contact.contactId)
                }
             case "T":
-               userModel.models.down.set_text("@" + contact.contactId)
+               userModel.models.down.text("@" + contact.contactId)
             default:
                print("Contact error")
             }
@@ -196,16 +196,16 @@ final class ProfileScene<Asset: AssetProtocol>: BaseSceneModel<
 final class SettingsTitleBodyDT<Design: DSP>: TitleSubtitleY<Design> {
    required init() {
       super.init()
-      set_spacing(4)
+      spacing(4)
       setAll { main, down in
          main
-            .set_alignment(.left)
+            .alignment(.left)
             .set(Design.state.label.caption)
-            .set_textColor(Design.color.textSecondary)
+            .textColor(Design.color.textSecondary)
          down
-            .set_alignment(.left)
+            .alignment(.left)
             .set(Design.state.label.default)
-            .set_textColor(Design.color.text)
+            .textColor(Design.color.text)
       }
    }
 }
@@ -214,11 +214,11 @@ final class UserProfileStack<Design: DSP>: StackModel, Designable {
    override func start() {
       super.start()
 
-      set_backColor(Design.color.backgroundInfoSecondary)
-      set_padding(.init(top: 16, left: 16, bottom: 16, right: 16))
-      set_cornerRadius(Design.params.cornerRadiusSmall)
-      set_spacing(12)
-      set_distribution(.equalSpacing)
-      set_alignment(.leading)
+      backColor(Design.color.backgroundInfoSecondary)
+      padding(.init(top: 16, left: 16, bottom: 16, right: 16))
+      cornerRadius(Design.params.cornerRadiusSmall)
+      spacing(12)
+      distribution(.equalSpacing)
+      alignment(.leading)
    }
 }

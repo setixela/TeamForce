@@ -85,11 +85,11 @@ final class TransactScene<Asset: AssetProtocol>: DoubleStacksModel, Assetable, S
    private lazy var pickedImages = PickedImagePanel<Design>()
 
    private lazy var closeButton = ButtonModel()
-      .set_title(Design.Text.title.close)
-      .set_textColor(Design.color.textBrand)
+      .title(Design.Text.title.close)
+      .textColor(Design.color.textBrand)
 
    private lazy var options = TransactOptionsVM<Design>()
-      .set_hidden(true)
+      .hidden(true)
 
    private lazy var viewModelsWrapper = ScrollViewModelY()
       .set(.spacing(Grid.x16.value))
@@ -105,12 +105,12 @@ final class TransactScene<Asset: AssetProtocol>: DoubleStacksModel, Assetable, S
 
    private lazy var notFoundBlock = Wrapped2Y(
       ImageViewModel()
-         .set_image(Design.icon.userNotFound)
-         .set_size(.square(275)),
+         .image(Design.icon.userNotFound)
+         .size(.square(275)),
       Design.label.body1
-         .set_numberOfLines(0)
-         .set_alignment(.center)
-         .set_text(Design.Text.title.userNotFound)
+         .numberOfLines(0)
+         .alignment(.center)
+         .text(Design.Text.title.userNotFound)
    )
 
    private lazy var activityIndicator = ActivityIndicator<Design>()
@@ -156,42 +156,42 @@ final class TransactScene<Asset: AssetProtocol>: DoubleStacksModel, Assetable, S
    func configure() {
       let shadow = Shadow(radius: 50, offset: .zero, color: Design.color.iconContrast, opacity: 0.33)
       topStackModel
-         .set_safeAreaOffsetDisabled()
-         .set_axis(.vertical)
-         .set_distribution(.fill)
-         .set_alignment(.fill)
-         .set_backColor(Design.color.background)
-         .set_padding(UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16))
-         .set_cornerRadius(Design.params.cornerRadiusMedium)
-         .set_shadow(shadow)
-         .set_arrangedModels([
+         .safeAreaOffsetDisabled()
+         .axis(.vertical)
+         .distribution(.fill)
+         .alignment(.fill)
+         .backColor(Design.color.background)
+         .padding(UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16))
+         .cornerRadius(Design.params.cornerRadiusMedium)
+         .shadow(shadow)
+         .arrangedModels([
             //
             Wrapped3X(
                Spacer(50),
                LabelModel()
-                  .set_alignment(.center)
+                  .alignment(.center)
                   .set(Design.state.label.body3)
-                  .set_text(Design.Text.title.newTransact),
+                  .text(Design.Text.title.newTransact),
                closeButton
             )
-            .set_height(64)
-            .set_alignment(.center)
-            .set_distribution(.equalCentering),
+            .height(64)
+            .alignment(.center)
+            .distribution(.equalCentering),
             //
             viewModels.userSearchTextField,
             Grid.x8.spacer,
 
-            notFoundBlock.set_hidden(true),
-            activityIndicator.set_hidden(false),
+            notFoundBlock.hidden(true),
+            activityIndicator.hidden(false),
 
             viewModelsWrapper,
             Spacer(16)
          ])
-         .set_disableBottomRadius(Design.params.cornerRadiusMedium)
+         .disableBottomRadius(Design.params.cornerRadiusMedium)
 
       bottomStackModel
          .set(Design.state.stack.bottomPanel)
-         .set_arrangedModels([
+         .arrangedModels([
             viewModels.sendButton
          ])
    }
@@ -208,9 +208,9 @@ final class TransactScene<Asset: AssetProtocol>: DoubleStacksModel, Assetable, S
    }
 
    private func clearFields() {
-      viewModels.userSearchTextField.set_text("")
-      viewModels.transactInputViewModel.textField.set_text("")
-      viewModels.reasonTextView.set_text("")
+      viewModels.userSearchTextField.text("")
+      viewModels.transactInputViewModel.textField.text("")
+      viewModels.reasonTextView.text("")
    }
 }
 
@@ -220,58 +220,58 @@ extension TransactScene: StateMachine {
 
       switch state {
       case .initial:
-         activityIndicator.set_hidden(false)
+         activityIndicator.hidden(false)
       //
       case .loadProfilError:
-         activityIndicator.set_hidden(true)
+         activityIndicator.hidden(true)
       //
       case .loadTransactionsError:
-         activityIndicator.set_hidden(true)
+         activityIndicator.hidden(true)
       //
       case .loadTokensSuccess:
-         activityIndicator.set_hidden(false)
+         activityIndicator.hidden(false)
 
       case .loadTokensError:
-         viewModels.userSearchTextField.set_hidden(true)
-         activityIndicator.set_hidden(true)
+         viewModels.userSearchTextField.hidden(true)
+         activityIndicator.hidden(true)
       //
       case .loadBalanceSuccess(let balance):
-         viewModels.balanceInfo.models.down.label.set_text(String(balance))
+         viewModels.balanceInfo.models.down.label.text(String(balance))
       //
       case .loadBalanceError:
-         activityIndicator.set_hidden(true)
+         activityIndicator.hidden(true)
       //
       case .loadUsersListSuccess(let users):
          presentFoundUsers(users: users)
-         activityIndicator.set_hidden(true)
+         activityIndicator.hidden(true)
       //
       case .loadUsersListError:
-         viewModels.foundUsersList.set_hidden(true)
-         activityIndicator.set_hidden(true)
+         viewModels.foundUsersList.hidden(true)
+         activityIndicator.hidden(true)
          presentFoundUsers(users: [])
       //
       case .presentFoundUser(let users):
-         viewModels.foundUsersList.set_hidden(true)
-         activityIndicator.set_hidden(true)
+         viewModels.foundUsersList.hidden(true)
+         activityIndicator.hidden(true)
          presentFoundUsers(users: users)
 
       //
       case .presentUsers(let users):
-         viewModels.foundUsersList.set_hidden(true)
-         activityIndicator.set_hidden(true)
+         viewModels.foundUsersList.hidden(true)
+         activityIndicator.hidden(true)
          presentFoundUsers(users: users)
       //
       case .listOfFoundUsers(let users):
-         activityIndicator.set_hidden(true)
+         activityIndicator.hidden(true)
          presentFoundUsers(users: users)
       //
       case .userSelectedSuccess(_, let index):
-         viewModels.userSearchTextField.set_hidden(true)
+         viewModels.userSearchTextField.hidden(true)
 
          if case .userSelectedSuccess = currentState {
             UIView.animate(withDuration: 0.3) {
-               self.viewModels.userSearchTextField.set_hidden(false)
-               self.viewModels.foundUsersList.set_hidden(true)
+               self.viewModels.userSearchTextField.hidden(false)
+               self.viewModels.foundUsersList.hidden(true)
                self.currentState = .initial
             }
             self.applySelectUserMode()
@@ -292,7 +292,7 @@ extension TransactScene: StateMachine {
 
       //
       case .userSearchTFDidEditingChangedSuccess:
-         activityIndicator.set_hidden(false)
+         activityIndicator.hidden(false)
          viewModels.foundUsersList.set(.items([]))
          applySelectUserMode()
       //
@@ -329,7 +329,7 @@ extension TransactScene: StateMachine {
       case .presentPickedImage(let image):
          pickedImages.addButton(image: image)
       case .setHideAddPhotoButton(let value):
-         viewModels.addPhotoButton.set_hidden(value)
+         viewModels.addPhotoButton.hidden(value)
       case .sendButtonPressed:
          view.removeFromSuperview()
       }
@@ -338,29 +338,29 @@ extension TransactScene: StateMachine {
 
 private extension TransactScene {
    func applySelectUserMode() {
-      pickedImages.set_hidden(true)
+      pickedImages.hidden(true)
       viewModels.balanceInfo.set(.hidden(true))
       viewModels.transactInputViewModel.set(.hidden(true))
       viewModels.reasonTextView.set(.hidden(true))
-      options.set_hidden(true)
-      viewModels.addPhotoButton.set_hidden(true)
-      bottomStackModel.set_hidden(true)
-      notFoundBlock.set_hidden(true)
-      viewModels.userSearchTextField.set_hidden(false)
+      options.hidden(true)
+      viewModels.addPhotoButton.hidden(true)
+      bottomStackModel.hidden(true)
+      notFoundBlock.hidden(true)
+      viewModels.userSearchTextField.hidden(false)
    }
 
    func presentBalanceInfo() {
-      notFoundBlock.set_hidden(true)
+      notFoundBlock.hidden(true)
       viewModels.balanceInfo.set(.hidden(false))
    }
 
    func applyReadyToSendMode() {
-      pickedImages.set_hidden(false)
+      pickedImages.hidden(false)
       viewModels.transactInputViewModel.set(.hidden(false))
       viewModels.reasonTextView.set(.hidden(false))
-      options.set_hidden(false)
-      viewModels.addPhotoButton.set_hidden(false)
-      bottomStackModel.set_hidden(false)
+      options.hidden(false)
+      viewModels.addPhotoButton.hidden(false)
+      bottomStackModel.hidden(false)
    }
 }
 
@@ -370,13 +370,13 @@ private extension TransactScene {
       viewModels.foundUsersList.set(.hidden(users.isEmpty ? true : false))
 
       if users.isEmpty {
-         notFoundBlock.set_alpha(0)
-         notFoundBlock.set_hidden(false)
+         notFoundBlock.alpha(0)
+         notFoundBlock.hidden(false)
          UIView.animate(withDuration: 0.3) {
-            self.notFoundBlock.set_alpha(1)
+            self.notFoundBlock.alpha(1)
          }
       } else {
-         notFoundBlock.set_hidden(true)
+         notFoundBlock.hidden(true)
       }
    }
 

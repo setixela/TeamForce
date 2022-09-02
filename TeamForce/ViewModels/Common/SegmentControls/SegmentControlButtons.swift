@@ -22,8 +22,8 @@ final class SegmentButton<Design: DSP>: BaseViewModel<StackViewExtended>, Segmen
    private lazy var button = ButtonModel()
 
    private let selector = ViewModel()
-      .set_height(3)
-      .set_backColor(Design.color.textError)
+      .height(3)
+      .backColor(Design.color.textError)
 
    override func start() {
 
@@ -31,23 +31,23 @@ final class SegmentButton<Design: DSP>: BaseViewModel<StackViewExtended>, Segmen
 
       onModeChanged(\.normal) { [weak self] in
          self?.button
-            .set_textColor(Design.color.text)
-            .set_hidden(false)
+            .textColor(Design.color.text)
+            .hidden(false)
          self?.selector
-            .set_hidden(true)
+            .hidden(true)
       }
 
       onModeChanged(\.selected) { [weak self] in
          self?.button
-            .set_textColor(Design.color.textError)
-            .set_hidden(false)
+            .textColor(Design.color.textError)
+            .hidden(false)
          self?.selector
-            .set_hidden(false)
+            .hidden(false)
       }
       setMode(\.normal)
 
-      set_axis(.vertical)
-      set_arrangedModels([
+      axis(.vertical)
+      arrangedModels([
          button,
          selector,
       ])
@@ -62,7 +62,7 @@ extension SegmentButton {
    static func withTitle(_ title: String) -> SegmentButton {
       let button = SegmentButton<Design>()
       button.set {
-         $0.button.set_title(title)
+         $0.button.title(title)
       }
 
       return button

@@ -16,7 +16,7 @@ final class ImageViewModel: BaseViewModel<PaddingImageView>, Communicable {
    var events = ButtonEvents()
 
    override func start() {
-      set_contentMode(.scaleAspectFit)
+      contentMode(.scaleAspectFit)
    }
 
    @objc func didTap() {

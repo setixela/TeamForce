@@ -18,39 +18,39 @@ final class FeedFilterButtons<Design: DSP>: StackModel, Designable, Communicable
    var events: Events = .init()
 
    lazy var buttonAll = SecondaryButtonDT<Design>()
-      .set_title("Все")
+      .title("Все")
       .onEvent(\.didTap) { [weak self] in
          self?.select(0)
          self?.sendEvent(\.didTapAll)
       }
 
    lazy var buttonMy = SecondaryButtonDT<Design>()
-      .set_title("Мои")
+      .title("Мои")
       .onEvent(\.didTap) { [weak self] in
          self?.select(1)
          self?.sendEvent(\.didTapMy)
       }
 
    lazy var buttonPublic = SecondaryButtonDT<Design>()
-      .set_title("Публичные")
+      .title("Публичные")
       .onEvent(\.didTap) { [weak self] in
          self?.select(2)
          self?.sendEvent(\.didTapPublic)
       }
 
    lazy var buttonCalendar = SecondaryButtonDT<Design>()
-      .set_image(Design.icon.calendar)
-      .set_width(52)
-      .set_backColor(Design.color.backgroundBrandSecondary)
+      .image(Design.icon.calendar)
+      .width(52)
+      .backColor(Design.color.backgroundBrandSecondary)
       .onEvent(\.didTap) { [weak self] in
          self?.select(3)
       }
 
    override func start() {
-      set_axis(.horizontal)
-      set_spacing(Grid.x8.value)
-      set_padBottom(8)
-      set_arrangedModels([
+      axis(.horizontal)
+      spacing(Grid.x8.value)
+      padBottom(8)
+      arrangedModels([
          buttonAll,
          buttonMy,
          buttonPublic,

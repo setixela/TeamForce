@@ -9,9 +9,9 @@ final class LabelSwitcherXDT<Design: DSP>: LabelSwitcherX {
    override func start() {
       super.start()
 
-      set_padding(Design.params.contentVerticalPadding)
+      padding(Design.params.contentVerticalPadding)
       label
          .set(Design.state.label.body1)
-         .set_backColor(Design.color.background)
+         .backColor(Design.color.background)
    }
 }

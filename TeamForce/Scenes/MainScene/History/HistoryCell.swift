@@ -14,37 +14,37 @@ final class HistoryCellModel<Design: DSP>:
    required init() {
       super.init(isAutoreleaseView: true)
 
-      set_alignment(.center)
-      set_padding(.init(top: 23, left: 16, bottom: 23, right: 16))
+      alignment(.center)
+      padding(.init(top: 23, left: 16, bottom: 23, right: 16))
       setAll { icon, nameStatus, summa in
          icon
-            .set_image(Design.icon.avatarPlaceholder)
-            .set_contentMode(.scaleAspectFill)
-            .set_cornerRadius(52.aspected/2)
-            .set_size(.square(52.aspected))
+            .image(Design.icon.avatarPlaceholder)
+            .contentMode(.scaleAspectFill)
+            .cornerRadius(52.aspected/2)
+            .size(.square(52.aspected))
          nameStatus
-            .set_padLeft(18)
-            .set_alignment(.leading)
+            .padLeft(18)
+            .alignment(.leading)
             .setAll { username, status in
                username
-                  .set_padBottom(10)
+                  .padBottom(10)
                   .set(Design.state.label.body1)
-                  .set_alignment(.left)
+                  .alignment(.left)
                status
-                  .set_textColor(Design.color.textInvert)
-                  .set_alignment(.left)
-                  .set_height(Design.params.cornerRadiusSmall * 2)
-                  .set_cornerRadius(Design.params.cornerRadiusSmall)
+                  .textColor(Design.color.textInvert)
+                  .alignment(.left)
+                  .height(Design.params.cornerRadiusSmall * 2)
+                  .cornerRadius(Design.params.cornerRadiusSmall)
             }
          summa
-            .set_alignment(.trailing)
+            .alignment(.trailing)
             .setAll { sumText, cancelButton in
                sumText
                   .set(Design.state.label.body3)
-                  .set_alignment(.right)
+                  .alignment(.right)
                cancelButton
-                  .set_size(.square(1)) // TODO: - change to SVG
-                  .set_hidden(true) // TODO: - change to SVG
+                  .size(.square(1)) // TODO: - change to SVG
+                  .hidden(true) // TODO: - change to SVG
             }
       }
    }

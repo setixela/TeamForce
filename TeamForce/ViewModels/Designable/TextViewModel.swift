@@ -69,18 +69,18 @@ extension TextViewModel: Stateable3 {
    func applyState(_ state: TextViewState) {
       switch state {
       case .text(let string):
-         set_text(string)
+         text(string)
       case .placeholder(let string):
          self.placeholder = string
-         set_text(string)
-      case .font(let font):
-         set_font(font)
+         text(string)
+      case .font(let value):
+         font(value)
       case .padding(let value):
-         set_padding(value)
+         padding(value)
       case .height(let value):
-         set_height(value)
+         height(value)
       case .width(let value):
-         set_width(value)
+         width(value)
       }
    }
 }

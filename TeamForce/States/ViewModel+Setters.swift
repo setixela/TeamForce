@@ -9,89 +9,89 @@ import ReactiveWorks
 import UIKit
 
 extension ViewModelProtocol where Self: Stateable {
-   @discardableResult func set_backColor(_ value: UIColor) -> Self {
+   @discardableResult func backColor(_ value: UIColor) -> Self {
       view.backgroundColor = value
       return self
    }
 
-   @discardableResult func set_cornerRadius(_ value: CGFloat) -> Self {
+   @discardableResult func cornerRadius(_ value: CGFloat) -> Self {
       view.layer.cornerRadius = value
       return self
    }
 
-   @discardableResult func set_borderWidth(_ value: CGFloat) -> Self {
+   @discardableResult func borderWidth(_ value: CGFloat) -> Self {
       view.layer.borderWidth = value
       return self
    }
 
-   @discardableResult func set_borderColor(_ value: UIColor) -> Self {
+   @discardableResult func borderColor(_ value: UIColor) -> Self {
       view.layer.borderColor = value.cgColor
       return self
    }
 
-   @discardableResult func set_size(_ value: CGSize) -> Self {
-      set_width(value.width)
-      set_height(value.height)
+   @discardableResult func size(_ value: CGSize) -> Self {
+      width(value.width)
+      height(value.height)
       return self
    }
 
-   @discardableResult func set_height(_ value: CGFloat) -> Self {
+   @discardableResult func height(_ value: CGFloat) -> Self {
       view.addAnchors.constHeight(value)
       return self
    }
 
-   @discardableResult func set_width(_ value: CGFloat) -> Self {
+   @discardableResult func width(_ value: CGFloat) -> Self {
       view.addAnchors.constWidth(value)
       return self
    }
 
-   @discardableResult func set_maxHeight(_ value: CGFloat) -> Self {
+   @discardableResult func maxHeight(_ value: CGFloat) -> Self {
       view.addAnchors.maxHeight(value)
       return self
    }
 
-   @discardableResult func set_maxWidth(_ value: CGFloat) -> Self {
+   @discardableResult func maxWidth(_ value: CGFloat) -> Self {
       view.addAnchors.maxWidth(value)
       return self
    }
 
-   @discardableResult func set_minHeight(_ value: CGFloat) -> Self {
+   @discardableResult func minHeight(_ value: CGFloat) -> Self {
       view.addAnchors.minHeight(value)
       return self
    }
 
-   @discardableResult func set_minWidth(_ value: CGFloat) -> Self {
+   @discardableResult func minWidth(_ value: CGFloat) -> Self {
       view.addAnchors.minHeight(value)
       return self
    }
 
-   @discardableResult func set_sizeAspect(_ value: CGSize) -> Self {
-      set_widthAspect(value.width)
-      set_heightAspect(value.height)
+   @discardableResult func sizeAspect(_ value: CGSize) -> Self {
+      widthAspect(value.width)
+      heightAspect(value.height)
       return self
    }
 
-   @discardableResult func set_heightAspect(_ value: CGFloat) -> Self {
+   @discardableResult func heightAspect(_ value: CGFloat) -> Self {
       view.addAnchors.constHeight(value * Config.sizeAspectCoeficient)
       return self
    }
 
-   @discardableResult func set_widthAspect(_ value: CGFloat) -> Self {
+   @discardableResult func widthAspect(_ value: CGFloat) -> Self {
       view.addAnchors.constWidth(value * Config.sizeAspectCoeficient)
       return self
    }
 
-   @discardableResult func set_hidden(_ value: Bool) -> Self {
+   @discardableResult func hidden(_ value: Bool) -> Self {
       view.isHidden = value
       return self
    }
 
-   @discardableResult func set_alpha(_ value: CGFloat) -> Self {
+   @discardableResult func alpha(_ value: CGFloat) -> Self {
       view.alpha = value
       return self
    }
 
-   @discardableResult func set_zPosition(_ value: CGFloat) -> Self {
+   @discardableResult func zPosition(_ value: CGFloat) -> Self {
       view.layer.masksToBounds = false
       view.clipsToBounds = false
       view.layer.zPosition = value
@@ -99,12 +99,12 @@ extension ViewModelProtocol where Self: Stateable {
       return self
    }
 
-   @discardableResult func set_placing(_ value: CGPoint) -> Self {
+   @discardableResult func placing(_ value: CGPoint) -> Self {
       view.center = value
       return self
    }
 
-   @discardableResult func set_shadow(_ value: Shadow) -> Self {
+   @discardableResult func shadow(_ value: Shadow) -> Self {
       view.layer.shadowColor = value.color.cgColor
       view.layer.shadowOffset = .init(width: value.offset.x, height: value.offset.y)
       view.layer.shadowRadius = value.radius
@@ -113,12 +113,12 @@ extension ViewModelProtocol where Self: Stateable {
       return self
    }
 
-   @discardableResult func set_shadowOpacity(_ value: CGFloat) -> Self {
+   @discardableResult func shadowOpacity(_ value: CGFloat) -> Self {
       view.layer.shadowOpacity = Float(value)
       return self
    }
 
-   @discardableResult func set_subviewModel(_ value: UIViewModel) -> Self {
+   @discardableResult func subviewModel(_ value: UIViewModel) -> Self {
       let subview = value.uiView
       view.addSubview(subview)
       subview.addAnchors.fitToView(view)
@@ -126,7 +126,7 @@ extension ViewModelProtocol where Self: Stateable {
       return self
    }
 
-   @discardableResult func set_subviewModels(_ value: [UIViewModel]) -> Self {
+   @discardableResult func subviewModels(_ value: [UIViewModel]) -> Self {
       value.forEach {
          let subview = $0.uiView
          view.addSubview(subview)
@@ -135,69 +135,69 @@ extension ViewModelProtocol where Self: Stateable {
       return self
    }
 
-   @discardableResult func set_contentMode(_ value: UIView.ContentMode) -> Self {
+   @discardableResult func contentMode(_ value: UIView.ContentMode) -> Self {
       view.contentMode = value
       return self
    }
 
-   @discardableResult func set_safeAreaOffsetDisabled() -> Self {
+   @discardableResult func safeAreaOffsetDisabled() -> Self {
       view.insetsLayoutMarginsFromSafeArea = false
       return self
    }
 }
 
 extension ViewModelProtocol where Self: Stateable, View: StackViewExtended {
-   @discardableResult func set_distribution(_ value: StackViewExtended.Distribution) -> Self {
+   @discardableResult func distribution(_ value: StackViewExtended.Distribution) -> Self {
       view.distribution = value
       return self
    }
 
-   @discardableResult func set_axis(_ value: NSLayoutConstraint.Axis) -> Self {
+   @discardableResult func axis(_ value: NSLayoutConstraint.Axis) -> Self {
       view.axis = value
       return self
    }
 
-   @discardableResult func set_spacing(_ value: CGFloat) -> Self {
+   @discardableResult func spacing(_ value: CGFloat) -> Self {
       view.spacing = value
       return self
    }
 
-   @discardableResult func set_alignment(_ value: StackViewExtended.Alignment) -> Self {
+   @discardableResult func alignment(_ value: StackViewExtended.Alignment) -> Self {
       view.alignment = value
       return self
    }
 
-   @discardableResult func set_padding(_ value: UIEdgeInsets) -> Self {
+   @discardableResult func padding(_ value: UIEdgeInsets) -> Self {
       view.layoutMargins = value
       view.isLayoutMarginsRelativeArrangement = true
       return self
    }
 
-   @discardableResult func set_padLeft(_ value: CGFloat) -> Self {
+   @discardableResult func padLeft(_ value: CGFloat) -> Self {
       view.layoutMargins.left = value
       view.isLayoutMarginsRelativeArrangement = true
       return self
    }
 
-   @discardableResult func set_padRight(_ value: CGFloat) -> Self {
+   @discardableResult func padRight(_ value: CGFloat) -> Self {
       view.layoutMargins.right = value
       view.isLayoutMarginsRelativeArrangement = true
       return self
    }
 
-   @discardableResult func set_padTop(_ value: CGFloat) -> Self {
+   @discardableResult func padTop(_ value: CGFloat) -> Self {
       view.layoutMargins.top = value
       view.isLayoutMarginsRelativeArrangement = true
       return self
    }
 
-   @discardableResult func set_padBottom(_ value: CGFloat) -> Self {
+   @discardableResult func padBottom(_ value: CGFloat) -> Self {
       view.layoutMargins.bottom = value
       view.isLayoutMarginsRelativeArrangement = true
       return self
    }
 
-   @discardableResult func set_arrangedModels(_ value: [UIViewModel]) -> Self {
+   @discardableResult func arrangedModels(_ value: [UIViewModel]) -> Self {
       view.subviews.forEach {
          $0.removeFromSuperview()
       }
@@ -208,7 +208,7 @@ extension ViewModelProtocol where Self: Stateable, View: StackViewExtended {
       return self
    }
 
-   @discardableResult func set_backView(_ value: UIView, inset: UIEdgeInsets = .zero) -> Self {
+   @discardableResult func backView(_ value: UIView, inset: UIEdgeInsets = .zero) -> Self {
       view.insertSubview(value, at: 0)
       view.backView = value
       value.addAnchors.fitToViewInsetted(view, inset)
@@ -218,20 +218,20 @@ extension ViewModelProtocol where Self: Stateable, View: StackViewExtended {
       return self
    }
 
-   @discardableResult func set_backImage(_ value: UIImage, contentMode: UIImageView.ContentMode = .scaleAspectFill) -> Self {
+   @discardableResult func backImage(_ value: UIImage, contentMode: UIImageView.ContentMode = .scaleAspectFill) -> Self {
       let imageView = PaddingImageView(image: value)
       imageView.contentMode = contentMode
-      set_backView(imageView)
+      backView(imageView)
       return self
    }
 
-   @discardableResult func set_backViewModel(_ value: UIViewModel, inset: UIEdgeInsets = .zero) -> Self {
-      let backView = value.uiView
-      set_backView(backView)
+   @discardableResult func backViewModel(_ value: UIViewModel, inset: UIEdgeInsets = .zero) -> Self {
+      let new = value.uiView
+      backView(new)
       return self
    }
 
-   @discardableResult func set_disableBottomRadius(_ value: CGFloat) -> Self {
+   @discardableResult func disableBottomRadius(_ value: CGFloat) -> Self {
       let backView = UIView()
       backView.backgroundColor = view.backgroundColor
       view.insertSubview(backView, at: 0)
@@ -244,62 +244,62 @@ extension ViewModelProtocol where Self: Stateable, View: StackViewExtended {
 }
 
 extension ViewModelProtocol where Self: Stateable, View: PaddingLabel {
-   @discardableResult func set_text(_ value: String) -> Self {
+   @discardableResult func text(_ value: String) -> Self {
       view.text = value
       return self
    }
 
-   @discardableResult func set_font(_ value: UIFont) -> Self {
+   @discardableResult func font(_ value: UIFont) -> Self {
       view.font = value
       return self
    }
 
-   @discardableResult func set_textColor(_ value: UIColor) -> Self {
+   @discardableResult func textColor(_ value: UIColor) -> Self {
       view.textColor = value
       return self
    }
 
-   @discardableResult func set_numberOfLines(_ value: Int) -> Self {
+   @discardableResult func numberOfLines(_ value: Int) -> Self {
       view.numberOfLines = value
       return self
    }
 
-   @discardableResult func set_alignment(_ value: NSTextAlignment) -> Self {
+   @discardableResult func alignment(_ value: NSTextAlignment) -> Self {
       view.textAlignment = value
       return self
    }
 
-   @discardableResult func set_attributedText(_ value: NSAttributedString) -> Self {
+   @discardableResult func attributedText(_ value: NSAttributedString) -> Self {
       view.attributedText = value
       return self
    }
 
-   @discardableResult func set_padding(_ value: UIEdgeInsets) -> Self {
+   @discardableResult func padding(_ value: UIEdgeInsets) -> Self {
       view.padding = value
       return self
    }
 
-   @discardableResult func set_padLeft(_ value: CGFloat) -> Self {
+   @discardableResult func padLeft(_ value: CGFloat) -> Self {
       view.padding.left = value
       return self
    }
 
-   @discardableResult func set_padRight(_ value: CGFloat) -> Self {
+   @discardableResult func padRight(_ value: CGFloat) -> Self {
       view.padding.right = value
       return self
    }
 
-   @discardableResult func set_padTop(_ value: CGFloat) -> Self {
+   @discardableResult func padTop(_ value: CGFloat) -> Self {
       view.padding.top = value
       return self
    }
 
-   @discardableResult func set_padBottom(_ value: CGFloat) -> Self {
+   @discardableResult func padBottom(_ value: CGFloat) -> Self {
       view.padding.bottom = value
       return self
    }
 
-   @discardableResult func set_cornerRadius(_ value: CGFloat) -> Self {
+   @discardableResult func cornerRadius(_ value: CGFloat) -> Self {
       view.layer.cornerRadius = value
       view.clipsToBounds = true
       return self
@@ -309,35 +309,35 @@ extension ViewModelProtocol where Self: Stateable, View: PaddingLabel {
 import AlamofireImage
 
 extension ViewModelProtocol where Self: Stateable, View: PaddingImageView {
-   @discardableResult func set_image(_ value: UIImage) -> Self {
+   @discardableResult func image(_ value: UIImage) -> Self {
       view.image = value
       return self
    }
 
-   @discardableResult func set_contentMode(_ value: UIView.ContentMode) -> Self {
+   @discardableResult func contentMode(_ value: UIView.ContentMode) -> Self {
       view.contentMode = value
       return self
    }
 
-   @discardableResult func set_padding(_ value: UIEdgeInsets) -> Self {
+   @discardableResult func padding(_ value: UIEdgeInsets) -> Self {
       view.padding = value
       return self
    }
 
-   @discardableResult func set_imageTintColor(_ value: UIColor) -> Self {
+   @discardableResult func imageTintColor(_ value: UIColor) -> Self {
       view.image = view.image?.withRenderingMode(UIImage.RenderingMode.alwaysTemplate)
       view.tintColor = value
       return self
    }
 
-   @discardableResult func set_cornerRadius(_ value: CGFloat) -> Self {
+   @discardableResult func cornerRadius(_ value: CGFloat) -> Self {
       view.layer.cornerRadius = value
       view.clipsToBounds = true
       view.layer.masksToBounds = true
       return self
    }
 
-   @discardableResult func set_url(_ value: String?) -> Self {
+   @discardableResult func url(_ value: String?) -> Self {
       guard
          let str = value,
          let url = URL(string: str) else { return self }
@@ -357,80 +357,80 @@ extension ViewModelProtocol where Self: Stateable, View: PaddingImageView {
 }
 
 extension ViewModelProtocol where Self: Stateable, View: ButtonExtended {
-   @discardableResult func set_enabled(_ value: Bool) -> Self {
+   @discardableResult func enabled(_ value: Bool) -> Self {
       view.isEnabled = value
       return self
    }
 
-   @discardableResult func set_selected(_ value: Bool) -> Self {
+   @discardableResult func selected(_ value: Bool) -> Self {
       view.isSelected = value
       return self
    }
 
-   @discardableResult func set_title(_ value: String) -> Self {
+   @discardableResult func title(_ value: String) -> Self {
       view.setTitle(value, for: .normal)
       return self
    }
 
-   @discardableResult func set_textColor(_ value: UIColor) -> Self {
+   @discardableResult func textColor(_ value: UIColor) -> Self {
       view.setTitleColor(value, for: .normal)
       return self
    }
 
-   @discardableResult func set_font(_ value: UIFont) -> Self {
+   @discardableResult func font(_ value: UIFont) -> Self {
       view.titleLabel?.font = value
       return self
    }
 
-   @discardableResult func set_image(_ value: UIImage) -> Self {
+   @discardableResult func image(_ value: UIImage) -> Self {
       view.setImage(value, for: .normal)
       return self
    }
 
-   @discardableResult func set_backImage(_ value: UIImage) -> Self {
+   @discardableResult func backImage(_ value: UIImage) -> Self {
       view.setBackgroundImage(value, for: .normal)
       return self
    }
 
-   @discardableResult func set_imageContentMode(_ value: UIView.ContentMode) -> Self {
+   @discardableResult func imageContentMode(_ value: UIView.ContentMode) -> Self {
       view.imageView?.contentMode = value
       return self
    }
 
-   @discardableResult func set_tint(_ value: UIColor) -> Self {
+   @discardableResult func tint(_ value: UIColor) -> Self {
       view.tintColor = value
       view.imageView?.tintColor = value
       return self
    }
 
-   @discardableResult func set_vertical(_ value: Bool) -> Self {
+   @discardableResult func vertical(_ value: Bool) -> Self {
       view.isVertical = value
       return self
    }
 
-   @discardableResult func set_imageInset(_ value: UIEdgeInsets) -> Self {
+   @discardableResult func imageInset(_ value: UIEdgeInsets) -> Self {
       view.imageEdgeInsets = value
       return self
    }
 
-   @discardableResult func set_padding(_ value: UIEdgeInsets) -> Self {
+   @discardableResult func padding(_ value: UIEdgeInsets) -> Self {
       view.contentEdgeInsets = value
       return self
    }
 }
 
 extension ViewModelProtocol where Self: Stateable, View: PaddingTextField {
-   @discardableResult func set_text(_ value: String) -> Self {
+   @discardableResult func text(_ value: String) -> Self {
       view.text = value
       return self
    }
 
-   @discardableResult func set_placeholder(_ value: String) -> Self {
+   @discardableResult func placeholder(_ value: String) -> Self {
       view.placeholder = value
       return self
    }
 
-   @discardableResult func set_placeholderColor(_ value: UIColor) -> Self {
+   @discardableResult func placeholderColor(_ value: UIColor) -> Self {
       let placeholder = view.placeholder.string
       view.attributedPlaceholder = NSAttributedString(
          string: placeholder,
@@ -439,86 +439,86 @@ extension ViewModelProtocol where Self: Stateable, View: PaddingTextField {
       return self
    }
 
-   @discardableResult func set_font(_ value: UIFont) -> Self {
+   @discardableResult func font(_ value: UIFont) -> Self {
       view.font = value
       return self
    }
 
-   @discardableResult func set_padding(_ value: UIEdgeInsets) -> Self {
+   @discardableResult func padding(_ value: UIEdgeInsets) -> Self {
       view.padding = value
       return self
    }
 
-   @discardableResult func set_clearButtonMode(_ value: UITextField.ViewMode) -> Self {
+   @discardableResult func clearButtonMode(_ value: UITextField.ViewMode) -> Self {
       view.clearButtonMode = value
       return self
    }
 
-   @discardableResult func set_alignment(_ value: NSTextAlignment) -> Self {
+   @discardableResult func alignment(_ value: NSTextAlignment) -> Self {
       view.textAlignment = value
       return self
    }
 
-   @discardableResult func set_textColor(_ value: UIColor) -> Self {
+   @discardableResult func textColor(_ value: UIColor) -> Self {
       view.textColor = value
       return self
    }
 
-   @discardableResult func set_keyboardType(_ value: UIKeyboardType) -> Self {
+   @discardableResult func keyboardType(_ value: UIKeyboardType) -> Self {
       view.keyboardType = value
       return self
    }
 
-   @discardableResult func set_onlyDigitsMode() -> Self {
+   @discardableResult func onlyDigitsMode() -> Self {
       view.isOnlyDigitsMode = true
       return self
    }
 
-   @discardableResult func set_disableAutocorrection() -> Self {
+   @discardableResult func disableAutocorrection() -> Self {
       view.autocorrectionType = .no
       return self
    }
 }
 
 extension ViewModelProtocol where Self: Stateable, View: UITextView {
-   @discardableResult func set_text(_ value: String) -> Self {
+   @discardableResult func text(_ value: String) -> Self {
       view.text = value
       view.delegate?.textViewDidEndEditing?(view)
       return self
    }
 
-   @discardableResult func set_placeholder(_ value: String) -> Self {
+   @discardableResult func placeholder(_ value: String) -> Self {
       view.text = value
       view.delegate?.textViewDidEndEditing?(view)
       return self
    }
 
-   @discardableResult func set_font(_ value: UIFont) -> Self {
+   @discardableResult func font(_ value: UIFont) -> Self {
       view.font = value
       return self
    }
 
-   @discardableResult func set_padding(_ value: UIEdgeInsets) -> Self {
+   @discardableResult func padding(_ value: UIEdgeInsets) -> Self {
       view.textContainerInset = value
       return self
    }
 
-   @discardableResult func set_alignment(_ value: NSTextAlignment) -> Self {
+   @discardableResult func alignment(_ value: NSTextAlignment) -> Self {
       view.textAlignment = value
       return self
    }
 
-   @discardableResult func set_textColor(_ value: UIColor) -> Self {
+   @discardableResult func textColor(_ value: UIColor) -> Self {
       view.textColor = value
       return self
    }
 
-   @discardableResult func set_keyboardType(_ value: UIKeyboardType) -> Self {
+   @discardableResult func keyboardType(_ value: UIKeyboardType) -> Self {
       view.keyboardType = value
       return self
    }
 
-   @discardableResult func set_disableAutocorrection() -> Self {
+   @discardableResult func disableAutocorrection() -> Self {
       view.autocorrectionType = .no
       return self
    }

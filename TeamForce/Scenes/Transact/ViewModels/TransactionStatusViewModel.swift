@@ -37,29 +37,29 @@ final class TransactionStatusViewModel<Design: DSP>: BaseViewModel<StackViewExte
    private lazy var recipientCell = SendCoinRecipentCell<Design>()
       .setAll { avatar, userName, nickName, amount in
          avatar
-            .set_size(.square(44))
-            .set_cornerRadius(44 / 2)
-            .set_contentMode(.scaleAspectFill)
+            .size(.square(44))
+            .cornerRadius(44 / 2)
+            .contentMode(.scaleAspectFill)
          userName
             .set(Design.state.label.body4)
-            .set_alignment(.left)
+            .alignment(.left)
          nickName
             .set(Design.state.label.captionSecondary)
-            .set_alignment(.left)
+            .alignment(.left)
          amount.label
-            .set_height(Grid.x32.value)
+            .height(Grid.x32.value)
             .set(Design.state.label.headline4)
-            .set_textColor(Design.color.textError)
+            .textColor(Design.color.textError)
          amount.currencyLogo
-            .set_width(22)
+            .width(22)
       }
-      .set_padding(.outline(Grid.x16.value))
-      .set_backColor(Design.color.background)
-      .set_cornerRadius(Design.params.cornerRadius)
-      .set_shadow(Design.params.cellShadow)
-      .set_borderColor(.black)
-      .set_alignment(.center)
-      .set_distribution(.equalSpacing)
+      .padding(.outline(Grid.x16.value))
+      .backColor(Design.color.background)
+      .cornerRadius(Design.params.cornerRadius)
+      .shadow(Design.params.cellShadow)
+      .borderColor(.black)
+      .alignment(.center)
+      .distribution(.equalSpacing)
 
    let button = Design.button.default
       .set(.title(Design.Text.button.toTheBeginingButton))
@@ -99,24 +99,24 @@ final class TransactionStatusViewModel<Design: DSP>: BaseViewModel<StackViewExte
       recipientCell.setAll { avatar, userName, nickName, amount in
 
          if let urlSuffix = foundUser.photo, urlSuffix.count != 0 {
-            avatar.set_url(TeamForceEndpoints.urlMediaBase + urlSuffix)
+            avatar.url(TeamForceEndpoints.urlMediaBase + urlSuffix)
          } else {
             print("icon text \(userIconText)")
             let image = userIconText.drawImage(backColor: Design.color.backgroundBrand)
             avatar
-               .set_backColor(Design.color.backgroundBrand)
-               .set_image(image)
+               .backColor(Design.color.backgroundBrand)
+               .image(image)
          }
 
          userName
-            .set_text(foundUser.name.string + " " + foundUser.surname.string)
+            .text(foundUser.name.string + " " + foundUser.surname.string)
          nickName
-            .set_text("@" + foundUser.tgName.string)
+            .text("@" + foundUser.tgName.string)
          amount.label
-            .set_text("-" + info.amount)
+            .text("-" + info.amount)
          amount.models.right
-            .set_image(Design.icon.logoCurrencyRed)
-            .set_imageTintColor(Design.color.iconError)
+            .image(Design.icon.logoCurrencyRed)
+            .imageTintColor(Design.color.iconError)
       }
    }
 }

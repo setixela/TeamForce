@@ -22,10 +22,10 @@ final class PickedImagePanel<Design: DSP>: StackModel, Designable, Eventable {
    private let maxCount = 1
 
    override func start() {
-      set_axis(.horizontal)
-      set_alignment(.leading)
-      set_distribution(.equalSpacing)
-      set_spacing(8)
+      axis(.horizontal)
+      alignment(.leading)
+      distribution(.equalSpacing)
+      spacing(8)
    }
 
    func addButton(image: UIImage) {
@@ -33,9 +33,9 @@ final class PickedImagePanel<Design: DSP>: StackModel, Designable, Eventable {
 
       let pickedImage = PickedImage<Design>()
       picked[image] = pickedImage
-      pickedImage.image.set_image(image)
+      pickedImage.image.image(image)
 
-      set_arrangedModels(Array(picked.values))
+      arrangedModels(Array(picked.values))
 
       pickedImage.closeButton.onEvent(\.didTap) { [weak self] in
          guard let self = self else { return }
@@ -54,24 +54,24 @@ final class PickedImagePanel<Design: DSP>: StackModel, Designable, Eventable {
 
 final class PickedImage<Design: DSP>: StackModel, Designable {
    let closeButton = ButtonModel()
-      .set_image(Design.icon.cross.withTintColor(.white))
-      .set_size(.square(23))
+      .image(Design.icon.cross.withTintColor(.white))
+      .size(.square(23))
 
    let image = ImageViewModel()
-      .set_size(.square(Grid.x80.value))
-      .set_cornerRadius(Design.params.cornerRadius)
+      .size(.square(Grid.x80.value))
+      .cornerRadius(Design.params.cornerRadius)
 
    override func start() {
       super.start()
-      set_backColor(Design.color.background)
-      set_axis(.horizontal)
-      set_alignment(.top)
-      set_size(.square(Grid.x80.value))
-      set_cornerRadius(Design.params.cornerRadius)
-      set_arrangedModels([
+      backColor(Design.color.background)
+      axis(.horizontal)
+      alignment(.top)
+      size(.square(Grid.x80.value))
+      cornerRadius(Design.params.cornerRadius)
+      arrangedModels([
          Grid.xxx.spacer,
          closeButton
       ])
-      set_backViewModel(image)
+      backViewModel(image)
    }
 }

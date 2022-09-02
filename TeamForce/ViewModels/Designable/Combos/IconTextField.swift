@@ -21,13 +21,13 @@ final class IconTextField<Design: DesignProtocol>:
 
       setMain {
          $0
-            .set_size(.square(Grid.x24.value))
+            .size(.square(Grid.x24.value))
       } setRight: {
          $0
             .set(Design.state.textField.invisible)
       }
       set(Design.state.stack.inputContent)
-      set_alignment(.center)
-      set_height(Design.params.buttonHeight)
+      alignment(.center)
+      height(Design.params.buttonHeight)
    }
 }

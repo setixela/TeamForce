@@ -33,11 +33,11 @@ final class BalanceScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>
    private lazy var selectPeriod = LabelIconX<Design>(Design.state.stack.buttonFrame)
       .set {
          $0.label
-            .set_text(Text.title.selectPeriod)
-            .set_textColor(Design.color.textSecondary)
+            .text(Text.title.selectPeriod)
+            .textColor(Design.color.textSecondary)
          $0.iconModel
-            .set_image(Design.icon.calendarLine)
-            .set_imageTintColor(Design.color.iconBrand)
+            .image(Design.icon.calendarLine)
+            .imageTintColor(Design.color.iconBrand)
       }
 
    private lazy var myAccountFrame = FrameCellModelDT<Design>()
@@ -61,38 +61,38 @@ final class BalanceScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>
             Grid.x16.spacer,
          ]))
    )
-   .set_padding(.init(top: 0, left: -16, bottom: 0, right: -16))
-   .set_height(184)
+   .padding(.init(top: 0, left: -16, bottom: 0, right: -16))
+   .height(184)
 
    private lazy var annulationFrame = BalanceStatusFrameDT<Design>()
       .setMain {
          $0
-            .set_image(Design.icon.cross)
-            .set_imageTintColor(Design.color.textError)
+            .image(Design.icon.cross)
+            .imageTintColor(Design.color.textError)
       } setRight: {
          $0
-            .set_text("Аннулировано")
-            .set_textColor(Design.color.textError)
+            .text("Аннулировано")
+            .textColor(Design.color.textError)
       } setDown: {
          $0
-            .set_text("0")
+            .text("0")
       }
-      .set_backColor(Design.color.errorSecondary)
+      .backColor(Design.color.errorSecondary)
 
    private lazy var inProgessFrame = BalanceStatusFrameDT<Design>()
       .setMain {
          $0
-            .set_image(Design.icon.inProgress)
-            .set_imageTintColor(Design.color.success)
+            .image(Design.icon.inProgress)
+            .imageTintColor(Design.color.success)
       } setRight: {
          $0
-            .set_text("На согласовании")
-            .set_textColor(Design.color.success)
+            .text("На согласовании")
+            .textColor(Design.color.success)
       } setDown: {
          $0
-            .set_text("0")
+            .text("0")
       }
-      .set_backColor(Design.color.successSecondary)
+      .backColor(Design.color.successSecondary)
 
    // MARK: - Services
 
@@ -126,9 +126,9 @@ extension BalanceScene {
       let cancelledSum = balance.income.cancelled + balance.distr.cancelled
 
       annulationFrame.models.down
-         .set_text("\(cancelledSum)")
+         .text("\(cancelledSum)")
       inProgessFrame.models.down
-         .set_text("\(frozenSum)")
+         .text("\(frozenSum)")
    }
 
    private func setIncome(_ income: Income) {

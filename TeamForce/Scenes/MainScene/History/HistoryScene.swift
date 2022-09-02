@@ -63,8 +63,8 @@ final class HistoryScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>
 
 private extension HistoryScene {
    func configure() {
-      set_axis(.vertical)
-      set_arrangedModels([
+      axis(.vertical)
+      arrangedModels([
          viewModels.segmentedControl,
          Grid.x16.spacer,
          activityIndicator,
@@ -92,31 +92,31 @@ extension HistoryScene: StateMachine {
    func setState(_ state: HistoryState) {
       switch state {
       case .initial:
-         activityIndicator.set_hidden(false)
-         errorBlock.set_hidden(true)
+         activityIndicator.hidden(false)
+         errorBlock.hidden(true)
       case .loadProfilError:
-         errorBlock.set_hidden(false)
+         errorBlock.hidden(false)
          scenario.start()
       //
       case .loadTransactionsError:
-         errorBlock.set_hidden(false)
+         errorBlock.hidden(false)
          scenario.start()
       //
       case .presentAllTransactions(let value):
-         errorBlock.set_hidden(true)
-         activityIndicator.set_hidden(true)
+         errorBlock.hidden(true)
+         activityIndicator.hidden(true)
          viewModels.tableModel
             .set(.itemSections(value.addedSpacer(size: Grid.x80.value)))
       //
       case .presentSentTransactions(let value):
-         errorBlock.set_hidden(true)
-         activityIndicator.set_hidden(true)
+         errorBlock.hidden(true)
+         activityIndicator.hidden(true)
          viewModels.tableModel
             .set(.itemSections(value.addedSpacer(size: Grid.x80.value)))
       //
       case .presentRecievedTransaction(let value):
-         errorBlock.set_hidden(true)
-         activityIndicator.set_hidden(true)
+         errorBlock.hidden(true)
+         activityIndicator.hidden(true)
          viewModels.tableModel
             .set(.itemSections(value.addedSpacer(size: Grid.x80.value)))
       //

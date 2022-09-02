@@ -11,7 +11,7 @@ import UIKit
 
 struct HistoryViewModels<Design: DesignProtocol>: Designable {
    lazy var tableModel = TableItemsModel<Design>()
-      .set_backColor(Design.color.background)
+      .backColor(Design.color.background)
 
    lazy var segmentedControl = SegmentControl<SegmentButton<Design>, SegmentControl3Events>()
       .set(.height(Grid.x40.value))

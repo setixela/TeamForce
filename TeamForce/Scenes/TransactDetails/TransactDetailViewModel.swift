@@ -40,39 +40,39 @@ final class TransactDeatilViewModel<Asset: AssetProtocol>: BaseSceneModel<
    
    lazy var reasonLabel = SettingsTitleBodyDT<Design>()
       .setAll {
-         $0.set_text("Cообщение")
-         $1.set_text("-")
+         $0.text("Cообщение")
+         $1.text("-")
       }
    
    lazy var statusLabel = SettingsTitleBodyDT<Design>()
       .setAll {
-         $0.set_text("Статус перевода")
-         $1.set_text("-")
+         $0.text("Статус перевода")
+         $1.text("-")
       }
    
    lazy var infoStack = UserProfileStack<Design>()
-      .set_arrangedModels([
+      .arrangedModels([
          LabelModel()
-            .set_text("ИНФОРМАЦИЯ")
+            .text("ИНФОРМАЦИЯ")
             .set(Design.state.label.caption2),
          reasonLabel,
          statusLabel,
       ])
-      .set_distribution(.fill)
-      .set_alignment(.fill)
+      .distribution(.fill)
+      .alignment(.fill)
 
 
    
    private lazy var currencyLabel = CurrencyLabelDT<Design>()
       .setAll {
          $0
-            .set_height(Grid.x32.value)
+            .height(Grid.x32.value)
             .set(Design.state.label.headline4)
-            .set_textColor(Design.color.success)
+            .textColor(Design.color.success)
          $1
-            .set_width(Grid.x26.value)
-            .set_height(Grid.x26.value)
-            .set_imageTintColor(Design.color.success)
+            .width(Grid.x26.value)
+            .height(Grid.x26.value)
+            .imageTintColor(Design.color.success)
       }
 
    private lazy var fourthStack = StackModel()
@@ -106,11 +106,11 @@ final class TransactDeatilViewModel<Asset: AssetProtocol>: BaseSceneModel<
    }
 
    private lazy var image = WrappedY(ImageViewModel()
-      .set_image(Design.icon.avatarPlaceholder)
-      .set_contentMode(.scaleAspectFill)
-      .set_cornerRadius(70 / 2)
-      .set_size(.square(70))
-      .set_shadow(Design.params.cellShadow)
+      .image(Design.icon.avatarPlaceholder)
+      .contentMode(.scaleAspectFill)
+      .cornerRadius(70 / 2)
+      .size(.square(70))
+      .shadow(Design.params.cellShadow)
    )
    
 
@@ -118,9 +118,9 @@ final class TransactDeatilViewModel<Asset: AssetProtocol>: BaseSceneModel<
      
       mainVM.topStackModel
          .set(Design.state.stack.default)
-         .set_alignment(.center)
+         .alignment(.center)
          .set(.backColor(Design.color.backgroundSecondary))
-         .set_arrangedModels([
+         .arrangedModels([
             //
             Grid.x64.spacer,
             image,
@@ -131,7 +131,7 @@ final class TransactDeatilViewModel<Asset: AssetProtocol>: BaseSceneModel<
 
       mainVM.bottomStackModel
          .set(Design.state.stack.bottomPanel)
-         .set_arrangedModels([
+         .arrangedModels([
             infoStack,
             Grid.xxx.spacer,
          ])
@@ -149,10 +149,10 @@ final class TransactDeatilViewModel<Asset: AssetProtocol>: BaseSceneModel<
          amountLabel
             .set(.text((input.amount ?? "") + " спасибок"))
          currencyLabel.label
-            .set_text("-" + (input.amount ?? ""))
+            .text("-" + (input.amount ?? ""))
          if let urlSuffix = input.recipient?.recipientPhoto {
             let urlString = TeamForceEndpoints.urlBase + urlSuffix
-            image.subModel.set_url(urlString)
+            image.subModel.url(urlString)
          } else {
             var userIconText = ""
             if let nameFirstLetter = input.recipient?.recipientFirstName?.first,
@@ -161,8 +161,8 @@ final class TransactDeatilViewModel<Asset: AssetProtocol>: BaseSceneModel<
             }
             let tempImage = userIconText.drawImage(backColor: Design.color.backgroundBrand)
             image.subModel
-               .set_image(tempImage)
-               .set_backColor(Design.color.backgroundBrand)
+               .image(tempImage)
+               .backColor(Design.color.backgroundBrand)
          }
       case false:
          transactionOwnerLabel
@@ -170,10 +170,10 @@ final class TransactDeatilViewModel<Asset: AssetProtocol>: BaseSceneModel<
          amountLabel
             .set(.text((input.amount ?? "") + " спасибок"))
          currencyLabel.label
-            .set_text("+" + (input.amount ?? ""))
+            .text("+" + (input.amount ?? ""))
          if let urlSuffix = input.sender?.senderPhoto {
             let urlString = TeamForceEndpoints.urlBase + urlSuffix
-            image.subModel.set_url(urlString)
+            image.subModel.url(urlString)
          } else {
             var userIconText = ""
             if let nameFirstLetter = input.sender?.senderFirstName?.first,
@@ -182,8 +182,8 @@ final class TransactDeatilViewModel<Asset: AssetProtocol>: BaseSceneModel<
             }
             let tempImage = userIconText.drawImage(backColor: Design.color.backgroundBrand)
             image.subModel
-               .set_image(tempImage)
-               .set_backColor(Design.color.backgroundBrand)
+               .image(tempImage)
+               .backColor(Design.color.backgroundBrand)
          }
       }
 
@@ -193,7 +193,7 @@ final class TransactDeatilViewModel<Asset: AssetProtocol>: BaseSceneModel<
          textColor = UIColor.systemGreen
       case "D":
          textColor = Design.color.boundaryError
-         statusLabel.models.main.set_text("Причина отказа")
+         statusLabel.models.main.text("Причина отказа")
       case "W":
          textColor = UIColor.orange
       default:
@@ -202,8 +202,8 @@ final class TransactDeatilViewModel<Asset: AssetProtocol>: BaseSceneModel<
       statusLabel.models.down.set(.textColor(textColor))
       amountLabel.set(.textColor(textColor))
 
-      statusLabel.models.down.set_text(input.transactionStatus?.name ?? "")
-      reasonLabel.models.down.set_text(input.reason ?? "")
+      statusLabel.models.down.text(input.transactionStatus?.name ?? "")
+      reasonLabel.models.down.text(input.reason ?? "")
 
       guard let convertedDate = (input.createdAt ?? "").convertToDate() else { return }
       dateLabel

@@ -18,8 +18,8 @@ enum ScrollState {
 
 final class ScrollViewModelY: BaseViewModel<UIScrollView> {
    private lazy var stack = StackModel()
-      .set_axis(.vertical)
-      .set_distribution(.equalSpacing)
+      .axis(.vertical)
+      .distribution(.equalSpacing)
 
    private var spacing: CGFloat = 0
 
@@ -56,7 +56,7 @@ extension ScrollViewModelY: Stateable2 {
 
 final class ScrollViewModelX: BaseViewModel<UIScrollView> {
    private lazy var stack = StackModel()
-      .set_axis(.horizontal)
+      .axis(.horizontal)
 
    private var spacing: CGFloat = 0
 

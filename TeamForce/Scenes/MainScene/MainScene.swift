@@ -55,8 +55,8 @@ final class MainScene<Asset: AssetProtocol>:
    override func start() {
       vcModel?.sendEvent(\.setNavBarTintColor, Design.color.backgroundBrand)
 
-      mainVM.header.set_text("Баланс")
-      mainVM.bodyStack.set_arrangedModels([
+      mainVM.header.text("Баланс")
+      mainVM.bodyStack.arrangedModels([
          ActivityIndicator<Design>(),
          Spacer()
       ])
@@ -77,7 +77,7 @@ private extension MainScene {
       tabBarPanel.button1
          .onEvent(\.didTap) { [weak self] in
             self?.unlockTabButtons()
-            self?.mainVM.header.set_text("Лента событий")
+            self?.mainVM.header.text("Лента событий")
             self?.vcModel?.sendEvent(\.setTitle, "Лента событий")
             self?.presentModel(self?.feedViewModel)
             self?.tabBarPanel.button1.setMode(\.normal)
@@ -86,7 +86,7 @@ private extension MainScene {
       tabBarPanel.button2
          .onEvent(\.didTap) { [weak self] in
             self?.unlockTabButtons()
-            self?.mainVM.header.set_text("Баланс")
+            self?.mainVM.header.text("Баланс")
             self?.vcModel?.sendEvent(\.setTitle, "Баланс")
             self?.presentModel(self?.balanceViewModel)
             self?.tabBarPanel.button2.setMode(\.normal)
@@ -100,7 +100,7 @@ private extension MainScene {
       tabBarPanel.button3
          .onEvent(\.didTap) { [weak self] in
             self?.unlockTabButtons()
-            self?.mainVM.header.set_text("История")
+            self?.mainVM.header.text("История")
             self?.vcModel?.sendEvent(\.setTitle, "История")
             self?.presentModel(self?.historyViewModel)
             self?.tabBarPanel.button3.setMode(\.normal)
@@ -109,7 +109,7 @@ private extension MainScene {
       tabBarPanel.button4
          .onEvent(\.didTap) { [weak self] in
             self?.unlockTabButtons()
-            self?.mainVM.header.set_text("Настройки")
+            self?.mainVM.header.text("Настройки")
             self?.vcModel?.sendEvent(\.setTitle, "Настройки")
             self?.presentModel(self?.settingsViewModel)
             self?.tabBarPanel.button4.setMode(\.normal)
@@ -139,7 +139,7 @@ extension MainScene: StateMachine {
          }
 
          if let photoUrl = currentUser?.profile.photo {
-            mainVM.profileButton.set_url(TeamForceEndpoints.urlBase + photoUrl)
+            mainVM.profileButton.url(TeamForceEndpoints.urlBase + photoUrl)
          }
       case .loadProfileError:
          presentModel(errorBlock)
@@ -163,7 +163,7 @@ extension MainScene {
          }
       }
       mainVM.bodyStack
-         .set_arrangedModels([
+         .arrangedModels([
             model
          ])
 
@@ -178,7 +178,7 @@ extension MainScene {
       guard let model = model else { return }
 
       mainVM.bodyStack
-         .set_arrangedModels([
+         .arrangedModels([
             model
          ])
    }

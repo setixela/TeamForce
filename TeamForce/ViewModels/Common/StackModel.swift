@@ -13,7 +13,7 @@ class StackModel: BaseViewModel<StackViewExtended> {
    convenience init(_ models: UIViewModel...) {
       self.init()
 
-      set_arrangedModels(models)
+      arrangedModels(models)
    }
 
    override func start() {

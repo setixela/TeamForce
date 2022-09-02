@@ -79,48 +79,48 @@ struct HistoryPresenters<Design: DesignProtocol>: Designable {
             .setAll { icon, userAndStatus, sumLabelAndCancelButton in
                if !item.isAnonymous || (item.isAnonymous && item.state != .recieved) {
                   if let urlSuffix = item.photo {
-                     icon.set_url(TeamForceEndpoints.urlBase + urlSuffix)
+                     icon.url(TeamForceEndpoints.urlBase + urlSuffix)
                   } else {
                      let image = userIconText.drawImage(backColor: Design.color.backgroundBrand)
                      icon
-                        .set_backColor(Design.color.backgroundBrand)
-                        .set_image(image)
+                        .backColor(Design.color.backgroundBrand)
+                        .image(image)
                   }
                }
 
                userAndStatus
-                  .set_padLeft(18)
-                  .set_alignment(.leading)
+                  .padLeft(18)
+                  .alignment(.leading)
                   .setAll { userLabel, statusLabel in
                      userLabel
-                        .set_text(userNameText)
+                        .text(userNameText)
 
                      guard statusHidden == false else {
-                        statusLabel.set_hidden(true)
+                        statusLabel.hidden(true)
                         return
                      }
 
                      statusLabel
-                        .set_text(statusText)
-                        .set_backColor(statusColor)
-                        .set_hidden(false)
+                        .text(statusText)
+                        .backColor(statusColor)
+                        .hidden(false)
                   }
 
                sumLabelAndCancelButton
-                  .set_alignment(.trailing)
+                  .alignment(.trailing)
                   .setAll { sumLabel, cancelButton in
                      sumLabel
-                        .set_text(sumText)
+                        .text(sumText)
 
                      guard item.state != .recieved else {
-                        cancelButton.set_hidden(true)
+                        cancelButton.hidden(true)
                         return
                      }
 
                      cancelButton
-                        .set_image(Design.icon.cross)
-                        .set_imageTintColor(Design.color.textError)
-                        .set_hidden(false)
+                        .image(Design.icon.cross)
+                        .imageTintColor(Design.color.textError)
+                        .hidden(false)
                   }
             }
 

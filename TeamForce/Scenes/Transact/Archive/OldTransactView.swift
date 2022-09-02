@@ -30,44 +30,44 @@
 //   // MARK: - View Models
 //
 //   private lazy var digitalThanksTitle = Design.label.headline4
-//      .set_text(Text.title.digitalThanks)
-//      .set_numberOfLines(1)
-//      .set_alignment(.left)
-//      .set_padding(.init(top: 22, left: 0, bottom: 26, right: 0))
+//      .text(Text.title.digitalThanks)
+//      .numberOfLines(1)
+//      .alignment(.left)
+//      .padding(.init(top: 22, left: 0, bottom: 26, right: 0))
 //
 //   private lazy var userSearchTextField = TextFieldModel<Design>()
-//      .set_backColor(.init(red: 0.33, green: 0.33, blue: 0.33, alpha: 0.08))
-//      .set_height(48)
-//      .set_placeholder(Text.title.chooseRecipient)
-//      .set_hidden(true)
-//      .set_padding(.init(top: 0, left: 16, bottom: 0, right: 16))
+//      .backColor(.init(red: 0.33, green: 0.33, blue: 0.33, alpha: 0.08))
+//      .height(48)
+//      .placeholder(Text.title.chooseRecipient)
+//      .hidden(true)
+//      .padding(.init(top: 0, left: 16, bottom: 0, right: 16))
 //
 //   private lazy var transactInputViewModel = TransactInputViewModel<Design>()
 //      .set(.leftCaptionText(Text.title.sendThanks))
 //      .set(.rightCaptionText(Text.title.availableThanks))
-//      .set_hidden(true)
+//      .hidden(true)
 //
 //   private lazy var tableModel = TableViewModel()
-//      .set_borderColor(.gray)
-//      .set_borderWidth(1)
-//      .set_cornerRadius(Design.params.cornerRadius)
-//      .set_hidden(true)
+//      .borderColor(.gray)
+//      .borderWidth(1)
+//      .cornerRadius(Design.params.cornerRadius)
+//      .hidden(true)
 //
 //   private lazy var sendButton = Design.button.default
 //      .set(Design.state.button.inactive)
-//      .set_title(Text.button.sendButton)
-//      .set_hidden(true)
+//      .title(Text.button.sendButton)
+//      .hidden(true)
 //
 //   private lazy var reasonTextView = TextViewModel<Design>()
 //      .set(.padding(.init(top: 16, left: 16, bottom: 16, right: 16)))
 //      .set(.placeholder(TextBuilder.title.reasonPlaceholder))
 //      .set(Design.state.label.body1))
-//      .set_backColor(UIColor.clear)
-//      .set_borderColor(.lightGray.withAlphaComponent(0.4))
-//      .set_borderWidth(1.0)
+//      .backColor(UIColor.clear)
+//      .borderColor(.lightGray.withAlphaComponent(0.4))
+//      .borderWidth(1.0)
 //
-//      .set_height(200)
-//      .set_hidden(true)
+//      .height(200)
+//      .hidden(true)
 //
 //   private lazy var transactionStatusView = TransactionStatusViewModel<Asset>()
 //
@@ -88,10 +88,10 @@
 //      works.loadTokens
 //         .doAsync()
 //         .onSuccess {
-//            wS?.userSearchTextField.set_hidden(false)
+//            wS?.userSearchTextField.hidden(false)
 //         }
 //         .onFail {
-//            wS?.userSearchTextField.set_hidden(true)
+//            wS?.userSearchTextField.hidden(true)
 //         }
 //         // then load balance
 //         .doNext(work: works.loadBalance)
@@ -111,14 +111,14 @@
 //            // wS?.presentFoundUsers(users: $0)
 //         }
 //         .onFail {
-//            wS?.tableModel.set_hidden(true)
+//            wS?.tableModel.hidden(true)
 //         }
 //      
 //      userSearchTextField
 //         .onEvent(\.didBeginEditing)
 //         .doNext(usecase: IsEmpty())
 //         .onSuccess {
-//            wS?.tableModel.set_hidden(true)
+//            wS?.tableModel.hidden(true)
 //            wS?.works.getUserList
 //               .doAsync()
 //               .onSuccess {
@@ -134,7 +134,7 @@
 //         // then check data is not empty
 //         .doNext(usecase: IsEmpty())
 //         .onSuccess {
-//            wS?.tableModel.set_hidden(true)
+//            wS?.tableModel.hidden(true)
 //            wS?.works.getUserList
 //               .doAsync()
 //               .onSuccess {
@@ -187,21 +187,21 @@
 //            wS?.setToInitialCondition()
 //            let fullName = foundUser.name + " " + foundUser.surname
 //            wS?.userSearchTextField.set(.text(fullName))
-//            wS?.tableModel.set_hidden(true)
-//            wS?.transactInputViewModel.set_hidden(false)
-//            wS?.sendButton.set_hidden(false)
-//            wS?.reasonTextView.set_hidden(false)
+//            wS?.tableModel.hidden(true)
+//            wS?.transactInputViewModel.hidden(false)
+//            wS?.sendButton.hidden(false)
+//            wS?.reasonTextView.hidden(false)
 //         }
 //
 //      configureInputParsers()
 //   }
 //
 //   func configure() {
-//      set_axis(.vertical)
-//      set_distribution(.fill)
-//      set_alignment(.fill)
-//      set_spacing(8)
-//      set_models([
+//      axis(.vertical)
+//      distribution(.fill)
+//      alignment(.fill)
+//      spacing(8)
+//      models([
 //         digitalThanksTitle,
 //         userSearchTextField,
 //         transactInputViewModel,
@@ -226,8 +226,8 @@
 //   }
 //   
 //   private func clearFields() {
-//      userSearchTextField.set_text("")
-//      transactInputViewModel.textField.set_text("")
+//      userSearchTextField.text("")
+//      transactInputViewModel.textField.text("")
 //      reasonTextView.set(.text(""))
 //   }
 //

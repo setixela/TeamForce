@@ -12,7 +12,7 @@ final class ActivityIndicator<Design: DSP>: BaseViewModel<UIActivityIndicatorVie
    typealias State = ViewState
 
    override func start() {
-      set_size(.square(100))
+      size(.square(100))
       view.startAnimating()
       view.color = Design.color.iconBrand
       view.contentScaleFactor = 1.33

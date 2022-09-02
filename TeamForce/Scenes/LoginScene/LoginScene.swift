@@ -45,9 +45,9 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
 private extension LoginScene {
    func configure() {
       mainVM.header
-         .set_text(Design.Text.title.autorisation)
+         .text(Design.Text.title.autorisation)
       mainVM.bottomSubStack
-         .set_arrangedModels([
+         .arrangedModels([
             viewModels.userNameInputModel,
             viewModels.smsCodeInputModel,
             Spacer(Design.params.buttonsSpacingY),

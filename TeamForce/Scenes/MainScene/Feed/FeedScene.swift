@@ -38,8 +38,8 @@ final class FeedScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>,
    private var state = FeedSceneState.initial
 
    override func start() {
-      set_axis(.vertical)
-      set_arrangedModels([
+      axis(.vertical)
+      arrangedModels([
          viewModels.filterButtons,
          activityIndicator,
          errorBlock,
@@ -69,18 +69,18 @@ extension FeedScene: StateMachine {
       self.state = state
       switch state {
       case .initial:
-         activityIndicator.set_hidden(false)
-         errorBlock.set_hidden(true)
+         activityIndicator.hidden(false)
+         errorBlock.hidden(true)
          break
       case .presentFeed(let tuple):
-         activityIndicator.set_hidden(true)
-         errorBlock.set_hidden(true)
+         activityIndicator.hidden(true)
+         errorBlock.hidden(true)
          viewModels.set(.userName(tuple.1))
          viewModels.feedTableModel.set(.items(tuple.0 + [SpacerItem(size: Grid.x64.value)]))
       case .loadFeedError:
          log("Feed Error!")
-         activityIndicator.set_hidden(true)
-         errorBlock.set_hidden(false)
+         activityIndicator.hidden(true)
+         errorBlock.hidden(false)
       }
    }
 }

@@ -16,7 +16,7 @@ final class FeedViewModels<Design: DSP>: BaseModel, Designable, Stateable {
    lazy var filterButtons = FeedFilterButtons<Design>()
 
    lazy var feedTableModel = TableItemsModel<Design>()
-      .set_backColor(Design.color.background)
+      .backColor(Design.color.background)
       .set(.presenters([
          feedCellPresenter,
          SpacerPresenter.presenter
@@ -52,54 +52,54 @@ final class FeedViewModels<Design: DSP>: BaseModel, Designable, Stateable {
       let icon = self.makeIcon(feed: feed)
 
       let tagBlock = StackModel()
-         .set_axis(.horizontal)
-         .set_spacing(4)
+         .axis(.horizontal)
+         .spacing(4)
 
       let messageButton = ReactionButton<Design>()
          .setAll {
-            $0.set_image(Design.icon.messageCloud)
-            $1.set_text("0")
+            $0.image(Design.icon.messageCloud)
+            $1.text("0")
          }
 
       let likeButton = ReactionButton<Design>()
          .setAll {
-            $0.set_image(Design.icon.like)
-            $1.set_text("0")
+            $0.image(Design.icon.like)
+            $1.text("0")
          }
 
       let dislikeButton = ReactionButton<Design>()
          .setAll {
-            $0.set_image(Design.icon.dislike)
-            $1.set_text("0")
+            $0.image(Design.icon.dislike)
+            $1.text("0")
          }
 
       let reactionsBlock = StackModel()
-         .set_axis(.horizontal)
-         .set_alignment(.leading)
-         .set_distribution(.equalSpacing)
-         .set_spacing(4)
-         .set_arrangedModels([
+         .axis(.horizontal)
+         .alignment(.leading)
+         .distribution(.equalSpacing)
+         .spacing(4)
+         .arrangedModels([
             messageButton,
             likeButton,
             dislikeButton
          ])
 
 //      let hashTagBlock = StackModel()
-//         .set_axis(.horizontal)
-//         .set_alignment(.leading)
-//         .set_distribution(.equalSpacing)
-//         .set_spacing(4)
-//         .set_arrangedModels(
+//         .axis(.horizontal)
+//         .alignment(.leading)
+//         .distribution(.equalSpacing)
+//         .spacing(4)
+//         .arrangedModels(
 //            (0 ..< Int.random(in: 0 ..< 5)).map { _ -> UIViewModel in
 //               self.randomButton
 //            }
 //         )
 
       let infoBlock = StackModel()
-         .set_spacing(Grid.x10.value)
-         .set_axis(.vertical)
-         .set_alignment(.leading)
-         .set_arrangedModels([
+         .spacing(Grid.x10.value)
+         .axis(.vertical)
+         .alignment(.leading)
+         .arrangedModels([
             dateLabel,
             infoLabel,
             reactionsBlock
@@ -113,18 +113,18 @@ final class FeedViewModels<Design: DSP>: BaseModel, Designable, Stateable {
 
       let cellStack = WrappedX(
          StackModel()
-            .set_padding(.outline(Grid.x8.value))
-            .set_spacing(Grid.x12.value)
-            .set_axis(.horizontal)
-            .set_alignment(.top)
-            .set_arrangedModels([
+            .padding(.outline(Grid.x8.value))
+            .spacing(Grid.x12.value)
+            .axis(.horizontal)
+            .alignment(.top)
+            .arrangedModels([
                icon,
                infoBlock
             ])
-            .set_backColor(backColor)
-            .set_cornerRadius(Design.params.cornerRadiusSmall)
+            .backColor(backColor)
+            .cornerRadius(Design.params.cornerRadiusSmall)
       )
-      .set_padding(.verticalOffset(Grid.x16.value))
+      .padding(.verticalOffset(Grid.x16.value))
 
       work.success(result: cellStack)
    }
@@ -159,10 +159,10 @@ private extension FeedViewModels {
       let titleText = dateAgoText + eventText
 
       let dateLabel = LabelModel()
-         .set_numberOfLines(0)
+         .numberOfLines(0)
          .set(Design.state.label.caption)
-         .set_textColor(Design.color.textSecondary)
-         .set_text(titleText)
+         .textColor(Design.color.textSecondary)
+         .text(titleText)
 
       return dateLabel
    }
@@ -197,23 +197,23 @@ private extension FeedViewModels {
       }
 
       let infoLabel = LabelModel()
-         .set_numberOfLines(0)
+         .numberOfLines(0)
          .set(Design.state.label.caption)
-         .set_textColor(Design.color.iconBrand)
-         .set_attributedText(infoText)
+         .textColor(Design.color.iconBrand)
+         .attributedText(infoText)
 
       return infoLabel
    }
 
    func makeIcon(feed: Feed) -> ImageViewModel {
       let icon = ImageViewModel()
-         .set_contentMode(.scaleAspectFill)
-         .set_image(Design.icon.avatarPlaceholder)
-         .set_size(.square(Grid.x36.value))
-         .set_cornerRadius(Grid.x36.value / 2)
+         .contentMode(.scaleAspectFill)
+         .image(Design.icon.avatarPlaceholder)
+         .size(.square(Grid.x36.value))
+         .cornerRadius(Grid.x36.value / 2)
       if let recipientPhoto = feed.transaction.photoUrl {
          // TODO: - Ohohoho
-         icon.set_url(recipientPhoto)
+         icon.url(recipientPhoto)
       } else {
          if let nameFirstLetter = feed.transaction.recipientFirstName?.first,
             let surnameFirstLetter = feed.transaction.recipientSurname?.first
@@ -223,8 +223,8 @@ private extension FeedViewModels {
                let image = text.drawImage(backColor: Design.color.backgroundBrand)
                DispatchQueue.main.async {
                   icon
-                     .set_backColor(Design.color.backgroundBrand)
-                     .set_image(image)
+                     .backColor(Design.color.backgroundBrand)
+                     .image(image)
                }
             }
          }
@@ -248,12 +248,12 @@ private extension FeedViewModels {
    var randomButton: LabelModel {
       LabelModel()
          .set(Design.state.label.caption2)
-         .set_textColor(Design.color.textInfo)
-         .set_backColor(Design.color.backgroundInfoSecondary)
-         .set_cornerRadius(Design.params.cornerRadiusMini)
-         .set_height(26)
-         .set_padding(.sideOffset(4))
-         .set_text("# " + randomWords[Int.random(in: 0 ..< randomWords.count)])
+         .textColor(Design.color.textInfo)
+         .backColor(Design.color.backgroundInfoSecondary)
+         .cornerRadius(Design.params.cornerRadiusMini)
+         .height(26)
+         .padding(.sideOffset(4))
+         .text("# " + randomWords[Int.random(in: 0 ..< randomWords.count)])
    }
 
    var randomWords: [String] { [

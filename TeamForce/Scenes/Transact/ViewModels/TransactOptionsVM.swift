@@ -16,11 +16,11 @@ final class TransactOptionsVM<Design: DSP>: BaseViewModel<StackViewExtended>, De
 
    private lazy var awaitOptionsModel = TitleBodySwitcherDT<Design>.switcherWith(titleText: "Период задержки",
                                                                                  bodyText: "Без задержки")
-      .set_backColor(Design.color.backgroundInfoSecondary)
-      .set_cornerRadius(Design.params.cornerRadius)
+      .backColor(Design.color.backgroundInfoSecondary)
+      .cornerRadius(Design.params.cornerRadius)
 
    override func start() {
-      set_arrangedModels([
+      arrangedModels([
          anonimParamModel,
 //         showEveryoneParamModel,
 //         addTagParamModel,

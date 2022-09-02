@@ -16,32 +16,32 @@ final class TripleStacksBrandedVM<Design: DesignProtocol>:
 {
 
    lazy var header = Design.label.headline5
-      .set_textColor(Design.color.textInvert)
-      .set_padTop(Grid.x16.value)
-      .set_padBottom(Grid.x6.value)
+      .textColor(Design.color.textInvert)
+      .padTop(Grid.x16.value)
+      .padBottom(Grid.x6.value)
 
    var headerStack: StackModel { models.main }
    var bodyStack: StackModel { models.down.subModel }
    var footerStack: TabBarPanel<Design> { models.down2 }
 
    lazy var profileButton = ImageViewModel()
-      .set_image(Design.icon.avatarPlaceholder)
-      .set_size(.square(Grid.x36.value))
-      .set_cornerRadius(Grid.x36.value / 2)
-      .set_borderColor(Design.color.backgroundBrandSecondary.withAlphaComponent(0.85))
-      .set_borderWidth(3)
-      .set_backColor(Design.color.background)
+      .image(Design.icon.avatarPlaceholder)
+      .size(.square(Grid.x36.value))
+      .cornerRadius(Grid.x36.value / 2)
+      .borderColor(Design.color.backgroundBrandSecondary.withAlphaComponent(0.85))
+      .borderWidth(3)
+      .backColor(Design.color.background)
 
    private lazy var topButtonsStack = StackModel()
-      .set_axis(.horizontal)
-      .set_spacing(Grid.x8.value)
-      .set_arrangedModels([
+      .axis(.horizontal)
+      .spacing(Grid.x8.value)
+      .arrangedModels([
          BrandLogoIcon<Design>(),
          Grid.xxx.spacer,
          ButtonModel()
             .set(Design.state.button.transparent)
             .set(.image(Design.icon.alarm))
-            .set_size(.square(Grid.x36.value)),
+            .size(.square(Grid.x36.value)),
          profileButton
       ])
 
@@ -51,8 +51,8 @@ final class TripleStacksBrandedVM<Design: DesignProtocol>:
       setMain {
          $0
             .set(Design.state.stack.header)
-            .set_alignment(.fill)
-            .set_arrangedModels([
+            .alignment(.fill)
+            .arrangedModels([
              //x  Grid.x1.spacer,
                topButtonsStack,
                header,
@@ -60,12 +60,12 @@ final class TripleStacksBrandedVM<Design: DesignProtocol>:
             ])
       } setDown: {
          $0
-            .set_backColor(Design.color.background)
-            .set_padding(.top(-Grid.x16.value))
-            .set_padBottom(-88.aspected)
+            .backColor(Design.color.background)
+            .padding(.top(-Grid.x16.value))
+            .padBottom(-88.aspected)
             .subModel
             .set(Design.state.stack.bodyStack)
-            .set_safeAreaOffsetDisabled()
+            .safeAreaOffsetDisabled()
       } setDown2: { _ in }
       
    }
@@ -84,15 +84,15 @@ extension TripleStacksBrandedVM: StateMachine {
    func setState(_ state: TripleStacksState) {
       switch state {
       case .hideHeaderTitle:
-         header.set_alpha(0)
-         header.set_hidden(true)
-//         topButtonsStack.set_alpha(0)
-//         topButtonsStack.set_hidden(true)
+         header.alpha(0)
+         header.hidden(true)
+//         topButtonsStack.alpha(0)
+//         topButtonsStack.hidden(true)
       case .presentHeaderTitle:
-         header.set_hidden(false)
-         header.set_alpha(1)
-//         topButtonsStack.set_alpha(1)
-//         topButtonsStack.set_hidden(false)
+         header.hidden(false)
+         header.alpha(1)
+//         topButtonsStack.alpha(1)
+//         topButtonsStack.hidden(false)
       }
    }
 

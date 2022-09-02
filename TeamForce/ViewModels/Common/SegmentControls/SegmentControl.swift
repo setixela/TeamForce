@@ -44,8 +44,8 @@ final class SegmentControl<Button: SegmentButtonModelProtocol,
    private lazy var _buttons: [UIViewModel] = []
 
    override func start() {
-      set_axis(.horizontal)
-      set_distribution(.fillEqually)
+      axis(.horizontal)
+      distribution(.fillEqually)
    }
 }
 
@@ -54,7 +54,7 @@ extension SegmentControl {
       switch state {
       case .items(let array):
          _buttons = array
-         set_arrangedModels(array)
+         arrangedModels(array)
          buttons.enumerated().forEach { index, model in
             model.onEvent(\.didTap) { [weak self] in
                self?.unselectAll()
