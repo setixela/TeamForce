@@ -22,12 +22,12 @@ final class BalanceInfo<Design: DSP>: Combos<SComboMD<LabelModel, CurrencyLabelD
          amount.currencyLogo
             .width(Grid.x20.value)
       }
-      .alignment(.leading)
-      .height(Grid.x90.value)
-      .backColor(Design.color.iconContrast)
-      .cornerRadius(Design.params.cornerRadius)
-      .padding(Design.params.infoFramePadding)
-      .hidden(true)
+      alignment(.leading)
+      height(Grid.x90.value)
+      backColor(Design.color.iconContrast)
+      cornerRadius(Design.params.cornerRadius)
+      padding(Design.params.infoFramePadding)
+      hidden(true)
    }
 }
 
@@ -36,10 +36,10 @@ final class UserSearchTextField<Design: DSP>: TextFieldModel, Designable {
       super.init()
 
       set(Design.state.textField.default)
-         .placeholder(Design.Text.title.chooseRecipient)
-         .placeholderColor(Design.color.textFieldPlaceholder)
-         .disableAutocorrection()
-         .hidden(true)
+      placeholder(Design.Text.title.chooseRecipient)
+      placeholderColor(Design.color.textFieldPlaceholder)
+      disableAutocorrection()
+      hidden(true)
    }
 }
 
@@ -47,19 +47,19 @@ final class ReasonTextView<Design: DSP>: TextViewModel, Designable {
    required init() {
       super.init()
 
-      set(.padding(Design.params.contentPadding))
-         .set(.placeholder(TextBuilder.title.reasonPlaceholder))
-         .set(Design.state.label.body1)
-         .backColor(Design.color.background)
-         .borderColor(Design.color.boundary)
-         .borderWidth(Design.params.borderWidth)
-         .cornerRadius(Design.params.cornerRadius)
-         .minHeight(144)
-         .hidden(true)
+      padding(Design.params.contentPadding)
+      placeholder(TextBuilder.title.reasonPlaceholder)
+      set(Design.state.label.body1)
+      backColor(Design.color.background)
+      borderColor(Design.color.boundary)
+      borderWidth(Design.params.borderWidth)
+      cornerRadius(Design.params.cornerRadius)
+      minHeight(144)
+      hidden(true)
    }
 }
 
-//final class 
+// final class
 
 final class TransactViewModels<Design: DSP>: Designable {
    //
@@ -69,9 +69,8 @@ final class TransactViewModels<Design: DSP>: Designable {
       .hidden(true)
    lazy var reasonTextView = ReasonTextView<Design>()
 
-   lazy var foundUsersList = StackItemsModel() //   TableItemsModel<Design>()
+   lazy var foundUsersList = StackItemsModel()
       .set(.activateSelector)
-      // .minHeight(300)
       .hidden(true)
       .set(.presenters([
          foundUserPresenter

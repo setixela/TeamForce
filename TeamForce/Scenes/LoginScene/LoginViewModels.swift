@@ -58,7 +58,7 @@ final class LoginViewModels<Design: DSP>: BaseModel, Designable {
       .title(Design.Text.button.getCodeButton)
 
    lazy var loginButton: ButtonModel = .init(Design.state.button.inactive)
-      .set(.title(Design.Text.button.enterButton))
+      .title(Design.Text.button.enterButton)
 }
 
 extension LoginViewModels: StateMachine {
