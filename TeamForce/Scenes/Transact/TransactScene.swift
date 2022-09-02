@@ -41,6 +41,7 @@ enum TransactState {
    case coinInputSuccess(String, Bool)
    case reasonInputSuccess(String, Bool)
 
+   case presentImagePicker
    case presentPickedImage(UIImage)
    case setHideAddPhotoButton(Bool)
 
@@ -74,6 +75,7 @@ final class TransactScene<Asset: AssetProtocol>: DoubleStacksModel, Assetable, S
       works: works,
       stateDelegate: stateDelegate,
       events: ImagePickingScenarioEvents(
+         startImagePicking: viewModels.addPhotoButton.onEvent(\.didTap),
          addImageToBasket: imagePicker.onEvent(\.didImagePicked),
          removeImageFromBasket: viewModels.pickedImages.on(\.didCloseImage),
          didMaximumReach: viewModels.pickedImages.on(\.didMaximumReached)
@@ -95,6 +97,7 @@ final class TransactScene<Asset: AssetProtocol>: DoubleStacksModel, Assetable, S
       ]))
 
    private lazy var activityIndicator = ActivityIndicator<Design>()
+   private lazy var errorInfoBlock = CommonErrorBlock<Design>()
 
    private lazy var imagePicker = ImagePickerViewModel()
 
@@ -125,13 +128,6 @@ final class TransactScene<Asset: AssetProtocol>: DoubleStacksModel, Assetable, S
          self?.scenario.start()
          self?.setToInitialCondition()
       }
-
-      viewModels.addPhotoButton
-         .onEvent(\.didTap) { [weak self] in
-            guard let baseVC = self?.vcModel else { return }
-
-            self?.imagePicker.sendEvent(\.presentOn, baseVC)
-         }
    }
 
    func configure() {
@@ -163,6 +159,7 @@ final class TransactScene<Asset: AssetProtocol>: DoubleStacksModel, Assetable, S
             Grid.x8.spacer,
 
             viewModels.notFoundBlock.hidden(true),
+            errorInfoBlock.hidden(true),
             activityIndicator.hidden(false),
 
             viewModelsWrapper,
@@ -286,7 +283,7 @@ extension TransactScene: StateMachine {
          setToInitialCondition()
       //
       case .sendCoinError:
-         presentAlert(text: "Не могу послать деньгу")
+         errorInfoBlock.hidden(false)
       //
       case .coinInputSuccess(let text, let isCorrect):
          viewModels.amountInputModel.textField.set(.text(text))
@@ -307,12 +304,19 @@ extension TransactScene: StateMachine {
             viewModels.reasonTextView.set(.text(text))
             viewModels.sendButton.set(Design.state.button.inactive)
          }
+      //
       case .presentPickedImage(let image):
          viewModels.pickedImages.addButton(image: image)
+      //
       case .setHideAddPhotoButton(let value):
          viewModels.addPhotoButton.hidden(value)
+      //
       case .sendButtonPressed:
          view.removeFromSuperview()
+      //
+      case .presentImagePicker:
+         guard let baseVC = vcModel else { return }
+         imagePicker.sendEvent(\.presentOn, baseVC)
       }
    }
 }
@@ -352,6 +356,4 @@ private extension TransactScene {
 
       viewModels.notFoundBlock.hiddenAnimated(!users.isEmpty, duration: 0.5)
    }
-
-   func presentAlert(text: String) {}
 }

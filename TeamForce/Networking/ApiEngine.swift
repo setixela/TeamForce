@@ -112,6 +112,14 @@ final class ApiEngine: ApiEngineProtocol {
          print("result body \(str)")
          print("response status \(String(describing: apiResult.response as? HTTPURLResponse))")
 
+         guard
+            let httpResponse = apiResult.response as? HTTPURLResponse,
+            case 200 ... 299 = httpResponse.statusCode else
+         {
+            seal.reject(ApiEngineError.unknown)
+            return
+         }
+
          seal.fulfill(apiResult)
       }
 

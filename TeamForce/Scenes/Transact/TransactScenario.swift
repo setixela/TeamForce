@@ -10,6 +10,7 @@ import ReactiveWorks
 import UIKit
 
 struct ImagePickingScenarioEvents {
+   let startImagePicking: VoidWorkVoid
    let addImageToBasket: VoidWork<UIImage>
    let removeImageFromBasket: VoidWork<UIImage>
    let didMaximumReach: VoidWork<Void>
@@ -20,6 +21,9 @@ final class ImagePickingScenario<Asset: AssetProtocol>:
 {
    override func start() {
 
+      events.startImagePicking
+         .onSuccess(setState, .presentImagePicker)
+      
       events.addImageToBasket
          .doNext(work: works.addImage)
          .onSuccess(setState) { .presentPickedImage($0) }
