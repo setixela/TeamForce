@@ -205,20 +205,17 @@ extension MainScene {
 
    private func presentTransactSuccessView(_ data: StatusViewInput) {
       let model = TransactionStatusViewModel<Design>()
-      model.onEvent(\.didHide) {
-         print()
+      model.onEvent(\.didHide) { [weak self] in
+         self?.bottomPopupPresenter.send(\.hide)
       }
 
       guard
          let baseView = vcModel?.view
       else { return }
-      let offset: CGFloat = 40
-      let view = model.uiView
 
       model.setup(info: data.sendCoinInfo, username: data.username, foundUser: data.foundUser)
 
-      baseView.addSubview(view)
-      view.addAnchors.fitToViewInsetted(baseView, .init(top: offset, left: 0, bottom: 0, right: 0))
+      bottomPopupPresenter.send(\.present, (model: model, onView: baseView.rootSuperview))
    }
 }
 

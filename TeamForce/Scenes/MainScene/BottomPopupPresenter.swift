@@ -26,6 +26,8 @@ final class BottomPopupPresenter: BaseModel, Eventable {
       on(\.present) { [weak self] model, onView in
          guard let self = self else { return }
 
+         self.darkView?.removeFromSuperview()
+
          let offset: CGFloat = 40
          let view = model.uiView
 
