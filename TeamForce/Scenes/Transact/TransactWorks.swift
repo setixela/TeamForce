@@ -205,6 +205,7 @@ final class TransactWorks<Asset: AssetProtocol>: BaseSceneWorks<TransactWorks.Te
          Self.store.isCorrectCoinInput = input.1
          work.success(result: ())
       }
+
       .retainBy(retainer) // hmm
    }
 

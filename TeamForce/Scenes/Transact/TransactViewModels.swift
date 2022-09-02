@@ -26,6 +26,7 @@ final class TransactViewModels<Design: DSP>: Designable {
       .set_backColor(Design.color.iconContrast)
       .set_cornerRadius(Design.params.cornerRadius)
       .set_padding(Design.params.infoFramePadding)
+      .set_hidden(true)
 
    lazy var userSearchTextField = TextFieldModel()
       .set(Design.state.textField.default)
@@ -48,6 +49,7 @@ final class TransactViewModels<Design: DSP>: Designable {
    lazy var sendButton = Design.button.default
       .set(Design.state.button.inactive)
       .set_title(Design.Text.button.sendButton)
+      .set_hidden(true)
    //  .set_hidden(true)
 
    lazy var reasonTextView = TextViewModel()
@@ -65,8 +67,7 @@ final class TransactViewModels<Design: DSP>: Designable {
       .set_title("Добавить фото")
       .set_image(Design.icon.attach.withTintColor(Design.color.iconBrand))
       .set(Design.state.button.brandTransparent)
-
-   lazy var transactionStatusView = TransactionStatusViewModel<Design>()
+      .set_hidden(true)
 }
 
 extension TransactViewModels {

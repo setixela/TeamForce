@@ -51,6 +51,8 @@ final class MainScene<Asset: AssetProtocol>:
    // MARK: - Start
 
    override func start() {
+      vcModel?.sendEvent(\.setNavBarTintColor, Design.color.backgroundBrand)
+
       mainVM.header.set_text("Баланс")
       mainVM.bodyStack.set_arrangedModels([
          ActivityIndicator<Design>(),
@@ -74,6 +76,7 @@ private extension MainScene {
          .onEvent(\.didTap) { [weak self] in
             self?.unlockTabButtons()
             self?.mainVM.header.set_text("Лента событий")
+            self?.vcModel?.sendEvent(\.setTitle, "Лента событий")
             self?.presentModel(self?.feedViewModel)
             self?.tabBarPanel.button1.setMode(\.normal)
          }
@@ -82,6 +85,7 @@ private extension MainScene {
          .onEvent(\.didTap) { [weak self] in
             self?.unlockTabButtons()
             self?.mainVM.header.set_text("Баланс")
+            self?.vcModel?.sendEvent(\.setTitle, "Баланс")
             self?.presentModel(self?.balanceViewModel)
             self?.tabBarPanel.button2.setMode(\.normal)
          }
@@ -95,6 +99,7 @@ private extension MainScene {
          .onEvent(\.didTap) { [weak self] in
             self?.unlockTabButtons()
             self?.mainVM.header.set_text("История")
+            self?.vcModel?.sendEvent(\.setTitle, "История")
             self?.presentModel(self?.historyViewModel)
             self?.tabBarPanel.button3.setMode(\.normal)
          }
@@ -103,6 +108,7 @@ private extension MainScene {
          .onEvent(\.didTap) { [weak self] in
             self?.unlockTabButtons()
             self?.mainVM.header.set_text("Настройки")
+            self?.vcModel?.sendEvent(\.setTitle, "Настройки")
             self?.presentModel(self?.settingsViewModel)
             self?.tabBarPanel.button4.setMode(\.normal)
          }
@@ -194,8 +200,21 @@ extension MainScene {
             self?.activeScreen?.scenario.start()
          }
 
+      let height = baseView.frame.height
+
+      view.translatesAutoresizingMaskIntoConstraints = true
+
       baseView.addSubview(view)
-      view.addAnchors.fitToViewInsetted(baseView, .init(top: offset, left: 0, bottom: 0, right: 0))
+
+      view.frame.size = .init(width: baseView.frame.width, height: height - offset)
+      view.frame.origin = .init(x: 0, y: height)
+
+      UIView.animate(withDuration: 0.5) {
+         view.frame.origin = .init(x: 0, y: offset)
+      } completion: { _ in
+         view.addAnchors.fitToViewInsetted(baseView, .init(top: offset, left: 0, bottom: 0, right: 0))
+         view.layoutIfNeeded()
+      }
    }
 
    private func presentTransactSuccessView(_ data: StatusViewInput) {
@@ -223,13 +242,14 @@ extension MainScene {
    private func presentHeader() {
       UIView.animate(withDuration: 0.36) {
          self.mainVM.setState(.hideHeaderTitle)
-         //self.vcModel?.sendEvent(\.setTitle, "История")
+      } completion: { _ in
+         self.vcModel?.sendEvent(\.setNavBarTintColor, Design.color.textInvert)
       }
    }
 
    private func hideHeader() {
+      vcModel?.sendEvent(\.setNavBarTintColor, Design.color.backgroundBrand)
       UIView.animate(withDuration: 0.36) {
-       //  self.vcModel?.sendEvent(\.setTitle, "")
          self.mainVM.setState(.presentHeaderTitle)
       }
    }
