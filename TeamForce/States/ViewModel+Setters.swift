@@ -109,6 +109,12 @@ extension ViewModelProtocol where Self: Stateable {
       view.layer.shadowOffset = .init(width: value.offset.x, height: value.offset.y)
       view.layer.shadowRadius = value.radius
       view.layer.shadowOpacity = Float(value.opacity)
+//      view.layer.shouldRasterize = true
+      return self
+   }
+
+   @discardableResult func set_shadowOpacity(_ value: CGFloat) -> Self {
+      view.layer.shadowOpacity = Float(value)
       return self
    }
 
@@ -456,6 +462,11 @@ extension ViewModelProtocol where Self: Stateable, View: PaddingTextField {
       view.isOnlyDigitsMode = true
       return self
    }
+
+   @discardableResult func set_disableAutocorrection() -> Self {
+      view.autocorrectionType = .no
+      return self
+   }
 }
 
 extension ViewModelProtocol where Self: Stateable, View: UITextView {
@@ -493,6 +504,11 @@ extension ViewModelProtocol where Self: Stateable, View: UITextView {
 
    @discardableResult func set_keyboardType(_ value: UIKeyboardType) -> Self {
       view.keyboardType = value
+      return self
+   }
+
+   @discardableResult func set_disableAutocorrection() -> Self {
+      view.autocorrectionType = .no
       return self
    }
 }

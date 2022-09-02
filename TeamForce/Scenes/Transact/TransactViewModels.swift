@@ -32,6 +32,7 @@ final class TransactViewModels<Design: DSP>: Designable {
       .set(Design.state.textField.default)
       .set_placeholder(Design.Text.title.chooseRecipient)
       .set_placeholderColor(Design.color.textFieldPlaceholder)
+      .set_disableAutocorrection()
       .set_hidden(true)
 
    lazy var transactInputViewModel = TransactInputViewModel<Design>()
@@ -49,7 +50,6 @@ final class TransactViewModels<Design: DSP>: Designable {
    lazy var sendButton = Design.button.default
       .set(Design.state.button.inactive)
       .set_title(Design.Text.button.sendButton)
-      .set_hidden(true)
    //  .set_hidden(true)
 
    lazy var reasonTextView = TextViewModel()

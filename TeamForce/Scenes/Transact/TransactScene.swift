@@ -44,14 +44,14 @@ enum TransactState {
    case presentPickedImage(UIImage)
    case setHideAddPhotoButton(Bool)
 
-   case startActivityIndicator
+   case sendButtonPressed
 }
 
 final class TransactScene<Asset: AssetProtocol>: DoubleStacksModel, Assetable, Scenarible2, Eventable {
    typealias Events = TransactEvents
    typealias State = StackState
 
-   var events: [Int : LambdaProtocol?] = [:]
+   var events: [Int: LambdaProtocol?] = [:]
 
    private lazy var works = TransactWorks<Asset>()
 
@@ -89,6 +89,8 @@ final class TransactScene<Asset: AssetProtocol>: DoubleStacksModel, Assetable, S
       .set_textColor(Design.color.textBrand)
 
    private lazy var options = TransactOptionsVM<Design>()
+      .set_hidden(true)
+
    private lazy var viewModelsWrapper = ScrollViewModelY()
       .set(.spacing(Grid.x16.value))
       .set(.models([
@@ -134,11 +136,10 @@ final class TransactScene<Asset: AssetProtocol>: DoubleStacksModel, Assetable, S
 
       closeButton.onEvent(\.didTap) { [weak self] in
          self?.send(\.cancelled)
-         self?.viewModels.foundUsersList.set(.items([]))
-         self?.view.removeFromSuperview()
       }
 
       view.onEvent(\.willAppear) { [weak self] in
+         self?.viewModels.foundUsersList.set(.items([]))
          self?.scenario2.start()
          self?.scenario.start()
          self?.setToInitialCondition()
@@ -153,6 +154,7 @@ final class TransactScene<Asset: AssetProtocol>: DoubleStacksModel, Assetable, S
    }
 
    func configure() {
+      let shadow = Shadow(radius: 50, offset: .zero, color: Design.color.iconContrast, opacity: 0.33)
       topStackModel
          .set_safeAreaOffsetDisabled()
          .set_axis(.vertical)
@@ -161,6 +163,7 @@ final class TransactScene<Asset: AssetProtocol>: DoubleStacksModel, Assetable, S
          .set_backColor(Design.color.background)
          .set_padding(UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16))
          .set_cornerRadius(Design.params.cornerRadiusMedium)
+         .set_shadow(shadow)
          .set_arrangedModels([
             //
             Wrapped3X(
@@ -298,7 +301,6 @@ extension TransactScene: StateMachine {
                                       foundUser: viewModels.foundUsersList.items.first as! FoundUser)
          send(\.finishWithSuccess, sended)
          setToInitialCondition()
-         view.removeFromSuperview()
       //
       case .sendCoinError:
          presentAlert(text: "Не могу послать деньгу")
@@ -326,8 +328,8 @@ extension TransactScene: StateMachine {
          pickedImages.addButton(image: image)
       case .setHideAddPhotoButton(let value):
          viewModels.addPhotoButton.set_hidden(value)
-      case .startActivityIndicator:
-         break
+      case .sendButtonPressed:
+         view.removeFromSuperview()
       }
    }
 }

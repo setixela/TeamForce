@@ -68,6 +68,43 @@ final class MainScene<Asset: AssetProtocol>:
       tabBarPanel.button3.setMode(\.inactive)
       tabBarPanel.button4.setMode(\.inactive)
    }
+
+   var viewTranslation = CGPoint(x: 0, y: 0)
+   @objc func handleDismiss(sender: UIPanGestureRecognizer) {
+      guard let view = sender.view else { return }
+
+      switch sender.state {
+      case .changed:
+         viewTranslation = sender.translation(in: view)
+         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+            view.transform = CGAffineTransform(translationX: 0,
+                                               y: self.viewTranslation.y > 0 ? self.viewTranslation.y : 0)
+         })
+      case .ended:
+         if viewTranslation.y < 200 {
+            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+               view.transform = .identity
+            })
+         } else {
+            hideView(view)
+         }
+      default:
+         break
+      }
+   }
+
+   @objc func didTapOnView(sender: UITapGestureRecognizer) {
+      sender.view?.endEditing(true)
+   }
+
+   private func hideView(_ view: UIView) {
+      UIView.animate(withDuration: 0.23) {
+         view.transform = CGAffineTransform(translationX: 0, y: view.frame.height)
+      } completion: { _ in
+         view.removeFromSuperview()
+         view.transform = .identity
+      }
+   }
 }
 
 private extension MainScene {
@@ -197,6 +234,7 @@ extension MainScene {
             self?.activeScreen?.scenario.start()
          }
          .on(\.cancelled) { [weak self] in
+            self?.hideView(view)
             self?.activeScreen?.scenario.start()
          }
 
@@ -204,7 +242,7 @@ extension MainScene {
 
       view.translatesAutoresizingMaskIntoConstraints = true
 
-      baseView.addSubview(view)
+      baseView.rootSuperview.addSubview(view)
 
       view.frame.size = .init(width: baseView.frame.width, height: height - offset)
       view.frame.origin = .init(x: 0, y: height)
@@ -215,6 +253,9 @@ extension MainScene {
          view.addAnchors.fitToViewInsetted(baseView, .init(top: offset, left: 0, bottom: 0, right: 0))
          view.layoutIfNeeded()
       }
+
+      view.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(handleDismiss)))
+      view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapOnView)))
    }
 
    private func presentTransactSuccessView(_ data: StatusViewInput) {

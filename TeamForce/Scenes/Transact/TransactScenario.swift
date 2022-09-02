@@ -90,7 +90,7 @@ final class TransactScenario<Asset: AssetProtocol>:
          .onSuccessMixSaved(setState) { .userSelectedSuccess($0, $1) }
 
       events.sendButtonEvent
-         .onSuccess(setState, .startActivityIndicator)
+         .onSuccess(setState, .sendButtonPressed)
          .doNext(work: works.sendCoins)
          .onSuccess(setState) { .sendCoinSuccess($0) }
          .onFail(setState, .sendCoinError)
