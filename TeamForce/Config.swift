@@ -15,6 +15,8 @@ struct Config {
 
    static let isDebugView = true
 
+   static let httpTimeout: TimeInterval = 3
+
    static let baseAspectWidth: CGFloat = 360
    static var sizeAspectCoeficient: CGFloat { UIScreen.main.bounds.width / baseAspectWidth }
 }

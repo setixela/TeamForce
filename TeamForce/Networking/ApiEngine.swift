@@ -87,8 +87,8 @@ final class ApiEngine: ApiEngineProtocol {
 
    private func start(request: URLRequest, seal: Resolver<ApiEngineResult>) {
       let sessionConfig = URLSessionConfiguration.default
-      sessionConfig.timeoutIntervalForRequest = 3
-      sessionConfig.timeoutIntervalForResource = 3
+      sessionConfig.timeoutIntervalForRequest = Config.httpTimeout
+      sessionConfig.timeoutIntervalForResource = Config.httpTimeout
       let session = URLSession(configuration: sessionConfig)
 
       let task = session.dataTask(with: request) { data, response, error in
