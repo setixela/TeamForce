@@ -9,10 +9,11 @@ import UIKit
 
 // MARK: - View models
 
-final class TransactViewModels<Design: DSP>: Designable {
-   //
-   lazy var balanceInfo = Combos<SComboMD<LabelModel, CurrencyLabelDT<Design>>>()
-      .setAll { title, amount in
+final class BalanceInfo<Design: DSP>: Combos<SComboMD<LabelModel, CurrencyLabelDT<Design>>> {
+   required init() {
+      super.init()
+
+      setAll { title, amount in
          title
             .set(Design.state.label.caption)
             .set_height(Grid.x20.value)
@@ -27,17 +28,46 @@ final class TransactViewModels<Design: DSP>: Designable {
       .set_cornerRadius(Design.params.cornerRadius)
       .set_padding(Design.params.infoFramePadding)
       .set_hidden(true)
+   }
+}
 
-   lazy var userSearchTextField = TextFieldModel()
-      .set(Design.state.textField.default)
-      .set_placeholder(Design.Text.title.chooseRecipient)
-      .set_placeholderColor(Design.color.textFieldPlaceholder)
-      .set_disableAutocorrection()
-      .set_hidden(true)
+final class UserSearchTextField<Design: DSP>: TextFieldModel, Designable {
+   required init() {
+      super.init()
 
+      set(Design.state.textField.default)
+         .set_placeholder(Design.Text.title.chooseRecipient)
+         .set_placeholderColor(Design.color.textFieldPlaceholder)
+         .set_disableAutocorrection()
+         .set_hidden(true)
+   }
+}
+
+final class ReasonTextView<Design: DSP>: TextViewModel, Designable {
+   required init() {
+      super.init()
+
+      set(.padding(Design.params.contentPadding))
+         .set(.placeholder(TextBuilder.title.reasonPlaceholder))
+         .set(Design.state.label.body1)
+         .set_backColor(Design.color.background)
+         .set_borderColor(Design.color.boundary)
+         .set_borderWidth(Design.params.borderWidth)
+         .set_cornerRadius(Design.params.cornerRadius)
+         .set_minHeight(144)
+         .set_hidden(true)
+   }
+}
+
+//final class 
+
+final class TransactViewModels<Design: DSP>: Designable {
+   //
+   lazy var balanceInfo = BalanceInfo<Design>()
+   lazy var userSearchTextField = UserSearchTextField<Design>()
    lazy var transactInputViewModel = TransactInputViewModel<Design>()
       .set_hidden(true)
-      .set_alignment(.center)
+   lazy var reasonTextView = ReasonTextView<Design>()
 
    lazy var foundUsersList = StackItemsModel() //   TableItemsModel<Design>()
       .set(.activateSelector)
@@ -50,18 +80,6 @@ final class TransactViewModels<Design: DSP>: Designable {
    lazy var sendButton = Design.button.default
       .set(Design.state.button.inactive)
       .set_title(Design.Text.button.sendButton)
-   //  .set_hidden(true)
-
-   lazy var reasonTextView = TextViewModel()
-      .set(.padding(Design.params.contentPadding))
-      .set(.placeholder(TextBuilder.title.reasonPlaceholder))
-      .set(Design.state.label.body1)
-      .set_backColor(Design.color.background)
-      .set_borderColor(Design.color.boundary)
-      .set_borderWidth(Design.params.borderWidth)
-      .set_cornerRadius(Design.params.cornerRadius)
-      .set_minHeight(144)
-      .set_hidden(true)
 
    lazy var addPhotoButton = ButtonModel()
       .set_title("Добавить фото")

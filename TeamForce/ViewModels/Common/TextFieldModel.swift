@@ -15,7 +15,7 @@ struct TextFieldEvents: InitProtocol {
    var didBeginEditing: Event<String>?
 }
 
-final class TextFieldModel: BaseViewModel<PaddingTextField>,
+class TextFieldModel: BaseViewModel<PaddingTextField>,
    Stateable3,
    UITextFieldDelegate
 {

@@ -13,7 +13,7 @@ struct TextViewEvents: InitProtocol {
    var didEditingChanged: Event<String>?
 }
 
-final class TextViewModel: BaseViewModel<UITextView>, UITextViewDelegate {
+class TextViewModel: BaseViewModel<UITextView>, UITextViewDelegate {
    var events: TextViewEvents = .init()
 
    private var placeholder: String = ""
