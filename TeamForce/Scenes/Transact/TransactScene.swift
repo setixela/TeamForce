@@ -65,8 +65,8 @@ final class TransactScene<Asset: AssetProtocol>: DoubleStacksModel, Assetable, S
          sendButtonEvent: viewModels.sendButton.onEvent(\.didTap),
          transactInputChanged: viewModels.amountInputModel.textField.onEvent(\.didEditingChanged),
          reasonInputChanged: viewModels.reasonTextView.onEvent(\.didEditingChanged),
-         anonymousSetOff: options.anonimParamModel.switcher.onEvent(\.turnedOff),
-         anonymousSetOn: options.anonimParamModel.switcher.onEvent(\.turnedOn)
+         anonymousSetOff: viewModels.options.anonimParamModel.switcher.onEvent(\.turnedOff),
+         anonymousSetOn: viewModels.options.anonimParamModel.switcher.onEvent(\.turnedOn)
       )
    )
 
@@ -75,21 +75,12 @@ final class TransactScene<Asset: AssetProtocol>: DoubleStacksModel, Assetable, S
       stateDelegate: stateDelegate,
       events: ImagePickingScenarioEvents(
          addImageToBasket: imagePicker.onEvent(\.didImagePicked),
-         removeImageFromBasket: pickedImages.on(\.didCloseImage),
-         didMaximumReach: pickedImages.on(\.didMaximumReached)
+         removeImageFromBasket: viewModels.pickedImages.on(\.didCloseImage),
+         didMaximumReach: viewModels.pickedImages.on(\.didMaximumReached)
       )
    )
 
    private lazy var viewModels = TransactViewModels<Design>()
-
-   private lazy var pickedImages = PickedImagePanel<Design>()
-
-   private lazy var closeButton = ButtonModel()
-      .title(Design.Text.title.close)
-      .textColor(Design.color.textBrand)
-
-   private lazy var options = TransactOptionsVM<Design>()
-      .hidden(true)
 
    private lazy var viewModelsWrapper = ScrollViewModelY()
       .set(.spacing(Grid.x16.value))
@@ -98,20 +89,10 @@ final class TransactScene<Asset: AssetProtocol>: DoubleStacksModel, Assetable, S
          viewModels.foundUsersList,
          viewModels.amountInputModel,
          viewModels.reasonTextView,
-         pickedImages.lefted(),
+         viewModels.pickedImages.lefted(),
          viewModels.addPhotoButton,
-         options
+         viewModels.options
       ]))
-
-   private lazy var notFoundBlock = Wrapped2Y(
-      ImageViewModel()
-         .image(Design.icon.userNotFound)
-         .size(.square(275)),
-      Design.label.body1
-         .numberOfLines(0)
-         .alignment(.center)
-         .text(Design.Text.title.userNotFound)
-   )
 
    private lazy var activityIndicator = ActivityIndicator<Design>()
 
@@ -134,7 +115,7 @@ final class TransactScene<Asset: AssetProtocol>: DoubleStacksModel, Assetable, S
 
       configure()
 
-      closeButton.onEvent(\.didTap) { [weak self] in
+      viewModels.closeButton.onEvent(\.didTap) { [weak self] in
          self?.send(\.cancelled)
       }
 
@@ -172,7 +153,7 @@ final class TransactScene<Asset: AssetProtocol>: DoubleStacksModel, Assetable, S
                   .alignment(.center)
                   .set(Design.state.label.body3)
                   .text(Design.Text.title.newTransact),
-               closeButton
+               viewModels.closeButton
             )
             .height(64)
             .alignment(.center)
@@ -181,7 +162,7 @@ final class TransactScene<Asset: AssetProtocol>: DoubleStacksModel, Assetable, S
             viewModels.userSearchTextField,
             Grid.x8.spacer,
 
-            notFoundBlock.hidden(true),
+            viewModels.notFoundBlock.hidden(true),
             activityIndicator.hidden(false),
 
             viewModelsWrapper,
@@ -327,7 +308,7 @@ extension TransactScene: StateMachine {
             viewModels.sendButton.set(Design.state.button.inactive)
          }
       case .presentPickedImage(let image):
-         pickedImages.addButton(image: image)
+         viewModels.pickedImages.addButton(image: image)
       case .setHideAddPhotoButton(let value):
          viewModels.addPhotoButton.hidden(value)
       case .sendButtonPressed:
@@ -338,27 +319,27 @@ extension TransactScene: StateMachine {
 
 private extension TransactScene {
    func applySelectUserMode() {
-      pickedImages.hidden(true)
+      viewModels.pickedImages.hidden(true)
       viewModels.balanceInfo.set(.hidden(true))
       viewModels.amountInputModel.set(.hidden(true))
       viewModels.reasonTextView.set(.hidden(true))
-      options.hidden(true)
+      viewModels.options.hidden(true)
       viewModels.addPhotoButton.hidden(true)
       bottomStackModel.hidden(true)
-      notFoundBlock.hidden(true)
+      viewModels.notFoundBlock.hidden(true)
       viewModels.userSearchTextField.hidden(false)
    }
 
    func presentBalanceInfo() {
-      notFoundBlock.hidden(true)
+      viewModels.notFoundBlock.hidden(true)
       viewModels.balanceInfo.set(.hidden(false))
    }
 
    func applyReadyToSendMode() {
-      pickedImages.hidden(false)
+      viewModels.pickedImages.hidden(false)
       viewModels.amountInputModel.set(.hidden(false))
       viewModels.reasonTextView.set(.hidden(false))
-      options.hidden(false)
+      viewModels.options.hidden(false)
       viewModels.addPhotoButton.hidden(false)
       bottomStackModel.hidden(false)
    }
@@ -367,19 +348,10 @@ private extension TransactScene {
 private extension TransactScene {
    func presentFoundUsers(users: [FoundUser]) {
       viewModels.foundUsersList.set(.items(users))
-      viewModels.foundUsersList.hiddenAnimated((users.isEmpty ? true : false), duration: 0.5)
+      viewModels.foundUsersList.hiddenAnimated(users.isEmpty ? true : false, duration: 0.5)
 
-      notFoundBlock.hiddenAnimated(!users.isEmpty, duration: 0.5)
+      viewModels.notFoundBlock.hiddenAnimated(!users.isEmpty, duration: 0.5)
    }
 
    func presentAlert(text: String) {}
-}
-
-extension UIView {
-   func clearConstraints() {
-      for subview in subviews {
-         subview.clearConstraints()
-      }
-      removeConstraints(constraints)
-   }
 }

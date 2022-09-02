@@ -18,6 +18,10 @@ protocol TransactModelBuilder: InitProtocol, Designable {
    var sendButton: ButtonModel { get }
    var addPhotoButton: ButtonModel { get }
    var foundUsersList: StackItemsModel { get }
+   var pickedImagesPanel: PickedImagePanel<Design> { get }
+   var closeButton: ButtonModel { get }
+   var userNotFoundInfoBlock: Wrapped2Y<ImageViewModel, LabelModel> { get }
+   var transactOptionsBlock: TransactOptionsVM<Design> { get }
 }
 
 struct ModelBuilder<Design: DSP>: ModelBuilderProtocol {
@@ -85,6 +89,29 @@ struct ModelBuilder<Design: DSP>: ModelBuilderProtocol {
          ]))
       }
 
+      var pickedImagesPanel: PickedImagePanel<Design> { .init() }
+
+      var closeButton: ButtonModel { .init()
+         .title(Design.Text.title.close)
+         .textColor(Design.color.textBrand)
+      }
+
+      var userNotFoundInfoBlock: Wrapped2Y<ImageViewModel, LabelModel> {
+         Wrapped2Y(
+            ImageViewModel()
+               .image(Design.icon.userNotFound)
+               .size(.square(275)),
+            Design.label.body1
+               .numberOfLines(0)
+               .alignment(.center)
+               .text(Design.Text.title.userNotFound)
+         )
+      }
+
+      var transactOptionsBlock: TransactOptionsVM<Design> { .init()
+         .hidden(true)
+      }
+
       // MARK: - Private
 
       private var foundUserPresenter: Presenter<FoundUser, WrappedY<ImageLabelLabelMRD>> {
@@ -96,47 +123,47 @@ struct ModelBuilder<Design: DSP>: ModelBuilderProtocol {
             let thName = "@" + user.tgName.string
 
             let comboMRD =
-            WrappedY(
-               ImageLabelLabelMRD()
-                  .setAll { avatar, username, nickname in
-                     avatar
-                        .contentMode(.scaleAspectFill)
-                        .size(.square(Grid.x26.value))
-                        .cornerRadius(Grid.x26.value / 2)
-                     if let photo = user.photo, photo.count != 0 {
-                        let urlString = TeamForceEndpoints.urlMediaBase + photo
-                        avatar.url(urlString)
-                     } else {
-                        if let nameFirstLetter = user.name.string.first,
-                           let surnameFirstLetter = user.surname.string.first
-                        {
-                           let text = String(nameFirstLetter) + String(surnameFirstLetter)
-                           let image = text.drawImage(backColor: Design.color.backgroundBrand)
-                           avatar
-                              .backColor(Design.color.backgroundBrand)
-                              .image(image)
+               WrappedY(
+                  ImageLabelLabelMRD()
+                     .setAll { avatar, username, nickname in
+                        avatar
+                           .contentMode(.scaleAspectFill)
+                           .size(.square(Grid.x26.value))
+                           .cornerRadius(Grid.x26.value / 2)
+                        if let photo = user.photo, photo.count != 0 {
+                           let urlString = TeamForceEndpoints.urlMediaBase + photo
+                           avatar.url(urlString)
+                        } else {
+                           if let nameFirstLetter = user.name.string.first,
+                              let surnameFirstLetter = user.surname.string.first
+                           {
+                              let text = String(nameFirstLetter) + String(surnameFirstLetter)
+                              let image = text.drawImage(backColor: Design.color.backgroundBrand)
+                              avatar
+                                 .backColor(Design.color.backgroundBrand)
+                                 .image(image)
+                           }
                         }
+                        username
+                           .text("\(name.string) \(surname.string)")
+                           .textColor(Design.color.text)
+                           .padLeft(Grid.x14.value)
+                           .height(Grid.x24.value)
+                        nickname
+                           .set(Design.state.label.caption)
+                           .textColor(Design.color.textSecondary)
+                           .text(thName)
+                           .padLeft(Grid.x14.value)
                      }
-                     username
-                        .text("\(name.string) \(surname.string)")
-                        .textColor(Design.color.text)
-                        .padLeft(Grid.x14.value)
-                        .height(Grid.x24.value)
-                     nickname
-                        .set(Design.state.label.caption)
-                        .textColor(Design.color.textSecondary)
-                        .text(thName)
-                        .padLeft(Grid.x14.value)
-                  }
-                  .padding(Design.params.cellContentPadding)
-                  .alignment(.center)
-                  .backColor(Design.color.background)
-                  .shadow(Design.params.cellShadow)
-                  .height(68)
-                  .cornerRadius(Design.params.cornerRadius)
-                  .zPosition(1000)
-            )
-            .padding(.outline(4))
+                     .padding(Design.params.cellContentPadding)
+                     .alignment(.center)
+                     .backColor(Design.color.background)
+                     .shadow(Design.params.cellShadow)
+                     .height(68)
+                     .cornerRadius(Design.params.cornerRadius)
+                     .zPosition(1000)
+               )
+               .padding(.outline(4))
 
             work.success(result: comboMRD)
          }
