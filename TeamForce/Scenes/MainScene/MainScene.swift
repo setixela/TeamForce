@@ -223,13 +223,13 @@ extension MainScene {
    private func presentHeader() {
       UIView.animate(withDuration: 0.36) {
          self.mainVM.setState(.hideHeaderTitle)
-         self.vcModel?.sendEvent(\.setTitle, "История")
+         //self.vcModel?.sendEvent(\.setTitle, "История")
       }
    }
 
    private func hideHeader() {
       UIView.animate(withDuration: 0.36) {
-         self.vcModel?.sendEvent(\.setTitle, "")
+       //  self.vcModel?.sendEvent(\.setTitle, "")
          self.mainVM.setState(.presentHeaderTitle)
       }
    }

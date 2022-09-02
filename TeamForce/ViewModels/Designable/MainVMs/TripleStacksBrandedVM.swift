@@ -32,7 +32,6 @@ final class TripleStacksBrandedVM<Design: DesignProtocol>:
       .set_borderWidth(3)
       .set_backColor(Design.color.background)
 
-
    private lazy var topButtonsStack = StackModel()
       .set_axis(.horizontal)
       .set_spacing(Grid.x8.value)
@@ -66,6 +65,7 @@ final class TripleStacksBrandedVM<Design: DesignProtocol>:
             .set_padBottom(-88.aspected)
             .subModel
             .set(Design.state.stack.bodyStack)
+            .set_safeAreaOffsetDisabled()
       } setDown2: { _ in }
       
    }
@@ -86,9 +86,13 @@ extension TripleStacksBrandedVM: StateMachine {
       case .hideHeaderTitle:
          header.set_alpha(0)
          header.set_hidden(true)
+//         topButtonsStack.set_alpha(0)
+//         topButtonsStack.set_hidden(true)
       case .presentHeaderTitle:
          header.set_hidden(false)
          header.set_alpha(1)
+//         topButtonsStack.set_alpha(1)
+//         topButtonsStack.set_hidden(false)
       }
    }
 
