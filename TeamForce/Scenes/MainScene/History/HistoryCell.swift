@@ -8,7 +8,7 @@
 import ReactiveWorks
 
 final class HistoryCellModel<Design: DSP>:
-   Combos<SComboMRR<ImageViewModel, TitleSubtitleY<Design>, TitleIconY>>,
+   Main<ImageViewModel>.Right<TitleSubtitleY<Design>>.Right2<TitleIconY>.Combo,
    Designable
 {
    required init() {
@@ -20,7 +20,7 @@ final class HistoryCellModel<Design: DSP>:
          icon
             .image(Design.icon.avatarPlaceholder)
             .contentMode(.scaleAspectFill)
-            .cornerRadius(52.aspected/2)
+            .cornerRadius(52.aspected / 2)
             .size(.square(52.aspected))
          nameStatus
             .padLeft(18)

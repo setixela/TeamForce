@@ -7,14 +7,22 @@
 
 import ReactiveWorks
 
+typealias M = Main
+
 struct Main<M: VMP>: InitProtocol {
    typealias Combo = Combos<SComboM<M>>
+   typealias R = Right
+   typealias D = Down
 
    enum Right<R: VMP> {
       typealias Combo = Combos<SComboMD<M, R>>
+      typealias R2 = Right2
+      typealias D = Down
 
       enum Right2<R2: VMP> {
          typealias Combo = Combos<SComboMRR<M, R, R2>>
+         typealias R3 = Right3
+         typealias D = Down
 
          enum Right3<R3: VMP> {
             typealias Combo = Combos<SComboMRRR<M, R, R2, R3>>
@@ -27,6 +35,8 @@ struct Main<M: VMP>: InitProtocol {
 
       enum Down<D: VMP> {
          typealias Combo = Combos<SComboMRD<M, R, D>>
+         typealias R2 = Right2
+         typealias D2 = Down2
 
          enum Right2<R2: VMP> {
             typealias Combo = Combos<SComboMRDR<M, R, D, R2>>
@@ -40,9 +50,13 @@ struct Main<M: VMP>: InitProtocol {
 
    enum Down<D: VMP> {
       typealias Combo = Combos<SComboMD<M, D>>
+      typealias R = Right
+      typealias D2 = Down2
 
       enum Right<R: VMP> {
          typealias Combo = Combos<SComboMDR<M, D, R>>
+         typealias R2 = Right2
+         typealias D2 = Down2
 
          enum Right2<R2: VMP> {
             typealias Combo = Combos<SComboMDRR<M, D, R, R2>>
@@ -55,6 +69,8 @@ struct Main<M: VMP>: InitProtocol {
 
       enum Down2<D2: VMP> {
          typealias Combo = Combos<SComboMDD<M, D, D2>>
+         typealias R = Right
+         typealias D3 = Down3
 
          enum Right<R: VMP> {
             typealias Combo = Combos<SComboMDDR<M, D, D2, R>>

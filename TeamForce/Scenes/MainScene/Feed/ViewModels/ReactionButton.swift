@@ -7,7 +7,7 @@
 
 import ReactiveWorks
 
-final class ReactionButton<Design: DSP>: Combos<SComboMR<ImageViewModel, LabelModel>>, Designable {
+final class ReactionButton<Design: DSP>: M<ImageViewModel>.R<LabelModel>.Combo, Designable {
    required init() {
       super.init()
 
