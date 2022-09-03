@@ -110,7 +110,7 @@ final class TransactWorks<Asset: AssetProtocol>: BaseSceneWorks<TransactWorks.Te
             .onSuccess {
                let tuple = (Self.store.recipientUsername, request)
                work.success(result: tuple)
-            }.onFail { (_: String) in
+            }.onFail {
                work.fail(())
             }
       }

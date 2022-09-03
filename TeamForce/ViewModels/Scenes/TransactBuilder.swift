@@ -25,7 +25,6 @@ protocol TransactModelBuilder: InitProtocol, Designable {
    var recipientCell: SendCoinRecipentCell<Design> { get }
    //
    var transactSuccessViewModel: TransactionStatusViewModel<Design> { get }
-   var transactErrorViewModel: TransactionStatusViewModel<Design> { get }
 }
 
 struct TransactBuilder<Design: DSP>: TransactModelBuilder {
@@ -118,8 +117,6 @@ struct TransactBuilder<Design: DSP>: TransactModelBuilder {
    var recipientCell: SendCoinRecipentCell<Design> { .init() }
 
    var transactSuccessViewModel: TransactionStatusViewModel<Design> { .init() }
-
-   var transactErrorViewModel: TransactionStatusViewModel<Design> { .init() }
 
    // MARK: - Private
 

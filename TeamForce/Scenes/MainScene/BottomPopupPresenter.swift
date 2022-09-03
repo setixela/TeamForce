@@ -20,7 +20,8 @@ final class BottomPopupPresenter: BaseModel, Eventable {
 
    private var viewTranslation = CGPoint(x: 0, y: 0)
    private var darkView: UIView?
-   private var view: UIView?
+
+   private lazy var queue: Queue<UIViewModel> = .init()
 
    override func start() {
       on(\.present) { [weak self] model, onView in
@@ -56,7 +57,7 @@ final class BottomPopupPresenter: BaseModel, Eventable {
          view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.didTapOnView)))
 
          self.darkView = darkView
-         self.view = view
+         self.queue.push(model)
       }
       .on(\.hide) { [weak self] in
          self?.hideView()
@@ -91,14 +92,20 @@ final class BottomPopupPresenter: BaseModel, Eventable {
    }
 
    private func hideView() {
-      guard let view = view else { return }
+      guard let view = queue.pop()?.uiView else {
+         return
+      }
 
       UIView.animate(withDuration: 0.23) {
-         self.darkView?.alpha = 0
+         if self.queue.isEmpty {
+            self.darkView?.alpha = 0
+         }
          view.transform = CGAffineTransform(translationX: 0, y: view.frame.height)
       } completion: { _ in
-         self.darkView?.removeFromSuperview()
-         self.darkView = nil
+         if self.queue.isEmpty {
+            self.darkView?.removeFromSuperview()
+            self.darkView = nil
+         }
          view.removeFromSuperview()
          view.transform = .identity
       }

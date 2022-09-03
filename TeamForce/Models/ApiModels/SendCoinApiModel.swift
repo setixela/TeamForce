@@ -65,7 +65,7 @@ final class SendCoinApiWorker: BaseApiWorker<SendCoinRequest, Void> {
 
                      let errorArray = try JSONSerialization.jsonObject(with: data) as? [String]
 
-                     work.fail(errorArray?.first)
+                     work.fail(())
                      return
                   }
                }
@@ -73,7 +73,7 @@ final class SendCoinApiWorker: BaseApiWorker<SendCoinRequest, Void> {
             }
             .catch { error in
                print("error coin sending: \(error)")
-               work.fail(error)
+               work.fail(())
             }
       } else {
          apiEngine?
@@ -102,7 +102,7 @@ final class SendCoinApiWorker: BaseApiWorker<SendCoinRequest, Void> {
             }
             .catch { error in
                print("error coin sending: \(error)")
-               work.fail(error)
+               work.fail(())
             }
       }
    }

@@ -121,10 +121,6 @@ final class TransactScene<Asset: AssetProtocol>: DoubleStacksModel, Assetable, S
 
       configure()
 
-      viewModels.closeButton.onEvent(\.didTap) { [weak self] in
-         self?.send(\.cancelled)
-      }
-
       view.onEvent(\.willAppear) { [weak self] in
          self?.viewModels.foundUsersList.set(.items([]))
          self?.scenario2.start()
@@ -286,8 +282,6 @@ extension TransactScene: StateMachine {
       //
       case .sendCoinError:
          send(\.finishWithError)
-      // errorInfoBlock.hidden(false)
-      //
       case .coinInputSuccess(let text, let isCorrect):
          viewModels.amountInputModel.textField.set(.text(text))
          if isCorrect {
@@ -319,6 +313,7 @@ extension TransactScene: StateMachine {
       //
       case .cancelButtonPressed:
          send(\.cancelled)
+      //
       case .presentImagePicker:
          guard let baseVC = vcModel else { return }
          imagePicker.sendEvent(\.presentOn, baseVC)

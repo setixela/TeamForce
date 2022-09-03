@@ -200,6 +200,7 @@ extension MainScene {
             self?.activeScreen?.scenario.start()
          }
          .on(\.finishWithError) { [weak self] in
+            self?.presentErrorPopup()
             self?.activeScreen?.scenario.start()
          }
          .on(\.cancelled) { [weak self] in
@@ -222,6 +223,20 @@ extension MainScene {
       else { return }
 
       model.setup(info: data.sendCoinInfo, username: data.username, foundUser: data.foundUser)
+
+      bottomPopupPresenter.send(\.present, (model: model, onView: baseView.rootSuperview))
+   }
+
+   private func presentErrorPopup() {
+      let model = Design.model.common.systemErrorBlock
+
+      model.on(\.didClosed) { [weak self] in
+         self?.bottomPopupPresenter.send(\.hide)
+      }
+
+      guard
+         let baseView = vcModel?.view
+      else { return }
 
       bottomPopupPresenter.send(\.present, (model: model, onView: baseView.rootSuperview))
    }
