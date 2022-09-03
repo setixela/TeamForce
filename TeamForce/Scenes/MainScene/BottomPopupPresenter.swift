@@ -10,6 +10,7 @@ import UIKit
 
 struct PopupEvent: InitProtocol {
    var present: (model: UIViewModel, onView: UIView)?
+   var presentAuto: (model: UIViewModel, onView: UIView)?
    var hide: Void?
 }
 
@@ -32,9 +33,39 @@ final class BottomPopupPresenter: BaseModel, Eventable {
          let offset: CGFloat = 40
          let view = model.uiView
 
-         let height = onView.frame.height
+         let darkView = UIView(frame: onView.frame)
+         darkView.backgroundColor = .darkText
+         darkView.alpha = 0
+         onView.addSubview(darkView)
+         onView.addSubview(view)
 
-         view.translatesAutoresizingMaskIntoConstraints = true
+         view.addAnchors.fitToViewInsetted(onView, .init(top: offset, left: 0, bottom: 0, right: 0))
+         view.layoutIfNeeded()
+
+         let viewHeight = view.frame.height
+
+         view.transform = CGAffineTransform(translationX: 0, y: viewHeight)
+
+         UIView.animate(withDuration: 0.5) {
+            view.transform = CGAffineTransform(translationX: 0, y: 0)
+            darkView.alpha = 0.75
+         } completion: { _ in
+            view.addAnchors.fitToViewInsetted(onView, .init(top: offset, left: 0, bottom: 0, right: 0))
+            view.layoutIfNeeded()
+         }
+
+         view.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(self.handleDismiss)))
+         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.didTapOnView)))
+
+         self.darkView = darkView
+         self.queue.push(model)
+      }
+      .on(\.presentAuto) { [weak self] model, onView in
+         guard let self = self else { return }
+
+         self.darkView?.removeFromSuperview()
+
+         let view = model.uiView
 
          let darkView = UIView(frame: onView.frame)
          darkView.backgroundColor = .darkText
@@ -42,15 +73,17 @@ final class BottomPopupPresenter: BaseModel, Eventable {
          onView.addSubview(darkView)
          onView.addSubview(view)
 
-         view.frame.size = .init(width: onView.frame.width, height: height - offset)
-         view.frame.origin = .init(x: 0, y: height)
+         view.addAnchors
+            .width(onView.widthAnchor)
+            .bottom(onView.bottomAnchor)
+         view.layoutIfNeeded()
 
+         let viewHeight = view.frame.height
+
+         view.transform = CGAffineTransform(translationX: 0, y: viewHeight)
          UIView.animate(withDuration: 0.5) {
-            view.frame.origin = .init(x: 0, y: offset)
+            view.transform = CGAffineTransform(translationX: 0, y: 0)
             darkView.alpha = 0.75
-         } completion: { _ in
-            view.addAnchors.fitToViewInsetted(onView, .init(top: offset, left: 0, bottom: 0, right: 0))
-            view.layoutIfNeeded()
          }
 
          view.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(self.handleDismiss)))

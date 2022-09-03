@@ -238,7 +238,7 @@ extension MainScene {
          let baseView = vcModel?.view
       else { return }
 
-      bottomPopupPresenter.send(\.present, (model: model, onView: baseView.rootSuperview))
+      bottomPopupPresenter.send(\.presentAuto, (model: model, onView: baseView.rootSuperview))
    }
 }
 
