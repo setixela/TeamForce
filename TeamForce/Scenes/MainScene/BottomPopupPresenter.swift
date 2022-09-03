@@ -28,68 +28,19 @@ final class BottomPopupPresenter: BaseModel, Eventable {
       on(\.present) { [weak self] model, onView in
          guard let self = self else { return }
 
-         self.darkView?.removeFromSuperview()
-
-         let offset: CGFloat = 40
-         let view = model.uiView
-
-         let darkView = UIView(frame: onView.frame)
-         darkView.backgroundColor = .darkText
-         darkView.alpha = 0
-         onView.addSubview(darkView)
-         onView.addSubview(view)
-
-         view.addAnchors.fitToViewInsetted(onView, .init(top: offset, left: 0, bottom: 0, right: 0))
-         view.layoutIfNeeded()
-
-         let viewHeight = view.frame.height
-
-         view.transform = CGAffineTransform(translationX: 0, y: viewHeight)
-
-         UIView.animate(withDuration: 0.5) {
-            view.transform = CGAffineTransform(translationX: 0, y: 0)
-            darkView.alpha = 0.75
-         } completion: { _ in
-            view.addAnchors.fitToViewInsetted(onView, .init(top: offset, left: 0, bottom: 0, right: 0))
-            view.layoutIfNeeded()
-         }
-
-         view.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(self.handleDismiss)))
-         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.didTapOnView)))
-
-         self.darkView = darkView
+         let view = self.prepareModel(model, onView: onView)
+         view.addAnchors.fitToViewInsetted(onView, .init(top: 40, left: 0, bottom: 0, right: 0))
+         self.animateViewAppear(view)
          self.queue.push(model)
       }
       .on(\.presentAuto) { [weak self] model, onView in
          guard let self = self else { return }
 
-         self.darkView?.removeFromSuperview()
-
-         let view = model.uiView
-
-         let darkView = UIView(frame: onView.frame)
-         darkView.backgroundColor = .darkText
-         darkView.alpha = 0
-         onView.addSubview(darkView)
-         onView.addSubview(view)
-
+         let view = self.prepareModel(model, onView: onView)
          view.addAnchors
             .width(onView.widthAnchor)
             .bottom(onView.bottomAnchor)
-         view.layoutIfNeeded()
-
-         let viewHeight = view.frame.height
-
-         view.transform = CGAffineTransform(translationX: 0, y: viewHeight)
-         UIView.animate(withDuration: 0.5) {
-            view.transform = CGAffineTransform(translationX: 0, y: 0)
-            darkView.alpha = 0.75
-         }
-
-         view.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(self.handleDismiss)))
-         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.didTapOnView)))
-
-         self.darkView = darkView
+         self.animateViewAppear(view)
          self.queue.push(model)
       }
       .on(\.hide) { [weak self] in
@@ -97,7 +48,38 @@ final class BottomPopupPresenter: BaseModel, Eventable {
       }
    }
 
-   @objc func handleDismiss(sender: UIPanGestureRecognizer) {
+   private func prepareModel(_ model: UIViewModel, onView: UIView) -> UIView {
+      self.darkView?.removeFromSuperview()
+
+      let view = model.uiView
+
+      let darkView = UIView(frame: onView.frame)
+      darkView.backgroundColor = .darkText
+      darkView.alpha = 0
+      self.darkView = darkView
+
+      onView.addSubview(darkView)
+      onView.addSubview(view)
+
+      return view
+   }
+
+   private func animateViewAppear(_ view: UIView) {
+      view.layoutIfNeeded()
+
+      let viewHeight = view.frame.height
+
+      view.transform = CGAffineTransform(translationX: 0, y: viewHeight)
+      UIView.animate(withDuration: 0.5) {
+         view.transform = CGAffineTransform(translationX: 0, y: 0)
+         self.darkView?.alpha = 0.75
+      }
+
+      view.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(handleDismiss)))
+      view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapOnView)))
+   }
+
+   @objc private func handleDismiss(sender: UIPanGestureRecognizer) {
       guard let view = sender.view else { return }
 
       switch sender.state {
@@ -120,7 +102,7 @@ final class BottomPopupPresenter: BaseModel, Eventable {
       }
    }
 
-   @objc func didTapOnView(sender: UITapGestureRecognizer) {
+   @objc private func didTapOnView(sender: UITapGestureRecognizer) {
       sender.view?.endEditing(true)
    }
 
