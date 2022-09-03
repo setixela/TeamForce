@@ -42,7 +42,7 @@ final class MainScene<Asset: AssetProtocol>:
 
    private var currentUser: UserData?
 
-   private lazy var errorBlock = CommonErrorBlock<Design>()
+   private lazy var errorBlock = Design.model.common.connectionErrorBlock
 
    private weak var activeScreen: Scenarible?
 
@@ -191,21 +191,21 @@ extension MainScene {
       else { return }
 
       model
-         .on(\.sendButtonPressed) { [weak self] in
-            self?.bottomPopupPresenter.send(\.hide)
-            self?.activeScreen?.scenario.start()
+         .on(self, \.sendButtonPressed) {
+            $0.bottomPopupPresenter.send(\.hide)
+            $0.activeScreen?.scenario.start()
          }
-         .on(\.finishWithSuccess) { [weak self] in
-            self?.presentTransactSuccessView($0)
-            self?.activeScreen?.scenario.start()
+         .on(self, \.finishWithSuccess) {
+            $0.presentTransactSuccessView($1)
+            $0.activeScreen?.scenario.start()
          }
-         .on(\.finishWithError) { [weak self] in
-            self?.presentErrorPopup()
-            self?.activeScreen?.scenario.start()
+         .on(self, \.finishWithError) {
+            $0.presentErrorPopup()
+            $0.activeScreen?.scenario.start()
          }
-         .on(\.cancelled) { [weak self] in
-            self?.bottomPopupPresenter.send(\.hide)
-            self?.activeScreen?.scenario.start()
+         .on(self, \.cancelled) {
+            $0.bottomPopupPresenter.send(\.hide)
+            $0.activeScreen?.scenario.start()
          }
 
       bottomPopupPresenter.send(\.present, (model: model, onView: baseView.rootSuperview))
@@ -230,8 +230,8 @@ extension MainScene {
    private func presentErrorPopup() {
       let model = Design.model.common.systemErrorBlock
 
-      model.on(\.didClosed) { [weak self] in
-         self?.bottomPopupPresenter.send(\.hide)
+      model.on(self, \.didClosed) {
+         $0.bottomPopupPresenter.send(\.hide)
       }
 
       guard

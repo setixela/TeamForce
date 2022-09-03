@@ -36,9 +36,9 @@ final class SystemErrorBlockVM<Design: DSP>: BaseViewModel<StackViewExtended>,
       set(.alignment(.fill))
 
       set(.models([
-         Spacer(20),
+         Grid.x24.spacer,
          errorBlock,
-         Spacer(),
+         Grid.x24.spacer,
          button
       ]))
 

@@ -86,8 +86,9 @@ final class BottomPopupPresenter: BaseModel, Eventable {
       case .changed:
          viewTranslation = sender.translation(in: view)
          UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
-            view.transform = CGAffineTransform(translationX: 0,
-                                               y: self.viewTranslation.y > 0 ? self.viewTranslation.y : 0)
+            view.transform = CGAffineTransform(
+               translationX: 0,
+               y: self.viewTranslation.y > 0 ? self.viewTranslation.y : 0)
          })
       case .ended:
          if viewTranslation.y < 200 {
