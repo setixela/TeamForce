@@ -101,7 +101,7 @@ class WorksTests2: XCTestCase {
             return ($0, true)
          }
          .doNext(work: works.updateAmount)
-         .doNext(work: works.isCorrect)
+         .doNext(work: works.isCorrectBothInputs)
          .onSuccess {
             log("success")
          }

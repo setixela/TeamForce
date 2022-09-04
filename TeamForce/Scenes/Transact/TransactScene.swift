@@ -17,17 +17,13 @@ struct TransactEvents: InitProtocol {
 
 enum TransactState {
    case initial
-   case loadProfilError
-   case loadTransactionsError
+   case error
 
    case loadTokensSuccess
-   case loadTokensError
 
    case loadBalanceSuccess(Int)
-   case loadBalanceError
 
    case loadUsersListSuccess([FoundUser])
-   case loadUsersListError
 
    case presentFoundUser([FoundUser])
    case presentUsers([FoundUser])
@@ -40,6 +36,7 @@ enum TransactState {
    case sendCoinSuccess((String, SendCoinRequest))
    case sendCoinError
 
+   case resetCoinInput
    case coinInputSuccess(String, Bool)
    case reasonInputSuccess(String, Bool)
 
@@ -67,7 +64,7 @@ final class TransactScene<Asset: AssetProtocol>: DoubleStacksModel, Assetable, S
          userSearchTFDidEditingChanged: viewModels.userSearchTextField.onEvent(\.didEditingChanged),
          userSelected: viewModels.foundUsersList.onEvent(\.didSelectRow),
          sendButtonEvent: viewModels.sendButton.onEvent(\.didTap),
-         transactInputChanged: viewModels.amountInputModel.textField.onEvent(\.didEditingChanged),
+         amountInputChanged: viewModels.amountInputModel.textField.onEvent(\.didEditingChanged),
          reasonInputChanged: viewModels.reasonTextView.onEvent(\.didEditingChanged),
          anonymousSetOff: viewModels.options.anonimParamModel.switcher.onEvent(\.turnedOff),
          anonymousSetOn: viewModels.options.anonimParamModel.switcher.onEvent(\.turnedOn),
@@ -199,33 +196,23 @@ extension TransactScene: StateMachine {
       case .initial:
          activityIndicator.hidden(false)
       //
-      case .loadProfilError:
+      case .error:
+         viewModels.userSearchTextField.hidden(true)
          activityIndicator.hidden(true)
-      //
-      case .loadTransactionsError:
-         activityIndicator.hidden(true)
+         presentFoundUsers(users: [])
+
       //
       case .loadTokensSuccess:
          activityIndicator.hidden(false)
 
-      case .loadTokensError:
-         viewModels.userSearchTextField.hidden(true)
-         activityIndicator.hidden(true)
       //
       case .loadBalanceSuccess(let balance):
          viewModels.balanceInfo.models.down.label.text(String(balance))
-      //
-      case .loadBalanceError:
-         activityIndicator.hidden(true)
       //
       case .loadUsersListSuccess(let users):
          presentFoundUsers(users: users)
          activityIndicator.hidden(true)
       //
-      case .loadUsersListError:
-         viewModels.foundUsersList.hidden(true)
-         activityIndicator.hidden(true)
-         presentFoundUsers(users: [])
       //
       case .presentFoundUser(let users):
          viewModels.foundUsersList.hidden(true)
@@ -282,13 +269,14 @@ extension TransactScene: StateMachine {
       //
       case .sendCoinError:
          send(\.finishWithError)
+      case .resetCoinInput:
+         viewModels.amountInputModel.setState(.noInput)
       case .coinInputSuccess(let text, let isCorrect):
          viewModels.amountInputModel.textField.set(.text(text))
          if isCorrect {
             viewModels.amountInputModel.setState(.normal(text))
             viewModels.sendButton.set(Design.state.button.default)
          } else {
-            viewModels.amountInputModel.setState(.noInput)
             viewModels.amountInputModel.textField.set(.text(text))
             viewModels.sendButton.set(Design.state.button.inactive)
          }

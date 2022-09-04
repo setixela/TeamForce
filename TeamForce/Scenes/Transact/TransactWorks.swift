@@ -26,7 +26,7 @@ protocol TransactWorksProtocol: TempStorage {
    //
    var reset: VoidWork<Void> { get }
    //
-   var addImage: Work<UIImage, UIImage> { get}
+   var addImage: Work<UIImage, UIImage> { get }
    var removeImage: Work<UIImage, Void> { get }
 }
 
@@ -197,35 +197,28 @@ final class TransactWorks<Asset: AssetProtocol>: BaseSceneWorks<TransactWorks.Te
       work.success(result: ())
    }
 
-   var updateAmount: Work<(String, Bool), Void> {
-      Work<(String, Bool), Void> { work in
-         guard let input = work.input else { return }
+   var updateAmount: Work<(String, Bool), Void> { .init { work in
+      guard let input = work.input else { return }
 
-         Self.store.inputAmountText = input.0
-         Self.store.isCorrectCoinInput = input.1
-         work.success(result: ())
-      }
+      Self.store.inputAmountText = input.0
+      Self.store.isCorrectCoinInput = input.1
+      work.success(result: ())
+   }.retainBy(retainer) }
 
-      .retainBy(retainer) // hmm
-   }
+   var updateReason: Work<(String, Bool), Void> { .init { work in
+      guard let input = work.input else { return }
+      Self.store.inputReasonText = input.0
+      Self.store.isCorrectReasonInput = input.1
+      work.success(result: ())
+   }.retainBy(retainer) }
 
-   var updateReason: Work<(String, Bool), Void> {
-      Work<(String, Bool), Void> { work in
-         guard let input = work.input else { return }
-         Self.store.inputReasonText = input.0
-         Self.store.isCorrectReasonInput = input.1
-         work.success(result: ())
-      }
-      .retainBy(retainer)
-   }
-
-   lazy var isCorrect = Work<Void, Void> { work in
+   var isCorrectBothInputs: Work<Void, Void> { .init { work in
       if Self.store.isCorrectReasonInput, Self.store.isCorrectCoinInput {
          work.success(result: ())
       } else {
          work.fail(())
       }
-   }
+   }.retainBy(retainer) }
 }
 
 extension TransactWorks {

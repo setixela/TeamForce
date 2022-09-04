@@ -191,19 +191,19 @@ extension MainScene {
       else { return }
 
       model
-         .on(self, \.sendButtonPressed) {
+         .on(\.sendButtonPressed, weak: self) {
             $0.bottomPopupPresenter.send(\.hide)
             $0.activeScreen?.scenario.start()
          }
-         .on(self, \.finishWithSuccess) {
+         .on(\.finishWithSuccess, weak: self) {
             $0.presentTransactSuccessView($1)
             $0.activeScreen?.scenario.start()
          }
-         .on(self, \.finishWithError) {
+         .on(\.finishWithError, weak: self) {
             $0.presentErrorPopup()
             $0.activeScreen?.scenario.start()
          }
-         .on(self, \.cancelled) {
+         .on(\.cancelled, weak: self) {
             $0.bottomPopupPresenter.send(\.hide)
             $0.activeScreen?.scenario.start()
          }
@@ -230,7 +230,7 @@ extension MainScene {
    private func presentErrorPopup() {
       let model = Design.model.common.systemErrorBlock
 
-      model.on(self, \.didClosed) {
+      model.on(\.didClosed, weak: self) {
          $0.bottomPopupPresenter.send(\.hide)
       }
 

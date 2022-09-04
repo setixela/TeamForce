@@ -20,10 +20,9 @@ final class ImagePickingScenario<Asset: AssetProtocol>:
    BaseScenario<ImagePickingScenarioEvents, TransactState, TransactWorks<Asset>>
 {
    override func start() {
-
       events.startImagePicking
          .onSuccess(setState, .presentImagePicker)
-      
+
       events.addImageToBasket
          .doNext(work: works.addImage)
          .onSuccess(setState) { .presentPickedImage($0) }
@@ -43,7 +42,7 @@ struct TransactScenarioEvents {
    let userSelected: VoidWork<Int>
    let sendButtonEvent: VoidWork<Void>
 
-   let transactInputChanged: VoidWork<String>
+   let amountInputChanged: VoidWork<String>
    let reasonInputChanged: VoidWork<String>
 
    let anonymousSetOff: VoidWork<Void>
@@ -62,15 +61,15 @@ final class TransactScenario<Asset: AssetProtocol>:
       works.loadTokens
          .doAsync()
          .onSuccess(setState, .loadTokensSuccess)
-         .onFail(setState, .loadTokensError)
+         .onFail(setState, .error)
          // then load balance
          .doNext(work: works.loadBalance)
          .onSuccess(setState) { .loadBalanceSuccess($0.distr.amount) }
-         .onFail(setState, .loadBalanceError)
+         .onFail(setState, .error)
          // then break to void and load 10 user list
          .doVoidNext(works.getUserList)
          .onSuccess(setState) { .loadUsersListSuccess($0) }
-         .onFail(setState, .loadUsersListError)
+         .onFail(setState, .error)
 
       events.userSearchTXTFLDBeginEditing
          .doNext(usecase: IsEmpty())
@@ -88,7 +87,7 @@ final class TransactScenario<Asset: AssetProtocol>:
          }
          .doRecover(works.searchUser)
          .onSuccess(setState) { .listOfFoundUsers($0) }
-         .onFail(setState) { .loadUsersListError }
+         .onFail(setState) { .error }
 
       events.userSelected
          .doSaveResult()
@@ -102,21 +101,24 @@ final class TransactScenario<Asset: AssetProtocol>:
          .onFail(setState, .sendCoinError)
          .doVoidNext(works.reset)
 
-      events.transactInputChanged
+      events.amountInputChanged
          .doNext(work: works.coinInputParsing)
          .onSuccess(setState) { .coinInputSuccess($0, true) }
          .onFail { [weak self] (text: String) in
+            self?.setState(.resetCoinInput)
             self?.works.updateAmount
                .doAsync((text, false))
                .onSuccess(self?.setState) { .coinInputSuccess(text, false) }
          }
          .doRecover()
-         .doSaveResult() // save inputString
+         .doSaveResult() // save text
          .doMap { ($0, true) }
          .doNext(work: works.updateAmount)
-         .doNext(work: works.isCorrect)
-         .onSuccessMixSaved(setState) { .coinInputSuccess($1, true) }
-         .onFailMixSaved(setState) { .coinInputSuccess($1, false) }
+         .doNext(work: works.isCorrectBothInputs)
+         .onSuccessMixSaved(setState) { bool, savedText in
+            .coinInputSuccess(savedText, true) }
+         .onFailMixSaved(setState) { bool, savedText in
+            .coinInputSuccess(savedText, false) }
 
       events.reasonInputChanged
          .doNext(work: works.reasonInputParsing)
@@ -129,7 +131,7 @@ final class TransactScenario<Asset: AssetProtocol>:
          .doSaveResult()
          .doMap { ($0, true) }
          .doNext(work: works.updateReason)
-         .doNext(work: works.isCorrect)
+         .doNext(work: works.isCorrectBothInputs)
          .onSuccessMixSaved(setState) { .reasonInputSuccess($1, true) }
          .onFailMixSaved(setState) { .reasonInputSuccess($1, false) }
 
