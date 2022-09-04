@@ -20,8 +20,8 @@ final class HistoryCellModel<Design: DSP>:
          icon
             .image(Design.icon.avatarPlaceholder)
             .contentMode(.scaleAspectFill)
-            .cornerRadius(52.aspected / 2)
-            .size(.square(52.aspected))
+            .cornerRadius(48 / 2)
+            .size(.square(48))
          nameStatus
             .padLeft(18)
             .alignment(.leading)
@@ -31,6 +31,7 @@ final class HistoryCellModel<Design: DSP>:
                   .set(Design.state.label.body1)
                   .alignment(.left)
                status
+                  .set(Design.state.label.caption)
                   .textColor(Design.color.textInvert)
                   .alignment(.left)
                   .height(Design.params.cornerRadiusSmall * 2)
