@@ -86,13 +86,9 @@ extension TripleStacksBrandedVM: StateMachine {
       case .hideHeaderTitle:
          header.alpha(0)
          header.hidden(true)
-//         topButtonsStack.alpha(0)
-//         topButtonsStack.hidden(true)
       case .presentHeaderTitle:
          header.hidden(false)
          header.alpha(1)
-//         topButtonsStack.alpha(1)
-//         topButtonsStack.hidden(false)
       }
    }
 
