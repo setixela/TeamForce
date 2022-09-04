@@ -496,7 +496,6 @@ extension ViewModelProtocol where Self: Stateable, View: PaddingTextField {
 extension ViewModelProtocol where Self: Stateable, View: UITextView {
    @discardableResult func text(_ value: String) -> Self {
       view.text = value
-      view.delegate?.textViewDidEndEditing?(view)
       return self
    }
 

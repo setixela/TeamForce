@@ -169,23 +169,6 @@ final class TransactScene<Asset: AssetProtocol>: DoubleStacksModel, Assetable, S
             viewModels.sendButton
          ])
    }
-
-   private func setToInitialCondition() {
-      clearFields()
-
-      viewModels.sendButton.set(Design.state.button.inactive)
-      viewModels.amountInputModel.setState(.noInput)
-
-      currentState = .initial
-      setState(.initial)
-      applySelectUserMode()
-   }
-
-   private func clearFields() {
-      viewModels.userSearchTextField.text("")
-      viewModels.amountInputModel.textField.text("")
-      viewModels.reasonTextView.text("")
-   }
 }
 
 extension TransactScene: StateMachine {
@@ -310,6 +293,25 @@ extension TransactScene: StateMachine {
 }
 
 private extension TransactScene {
+   private func setToInitialCondition() {
+      clearFields()
+
+      viewModels.sendButton.set(Design.state.button.inactive)
+      viewModels.amountInputModel.setState(.noInput)
+
+      currentState = .initial
+      setState(.initial)
+      applySelectUserMode()
+   }
+
+   private func clearFields() {
+      viewModels.userSearchTextField.text("")
+      viewModels.amountInputModel.textField.text("")
+      viewModels.reasonTextView
+         .text("")
+         .placeholder(Design.Text.title.reasonPlaceholder)
+   }
+
    func applySelectUserMode() {
       viewModels.pickedImages.hidden(true)
       viewModels.balanceInfo.set(.hidden(true))

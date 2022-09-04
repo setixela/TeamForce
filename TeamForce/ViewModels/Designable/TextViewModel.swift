@@ -44,11 +44,17 @@ class TextViewModel: BaseViewModel<UITextView>, UITextViewDelegate {
    }
 
    func textViewDidEndEditing(_ textView: UITextView) {
-      if textView.text.isEmpty {
+      if textView.text == nil || textView.text.isEmpty {
          textView.text = self.placeholder
          textView.textColor = UIColor.lightGray
          isPlaceholded = true
       }
+   }
+
+   @discardableResult func placeholder(_ value: String) -> Self {
+      self.placeholder = value
+      textViewDidEndEditing(view)
+      return self
    }
 }
 
@@ -60,7 +66,6 @@ enum TextViewState {
    case height(CGFloat)
    case width(CGFloat)
 }
-
 extension TextViewModel: Stateable3 {
    typealias State = ViewState
    typealias State2 = TextViewState

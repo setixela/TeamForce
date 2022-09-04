@@ -67,6 +67,7 @@ protocol TitleTextsProtocol: InitProtocol {
    var availableThanks: String { get }
    var thanksWereSend: String { get }
    var userNotFound: String { get }
+   var reasonPlaceholder: String { get }
 
    // errors
    var wrongUsername: String { get }
