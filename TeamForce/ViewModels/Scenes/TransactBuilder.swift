@@ -49,7 +49,7 @@ struct TransactBuilder<Design: DSP>: TransactModelBuilder {
       .hidden(true)
    }
 
-   var balanceInfo: M<LabelModel>.R<CurrencyLabelDT<Design>>.Combo { .init()
+   var balanceInfo: M<LabelModel>.D<CurrencyLabelDT<Design>>.Combo { .init()
       .setAll { title, amount in
          title
             .set(Design.state.label.caption)
