@@ -10,10 +10,15 @@ import Foundation
 extension String {
    private var dateFormat: String { "yyyy-MM-dd'T'HH:mm:ss.SSSZ" }
 
-   var dateConverted: String {
+   var dateConvertedToDate: Date? {
       let inputFormatter = DateFormatter()
       inputFormatter.dateFormat = dateFormat
-      guard let convertedDate = inputFormatter.date(from: self) else { return "" }
+      guard let convertedDate = inputFormatter.date(from: self) else { return nil }
+      return convertedDate
+   }
+   
+   var dateConverted: String {
+      guard let convertedDate = dateConvertedToDate else { return "" }
 
       let outputFormatter = DateFormatter()
       outputFormatter.dateFormat = "d MMM y"
