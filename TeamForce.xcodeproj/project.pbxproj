@@ -62,6 +62,7 @@
 		196D883628ADB74800F4C09D /* TabBarPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196D883528ADB74800F4C09D /* TabBarPanel.swift */; };
 		1977518D28A8329F006CFAF3 /* ReactiveWorks in Frameworks */ = {isa = PBXBuildFile; productRef = 1977518C28A8329F006CFAF3 /* ReactiveWorks */; };
 		1977519028A83395006CFAF3 /* SwiftCSSParser in Frameworks */ = {isa = PBXBuildFile; productRef = 1977518F28A83395006CFAF3 /* SwiftCSSParser */; };
+		19775FFE28C5922B008DF8E0 /* ImagePickingScenario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19775FFD28C5922B008DF8E0 /* ImagePickingScenario.swift */; };
 		1977BE5528A7238F00D554EA /* TextFieldStates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1977BE5428A7238F00D554EA /* TextFieldStates.swift */; };
 		1977BE5828A7343400D554EA /* InputCheckers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1977BE5728A7343400D554EA /* InputCheckers.swift */; };
 		197A2D9928A98F4300190656 /* UIColor+Random.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197A2D9828A98F4300190656 /* UIColor+Random.swift */; };
@@ -292,6 +293,7 @@
 		196750B3286519660019A6DE /* ProductionAsset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductionAsset.swift; sourceTree = "<group>"; };
 		196D883328ADB6EC00F4C09D /* TripleStacksBrandedVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripleStacksBrandedVM.swift; sourceTree = "<group>"; };
 		196D883528ADB74800F4C09D /* TabBarPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarPanel.swift; sourceTree = "<group>"; };
+		19775FFD28C5922B008DF8E0 /* ImagePickingScenario.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickingScenario.swift; sourceTree = "<group>"; };
 		1977BE5428A7238F00D554EA /* TextFieldStates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldStates.swift; sourceTree = "<group>"; };
 		1977BE5728A7343400D554EA /* InputCheckers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputCheckers.swift; sourceTree = "<group>"; };
 		197A2D9828A98F4300190656 /* UIColor+Random.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Random.swift"; sourceTree = "<group>"; };
@@ -895,6 +897,7 @@
 				199E321528BD3A790088BA71 /* TransactScene.swift */,
 				1953DE832879FDE3000DC537 /* TransactViewModels.swift */,
 				190BE97828ADDFAB0062CCD5 /* TransactScenario.swift */,
+				19775FFD28C5922B008DF8E0 /* ImagePickingScenario.swift */,
 				19CF792B28A587B9001531B8 /* TransactWorks.swift */,
 				19CAB9CF28B4265000A0A3B1 /* ViewModels */,
 			);
@@ -1350,6 +1353,7 @@
 				6368D8282891E7C40049EEAB /* UserDefault+helpers.swift in Sources */,
 				19017B6928A6986F00B06345 /* TitleSubtitleX.swift in Sources */,
 				19E9F30F28AC14D100AD951F /* SceneStateProtocol.swift in Sources */,
+				19775FFE28C5922B008DF8E0 /* ImagePickingScenario.swift in Sources */,
 				63AB071128BD6B0F00FD650F /* ProfileWorks.swift in Sources */,
 				63E1916D2889519E000FD312 /* BadgeModel.swift in Sources */,
 				19C1E9A328610E4E00E7976D /* MainRouter.swift in Sources */,
@@ -1641,7 +1645,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 14;
+				CURRENT_PROJECT_VERSION = 15;
 				DEVELOPMENT_TEAM = B9QL37WADD;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = TeamForce/Info.plist;
@@ -1675,7 +1679,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 14;
+				CURRENT_PROJECT_VERSION = 15;
 				DEVELOPMENT_TEAM = B9QL37WADD;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = TeamForce/Info.plist;
@@ -1708,7 +1712,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 14;
+				CURRENT_PROJECT_VERSION = 15;
 				DEVELOPMENT_TEAM = 6MKP9BQB2K;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
@@ -1728,7 +1732,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 14;
+				CURRENT_PROJECT_VERSION = 15;
 				DEVELOPMENT_TEAM = 6MKP9BQB2K;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.5;

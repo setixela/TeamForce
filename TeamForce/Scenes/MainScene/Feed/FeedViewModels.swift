@@ -212,7 +212,6 @@ private extension FeedViewModels {
          .size(.square(Grid.x36.value))
          .cornerRadius(Grid.x36.value / 2)
       if let recipientPhoto = feed.transaction.photoUrl {
-         // TODO: - Ohohoho
          icon.url(recipientPhoto)
       } else {
          if let nameFirstLetter = feed.transaction.recipientFirstName?.first,
@@ -232,47 +231,6 @@ private extension FeedViewModels {
 
       return icon
    }
-
-   func makeIGet(sender: String, amount: String) -> NSAttributedString {
-      NSAttributedString()
-   }
-
-   func makeSomeGetFromSome(sender: String, recipient: String, amount: String) -> NSAttributedString {
-      NSAttributedString()
-   }
-
-   func makeSomeGetFromAnonym(recipient: String, amount: String) -> NSAttributedString {
-      NSAttributedString()
-   }
-
-   var randomButton: LabelModel {
-      LabelModel()
-         .set(Design.state.label.caption2)
-         .textColor(Design.color.textInfo)
-         .backColor(Design.color.backgroundInfoSecondary)
-         .cornerRadius(Design.params.cornerRadiusMini)
-         .height(26)
-         .padding(.sideOffset(4))
-         .text("# " + randomWords[Int.random(in: 0 ..< randomWords.count)])
-   }
-
-   var randomWords: [String] { [
-      Design.Text.title.autorisation,
-      Design.Text.title.canceled,
-      Design.Text.title.digitalThanks,
-      Design.Text.title.enter,
-      Design.Text.title.register,
-      Design.Text.title.sendThanks,
-
-      Design.Text.button.enterButton,
-      Design.Text.button.nextButton,
-      Design.Text.button.registerButton,
-      Design.Text.button.getCodeButton,
-      Design.Text.button.changeUserButton,
-      Design.Text.button.sendButton,
-      Design.Text.button.toTheBeginingButton,
-      Design.Text.button.logoutButton
-   ] }
 }
 
 extension String {

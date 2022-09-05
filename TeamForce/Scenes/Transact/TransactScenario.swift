@@ -9,33 +9,6 @@ import Foundation
 import ReactiveWorks
 import UIKit
 
-struct ImagePickingScenarioEvents {
-   let startImagePicking: VoidWorkVoid
-   let addImageToBasket: VoidWork<UIImage>
-   let removeImageFromBasket: VoidWork<UIImage>
-   let didMaximumReach: VoidWork<Void>
-}
-
-final class ImagePickingScenario<Asset: AssetProtocol>:
-   BaseScenario<ImagePickingScenarioEvents, TransactState, TransactWorks<Asset>>
-{
-   override func start() {
-      events.startImagePicking
-         .onSuccess(setState, .presentImagePicker)
-
-      events.addImageToBasket
-         .doNext(work: works.addImage)
-         .onSuccess(setState) { .presentPickedImage($0) }
-
-      events.removeImageFromBasket
-         .doNext(work: works.removeImage)
-         .onSuccess(setState, .setHideAddPhotoButton(false))
-
-      events.didMaximumReach
-         .onSuccess(setState, .setHideAddPhotoButton(true))
-   }
-}
-
 struct TransactScenarioEvents {
    let userSearchTXTFLDBeginEditing: VoidWork<String>
    let userSearchTFDidEditingChanged: VoidWork<String>
