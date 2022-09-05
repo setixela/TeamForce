@@ -40,27 +40,51 @@ final class TransactDeatilViewModel<Asset: AssetProtocol>: BaseSceneModel<
    
    lazy var reasonLabel = SettingsTitleBodyDT<Design>()
       .setAll {
-         $0.text("Cообщение")
-         $1.text("-")
+         $0
+            .text("Cообщение")
+            .set(Design.state.label.body4)
+         $1
+            .text("-")
+            .set(Design.state.label.caption)
       }
    
    lazy var statusLabel = SettingsTitleBodyDT<Design>()
       .setAll {
-         $0.text("Статус перевода")
-         $1.text("-")
+         $0
+            .text("Статус перевода")
+            .set(Design.state.label.body4)
+         $1
+            .text("-")
+            .set(Design.state.label.caption)
       }
+   
+   lazy var transactPhoto = Combos<SComboMD<LabelModel, ImageViewModel>>()
+      .setAll {
+         $0
+            .padBottom(10)
+            .set(Design.state.label.body4)
+            .text("Фотография")
+         $1
+            .image(Design.icon.transactSuccess)
+            .size(.init(width: 100, height: 100))
+            .contentMode(.scaleAspectFit)
+            .cornerRadius(Design.params.cornerRadiusSmall)
+      }
+      .hidden(true)
+   
    
    lazy var infoStack = UserProfileStack<Design>()
       .arrangedModels([
          LabelModel()
             .text("ИНФОРМАЦИЯ")
-            .set(Design.state.label.caption2),
+            .set(Design.state.label.captionSecondary),
          reasonLabel,
          statusLabel,
+         transactPhoto
       ])
       .distribution(.fill)
-      .alignment(.fill)
-
+      .alignment(.leading)
+   
 
    
    private lazy var currencyLabel = CurrencyLabelDT<Design>()
@@ -185,6 +209,10 @@ final class TransactDeatilViewModel<Asset: AssetProtocol>: BaseSceneModel<
                .image(tempImage)
                .backColor(Design.color.backgroundBrand)
          }
+         statusLabel
+            .models.main.text("Тип перевода")
+         statusLabel
+            .models.down.text("Входящий перевод")
       }
 
       var textColor = UIColor.black
@@ -194,6 +222,7 @@ final class TransactDeatilViewModel<Asset: AssetProtocol>: BaseSceneModel<
       case "D":
          textColor = Design.color.boundaryError
          statusLabel.models.main.text("Причина отказа")
+         transactionOwnerLabel.text("Вы хотели отправили @" + (input.recipient?.recipientTgName ?? ""))
       case "W":
          textColor = UIColor.orange
       default:
@@ -205,6 +234,10 @@ final class TransactDeatilViewModel<Asset: AssetProtocol>: BaseSceneModel<
       statusLabel.models.down.text(input.transactionStatus?.name ?? "")
       reasonLabel.models.down.text(input.reason ?? "")
 
+      if let photoLink = input.photo {
+         transactPhoto.models.down.url(photoLink)
+         transactPhoto.hidden(false)
+      }
       guard let convertedDate = (input.createdAt ?? "").convertToDate() else { return }
       dateLabel
          .set(.text(convertedDate))

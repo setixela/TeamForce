@@ -134,13 +134,13 @@ extension BalanceScene {
    private func setIncome(_ income: Income) {
       myAccountFrame
          .set(.text(String(income.amount)))
-         .set(.caption("\(Text.title.sended)): \(income.sent)"))
+         .set(.caption("\(Text.title.sended): \(income.sent)"))
    }
 
    private func setDistr(_ distr: Distr) {
       leftToSendFrame
          .set(.text(String(distr.amount)))
-         .set(.caption("\(Text.title.sended)): \(distr.sent)"))
+         .set(.caption("\(Text.title.sended): \(distr.sent)"))
    }
 }
 
