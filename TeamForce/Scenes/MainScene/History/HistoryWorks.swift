@@ -211,7 +211,13 @@ private extension HistoryWorks {
             )
 
             var result = result
-            let currentDay = item.createdAt.dateConverted
+            
+            var currentDay = item.createdAt.dateConverted
+            if let date = item.createdAt.dateConvertedToDate {
+               if Calendar.current.isDateInToday(date) {
+                  currentDay = Design.Text.title.today
+               }
+            }
 
             if prevDay != currentDay {
                result.append(TableItemsSection(title: currentDay))
