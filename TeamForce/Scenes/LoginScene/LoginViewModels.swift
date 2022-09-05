@@ -59,6 +59,7 @@ final class LoginViewModels<Design: DSP>: BaseModel, Designable {
 
    lazy var loginButton: ButtonModel = .init(Design.state.button.inactive)
       .title(Design.Text.button.enterButton)
+      .hidden(true)
 }
 
 extension LoginViewModels: StateMachine {
@@ -73,7 +74,7 @@ extension LoginViewModels: StateMachine {
 
       case .inputSmsCode:
          smsCodeInputModel.hidden(false)
-         loginButton.hidden(false)
+         //loginButton.hidden(false)
          getCodeButton.hidden(true)
          activityIndicator.hidden(true)
 
@@ -92,6 +93,7 @@ extension LoginViewModels: StateMachine {
       case .smsInputParseSuccess(let value):
          smsCodeInputModel.mainModel.textField.set(.text(value))
          loginButton.set(Design.state.button.default)
+         loginButton.sendEvent(\.didTap)
          activityIndicator.hidden(true)
 
       case .smsInputParseError(let value):
