@@ -138,9 +138,18 @@ extension BalanceScene {
    }
 
    private func setDistr(_ distr: Distr) {
+      let dateFormatter = DateFormatter()
+      dateFormatter.dateFormat = "yyyy-MM-dd"
+      var diffs = 0
+      if let date1 = dateFormatter.date(from: distr.expireDate!) {
+         let date2 = Date()
+         diffs = Calendar.current.numberOf24DaysBetween(date2, and: date1)
+      }
+      
       leftToSendFrame
          .set(.text(String(distr.amount)))
          .set(.caption("\(Text.title.sended): \(distr.sent)"))
+         .set(.burn("Cгорят через \n \(diffs) дня"))
    }
 }
 
@@ -157,5 +166,13 @@ extension BalanceScene: StateMachine {
       case .loadBalanceError:
          log("Balance Error!")
       }
+   }
+}
+
+extension Calendar {
+   func numberOf24DaysBetween(_ from: Date, and to: Date) -> Int {
+      let numberOfDays = dateComponents([.day], from: from, to: to)
+
+      return numberOfDays.day! + 1
    }
 }

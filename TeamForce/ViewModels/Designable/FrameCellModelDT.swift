@@ -12,6 +12,7 @@ enum FrameCellState {
    case text(String)
    case header(String)
    case caption(String)
+   case burn(String)
 }
 
 final class FrameCellModelDT<Design: DesignProtocol>: BaseViewModel<StackViewExtended>,
@@ -25,7 +26,8 @@ final class FrameCellModelDT<Design: DesignProtocol>: BaseViewModel<StackViewExt
       .textColor(Design.color.textInvert)
    private lazy var captionLabel = Design.label.default
       .textColor(Design.color.textInvert)
-
+   private lazy var burnLabel = IconLabelModel<Design>()
+  
    override func start() {
       set(.axis(.vertical))
       set(.padding(.init(top: 28, left: 20, bottom: 22, right: 16)))
@@ -35,7 +37,8 @@ final class FrameCellModelDT<Design: DesignProtocol>: BaseViewModel<StackViewExt
          headerLabel,
          Spacer(10),
          textLabel,
-         Spacer(54),
+         burnLabel,
+         Spacer(34),
          captionLabel
       ]))
       backViewModel(ImageViewModel()
@@ -54,6 +57,10 @@ extension FrameCellModelDT: Stateable2 {
          headerLabel.set(.text(string))
       case .caption(let string):
          captionLabel.set(.text(string))
+      case .burn(let string):
+         burnLabel.icon.image(Design.icon.burn)
+         burnLabel.label.text(string)
+         burnLabel.label.textColor(Design.color.textBrand)
       }
    }
 }
