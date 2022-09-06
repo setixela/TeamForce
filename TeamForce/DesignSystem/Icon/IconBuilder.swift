@@ -50,6 +50,8 @@ protocol IconElements: InitProtocol, DesignElementable where DesignElement == UI
 
    var sendCoinIcon: DesignElement { get }
    var recieveCoinIcon: DesignElement { get }
+   
+   var burn: DesignElement { get }
 
    // bottom panel
    var bottomPanel: DesignElement { get }
@@ -113,6 +115,8 @@ struct IconBuilder: IconElements {
 
    var recieveCoinIcon: UIImage { make("recieve_coin_icon") }
    var sendCoinIcon: UIImage { make("send_coin_icon") }
+   
+   var burn: UIImage { make("burn") }
 
    var bottomPanel: UIImage { make("bottom_panel") }
 
