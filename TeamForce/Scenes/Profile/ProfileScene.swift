@@ -16,30 +16,7 @@ final class ProfileScene<Asset: AssetProtocol>: BaseSceneModel<
    Asset,
    Void
 > {
-   lazy var userModel = Combos<SComboMRD<ImageViewModel, LabelModel, LabelModel>>()
-      .setMain { image in
-         image
-            .image(Design.icon.avatarPlaceholder)
-            .cornerRadius(52 / 2)
-            .set(.size(.square(52)))
-      } setRight: { fullName in
-         fullName
-            .textColor(Design.color.text)
-            .padTop(-8)
-            .padLeft(12)
-      } setDown: { telegram in
-         telegram
-            .textColor(Design.color.textBrand)
-            .padLeft(12)
-            .set(Design.state.label.body2)
-      }
-      .alignment(.center)
-      .distribution(.fill)
-      .backColor(Design.color.backgroundInfoSecondary)
-      .cornerRadius(Design.params.cornerRadius)
-      .padding(Design.params.cellContentPadding)
-      .shadow(Design.params.panelMainButtonShadow)
-      .height(76)
+   lazy var userModel = Design.model.profile.userEditPanel
 
    lazy var email = SettingsTitleBodyDT<Design>()
       .setAll {
@@ -93,6 +70,8 @@ final class ProfileScene<Asset: AssetProtocol>: BaseSceneModel<
    lazy var editButton = Design.button.default
       .title("Edit")
 
+   lazy var bottomPopupPresenter = Design.model.common.bottomPopupPresenter
+
    // MARK: - Services
 
    private lazy var userProfileApiModel = ProfileApiWorker(apiEngine: Asset.service.apiEngine)
@@ -107,7 +86,7 @@ final class ProfileScene<Asset: AssetProtocol>: BaseSceneModel<
    }
 
    private func configure() {
-      mainVM.footerStack.view.removeFromSuperview()
+   //   mainVM.footerStack.view.removeFromSuperview()
       mainVM.headerStack.arrangedModels([Grid.x128.spacer])
       mainVM.bodyStack
          .set(.backColor(Design.color.backgroundSecondary))
@@ -125,8 +104,11 @@ final class ProfileScene<Asset: AssetProtocol>: BaseSceneModel<
             editButton,
             Grid.xxx.spacer,
          ]))
-      
-      editButton.onEvent(\.didTap) {
+
+      userModel.models.right2.on(\.didTap) {
+
+      }
+      editButton.on(\.didTap) {
          Asset.router?.route(\.profileEdit, navType: .presentModally(.formSheet))
       }
    }

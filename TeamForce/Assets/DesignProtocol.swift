@@ -52,10 +52,14 @@ extension DesignProtocol {
 
 protocol ModelBuilderProtocol: InitProtocol, Designable {
    associatedtype Transact: TransactModelBuilder
+   associatedtype Profile: ProfileModelBuilder
+
    associatedtype Common: CommonModelBuilder
 }
 
 extension ModelBuilderProtocol {
    var transact: Transact { .init() }
+   var profile: Profile { .init() }
+
    var common: Common { .init() }
 }

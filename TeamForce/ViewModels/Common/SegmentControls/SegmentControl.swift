@@ -56,7 +56,7 @@ extension SegmentControl {
          _buttons = array
          arrangedModels(array)
          buttons.enumerated().forEach { index, model in
-            model.onEvent(\.didTap) { [weak self] in
+            model.on(\.didTap) { [weak self] in
                self?.unselectAll()
                self?.events.sendEventBy(index: index)
                model.setMode(\.selected)

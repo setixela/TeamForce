@@ -57,7 +57,7 @@ final class TransactionStatusViewModel<Design: DSP>: BaseViewModel<StackViewExte
          self?.hide()
       }
 
-      button.onEvent(\.didTap) {
+      button.on(\.didTap) {
          self.hide()
       }
    }

@@ -8,12 +8,9 @@
 import ReactiveWorks
 import UIKit
 
-struct LabelModelEvents: InitProtocol {
-   var didTap: Event<Void>?
-}
-
-final class LabelModel: BaseViewModel<PaddingLabel>, Communicable {
-   var events: ButtonEvents = .init()
+final class LabelModel: BaseViewModel<PaddingLabel>, Eventable {
+   typealias Events = ButtonEvents
+   var events = [Int: LambdaProtocol?]()
    
    func makeTappable() {
       let labelTap = UITapGestureRecognizer(target: self, action: #selector(labelTapped(_:)))
@@ -22,7 +19,7 @@ final class LabelModel: BaseViewModel<PaddingLabel>, Communicable {
    }
    
    @objc func labelTapped(_ sender: UITapGestureRecognizer) {
-      sendEvent(\.didTap)
+      send(\.didTap)
    }
 }
 

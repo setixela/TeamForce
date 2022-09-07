@@ -24,6 +24,7 @@
 		190C1D1B285D160000FB3518 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 190C1D1A285D160000FB3518 /* Assets.xcassets */; };
 		190C1D1E285D160000FB3518 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 190C1D1C285D160000FB3518 /* LaunchScreen.storyboard */; };
 		190C1D29285D160000FB3518 /* WorksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190C1D28285D160000FB3518 /* WorksTests.swift */; };
+		190D052328C7C1DC00466893 /* ProfileBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190D052228C7C1DC00466893 /* ProfileBuilder.swift */; };
 		1913F656286E1EC80033FAB3 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 1913F655286E1EC80033FAB3 /* RealmSwift */; };
 		191571D1289F12350061510F /* PlaygroundScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191571D0289F12350061510F /* PlaygroundScene.swift */; };
 		19171F4B28AD23AE000926B1 /* HistoryViewModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19171F4A28AD23AE000926B1 /* HistoryViewModels.swift */; };
@@ -259,6 +260,7 @@
 		190C1D1F285D160000FB3518 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		190C1D24285D160000FB3518 /* TeamForceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TeamForceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		190C1D28285D160000FB3518 /* WorksTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorksTests.swift; sourceTree = "<group>"; };
+		190D052228C7C1DC00466893 /* ProfileBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileBuilder.swift; sourceTree = "<group>"; };
 		191571D0289F12350061510F /* PlaygroundScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundScene.swift; sourceTree = "<group>"; };
 		19171F4A28AD23AE000926B1 /* HistoryViewModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewModels.swift; sourceTree = "<group>"; };
 		19171F4C28AD663F000926B1 /* TableItemsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableItemsModel.swift; sourceTree = "<group>"; };
@@ -887,6 +889,7 @@
 			children = (
 				19A9BE7528C283270099F8EA /* CommonModelBuilder.swift */,
 				19A9BE7228C255680099F8EA /* TransactBuilder.swift */,
+				190D052228C7C1DC00466893 /* ProfileBuilder.swift */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -1304,6 +1307,7 @@
 				63A529F528A1F8AB004A858D /* SegmentedControlModel.swift in Sources */,
 				63D419F128AA825F0024E22C /* GetPeriodsUseCase.swift in Sources */,
 				63E7A73F28AF9E8000FB2C80 /* ReadyWorks.swift in Sources */,
+				190D052328C7C1DC00466893 /* ProfileBuilder.swift in Sources */,
 				1953DE88287B4574000DC537 /* Fonts.swift in Sources */,
 				197A2DA228A9BF4B00190656 /* Combos+Configure.swift in Sources */,
 				199E321628BD3A790088BA71 /* TransactScene.swift in Sources */,

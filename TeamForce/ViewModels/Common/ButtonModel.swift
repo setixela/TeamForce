@@ -9,16 +9,17 @@ import Anchorage
 import ReactiveWorks
 import UIKit
 
-protocol ButtonModelProtocol: UIViewModel, InitProtocol, Communicable where Events == ButtonEvents {}
+protocol ButtonModelProtocol: UIViewModel, InitProtocol, Eventable where Events == ButtonEvents {}
 
 struct ButtonEvents: InitProtocol {
-   var didTap: Event<Void>?
+   var didTap: Void?
 }
 
 class ButtonModel: BaseViewModel<ButtonExtended>, ButtonModelProtocol {
    //
-   var events: ButtonEvents = .init()
 
+   typealias Events = ButtonEvents
+   var events = [Int: LambdaProtocol?]()
 
    override func start() {
       view.addTarget(self, action: #selector(self.didTap), for: .touchUpInside)
@@ -26,7 +27,7 @@ class ButtonModel: BaseViewModel<ButtonExtended>, ButtonModelProtocol {
 
    @objc func didTap() {
       if view.isEnabled {
-         sendEvent(\.didTap)
+         send(\.didTap)
          print("Did tap")
 
          animateTap()
@@ -38,7 +39,7 @@ extension ButtonModel: Stateable {
    typealias State = ButtonState
 }
 
-extension ButtonModel: Communicable, ButtonTapAnimator {}
+extension ButtonModel: Eventable, ButtonTapAnimator {}
 
 class ButtonModelModableOld: ButtonModel, SelfModable {
 

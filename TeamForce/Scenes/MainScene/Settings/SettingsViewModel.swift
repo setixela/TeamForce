@@ -112,7 +112,7 @@ final class SettingsViewModel<Asset: AssetProtocol>: BaseViewModel<StackViewExte
       ]))
 
       logoutButton
-         .onEvent(\.didTap)
+         .on(\.didTap)
          .doNext(work: useCase.logout)
          .onSuccess {
             UserDefaults.standard.setIsLoggedIn(value: false)

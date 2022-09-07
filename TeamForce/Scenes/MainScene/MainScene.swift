@@ -75,7 +75,7 @@ final class MainScene<Asset: AssetProtocol>:
 private extension MainScene {
    func configButtons() {
       tabBarPanel.button1
-         .onEvent(\.didTap) { [weak self] in
+         .on(\.didTap) { [weak self] in
             self?.unlockTabButtons()
             self?.mainVM.header.text("Лента событий")
             self?.vcModel?.sendEvent(\.setTitle, "Лента событий")
@@ -84,7 +84,7 @@ private extension MainScene {
          }
 
       tabBarPanel.button2
-         .onEvent(\.didTap) { [weak self] in
+         .on(\.didTap) { [weak self] in
             self?.unlockTabButtons()
             self?.mainVM.header.text("Баланс")
             self?.vcModel?.sendEvent(\.setTitle, "Баланс")
@@ -93,12 +93,12 @@ private extension MainScene {
          }
 
       tabBarPanel.buttonMain
-         .onEvent(\.didTap) { [weak self] in
+         .on(\.didTap) { [weak self] in
             self?.presentTransactModel(self?.transactModel)
          }
 
       tabBarPanel.button3
-         .onEvent(\.didTap) { [weak self] in
+         .on(\.didTap) { [weak self] in
             self?.unlockTabButtons()
             self?.mainVM.header.text("История")
             self?.vcModel?.sendEvent(\.setTitle, "История")
@@ -107,7 +107,7 @@ private extension MainScene {
          }
 
       tabBarPanel.button4
-         .onEvent(\.didTap) { [weak self] in
+         .on(\.didTap) { [weak self] in
             self?.unlockTabButtons()
             self?.mainVM.header.text("Настройки")
             self?.vcModel?.sendEvent(\.setTitle, "Настройки")
@@ -134,7 +134,7 @@ extension MainScene: StateMachine {
 
          configButtons()
 
-         mainVM.profileButton.onEvent(\.didTap) {
+         mainVM.profileButton.on(\.didTap) {
             Asset.router?.route(\.profile, navType: .push)
          }
 

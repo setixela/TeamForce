@@ -60,15 +60,15 @@ final class TransactScene<Asset: AssetProtocol>: DoubleStacksModel, Assetable, S
       works: works,
       stateDelegate: stateDelegate,
       events: TransactScenarioEvents(
-         userSearchTXTFLDBeginEditing: viewModels.userSearchTextField.onEvent(\.didBeginEditing),
-         userSearchTFDidEditingChanged: viewModels.userSearchTextField.onEvent(\.didEditingChanged),
+         userSearchTXTFLDBeginEditing: viewModels.userSearchTextField.on(\.didBeginEditing),
+         userSearchTFDidEditingChanged: viewModels.userSearchTextField.on(\.didEditingChanged),
          userSelected: viewModels.foundUsersList.onEvent(\.didSelectRow),
-         sendButtonEvent: viewModels.sendButton.onEvent(\.didTap),
-         amountInputChanged: viewModels.amountInputModel.textField.onEvent(\.didEditingChanged),
+         sendButtonEvent: viewModels.sendButton.on(\.didTap),
+         amountInputChanged: viewModels.amountInputModel.textField.on(\.didEditingChanged),
          reasonInputChanged: viewModels.reasonTextView.onEvent(\.didEditingChanged),
          anonymousSetOff: viewModels.options.anonimParamModel.switcher.onEvent(\.turnedOff),
          anonymousSetOn: viewModels.options.anonimParamModel.switcher.onEvent(\.turnedOn),
-         cancelButtonDidTap: viewModels.closeButton.onEvent(\.didTap)
+         cancelButtonDidTap: viewModels.closeButton.on(\.didTap)
       )
    )
 
@@ -76,7 +76,7 @@ final class TransactScene<Asset: AssetProtocol>: DoubleStacksModel, Assetable, S
       works: works,
       stateDelegate: stateDelegate,
       events: ImagePickingScenarioEvents(
-         startImagePicking: viewModels.addPhotoButton.onEvent(\.didTap),
+         startImagePicking: viewModels.addPhotoButton.on(\.didTap),
          addImageToBasket: imagePicker.onEvent(\.didImagePicked),
          removeImageFromBasket: viewModels.pickedImages.on(\.didCloseImage),
          didMaximumReach: viewModels.pickedImages.on(\.didMaximumReached)

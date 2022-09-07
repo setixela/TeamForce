@@ -12,15 +12,16 @@ enum TapGestureState {
    case tapGesturing
 }
 
-final class ImageViewModel: BaseViewModel<PaddingImageView>, Communicable {
-   var events = ButtonEvents()
+final class ImageViewModel: BaseViewModel<PaddingImageView>, Eventable {
+   typealias Events = ButtonEvents
+   var events = [Int: LambdaProtocol?]()
 
    override func start() {
       contentMode(.scaleAspectFit)
    }
 
    @objc func didTap() {
-      sendEvent(\.didTap)
+      send(\.didTap)
       print("Did tap")
 
       animateTap()

@@ -15,7 +15,9 @@ struct ButtonMode: ModeProtocol {
 final class SegmentButton<Design: DSP>: BaseViewModel<StackViewExtended>, SegmentButtonModelProtocol
 {
    var modes: ButtonMode = .init()
-   var events: ButtonEvents = .init()
+
+   typealias Events = ButtonEvents
+   var events = [Int: LambdaProtocol?]()
 
    typealias State = StackState
 
@@ -52,8 +54,8 @@ final class SegmentButton<Design: DSP>: BaseViewModel<StackViewExtended>, Segmen
          selector,
       ])
 
-      button.onEvent(\.didTap) { [weak self]
-         in self?.sendEvent(\.didTap)
+      button.on(\.didTap) { [weak self]
+         in self?.send(\.didTap)
       }
    }
 }

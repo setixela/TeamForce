@@ -17,8 +17,11 @@ extension CurrencyButtonDT {
    }
 }
 
-final class CurrencyButtonDT<Design: DSP>: CurrencyLabelDT<Design>, Communicable, Modable {
-   var events = ButtonEvents()
+final class CurrencyButtonDT<Design: DSP>: CurrencyLabelDT<Design>, Eventable, Modable {
+
+   typealias Events = ButtonEvents
+   var events = [Int: LambdaProtocol?]()
+
    var modes = ButtonMode()
 
    var currencyValue = 0
@@ -47,7 +50,7 @@ final class CurrencyButtonDT<Design: DSP>: CurrencyLabelDT<Design>, Communicable
    }
 
    @objc private func didTap() {
-      sendEvent(\.didTap)
+      send(\.didTap)
       animateTapWithShadow()
    }
 }

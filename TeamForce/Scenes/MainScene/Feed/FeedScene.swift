@@ -24,9 +24,9 @@ final class FeedScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>,
       stateDelegate: stateDelegate,
       events: FeedScenarioInputEvents(
          loadFeedForCurrentUser: onEvent(\.userDidLoad),
-         presentAllFeed: viewModels.filterButtons.onEvent(\.didTapAll),
-         presentMyFeed: viewModels.filterButtons.onEvent(\.didTapMy),
-         presentPublicFeed: viewModels.filterButtons.onEvent(\.didTapPublic)
+         presentAllFeed: viewModels.filterButtons.on(\.didTapAll),
+         presentMyFeed: viewModels.filterButtons.on(\.didTapMy),
+         presentPublicFeed: viewModels.filterButtons.on(\.didTapPublic)
       )
    )
 

@@ -76,7 +76,7 @@ final class SideBarModel<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>
       configureLogoutUseCase()
 
       userModel
-         .onEvent(\.didTap) {
+         .on(\.didTap) {
             print("User model did tap")
 //            ProductionAsset.router?.route(\.profile, navType: .push, payload: ())
          }
@@ -99,7 +99,7 @@ extension SideBarModel {
 
    private func configureLogoutUseCase() {
       item4
-         .onEvent(\.didTap)
+         .on(\.didTap)
          .doNext(work: useCase.logout)
          .onSuccess {
             UserDefaults.standard.setIsLoggedIn(value: false)

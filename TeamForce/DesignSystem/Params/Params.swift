@@ -33,6 +33,7 @@ protocol ParamsProtocol: InitProtocol, Designable {
    var panelButtonShadow: Shadow { get }
    var panelMainButtonShadow: Shadow { get }
    var cellShadow: Shadow { get }
+   var profileUserPanelShadow: Shadow { get }
    // paddings
    var contentPadding: UIEdgeInsets { get }
    var contentVerticalPadding: UIEdgeInsets  { get }
@@ -82,6 +83,12 @@ struct ParamBuilder<Design: DSP>: ParamsProtocol {
       offset: .init(x: 0, y: 4),
       color: Design.color.iconContrast,
       opacity: 0.12
+   ) }
+   var profileUserPanelShadow: Shadow { .init(
+      radius: 12,
+      offset: .init(x: 0, y: 12),
+      color: UIColor(red: 0.794, green: 0.816, blue: 0.858, alpha: 0.25), // Design.color.iconContrast,
+      opacity: 1.0
    ) }
    // paddings
    var contentPadding: UIEdgeInsets { .init(top: 12, left: 16, bottom: 12, right: 16) }

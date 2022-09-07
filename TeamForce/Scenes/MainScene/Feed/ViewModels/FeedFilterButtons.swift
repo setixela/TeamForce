@@ -8,41 +8,41 @@
 import Foundation
 import ReactiveWorks
 
-final class FeedFilterButtons<Design: DSP>: StackModel, Designable, Communicable {
+final class FeedFilterButtons<Design: DSP>: StackModel, Designable, Eventable {
    struct Events: InitProtocol {
-      var didTapAll: Event<Void>?
-      var didTapMy: Event<Void>?
-      var didTapPublic: Event<Void>?
+      var didTapAll: Void?
+      var didTapMy: Void?
+      var didTapPublic: Void?
    }
 
-   var events: Events = .init()
+   var events = [Int: LambdaProtocol?]()
 
    lazy var buttonAll = SecondaryButtonDT<Design>()
       .title("Все")
-      .onEvent(\.didTap) { [weak self] in
+      .on(\.didTap) { [weak self] in
          self?.select(0)
-         self?.sendEvent(\.didTapAll)
+         self?.send(\.didTapAll)
       }
 
    lazy var buttonMy = SecondaryButtonDT<Design>()
       .title("Мои")
-      .onEvent(\.didTap) { [weak self] in
+      .on(\.didTap) { [weak self] in
          self?.select(1)
-         self?.sendEvent(\.didTapMy)
+         self?.send(\.didTapMy)
       }
 
    lazy var buttonPublic = SecondaryButtonDT<Design>()
       .title("Публичные")
-      .onEvent(\.didTap) { [weak self] in
+      .on(\.didTap) { [weak self] in
          self?.select(2)
-         self?.sendEvent(\.didTapPublic)
+         self?.send(\.didTapPublic)
       }
 
    lazy var buttonCalendar = SecondaryButtonDT<Design>()
       .image(Design.icon.calendar)
       .width(52)
       .backColor(Design.color.backgroundBrandSecondary)
-      .onEvent(\.didTap) { [weak self] in
+      .on(\.didTap) { [weak self] in
          self?.select(3)
       }
 

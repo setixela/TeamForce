@@ -23,10 +23,10 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
       works: LoginWorks<Asset>(),
       stateDelegate: viewModels.setState,
       events: LoginScenarioEvents(
-         userNameStringEvent: viewModels.userNameInputModel.mainModel.textField.onEvent(\.didEditingChanged),
-         smsCodeStringEvent: viewModels.smsCodeInputModel.mainModel.textField.onEvent(\.didEditingChanged),
-         getCodeButtonEvent: viewModels.getCodeButton.onEvent(\.didTap),
-         loginButtonEvent: viewModels.loginButton.onEvent(\.didTap)
+         userNameStringEvent: viewModels.userNameInputModel.mainModel.textField.on(\.didEditingChanged),
+         smsCodeStringEvent: viewModels.smsCodeInputModel.mainModel.textField.on(\.didEditingChanged),
+         getCodeButtonEvent: viewModels.getCodeButton.on(\.didTap),
+         loginButtonEvent: viewModels.loginButton.on(\.didTap)
       )
    )
 

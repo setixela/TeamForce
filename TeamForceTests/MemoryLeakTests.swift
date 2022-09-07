@@ -93,7 +93,7 @@ import XCTest
 //            userSearchTXTFLDBeginEditing: viewModels.userSearchTextField.onEvent(\.didBeginEditing),
 //            userSearchTFDidEditingChanged: viewModels.userSearchTextField.onEvent(\.didEditingChanged),
 //            userSelected: viewModels.tableModel.onEvent(\.didSelectRow),
-//            sendButtonEvent: viewModels.sendButton.onEvent(\.didTap),
+//            sendButtonEvent: viewModels.sendButton.on(\.didTap),
 //            transactInputChanged: viewModels.transactInputViewModel.textField.onEvent(\.didEditingChanged),
 //            reasonInputChanged: viewModels.reasonTextView.onEvent(\.didEditingChanged)
 //         )

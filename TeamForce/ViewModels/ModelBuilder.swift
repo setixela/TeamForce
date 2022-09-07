@@ -9,5 +9,7 @@ import Foundation
 
 struct ModelBuilder<Design: DSP>: ModelBuilderProtocol {
    typealias Transact = TransactBuilder<Design>
+   typealias Profile = ProfileBuilder<Design>
+
    typealias Common = CommonBuilder<Design>
 }

@@ -194,7 +194,7 @@ final class ProfileEditScene<Asset: AssetProtocol>: BaseSceneModel<
          }
       }
       print("I am here 2")
-      saveButton.onEvent(\.didTap) {
+      saveButton.on(\.didTap) {
          guard let emailId = emailId else {
             return
          }

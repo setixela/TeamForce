@@ -42,7 +42,7 @@ final class SystemErrorBlockVM<Design: DSP>: BaseViewModel<StackViewExtended>,
          button
       ]))
 
-      button.onEvent(\.didTap) { [weak self] in
+      button.on(\.didTap) { [weak self] in
          self?.send(\.didClosed)
       }
    }

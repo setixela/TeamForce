@@ -14,17 +14,19 @@ enum IconLabelState {
 }
 
 struct IconLabelHorizontalModelEvents: InitProtocol {
-   var didTap: Event<Void>?
+   var didTap: Void?
 }
 
 final class IconLabelX<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>,
-   Assetable, Communicable
+   Assetable, Eventable
 {
-   var events: IconLabelHorizontalModelEvents = .init()
+   typealias Events = IconLabelHorizontalModelEvents
+   var events = [Int: LambdaProtocol?]()
 
    let label = Design.label.body2
    let icon = ImageViewModel()
 
+   
    required init() {
       super.init()
    }
@@ -44,7 +46,7 @@ final class IconLabelX<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>,
    }
 
    @objc private func clickAction(sender: UITapGestureRecognizer) {
-      sendEvent(\.didTap)
+      send(\.didTap)
       print("Did tap1")
    }
 }

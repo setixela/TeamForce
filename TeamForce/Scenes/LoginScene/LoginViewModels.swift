@@ -93,7 +93,7 @@ extension LoginViewModels: StateMachine {
       case .smsInputParseSuccess(let value):
          smsCodeInputModel.mainModel.textField.set(.text(value))
          loginButton.set(Design.state.button.default)
-         loginButton.sendEvent(\.didTap)
+         loginButton.send(\.didTap)
          activityIndicator.hidden(true)
 
       case .smsInputParseError(let value):

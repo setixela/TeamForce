@@ -15,6 +15,8 @@ protocol CommonModelBuilder: InitProtocol, Designable {
    var systemErrorBlock: SystemErrorBlockVM<Design> { get }
 
    var imagePicker: ImagePickerViewModel { get }
+
+   var bottomPopupPresenter: BottomPopupPresenter { get }
 }
 
 struct CommonBuilder<Design: DSP>: CommonModelBuilder {
@@ -24,4 +26,6 @@ struct CommonBuilder<Design: DSP>: CommonModelBuilder {
    var systemErrorBlock: SystemErrorBlockVM<Design> { .init()  }
 
    var imagePicker: ImagePickerViewModel { .init() }
+
+   var bottomPopupPresenter: BottomPopupPresenter { .init() }
 }

@@ -37,7 +37,7 @@ final class PickedImagePanel<Design: DSP>: StackModel, Designable, Eventable {
 
       arrangedModels(Array(picked.values))
 
-      pickedImage.closeButton.onEvent(\.didTap) { [weak self] in
+      pickedImage.closeButton.on(\.didTap) { [weak self] in
          guard let self = self else { return }
 
          self.send(\.didCloseImage, image)

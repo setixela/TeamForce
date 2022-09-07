@@ -10,16 +10,19 @@ import ReactiveWorks
 import UIKit
 
 struct TextFieldEvents: InitProtocol {
-   var didEditingChanged: Event<String>?
-   var didTap: Event<String>?
-   var didBeginEditing: Event<String>?
+   var didEditingChanged: String?
+   var didTap: String?
+   var didBeginEditing: String?
 }
 
 class TextFieldModel: BaseViewModel<PaddingTextField>,
    Stateable3,
+   Eventable,
    UITextFieldDelegate
 {
-   var events: TextFieldEvents = .init()
+   typealias Events = TextFieldEvents
+
+   var events = [Int: LambdaProtocol?]()
 
    override func start() {
       set(.backColor(.lightGray.withAlphaComponent(0.3)))
@@ -32,12 +35,12 @@ class TextFieldModel: BaseViewModel<PaddingTextField>,
    @objc func changValue() {
       guard let text = view.text else { return }
 
-      sendEvent(\.didEditingChanged, text)
+      send(\.didEditingChanged, text)
    }
 
    @objc func didEditingBegin() {
       guard let text = view.text else { return }
-      sendEvent(\.didBeginEditing, text)
+      send(\.didBeginEditing, text)
       print("Did tap textfield")
    }
 
@@ -60,4 +63,3 @@ extension TextFieldModel {
    typealias State3 = LabelState
 }
 
-extension TextFieldModel: Communicable {}

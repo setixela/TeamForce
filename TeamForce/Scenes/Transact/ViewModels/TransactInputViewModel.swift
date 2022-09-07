@@ -121,11 +121,11 @@ private extension TransactInputViewModel {
          defaultValues.append((button.currencyValue.toString))
 
          button
-            .onEvent(\.didTap) {
+            .on(\.didTap) {
            //    self?.textField.text("\(button.currencyValue)")
              // self?.setState(.normal())
                button.setMode(\.selected)
-               self?.textField.sendEvent(\.didEditingChanged, "\(button.currencyValue)")
+               self?.textField.send(\.didEditingChanged, "\(button.currencyValue)")
             }
       }
    }

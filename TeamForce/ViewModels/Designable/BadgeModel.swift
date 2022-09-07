@@ -36,7 +36,7 @@ class BadgeModel<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>, Asseta
         ]))
 
         textFieldModel
-          .onEvent(\.didTap) {_ in 
+          .on(\.didTap) {_ in 
                self.titleLabel.set(.hidden(false))
            }
     }
