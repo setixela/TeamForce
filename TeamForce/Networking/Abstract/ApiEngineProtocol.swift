@@ -12,4 +12,5 @@ import UIKit
 protocol ApiEngineProtocol {
    func process(endpoint: EndpointProtocol) -> Promise<ApiEngineResult>
    func processWithImage(endpoint: EndpointProtocol, image: UIImage) -> Promise<ApiEngineResult>
+   func processPUT(endpoint: EndpointProtocol) -> Promise<ApiEngineResult>
 }

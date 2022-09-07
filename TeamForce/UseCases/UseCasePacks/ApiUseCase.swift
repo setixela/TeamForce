@@ -185,6 +185,30 @@ final class ApiUseCase<Asset: AssetProtocol>: InitProtocol, Assetable, WorkBaske
       )
       .retainedWork(retainer)
    }
+   
+   var createContact: CreateContactUseCase.WRK {
+      CreateContactUseCase(
+         safeStringStorage: safeStringStorage,
+         createContactApiWorker: createContactApiWorker
+      )
+      .retainedWork(retainer)
+   }
+   
+   var updateProfile: UpdateProfileUseCase.WRK {
+      UpdateProfileUseCase(
+         safeStringStorage: safeStringStorage,
+         updateProfileApiWorker: updateProfileApiWorker
+      )
+      .retainedWork(retainer)
+   }
+   
+   var createFewContacts: CreateFewContactsUseCase.WRK {
+      CreateFewContactsUseCase(
+         safeStringStorage: safeStringStorage,
+         createFewContactsApiWorker: createFewContactsApiWorker
+      )
+      .retainedWork(retainer)
+   }
 
    // MARK: - Dependencies
 
@@ -209,4 +233,9 @@ final class ApiUseCase<Asset: AssetProtocol>: InitProtocol, Assetable, WorkBaske
    private var updateProfileImageApiWorker: UpdateProfileImageApiWorker { .init(apiEngine: Asset.service.apiEngine) }
    private var updateContactApiWorker: UpdateContactApiWorker { .init(apiEngine:
        Asset.service.apiEngine) }
+   private var createContactApiWorker: CreateContactApiWorker { .init(apiEngine:
+       Asset.service.apiEngine) }
+   private var updateProfileApiWorker: UpdateProfileApiWorker { .init(apiEngine:
+       Asset.service.apiEngine) }
+   private var createFewContactsApiWorker: CreateFewContactsApiWorker { .init(apiEngine: Asset.service.apiEngine) }
 }
