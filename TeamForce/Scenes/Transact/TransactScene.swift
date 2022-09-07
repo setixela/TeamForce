@@ -48,7 +48,7 @@ enum TransactState {
    case cancelButtonPressed
 }
 
-final class TransactScene<Asset: AssetProtocol>: DoubleStacksModel, Assetable, Scenarible2, Eventable {
+final class TransactScene<Asset: AssetProtocol>: ModalDoubleStackModel<Asset>, Scenarible2, Eventable {
    typealias Events = TransactEvents
    typealias State = StackState
 
@@ -68,7 +68,7 @@ final class TransactScene<Asset: AssetProtocol>: DoubleStacksModel, Assetable, S
          reasonInputChanged: viewModels.reasonTextView.onEvent(\.didEditingChanged),
          anonymousSetOff: viewModels.options.anonimParamModel.switcher.onEvent(\.turnedOff),
          anonymousSetOn: viewModels.options.anonimParamModel.switcher.onEvent(\.turnedOn),
-         cancelButtonDidTap: viewModels.closeButton.on(\.didTap)
+         cancelButtonDidTap: closeButton.on(\.didTap)
       )
    )
 
@@ -127,29 +127,17 @@ final class TransactScene<Asset: AssetProtocol>: DoubleStacksModel, Assetable, S
    }
 
    func configure() {
-      let shadow = Shadow(radius: 50, offset: .zero, color: Design.color.iconContrast, opacity: 0.33)
-      topStackModel
+      //
+      title
+         .set(Design.state.label.body3)
+         .text(Design.Text.title.newTransact)
+      //
+      bodyStack
          .safeAreaOffsetDisabled()
          .axis(.vertical)
          .distribution(.fill)
          .alignment(.fill)
-         .backColor(Design.color.background)
-         .padding(UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16))
-         .cornerRadius(Design.params.cornerRadiusMedium)
-         .shadow(shadow)
          .arrangedModels([
-            //
-            Wrapped3X(
-               Spacer(50),
-               LabelModel()
-                  .alignment(.center)
-                  .set(Design.state.label.body3)
-                  .text(Design.Text.title.newTransact),
-               viewModels.closeButton
-            )
-            .height(64)
-            .alignment(.center)
-            .distribution(.equalCentering),
             //
             viewModels.userSearchTextField,
             Grid.x8.spacer,
@@ -161,9 +149,8 @@ final class TransactScene<Asset: AssetProtocol>: DoubleStacksModel, Assetable, S
             viewModelsWrapper,
             Spacer(16)
          ])
-         .disableBottomRadius(Design.params.cornerRadiusMedium)
-
-      bottomStackModel
+      //
+      footerStack
          .set(Design.state.stack.bottomPanel)
          .arrangedModels([
             viewModels.sendButton
@@ -319,7 +306,7 @@ private extension TransactScene {
       viewModels.reasonTextView.set(.hidden(true))
       viewModels.options.hidden(true)
       viewModels.addPhotoButton.hidden(true)
-      bottomStackModel.hidden(true)
+      footerStack.hidden(true)
       viewModels.notFoundBlock.hidden(true)
       viewModels.userSearchTextField.hidden(false)
    }
@@ -335,7 +322,7 @@ private extension TransactScene {
       viewModels.reasonTextView.set(.hidden(false))
       viewModels.options.hidden(false)
       viewModels.addPhotoButton.hidden(false)
-      bottomStackModel.hidden(false)
+      footerStack.hidden(false)
    }
 }
 

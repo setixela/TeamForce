@@ -34,7 +34,7 @@ final class SideBarUserModel<Design: DesignProtocol>: BaseViewModel<StackViewExt
          .set(.distribution(.equalSpacing))
          .set(.alignment(.leading))
          .set(.padding(.init(top: 12, left: 16, bottom: 12, right: 16)))
-         .set(.models([
+         .set(.arrangedModels([
             self.avatar,
             Spacer(30),
             self.userName,

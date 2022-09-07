@@ -92,7 +92,7 @@ final class ProfileScene<Asset: AssetProtocol>: BaseSceneModel<
          .set(.distribution(.fill))
          .set(.alignment(.fill))
          .padTop(-32)
-         .set(.models([
+         .set(.arrangedModels([
             userModel,
             Spacer(32),
             infoStack,

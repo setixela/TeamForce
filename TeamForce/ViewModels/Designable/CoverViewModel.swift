@@ -23,7 +23,7 @@ final class CoverViewModel<Asset: AssetProtocol>: BaseViewModel<StackViewExtende
       set(.distribution(.fill))
       set(.alignment(.center))
       set(.axis(.vertical))
-      set(.models([
+      set(.arrangedModels([
          Spacer(28),
          titleModel,
          illustrationModel,

@@ -102,7 +102,7 @@ final class SettingsViewModel<Asset: AssetProtocol>: BaseViewModel<StackViewExte
       set(.axis(.vertical))
       set(.distribution(.fill))
       set(.alignment(.fill))
-      set(.models([
+      set(.arrangedModels([
          general,
          Spacer(8),
          help,

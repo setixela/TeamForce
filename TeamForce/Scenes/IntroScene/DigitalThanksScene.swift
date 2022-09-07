@@ -34,7 +34,7 @@ final class DigitalThanksScene<Asset: AssetProtocol>: BaseSceneModel<
       mainVM
          .backColor(Design.color.background)
 
-      mainVM.topStackModel
+      mainVM.bodyStack
          .set(Design.state.stack.default)
          .set(.alignment(.center))
          .arrangedModels([
@@ -45,7 +45,7 @@ final class DigitalThanksScene<Asset: AssetProtocol>: BaseSceneModel<
                .size(.square(280))
          ])
 
-      mainVM.bottomStackModel
+      mainVM.footerStack
          .set(Design.state.stack.bottomPanel)
          .arrangedModels([
             Grid.x1.spacer,

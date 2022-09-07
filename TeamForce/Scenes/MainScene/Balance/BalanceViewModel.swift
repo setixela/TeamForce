@@ -104,7 +104,7 @@ final class BalanceScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>
       set(.axis(.vertical))
       set(.distribution(.fill))
       set(.alignment(.fill))
-      set(.models([
+      set(.arrangedModels([
          selectPeriod,
          Spacer(20),
          frameCellStackModel,

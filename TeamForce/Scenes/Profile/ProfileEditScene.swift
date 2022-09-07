@@ -140,14 +140,14 @@ final class ProfileEditScene<Asset: AssetProtocol>: StackModel, Assetable {
          .set(.distribution(.fill))
          .set(.alignment(.fill))
          // .padTop(-32)
-         .set(.models([
+         .set(.arrangedModels([
             userModel,
             Spacer(32),
             infoStack,
             Grid.xxx.spacer,
          ]))
 
-//      mainVM.bottomStackModel
+//      mainVM.footerStack
 //         .set(Design.state.stack.bottomPanel)
 //         .arrangedModels([
 //            saveButton,

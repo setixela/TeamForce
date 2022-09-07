@@ -43,7 +43,7 @@ final class LabelIconX<Design: DesignProtocol>: BaseViewModel<StackViewExtended>
       set(.axis(.horizontal))
       set(.distribution(.fill))
       set(.alignment(.fill))
-      set(.models([
+      set(.arrangedModels([
          label,
          Spacer(),
          iconModel

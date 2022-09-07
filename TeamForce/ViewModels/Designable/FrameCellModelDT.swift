@@ -33,7 +33,7 @@ final class FrameCellModelDT<Design: DesignProtocol>: BaseViewModel<StackViewExt
       set(.padding(.init(top: 28, left: 20, bottom: 22, right: 16)))
       set(.cornerRadius(Design.params.cornerRadiusMedium))
       width(193)
-      set(.models([
+      set(.arrangedModels([
          headerLabel,
          Spacer(10),
          textLabel,

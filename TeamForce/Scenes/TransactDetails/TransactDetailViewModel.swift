@@ -30,7 +30,7 @@ final class TransactDeatilViewModel<Asset: AssetProtocol>: BaseSceneModel<
       .set(.distribution(.equalCentering))
       .set(.alignment(.center))
       .set(.spacing(8))
-      .set(.models([
+      .set(.arrangedModels([
          dateLabel,
          transactionOwnerLabel,
          amountLabel,
@@ -106,7 +106,7 @@ final class TransactDeatilViewModel<Asset: AssetProtocol>: BaseSceneModel<
       .set(.axis(.vertical))
       .set(.distribution(.fill))
       .set(.alignment(.center))
-      .set(.models([
+      .set(.arrangedModels([
          firstStack,
       ]))
 
@@ -140,7 +140,7 @@ final class TransactDeatilViewModel<Asset: AssetProtocol>: BaseSceneModel<
 
    private func configure() {
      
-      mainVM.topStackModel
+      mainVM.bodyStack
          .set(Design.state.stack.default)
          .alignment(.center)
          .set(.backColor(Design.color.backgroundSecondary))
@@ -153,7 +153,7 @@ final class TransactDeatilViewModel<Asset: AssetProtocol>: BaseSceneModel<
             Grid.x64.spacer,
          ])
 
-      mainVM.bottomStackModel
+      mainVM.footerStack
          .set(Design.state.stack.bottomPanel)
          .arrangedModels([
             infoStack,

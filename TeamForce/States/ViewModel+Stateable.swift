@@ -66,7 +66,7 @@ enum StackState {
    case borderWidth(CGFloat)
    case borderColor(UIColor)
    case height(CGFloat)
-   case models([UIViewModel])
+   case arrangedModels([UIViewModel])
    case hidden(Bool)
    case backView(UIView, inset: UIEdgeInsets = .zero)
    case backImage(UIImage)
@@ -88,7 +88,7 @@ extension ViewModelProtocol where Self: Stateable, View: StackViewExtended {
          alignment(value)
       case .padding(let value):
          padding(value)
-      case .models(let value):
+      case .arrangedModels(let value):
          arrangedModels(value)
       case .backView(let value, let value2):
          backView(value, inset: value2)

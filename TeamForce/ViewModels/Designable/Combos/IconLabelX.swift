@@ -34,7 +34,7 @@ final class IconLabelX<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>,
    override func start() {
       set(.axis(.horizontal))
       set(.alignment(.center))
-      set(.models([
+      set(.arrangedModels([
          icon,
          Spacer(20),
          label,

@@ -33,7 +33,7 @@ final class CustomCellModel<Design: DesignProtocol>: BaseViewModel<StackViewExte
     override func start() {
 //        view.backgroundColor = 
         set(.axis(.vertical))
-        set(.models([title,
+        set(.arrangedModels([title,
                      label]))
         set(.height(44))
     }

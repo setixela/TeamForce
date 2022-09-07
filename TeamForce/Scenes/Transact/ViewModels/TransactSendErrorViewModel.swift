@@ -35,7 +35,7 @@ final class SystemErrorBlockVM<Design: DSP>: BaseViewModel<StackViewExtended>,
       set(.cornerRadius(Design.params.cornerRadius))
       set(.alignment(.fill))
 
-      set(.models([
+      set(.arrangedModels([
          Grid.x24.spacer,
          errorBlock,
          Grid.x24.spacer,

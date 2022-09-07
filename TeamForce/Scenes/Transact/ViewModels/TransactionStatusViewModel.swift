@@ -45,7 +45,7 @@ final class TransactionStatusViewModel<Design: DSP>: BaseViewModel<StackViewExte
       set(.cornerRadius(Design.params.cornerRadius))
       set(.alignment(.fill))
 
-      set(.models([
+      set(.arrangedModels([
          Spacer(20),
          image,
          Spacer(20),

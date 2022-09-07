@@ -19,7 +19,7 @@ final class TransactViewModels<Design: DSP>: Designable {
    lazy var addPhotoButton = Design.model.transact.addPhotoButton
    lazy var sendButton = Design.model.transact.sendButton
    lazy var pickedImages = Design.model.transact.pickedImagesPanel
-   lazy var closeButton = Design.model.transact.closeButton
+//   lazy var closeButton = Design.model.transact.closeButton
    lazy var notFoundBlock = Design.model.transact.userNotFoundInfoBlock
    lazy var options = Design.model.transact.transactOptionsBlock
 }

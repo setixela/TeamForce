@@ -26,7 +26,7 @@ final class DoubleLabelPairModel<Design: DesignProtocol>: BaseViewModel<StackVie
          .set(.cornerRadius(Design.params.cornerRadius))
          .set(.distribution(.fillProportionally))
          .set(.alignment(.fill))
-         .set(.models([
+         .set(.arrangedModels([
             doubleLabelLeft,
             doubleLabelRight
          ]))
