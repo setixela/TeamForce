@@ -69,6 +69,9 @@ protocol TitleTextsProtocol: InitProtocol {
    var userNotFound: String { get }
    var reasonPlaceholder: String { get }
 
+   // profile
+   var myProfile: String { get }
+
    // errors
    var wrongUsername: String { get }
    var wrongCode: String { get }
@@ -134,6 +137,9 @@ struct TitleTexts: TitleTextsProtocol {
    var thanksWereSend: String { "Спасибо отправлено" }
    var recipient: String { "Получатель: @" }
    var userNotFound: String { "По вашему запросу\nникого не нашли" }
+
+   // profile
+   var myProfile: String { "Мои данные" }
 
    // errors
    var wrongUsername: String { "Ошибка. Пользователь не найден" }

@@ -9,6 +9,7 @@ import ReactiveWorks
 
 protocol TypographyElements: InitProtocol, DesignElementable {
    var `default`: DesignElement { get }
+   var defaultBrand: DesignElement { get }
    var defaultError: DesignElement { get }
 
    var headline2: DesignElement { get }
@@ -37,15 +38,14 @@ protocol TypographyElements: InitProtocol, DesignElementable {
 
 // MARK: - Labels Protocol
 
-protocol LabelProtocol: TypographyElements
-   where DesignElement == LabelModel {}
+protocol LabelProtocol: TypographyElements where DesignElement == LabelModel {}
 
 // MARK: - Labels
 
 struct LabelBuilder<Design: DSP>: LabelProtocol, Designable {
-
    var `default`: LabelModel { .init(Design.state.label.default) }
-   var defaultError: LabelModel  { .init(Design.state.label.defaultError) }
+   var defaultBrand: LabelModel { .init(Design.state.label.defaultBrand) }
+   var defaultError: LabelModel { .init(Design.state.label.defaultError) }
 
    var headline2: LabelModel { .init(Design.state.label.headline2) }
    var headline3: LabelModel { .init(Design.state.label.headline3) }
@@ -66,7 +66,7 @@ struct LabelBuilder<Design: DSP>: LabelProtocol, Designable {
    var caption: LabelModel { .init(Design.state.label.caption) }
    var captionSecondary: LabelModel { .init(Design.state.label.captionSecondary) }
 
-   var captionError: LabelModel { .init(Design.state.label.captionError)  }
+   var captionError: LabelModel { .init(Design.state.label.captionError) }
    var caption2: LabelModel { .init(Design.state.label.caption2) }
    var counter: LabelModel { .init(Design.state.label.counter) }
 }
@@ -74,10 +74,14 @@ struct LabelBuilder<Design: DSP>: LabelProtocol, Designable {
 protocol LabelStateProtocol: TypographyElements where DesignElement == [LabelState] {}
 
 struct LabelStateBuilder<Design: DSP>: LabelStateProtocol, Designable {
-
    var `default`: [LabelState] { [
       .font(.systemFont(ofSize: 14, weight: .regular)),
       .textColor(Design.color.text)
+   ] }
+
+   var defaultBrand: [LabelState] { [
+      .font(.systemFont(ofSize: 14, weight: .regular)),
+      .textColor(Design.color.textBrand)
    ] }
 
    var defaultError: [LabelState] { [
@@ -155,10 +159,10 @@ struct LabelStateBuilder<Design: DSP>: LabelStateProtocol, Designable {
       .textColor(Design.color.textSecondary)
    ] }
 
-   var captionError:  [LabelState] { [
+   var captionError: [LabelState] { [
       .font(.systemFont(ofSize: 12, weight: .regular)),
       .textColor(Design.color.textError)
-   ]}
+   ] }
 
    var caption2: [LabelState] { [
       .font(.systemFont(ofSize: 10, weight: .regular)),

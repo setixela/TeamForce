@@ -19,7 +19,6 @@ protocol TransactModelBuilder: InitProtocol, Designable {
    var addPhotoButton: ButtonModel { get }
    var foundUsersList: StackItemsModel { get }
    var pickedImagesPanel: PickedImagePanel<Design> { get }
-//   var closeButton: ButtonModel { get }
    var userNotFoundInfoBlock: Wrapped2Y<ImageViewModel, LabelModel> { get }
    var transactOptionsBlock: TransactOptionsVM<Design> { get }
    var recipientCell: SendCoinRecipentCell<Design> { get }
@@ -92,11 +91,6 @@ struct TransactBuilder<Design: DSP>: TransactModelBuilder {
    }
 
    var pickedImagesPanel: PickedImagePanel<Design> { .init() }
-
-//   var closeButton: ButtonModel { .init()
-//      .title(Design.Text.title.close)
-//      .textColor(Design.color.textBrand)
-//   }
 
    var userNotFoundInfoBlock: Wrapped2Y<ImageViewModel, LabelModel> {
       Wrapped2Y(

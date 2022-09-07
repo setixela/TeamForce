@@ -10,31 +10,8 @@ import UIKit
 
 struct ProfileEditViewEvent: InitProtocol {}
 
-final class ProfileEditScene<Asset: AssetProtocol>: StackModel, Assetable {
-   lazy var userModel = Combos<SComboMRD<ImageViewModel, LabelModel, LabelModel>>()
-      .setMain { image in
-         image
-            .image(Design.icon.avatarPlaceholder)
-            .cornerRadius(52 / 2)
-            .set(.size(.square(52)))
-      } setRight: { fullName in
-         fullName
-            .textColor(Design.color.text)
-            .padTop(-8)
-            .padLeft(12)
-      } setDown: { telegram in
-         telegram
-            .textColor(Design.color.textBrand)
-            .padLeft(12)
-            .set(Design.state.label.body2)
-      }
-      .alignment(.center)
-      .distribution(.fill)
-      .backColor(Design.color.backgroundInfoSecondary)
-      .cornerRadius(Design.params.cornerRadius)
-      .padding(Design.params.cellContentPadding)
-      .shadow(Design.params.panelMainButtonShadow)
-      .height(76)
+final class ProfileEditScene<Asset: AssetProtocol>: ModalDoubleStackModel<Asset> {
+   lazy var userModel = Design.model.profile.userEditPanel
 
    lazy var firstname = ProfileEditTitleBodyDT<Design>()
       .setAll {
@@ -128,30 +105,24 @@ final class ProfileEditScene<Asset: AssetProtocol>: StackModel, Assetable {
    private var currentUser: UserData?
 
    override func start() {
-    //  vcModel?.sendEvent(\.setTitle, "Профиль")
+      super.start()
+
+      //  vcModel?.sendEvent(\.setTitle, "Профиль")
       configure()
       configureProfile()
    }
 
    private func configure() {
-      set(Design.state.stack.bodyStack)
-      set(.backColor(Design.color.backgroundSecondary))
-         .set(.axis(.vertical))
-         .set(.distribution(.fill))
-         .set(.alignment(.fill))
-         // .padTop(-32)
-         .set(.arrangedModels([
+      title
+         .text(Design.Text.title.myProfile)
+
+      bodyStack
+         .arrangedModels([
             userModel,
             Spacer(32),
             infoStack,
             Grid.xxx.spacer,
-         ]))
-
-//      mainVM.footerStack
-//         .set(Design.state.stack.bottomPanel)
-//         .arrangedModels([
-//            saveButton,
-//         ])
+         ])
    }
 
    private func configureProfile() {

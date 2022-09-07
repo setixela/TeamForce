@@ -22,13 +22,12 @@ struct ProfileBuilder<Design: DSP>: ProfileModelBuilder {
          fullName
             .textColor(Design.color.text)
             .padLeft(Grid.x12.value)
-            .height(Grid.x20.value)
+            .height(Grid.x24.value)
       } setDown: { telegram in
          telegram
-            .textColor(Design.color.textBrand)
+            .set(Design.state.label.defaultBrand)
             .padLeft(Grid.x12.value)
-            .height(Grid.x20.value)
-            .set(Design.state.label.body2)
+            .height(Grid.x24.value)
       } setRight2: { button in
          button
             .size(.square(24))
