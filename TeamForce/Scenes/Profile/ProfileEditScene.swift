@@ -10,12 +10,7 @@ import UIKit
 
 struct ProfileEditViewEvent: InitProtocol {}
 
-final class ProfileEditScene<Asset: AssetProtocol>: BaseSceneModel<
-   DefaultVCModel,
-   DoubleStacksModel,
-   Asset,
-   Void
-> {
+final class ProfileEditScene<Asset: AssetProtocol>: StackModel, Assetable {
    lazy var userModel = Combos<SComboMRD<ImageViewModel, LabelModel, LabelModel>>()
       .setMain { image in
          image
@@ -53,7 +48,7 @@ final class ProfileEditScene<Asset: AssetProtocol>: BaseSceneModel<
       .padding(Design.params.contentPadding)
       .cornerRadius(Design.params.cornerRadius)
       .alignment(.fill)
-   
+
    lazy var surname = ProfileEditTitleBodyDT<Design>()
       .setAll {
          $0.text("Фамилия")
@@ -66,7 +61,7 @@ final class ProfileEditScene<Asset: AssetProtocol>: BaseSceneModel<
       .padding(Design.params.contentPadding)
       .cornerRadius(Design.params.cornerRadius)
       .alignment(.fill)
-   
+
    lazy var middleName = ProfileEditTitleBodyDT<Design>()
       .setAll {
          $0.text("Отчество")
@@ -79,7 +74,7 @@ final class ProfileEditScene<Asset: AssetProtocol>: BaseSceneModel<
       .padding(Design.params.contentPadding)
       .cornerRadius(Design.params.cornerRadius)
       .alignment(.fill)
-   
+
    lazy var email = ProfileEditTitleBodyDT<Design>()
       .setAll {
          $0.text("Корпоративная почта")
@@ -92,7 +87,7 @@ final class ProfileEditScene<Asset: AssetProtocol>: BaseSceneModel<
       .padding(Design.params.contentPadding)
       .cornerRadius(Design.params.cornerRadius)
       .alignment(.fill)
-      
+
    lazy var phone = ProfileEditTitleBodyDT<Design>()
       .setAll {
          $0.text("Мобильный номер")
@@ -105,7 +100,7 @@ final class ProfileEditScene<Asset: AssetProtocol>: BaseSceneModel<
       .padding(Design.params.contentPadding)
       .cornerRadius(Design.params.cornerRadius)
       .alignment(.fill)
-   
+
    lazy var infoStack = UserProfileStack<Design>()
       .arrangedModels([
          LabelModel()
@@ -118,7 +113,7 @@ final class ProfileEditScene<Asset: AssetProtocol>: BaseSceneModel<
          phone,
       ])
       .alignment(.fill)
-      
+
    lazy var saveButton = Design.button.default
       .title("Сохранить")
 
@@ -129,19 +124,18 @@ final class ProfileEditScene<Asset: AssetProtocol>: BaseSceneModel<
 
    private lazy var works = ProfileEditWorks<Asset>()
    private var balance: Balance?
-   
+
    private var currentUser: UserData?
 
    override func start() {
-      vcModel?.sendEvent(\.setTitle, "Профиль")
+    //  vcModel?.sendEvent(\.setTitle, "Профиль")
       configure()
       configureProfile()
    }
 
    private func configure() {
-      mainVM.topStackModel.set(Design.state.stack.bodyStack)
-      mainVM.topStackModel
-         .set(.backColor(Design.color.backgroundSecondary))
+      set(Design.state.stack.bodyStack)
+      set(.backColor(Design.color.backgroundSecondary))
          .set(.axis(.vertical))
          .set(.distribution(.fill))
          .set(.alignment(.fill))
@@ -152,12 +146,12 @@ final class ProfileEditScene<Asset: AssetProtocol>: BaseSceneModel<
             infoStack,
             Grid.xxx.spacer,
          ]))
-      
-      mainVM.bottomStackModel
-         .set(Design.state.stack.bottomPanel)
-         .arrangedModels([
-            saveButton,
-         ])
+
+//      mainVM.bottomStackModel
+//         .set(Design.state.stack.bottomPanel)
+//         .arrangedModels([
+//            saveButton,
+//         ])
    }
 
    private func configureProfile() {
@@ -178,13 +172,13 @@ final class ProfileEditScene<Asset: AssetProtocol>: BaseSceneModel<
             print("load profile error")
          }
    }
-   
+
    private func configureButton() {
       print("I am here")
       var emailId: Int?
       var phoneId: Int?
-      guard let contacts = self.currentUser?.profile.contacts else { return }
-      
+      guard let contacts = currentUser?.profile.contacts else { return }
+
       for contact in contacts {
          if contact.contactType == "@" {
             emailId = contact.id
@@ -213,14 +207,14 @@ final class ProfileEditScene<Asset: AssetProtocol>: BaseSceneModel<
    private func setLabels(userData: UserData) {
       let profile = userData.profile
       let fullName = profile.surName.string + " " +
-      profile.firstName.string + " " +
+         profile.firstName.string + " " +
          profile.middleName.string
       userModel.models.right.text(fullName)
       userModel.models.down.text("@" + profile.tgName)
       if let urlSuffix = profile.photo {
          userModel.models.main.url(TeamForceEndpoints.urlBase + urlSuffix)
       }
-      
+
       // infoStack
       firstname.models.down.text(profile.firstName.string)
       surname.models.down.text(profile.surName.string)

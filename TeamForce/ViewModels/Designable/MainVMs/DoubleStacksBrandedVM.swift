@@ -13,7 +13,8 @@ final class DoubleStacksBrandedVM<Design: DesignProtocol>: Combos<SComboMD<Stack
    lazy var header = Design.label.headline5
       .textColor(Design.color.textInvert)
 
-   var bottomSubStack: StackModel { models.down.subModel }
+   var headerStack: StackModel { models.main }
+   var bodyStack: StackModel { models.down.subModel }
 
    required init() {
       super.init()

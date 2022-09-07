@@ -46,7 +46,7 @@ private extension LoginScene {
    func configure() {
       mainVM.header
          .text(Design.Text.title.autorisation)
-      mainVM.bottomSubStack
+      mainVM.bodyStack
          .arrangedModels([
             viewModels.userNameInputModel,
             viewModels.smsCodeInputModel,

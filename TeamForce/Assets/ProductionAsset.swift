@@ -17,6 +17,18 @@ enum ProductionAsset: AssetProtocol {
    static weak var router: MainRouter<ProductionAsset>?
 }
 
+protocol ScenesProtocol: InitProtocol {
+   var digitalThanks: SceneModelProtocol { get }
+   var login: SceneModelProtocol { get }
+   var main: SceneModelProtocol { get }
+   var profile: SceneModelProtocol { get }
+  // var profileEdit: SceneModelProtocol { get }
+
+   // plays
+   var playground: SceneModelProtocol { get }
+}
+
+
 struct Scenes: ScenesProtocol {
    var playground: SceneModelProtocol { PlaygroundScene<ProductionAsset>()}
    //
@@ -25,7 +37,7 @@ struct Scenes: ScenesProtocol {
    var main: SceneModelProtocol { MainScene<ProductionAsset>() }
    var profile: SceneModelProtocol { ProfileScene<ProductionAsset>() }
    var transactionDetail: SceneModelProtocol { TransactDeatilViewModel<ProductionAsset>() }
-   var profileEdit: SceneModelProtocol { ProfileEditScene<ProductionAsset>() }
+   //var profileEdit: SceneModelProtocol { ProfileEditScene<ProductionAsset>() }
 }
 
 struct ProductionService: ServiceProtocol {

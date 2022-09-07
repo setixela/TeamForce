@@ -142,4 +142,25 @@ final class StackViewExtended: UIStackView, Communicable {
          sendEvent(\.willAppear)
       }
    }
+
+   override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+      if !clipsToBounds, !isHidden, alpha > 0 {
+         let button = subviews.flatMap {
+            $0.subviews.flatMap { $0.subviews }
+         }
+         .filter {
+            $0 is UIButton
+         }
+         .first(where: {
+            let subPoint = $0.convert(point, from: self)
+            return $0.hitTest(subPoint, with: event) != nil
+         })
+
+         if button != nil {
+            return button
+         }
+      }
+
+      return super.hitTest(point, with: event)
+   }
 }

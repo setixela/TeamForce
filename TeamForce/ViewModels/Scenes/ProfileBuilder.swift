@@ -32,7 +32,7 @@ struct ProfileBuilder<Design: DSP>: ProfileModelBuilder {
       } setRight2: { button in
          button
             .size(.square(24))
-            .backImage(Design.icon.editCircle)
+            .image(Design.icon.editCircle)
       }
       .alignment(.center)
       .distribution(.fill)

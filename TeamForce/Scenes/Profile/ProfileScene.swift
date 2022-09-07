@@ -12,7 +12,7 @@ struct ProfileViewEvent: InitProtocol {}
 
 final class ProfileScene<Asset: AssetProtocol>: BaseSceneModel<
    DefaultVCModel,
-   TripleStacksBrandedVM<Asset.Design>,
+   DoubleStacksBrandedVM<Asset.Design>,
    Asset,
    Void
 > {
@@ -23,13 +23,13 @@ final class ProfileScene<Asset: AssetProtocol>: BaseSceneModel<
          $0.text("Корпоративная почта")
          $1.text("-")
       }
-   
+
    lazy var phone = SettingsTitleBodyDT<Design>()
       .setAll {
          $0.text("Мобильный номер")
          $1.text("-")
       }
-   
+
    lazy var infoStack = UserProfileStack<Design>()
       .arrangedModels([
          LabelModel()
@@ -44,19 +44,19 @@ final class ProfileScene<Asset: AssetProtocol>: BaseSceneModel<
          $0.text("Компания")
          $1.text("-")
       }
-   
+
    lazy var department = SettingsTitleBodyDT<Design>()
       .setAll {
          $0.text("Подразделение")
          $1.text("-")
       }
-   
+
    lazy var hiredAt = SettingsTitleBodyDT<Design>()
       .setAll {
          $0.text("Дата начала работы")
          $1.text("-")
       }
-   
+
    lazy var infoStackSecondary = UserProfileStack<Design>()
       .arrangedModels([
          LabelModel()
@@ -66,11 +66,10 @@ final class ProfileScene<Asset: AssetProtocol>: BaseSceneModel<
          department,
          hiredAt,
       ])
-   
-   lazy var editButton = Design.button.default
-      .title("Edit")
 
    lazy var bottomPopupPresenter = Design.model.common.bottomPopupPresenter
+
+   lazy var editProfileModel = ProfileEditScene<Asset>()
 
    // MARK: - Services
 
@@ -86,8 +85,7 @@ final class ProfileScene<Asset: AssetProtocol>: BaseSceneModel<
    }
 
    private func configure() {
-   //   mainVM.footerStack.view.removeFromSuperview()
-      mainVM.headerStack.arrangedModels([Grid.x128.spacer])
+      mainVM.headerStack.arrangedModels([Grid.x64.spacer])
       mainVM.bodyStack
          .set(.backColor(Design.color.backgroundSecondary))
          .set(.axis(.vertical))
@@ -100,16 +98,11 @@ final class ProfileScene<Asset: AssetProtocol>: BaseSceneModel<
             infoStack,
             Spacer(8),
             infoStackSecondary,
-            Spacer(8),
-            editButton,
             Grid.xxx.spacer,
          ]))
 
-      userModel.models.right2.on(\.didTap) {
-
-      }
-      editButton.on(\.didTap) {
-         Asset.router?.route(\.profileEdit, navType: .presentModally(.formSheet))
+      userModel.models.right2.on(\.didTap, weak: self) {
+         $0.bottomPopupPresenter.send(\.present, ($0.editProfileModel, $0.vcModel?.view.rootSuperview))
       }
    }
 
@@ -133,7 +126,7 @@ final class ProfileScene<Asset: AssetProtocol>: BaseSceneModel<
    private func setLabels(userData: UserData) {
       let profile = userData.profile
       let fullName = profile.surName.string + " " +
-      profile.firstName.string + " " + profile.middleName.string
+         profile.firstName.string + " " + profile.middleName.string
       userModel.models.right.text(fullName)
       userModel.models.down.text("@" + profile.tgName)
       if let urlSuffix = profile.photo {
@@ -151,8 +144,8 @@ final class ProfileScene<Asset: AssetProtocol>: BaseSceneModel<
          $1.text(profile.hiredAt.string)
       }
       print("contacts \(profile.contacts)")
-      
-      //infoStack
+
+      // infoStack
       if let contacts = profile.contacts {
          for contact in contacts {
             switch contact.contactType {
@@ -171,7 +164,6 @@ final class ProfileScene<Asset: AssetProtocol>: BaseSceneModel<
             }
          }
       }
-      
    }
 }
 

@@ -9,8 +9,8 @@ import ReactiveWorks
 import UIKit
 
 struct PopupEvent: InitProtocol {
-   var present: (model: UIViewModel, onView: UIView)?
-   var presentAuto: (model: UIViewModel, onView: UIView)?
+   var present: (model: UIViewModel, onView: UIView?)?
+   var presentAuto: (model: UIViewModel, onView: UIView?)?
    var hide: Void?
 }
 
@@ -26,7 +26,9 @@ final class BottomPopupPresenter: BaseModel, Eventable {
 
    override func start() {
       on(\.present) { [weak self] model, onView in
-         guard let self = self else { return }
+         guard let self = self,
+               let onView = onView
+         else { return }
 
          let view = self.prepareModel(model, onView: onView)
          view.addAnchors.fitToViewInsetted(onView, .init(top: 40, left: 0, bottom: 0, right: 0))
@@ -34,7 +36,9 @@ final class BottomPopupPresenter: BaseModel, Eventable {
          self.queue.push(model)
       }
       .on(\.presentAuto) { [weak self] model, onView in
-         guard let self = self else { return }
+         guard let self = self,
+               let onView = onView
+         else { return }
 
          let view = self.prepareModel(model, onView: onView)
          view.addAnchors

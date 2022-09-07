@@ -34,14 +34,4 @@ extension AssetProtocol {
    }
 }
 
-protocol ScenesProtocol: InitProtocol {
-   var digitalThanks: SceneModelProtocol { get }
-   var login: SceneModelProtocol { get }
-   var main: SceneModelProtocol { get }
-   var profile: SceneModelProtocol { get }
-   var profileEdit: SceneModelProtocol { get }
-
-   // plays
-   var playground: SceneModelProtocol { get }
-}
 
