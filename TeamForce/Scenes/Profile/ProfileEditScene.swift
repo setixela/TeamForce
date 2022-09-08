@@ -13,70 +13,35 @@ struct ProfileEditViewEvent: InitProtocol {}
 final class ProfileEditScene<Asset: AssetProtocol>: ModalDoubleStackModel<Asset> {
    lazy var userModel = Design.model.profile.userEditPanel
 
-   lazy var firstname = ProfileEditTitleBodyDT<Design>()
+   lazy var firstname = Design.model.profile.titledTextField
       .setAll {
          $0.text("Имя")
-         $1
-            .placeholder("Имя")
-            .backColor(.clear)
+         $1.placeholder("Имя")
       }
-      .borderColor(Design.color.textSecondary)
-      .borderWidth(1.0)
-      .padding(Design.params.contentPadding)
-      .cornerRadius(Design.params.cornerRadius)
-      .alignment(.fill)
 
-   lazy var surname = ProfileEditTitleBodyDT<Design>()
+   lazy var surname = Design.model.profile.titledTextField
       .setAll {
          $0.text("Фамилия")
-         $1
-            .placeholder("Фамилия")
-            .backColor(.clear)
+         $1.placeholder("Фамилия")
       }
-      .borderColor(Design.color.textSecondary)
-      .borderWidth(1.0)
-      .padding(Design.params.contentPadding)
-      .cornerRadius(Design.params.cornerRadius)
-      .alignment(.fill)
 
-   lazy var middleName = ProfileEditTitleBodyDT<Design>()
+   lazy var middleName = Design.model.profile.titledTextField
       .setAll {
          $0.text("Отчество")
-         $1
-            .placeholder("Отчество")
-            .backColor(.clear)
+         $1.placeholder("Отчество")
       }
-      .borderColor(Design.color.textSecondary)
-      .borderWidth(1.0)
-      .padding(Design.params.contentPadding)
-      .cornerRadius(Design.params.cornerRadius)
-      .alignment(.fill)
 
-   lazy var email = ProfileEditTitleBodyDT<Design>()
+   lazy var email = Design.model.profile.titledTextField
       .setAll {
          $0.text("Корпоративная почта")
-         $1
-            .placeholder("Корпоративная почта")
-            .backColor(.clear)
+         $1.placeholder("Корпоративная почта")
       }
-      .borderColor(Design.color.textSecondary)
-      .borderWidth(1.0)
-      .padding(Design.params.contentPadding)
-      .cornerRadius(Design.params.cornerRadius)
-      .alignment(.fill)
 
-   lazy var phone = ProfileEditTitleBodyDT<Design>()
+   lazy var phone = Design.model.profile.titledTextField
       .setAll {
          $0.text("Мобильный номер")
-         $1
-            .placeholder("Мобильный номер")
-            .backColor(.clear)
+         $1.placeholder("Мобильный номер")
       }
-      .borderColor(Design.color.textSecondary)
-      .borderWidth(1.0)
-      .padding(Design.params.contentPadding)
-      .cornerRadius(Design.params.cornerRadius)
-      .alignment(.fill)
 
    lazy var infoStack = UserProfileStack<Design>()
       .arrangedModels([
@@ -87,7 +52,7 @@ final class ProfileEditScene<Asset: AssetProtocol>: ModalDoubleStackModel<Asset>
          firstname,
          middleName,
          email,
-         phone,
+         phone
       ])
       .alignment(.fill)
 
@@ -121,7 +86,7 @@ final class ProfileEditScene<Asset: AssetProtocol>: ModalDoubleStackModel<Asset>
             userModel,
             Spacer(32),
             infoStack,
-            Grid.xxx.spacer,
+            Grid.xxx.spacer
          ])
    }
 
@@ -149,8 +114,8 @@ final class ProfileEditScene<Asset: AssetProtocol>: ModalDoubleStackModel<Asset>
       var emailId: Int?
       var phoneId: Int?
       guard
-         let contacts = self.currentUser?.profile.contacts,
-         let profileId = self.currentUser?.profile.id
+         let contacts = currentUser?.profile.contacts,
+         let profileId = currentUser?.profile.id
       else { return }
       print("profile id = \(profileId)")
       for contact in contacts {
@@ -162,7 +127,7 @@ final class ProfileEditScene<Asset: AssetProtocol>: ModalDoubleStackModel<Asset>
          }
       }
       print("I am here 2")
-      saveButton.onEvent(\.didTap) {
+      saveButton.on(\.didTap) {
          var info: [[String: Any]] = []
          var emailDic: [String: Any]
          var phoneDic: [String: Any]
@@ -178,7 +143,7 @@ final class ProfileEditScene<Asset: AssetProtocol>: ModalDoubleStackModel<Asset>
                "contact_id": self.email.models.down.view.text ?? ""
             ]
          }
-         
+
          if phoneId != nil {
             phoneDic = [
                "contact_type": "P",
@@ -197,7 +162,7 @@ final class ProfileEditScene<Asset: AssetProtocol>: ModalDoubleStackModel<Asset>
          if phoneId != nil || (phoneId == nil && self.phone.models.down.view.text != "") {
             info.append(phoneDic)
          }
-         
+
          let creteFewContactsRequest = CreateFewContactsRequest(token: "",
                                                                 info: info)
          self.works.createFewContacts
@@ -208,7 +173,7 @@ final class ProfileEditScene<Asset: AssetProtocol>: ModalDoubleStackModel<Asset>
             .onFail {
                print("create few contacts -")
             }
-         
+
 //         let info = [
 //            "surname": self.surname.models.down.view.text ?? "",
 //            "first_name": self.firstname.models.down.view.text ?? "",
@@ -223,7 +188,7 @@ final class ProfileEditScene<Asset: AssetProtocol>: ModalDoubleStackModel<Asset>
 //            .onFail {
 //               print("can not update profile info")
 //            }
-         
+
 //         guard let emailId = emailId else {
 //            let request = CreateContactRequest(token: "",
 //                                               contactId: self.email.models.down.view.text ?? "email@gmail.com",
@@ -286,25 +251,4 @@ final class ProfileEditScene<Asset: AssetProtocol>: ModalDoubleStackModel<Asset>
          }
       }
    }
-}
-
-final class ProfileEditTitleBodyDT<Design: DSP>: TitleSubtitleTextFieldY<Design> {
-   required init() {
-      super.init()
-      spacing(4)
-      setAll { main, down in
-         main
-            .alignment(.left)
-            .set(Design.state.label.caption)
-            .textColor(Design.color.textSecondary)
-         down
-            .alignment(.left)
-            .set(Design.state.label.default)
-            .textColor(Design.color.text)
-      }
-   }
-}
-
-extension Optional where Wrapped == String {
-   var string: String { self ?? "" }
 }
