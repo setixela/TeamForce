@@ -5,7 +5,6 @@
 //  Created by Aleksandr Solovyev on 18.08.2022.
 //
 
-import Foundation
 import ReactiveWorks
 import UIKit
 
