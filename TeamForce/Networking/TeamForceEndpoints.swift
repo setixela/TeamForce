@@ -228,7 +228,7 @@ enum TeamForceEndpoints {
    struct UpdateProfile: EndpointProtocol {
       let method = HTTPMethod.put
       
-      var endPoint: String = urlBase + "/update-profile-by-user" 
+      var endPoint: String = urlBase + "/update-profile-by-user/" 
       
       var body: [String : Any]
       
@@ -263,6 +263,16 @@ enum TeamForceEndpoints {
       var endPoint: String { urlBase + "/create-contact-by-user/" }
       
       let body: [String : Any]
+      
+      let headers: [String : String]
+   }
+   
+   struct CreateFewContacts: EndpointProtocol {
+      let method = HTTPMethod.post
+      
+      var endPoint: String { urlBase + "/create-few-contacts/" }
+      
+      let arrayBody: Array<[String : Any]>?
       
       let headers: [String : String]
    }

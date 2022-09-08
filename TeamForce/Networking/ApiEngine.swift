@@ -38,12 +38,18 @@ final class ApiEngine: ApiEngineProtocol {
             request.setValue(value, forHTTPHeaderField: key)
          }
 
-         request.httpBody = params
-            .map { (key: String, value: Any) in
-               key + "=\(value)"
-            }
-            .joined(separator: "&")
-            .data(using: .utf8)
+         if let arrayParams = endpoint.arrayBody {
+            let jsonData = try? JSONSerialization.data(withJSONObject: arrayParams)
+            request.httpBody = jsonData
+         } else {
+            request.httpBody = params
+               .map { (key: String, value: Any) in
+                  key + "=\(value)"
+               }
+               .joined(separator: "&")
+               .data(using: .utf8)
+         }
+         
 
          log(request, "REQUEST")
 
@@ -77,6 +83,37 @@ final class ApiEngine: ApiEngineProtocol {
          request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
 
          let dataBody = createDataBody(withParameters: params, media: [mediaImage], boundary: boundary)
+         request.httpBody = dataBody
+
+         log(request, "REQUEST MULTIPART")
+
+         start(request: request, seal: seal)
+      }
+   }
+   
+   func processPUT(endpoint: EndpointProtocol) -> Promise<ApiEngineResult> {
+      return Promise { seal in
+         guard let url = URL(string: endpoint.endPoint) else {
+            seal.reject(ApiEngineError.unknown)
+            return
+         }
+         
+         let boundary = UUID().uuidString
+
+         let method = endpoint.method
+         let params = endpoint.body
+         let headers = endpoint.headers
+
+         var request = URLRequest(url: url)
+
+         request.httpMethod = method.rawValue
+
+         for (key, value) in headers {
+            request.setValue(value, forHTTPHeaderField: key)
+         }
+         request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
+
+         let dataBody = createDataBody(withParameters: params, media: [], boundary: boundary)
          request.httpBody = dataBody
 
          log(request, "REQUEST MULTIPART")

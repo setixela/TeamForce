@@ -29,17 +29,16 @@ final class UpdateContactApiWorker: BaseApiWorker<UpdateContactRequest, Void> {
       let endpoint = TeamForceEndpoints.UpdateContact(
          id: String(updateContactRequest.id),
          headers: ["Authorization": updateContactRequest.token,
-                   "X-CSRFToken": cookie.value,
-                   "Content-Type": "multipart/form-data; boundary=something"],
+                   "X-CSRFToken": cookie.value],
          body: ["contact_id": updateContactRequest.contactId]
       )
       print("endpoint is \(endpoint)")
       apiEngine?
-         .process(endpoint: endpoint)
+         .processPUT(endpoint: endpoint)
          .done { result in
-            let str = String(decoding: result.data!, as: UTF8.self)
-            print("result body \(str)")
-            print("response status \(result.response)")
+//            let str = String(decoding: result.data!, as: UTF8.self)
+//            print("result body \(str)")
+//            print("response status \(result.response)")
             work.success(result: ())
          }
          .catch { _ in

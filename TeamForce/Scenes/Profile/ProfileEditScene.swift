@@ -148,8 +148,11 @@ final class ProfileEditScene<Asset: AssetProtocol>: ModalDoubleStackModel<Asset>
       print("I am here")
       var emailId: Int?
       var phoneId: Int?
-      guard let contacts = currentUser?.profile.contacts else { return }
-
+      guard
+         let contacts = self.currentUser?.profile.contacts,
+         let profileId = self.currentUser?.profile.id
+      else { return }
+      print("profile id = \(profileId)")
       for contact in contacts {
          if contact.contactType == "@" {
             emailId = contact.id
@@ -159,19 +162,93 @@ final class ProfileEditScene<Asset: AssetProtocol>: ModalDoubleStackModel<Asset>
          }
       }
       print("I am here 2")
-      saveButton.on(\.didTap) {
-         guard let emailId = emailId else {
-            return
+      saveButton.onEvent(\.didTap) {
+         var info: [[String: Any]] = []
+         var emailDic: [String: Any]
+         var phoneDic: [String: Any]
+         if emailId != nil {
+            emailDic = [
+               "contact_type": "@",
+               "contact_id": self.email.models.down.view.text ?? "",
+               "id": emailId
+            ]
+         } else {
+            emailDic = [
+               "contact_type": "@",
+               "contact_id": self.email.models.down.view.text ?? ""
+            ]
          }
-
-         self.works.updateContact
-            .doAsync((emailId, self.email.models.down.view.text ?? "email@gmail.com"))
+         
+         if phoneId != nil {
+            phoneDic = [
+               "contact_type": "P",
+               "contact_id": self.phone.models.down.view.text ?? "",
+               "id": phoneId
+            ]
+         } else {
+            phoneDic = [
+               "contact_type": "P",
+               "contact_id": self.phone.models.down.view.text ?? ""
+            ]
+         }
+         if emailId != nil || (emailId == nil && self.email.models.down.view.text != "") {
+            info.append(emailDic)
+         }
+         if phoneId != nil || (phoneId == nil && self.phone.models.down.view.text != "") {
+            info.append(phoneDic)
+         }
+         
+         let creteFewContactsRequest = CreateFewContactsRequest(token: "",
+                                                                info: info)
+         self.works.createFewContacts
+            .doAsync(creteFewContactsRequest)
             .onSuccess {
-               print("Succeessss")
+               print("create few contacts +")
             }
             .onFail {
-               print("FAIIIL")
+               print("create few contacts -")
             }
+         
+//         let info = [
+//            "surname": self.surname.models.down.view.text ?? "",
+//            "first_name": self.firstname.models.down.view.text ?? "",
+//            "middle_name":self.middleName.models.down.view.text ?? ""
+//         ]
+//         let profileRequest = UpdateProfileRequest(token: "", id: profileId, info: info)
+//         self.works.updateProfile
+//            .doAsync(profileRequest)
+//            .onSuccess {
+//               print("update profile info")
+//            }
+//            .onFail {
+//               print("can not update profile info")
+//            }
+         
+//         guard let emailId = emailId else {
+//            let request = CreateContactRequest(token: "",
+//                                               contactId: self.email.models.down.view.text ?? "email@gmail.com",
+//                                               contactType: "@",
+//                                               profile: profileId)
+//            self.works.createContact
+//               .doAsync(request)
+//               .onSuccess {
+//                  print("Succeessss")
+//               }
+//               .onFail {
+//                  print("FAIIIL")
+//               }
+//            print("hey yo")
+//            return
+//         }
+//
+//         self.works.updateContact
+//            .doAsync((emailId, self.email.models.down.view.text ?? "email@gmail.com"))
+//            .onSuccess {
+//               print("Succeessss")
+//            }
+//            .onFail {
+//               print("FAIIIL")
+//            }
       }
    }
 
