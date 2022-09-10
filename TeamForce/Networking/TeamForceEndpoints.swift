@@ -272,7 +272,7 @@ enum TeamForceEndpoints {
       
       var endPoint: String { urlBase + "/create-few-contacts/" }
       
-      let arrayBody: Array<[String : Any]>?
+      let jsonData: Data?
       
       let headers: [String : String]
    }

@@ -31,7 +31,8 @@ final class ProfileEditScene<Asset: AssetProtocol>: ModalDoubleStackModel<Asset>
       works: ProfileEditWorks<Asset>(),
       stateDelegate: stateDelegate,
       events: ProfileEditEvents(
-         contactsEvents: contactModels.work
+         contactsEvents: contactModels.work,
+         saveButtonDidTap: saveButton.on(\.didTap)
       )
    )
 
@@ -64,28 +65,10 @@ final class ProfileEditScene<Asset: AssetProtocol>: ModalDoubleStackModel<Asset>
                contactModels.email,
                contactModels.phone,
             ]),
+            Spacer(10),
+            saveButton,
             Grid.xxx.spacer,
          ])
-   }
-
-   private func configureButton() {
-      var emailId: Int?
-      var phoneId: Int?
-      guard
-         let contacts = currentUser?.profile.contacts,
-         let profileId = currentUser?.profile.id
-      else { return }
-
-      for contact in contacts {
-         if contact.contactType == "@" {
-            emailId = contact.id
-         }
-         if contact.contactType == "P" {
-            phoneId = contact.id
-         }
-      }
-
-      saveButton.on(\.didTap) {}
    }
 
    private func saveUserData() {
@@ -230,7 +213,7 @@ extension ProfileEditScene: StateMachine {
          contactModels.setup(userData)
 
          currentUser = userData
-         configureButton()
+         //configureButton()
       }
    }
 }

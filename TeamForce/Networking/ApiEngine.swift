@@ -38,8 +38,7 @@ final class ApiEngine: ApiEngineProtocol {
             request.setValue(value, forHTTPHeaderField: key)
          }
 
-         if let arrayParams = endpoint.arrayBody {
-            let jsonData = try? JSONSerialization.data(withJSONObject: arrayParams)
+         if let jsonData = endpoint.jsonData {
             request.httpBody = jsonData
          } else {
             request.httpBody = params
