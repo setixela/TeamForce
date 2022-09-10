@@ -58,11 +58,11 @@ final class ProfileEditScene<Asset: AssetProtocol>: ModalDoubleStackModel<Asset>
             viewModels.editPhotoBlock,
             Design.model.common.divider,
             EditStack<Design>(title: "КОНТАКТЫ", models: [
-               contactModels.surname,
-               contactModels.name,
-               contactModels.middlename,
-               contactModels.email,
-               contactModels.phone,
+               contactModels.surnameEditField,
+               contactModels.nameEditField,
+               contactModels.middlenameEditField,
+               contactModels.emailEditField,
+               contactModels.phoneEditField,
             ]),
             Grid.xxx.spacer,
          ])

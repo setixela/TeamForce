@@ -9,8 +9,15 @@ import ReactiveWorks
 
 class TitledTextFieldY<Design: DesignProtocol>:
    M<LabelModel>.D<TextFieldModel>.Combo,
-   Designable
+   Designable,
+   Eventable
 {
+   typealias Events = TextFieldEvents
+   var events: EventsStore = .init()
+
+   var title: LabelModel { models.main }
+   var textField: TextFieldModel { models.down }
+
    required init() {
       super.init()
 
@@ -28,5 +35,9 @@ class TitledTextFieldY<Design: DesignProtocol>:
             .padding(.bottom(Grid.x8.value))
       }
       alignment(.center)
+
+      textField.on(\.didEditingChanged) { [weak self] in
+         self?.send(\.didEditingChanged, $0)
+      }
    }
 }
