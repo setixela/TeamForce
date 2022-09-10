@@ -59,7 +59,7 @@ final class EditContactsViewModels<Design: DSP>: BaseModel, Designable, Multiple
    }
 }
 
-//MARK: - Multiplexor
+// MARK: - Multiplexor
 
 protocol Multiplexor: AnyObject {
    associatedtype Stock
@@ -70,8 +70,8 @@ protocol Multiplexor: AnyObject {
 
 extension Multiplexor {
    func bind<T: Eventable, D>(event: KeyPath<T.Events, D?>,
-                           of model: KeyPath<Self, T>,
-                           to result: WritableKeyPath<Stock, D?>)
+                              of model: KeyPath<Self, T>,
+                              to result: WritableKeyPath<Stock, D?>)
    {
       let model = self[keyPath: model]
       model.on(event, weak: self) {
@@ -84,21 +84,19 @@ extension Multiplexor {
 extension EditContactsViewModels: SetupProtocol {
    func setup(_ data: UserData) {
       let profile = data.profile
-      surnameEditField.models.down.text(profile.surName.string)
-      nameEditField.models.down.text(profile.firstName.string)
-      middlenameEditField.models.down.text(profile.middleName.string)
+      surnameEditField.textField.text(profile.surName.string)
+      nameEditField.textField.text(profile.firstName.string)
+      middlenameEditField.textField.text(profile.middleName.string)
 
       if let contacts = profile.contacts {
          for contact in contacts {
             switch contact.contactType {
             case "@":
-               emailEditField.setAll {
-                  $1.text(contact.contactId)
-               }
+               emailEditField.textField
+                  .text(contact.contactId)
             case "P":
-               phoneEditField.setAll {
-                  $1.text(contact.contactId)
-               }
+               phoneEditField.textField
+                  .text(contact.contactId)
             default:
                print("Contact error")
             }
