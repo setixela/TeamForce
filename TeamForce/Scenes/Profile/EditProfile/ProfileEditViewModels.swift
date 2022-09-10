@@ -13,7 +13,6 @@ final class ProfileEditViewModels<Design: DSP>: Designable {
 }
 
 final class EditContactsViewModels<Design: DSP>: BaseModel, Designable, Multiplexor {
-   typealias FlowType = String
    typealias Stock = Contacts
 
    var stock: Contacts = .init()
@@ -63,7 +62,6 @@ final class EditContactsViewModels<Design: DSP>: BaseModel, Designable, Multiple
 //MARK: - Multiplexor
 
 protocol Multiplexor: AnyObject {
-   associatedtype FlowType
    associatedtype Stock
 
    var work: VoidWork<Stock> { get }
@@ -71,9 +69,9 @@ protocol Multiplexor: AnyObject {
 }
 
 extension Multiplexor {
-   func bind<T: Eventable>(event: KeyPath<T.Events, FlowType?>,
+   func bind<T: Eventable, D>(event: KeyPath<T.Events, D?>,
                            of model: KeyPath<Self, T>,
-                           to result: WritableKeyPath<Stock, FlowType?>)
+                           to result: WritableKeyPath<Stock, D?>)
    {
       let model = self[keyPath: model]
       model.on(event, weak: self) {
