@@ -12,6 +12,8 @@ import UIKit
 
 protocol ParamsProtocol: InitProtocol, Designable {
    //
+   var commonSideOffset: CGFloat { get }
+   //
    var cornerRadiusMini: CGFloat { get }
    var cornerRadiusSmall: CGFloat { get }
    var cornerRadius: CGFloat { get }
@@ -43,6 +45,8 @@ protocol ParamsProtocol: InitProtocol, Designable {
 }
 
 struct ParamBuilder<Design: DSP>: ParamsProtocol {
+   //
+   var commonSideOffset: CGFloat { 16 }
    //
    var cornerRadiusMini: CGFloat { 8 }
    var cornerRadiusSmall: CGFloat { 11 }
@@ -91,9 +95,9 @@ struct ParamBuilder<Design: DSP>: ParamsProtocol {
       opacity: 1.0
    ) }
    // paddings
-   var contentPadding: UIEdgeInsets { .init(top: 12, left: 16, bottom: 12, right: 16) }
+   var contentPadding: UIEdgeInsets { .init(top: 12, left: commonSideOffset, bottom: 12, right: commonSideOffset) }
    var contentVerticalPadding: UIEdgeInsets { .init(top: 12, left: 0, bottom: 12, right: 0) }
-   var cellContentPadding: UIEdgeInsets { .init(top: 12, left: 16, bottom: 12, right: 16) }
+   var cellContentPadding: UIEdgeInsets { .init(top: 12, left: commonSideOffset, bottom: 12, right: commonSideOffset) }
    var userInfoHeaderPadding: UIEdgeInsets { .init(top: 12, left: 12, bottom: 12, right: 12) }
    var infoFramePadding: UIEdgeInsets { .init(top: 16, left: 24, bottom: 24, right: 24) }
 }

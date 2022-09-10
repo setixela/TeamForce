@@ -127,8 +127,8 @@ final class ProfileScene<Asset: AssetProtocol>: BaseSceneModel<
       let profile = userData.profile
       let fullName = profile.surName.string + " " +
          profile.firstName.string + " " + profile.middleName.string
-      userModel.models.right.text(fullName)
-      userModel.models.down.text("@" + profile.tgName)
+      userModel.models.right.fullName.text(fullName)
+      userModel.models.right.nickName.text("@" + profile.tgName)
       if let urlSuffix = profile.photo {
          userModel.models.main.url(TeamForceEndpoints.urlBase + urlSuffix)
       }
@@ -158,7 +158,7 @@ final class ProfileScene<Asset: AssetProtocol>: BaseSceneModel<
                   $1.text(contact.contactId)
                }
             case "T":
-               userModel.models.down.text("@" + contact.contactId)
+               userModel.models.right.nickName.text("@" + contact.contactId)
             default:
                print("Contact error")
             }
@@ -185,6 +185,7 @@ final class SettingsTitleBodyDT<Design: DSP>: TitleSubtitleY<Design> {
 }
 
 final class UserProfileStack<Design: DSP>: StackModel, Designable {
+
    override func start() {
       super.start()
 

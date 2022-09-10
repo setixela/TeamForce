@@ -25,7 +25,6 @@ class TextFieldModel: BaseViewModel<PaddingTextField>,
    var events = [Int: LambdaProtocol?]()
 
    override func start() {
-      set(.backColor(.lightGray.withAlphaComponent(0.3)))
       set(.clearButtonMode(.whileEditing))
       view.delegate = self
       view.addTarget(self, action: #selector(changValue), for: .editingChanged)

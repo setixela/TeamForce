@@ -5,8 +5,10 @@
 //  Created by Aleksandr Solovyev on 08.09.2022.
 //
 
+import ReactiveWorks
+
 class TitledTextFieldY<Design: DesignProtocol>:
-   Combos<SComboMD<LabelModel, TextFieldModel>>,
+   M<LabelModel>.D<TextFieldModel>.Combo,
    Designable
 {
    required init() {
@@ -15,13 +17,16 @@ class TitledTextFieldY<Design: DesignProtocol>:
       setMain {
          $0
             .set(Design.state.label.title)
-            .set(.numberOfLines(0))
-            .set(.alignment(.center))
+            .numberOfLines(0)
+            .alignment(.center)
+            .padTop(Grid.x8.value)
       } setDown: {
          $0
             .set(Design.state.label.subtitle)
             .textColor(Design.color.textSecondary)
             .clearButtonMode(.never)
+            .padding(.bottom(Grid.x8.value))
       }
+      alignment(.center)
    }
 }

@@ -151,7 +151,6 @@ final class TransactScene<Asset: AssetProtocol>: ModalDoubleStackModel<Asset>, S
          ])
       //
       footerStack
-         .set(Design.state.stack.bottomPanel)
          .arrangedModels([
             viewModels.sendButton
          ])

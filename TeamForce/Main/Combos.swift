@@ -291,6 +291,19 @@ extension Combos
       return self
    }
 
+   @discardableResult func setAll<M, D, D2>(
+      _ setAll: VariadicClosure3<M, D, D2>) -> Self where S == SComboMDD<M, D, D2>
+   {
+      setAll(models.main, models.down, models.down2)
+
+      if !isConfigured
+      {
+         configure()
+         isConfigured = true
+      }
+      return self
+   }
+
    @discardableResult func setMain<M, D, D2, R>(
       _ setMain: GenericClosure<M>,
       setDown: GenericClosure<D>,

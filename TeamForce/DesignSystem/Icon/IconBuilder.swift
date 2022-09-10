@@ -67,6 +67,7 @@ protocol IconElements: InitProtocol, DesignElementable where DesignElement == UI
 
    // profile
    var editCircle: UIImage { get }
+   var camera: UIImage { get }
 
    // errors
    var errorIllustrate: UIImage { get }
@@ -135,6 +136,7 @@ struct IconBuilder: IconElements {
 
    // profile
    var editCircle: UIImage { make("edit_circle") }
+   var camera: UIImage { make("tabler_camera") }
 
    // errors
    var errorIllustrate: UIImage { make("dt_error_illustrate") }

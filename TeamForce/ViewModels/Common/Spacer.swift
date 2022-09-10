@@ -96,7 +96,9 @@ extension GridAsp {
    }
 }
 
-final class Spacer: BaseViewModel<SpacerView> {
+final class Spacer: BaseViewModel<SpacerView>, Stateable {
+   typealias State = ViewState
+
     convenience init(_ size: CGFloat = .zero) {
         self.init()
 

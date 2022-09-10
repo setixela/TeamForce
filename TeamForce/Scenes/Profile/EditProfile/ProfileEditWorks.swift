@@ -8,6 +8,7 @@
 import ReactiveWorks
 
 protocol ProfileEditWorksProtocol: Assetable {
+   var loadProfile: VoidWork<UserData> { get }
    var updateContact: Work<(Int, String), Void> { get }
    var createContact: Work<CreateContactRequest, Void> { get }
    var updateProfile: Work<UpdateProfileRequest, Void> { get }
@@ -20,12 +21,22 @@ final class ProfileEditWorks<Asset: AssetProtocol>: BaseSceneWorks<ProfileEditWo
 
    // Temp Storage
    final class Temp: InitProtocol {
-      var loginName: String?
-      var smsCodeInput: String?
-      var authResult: AuthResult?
+      var contacts: Contacts = .init()
    }
 
    // MARK: - Works
+
+   var loadProfile: VoidWork<UserData> { .init { [weak self] work in
+      self?.useCase.loadProfile
+         .doAsync()
+         .onSuccess {
+            work.success(result: $0)
+         }
+         .onFail {
+            work.fail(())
+         }
+
+   }.retainBy(retainer) }
 
    var updateContact: Work<(Int, String), Void> {
       .init { [weak self] work in
@@ -44,7 +55,7 @@ final class ProfileEditWorks<Asset: AssetProtocol>: BaseSceneWorks<ProfileEditWo
       }
       .retainBy(retainer)
    }
-   
+
    var createContact: Work<CreateContactRequest, Void> {
       .init { [weak self] work in
          guard let input = work.input else { return }
@@ -61,7 +72,7 @@ final class ProfileEditWorks<Asset: AssetProtocol>: BaseSceneWorks<ProfileEditWo
       }
       .retainBy(retainer)
    }
-   
+
    var updateProfile: Work<UpdateProfileRequest, Void> {
       .init { [weak self] work in
          guard let input = work.input else { return }
@@ -78,7 +89,7 @@ final class ProfileEditWorks<Asset: AssetProtocol>: BaseSceneWorks<ProfileEditWo
       }
       .retainBy(retainer)
    }
-   
+
    var createFewContacts: Work<CreateFewContactsRequest, Void> {
       .init { [weak self] work in
          guard let input = work.input else { return }
@@ -95,6 +106,4 @@ final class ProfileEditWorks<Asset: AssetProtocol>: BaseSceneWorks<ProfileEditWo
       }
       .retainBy(retainer)
    }
-   
-
 }
