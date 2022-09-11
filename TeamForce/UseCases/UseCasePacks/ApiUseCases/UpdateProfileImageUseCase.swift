@@ -12,8 +12,8 @@ struct UpdateProfileImageUseCase: UseCaseProtocol {
    let safeStringStorage: StringStorageWorker
    let updateProfileImageApiWorker: UpdateProfileImageApiWorker
    
-   var work: Work<(Int, UIImage), Void> {
-      Work<(Int, UIImage), Void> { work in
+   var work: Work<UpdateImageRequest, Void> {
+      Work<UpdateImageRequest, Void> { work in
          safeStringStorage
             .doAsync("token")
             .onFail {
@@ -21,8 +21,8 @@ struct UpdateProfileImageUseCase: UseCaseProtocol {
             }
             .doMap {
                guard
-                  let id = work.input?.0,
-                  let photo = work.input?.1
+                  let id = work.input?.id,
+                  let photo = work.input?.photo
                else { return nil }
                return UpdateImageRequest(token: $0, id: id, photo: photo)
             }

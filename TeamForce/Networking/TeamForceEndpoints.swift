@@ -214,14 +214,11 @@ enum TeamForceEndpoints {
       
       var endPoint: String = urlBase + "/update-profile-image/"
       
-      var body: [String : Any]
-      
       var headers: [String : String]
       
-      init(id: String, headers: [String : String], body: [String : Any]) {
+      init(id: String, headers: [String : String]) {
          endPoint = endPoint + id + "/"
          self.headers = headers
-         self.body = body
       }
    }
    

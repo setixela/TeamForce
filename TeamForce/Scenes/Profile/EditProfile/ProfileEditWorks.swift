@@ -6,12 +6,15 @@
 //
 
 import ReactiveWorks
+import UIKit
 
 protocol ProfileEditWorksProtocol: Assetable {
    var loadProfile: VoidWork<UserData> { get }
    var updateProfile: Work<UpdateProfileRequest, Void> { get }
    var createFewContacts: Work<CreateFewContactsRequest, Void> { get }
    var sendRequests: VoidWork<Void> { get }
+   var addImage: Work<UIImage, UIImage> { get }
+   var updateAvatar: Work<UpdateImageRequest, Void> { get }
 }
 
 final class ProfileEditWorks<Asset: AssetProtocol>: BaseSceneWorks<ProfileEditWorks.Temp, Asset>, ProfileEditWorksProtocol {
@@ -24,6 +27,7 @@ final class ProfileEditWorks<Asset: AssetProtocol>: BaseSceneWorks<ProfileEditWo
       var profileId: Int?
       var emailId: Int?
       var phoneId: Int?
+      var image: UIImage?
    }
 
    // MARK: - Works
@@ -83,6 +87,20 @@ final class ProfileEditWorks<Asset: AssetProtocol>: BaseSceneWorks<ProfileEditWo
             }
       }.retainBy(retainer)
    }
+   
+   var updateAvatar: Work<UpdateImageRequest, Void> {
+      .init { [weak self] work in
+         guard let input = work.input else { return }
+         self?.useCase.updateProfileImage
+            .doAsync(input)
+            .onSuccess {
+               work.success(result: $0)
+            }
+            .onFail {
+               work.fail(())
+            }
+      }.retainBy(retainer)
+   }
 
    var updateStorage: Work<Contacts, Void> {
       .init { work in
@@ -115,10 +133,21 @@ final class ProfileEditWorks<Asset: AssetProtocol>: BaseSceneWorks<ProfileEditWo
          .onFail {
             print("few contacts not created")
          }
+      
+      let avatarRequest = self.formAvatarRequest()
+      self.updateAvatar
+         .doAsync(avatarRequest)
+         .onSuccess {
+            print("Updated avatar")
+         }
+         .onFail {
+            print("can not update avatar")
+         }
       work.success(result: ())
    }
 }
 
+// MARK: - Form Requests
 extension ProfileEditWorks {
    func formUpdateProfileRequest() -> UpdateProfileRequest? {
       guard
@@ -173,7 +202,24 @@ extension ProfileEditWorks {
 
       let createFewContactsRequest = CreateFewContactsRequest(token: "",
                                                              info: info)
-      
       return createFewContactsRequest
    }
+   
+   func formAvatarRequest() -> UpdateImageRequest? {
+      guard
+         let profileId = Self.store.profileId,
+         let avatar = Self.store.image
+      else { return nil }
+      let request = UpdateImageRequest(token: "",
+                                       id: profileId,
+                                       photo: avatar)
+      return request
+   }
+}
+
+extension ProfileEditWorks {
+   var addImage: Work<UIImage, UIImage> { .init { work in
+      Self.store.image = work.unsafeInput
+      work.success(result: work.unsafeInput)
+   } }
 }

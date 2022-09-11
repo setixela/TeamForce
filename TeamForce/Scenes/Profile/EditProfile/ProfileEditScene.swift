@@ -14,13 +14,16 @@ enum ProfileEditState {
    case userDataDidLoad(UserData)
    case userDataDidChange
    case saveUserData
+   case presentImagePicker
+   case presentPickedImage(UIImage)
 }
 
-final class ProfileEditScene<Asset: AssetProtocol>: ModalDoubleStackModel<Asset>, Scenarible {
+final class ProfileEditScene<Asset: AssetProtocol>: ModalDoubleStackModel<Asset>, Scenarible2 {
    lazy var viewModels = ProfileEditViewModels<Design>()
    lazy var contactModels = EditContactsViewModels<Design>()
 
    // OLD
+   private lazy var imagePicker = Design.model.common.imagePicker
 
    lazy var saveButton = Design.button.default
       .title("Сохранить")
@@ -35,18 +38,36 @@ final class ProfileEditScene<Asset: AssetProtocol>: ModalDoubleStackModel<Asset>
          saveButtonDidTap: saveButton.on(\.didTap)
       )
    )
+   
+   lazy var scenario2: Scenario = AvatarPickingScenario(
+      works: works,
+      stateDelegate: stateDelegate,
+      events: AvatarPickingScenarioEvents(
+         startImagePicking: viewModels.editPhotoBlock.models.main.on(\.didTap),
+         addImageToBasket: imagePicker.onEvent(\.didImagePicked)
+      )
+   )
 
    private lazy var works = ProfileEditWorks<Asset>()
    private var balance: Balance?
 
    private var currentUser: UserData?
 
+   private weak var vcModel: UIViewController?
+
+   convenience init(vcModel: UIViewController?) {
+      self.init()
+
+      self.vcModel = vcModel
+   }
+
    override func start() {
       super.start()
 
       //  vcModel?.sendEvent(\.setTitle, "Профиль")
       configure()
-
+      
+      scenario2.start()
       scenario.start()
    }
 
@@ -71,97 +92,6 @@ final class ProfileEditScene<Asset: AssetProtocol>: ModalDoubleStackModel<Asset>
          ])
    }
 
-   private func saveUserData() {
-      /*
-       var info: [[String: Any]] = []
-       var emailDic: [String: Any]
-       var phoneDic: [String: Any]
-       if emailId != nil {
-          emailDic = [
-             "contact_type": "@",
-             "contact_id": self.email.models.down.view.text ?? "",
-             "id": emailId
-          ]
-       } else {
-          emailDic = [
-             "contact_type": "@",
-             "contact_id": self.email.models.down.view.text ?? ""
-          ]
-       }
-
-       if phoneId != nil {
-          phoneDic = [
-             "contact_type": "P",
-             "contact_id": self.phone.models.down.view.text ?? "",
-             "id": phoneId
-          ]
-       } else {
-          phoneDic = [
-             "contact_type": "P",
-             "contact_id": self.phone.models.down.view.text ?? ""
-          ]
-       }
-       if emailId != nil || (emailId == nil && self.email.models.down.view.text != "") {
-          info.append(emailDic)
-       }
-       if phoneId != nil || (phoneId == nil && self.phone.models.down.view.text != "") {
-          info.append(phoneDic)
-       }
-
-       let creteFewContactsRequest = CreateFewContactsRequest(token: "",
-                                                              info: info)
-       self.works.createFewContacts
-          .doAsync(creteFewContactsRequest)
-          .onSuccess {
-             print("create few contacts +")
-          }
-          .onFail {
-             print("create few contacts -")
-          }
-       */
-
-      //         let info = [
-      //            "surname": self.surname.models.down.view.text ?? "",
-      //            "first_name": self.firstname.models.down.view.text ?? "",
-      //            "middle_name":self.middleName.models.down.view.text ?? ""
-      //         ]
-      //         let profileRequest = UpdateProfileRequest(token: "", id: profileId, info: info)
-      //         self.works.updateProfile
-      //            .doAsync(profileRequest)
-      //            .onSuccess {
-      //               print("update profile info")
-      //            }
-      //            .onFail {
-      //               print("can not update profile info")
-      //            }
-
-      //         guard let emailId = emailId else {
-      //            let request = CreateContactRequest(token: "",
-      //                                               contactId: self.email.models.down.view.text ?? "email@gmail.com",
-      //                                               contactType: "@",
-      //                                               profile: profileId)
-      //            self.works.createContact
-      //               .doAsync(request)
-      //               .onSuccess {
-      //                  print("Succeessss")
-      //               }
-      //               .onFail {
-      //                  print("FAIIIL")
-      //               }
-      //            print("hey yo")
-      //            return
-      //         }
-      //
-      //         self.works.updateContact
-      //            .doAsync((emailId, self.email.models.down.view.text ?? "email@gmail.com"))
-      //            .onSuccess {
-      //               print("Succeessss")
-      //            }
-      //            .onFail {
-      //               print("FAIIIL")
-      //            }
-   }
-
    private func setLabels(userData: UserData) {
       let profile = userData.profile
       let fullName = profile.surName.string + " " +
@@ -172,29 +102,6 @@ final class ProfileEditScene<Asset: AssetProtocol>: ModalDoubleStackModel<Asset>
       if let urlSuffix = profile.photo {
          // userModel.models.main.url(TeamForceEndpoints.urlBase + urlSuffix)
       }
-
-      // infoStack
-//      firstname.models.down.text(profile.firstName.string)
-//      surname.models.down.text(profile.surName.string)
-//      middleName.models.down.text(profile.middleName.string)
-//      if let contacts = profile.contacts {
-//         for contact in contacts {
-//            switch contact.contactType {
-//            case "@":
-//               email.setAll {
-//                  $1.text(contact.contactId)
-//               }
-//            case "P":
-//               phone.setAll {
-//                  $1.text(contact.contactId)
-//               }
-//            case "T":
-//               viewModels.editPhotoBlock.fullAndNickName.nickName.text("@" + contact.contactId)
-//            default:
-//               print("Contact error")
-//            }
-//         }
-//      }
    }
 }
 
@@ -211,9 +118,12 @@ extension ProfileEditScene: StateMachine {
          break
       case .userDataDidLoad(let userData):
          contactModels.setup(userData)
-
          currentUser = userData
-         //configureButton()
+      case .presentImagePicker:
+         guard let baseVC = vcModel else { return }
+         imagePicker.sendEvent(\.presentOn, baseVC)
+      case .presentPickedImage(let image):
+         viewModels.editPhotoBlock.models.main.image(image)
       }
    }
 }

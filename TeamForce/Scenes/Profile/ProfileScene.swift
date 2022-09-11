@@ -69,7 +69,7 @@ final class ProfileScene<Asset: AssetProtocol>: BaseSceneModel<
 
    lazy var bottomPopupPresenter = Design.model.common.bottomPopupPresenter
 
-   lazy var editProfileModel = ProfileEditScene<Asset>()
+   lazy var editProfileModel = ProfileEditScene<Asset>(vcModel: vcModel)
 
    // MARK: - Services
 
