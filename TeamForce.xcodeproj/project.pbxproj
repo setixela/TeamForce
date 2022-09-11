@@ -195,6 +195,7 @@
 		6368D8282891E7C40049EEAB /* UserDefault+helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6368D8272891E7C30049EEAB /* UserDefault+helpers.swift */; };
 		6368D82A2894091B0049EEAB /* TransactInputViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6368D8292894091B0049EEAB /* TransactInputViewModel.swift */; };
 		6368D82C289415EC0049EEAB /* TextViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6368D82B289415EC0049EEAB /* TextViewModel.swift */; };
+		63A2233D28CD503B00D92615 /* AvatarPickingScenario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A2233C28CD503B00D92615 /* AvatarPickingScenario.swift */; };
 		63A529F528A1F8AB004A858D /* SegmentedControlModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A529F428A1F8AA004A858D /* SegmentedControlModel.swift */; };
 		63AB070928BD4C1B00FD650F /* UpdateProfileApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AB070828BD4C1B00FD650F /* UpdateProfileApiWorker.swift */; };
 		63AB070D28BD526700FD650F /* UpdateContactApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AB070C28BD526700FD650F /* UpdateContactApiWorker.swift */; };
@@ -433,6 +434,7 @@
 		6368D8272891E7C30049EEAB /* UserDefault+helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefault+helpers.swift"; sourceTree = "<group>"; };
 		6368D8292894091B0049EEAB /* TransactInputViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactInputViewModel.swift; sourceTree = "<group>"; };
 		6368D82B289415EC0049EEAB /* TextViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextViewModel.swift; sourceTree = "<group>"; };
+		63A2233C28CD503B00D92615 /* AvatarPickingScenario.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarPickingScenario.swift; sourceTree = "<group>"; };
 		63A529F428A1F8AA004A858D /* SegmentedControlModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentedControlModel.swift; sourceTree = "<group>"; };
 		63AB070828BD4C1B00FD650F /* UpdateProfileApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateProfileApiWorker.swift; sourceTree = "<group>"; };
 		63AB070C28BD526700FD650F /* UpdateContactApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateContactApiWorker.swift; sourceTree = "<group>"; };
@@ -629,6 +631,7 @@
 				19221EEE28CB509A00B7B604 /* ProfileEditViewModels.swift */,
 				19221EE728C9ADC300B7B604 /* ProfileEditScenario.swift */,
 				63AB071428BD8E6100FD650F /* ProfileEditWorks.swift */,
+				63A2233C28CD503B00D92615 /* AvatarPickingScenario.swift */,
 			);
 			path = EditProfile;
 			sourceTree = "<group>";
@@ -1459,6 +1462,7 @@
 				19CAB9C528B41C1F00A0A3B1 /* Switcher.swift in Sources */,
 				19A9232A28B2A8200080D491 /* SpacerPresenter.swift in Sources */,
 				63AB071328BD7DD700FD650F /* ProfileEditScene.swift in Sources */,
+				63A2233D28CD503B00D92615 /* AvatarPickingScenario.swift in Sources */,
 				19F153842899649900ECF000 /* LoadProfileUseCase.swift in Sources */,
 				19CAB9D628B44C4700A0A3B1 /* StackItemsModel.swift in Sources */,
 				19221EEF28CB509A00B7B604 /* ProfileEditViewModels.swift in Sources */,

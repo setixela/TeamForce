@@ -8,9 +8,21 @@
 import Foundation
 import ReactiveWorks
 
-struct CreateFewContactsRequest {
+struct CreateFewContactsRequest: Codable {
    let token: String
-   let info: [[String: Any]]
+   let info: [FewContacts]
+}
+
+struct FewContacts: Codable {
+   let id: Int?
+   let contactType: String
+   let contactId: String
+
+   enum CodingKeys: String, CodingKey {
+      case id
+      case contactType = "contact_type"
+      case contactId = "contact_id"
+   }
 }
 
 final class CreateFewContactsApiWorker: BaseApiWorker<CreateFewContactsRequest, Void> {
@@ -25,22 +37,29 @@ final class CreateFewContactsApiWorker: BaseApiWorker<CreateFewContactsRequest, 
          work.fail(())
          return
       }
-      let endpoint = TeamForceEndpoints.CreateFewContacts(
-         arrayBody: CreateFewContactsRequest.info,
-         headers: ["Authorization": CreateFewContactsRequest.token,
-                   "X-CSRFToken": cookie.value]
-      )
-      print("endpoint is \(endpoint)")
-      apiEngine?
-         .process(endpoint: endpoint)
-         .done { result in
-//            let str = String(decoding: result.data!, as: UTF8.self)
-//            print(str)
-//            print("response status \(result.response)")
-            work.success(result: ())
-         }
-         .catch { _ in
-            work.fail(())
-         }
+      
+      do {
+         let jsonData = try JSONEncoder().encode(CreateFewContactsRequest.info)
+         let endpoint = TeamForceEndpoints.CreateFewContacts(
+            jsonData: jsonData,
+            headers: ["Authorization": CreateFewContactsRequest.token,
+                      "X-CSRFToken": cookie.value,
+                      "Content-Type": "application/json"]
+         )
+         print("endpoint is \(endpoint)")
+         apiEngine?
+            .process(endpoint: endpoint)
+            .done { result in
+               let str = String(decoding: result.data!, as: UTF8.self)
+               print(str)
+               print("response status \(result.response)")
+               work.success(result: ())
+            }
+            .catch { _ in
+               work.fail(())
+            }
+      } catch {
+         print(error)
+      }
    }
 }
