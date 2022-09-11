@@ -9,7 +9,7 @@ import ReactiveWorks
 import UIKit
 
 enum ScrollState {
-   case models([UIViewModel])
+   case arrangedModels([UIViewModel])
    case spacing(CGFloat)
    case scrollToTop(animated: Bool)
    case hideHorizontalScrollIndicator
@@ -38,7 +38,7 @@ final class ScrollViewModelY: BaseViewModel<UIScrollView> {
 extension ScrollViewModelY: Stateable2 {
    func applyState(_ state: ScrollState) {
       switch state {
-      case .models(let array):
+      case .arrangedModels(let array):
          array.forEach {
             stack.view.addArrangedSubview($0.uiView)
          }
@@ -74,7 +74,7 @@ final class ScrollViewModelX: BaseViewModel<UIScrollView> {
 extension ScrollViewModelX: Stateable2 {
    func applyState(_ state: ScrollState) {
       switch state {
-      case .models(let array):
+      case .arrangedModels(let array):
          array.enumerated().forEach {
             stack.view.addArrangedSubview($0.1.uiView)
          }

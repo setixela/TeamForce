@@ -87,7 +87,7 @@ final class TransactScene<Asset: AssetProtocol>: ModalDoubleStackModel<Asset>, S
 
    private lazy var viewModelsWrapper = ScrollViewModelY()
       .set(.spacing(Grid.x16.value))
-      .set(.models([
+      .set(.arrangedModels([
          viewModels.balanceInfo,
          viewModels.foundUsersList,
          viewModels.amountInputModel,

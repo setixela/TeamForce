@@ -101,8 +101,11 @@ final class ProfileScene<Asset: AssetProtocol>: BaseSceneModel<
             Grid.xxx.spacer,
          ]))
 
-      userModel.models.right2.on(\.didTap, weak: self) {
-         $0.bottomPopupPresenter.send(\.present, ($0.editProfileModel, $0.vcModel?.view.rootSuperview))
+      userModel.models.right2.on(\.didTap, weak: self) { slf in
+         slf.bottomPopupPresenter.send(\.present, (slf.editProfileModel, slf.vcModel?.view.rootSuperview))
+         slf.editProfileModel.closeButton.on(\.didTap) {
+            slf.bottomPopupPresenter.send(\.hide)
+         }
       }
    }
 

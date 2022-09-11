@@ -26,18 +26,18 @@ class ModalDoubleStackModel<Asset: AssetProtocol>: DoubleStacksModel, Assetable 
 
    override func start() {
       backColor(Design.color.background)
-      padding(UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16))
       cornerRadius(Design.params.cornerRadiusMedium)
       shadow(.init(radius: 50, color: Design.color.iconContrast, opacity: 0.33))
-      disableBottomRadius(Design.params.cornerRadiusMedium)
+      padding(UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16))
 
-      set(.axis(.vertical))
-      set(.alignment(.fill))
-      set(.distribution(.fill))
-      set(.arrangedModels([
+      axis(.vertical)
+      alignment(.fill)
+      distribution(.fill)
+      arrangedModels([
          titlePanel,
          bodyStack,
          footerStack
-      ]))
+      ])
+      disableBottomRadius(Design.params.cornerRadiusMedium)
    }
 }

@@ -9,7 +9,7 @@ import ReactiveWorks
 import UIKit
 
 struct ImagePickerEvents: InitProtocol {
-   var presentOn: Event<UIViewController>?
+   var presentOn: Event<UIViewController?>?
    var didCancel: Event<Void>?
    var didImagePicked: Event<UIImage>?
    var didImagePickingError: Event<Void>?
@@ -26,7 +26,7 @@ final class ImagePickerViewModel: BaseModel, Communicable {
       onEvent(\.presentOn) { [weak self] in
          guard let picker = self?.picker else { return }
 
-         $0.present(picker, animated: true)
+         $0?.present(picker, animated: true)
       }
    }
 }

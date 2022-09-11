@@ -169,11 +169,11 @@ final class StackViewExtended: UIStackView, Communicable {
    }
 }
 
-// MARK: - ButtonExtended(UIButton)
+// MARK: - ButtonExtended(UIButton) -------------------------
 
 final class ButtonExtended: UIButton, AlamoLoader {
    lazy var downloader = ImageDownloader()
-   
+
    var isVertical = false
 
    override init(frame: CGRect) {
@@ -185,30 +185,26 @@ final class ButtonExtended: UIButton, AlamoLoader {
    override func layoutSubviews() {
       super.layoutSubviews()
 
-      if self.isVertical {
-         //  self.contentHorizontalAlignment = .center
-         self.setButtonVertical()
+      if isVertical {
+         setButtonVertical()
       }
    }
 
+   @available(*, unavailable)
    required init?(coder: NSCoder) {
       fatalError("init(coder:) has not been implemented")
    }
 
    private func setButtonVertical() {
-      let titleSize = self.titleLabel?.frame.size ?? .zero
-      let imageSize = self.imageView?.frame.size ?? .zero
+      let titleSize = titleLabel?.frame.size ?? .zero
+      let imageSize = imageView?.frame.size ?? .zero
       let spacing: CGFloat = 6.0
-      self.imageEdgeInsets = UIEdgeInsets(top: -(titleSize.height + spacing), left: 0, bottom: 0, right: -titleSize.width)
-      self.titleEdgeInsets = UIEdgeInsets(top: 0, left: -imageSize.width, bottom: -(imageSize.height + spacing), right: 0)
+      imageEdgeInsets = UIEdgeInsets(top: -(titleSize.height + spacing), left: 0, bottom: 0, right: -titleSize.width)
+      titleEdgeInsets = UIEdgeInsets(top: 0, left: -imageSize.width, bottom: -(imageSize.height + spacing), right: 0)
    }
-
-   //   override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
-   //      return bounds.insetBy(dx: -10, dy: -10).contains(point)
-   //   }
-
-   // or so: button.contentEdgeInsets = UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 16)
 }
+
+// MARK: - Tap animator -------------------------
 
 protocol ButtonTapAnimator: UIViewModel {}
 

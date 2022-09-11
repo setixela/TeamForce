@@ -53,7 +53,7 @@ final class BalanceScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>
    private lazy var frameCellStackModel = WrappedX(
       ScrollViewModelX()
          .set(.hideHorizontalScrollIndicator)
-         .set(.models([
+         .set(.arrangedModels([
             Grid.x16.spacer,
             myAccountFrame,
             Grid.x16.spacer,

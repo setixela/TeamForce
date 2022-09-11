@@ -14,6 +14,7 @@ protocol ProfileModelBuilder: InitProtocol, Designable {
    var editPhotoBlock: EditPhotoBlock<Design> { get }
 
    var titledTextField: TitledTextFieldY<Design> { get }
+   var titleBody: TitleSubtitleY<Design> { get }
 }
 
 struct ProfileBuilder<Design: DSP>: ProfileModelBuilder {
@@ -68,6 +69,25 @@ struct ProfileBuilder<Design: DSP>: ProfileModelBuilder {
       .alignment(.fill)
       .height(Grid.x48.value)
    }
+
+   var titleBody: TitleSubtitleY<Design> { .init()
+         .setAll { main, down in
+            main
+               .alignment(.left)
+               .set(Design.state.label.caption)
+               .textColor(Design.color.textSecondary)
+               .padTop(Grid.x8.value)
+            down
+               .alignment(.left)
+               .set(Design.state.label.default)
+               .textColor(Design.color.text)
+               .padBottom(Grid.x8.value)
+         }
+         .backColor(Design.color.backgroundInfoSecondary)
+         .padding(.sideOffset(16))
+         .cornerRadius(Design.params.cornerRadiusSmall)
+         .alignment(.fill)
+      .height(Grid.x48.value) }
 }
 
 final class EditPhotoBlock<Design: DSP>: M<ButtonModel>.R<FullAndNickNameY<Design>>.Combo, Designable {

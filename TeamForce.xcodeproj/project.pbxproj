@@ -41,6 +41,9 @@
 		19221EEF28CB509A00B7B604 /* ProfileEditViewModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19221EEE28CB509A00B7B604 /* ProfileEditViewModels.swift */; };
 		19221EF128CDBC7300B7B604 /* Multiplexor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19221EF028CDBC7300B7B604 /* Multiplexor.swift */; };
 		19221EF328CDBCB000B7B604 /* SetupProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19221EF228CDBCB000B7B604 /* SetupProtocol.swift */; };
+		19221EF528CE1D1B00B7B604 /* EditContactsViewModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19221EF428CE1D1B00B7B604 /* EditContactsViewModels.swift */; };
+		19221EF828CE262A00B7B604 /* WorkingPlaceViewModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19221EF728CE262A00B7B604 /* WorkingPlaceViewModels.swift */; };
+		19221EFA28CE267B00B7B604 /* OtherViewModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19221EF928CE267B00B7B604 /* OtherViewModels.swift */; };
 		192FCFFF28C9477100E6FACC /* ModalDoubleStackModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 192FCFFE28C9477100E6FACC /* ModalDoubleStackModel.swift */; };
 		19466E01289FE28C0052F0AB /* TitleSubtitleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19466E00289FE28C0052F0AB /* TitleSubtitleModel.swift */; };
 		19466E03289FFC040052F0AB /* IconTitleSubtitleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19466E02289FFC040052F0AB /* IconTitleSubtitleModel.swift */; };
@@ -287,6 +290,9 @@
 		19221EEE28CB509A00B7B604 /* ProfileEditViewModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditViewModels.swift; sourceTree = "<group>"; };
 		19221EF028CDBC7300B7B604 /* Multiplexor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Multiplexor.swift; sourceTree = "<group>"; };
 		19221EF228CDBCB000B7B604 /* SetupProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupProtocol.swift; sourceTree = "<group>"; };
+		19221EF428CE1D1B00B7B604 /* EditContactsViewModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditContactsViewModels.swift; sourceTree = "<group>"; };
+		19221EF728CE262A00B7B604 /* WorkingPlaceViewModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkingPlaceViewModels.swift; sourceTree = "<group>"; };
+		19221EF928CE267B00B7B604 /* OtherViewModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherViewModels.swift; sourceTree = "<group>"; };
 		192FCFFE28C9477100E6FACC /* ModalDoubleStackModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalDoubleStackModel.swift; sourceTree = "<group>"; };
 		19466E00289FE28C0052F0AB /* TitleSubtitleModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleSubtitleModel.swift; sourceTree = "<group>"; };
 		19466E02289FFC040052F0AB /* IconTitleSubtitleModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconTitleSubtitleModel.swift; sourceTree = "<group>"; };
@@ -631,13 +637,24 @@
 		19221EED28CB17CD00B7B604 /* EditProfile */ = {
 			isa = PBXGroup;
 			children = (
+				19221EF628CE1D4400B7B604 /* ViewModels */,
 				63AB071228BD7DD700FD650F /* ProfileEditScene.swift */,
-				19221EEE28CB509A00B7B604 /* ProfileEditViewModels.swift */,
 				19221EE728C9ADC300B7B604 /* ProfileEditScenario.swift */,
 				63AB071428BD8E6100FD650F /* ProfileEditWorks.swift */,
 				63A2233C28CD503B00D92615 /* AvatarPickingScenario.swift */,
 			);
 			path = EditProfile;
+			sourceTree = "<group>";
+		};
+		19221EF628CE1D4400B7B604 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				19221EEE28CB509A00B7B604 /* ProfileEditViewModels.swift */,
+				19221EF428CE1D1B00B7B604 /* EditContactsViewModels.swift */,
+				19221EF728CE262A00B7B604 /* WorkingPlaceViewModels.swift */,
+				19221EF928CE267B00B7B604 /* OtherViewModels.swift */,
+			);
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 		19466DFF289FE0B20052F0AB /* LabelModels */ = {
@@ -887,7 +904,6 @@
 				19A9BE6428BEB57C0099F8EA /* ImagePickerViewModel.swift */,
 				196750AB2865189C0019A6DE /* TextFieldModel.swift */,
 				196750AF286518F80019A6DE /* DoubleStacksModel.swift */,
-				192FCFFE28C9477100E6FACC /* ModalDoubleStackModel.swift */,
 				196750B12865190D0019A6DE /* ImageViewModel.swift */,
 				199C4B6528624B4C008AD6FD /* Spacer.swift */,
 				1953DE852879FE30000DC537 /* PickerViewModel.swift */,
@@ -1113,6 +1129,7 @@
 		19EE848E28AB20A600D862EE /* MainVMs */ = {
 			isa = PBXGroup;
 			children = (
+				192FCFFE28C9477100E6FACC /* ModalDoubleStackModel.swift */,
 				196D883328ADB6EC00F4C09D /* TripleStacksBrandedVM.swift */,
 				196D883528ADB74800F4C09D /* TabBarPanel.swift */,
 				19EE848F28AB20CE00D862EE /* DoubleStacksBrandedVM.swift */,
@@ -1362,6 +1379,7 @@
 				196750B22865190D0019A6DE /* ImageViewModel.swift in Sources */,
 				63D419E928A5109E0024E22C /* GetUsersListUseCase.swift in Sources */,
 				197A771A28AD90B30082CD81 /* Presenting.swift in Sources */,
+				19221EF828CE262A00B7B604 /* WorkingPlaceViewModels.swift in Sources */,
 				63D419ED28AA56570024E22C /* GetFeedUseCase.swift in Sources */,
 				1977BE5528A7238F00D554EA /* TextFieldStates.swift in Sources */,
 				191571D1289F12350061510F /* PlaygroundScene.swift in Sources */,
@@ -1408,6 +1426,7 @@
 				63E1916D2889519E000FD312 /* BadgeModel.swift in Sources */,
 				19C1E9A328610E4E00E7976D /* MainRouter.swift in Sources */,
 				19A9BE7328C255690099F8EA /* TransactBuilder.swift in Sources */,
+				19221EF528CE1D1B00B7B604 /* EditContactsViewModels.swift in Sources */,
 				19A73BEB28A4510E000B74CF /* BadgedViewModel.swift in Sources */,
 				198BBEEE28B698040006CD30 /* LoadCsrfTokenUseCase.swift in Sources */,
 				198FE1D02899E0BF00BAF1A5 /* IsEmpty.swift in Sources */,
@@ -1469,6 +1488,7 @@
 				19017B8228A6A3FB00B06345 /* GetUsersListApiWorker.swift in Sources */,
 				19CAB9C528B41C1F00A0A3B1 /* Switcher.swift in Sources */,
 				19A9232A28B2A8200080D491 /* SpacerPresenter.swift in Sources */,
+				19221EFA28CE267B00B7B604 /* OtherViewModels.swift in Sources */,
 				63AB071328BD7DD700FD650F /* ProfileEditScene.swift in Sources */,
 				63A2233D28CD503B00D92615 /* AvatarPickingScenario.swift in Sources */,
 				19F153842899649900ECF000 /* LoadProfileUseCase.swift in Sources */,
