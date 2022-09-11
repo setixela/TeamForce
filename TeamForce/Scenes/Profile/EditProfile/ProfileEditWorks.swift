@@ -175,6 +175,10 @@ private extension ProfileEditWorks {
       if let middleName = Self.store.contacts.middlename {
          info["middle_name"] = middleName
       }
+      
+      if let telegram = Self.store.contacts.telegram {
+         info["tg_name"] = telegram
+      }
 
       let updateProfileRequest = UpdateProfileRequest(token: "",
                                                       id: profileId,
