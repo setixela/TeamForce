@@ -12,6 +12,18 @@ final class ProfileEditViewModels<Design: DSP>: Designable {
    lazy var editPhotoBlock = Design.model.profile.editPhotoBlock
 }
 
+extension ProfileEditViewModels: SetupProtocol {
+   func setup(_ data: UserData) {
+      let profile = data.profile
+      let fullName = profile.surName.string + " " +
+         profile.firstName.string + " " +
+         profile.middleName.string
+      editPhotoBlock.fullAndNickName.fullName.text(fullName)
+      editPhotoBlock.fullAndNickName.nickName.text("@" + profile.tgName)
+      editPhotoBlock.photoButton.backImageUrl(TeamForceEndpoints.urlBase + profile.photo.string)
+   }
+}
+
 final class EditContactsViewModels<Design: DSP>: BaseModel, Designable, Multiplexor {
    typealias Stock = Contacts
 
@@ -59,28 +71,6 @@ final class EditContactsViewModels<Design: DSP>: BaseModel, Designable, Multiple
    }
 }
 
-// MARK: - Multiplexor
-
-protocol Multiplexor: AnyObject {
-   associatedtype Stock
-
-   var work: VoidWork<Stock> { get }
-   var stock: Stock { get set }
-}
-
-extension Multiplexor {
-   func bind<T: Eventable, D>(event: KeyPath<T.Events, D?>,
-                              of model: KeyPath<Self, T>,
-                              to result: WritableKeyPath<Stock, D?>)
-   {
-      let model = self[keyPath: model]
-      model.on(event, weak: self) {
-         $0.stock[keyPath: result] = $1
-         $0.work.success(result: $0.stock)
-      }
-   }
-}
-
 extension EditContactsViewModels: SetupProtocol {
    func setup(_ data: UserData) {
       let profile = data.profile
@@ -105,7 +95,3 @@ extension EditContactsViewModels: SetupProtocol {
    }
 }
 
-protocol SetupProtocol {
-   associatedtype Data
-   func setup(_ data: Data)
-}

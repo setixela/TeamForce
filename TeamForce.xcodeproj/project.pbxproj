@@ -39,6 +39,8 @@
 		19221EEA28C9AF3400B7B604 /* Optional+Unwrap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19221EE928C9AF3400B7B604 /* Optional+Unwrap.swift */; };
 		19221EEC28C9B04700B7B604 /* TitledTextFieldY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19221EEB28C9B04700B7B604 /* TitledTextFieldY.swift */; };
 		19221EEF28CB509A00B7B604 /* ProfileEditViewModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19221EEE28CB509A00B7B604 /* ProfileEditViewModels.swift */; };
+		19221EF128CDBC7300B7B604 /* Multiplexor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19221EF028CDBC7300B7B604 /* Multiplexor.swift */; };
+		19221EF328CDBCB000B7B604 /* SetupProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19221EF228CDBCB000B7B604 /* SetupProtocol.swift */; };
 		192FCFFF28C9477100E6FACC /* ModalDoubleStackModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 192FCFFE28C9477100E6FACC /* ModalDoubleStackModel.swift */; };
 		19466E01289FE28C0052F0AB /* TitleSubtitleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19466E00289FE28C0052F0AB /* TitleSubtitleModel.swift */; };
 		19466E03289FFC040052F0AB /* IconTitleSubtitleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19466E02289FFC040052F0AB /* IconTitleSubtitleModel.swift */; };
@@ -283,6 +285,8 @@
 		19221EE928C9AF3400B7B604 /* Optional+Unwrap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Optional+Unwrap.swift"; sourceTree = "<group>"; };
 		19221EEB28C9B04700B7B604 /* TitledTextFieldY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitledTextFieldY.swift; sourceTree = "<group>"; };
 		19221EEE28CB509A00B7B604 /* ProfileEditViewModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditViewModels.swift; sourceTree = "<group>"; };
+		19221EF028CDBC7300B7B604 /* Multiplexor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Multiplexor.swift; sourceTree = "<group>"; };
+		19221EF228CDBCB000B7B604 /* SetupProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupProtocol.swift; sourceTree = "<group>"; };
 		192FCFFE28C9477100E6FACC /* ModalDoubleStackModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalDoubleStackModel.swift; sourceTree = "<group>"; };
 		19466E00289FE28C0052F0AB /* TitleSubtitleModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleSubtitleModel.swift; sourceTree = "<group>"; };
 		19466E02289FFC040052F0AB /* IconTitleSubtitleModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconTitleSubtitleModel.swift; sourceTree = "<group>"; };
@@ -1046,6 +1050,8 @@
 				197A771928AD90B30082CD81 /* Presenting.swift */,
 				19B2C5D328B7D37A00E7B47D /* Shadow.swift */,
 				19A9BE7F28C306FF0099F8EA /* Queue.swift */,
+				19221EF028CDBC7300B7B604 /* Multiplexor.swift */,
+				19221EF228CDBCB000B7B604 /* SetupProtocol.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -1325,6 +1331,7 @@
 				19A9BE6528BEB57C0099F8EA /* ImagePickerViewModel.swift in Sources */,
 				199C4B6D2863299E008AD6FD /* DesignSystem.swift in Sources */,
 				63578E5828AB8DA000423957 /* GetTransactionsByPeriodApiWorker.swift in Sources */,
+				19221EF328CDBCB000B7B604 /* SetupProtocol.swift in Sources */,
 				197A771828AD90800082CD81 /* XelaLog.swift in Sources */,
 				19A9BE7E28C2EB7D0099F8EA /* TransactSendErrorViewModel.swift in Sources */,
 				19A9232F28B2E34E0080D491 /* CurrencyLabelDT.swift in Sources */,
@@ -1381,6 +1388,7 @@
 				19017B8128A6A39800B06345 /* TransactDetailViewModel.swift in Sources */,
 				63EB469528AC35720070A271 /* HistoryScene.swift in Sources */,
 				63E7A74328AFA35E00FB2C80 /* GetPeriodByDateUseCase.swift in Sources */,
+				19221EF128CDBC7300B7B604 /* Multiplexor.swift in Sources */,
 				19DD3D97288A0A8C0085CDA8 /* CoverViewModel.swift in Sources */,
 				191B0C292865F119001CF3D9 /* TextBuilder.swift in Sources */,
 				19D08355286F405500F75E4A /* DoubleLabelModel.swift in Sources */,

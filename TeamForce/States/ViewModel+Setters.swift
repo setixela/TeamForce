@@ -430,6 +430,30 @@ extension ViewModelProtocol where Self: Stateable, View: ButtonExtended {
       view.contentEdgeInsets = value
       return self
    }
+
+   @discardableResult func backImageUrl(_ value: String?) -> Self {
+      guard
+         let str = value,
+         let url = URL(string: str) else { return self }
+
+      let urlRequest = URLRequest(url: url)
+
+      view.downloader.download(urlRequest, progressQueue: .global(qos: .utility), completion: { [weak view] response in
+         if case .success(let image) = response.result {
+            let image = image.resized(to: .square(48))
+            DispatchQueue.main.async {
+               view?.setBackgroundImage(image, for: .normal)
+            }
+         }
+      })
+      return self
+   }
+
+   @discardableResult func cornerRadius(_ value: CGFloat) -> Self {
+      view.layer.cornerRadius = value
+      view.clipsToBounds = true
+      return self
+   }
 }
 
 extension ViewModelProtocol where Self: Stateable, View: PaddingTextField {

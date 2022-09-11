@@ -87,7 +87,7 @@ final class ProfileEditWorks<Asset: AssetProtocol>: BaseSceneWorks<ProfileEditWo
             }
       }.retainBy(retainer)
    }
-   
+
    var updateAvatar: Work<UpdateImageRequest, Void> {
       .init { [weak self] work in
          guard let input = work.input else { return }
@@ -124,7 +124,7 @@ final class ProfileEditWorks<Asset: AssetProtocol>: BaseSceneWorks<ProfileEditWo
          }
 
       let fewContactsRequest = self.formFewContactsRequest()
-      
+
       self.createFewContacts
          .doAsync(fewContactsRequest)
          .onSuccess {
@@ -133,7 +133,7 @@ final class ProfileEditWorks<Asset: AssetProtocol>: BaseSceneWorks<ProfileEditWo
          .onFail {
             print("few contacts not created")
          }
-      
+
       let avatarRequest = self.formAvatarRequest()
       self.updateAvatar
          .doAsync(avatarRequest)
@@ -147,8 +147,18 @@ final class ProfileEditWorks<Asset: AssetProtocol>: BaseSceneWorks<ProfileEditWo
    }
 }
 
-// MARK: - Form Requests
+// MARK: - Add avatar
+
 extension ProfileEditWorks {
+   var addImage: Work<UIImage, UIImage> { .init { work in
+      Self.store.image = work.unsafeInput
+      work.success(result: work.unsafeInput)
+   } }
+}
+
+// MARK: - Form Requests
+
+private extension ProfileEditWorks {
    func formUpdateProfileRequest() -> UpdateProfileRequest? {
       guard
          let profileId = Self.store.profileId
@@ -173,13 +183,12 @@ extension ProfileEditWorks {
    }
 
    func formFewContactsRequest() -> CreateFewContactsRequest? {
-      
       var info: [FewContacts] = []
-      
+
       if let email = Self.store.contacts.email {
-         var emailDic: FewContacts = FewContacts(id: nil,
-                                                 contactType: "@",
-                                                 contactId: email)
+         var emailDic = FewContacts(id: nil,
+                                    contactType: "@",
+                                    contactId: email)
          if let emailId = Self.store.emailId {
             emailDic = FewContacts(id: emailId,
                                    contactType: "@",
@@ -187,11 +196,11 @@ extension ProfileEditWorks {
          }
          info.append(emailDic)
       }
-      
+
       if let phone = Self.store.contacts.phone {
-         var phoneDic: FewContacts = FewContacts(id: nil,
-                                                 contactType: "P",
-                                                 contactId: phone)
+         var phoneDic = FewContacts(id: nil,
+                                    contactType: "P",
+                                    contactId: phone)
          if let phoneId = Self.store.phoneId {
             phoneDic = FewContacts(id: phoneId,
                                    contactType: "P",
@@ -201,10 +210,10 @@ extension ProfileEditWorks {
       }
 
       let createFewContactsRequest = CreateFewContactsRequest(token: "",
-                                                             info: info)
+                                                              info: info)
       return createFewContactsRequest
    }
-   
+
    func formAvatarRequest() -> UpdateImageRequest? {
       guard
          let profileId = Self.store.profileId,
@@ -215,11 +224,4 @@ extension ProfileEditWorks {
                                        photo: avatar)
       return request
    }
-}
-
-extension ProfileEditWorks {
-   var addImage: Work<UIImage, UIImage> { .init { work in
-      Self.store.image = work.unsafeInput
-      work.success(result: work.unsafeInput)
-   } }
 }

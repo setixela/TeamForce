@@ -19,7 +19,7 @@ enum ProfileEditState {
 }
 
 final class ProfileEditScene<Asset: AssetProtocol>: ModalDoubleStackModel<Asset>, Scenarible2 {
-   lazy var viewModels = ProfileEditViewModels<Design>()
+   lazy var userNamePanel = ProfileEditViewModels<Design>()
    lazy var contactModels = EditContactsViewModels<Design>()
 
    // OLD
@@ -38,12 +38,12 @@ final class ProfileEditScene<Asset: AssetProtocol>: ModalDoubleStackModel<Asset>
          saveButtonDidTap: saveButton.on(\.didTap)
       )
    )
-   
+
    lazy var scenario2: Scenario = AvatarPickingScenario(
       works: works,
       stateDelegate: stateDelegate,
       events: AvatarPickingScenarioEvents(
-         startImagePicking: viewModels.editPhotoBlock.models.main.on(\.didTap),
+         startImagePicking: userNamePanel.editPhotoBlock.models.main.on(\.didTap),
          addImageToBasket: imagePicker.onEvent(\.didImagePicked)
       )
    )
@@ -64,9 +64,8 @@ final class ProfileEditScene<Asset: AssetProtocol>: ModalDoubleStackModel<Asset>
    override func start() {
       super.start()
 
-      //  vcModel?.sendEvent(\.setTitle, "Профиль")
       configure()
-      
+
       scenario2.start()
       scenario.start()
    }
@@ -77,7 +76,7 @@ final class ProfileEditScene<Asset: AssetProtocol>: ModalDoubleStackModel<Asset>
 
       bodyStack
          .arrangedModels([
-            viewModels.editPhotoBlock,
+            userNamePanel.editPhotoBlock,
             Design.model.common.divider,
             EditStack<Design>(title: "КОНТАКТЫ", models: [
                contactModels.surnameEditField,
@@ -90,18 +89,6 @@ final class ProfileEditScene<Asset: AssetProtocol>: ModalDoubleStackModel<Asset>
             saveButton,
             Grid.xxx.spacer,
          ])
-   }
-
-   private func setLabels(userData: UserData) {
-      let profile = userData.profile
-      let fullName = profile.surName.string + " " +
-         profile.firstName.string + " " +
-         profile.middleName.string
-      viewModels.editPhotoBlock.fullAndNickName.fullName.text(fullName)
-      viewModels.editPhotoBlock.fullAndNickName.nickName.text("@" + profile.tgName)
-      if let urlSuffix = profile.photo {
-         // userModel.models.main.url(TeamForceEndpoints.urlBase + urlSuffix)
-      }
    }
 }
 
@@ -118,12 +105,13 @@ extension ProfileEditScene: StateMachine {
          break
       case .userDataDidLoad(let userData):
          contactModels.setup(userData)
+         userNamePanel.setup(userData)
          currentUser = userData
       case .presentImagePicker:
          guard let baseVC = vcModel else { return }
          imagePicker.sendEvent(\.presentOn, baseVC)
       case .presentPickedImage(let image):
-         viewModels.editPhotoBlock.models.main.image(image)
+         userNamePanel.editPhotoBlock.models.main.image(image)
       }
    }
 }
