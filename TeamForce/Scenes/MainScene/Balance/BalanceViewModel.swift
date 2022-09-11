@@ -50,19 +50,14 @@ final class BalanceScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>
       .set(.backColor(Design.color.frameCellBackgroundSecondary))
       .set(.borderColor(.init(red: 0.33, green: 0.33, blue: 0.33, alpha: 0.08)))
 
-   private lazy var frameCellStackModel = WrappedX(
-      ScrollViewModelX()
-         .set(.hideHorizontalScrollIndicator)
-         .set(.arrangedModels([
-            Grid.x16.spacer,
-            myAccountFrame,
-            Grid.x16.spacer,
-            leftToSendFrame,
-            Grid.x16.spacer,
-         ]))
-   )
-   .padding(.init(top: 0, left: -16, bottom: 0, right: -16))
-   .height(184)
+   private lazy var frameCellStackModel = StackModel()
+      .axis(.horizontal)
+      .distribution(.fillEqually)
+      .spacing(Grid.x8.value)
+      .arrangedModels([
+         myAccountFrame,
+         leftToSendFrame
+      ])
 
    private lazy var annulationFrame = BalanceStatusFrameDT<Design>()
       .setMain {

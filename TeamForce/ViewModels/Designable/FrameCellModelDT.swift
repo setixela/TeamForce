@@ -27,18 +27,25 @@ final class FrameCellModelDT<Design: DesignProtocol>: BaseViewModel<StackViewExt
    private lazy var captionLabel = Design.label.default
       .textColor(Design.color.textInvert)
    private lazy var burnLabel = IconLabelModel<Design>()
+      .backColor(Design.color.background.withAlphaComponent(0.5))
+      .cornerRadius(7)
+      .padding(.outline(3))
+      .padLeft(6)
+      .width(90)
+      .hidden(true)
   
    override func start() {
       set(.axis(.vertical))
-      set(.padding(.init(top: 28, left: 20, bottom: 22, right: 16)))
+      set(.padding(.init(top: 36, left: 18, bottom: 14, right: 18)))
       set(.cornerRadius(Design.params.cornerRadiusMedium))
-      width(193)
+      height(184)
       set(.arrangedModels([
          headerLabel,
          Spacer(10),
          textLabel,
-         burnLabel,
-         Spacer(34),
+         Spacer(8),
+         burnLabel.lefted().height(30),
+         Spacer(),
          captionLabel
       ]))
       backViewModel(ImageViewModel()
@@ -61,6 +68,7 @@ extension FrameCellModelDT: Stateable2 {
          burnLabel.icon.image(Design.icon.burn)
          burnLabel.label.text(string)
          burnLabel.label.textColor(Design.color.textBrand)
+         burnLabel.hidden(false)
       }
    }
 }

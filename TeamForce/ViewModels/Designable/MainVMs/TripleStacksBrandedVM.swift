@@ -28,9 +28,6 @@ final class TripleStacksBrandedVM<Design: DesignProtocol>:
       .image(Design.icon.avatarPlaceholder)
       .size(.square(Grid.x36.value))
       .cornerRadius(Grid.x36.value / 2)
-      .borderColor(Design.color.backgroundBrandSecondary.withAlphaComponent(0.85))
-      .borderWidth(3)
-      .backColor(Design.color.background)
 
    private lazy var topButtonsStack = StackModel()
       .axis(.horizontal)
