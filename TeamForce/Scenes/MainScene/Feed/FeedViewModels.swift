@@ -35,7 +35,7 @@ final class FeedViewModels<Design: DSP>: BaseModel, Designable, Stateable {
       }
    }
 
-   private lazy var feedCellPresenter: Presenter<Feed, WrappedX<StackModel>> = Presenter<Feed, WrappedX<StackModel>> { [weak self] work in
+   private lazy var feedCellPresenter: Presenter<Feed, WrappedX<StackModel>> = .init { [weak self] work in
 
       guard let self = self else { return }
 
@@ -125,6 +125,7 @@ final class FeedViewModels<Design: DSP>: BaseModel, Designable, Stateable {
             .cornerRadius(Design.params.cornerRadiusSmall)
       )
       .padding(.verticalOffset(Grid.x16.value))
+      cellStack.isAutoreleaseView = true
 
       work.success(result: cellStack)
    }

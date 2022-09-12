@@ -71,6 +71,7 @@ final class PaddingTextField: UITextField, Marginable {
 // MARK: - PaddingImageView -------------------------
 
 import Alamofire
+import AlamofireImage
 
 protocol AlamoLoader {}
 
@@ -79,13 +80,31 @@ extension AlamoLoader {
       guard
          let str = urlStr else { result(nil); return }
 
-      AF.request(str).responseImage {
-         if case .success(let image) = $0.result {
-            result(image)
-            return
-         }
-         result(nil)
-      }
+//      AF.request(str).responseImage {
+//         if case .success(let image) = $0.result {
+//            result(image)
+//            return
+//         }
+//         result(nil)
+//      }
+
+      let imageDownloader = ImageDownloader(
+         configuration: ImageDownloader.defaultURLSessionConfiguration(),
+         downloadPrioritization: .lifo,
+         maximumActiveDownloads: 4,
+         imageCache: AutoPurgingImageCache(memoryCapacity: 500_000_000, preferredMemoryUsageAfterPurge: 60_000_000)
+      )
+
+      let urlRequest = URLRequest(url: URL(string: str)!)
+
+      imageDownloader.download(urlRequest, completion: { response in
+
+         guard case .success(let image) = response.result else { result(nil); return }
+
+         let coef = image.size.width / image.size.height
+         let image2 = image.resized(to: .init(width: 256, height: 256/coef))
+         result(image2)
+      })
    }
 }
 
@@ -183,7 +202,6 @@ final class StackViewExtended: UIStackView, Communicable {
 // MARK: - ButtonExtended(UIButton) -------------------------
 
 final class ButtonExtended: UIButton, AlamoLoader {
-
    var isVertical = false
 
    override init(frame: CGRect) {

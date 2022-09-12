@@ -89,12 +89,13 @@ final class TableItemsModel<Design: DSP>: BaseViewModel<UITableView>,
 
       let cellName = String(describing: type(of: item))
 
-      view.register(UITableViewCell.self, forCellReuseIdentifier: cellName)
+      view.register(TableCell.self, forCellReuseIdentifier: cellName)
 
-      let cell = tableView.dequeueReusableCell(withIdentifier: cellName) ?? UITableViewCell()
+      let cell = tableView.dequeueReusableCell(withIdentifier: cellName) ?? TableCell()
 
       let presenter = presenters[cellName]
-      let modelView = presenter?.viewModel(for: item).uiView ?? UIView()
+      let model = presenter?.viewModel(for: item)
+      let modelView = model?.uiView ?? UIView()
 
       cell.backgroundColor = .clear
       cell.contentView.subviews.forEach { $0.removeFromSuperview() }
@@ -144,9 +145,6 @@ final class TableItemsModel<Design: DSP>: BaseViewModel<UITableView>,
                                   targetContentOffset: UnsafeMutablePointer<CGPoint>) {
       sendEvent(\.willEndDragging, velocity.y)
    }
-//   {
-//      sendEvent(\.didEndDragging, velocity)
-//   }
 }
 
 extension TableItemsModel: Stateable2 {
@@ -173,3 +171,9 @@ extension TableItemsModel: Stateable2 {
 }
 
 extension TableItemsModel: Communicable {}
+
+final class TableCell: UITableViewCell {
+   override func prepareForReuse() {
+      super.prepareForReuse()
+   }
+}
