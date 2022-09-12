@@ -16,9 +16,15 @@ enum ProfileEditState {
    case saveUserData
    case presentImagePicker
    case presentPickedImage(UIImage)
+   case finishSaveSuccess
 }
 
-final class ProfileEditScene<Asset: AssetProtocol>: ModalDoubleStackModel<Asset>, Scenarible2 {
+final class ProfileEditScene<Asset: AssetProtocol>: ModalDoubleStackModel<Asset>, Scenarible2, Eventable
+{
+   
+   typealias Events = ProfileEvents
+   var events = [Int: LambdaProtocol?]()
+   
    //
    private lazy var userNamePanel = ProfileEditViewModels<Design>()
    private lazy var contactModels = EditContactsViewModels<Design>()
@@ -129,6 +135,8 @@ extension ProfileEditScene: StateMachine {
          imagePicker.sendEvent(\.presentOn, vcModel)
       case .presentPickedImage(let image):
          userNamePanel.editPhotoBlock.models.main.image(image)
+      case .finishSaveSuccess:
+         send(\.saveSuccess)
       }
    }
 }
