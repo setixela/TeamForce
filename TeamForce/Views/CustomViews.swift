@@ -68,18 +68,29 @@ final class PaddingTextField: UITextField, Marginable {
    }
 }
 
-// MARK: - PaddinPaddingImageViewgLabel -------------------------
+// MARK: - PaddingImageView -------------------------
 
-import AlamofireImage
+import Alamofire
 
-protocol AlamoLoader {
-   var downloader: ImageDownloader { get }
+protocol AlamoLoader {}
+
+extension AlamoLoader {
+   func loadImage(_ urlStr: String?, result: @escaping (UIImage?) -> Void) {
+      guard
+         let str = urlStr else { result(nil); return }
+
+      AF.request(str).responseImage {
+         if case .success(let image) = $0.result {
+            result(image)
+            return
+         }
+         result(nil)
+      }
+   }
 }
 
 final class PaddingImageView: UIImageView, Marginable, AlamoLoader {
    var padding: UIEdgeInsets = .init()
-
-   lazy var downloader = ImageDownloader()
 
    override var alignmentRectInsets: UIEdgeInsets {
       return .init(top: -padding.top,
@@ -172,7 +183,6 @@ final class StackViewExtended: UIStackView, Communicable {
 // MARK: - ButtonExtended(UIButton) -------------------------
 
 final class ButtonExtended: UIButton, AlamoLoader {
-   lazy var downloader = ImageDownloader()
 
    var isVertical = false
 

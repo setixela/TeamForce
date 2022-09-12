@@ -22,6 +22,7 @@ struct ProfileBuilder<Design: DSP>: ProfileModelBuilder {
       .setMain { image in
          image
             .image(Design.icon.avatarPlaceholder)
+            .contentMode(.scaleAspectFill)
             .cornerRadius(52 / 2)
             .set(.size(.square(52)))
       } setRight: { name in
@@ -102,6 +103,7 @@ final class EditPhotoBlock<Design: DSP>: M<ButtonModel>.R<FullAndNickNameY<Desig
             .size(.square(Grid.x60.value))
             .image(Design.icon.camera)
             .backImage(Design.icon.avatarPlaceholder)
+            .contentMode(.scaleAspectFill)
             .cornerRadius(Grid.x60.value / 2)
       }
 

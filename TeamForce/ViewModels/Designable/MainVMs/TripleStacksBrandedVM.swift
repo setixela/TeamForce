@@ -26,6 +26,7 @@ final class TripleStacksBrandedVM<Design: DesignProtocol>:
 
    lazy var profileButton = ImageViewModel()
       .image(Design.icon.avatarPlaceholder)
+      .contentMode(.scaleAspectFill)
       .size(.square(Grid.x36.value))
       .cornerRadius(Grid.x36.value / 2)
 

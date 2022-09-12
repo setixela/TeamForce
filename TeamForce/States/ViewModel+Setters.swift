@@ -353,18 +353,11 @@ extension ViewModelProtocol where Self: Stateable, View: PaddingImageView {
    @discardableResult func url(_ value: String?) -> Self {
       guard
          let str = value,
-         let url = URL(string: str) else { return self }
+         let url = URL(string: str)
+      else { return self }
 
-      let urlRequest = URLRequest(url: url)
+      view.af.setImage(withURL: url)
 
-      view.downloader.download(urlRequest, progressQueue: .global(qos: .utility), completion: { [weak view] response in
-         if case .success(let image) = response.result {
-            let image = image.resized(to: .square(48))
-            DispatchQueue.main.async {
-               view?.image = image
-            }
-         }
-      })
       return self
    }
 }
@@ -432,20 +425,10 @@ extension ViewModelProtocol where Self: Stateable, View: ButtonExtended {
    }
 
    @discardableResult func backImageUrl(_ value: String?) -> Self {
-      guard
-         let str = value,
-         let url = URL(string: str) else { return self }
+      view.loadImage(value) { [weak view] in
+         view?.setBackgroundImage($0, for: .normal)
+      }
 
-      let urlRequest = URLRequest(url: url)
-
-      view.downloader.download(urlRequest, progressQueue: .global(qos: .utility), completion: { [weak view] response in
-         if case .success(let image) = response.result {
-            let image = image.resized(to: .square(48))
-            DispatchQueue.main.async {
-               view?.setBackgroundImage(image, for: .normal)
-            }
-         }
-      })
       return self
    }
 
