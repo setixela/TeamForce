@@ -29,8 +29,7 @@ final class ProfileEditScene<Asset: AssetProtocol>: ModalDoubleStackModel<Asset>
    private lazy var userNamePanel = ProfileEditViewModels<Design>()
    private lazy var contactModels = EditContactsViewModels<Design>()
    private lazy var workPlaceModels = WorkingPlaceViewModels<Design>()
-//   private lazy var otherViewModels = OtherViewModels<Design>()
-
+   
    private lazy var imagePicker = Design.model.common.imagePicker
 
    private lazy var saveButton = Design.button.default
@@ -130,7 +129,6 @@ extension ProfileEditScene: StateMachine {
          contactModels.setup(userData)
          userNamePanel.setup(userData)
          workPlaceModels.setup(userData)
-         //otherViewModels.setup(userData)
       case .presentImagePicker:
          imagePicker.sendEvent(\.presentOn, vcModel)
       case .presentPickedImage(let image):

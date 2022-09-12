@@ -23,4 +23,3 @@ extension ProfileEditViewModels: SetupProtocol {
       editPhotoBlock.photoButton.backImageUrl(TeamForceEndpoints.urlBase + profile.photo.string)
    }
 }
-
