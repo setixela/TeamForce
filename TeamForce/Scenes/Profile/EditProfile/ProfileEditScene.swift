@@ -113,6 +113,10 @@ final class ProfileEditScene<Asset: AssetProtocol>: ModalDoubleStackModel<Asset>
          .padding(.top(Grid.x16.value))
          .padBottom(Grid.x16.value)
    }
+   
+   func clearcontactModelsStock() {
+      contactModels.stock = .init()
+   }
 }
 
 extension ProfileEditScene: StateMachine {
