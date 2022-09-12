@@ -110,6 +110,8 @@ final class ProfileScene<Asset: AssetProtocol>: BaseSceneModel<
          }
          
          slf.editProfileModel.on(\.saveSuccess) {
+            slf.editProfileModel.clearcontactModelsStock()
+            slf.editProfileModel.scenario.start()
             self.configureProfile()
             slf.bottomPopupPresenter.send(\.hide)
          }
@@ -132,8 +134,18 @@ final class ProfileScene<Asset: AssetProtocol>: BaseSceneModel<
             print("load profile error")
          }
    }
-
+   
+   private func clearLabels() {
+      email.setAll {
+         $1.text("-")
+      }
+      phone.setAll {
+         $1.text("-")
+      }
+   }
+   
    private func setLabels(userData: UserData) {
+      clearLabels()
       let profile = userData.profile
       let fullName = profile.surName.string + " " +
          profile.firstName.string + " " + profile.middleName.string
@@ -153,7 +165,6 @@ final class ProfileScene<Asset: AssetProtocol>: BaseSceneModel<
       hiredAt.setAll {
          $1.text(profile.hiredAt.string)
       }
-      print("contacts \(profile.contacts)")
 
       // infoStack
       if let contacts = profile.contacts {
