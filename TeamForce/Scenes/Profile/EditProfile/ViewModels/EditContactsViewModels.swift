@@ -42,6 +42,12 @@ final class EditContactsViewModels<Design: DSP>: BaseModel, Designable, Multiple
          $0.text("Мобильный номер")
          $1.placeholder("Мобильный номер")
       }
+   
+   lazy var telegramEditField = Design.model.profile.titledTextField
+      .setAll {
+         $0.text("Имя пользователя")
+         $1.placeholder("Имя пользователя")
+      }
 
    // MARK: - Start
 
@@ -51,6 +57,7 @@ final class EditContactsViewModels<Design: DSP>: BaseModel, Designable, Multiple
       bind(event: \.didEditingChanged, of: \.middlenameEditField, to: \.middlename)
       bind(event: \.didEditingChanged, of: \.emailEditField, to: \.email)
       bind(event: \.didEditingChanged, of: \.phoneEditField, to: \.phone)
+      bind(event: \.didEditingChanged, of: \.telegramEditField, to: \.telegram)
    }
 }
 
@@ -60,6 +67,7 @@ extension EditContactsViewModels: SetupProtocol {
       surnameEditField.textField.text(profile.surName.string)
       nameEditField.textField.text(profile.firstName.string)
       middlenameEditField.textField.text(profile.middleName.string)
+      telegramEditField.textField.text(profile.tgName)
 
       if let contacts = profile.contacts {
          for contact in contacts {

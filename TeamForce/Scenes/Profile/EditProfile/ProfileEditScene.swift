@@ -16,14 +16,20 @@ enum ProfileEditState {
    case saveUserData
    case presentImagePicker
    case presentPickedImage(UIImage)
+   case finishSaveSuccess
 }
 
-final class ProfileEditScene<Asset: AssetProtocol>: ModalDoubleStackModel<Asset>, Scenarible2 {
+final class ProfileEditScene<Asset: AssetProtocol>: ModalDoubleStackModel<Asset>, Scenarible2, Eventable
+{
+   
+   typealias Events = ProfileEvents
+   var events = [Int: LambdaProtocol?]()
+   
    //
    private lazy var userNamePanel = ProfileEditViewModels<Design>()
    private lazy var contactModels = EditContactsViewModels<Design>()
    private lazy var workPlaceModels = WorkingPlaceViewModels<Design>()
-   private lazy var otherViewModels = OtherViewModels<Design>()
+//   private lazy var otherViewModels = OtherViewModels<Design>()
 
    private lazy var imagePicker = Design.model.common.imagePicker
 
@@ -94,7 +100,7 @@ final class ProfileEditScene<Asset: AssetProtocol>: ModalDoubleStackModel<Asset>
                   ]),
                   Design.model.common.divider,
                   EditStack<Design>(title: "ТЕЛЕГРАМ", models: [
-                     otherViewModels.telegramEditField
+                     contactModels.telegramEditField
                   ]),
                   Grid.x24.spacer
                ]))
@@ -124,11 +130,13 @@ extension ProfileEditScene: StateMachine {
          contactModels.setup(userData)
          userNamePanel.setup(userData)
          workPlaceModels.setup(userData)
-         otherViewModels.setup(userData)
+         //otherViewModels.setup(userData)
       case .presentImagePicker:
          imagePicker.sendEvent(\.presentOn, vcModel)
       case .presentPickedImage(let image):
          userNamePanel.editPhotoBlock.models.main.image(image)
+      case .finishSaveSuccess:
+         send(\.saveSuccess)
       }
    }
 }

@@ -11,6 +11,7 @@ import UIKit
 struct ProfileEditEvents {
    let contactsEvents: VoidWork<Contacts>
    let saveButtonDidTap: VoidWork<Void>
+   var saveSuccess: UserData?
 }
 
 final class ProfileEditScenario<Asset: AssetProtocol>: BaseScenario<ProfileEditEvents, ProfileEditState, ProfileEditWorks<Asset>> {
@@ -37,9 +38,7 @@ final class ProfileEditScenario<Asset: AssetProtocol>: BaseScenario<ProfileEditE
          .onSuccess {
             self.works.sendRequests
                .doAsync()
-               .onSuccess {
-                  print("hi")
-               }
+               .onSuccess(self.setState) { .finishSaveSuccess }
                .onFail {
                   print("bye")
                }

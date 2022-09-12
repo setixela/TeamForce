@@ -113,37 +113,38 @@ final class ProfileEditWorks<Asset: AssetProtocol>: BaseSceneWorks<ProfileEditWo
 
    lazy var sendRequests = VoidWork<Void> { work in
       let updateProfileRequest = self.formUpdateProfileRequest()
+      let fewContactsRequest = self.formFewContactsRequest()
+      let avatarRequest = self.formAvatarRequest()
 
       self.updateProfile
          .doAsync(updateProfileRequest)
          .onSuccess {
-            print("updated profile")
+            if fewContactsRequest == nil && avatarRequest == nil {
+               work.success(result: ())
+            }
          }
          .onFail {
-            print("failed to update profile")
+            work.fail(())
          }
-
-      let fewContactsRequest = self.formFewContactsRequest()
-
-      self.createFewContacts
-         .doAsync(fewContactsRequest)
+         .doMap { fewContactsRequest }
+         .doNext(work: self.createFewContacts)
          .onSuccess {
-            print("Created few contacts")
+            if avatarRequest == nil {
+               work.success(result: ())
+            }
+            
          }
          .onFail {
-            print("few contacts not created")
+            work.fail(())
          }
-
-      let avatarRequest = self.formAvatarRequest()
-      self.updateAvatar
-         .doAsync(avatarRequest)
+         .doMap { avatarRequest }
+         .doNext(work: self.updateAvatar)
          .onSuccess {
-            print("Updated avatar")
+            work.success(result: ())
          }
          .onFail {
-            print("can not update avatar")
+            work.fail(())
          }
-      work.success(result: ())
    }
 }
 
@@ -174,6 +175,10 @@ private extension ProfileEditWorks {
       }
       if let middleName = Self.store.contacts.middlename {
          info["middle_name"] = middleName
+      }
+      
+      if let telegram = Self.store.contacts.telegram {
+         info["tg_name"] = telegram
       }
 
       let updateProfileRequest = UpdateProfileRequest(token: "",

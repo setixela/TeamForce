@@ -19,12 +19,30 @@
       }
     },
     {
+      "identity" : "anchorage",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/setixela/Anchorage.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "932c31229aa680ab101bab81897173319bd5ce7e"
+      }
+    },
+    {
       "identity" : "promisekit",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/mxcl/PromiseKit",
       "state" : {
         "revision" : "ed3192004c0b00b4b3d7baa9578ee655c66faae3",
         "version" : "6.18.0"
+      }
+    },
+    {
+      "identity" : "reactiveworks",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/setixela/ReactiveWorks.git",
+      "state" : {
+        "branch" : "master",
+        "revision" : "ed6d0524d8e3c1b50f9ca79e0d5cee5831914bdd"
       }
     },
     {

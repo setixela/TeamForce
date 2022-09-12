@@ -157,4 +157,5 @@ struct Contacts {
    var middlename: String?
    var email: String?
    var phone: String?
+   var telegram: String?
 }

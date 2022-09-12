@@ -8,7 +8,9 @@
 import ReactiveWorks
 import UIKit
 
-struct ProfileViewEvent: InitProtocol {}
+struct ProfileEvents: InitProtocol {
+   var saveSuccess: Void?
+}
 
 final class ProfileScene<Asset: AssetProtocol>: BaseSceneModel<
    DefaultVCModel,
@@ -106,6 +108,11 @@ final class ProfileScene<Asset: AssetProtocol>: BaseSceneModel<
          slf.editProfileModel.closeButton.on(\.didTap) {
             slf.bottomPopupPresenter.send(\.hide)
          }
+         
+         slf.editProfileModel.on(\.saveSuccess) {
+            self.configureProfile()
+            slf.bottomPopupPresenter.send(\.hide)
+         }
       }
    }
 
@@ -188,7 +195,6 @@ final class SettingsTitleBodyDT<Design: DSP>: TitleSubtitleY<Design> {
 }
 
 final class UserProfileStack<Design: DSP>: StackModel, Designable {
-
    override func start() {
       super.start()
 
