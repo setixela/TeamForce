@@ -356,7 +356,14 @@ extension ViewModelProtocol where Self: Stateable, View: PaddingImageView {
          let url = URL(string: str)
       else { return self }
 
-      view.af.setImage(withURL: url)
+      view.af.setImage(withURL: url, completion: {
+         switch $0.result {
+         case .success(let image):
+            print(image)
+         case .failure(let error):
+            print(error)
+         }
+      })
 
       return self
    }

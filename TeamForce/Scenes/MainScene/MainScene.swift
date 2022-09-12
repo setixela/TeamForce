@@ -55,7 +55,7 @@ final class MainScene<Asset: AssetProtocol>:
    override func start() {
       vcModel?.sendEvent(\.setNavBarTintColor, Design.color.backgroundBrand)
 
-      mainVM.header.text("Баланс")
+//      mainVM.header.text("Баланс")
       mainVM.bodyStack.arrangedModels([
          ActivityIndicator<Design>(),
          Spacer()
@@ -129,8 +129,8 @@ extension MainScene: StateMachine {
       case .profileDidLoad(let userData):
          currentUser = userData
 
-         presentModel(balanceViewModel)
-         tabBarPanel.button2.setMode(\.normal)
+         presentModel(feedViewModel)
+         tabBarPanel.button1.setMode(\.normal)
 
          configButtons()
 
