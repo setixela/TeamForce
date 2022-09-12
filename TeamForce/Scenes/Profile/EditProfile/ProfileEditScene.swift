@@ -21,16 +21,17 @@ enum ProfileEditState {
 
 final class ProfileEditScene<Asset: AssetProtocol>: ModalDoubleStackModel<Asset>, Scenarible2, Eventable
 {
-   
    typealias Events = ProfileEvents
    var events = [Int: LambdaProtocol?]()
-   
+
    //
    private lazy var userNamePanel = ProfileEditViewModels<Design>()
    private lazy var contactModels = EditContactsViewModels<Design>()
    private lazy var workPlaceModels = WorkingPlaceViewModels<Design>()
-   
+
    private lazy var imagePicker = Design.model.common.imagePicker
+
+   private lazy var activityIndicator = Design.model.common.activityIndicator
 
    private lazy var saveButton = Design.button.default
       .title("Сохранить")
@@ -68,16 +69,16 @@ final class ProfileEditScene<Asset: AssetProtocol>: ModalDoubleStackModel<Asset>
    override func start() {
       super.start()
 
-      configure()
+      title.text(Design.Text.title.myProfile)
+      bodyStack.arrangedModels([
+         activityIndicator
+      ])
 
       scenario.start()
       scenario2.start()
    }
 
    private func configure() {
-      title
-         .text(Design.Text.title.myProfile)
-
       bodyStack
          .arrangedModels([
             userNamePanel.editPhotoBlock,
@@ -126,6 +127,7 @@ extension ProfileEditScene: StateMachine {
       case .error:
          break
       case .userDataDidLoad(let userData):
+         configure()
          contactModels.setup(userData)
          userNamePanel.setup(userData)
          workPlaceModels.setup(userData)
