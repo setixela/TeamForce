@@ -31,7 +31,7 @@ final class FrameCellModelDT<Design: DesignProtocol>: BaseViewModel<StackViewExt
       .cornerRadius(7)
       .padding(.outline(3))
       .padLeft(6)
-      .width(90)
+      .width(92)
       .hidden(true)
   
    override func start() {

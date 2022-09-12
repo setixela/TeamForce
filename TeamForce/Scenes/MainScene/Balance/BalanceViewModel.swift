@@ -144,7 +144,7 @@ extension BalanceScene {
       leftToSendFrame
          .set(.text(String(distr.amount)))
          .set(.caption("\(Text.title.sended): \(distr.sent)"))
-         .set(.burn("Cгорят через \n \(diffs) дня"))
+         .set(.burn("Cгорят через\n\(diffs) дня"))
    }
 }
 
