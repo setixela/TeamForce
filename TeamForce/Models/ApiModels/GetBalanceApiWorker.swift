@@ -8,11 +8,6 @@
 import Foundation
 import ReactiveWorks
 
-struct BalanceApiEvent: NetworkEventProtocol {
-    var request: Event<TokenRequest>?
-    var success: Event<Balance>?
-    var error: Event<ApiEngineError>?
-}
 
 final class GetBalanceApiWorker: BaseApiWorker<String, Balance> {
     override func doAsync(work: Wrk) {

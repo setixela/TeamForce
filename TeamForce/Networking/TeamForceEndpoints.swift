@@ -10,8 +10,8 @@ import Foundation
 // Api Endpoints
 enum TeamForceEndpoints {
 
-   static var urlBase: String { "http://176.99.6.251:8889" }
-   static var urlMediaBase: String { "http://176.99.6.251:8889/media/" }
+   static var urlBase: String { "http://176.99.6.251:8888" }
+   static var urlMediaBase: String { "http://176.99.6.251:8888/media/" }
 
    //
     struct AuthEndpoint: EndpointProtocol {
@@ -272,5 +272,26 @@ enum TeamForceEndpoints {
       let jsonData: Data?
       
       let headers: [String : String]
+   }
+   
+   struct Tags: EndpointProtocol {
+      let method = HTTPMethod.get
+      
+      var endPoint: String { urlBase + "/tags/" }
+      
+      let headers: [String : String]
+   }
+   
+   struct TagById: EndpointProtocol {
+      let method = HTTPMethod.get
+      
+      var endPoint: String = urlBase + "/tags/"
+      
+      var headers: [String : String]
+      
+      init(id: String, headers: [String : String]) {
+         endPoint = endPoint + id + "/"
+         self.headers = headers
+      }
    }
 }

@@ -73,6 +73,32 @@ final class TransactWorks<Asset: AssetProtocol>: BaseSceneWorks<TransactWorks.Te
             work.fail(())
          }
    }.retainBy(retainer) }
+   
+   var getTags: Work<Void, [Tag]> { .init { [weak self] work in
+      self?.apiUseCase.getTags
+         .doAsync(Self.store.tokens.token)
+         .onSuccess {
+            print("I got tags \($0)")
+            work.success(result: $0)
+         }
+         .onFail {
+            work.fail(())
+         }
+   }.retainBy(retainer) }
+   
+   var getTagById: Work<Int, Tag> { .init { [weak self] work in
+      let request = RequestWithId(token: Self.store.tokens.token,
+                                  id: work.unsafeInput)
+      self?.apiUseCase.getTagById
+         .doAsync(request)
+         .onSuccess {
+            work.success(result: $0)
+         }
+         .onFail {
+            work.fail(())
+         }
+      
+   }.retainBy(retainer) }
 
    var searchUser: Work<String, [FoundUser]> {
       .init { [weak self] work in

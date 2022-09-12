@@ -8,12 +8,6 @@
 import UIKit
 import ReactiveWorks
 
-//struct GetTransactionByIdApiEvent: NetworkEventProtocol {
-//    var request: Event<TokenRequest>?
-//    var success: Event<Transaction>?
-//    var error: Event<ApiEngineError>?
-//}
-
 struct RequestWithId {
    let token: String
    //   let csrfToken: String
