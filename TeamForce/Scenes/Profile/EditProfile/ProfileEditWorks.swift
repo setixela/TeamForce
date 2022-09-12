@@ -37,7 +37,8 @@ final class ProfileEditWorks<Asset: AssetProtocol>: BaseSceneWorks<ProfileEditWo
          .doAsync()
          .onSuccess {
             Self.store.profileId = $0.profile.id
-
+            Self.store.emailId = nil
+            Self.store.phoneId = nil
             if let contacts = $0.profile.contacts {
                for contact in contacts {
                   switch contact.contactType {
