@@ -216,14 +216,18 @@ final class ButtonExtended: UIButton, AlamoLoader {
       if isVertical {
          setButtonVertical()
       }
-      let first = subviews.first
-
-      first?.contentMode = contentMode
    }
 
    @available(*, unavailable)
    required init?(coder: NSCoder) {
       fatalError("init(coder:) has not been implemented")
+   }
+
+   override func setBackgroundImage(_ image: UIImage?, for state: UIControl.State) {
+      super.setBackgroundImage(image, for: state)
+
+      let first = subviews.first
+      first?.contentMode = .scaleAspectFill
    }
 
    private func setButtonVertical() {
