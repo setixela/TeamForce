@@ -273,4 +273,25 @@ enum TeamForceEndpoints {
       
       let headers: [String : String]
    }
+   
+   struct Tags: EndpointProtocol {
+      let method = HTTPMethod.get
+      
+      var endPoint: String { urlBase + "/tags/" }
+      
+      let headers: [String : String]
+   }
+   
+   struct TagById: EndpointProtocol {
+      let method = HTTPMethod.get
+      
+      var endPoint: String = urlBase + "/tags/"
+      
+      var headers: [String : String]
+      
+      init(id: String, headers: [String : String]) {
+         endPoint = endPoint + id + "/"
+         self.headers = headers
+      }
+   }
 }

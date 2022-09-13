@@ -17,6 +17,7 @@ struct SendCoinRequest {
    let reason: String
    let isAnonymous: Bool
    let photo: UIImage?
+   let tags: String?
 }
 
 protocol Failuring {
@@ -41,6 +42,7 @@ final class SendCoinApiWorker: BaseApiWorker<SendCoinRequest, Void> {
          "amount": sendCoinRequest.amount,
          "reason": sendCoinRequest.reason,
          "is_anonymous": sendCoinRequest.isAnonymous,
+         "tags": sendCoinRequest.tags.string
       ]
 
       if let photo = sendCoinRequest.photo {
