@@ -85,6 +85,7 @@ protocol TitleTextsProtocol: InitProtocol {
    
    // historyScene
    var today: String { get }
+   var yesterday: String { get }
 }
 
 // MARK: - Button texts implements
@@ -154,6 +155,7 @@ struct TitleTexts: TitleTextsProtocol {
    
    //historyScene
    var today: String { "Сегодня" }
+   var yesterday: String { "Вчера" }
 }
 
 struct TextBuilder: TextsProtocol {
