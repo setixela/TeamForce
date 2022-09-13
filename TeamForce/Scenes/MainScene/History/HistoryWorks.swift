@@ -216,6 +216,8 @@ private extension HistoryWorks {
             if let date = item.createdAt.dateConvertedToDate {
                if Calendar.current.isDateInToday(date) {
                   currentDay = Design.Text.title.today
+               } else if Calendar.current.isDateInYesterday(date) {
+                  currentDay = Design.Text.title.yesterday
                }
             }
 
