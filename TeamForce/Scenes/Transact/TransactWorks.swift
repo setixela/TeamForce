@@ -128,7 +128,8 @@ final class TransactWorks<Asset: AssetProtocol>: BaseSceneWorks<TransactWorks.Te
             amount: Self.store.inputAmountText,
             reason: Self.store.inputReasonText,
             isAnonymous: Self.store.isAnonymous,
-            photo: Self.store.images.first
+            photo: Self.store.images.first,
+            tags: nil //change with real tags
          )
 
          self?.apiUseCase.sendCoin
