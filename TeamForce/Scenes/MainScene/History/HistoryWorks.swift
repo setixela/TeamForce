@@ -128,6 +128,21 @@ final class HistoryWorks<Asset: AssetProtocol>: BaseSceneWorks<HistoryWorks.Temp
       }
       .retainBy(retainer)
    }
+   
+   var cancelTransactionById: Work<Int, Void> {
+      .init { [weak self] work in
+         self?.useCase.cancelTransactionById
+            .doAsync(work.input)
+            .onSuccess {
+               print("cancelled transaction successfully")
+               work.success(result: ())
+            }
+            .onFail {
+               work.fail(())
+            }
+         
+      }.retainBy(retainer)
+   }
 }
 
 private extension HistoryWorks {
