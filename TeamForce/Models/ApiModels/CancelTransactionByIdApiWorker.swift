@@ -24,16 +24,12 @@ final class CancelTransactionByIdApiWorker: BaseApiWorker<RequestWithId, Void> {
          id: String(transactionRequest.id),
          headers: ["Authorization": transactionRequest.token,
                    "X-CSRFToken": cookie.value],
-                   body: ["status" : "D",]
+                   body: ["status" : "D"]
       )
       print("endpoint is \(endpoint)")
       apiEngine?
-         .process(endpoint: endpoint)
+         .processPUT(endpoint: endpoint)
          .done { result in
-            //415 need to fix
-            let str = String(decoding: result.data!, as: UTF8.self)
-            print(str)
-            print("response status \(result.response)")
             work.success(result: ())
          }
          .catch { _ in
