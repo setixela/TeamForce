@@ -10,8 +10,8 @@ import Foundation
 // Api Endpoints
 enum TeamForceEndpoints {
 
-   static var urlBase: String { "http://176.99.6.251:8889" }
-   static var urlMediaBase: String { "http://176.99.6.251:8889/media/" }
+   static var urlBase: String { "http://176.99.6.251:8888" }
+   static var urlMediaBase: String { urlBase + "/media/" }
 
    //
     struct AuthEndpoint: EndpointProtocol {

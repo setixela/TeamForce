@@ -125,7 +125,6 @@ final class FeedViewModels<Design: DSP>: BaseModel, Designable, Stateable {
             .cornerRadius(Design.params.cornerRadiusSmall)
       )
       .padding(.verticalOffset(Grid.x16.value))
-      cellStack.isAutoreleaseView = true
 
       work.success(result: cellStack)
    }
@@ -137,7 +136,7 @@ private enum FeedTransactType {
          if feed.transaction.isAnonymous {
             return .youGotAmountFromAnonym
          } else {
-            return .someGotAmountFromSome
+            return .youGotAmountFromSome
          }
       }
       if feed.transaction.isAnonymous {
