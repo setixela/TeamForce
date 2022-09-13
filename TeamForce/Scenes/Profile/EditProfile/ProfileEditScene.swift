@@ -138,7 +138,7 @@ extension ProfileEditScene: StateMachine {
       case .presentImagePicker:
          imagePicker.sendEvent(\.presentOn, vcModel)
       case .presentPickedImage(let image):
-         userNamePanel.editPhotoBlock.models.main.image(image)
+         userNamePanel.editPhotoBlock.photoButton.backImage(image)
       case .finishSaveSuccess:
          send(\.saveSuccess)
       }

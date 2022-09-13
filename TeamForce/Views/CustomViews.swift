@@ -216,6 +216,9 @@ final class ButtonExtended: UIButton, AlamoLoader {
       if isVertical {
          setButtonVertical()
       }
+      let first = subviews.first
+
+      first?.contentMode = contentMode
    }
 
    @available(*, unavailable)

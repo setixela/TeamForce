@@ -436,7 +436,9 @@ extension ViewModelProtocol where Self: Stateable, View: ButtonExtended {
 
    @discardableResult func backImageUrl(_ value: String?) -> Self {
       view.loadImage(value) { [weak view] in
-         view?.setBackgroundImage($0, for: .normal)
+         guard let image = $0 else { return }
+
+         view?.setBackgroundImage(image, for: .normal)
       }
 
       return self
