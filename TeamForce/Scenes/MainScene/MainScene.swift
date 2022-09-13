@@ -55,13 +55,14 @@ final class MainScene<Asset: AssetProtocol>:
    override func start() {
       vcModel?.sendEvent(\.setNavBarTintColor, Design.color.backgroundBrand)
 
-//      mainVM.header.text("Баланс")
       mainVM.bodyStack.arrangedModels([
          ActivityIndicator<Design>(),
          Spacer()
       ])
 
-      scenario.start()
+      vcModel?.onEvent(\.viewWillAppear) { [weak self] in
+         self?.scenario.start()
+      }
    }
 
    private func unlockTabButtons() {
@@ -75,12 +76,12 @@ final class MainScene<Asset: AssetProtocol>:
 private extension MainScene {
    func configButtons() {
       tabBarPanel.button1
-         .on(\.didTap) { [weak self] in
-            self?.unlockTabButtons()
-            self?.mainVM.header.text("Лента событий")
-            self?.vcModel?.sendEvent(\.setTitle, "Лента событий")
-            self?.presentModel(self?.feedViewModel)
-            self?.tabBarPanel.button1.setMode(\.normal)
+         .on(\.didTap, self) {
+            $0.unlockTabButtons()
+            $0.mainVM.header.text("Лента событий")
+            $0.vcModel?.sendEvent(\.setTitle, "Лента событий")
+            $0.presentModel($0.feedViewModel)
+            $0.tabBarPanel.button1.setMode(\.normal)
          }
 
       tabBarPanel.button2
@@ -191,19 +192,19 @@ extension MainScene {
       else { return }
 
       model
-         .on(\.sendButtonPressed, weak: self) {
+         .on(\.sendButtonPressed, self) {
             $0.bottomPopupPresenter.send(\.hide)
             $0.activeScreen?.scenario.start()
          }
-         .on(\.finishWithSuccess, weak: self) {
+         .on(\.finishWithSuccess, self) {
             $0.presentTransactSuccessView($1)
             $0.activeScreen?.scenario.start()
          }
-         .on(\.finishWithError, weak: self) {
+         .on(\.finishWithError, self) {
             $0.presentErrorPopup()
             $0.activeScreen?.scenario.start()
          }
-         .on(\.cancelled, weak: self) {
+         .on(\.cancelled, self) {
             $0.bottomPopupPresenter.send(\.hide)
             $0.activeScreen?.scenario.start()
          }
@@ -230,7 +231,7 @@ extension MainScene {
    private func presentErrorPopup() {
       let model = Design.model.common.systemErrorBlock
 
-      model.on(\.didClosed, weak: self) {
+      model.on(\.didClosed, self) {
          $0.bottomPopupPresenter.send(\.hide)
       }
 

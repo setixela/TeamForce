@@ -22,7 +22,7 @@ extension Multiplexor {
                               to result: WritableKeyPath<Stock, D?>)
    {
       let model = self[keyPath: model]
-      model.on(event, weak: self) {
+      model.on(event, self) {
          $0.stock[keyPath: result] = $1
          $0.work.success(result: $0.stock)
       }

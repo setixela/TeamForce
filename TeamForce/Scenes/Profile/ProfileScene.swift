@@ -103,7 +103,7 @@ final class ProfileScene<Asset: AssetProtocol>: BaseSceneModel<
             Grid.xxx.spacer,
          ]))
 
-      userModel.models.right2.on(\.didTap, weak: self) { slf in
+      userModel.models.right2.on(\.didTap, self) { slf in
          slf.bottomPopupPresenter.send(\.present, (slf.editProfileModel, slf.vcModel?.view.rootSuperview))
          slf.editProfileModel.closeButton.on(\.didTap) {
             slf.bottomPopupPresenter.send(\.hide)
@@ -112,7 +112,7 @@ final class ProfileScene<Asset: AssetProtocol>: BaseSceneModel<
          slf.editProfileModel.on(\.saveSuccess) {
             slf.editProfileModel.clearcontactModelsStock()
             slf.editProfileModel.scenario.start()
-            self.configureProfile()
+            slf.configureProfile()
             slf.bottomPopupPresenter.send(\.hide)
          }
       }
