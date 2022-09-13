@@ -66,8 +66,8 @@ final class TransactScene<Asset: AssetProtocol>: ModalDoubleStackModel<Asset>, S
          sendButtonEvent: viewModels.sendButton.on(\.didTap),
          amountInputChanged: viewModels.amountInputModel.textField.on(\.didEditingChanged),
          reasonInputChanged: viewModels.reasonTextView.onEvent(\.didEditingChanged),
-         anonymousSetOff: viewModels.options.anonimParamModel.switcher.onEvent(\.turnedOff),
-         anonymousSetOn: viewModels.options.anonimParamModel.switcher.onEvent(\.turnedOn),
+         anonymousSetOff: viewModels.options.anonimParamModel.switcher.on(\.turnedOff),
+         anonymousSetOn: viewModels.options.anonimParamModel.switcher.on(\.turnedOn),
          cancelButtonDidTap: closeButton.on(\.didTap)
       )
    )
@@ -94,7 +94,8 @@ final class TransactScene<Asset: AssetProtocol>: ModalDoubleStackModel<Asset>, S
          viewModels.reasonTextView,
          viewModels.pickedImages.lefted(),
          viewModels.addPhotoButton,
-         viewModels.options
+         viewModels.options,
+         Grid.x32.spacer
       ]))
 
    private lazy var activityIndicator = Design.model.common.activityIndicator
@@ -146,8 +147,7 @@ final class TransactScene<Asset: AssetProtocol>: ModalDoubleStackModel<Asset>, S
             errorInfoBlock.hidden(true),
             activityIndicator.hidden(false),
 
-            viewModelsWrapper,
-            Spacer(16)
+            viewModelsWrapper
          ])
       //
       footerStack

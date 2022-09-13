@@ -43,6 +43,7 @@ protocol IconElements: InitProtocol, DesignElementable where DesignElement == UI
 
    var arrowDropDownLine: DesignElement { get }
    var arrowDropUpLine: DesignElement { get }
+   var arrowDropRightLine: DesignElement { get }
 
    var clapHands: DesignElement { get }
 
@@ -114,6 +115,7 @@ struct IconBuilder: IconElements {
 
    var arrowDropDownLine: UIImage { make("arrow-drop-down-line") }
    var arrowDropUpLine: UIImage { make("arrow-drop-up-line") }
+   var arrowDropRightLine: UIImage { make("arrow-drop-right-line") }
 
    var clapHands: UIImage { make("bloom_woman_and_man_clapped_their_hands_1") }
 

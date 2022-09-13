@@ -12,7 +12,11 @@ final class TransactOptionsVM<Design: DSP>: BaseViewModel<StackViewExtended>, De
    //
    lazy var anonimParamModel = LabelSwitcherXDT<Design>.switcherWith(text: "Анонимно")
    private lazy var showEveryoneParamModel = LabelSwitcherXDT<Design>.switcherWith(text: "Показать всем")
-   private lazy var addTagParamModel = LabelSwitcherXDT<Design>.switcherWith(text: "Добавить тег")
+   private lazy var addTagParamModel = SwitcherBox<LabelModel, Design>()
+      .setAll { switcher, option in
+         switcher.label.text("Добавить ценность")
+         option.text("TST")
+      }
 
    private lazy var awaitOptionsModel = TitleBodySwitcherDT<Design>.switcherWith(titleText: "Период задержки",
                                                                                  bodyText: "Без задержки")
@@ -22,9 +26,13 @@ final class TransactOptionsVM<Design: DSP>: BaseViewModel<StackViewExtended>, De
    override func start() {
       arrangedModels([
          anonimParamModel,
-//         showEveryoneParamModel,
-//         addTagParamModel,
-//         awaitOptionsModel,
+         addTagParamModel
       ])
    }
 }
+
+//final class TagList<Asset: AssetProtocol>: ModalDoubleStackModel<Asset> {
+//   convenience init() {
+//      <#statements#>
+//   }
+//}

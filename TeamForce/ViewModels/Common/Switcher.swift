@@ -9,8 +9,8 @@ import ReactiveWorks
 import UIKit
 
 struct SwitchEvent: InitProtocol {
-   var turnedOn: Event<Void>?
-   var turnedOff: Event<Void>?
+   var turnedOn: Void?
+   var turnedOff: Void?
 }
 
 enum SwitcherState {
@@ -18,11 +18,12 @@ enum SwitcherState {
    case turnOff
 }
 
-final class Switcher: BaseViewModel<UISwitch>, Communicable, Stateable2 {
+final class Switcher: BaseViewModel<UISwitch>, Eventable, Stateable2 {
    typealias State = ViewState
    typealias State2 = SwitcherState
 
-   var events = SwitchEvent()
+   typealias Events = SwitchEvent
+   var events: EventsStore = .init()
 
    override func start() {
       view.addTarget(self, action: #selector(didSwitch), for: .valueChanged)
@@ -30,9 +31,9 @@ final class Switcher: BaseViewModel<UISwitch>, Communicable, Stateable2 {
 
    @objc private func didSwitch() {
       if view.isOn {
-         sendEvent(\.turnedOn)
+         send(\.turnedOn)
       } else {
-         sendEvent(\.turnedOff)
+         send(\.turnedOff)
       }
    }
 }

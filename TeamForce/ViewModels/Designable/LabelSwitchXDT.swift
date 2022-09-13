@@ -15,3 +15,26 @@ final class LabelSwitcherXDT<Design: DSP>: LabelSwitcherX {
          .backColor(Design.color.background)
    }
 }
+
+import ReactiveWorks
+
+final class SwitcherBox<D: VMPS, Design: DSP>:
+   M<LabelSwitcherXDT<Design>>.D<D>.Combo, Designable
+{
+   //
+   var labelSwitcher: LabelSwitcherXDT<Design> { models.main }
+   var optionModel: D { models.down }
+
+   override func start() {
+      super.start()
+
+      optionModel.hidden(true)
+      labelSwitcher.switcher
+         .on(\.turnedOn, self) {
+            $0.optionModel.hidden(false)
+         }
+         .on(\.turnedOff, self) {
+            $0.optionModel.hidden(true)
+         }
+   }
+}
