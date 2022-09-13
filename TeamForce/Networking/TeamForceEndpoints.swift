@@ -170,7 +170,7 @@ enum TeamForceEndpoints {
       
       var headers: [String : String]
       
-      var body: [String : Any] //= ["status": "D"]
+      var body: [String : Any]
       
       init(id: String, headers: [String : String], body: [String : Any]) {
          endPoint = endPoint + id + "/"
