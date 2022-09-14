@@ -89,7 +89,7 @@ final class FeedViewModels<Design: DSP>: BaseModel, Designable, Stateable {
          WrappedX(
             LabelModel()
                .set(Design.state.label.caption2)
-               .text("#" + tag.name)
+               .text("# " + tag.name)
 
          )
          .backColor(Design.color.infoSecondary)
@@ -176,7 +176,7 @@ private extension FeedViewModels {
    func makeInfoLabel(feed: Feed, type: FeedTransactType) -> LabelModel {
       let recipientName = "@" + feed.transaction.recipient
       let senderName = "@" + feed.transaction.sender
-      let amountText = "\(feed.transaction.amount)" + " " + "спасибок"
+      let amountText = "\(Int(feed.transaction.amount))" + " " + "спасибок"
       let infoText: NSMutableAttributedString = .init(string: "")
 
       switch type {

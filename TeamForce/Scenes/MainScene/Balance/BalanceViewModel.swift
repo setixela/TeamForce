@@ -117,7 +117,7 @@ extension BalanceScene {
       setIncome(balance.income)
       setDistr(balance.distr)
 
-      let frozenSum = balance.income.frozen + balance.distr.frozen
+      let frozenSum = balance.income.frozen
       let cancelledSum = balance.income.cancelled + balance.distr.cancelled
 
       annulationFrame.models.down
