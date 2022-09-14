@@ -223,6 +223,14 @@ final class ApiUseCase<Asset: AssetProtocol>: InitProtocol, Assetable, WorkBaske
       )
       .retainedWork(retainer)
    }
+   
+   var getProfileById: GetProfileByIdUseCase.WRK {
+      GetProfileByIdUseCase(
+         safeStringStorage: safeStringStorage,
+         getProfileByIdApiWorker: getProfileByIdApiWorker
+      )
+      .retainedWork(retainer)
+   }
 
    // MARK: - Dependencies
 
@@ -255,5 +263,7 @@ final class ApiUseCase<Asset: AssetProtocol>: InitProtocol, Assetable, WorkBaske
    private var getTagsApiWorker: GetTagsApiWorker { .init(apiEngine:
        Asset.service.apiEngine) }
    private var getTagByIdApiWorker: GetTagByIdApiWorker { .init(apiEngine:
+       Asset.service.apiEngine) }
+   private var getProfileByIdApiWorker: GetProfileByIdApiWorker { .init(apiEngine:
        Asset.service.apiEngine) }
 }

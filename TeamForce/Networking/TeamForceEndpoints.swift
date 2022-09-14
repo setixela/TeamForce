@@ -294,4 +294,17 @@ enum TeamForceEndpoints {
          self.headers = headers
       }
    }
+   
+   struct ProfileById: EndpointProtocol {
+      let method = HTTPMethod.get
+      
+      var endPoint: String = urlBase + "/profile/"
+      
+      var headers: [String : String]
+      
+      init(id: String, headers: [String : String]) {
+         endPoint = endPoint + id + "/"
+         self.headers = headers
+      }
+   }
 }

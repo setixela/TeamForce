@@ -61,6 +61,20 @@ final class HistoryWorks<Asset: AssetProtocol>: BaseSceneWorks<HistoryWorks.Temp
       }
       .retainBy(retainer)
    }
+   //
+   var getProfileById: Work<Int, UserData> {
+      .init { [weak self] work in
+         self?.useCase.getProfileById
+            .doAsync(work.input)
+            .onSuccess {
+               work.success(result: $0)
+            }
+            .onFail {
+               work.fail(())
+            }
+      }
+      .retainBy(retainer)
+   }
 
    var getTransactionByRowNumber: Work<(IndexPath, Int), Transaction> {
       .init { work in
