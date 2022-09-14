@@ -76,34 +76,40 @@ final class FeedViewModels<Design: DSP>: BaseModel, Designable, Stateable {
       let reactionsBlock = StackModel()
          .axis(.horizontal)
          .alignment(.leading)
-         .distribution(.equalSpacing)
+         .distribution(.fill)
          .spacing(4)
          .arrangedModels([
             messageButton,
             likeButton,
-            dislikeButton
+            dislikeButton,
+            Grid.xxx.spacer
          ])
 
-//      let hashTagBlock = StackModel()
-//         .axis(.horizontal)
-//         .alignment(.leading)
-//         .distribution(.equalSpacing)
-//         .spacing(4)
-//         .arrangedModels(
-//            (0 ..< Int.random(in: 0 ..< 5)).map { _ -> UIViewModel in
-//               self.randomButton
-//            }
-//         )
+      let tags = (feed.transaction.tags ?? []).map { tag in
+         WrappedX(
+            LabelModel()
+               .set(Design.state.label.caption2)
+               .text("#" + tag.name)
+
+         )
+         .backColor(Design.color.infoSecondary)
+         .cornerRadius(Design.params.cornerRadiusMini)
+         .padding(.outline(8))
+      }
+      let hashTagBlock = ScrollViewModelX()
+         .set(.spacing(4))
+         .set(.arrangedModels(tags))
+         .set(.hideHorizontalScrollIndicator)
 
       let infoBlock = StackModel()
          .spacing(Grid.x10.value)
          .axis(.vertical)
-         .alignment(.leading)
+         .alignment(.fill)
          .arrangedModels([
             dateLabel,
             infoLabel,
-            reactionsBlock
-            //  hashTagBlock
+            reactionsBlock,
+            hashTagBlock
          ])
 
       var backColor = Design.color.background

@@ -42,6 +42,7 @@ struct Feed: Codable {
       let recipientPhoto: String?
       let recipientFirstName: String?
       let recipientSurname: String?
+      let tags: [FeedTag]?
 
       enum CodingKeys: String, CodingKey {
          case id
@@ -54,6 +55,7 @@ struct Feed: Codable {
          case recipientPhoto = "recipient_photo"
          case recipientFirstName = "recipient_first_name"
          case recipientSurname = "recipient_surname"
+         case tags
       }
 
       var photoUrl: String? {
@@ -91,5 +93,15 @@ final class GetFeedsApiWorker: BaseApiWorker<String, [Feed]> {
          .catch { _ in
             work.fail(())
          }
+   }
+}
+
+struct FeedTag: Codable {
+   let id: Int
+   let name: String
+
+   enum CodingKeys: String, CodingKey {
+      case id = "tag_id"
+      case name
    }
 }

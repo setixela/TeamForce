@@ -48,3 +48,4 @@ final class GetTagsApiWorker: BaseApiWorker<String, [Tag]> {
          }
    }
 }
+
