@@ -20,6 +20,9 @@ struct TransactScenarioEvents {
    let anonymousSetOff: VoidWork<Void>
    let anonymousSetOn: VoidWork<Void>
 
+   let addTag: VoidWork<Int>
+   let removeTag: VoidWork<Int>
+
    let cancelButtonDidTap: VoidWorkVoid
 }
 
@@ -115,5 +118,17 @@ final class TransactScenario<Asset: AssetProtocol>:
 
       events.cancelButtonDidTap
          .onSuccess(setState, .cancelButtonPressed)
+
+      events.addTag
+         .doNext(works.addSelectedTag)
+         .onFail {
+            print()
+         }
+
+      events.removeTag
+         .doNext(works.removeSelectedTag)
+         .onFail {
+            print()
+         }
    }
 }

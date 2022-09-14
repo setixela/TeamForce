@@ -51,7 +51,7 @@ protocol IconElements: InitProtocol, DesignElementable where DesignElement == UI
 
    var sendCoinIcon: DesignElement { get }
    var recieveCoinIcon: DesignElement { get }
-   
+
    var burn: DesignElement { get }
 
    // bottom panel
@@ -72,6 +72,12 @@ protocol IconElements: InitProtocol, DesignElementable where DesignElement == UI
 
    // errors
    var errorIllustrate: UIImage { get }
+
+   // tabler
+   var tablerCircleCheck: UIImage { get }
+   var tablerDiamond: UIImage { get }
+   var tablerChevronRight: UIImage { get }
+   var tablerCamera: UIImage { get }
 }
 
 struct IconBuilder: IconElements {
@@ -121,7 +127,7 @@ struct IconBuilder: IconElements {
 
    var recieveCoinIcon: UIImage { make("recieve_coin_icon") }
    var sendCoinIcon: UIImage { make("send_coin_icon") }
-   
+
    var burn: UIImage { make("burn") }
 
    var bottomPanel: UIImage { make("bottom_panel") }
@@ -142,6 +148,12 @@ struct IconBuilder: IconElements {
 
    // errors
    var errorIllustrate: UIImage { make("dt_error_illustrate") }
+
+   // tabler
+   var tablerCircleCheck: UIImage { make("tabler_circle-check") }
+   var tablerDiamond: UIImage { make("tabler_diamond") }
+   var tablerChevronRight: UIImage { make("tabler_chevron-right") }
+   var tablerCamera: UIImage { make("tabler_camera") }
 }
 
 private extension IconBuilder {

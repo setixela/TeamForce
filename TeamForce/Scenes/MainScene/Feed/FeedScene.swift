@@ -47,10 +47,10 @@ final class FeedScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>,
       ])
 
       viewModels.feedTableModel
-         .onEvent(\.didScroll) { [weak self] in
+         .on(\.didScroll) { [weak self] in
             self?.sendEvent(\.didScroll, $0)
          }
-         .onEvent(\.willEndDragging) { [weak self] in
+         .on(\.willEndDragging) { [weak self] in
             self?.sendEvent(\.willEndDragging, $0)
          }
 
@@ -71,7 +71,6 @@ extension FeedScene: StateMachine {
       case .initial:
          activityIndicator.hidden(false)
          errorBlock.hidden(true)
-         break
       case .presentFeed(let tuple):
          activityIndicator.hidden(true)
          errorBlock.hidden(true)

@@ -334,6 +334,7 @@ extension ViewModelProtocol where Self: Stateable, View: PaddingImageView {
 
    @discardableResult func padding(_ value: UIEdgeInsets) -> Self {
       view.padding = value
+//      view.image = view.image?.withAlignmentRectInsets(value)
       return self
    }
 
@@ -352,8 +353,8 @@ extension ViewModelProtocol where Self: Stateable, View: PaddingImageView {
 
    @discardableResult func url(_ value: String?) -> Self {
       guard
-         let str = value,
-         let url = URL(string: str)
+         let str = value
+//         let url = URL(string: str)
       else { return self }
 
       view.loadImage(value) { [weak view] image in

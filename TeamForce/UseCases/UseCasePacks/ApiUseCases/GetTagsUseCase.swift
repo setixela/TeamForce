@@ -12,9 +12,9 @@ struct GetTagsUseCase: UseCaseProtocol {
 
    var work: Work<String, [Tag]> {
       Work<String, [Tag]>() { work in
-         guard let input = work.input else { return }
+
          getTagsApiWorker
-            .doAsync(input)
+            .doAsync(work.unsafeInput)
             .onSuccess {
                work.success(result: $0)
             }

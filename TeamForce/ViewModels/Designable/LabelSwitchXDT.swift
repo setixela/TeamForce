@@ -18,12 +18,12 @@ final class LabelSwitcherXDT<Design: DSP>: LabelSwitcherX {
 
 import ReactiveWorks
 
-final class SwitcherBox<D: VMPS, Design: DSP>:
-   M<LabelSwitcherXDT<Design>>.D<D>.Combo, Designable
+final class SwitcherBox<Down: VMPS, Design: DSP>:
+   M<LabelSwitcherXDT<Design>>.D<Down>.Combo, Designable
 {
    //
    var labelSwitcher: LabelSwitcherXDT<Design> { models.main }
-   var optionModel: D { models.down }
+   var optionModel: Down { models.down }
 
    override func start() {
       super.start()

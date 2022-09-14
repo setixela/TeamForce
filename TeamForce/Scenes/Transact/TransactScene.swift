@@ -68,6 +68,8 @@ final class TransactScene<Asset: AssetProtocol>: ModalDoubleStackModel<Asset>, S
          reasonInputChanged: viewModels.reasonTextView.onEvent(\.didEditingChanged),
          anonymousSetOff: viewModels.options.anonimParamModel.switcher.on(\.turnedOff),
          anonymousSetOn: viewModels.options.anonimParamModel.switcher.on(\.turnedOn),
+         addTag: tagList.on(\.didSelectTag),
+         removeTag: tagList.on(\.didDeselectTag),
          cancelButtonDidTap: closeButton.on(\.didTap)
       )
    )
@@ -102,6 +104,10 @@ final class TransactScene<Asset: AssetProtocol>: ModalDoubleStackModel<Asset>, S
    private lazy var errorInfoBlock = Design.model.common.connectionErrorBlock
    private lazy var imagePicker = Design.model.common.imagePicker
 
+   private lazy var tagList = TagList<Asset>()
+
+   private lazy var bottomPopupPresenter = BottomPopupPresenter()
+
    private var currentState = TransactState.initial
 
    private weak var vcModel: UIViewController?
@@ -119,11 +125,14 @@ final class TransactScene<Asset: AssetProtocol>: ModalDoubleStackModel<Asset>, S
 
       configure()
 
-      view.onEvent(\.willAppear) { [weak self] in
+      view.on(\.willAppear) { [weak self] in
          self?.viewModels.foundUsersList.set(.items([]))
          self?.scenario2.start()
          self?.scenario.start()
          self?.setToInitialCondition()
+      }
+      viewModels.options.addTagParamModel.optionModel.on(\.didTap, self) {
+         $0.bottomPopupPresenter.send(\.present, (model: $0.tagList, onView: $0.vcModel?.view.rootSuperview))
       }
    }
 

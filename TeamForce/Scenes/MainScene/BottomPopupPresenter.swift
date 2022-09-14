@@ -22,6 +22,8 @@ final class BottomPopupPresenter: BaseModel, Eventable {
    private var viewTranslation = CGPoint(x: 0, y: 0)
    private var darkView: UIView?
 
+   private var presentDuration = 0.3
+
    private lazy var queue: Queue<UIViewModel> = .init()
 
    override func start() {
@@ -74,13 +76,16 @@ final class BottomPopupPresenter: BaseModel, Eventable {
       let viewHeight = view.frame.height
 
       view.transform = CGAffineTransform(translationX: 0, y: viewHeight)
-      UIView.animate(withDuration: 0.5) {
+      UIView.animate(withDuration: presentDuration) {
          view.transform = CGAffineTransform(translationX: 0, y: 0)
          self.darkView?.alpha = 0.75
       }
 
+      let tapGest = UITapGestureRecognizer(target: self, action: #selector(didTapOnView))
+      tapGest.cancelsTouchesInView = false
+
       view.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(handleDismiss)))
-      view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapOnView)))
+      view.addGestureRecognizer(tapGest)
    }
 
    @objc private func handleDismiss(sender: UIPanGestureRecognizer) {
@@ -89,14 +94,14 @@ final class BottomPopupPresenter: BaseModel, Eventable {
       switch sender.state {
       case .changed:
          viewTranslation = sender.translation(in: view)
-         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+         UIView.animate(withDuration: presentDuration, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
             view.transform = CGAffineTransform(
                translationX: 0,
                y: self.viewTranslation.y > 0 ? self.viewTranslation.y : 0)
          })
       case .ended:
          if viewTranslation.y < 200 {
-            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+            UIView.animate(withDuration: presentDuration, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
                view.transform = .identity
             })
          } else {

@@ -78,7 +78,9 @@ protocol AlamoLoader {}
 extension AlamoLoader {
    func loadImage(_ urlStr: String?, result: @escaping (UIImage?) -> Void) {
       guard
-         let str = urlStr else { result(nil); return }
+         let str = urlStr,
+         let url = URL(string: str)
+      else { result(nil); return }
 
 //      AF.request(str).responseImage {
 //         if case .success(let image) = $0.result {
@@ -95,14 +97,14 @@ extension AlamoLoader {
          imageCache: AutoPurgingImageCache(memoryCapacity: 500_000_000, preferredMemoryUsageAfterPurge: 60_000_000)
       )
 
-      let urlRequest = URLRequest(url: URL(string: str)!)
+      let urlRequest = URLRequest(url: url)
 
       imageDownloader.download(urlRequest, completion: { response in
 
          guard case .success(let image) = response.result else { result(nil); return }
 
          let coef = image.size.width / image.size.height
-         let image2 = image.resized(to: .init(width: 256, height: 256/coef))
+         let image2 = image.resized(to: .init(width: 256, height: 256 / coef))
          result(image2)
       })
    }
@@ -134,13 +136,19 @@ final class PaddingView: UIView, Marginable {
 
 // MARK: - StackViewExtendeed -------------------------
 
-final class StackViewExtended: UIStackView, Communicable {
+final class StackViewExtended: UIStackView, Eventable {
    struct Events: InitProtocol {
-      var willAppear: Event<Void>?
-      var willDisappear: Event<Void>?
+      var willAppear: Void?
+      var willDisappear: Void?
    }
 
-   var events: Events = .init()
+   var didTapClosure: VoidClosure? {
+      didSet {
+         addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.didTap)))
+      }
+   }
+
+   var events: EventsStore = .init()
 
    weak var backView: UIView?
 
@@ -171,9 +179,9 @@ final class StackViewExtended: UIStackView, Communicable {
       super.willMove(toSuperview: newSuperview)
 
       if newSuperview == nil {
-         sendEvent(\.willDisappear)
+         send(\.willDisappear)
       } else {
-         sendEvent(\.willAppear)
+         send(\.willAppear)
       }
    }
 
@@ -196,6 +204,10 @@ final class StackViewExtended: UIStackView, Communicable {
       }
 
       return super.hitTest(point, with: event)
+   }
+
+   @objc private func didTap() {
+      didTapClosure?()
    }
 }
 
@@ -277,5 +289,20 @@ extension ButtonTapAnimator {
          layer.masksToBounds = masksToBounds
          self.uiView.clipsToBounds = clipsToBounds
       }
+   }
+}
+
+extension UIImage {
+   func withInset(_ insets: UIEdgeInsets) -> UIImage {
+      let cgSize = CGSize(width: size.width + insets.left * scale + insets.right * scale,
+                          height: size.height + insets.top * scale + insets.bottom * scale)
+
+      UIGraphicsBeginImageContextWithOptions(cgSize, false, scale)
+      defer { UIGraphicsEndImageContext() }
+
+      let origin = CGPoint(x: insets.left * scale, y: insets.top * scale)
+      draw(at: origin)
+
+      return UIGraphicsGetImageFromCurrentImageContext()?.withRenderingMode(renderingMode) ?? self
    }
 }

@@ -28,6 +28,10 @@ protocol TransactWorksProtocol: TempStorage {
    //
    var addImage: Work<UIImage, UIImage> { get }
    var removeImage: Work<UIImage, Void> { get }
+
+   var addSelectedTag: Work<Int, Void> { get }
+   var removeSelectedTag: Work<Int, Void> { get }
+   var getSelectedTags: Work<Void, Set<Int>> { get }
 }
 
 // Transact Works - (если нужно хранилище временное, то наследуемся от BaseSceneWorks)
@@ -55,6 +59,8 @@ final class TransactWorks<Asset: AssetProtocol>: BaseSceneWorks<TransactWorks.Te
       var isCorrectCoinInput = false
       var isCorrectReasonInput = false
 
+      var tags: Set<Int> = []
+
       var images: [UIImage] = []
    }
 
@@ -73,7 +79,7 @@ final class TransactWorks<Asset: AssetProtocol>: BaseSceneWorks<TransactWorks.Te
             work.fail(())
          }
    }.retainBy(retainer) }
-   
+
    var getTags: Work<Void, [Tag]> { .init { [weak self] work in
       self?.apiUseCase.getTags
          .doAsync(Self.store.tokens.token)
@@ -85,7 +91,7 @@ final class TransactWorks<Asset: AssetProtocol>: BaseSceneWorks<TransactWorks.Te
             work.fail(())
          }
    }.retainBy(retainer) }
-   
+
    var getTagById: Work<Int, Tag> { .init { [weak self] work in
       let request = RequestWithId(token: Self.store.tokens.token,
                                   id: work.unsafeInput)
@@ -97,7 +103,7 @@ final class TransactWorks<Asset: AssetProtocol>: BaseSceneWorks<TransactWorks.Te
          .onFail {
             work.fail(())
          }
-      
+
    }.retainBy(retainer) }
 
    var searchUser: Work<String, [FoundUser]> {
@@ -119,6 +125,26 @@ final class TransactWorks<Asset: AssetProtocol>: BaseSceneWorks<TransactWorks.Te
       }
    }
 
+   var addSelectedTag: Work<Int, Void> {
+      .init(retainedBy: retainer) { work in
+         Self.store.tags.insert(work.unsafeInput)
+         work.success(result: ())
+      }
+   }
+
+   var removeSelectedTag: Work<Int, Void> {
+      .init(retainedBy: retainer) { work in
+         Self.store.tags.remove(work.unsafeInput)
+         work.success(result: ())
+      }
+   }
+
+   var getSelectedTags: Work<Void, Set<Int>> {
+      .init(retainedBy: retainer) { work in
+         work.success(result: Self.store.tags)
+      }
+   }
+
    var sendCoins: VoidWork<(recipient: String, info: SendCoinRequest)> {
       .init { [weak self] work in
          let request = SendCoinRequest(
@@ -129,7 +155,7 @@ final class TransactWorks<Asset: AssetProtocol>: BaseSceneWorks<TransactWorks.Te
             reason: Self.store.inputReasonText,
             isAnonymous: Self.store.isAnonymous,
             photo: Self.store.images.first,
-            tags: nil //change with real tags
+            tags: Self.store.tags.map { String($0) }.joined(separator: " ")
          )
 
          self?.apiUseCase.sendCoin

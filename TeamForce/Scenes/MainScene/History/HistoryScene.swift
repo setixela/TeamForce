@@ -30,7 +30,7 @@ final class HistoryScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>
          presentAllTransactions: viewModels.segmentedControl.onEvent(\.selected0),
          presentSentTransactions: viewModels.segmentedControl.onEvent(\.selected2),
          presentRecievedTransaction: viewModels.segmentedControl.onEvent(\.selected1),
-         presentDetailView: viewModels.tableModel.onEvent(\.didSelectRow)
+         presentDetailView: viewModels.tableModel.on(\.didSelectRow)
       )
    )
 
@@ -48,10 +48,10 @@ final class HistoryScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>
             SpacerPresenter.presenter,
          ]))
 
-      viewModels.tableModel.onEvent(\.didScroll) { [weak self] in
+      viewModels.tableModel.on(\.didScroll) { [weak self] in
          self?.sendEvent(\.didScroll, $0)
       }
-      viewModels.tableModel.onEvent(\.willEndDragging) { [weak self] in
+      viewModels.tableModel.on(\.willEndDragging) { [weak self] in
          self?.sendEvent(\.willEndDragging, $0)
       }
 
