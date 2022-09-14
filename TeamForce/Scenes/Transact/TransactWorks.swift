@@ -28,10 +28,10 @@ protocol TransactWorksProtocol: TempStorage {
    //
    var addImage: Work<UIImage, UIImage> { get }
    var removeImage: Work<UIImage, Void> { get }
-
-   var addSelectedTag: Work<Int, Void> { get }
-   var removeSelectedTag: Work<Int, Void> { get }
-   var getSelectedTags: Work<Void, Set<Int>> { get }
+   //
+   var addSelectedTag: Work<Tag, Void> { get }
+   var removeSelectedTag: Work<Tag, Void> { get }
+   var getSelectedTags: Work<Void, Set<Tag>> { get }
 }
 
 // Transact Works - (если нужно хранилище временное, то наследуемся от BaseSceneWorks)
@@ -59,7 +59,8 @@ final class TransactWorks<Asset: AssetProtocol>: BaseSceneWorks<TransactWorks.Te
       var isCorrectCoinInput = false
       var isCorrectReasonInput = false
 
-      var tags: Set<Int> = []
+      var isTagsEnabled = false
+      var tags: Set<Tag> = []
 
       var images: [UIImage] = []
    }
@@ -125,21 +126,26 @@ final class TransactWorks<Asset: AssetProtocol>: BaseSceneWorks<TransactWorks.Te
       }
    }
 
-   var addSelectedTag: Work<Int, Void> {
+   var enableTags: Work<Bool, Void> { .init(retainedBy: retainer) { work in
+      Self.store.isTagsEnabled = work.unsafeInput
+      work.success(result: ())
+   }}
+
+   var addSelectedTag: Work<Tag, Void> {
       .init(retainedBy: retainer) { work in
          Self.store.tags.insert(work.unsafeInput)
          work.success(result: ())
       }
    }
 
-   var removeSelectedTag: Work<Int, Void> {
+   var removeSelectedTag: Work<Tag, Void> {
       .init(retainedBy: retainer) { work in
          Self.store.tags.remove(work.unsafeInput)
          work.success(result: ())
       }
    }
 
-   var getSelectedTags: Work<Void, Set<Int>> {
+   var getSelectedTags: Work<Void, Set<Tag>> {
       .init(retainedBy: retainer) { work in
          work.success(result: Self.store.tags)
       }
@@ -155,7 +161,7 @@ final class TransactWorks<Asset: AssetProtocol>: BaseSceneWorks<TransactWorks.Te
             reason: Self.store.inputReasonText,
             isAnonymous: Self.store.isAnonymous,
             photo: Self.store.images.first,
-            tags: Self.store.tags.map { String($0) }.joined(separator: " ")
+            tags: Self.store.isTagsEnabled ? Self.store.tags.map { String($0.id) }.joined(separator: " ") : nil
          )
 
          self?.apiUseCase.sendCoin

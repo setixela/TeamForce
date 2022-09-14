@@ -12,10 +12,18 @@ struct Reason: Codable {
    let data: String?
 }
 
-struct Tag: Codable {
+struct Tag: Codable, Hashable {
    let id: Int
    let name: String?
    let reasons: [Reason]?
+
+   func hash(into hasher: inout Hasher) {
+      hasher.combine(id)
+   }
+   
+   static func == (lhs: Tag, rhs: Tag) -> Bool {
+      lhs.id == rhs.id
+   }
 }
 
 final class GetTagsApiWorker: BaseApiWorker<String, [Tag]> {

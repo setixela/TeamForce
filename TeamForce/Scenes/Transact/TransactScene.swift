@@ -44,6 +44,8 @@ enum TransactState {
    case presentPickedImage(UIImage)
    case setHideAddPhotoButton(Bool)
 
+   case updateSelectedTags(Set<Tag>)
+
    case sendButtonPressed
    case cancelButtonPressed
 }
@@ -68,6 +70,8 @@ final class TransactScene<Asset: AssetProtocol>: ModalDoubleStackModel<Asset>, S
          reasonInputChanged: viewModels.reasonTextView.onEvent(\.didEditingChanged),
          anonymousSetOff: viewModels.options.anonimParamModel.switcher.on(\.turnedOff),
          anonymousSetOn: viewModels.options.anonimParamModel.switcher.on(\.turnedOn),
+         enableTags: viewModels.options.addTagParamModel.on(\.turnedOn),
+         disableTags: viewModels.options.addTagParamModel.on(\.turnedOff),
          addTag: tagList.on(\.didSelectTag),
          removeTag: tagList.on(\.didDeselectTag),
          cancelButtonDidTap: closeButton.on(\.didTap)
@@ -97,7 +101,7 @@ final class TransactScene<Asset: AssetProtocol>: ModalDoubleStackModel<Asset>, S
          viewModels.pickedImages.lefted(),
          viewModels.addPhotoButton,
          viewModels.options,
-         Grid.x32.spacer
+         Grid.x48.spacer
       ]))
 
    private lazy var activityIndicator = Design.model.common.activityIndicator
@@ -131,8 +135,11 @@ final class TransactScene<Asset: AssetProtocol>: ModalDoubleStackModel<Asset>, S
          self?.scenario.start()
          self?.setToInitialCondition()
       }
-      viewModels.options.addTagParamModel.optionModel.on(\.didTap, self) {
-         $0.bottomPopupPresenter.send(\.present, (model: $0.tagList, onView: $0.vcModel?.view.rootSuperview))
+      viewModels.options.addTagParamModel.optionModel.on(\.didTap, self) { slf in
+         slf.bottomPopupPresenter.send(\.present, (model: slf.tagList, onView: slf.vcModel?.view.rootSuperview))
+         slf.tagList.closeButton.on(\.didTap) {
+            slf.bottomPopupPresenter.send(\.hide)
+         }
       }
    }
 
@@ -283,6 +290,45 @@ extension TransactScene: StateMachine {
       case .presentImagePicker:
          guard let baseVC = vcModel else { return }
          imagePicker.sendEvent(\.presentOn, baseVC)
+      //
+      case .updateSelectedTags(let tags):
+         viewModels.options.selectedTagPanel
+            .set(.arrangedModels(
+               mapTagsToModels(tags)
+            ))
+
+         if tags.isEmpty {
+            viewModels.options.selectedTagPanel.hidden(true)
+            viewModels.options.addTagParamModel.optionModel.button.label
+               .text("Выберите ценность")
+         } else {
+            viewModels.options.selectedTagPanel.hidden(false)
+            viewModels.options.addTagParamModel.optionModel.button.label
+               .text("Добавлено \(tags.count) ценности. Добавить еще?")
+         }
+      }
+   }
+}
+
+private extension TransactScene {
+   func mapTagsToModels(_ tags: Set<Tag>) -> [UIViewModel] {
+      tags.map { tag in
+         let model = TitleIconX()
+            .setAll { title, icon in
+               title
+                  .set(Design.state.label.caption2)
+                  .textColor(Design.color.textBrand)
+                  .text(tag.name.string)
+
+               icon
+                  .image(Design.icon.tablerMark)
+                  .size(.init(width: 24, height: 12))
+                  .imageTintColor(Design.color.iconBrand)
+            }
+            .cornerRadius(Design.params.cornerRadiusMini)
+            .backColor(Design.color.backgroundBrandSecondary)
+            .padding(.init(top: 8, left: 8, bottom: 8, right: 0))
+         return model
       }
    }
 }

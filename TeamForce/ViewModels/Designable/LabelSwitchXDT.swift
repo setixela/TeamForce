@@ -19,8 +19,10 @@ final class LabelSwitcherXDT<Design: DSP>: LabelSwitcherX {
 import ReactiveWorks
 
 final class SwitcherBox<Down: VMPS, Design: DSP>:
-   M<LabelSwitcherXDT<Design>>.D<Down>.Combo, Designable
+   M<LabelSwitcherXDT<Design>>.D<Down>.Combo, Designable, Eventable
 {
+   typealias Events = SwitchEvent
+   var events: EventsStore = .init()
    //
    var labelSwitcher: LabelSwitcherXDT<Design> { models.main }
    var optionModel: Down { models.down }
@@ -32,9 +34,11 @@ final class SwitcherBox<Down: VMPS, Design: DSP>:
       labelSwitcher.switcher
          .on(\.turnedOn, self) {
             $0.optionModel.hidden(false)
+            $0.send(\.turnedOn)
          }
          .on(\.turnedOff, self) {
             $0.optionModel.hidden(true)
+            $0.send(\.turnedOff)
          }
    }
 }

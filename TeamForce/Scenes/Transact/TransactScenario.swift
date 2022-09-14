@@ -20,8 +20,10 @@ struct TransactScenarioEvents {
    let anonymousSetOff: VoidWork<Void>
    let anonymousSetOn: VoidWork<Void>
 
-   let addTag: VoidWork<Int>
-   let removeTag: VoidWork<Int>
+   let enableTags: VoidWorkVoid
+   let disableTags: VoidWorkVoid
+   let addTag: VoidWork<Tag>
+   let removeTag: VoidWork<Tag>
 
    let cancelButtonDidTap: VoidWorkVoid
 }
@@ -90,10 +92,12 @@ final class TransactScenario<Asset: AssetProtocol>:
          .doMap { ($0, true) }
          .doNext(work: works.updateAmount)
          .doNext(work: works.isCorrectBothInputs)
-         .onSuccessMixSaved(setState) { bool, savedText in
-            .coinInputSuccess(savedText, true) }
-         .onFailMixSaved(setState) { bool, savedText in
-            .coinInputSuccess(savedText, false) }
+         .onSuccessMixSaved(setState) { _, savedText in
+            .coinInputSuccess(savedText, true)
+         }
+         .onFailMixSaved(setState) { _, savedText in
+            .coinInputSuccess(savedText, false)
+         }
 
       events.reasonInputChanged
          .doNext(work: works.reasonInputParsing)
@@ -120,15 +124,25 @@ final class TransactScenario<Asset: AssetProtocol>:
          .onSuccess(setState, .cancelButtonPressed)
 
       events.addTag
-         .doNext(works.addSelectedTag)
-         .onFail {
-            print()
+         .doNext(work: works.addSelectedTag)
+         .doNext(work: works.getSelectedTags)
+         .onSuccess(setState) {
+            .updateSelectedTags($0)
          }
 
       events.removeTag
-         .doNext(works.removeSelectedTag)
-         .onFail {
-            print()
+         .doNext(work: works.removeSelectedTag)
+         .doNext(work: works.getSelectedTags)
+         .onSuccess(setState) {
+            .updateSelectedTags($0)
          }
+
+      events.enableTags
+         .doInput(true)
+         .doNext(work: works.enableTags)
+
+      events.disableTags
+         .doInput(false)
+         .doNext(work: works.enableTags)
    }
 }

@@ -14,9 +14,9 @@ class TitleBodySwitcherY: Combos<SComboMD<LabelModel, LabelSwitcherX>> {
    var switcher: Switcher { models.down.switcher }
 
    override func start() {
-      axis(.vertical)
-
       setAll { _, _ in }
+
+      axis(.vertical)
    }
 }
 

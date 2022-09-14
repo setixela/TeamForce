@@ -14,6 +14,7 @@ enum ScrollState {
    case scrollToTop(animated: Bool)
    case hideHorizontalScrollIndicator
    case hideVerticalScrollIndicator
+   case padding(UIEdgeInsets)
 }
 
 final class ScrollViewModelY: BaseViewModel<UIScrollView> {
@@ -39,6 +40,9 @@ extension ScrollViewModelY: Stateable2 {
    func applyState(_ state: ScrollState) {
       switch state {
       case .arrangedModels(let array):
+         stack.view.subviews.forEach {
+            $0.removeFromSuperview()
+         }
          array.forEach {
             stack.view.addArrangedSubview($0.uiView)
          }
@@ -50,6 +54,8 @@ extension ScrollViewModelY: Stateable2 {
          view.showsHorizontalScrollIndicator = false
       case .hideVerticalScrollIndicator:
          view.showsVerticalScrollIndicator = false
+      case .padding(let value):
+         stack.padding(value)
       }
    }
 }
@@ -75,6 +81,9 @@ extension ScrollViewModelX: Stateable2 {
    func applyState(_ state: ScrollState) {
       switch state {
       case .arrangedModels(let array):
+         stack.view.subviews.forEach {
+            $0.removeFromSuperview()
+         }
          array.enumerated().forEach {
             stack.view.addArrangedSubview($0.1.uiView)
          }
@@ -86,6 +95,8 @@ extension ScrollViewModelX: Stateable2 {
          view.showsHorizontalScrollIndicator = false
       case .hideVerticalScrollIndicator:
          view.showsVerticalScrollIndicator = false
+      case .padding(let value):
+         stack.padding(value)
       }
    }
 }

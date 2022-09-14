@@ -78,6 +78,7 @@ protocol IconElements: InitProtocol, DesignElementable where DesignElement == UI
    var tablerDiamond: UIImage { get }
    var tablerChevronRight: UIImage { get }
    var tablerCamera: UIImage { get }
+   var tablerMark: UIImage { get }
 }
 
 struct IconBuilder: IconElements {
@@ -154,6 +155,7 @@ struct IconBuilder: IconElements {
    var tablerDiamond: UIImage { make("tabler_diamond") }
    var tablerChevronRight: UIImage { make("tabler_chevron-right") }
    var tablerCamera: UIImage { make("tabler_camera") }
+   var tablerMark: UIImage { make("tabler_mark") }
 }
 
 private extension IconBuilder {

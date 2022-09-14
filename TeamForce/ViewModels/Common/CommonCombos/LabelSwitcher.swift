@@ -13,10 +13,13 @@ class LabelSwitcherX: Combos<SComboMR<LabelModel, WrappedY<Switcher>>> {
    var switcher: Switcher { models.right.subModel }
 
    override func start() {
+
+      setAll { _, switcherStack in
+         switcherStack.padding(.right(4))
+      }
+
       alignment(.center)
       axis(.horizontal)
-
-      setAll { _, _ in }
    }
 }
 

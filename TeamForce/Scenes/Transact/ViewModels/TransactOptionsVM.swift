@@ -14,8 +14,10 @@ final class TransactOptionsVM<Design: DSP>: BaseViewModel<StackViewExtended>, De
    lazy var addTagParamModel = SwitcherBox<SelectTagButton<Design>, Design>()
       .setAll { switcher, option in
          switcher.label.text("Добавить ценность")
-         option.label.text("Выберите ценность")
+         option.button.label.text("Выберите ценность")
       }
+
+   var selectedTagPanel: ScrollViewModelX { addTagParamModel.optionModel.selectedTagsPanel }
 
 //   private lazy var showEveryoneParamModel = LabelSwitcherXDT<Design>.switcherWith(text: "Показать всем")
 //   private lazy var awaitOptionsModel = TitleBodySwitcherDT<Design>.switcherWith(
@@ -35,8 +37,8 @@ final class TransactOptionsVM<Design: DSP>: BaseViewModel<StackViewExtended>, De
 
 extension TagList: Eventable {
    struct Events: InitProtocol {
-      var didSelectTag: Int?
-      var didDeselectTag: Int?
+      var didSelectTag: Tag?
+      var didDeselectTag: Tag?
    }
 }
 
@@ -71,9 +73,9 @@ final class TagList<Asset: AssetProtocol>: ModalDoubleStackModel<Asset> {
          slf.tableModel.set(.items(slf.items))
 
          if item.isSelected {
-            slf.send(\.didSelectTag, item.value.id)
+            slf.send(\.didSelectTag, item.value)
          } else {
-            slf.send(\.didDeselectTag, item.value.id)
+            slf.send(\.didDeselectTag, item.value)
          }
       }
    }
@@ -145,27 +147,38 @@ enum SelectState {
    case selected
 }
 
-final class SelectTagButton<Design: DSP>: TitleIconX, Designable {
-
+final class SelectTagButton<Design: DSP>: M<ScrollViewModelX>.D<TitleIconX>.Combo, Designable {
    var events: EventsStore = .init()
+
+   var button: TitleIconX { models.down }
+   var selectedTagsPanel: ScrollViewModelX { models.main }
 
    required init() {
       super.init()
 
-      setAll { title, icon in
-         title
-            .set(Design.state.label.default)
-         icon
-            .size(.square(16))
-            .image(Design.icon.arrowDropRightLine)
+      setAll { tagsScrollView, titleIcon in
+         tagsScrollView
+            .set(.spacing(8))
+            .set(.hideHorizontalScrollIndicator)
+            .set(.padding(.bottom(16)))
+
+         titleIcon
+            .setAll { title, icon in
+               title
+                  .set(Design.state.label.default)
+               icon
+                  .size(.square(16))
+                  .image(Design.icon.arrowDropRightLine)
+            }
+            .cornerRadius(Design.params.cornerRadiusSmall)
+            .borderColor(Design.color.iconMidpoint)
+            .borderWidth(1)
+            .height(48)
+            .distribution(.fill)
+            .alignment(.center)
+            .padding(.sideOffset(16))
       }
-      cornerRadius(Design.params.cornerRadiusSmall)
-      borderColor(Design.color.iconMidpoint)
-      borderWidth(1)
-      height(48)
-      distribution(.fill)
-      alignment(.center)
-      padding(.sideOffset(16))
+
    }
 
    override func start() {
