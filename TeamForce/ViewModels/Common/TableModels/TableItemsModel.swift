@@ -59,6 +59,8 @@ final class TableItemsModel<Design: DSP>: BaseViewModel<UITableView>,
       view.clipsToBounds = true
       view.layer.masksToBounds = true
 
+      backColor(Design.color.background)
+
       if #available(iOS 15.0, *) {
          view.sectionHeaderTopPadding = 0
       }

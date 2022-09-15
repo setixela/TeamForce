@@ -19,30 +19,12 @@
       }
     },
     {
-      "identity" : "anchorage",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/setixela/Anchorage.git",
-      "state" : {
-        "branch" : "main",
-        "revision" : "932c31229aa680ab101bab81897173319bd5ce7e"
-      }
-    },
-    {
       "identity" : "promisekit",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/mxcl/PromiseKit",
       "state" : {
-        "revision" : "43772616c46a44a9977e41924ae01d0e55f2f9ca",
-        "version" : "6.18.1"
-      }
-    },
-    {
-      "identity" : "reactiveworks",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/setixela/ReactiveWorks.git",
-      "state" : {
-        "branch" : "master",
-        "revision" : "06340fa2abf2663c452563f2facc34729913fec6"
+        "revision" : "ed3192004c0b00b4b3d7baa9578ee655c66faae3",
+        "version" : "6.18.0"
       }
     },
     {
@@ -50,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/realm/realm-core",
       "state" : {
-        "revision" : "5da7744b4056ad185c025bccf0924f17f73f7a91",
-        "version" : "12.6.0"
+        "revision" : "2b8def17bb8e0cddbcc754db6b6466b8487feebf",
+        "version" : "12.5.0"
       }
     },
     {
@@ -60,7 +42,7 @@
       "location" : "https://github.com/realm/realm-swift",
       "state" : {
         "branch" : "master",
-        "revision" : "a4e41b471f5ee702c63f2b81b87dc6302fe20e49"
+        "revision" : "d949715c09767dbe1b9924a2d187624811fc5cd9"
       }
     },
     {

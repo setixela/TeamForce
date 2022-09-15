@@ -145,7 +145,14 @@ struct SelectWrapper<T> {
    var isSelected = false
 }
 
-final class TagCell<Design: DSP>: IconTitleX, Designable {}
+final class TagCell<Design: DSP>: IconTitleX, Designable {
+   override func start() {
+      super.start()
+
+      backColor(Design.color.background)
+      label.set(Design.state.label.body1)
+   }
+}
 
 extension TagCell: StateMachine {
    func setState(_ state: SelectState) {

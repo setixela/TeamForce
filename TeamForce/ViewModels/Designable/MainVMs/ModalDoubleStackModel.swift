@@ -10,6 +10,7 @@ import UIKit
 
 class ModalDoubleStackModel<Asset: AssetProtocol>: DoubleStacksModel, Assetable {
    let title = LabelModel()
+      .set(Design.state.label.body3)
       .alignment(.center)
    let closeButton = ButtonModel()
       .title(Design.Text.title.close)
