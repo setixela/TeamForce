@@ -13,6 +13,7 @@ struct HistoryScenarioEvents {
    let presentSentTransactions: VoidWork<Void>
    let presentRecievedTransaction: VoidWork<Void>
    let presentDetailView: VoidWork<(IndexPath, Int)>
+   let cancelTransaction: VoidWork<Int>
 }
 
 final class HistoryScenario<Asset: AssetProtocol>:
@@ -43,5 +44,12 @@ final class HistoryScenario<Asset: AssetProtocol>:
       events.presentDetailView
          .doNext(work: works.getTransactionByRowNumber)
          .onSuccess(setState) { .presentDetailView($0)}
+      
+      events.cancelTransaction
+         .doNext(work: works.cancelTransactionById)
+         .onSuccess(setState) { .cancelTransaction }
+         .onFail {
+            print("can not cancel transaction")
+         }
    }
 }

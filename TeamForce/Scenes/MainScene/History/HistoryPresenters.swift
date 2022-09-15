@@ -8,8 +8,10 @@
 import ReactiveWorks
 import UIKit
 
-struct HistoryPresenters<Design: DesignProtocol>: Designable {
-   static var transactToHistoryCell: Presenter<TransactionItem, HistoryCellModel<Design>> {
+class HistoryPresenters<Design: DesignProtocol>: Designable {
+   var events: EventsStore = .init()
+   
+   var transactToHistoryCell: Presenter<TransactionItem, HistoryCellModel<Design>> {
       Presenter { work in
          let item = work.unsafeInput
          //print(work.input)
@@ -112,7 +114,7 @@ struct HistoryPresenters<Design: DesignProtocol>: Designable {
                      sumLabel
                         .text(sumText)
 
-                     guard item.state != .recieved else {
+                     guard item.state == .waiting else {
                         cancelButton.hidden(true)
                         return
                      }
@@ -124,8 +126,18 @@ struct HistoryPresenters<Design: DesignProtocol>: Designable {
                   }
             }
 
+         cell.on(\.cancelButtonPressed) { [self] in
+            send(\.cancelButtonPressed, item.id ?? 0)
+         }
+         
          work.success(result: cell)
       }
+   }
+}
+
+extension HistoryPresenters: Eventable {
+   struct Events: InitProtocol {
+      var cancelButtonPressed: Int?
    }
 }
 
@@ -153,4 +165,5 @@ struct TransactionItem {
    let createdAt: String
    let photo: String?
    let isAnonymous: Bool
+   let id: Int?
 }
