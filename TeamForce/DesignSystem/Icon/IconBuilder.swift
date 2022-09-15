@@ -87,7 +87,7 @@ struct IconBuilder: IconElements {
    var attach: UIImage { make("akar-icons_attach") }
    var bell: UIImage { make("bell") }
    var calendar: UIImage { make("calendar") }
-   var cross: UIImage { make("cross") }
+   var cross: UIImage { make("tabler_mark") }
    var inProgress: UIImage { make("in_progress") }
    var lock: UIImage { make("lock") }
    var mail: UIImage { make("mail") }

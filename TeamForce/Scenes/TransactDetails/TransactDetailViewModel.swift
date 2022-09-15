@@ -24,7 +24,6 @@ final class TransactDeatilViewModel<Asset: AssetProtocol>: BaseSceneModel<
       .set(.textColor(UIColor.gray))
    private lazy var amountLabel = LabelModel()
 //      .set(Design.state.label.headline3)
-  
 
    private lazy var firstStack = StackModel()
       .set(.distribution(.equalCentering))
@@ -34,10 +33,10 @@ final class TransactDeatilViewModel<Asset: AssetProtocol>: BaseSceneModel<
          dateLabel,
          transactionOwnerLabel,
          amountLabel,
-         //statusLabel,
-         currencyLabel
+         // statusLabel,
+         currencyLabel,
       ]))
-   
+
    lazy var reasonLabel = SettingsTitleBodyDT<Design>()
       .setAll {
          $0
@@ -47,7 +46,7 @@ final class TransactDeatilViewModel<Asset: AssetProtocol>: BaseSceneModel<
             .text("-")
             .set(Design.state.label.caption)
       }
-   
+
    lazy var statusLabel = SettingsTitleBodyDT<Design>()
       .setAll {
          $0
@@ -57,7 +56,7 @@ final class TransactDeatilViewModel<Asset: AssetProtocol>: BaseSceneModel<
             .text("-")
             .set(Design.state.label.caption)
       }
-   
+
    lazy var transactPhoto = Combos<SComboMD<LabelModel, ImageViewModel>>()
       .setAll {
          $0
@@ -66,13 +65,13 @@ final class TransactDeatilViewModel<Asset: AssetProtocol>: BaseSceneModel<
             .text("Фотография")
          $1
             .image(Design.icon.transactSuccess)
-            .size(.init(width: 100, height: 100))
-            .contentMode(.scaleAspectFit)
+            .maxHeight(130)
+            .maxWidth(130)
+            .contentMode(.scaleAspectFill)
             .cornerRadius(Design.params.cornerRadiusSmall)
       }
       .hidden(true)
-   
-   
+
    lazy var infoStack = UserProfileStack<Design>()
       .arrangedModels([
          LabelModel()
@@ -80,13 +79,12 @@ final class TransactDeatilViewModel<Asset: AssetProtocol>: BaseSceneModel<
             .set(Design.state.label.captionSecondary),
          reasonLabel,
          statusLabel,
-         transactPhoto
+         transactPhoto,
+         Grid.xxx.spacer
       ])
       .distribution(.fill)
       .alignment(.leading)
-   
 
-   
    private lazy var currencyLabel = CurrencyLabelDT<Design>()
       .setAll {
          $0
@@ -136,28 +134,26 @@ final class TransactDeatilViewModel<Asset: AssetProtocol>: BaseSceneModel<
       .size(.square(70))
       .shadow(Design.params.cellShadow)
    )
-   
 
    private func configure() {
-     
       mainVM.bodyStack
          .set(Design.state.stack.default)
          .alignment(.center)
          .set(.backColor(Design.color.backgroundSecondary))
          .arrangedModels([
             //
-            Grid.x64.spacer,
+            Spacer(32),
+            Spacer(maxSize: 32),
             image,
-            Grid.x32.spacer,
+            Spacer(maxSize: 32),
             fourthStack,
-            Grid.x64.spacer,
+            Spacer(maxSize: 64),
          ])
 
       mainVM.footerStack
          .set(Design.state.stack.bottomPanel)
          .arrangedModels([
             infoStack,
-            Grid.xxx.spacer,
          ])
    }
 
@@ -180,7 +176,8 @@ final class TransactDeatilViewModel<Asset: AssetProtocol>: BaseSceneModel<
          } else {
             var userIconText = ""
             if let nameFirstLetter = input.recipient?.recipientFirstName?.first,
-               let surnameFirstLetter = input.recipient?.recipientSurname?.first {
+               let surnameFirstLetter = input.recipient?.recipientSurname?.first
+            {
                userIconText = String(nameFirstLetter) + String(surnameFirstLetter)
             }
             let tempImage = userIconText.drawImage(backColor: Design.color.backgroundBrand)
@@ -201,7 +198,8 @@ final class TransactDeatilViewModel<Asset: AssetProtocol>: BaseSceneModel<
          } else {
             var userIconText = ""
             if let nameFirstLetter = input.sender?.senderFirstName?.first,
-               let surnameFirstLetter = input.sender?.senderSurname?.first {
+               let surnameFirstLetter = input.sender?.senderSurname?.first
+            {
                userIconText = String(nameFirstLetter) + String(surnameFirstLetter)
             }
             let tempImage = userIconText.drawImage(backColor: Design.color.backgroundBrand)
