@@ -112,6 +112,7 @@ extension AlamoLoader {
 
 final class PaddingImageView: UIImageView, Marginable, AlamoLoader {
    var padding: UIEdgeInsets = .init()
+   var events: EventsStore = .init()
 
    override var alignmentRectInsets: UIEdgeInsets {
       return .init(top: -padding.top,
@@ -119,6 +120,18 @@ final class PaddingImageView: UIImageView, Marginable, AlamoLoader {
                    bottom: -padding.bottom,
                    right: -padding.right)
    }
+
+   func startTapGesture() {
+      addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.didTap)))
+   }
+
+   @objc private func didTap() {
+      send(\.didTap)
+   }
+}
+
+extension PaddingImageView: Eventable {
+   typealias Events = ButtonEvents
 }
 
 // MARK: - PaddingView -------------------------

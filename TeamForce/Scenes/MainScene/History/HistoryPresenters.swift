@@ -10,21 +10,26 @@ import UIKit
 
 class HistoryPresenters<Design: DesignProtocol>: Designable {
    var events: EventsStore = .init()
-   
+
+   private lazy var retainer = Retainer()
+
    var transactToHistoryCell: Presenter<TransactionItem, HistoryCellModel<Design>> {
-      Presenter { work in
+      Presenter { [weak self] work in
+         guard let self = self else { return }
+         
          let item = work.unsafeInput
-         //print(work.input)
+         // print(work.input)
          var userNameText: String
          var userIconText: String = ""
          var statusHidden: Bool
          var statusText: String
          var statusColor: UIColor
          var sumText: String
-         //var image = ImageViewModel()
-         
+         // var image = ImageViewModel()
+
          if let nameFirstLetter = item.recipient.recipientFirstName?.first,
-            let surnameFirstLetter = item.recipient.recipientSurname?.first {
+            let surnameFirstLetter = item.recipient.recipientSurname?.first
+         {
             userIconText = String(nameFirstLetter) + String(surnameFirstLetter)
          }
 
@@ -36,7 +41,8 @@ class HistoryPresenters<Design: DesignProtocol>: Designable {
             statusColor = .clear
             statusHidden = true
             if let nameFirstLetter = item.sender.senderFirstName?.first,
-               let surnameFirstLetter = item.sender.senderSurname?.first {
+               let surnameFirstLetter = item.sender.senderSurname?.first
+            {
                userIconText = String(nameFirstLetter) + String(surnameFirstLetter)
             }
 //            image = Design.icon.recieveCoinIcon
@@ -91,8 +97,6 @@ class HistoryPresenters<Design: DesignProtocol>: Designable {
                }
 
                userAndStatus
-                  .padLeft(18)
-                  .alignment(.leading)
                   .setAll { userLabel, statusLabel in
                      userLabel
                         .text(userNameText)
@@ -109,7 +113,6 @@ class HistoryPresenters<Design: DesignProtocol>: Designable {
                   }
 
                sumLabelAndCancelButton
-                  .alignment(.trailing)
                   .setAll { sumLabel, cancelButton in
                      sumLabel
                         .text(sumText)
@@ -124,12 +127,14 @@ class HistoryPresenters<Design: DesignProtocol>: Designable {
                         .imageTintColor(Design.color.textError)
                         .hidden(false)
                   }
+               
             }
 
-         cell.on(\.cancelButtonPressed) { [self] in
-            send(\.cancelButtonPressed, item.id ?? 0)
+         cell.on(\.cancelButtonPressed, self) {
+            $0.send(\.cancelButtonPressed, item.id ?? 0)
          }
-         
+
+         self.retainer.retain(work)
          work.success(result: cell)
       }
    }
@@ -149,7 +154,7 @@ struct TransactionItem {
       case ingrace
       case ready
       case cancelled
-      
+
 //      case sendSuccess
 //      case sendDeclined
 //      case sendInProgress

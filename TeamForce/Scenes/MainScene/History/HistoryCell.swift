@@ -12,12 +12,10 @@ final class HistoryCellModel<Design: DSP>:
    Designable
 {
    var events: EventsStore = .init()
-   
+
    required init() {
       super.init(isAutoreleaseView: true)
 
-      alignment(.center)
-      padding(.init(top: 23, left: 16, bottom: 23, right: 16))
       setAll { icon, nameStatus, summa in
          icon
             .image(Design.icon.avatarPlaceholder)
@@ -44,16 +42,23 @@ final class HistoryCellModel<Design: DSP>:
             .setAll { sumText, cancelButton in
                sumText
                   .set(Design.state.label.body3)
+                  .padTop(8)
+                  .padBottom(6)
                   .alignment(.right)
                cancelButton
                   .set(.tapGesturing)
-                  .size(.square(25)) // TODO: - change to SVG
-                  .hidden(false) // TODO: - change to SVG
-               cancelButton.on(\.didTap) { [self] in
+                  .size(.square(25))
+                  .hidden(false)
+                  .padding(.left(8))
+                  .padding(.right(-8))
+               cancelButton.view.startTapGesture()
+               cancelButton.view.on(\.didTap) { [self] in
                   send(\.cancelButtonPressed)
                }
             }
       }
+      alignment(.center)
+      padding(.init(top: 23, left: 16, bottom: 23, right: 16))
    }
 }
 
