@@ -243,6 +243,8 @@ final class TransactWorks<Asset: AssetProtocol>: BaseSceneWorks<TransactWorks.Te
       Self.store.isCorrectReasonInput = false
       Self.store.isAnonymous = false
       Self.store.images = []
+      Self.store.isTagsEnabled = false
+      Self.store.tags = []
       work.success(result: ())
    }
 

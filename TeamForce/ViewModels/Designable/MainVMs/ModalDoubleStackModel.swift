@@ -28,7 +28,7 @@ class ModalDoubleStackModel<Asset: AssetProtocol>: DoubleStacksModel, Assetable 
       backColor(Design.color.background)
       cornerRadius(Design.params.cornerRadiusMedium)
       shadow(.init(radius: 50, color: Design.color.iconContrast, opacity: 0.33))
-      padding(UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16))
+      padding(UIEdgeInsets(top: 0, left: 16, bottom: 16, right: 16))
 
       axis(.vertical)
       alignment(.fill)

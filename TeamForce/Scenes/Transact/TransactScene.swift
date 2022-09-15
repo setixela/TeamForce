@@ -131,8 +131,8 @@ final class TransactScene<Asset: AssetProtocol>: ModalDoubleStackModel<Asset>, S
 
       view.on(\.willAppear) { [weak self] in
          self?.viewModels.foundUsersList.set(.items([]))
-         self?.scenario2.start()
          self?.scenario.start()
+         self?.scenario2.start()
          self?.setToInitialCondition()
       }
       viewModels.options.addTagParamModel.optionModel.on(\.didTap, self) { slf in
@@ -292,19 +292,10 @@ extension TransactScene: StateMachine {
          imagePicker.sendEvent(\.presentOn, baseVC)
       //
       case .updateSelectedTags(let tags):
-         viewModels.options.selectedTagPanel
-            .set(.arrangedModels(
-               mapTagsToModels(tags)
-            ))
-
          if tags.isEmpty {
-            viewModels.options.selectedTagPanel.hidden(true)
-            viewModels.options.addTagParamModel.optionModel.button.label
-               .text("Выберите ценность")
+            viewModels.options.addTagParamModel.optionModel.setState(.clear)
          } else {
-            viewModels.options.selectedTagPanel.hidden(false)
-            viewModels.options.addTagParamModel.optionModel.button.label
-               .text("Добавлено \(tags.count) ценности. Добавить еще?")
+            viewModels.options.addTagParamModel.optionModel.setState(.selected(mapTagsToModels(tags)))
          }
       }
    }
@@ -351,6 +342,9 @@ private extension TransactScene {
       viewModels.reasonTextView
          .text("")
          .placeholder(Design.Text.title.reasonPlaceholder)
+      viewModels.options.addTagParamModel.labelSwitcher.switcher.applyState(.turnOff)
+      viewModels.options.addTagParamModel.optionModel.setState(.clear)
+      tagList.setState(.clear)
    }
 
    func applySelectUserMode() {

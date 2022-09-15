@@ -17,8 +17,6 @@ final class TransactOptionsVM<Design: DSP>: BaseViewModel<StackViewExtended>, De
          option.button.label.text("Выберите ценность")
       }
 
-   var selectedTagPanel: ScrollViewModelX { addTagParamModel.optionModel.selectedTagsPanel }
-
 //   private lazy var showEveryoneParamModel = LabelSwitcherXDT<Design>.switcherWith(text: "Показать всем")
 //   private lazy var awaitOptionsModel = TitleBodySwitcherDT<Design>.switcherWith(
 //      titleText: "Период задержки",
@@ -88,11 +86,16 @@ final class TagList<Asset: AssetProtocol>: ModalDoubleStackModel<Asset> {
             $0.items = $1.map {
                SelectWrapper(value: $0)
             }
-            $0.tableModel.set(.items($0.items))
+            $0.setItemsToTable()
          }
          .onFail(self) {
             $0.items = []
+            $0.setItemsToTable()
          }
+   }
+
+   private func setItemsToTable() {
+      tableModel.set(.items(items))
    }
 
    private var tagPresenter: Presenter<SelectWrapper<Tag>, TagCell<Design>> = .init { work in
@@ -119,6 +122,21 @@ final class TagList<Asset: AssetProtocol>: ModalDoubleStackModel<Asset> {
       iconLabel.setState(isSelected ? .selected : .none)
 
       work.success(result: iconLabel)
+   }
+}
+
+enum TagListState {
+   case clear
+}
+
+extension TagList: StateMachine {
+   func setState(_ state: TagListState) {
+      switch state {
+      case .clear:
+         items = []
+         setItemsToTable()
+         loadTags()
+      }
    }
 }
 
@@ -178,7 +196,6 @@ final class SelectTagButton<Design: DSP>: M<ScrollViewModelX>.D<TitleIconX>.Comb
             .alignment(.center)
             .padding(.sideOffset(16))
       }
-
    }
 
    override func start() {
@@ -186,6 +203,26 @@ final class SelectTagButton<Design: DSP>: M<ScrollViewModelX>.D<TitleIconX>.Comb
 
       view.didTapClosure = { [weak self] in
          self?.send(\.didTap)
+      }
+   }
+}
+
+enum SelectTagButtonState {
+   case clear
+   case selected([UIViewModel])
+}
+
+extension SelectTagButton: StateMachine {
+   func setState(_ state: SelectTagButtonState) {
+      switch state {
+      case .clear:
+         selectedTagsPanel.set(.arrangedModels([]))
+         selectedTagsPanel.hidden(true)
+         button.label.text("Выберите ценность")
+      case .selected(let tags):
+         selectedTagsPanel.set(.arrangedModels(tags))
+         selectedTagsPanel.hidden(false)
+         button.label.text("Добавлено \(tags.count) ценности. Добавить еще?")
       }
    }
 }

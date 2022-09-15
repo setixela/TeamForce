@@ -28,6 +28,8 @@ final class BottomPopupPresenter: BaseModel, Eventable {
 
    override func start() {
       on(\.present) { [weak self] model, onView in
+         onView?.endEditing(true)
+
          guard let self = self,
                let onView = onView
          else { return }
@@ -38,6 +40,8 @@ final class BottomPopupPresenter: BaseModel, Eventable {
          self.queue.push(model)
       }
       .on(\.presentAuto) { [weak self] model, onView in
+         onView?.endEditing(true)
+         
          guard let self = self,
                let onView = onView
          else { return }
