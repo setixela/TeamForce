@@ -30,21 +30,22 @@ final class HistoryScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>
          presentAllTransactions: viewModels.segmentedControl.onEvent(\.selected0),
          presentSentTransactions: viewModels.segmentedControl.onEvent(\.selected2),
          presentRecievedTransaction: viewModels.segmentedControl.onEvent(\.selected1),
-         presentDetailView: viewModels.tableModel.on(\.didSelectRow)
+         presentDetailView: viewModels.tableModel.on(\.didSelectRow),
+         cancelTransaction: viewModels.presenter.on(\.cancelButtonPressed)
       )
    )
 
    private lazy var activityIndicator = ActivityIndicator<Design>()
    private lazy var errorBlock = CommonErrorBlock<Design>()
-
+   //private lazy var presenter = HistoryPresenters<Design>()
    // MARK: - Start
 
    override func start() {
       configure()
-
+      
       viewModels.tableModel
          .set(.presenters([
-            HistoryPresenters<Design>.transactToHistoryCell,
+            viewModels.presenter.transactToHistoryCell,
             SpacerPresenter.presenter,
          ]))
 
@@ -54,6 +55,9 @@ final class HistoryScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>
       viewModels.tableModel.on(\.willEndDragging) { [weak self] in
          self?.sendEvent(\.willEndDragging, $0)
       }
+      
+      
+//      var historycells = viewModels.tableModel.items as? [HistoryCellModel<Design>]
 
       setState(.initial)
    }
@@ -86,6 +90,8 @@ enum HistoryState {
    case presentRecievedTransaction([TableItemsSection])
 
    case presentDetailView(Transaction)
+   
+   case cancelTransaction
 }
 
 extension HistoryScene: StateMachine {
@@ -124,6 +130,8 @@ extension HistoryScene: StateMachine {
          ProductionAsset.router?.route(\.transactionDetail,
                                        navType: .presentModally(.automatic),
                                        payload: value)
+      case .cancelTransaction:
+         print("transaction cancelled")
       }
    }
 }

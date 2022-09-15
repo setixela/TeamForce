@@ -11,6 +11,8 @@ final class HistoryCellModel<Design: DSP>:
    Main<ImageViewModel>.Right<TitleSubtitleY<Design>>.Right2<TitleIconY>.Combo,
    Designable
 {
+   var events: EventsStore = .init()
+   
    required init() {
       super.init(isAutoreleaseView: true)
 
@@ -44,9 +46,19 @@ final class HistoryCellModel<Design: DSP>:
                   .set(Design.state.label.body3)
                   .alignment(.right)
                cancelButton
-                  .size(.square(1)) // TODO: - change to SVG
-                  .hidden(true) // TODO: - change to SVG
+                  .set(.tapGesturing)
+                  .size(.square(25)) // TODO: - change to SVG
+                  .hidden(false) // TODO: - change to SVG
+               cancelButton.on(\.didTap) { [self] in
+                  send(\.cancelButtonPressed)
+               }
             }
       }
+   }
+}
+
+extension HistoryCellModel: Eventable {
+   struct Events: InitProtocol {
+      var cancelButtonPressed: Void?
    }
 }

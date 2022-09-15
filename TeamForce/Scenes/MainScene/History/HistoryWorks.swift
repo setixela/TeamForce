@@ -236,7 +236,8 @@ private extension HistoryWorks {
                amount: transact.amount.string,
                createdAt: transact.createdAt.string,
                photo: authorPhoto,
-               isAnonymous: transact.isAnonymous ?? false
+               isAnonymous: transact.isAnonymous ?? false,
+               id: transact.id
             )
 
             var result = result
