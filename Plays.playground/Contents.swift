@@ -3,6 +3,7 @@
 import PlaygroundSupport
 import ReactiveWorks
 import UIKit
+@testable import TeamForce
 
 typealias Design = ProductionAsset.Design
 typealias Text = ProductionAsset.Design.Text
@@ -25,14 +26,8 @@ if true {
       override func loadView() {
 //         view = scene.makeMainView()
 //         view = UIView()
-         let stack = StackModel()
-            .set_arrangedModels([
-               Grid.x128.spacer,
-               model,
-               Grid.x128.spacer,
-               Grid.xxx.spacer
-            ])
-         view = stack.uiView
+
+//         view = model.uiView
       }
    }
 
@@ -44,19 +39,46 @@ if true {
 
 // let scene = MainScene<ProductionAsset>()
 
-let model = Combos<SComboMD<LabelModel, IconTextField<Design>>>()
-   .setAll { topBadge, inputField in
-      inputField.setAll {
-         $0
-            .set_image(Design.icon.user)
-         $1
-            .set_placeholder(Text.title.userName)
-            .set_placeholderColor(Design.color.textFieldPlaceholder)
-      }
-      topBadge
-        // .set_placing(.init(x: 0, y: 0))
-        // .set_padLeft(0)
-         .set(Design.state.label.captionError)
-         .set_text("Error")
-         .set_zPosition(1000)
-   }
+let model = TagCell<Design>()
+//
+final class TagCell<Design: DesignProtocol>: IconTitleX, Designable {
+//   private let badgeImage = ImageViewModel()
+//      .size(.square(24))
+//      //      .image(Design.icon.tablerCircleCheck)
+//      .backColor(Design.color.background)
+//      .imageTintColor(Design.color.iconBrand)
+//      .cornerRadius(24 / 2)
+//      .hidden(true)
+//
+//   override func start() {
+//      super.start()
+//
+//      backColor(Design.color.background)
+//      label.set(Design.state.label.body1)
+//
+//      icon.view.clipsToBounds = false
+//      icon.view.layer.shouldRasterize = true
+//      icon.addModel(badgeImage) {
+//         $0
+//            .constSquare(size: 24)
+//            .fitToBottomRight($1)
+//      }
+//   }
+}
+
+//extension TagCell: StateMachine {
+//   func setState(_ state: SelectState) {
+//      switch state {
+//      case .none:
+//         icon.borderWidth(0)
+//         icon.borderColor(Design.color.transparent)
+//         badgeImage.hidden(true)
+//      case .selected:
+//
+//         icon.borderWidth(2)
+//         icon.borderColor(Design.color.iconBrand)
+//
+//         badgeImage.hidden(false)
+//      }
+//   }
+//}

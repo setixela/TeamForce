@@ -52,7 +52,7 @@ final class CreateFewContactsApiWorker: BaseApiWorker<CreateFewContactsRequest, 
             .done { result in
                let str = String(decoding: result.data!, as: UTF8.self)
                print(str)
-               print("response status \(result.response)")
+               print("response status \(String(describing: result.response))")
                work.success()
             }
             .catch { _ in

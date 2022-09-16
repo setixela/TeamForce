@@ -6,6 +6,7 @@
 //
 
 import ReactiveWorks
+import Anchorage
 import UIKit
 
 extension ViewModelProtocol where Self: Stateable {
@@ -128,6 +129,13 @@ extension ViewModelProtocol where Self: Stateable {
 
    @discardableResult func shadowOpacity(_ value: CGFloat) -> Self {
       view.layer.shadowOpacity = Float(value)
+      return self
+   }
+
+   @discardableResult func addModel(_ value: UIViewModel, setup: (Anchors, UIView) -> Void) -> Self {
+      let subview = value.uiView
+      view.addSubview(subview)
+      setup(subview.addAnchors, view)
       return self
    }
 
@@ -352,10 +360,10 @@ extension ViewModelProtocol where Self: Stateable, View: PaddingImageView {
    }
 
    @discardableResult func url(_ value: String?) -> Self {
-      guard
-         let str = value
+//      guard
+//         let str = value
 //         let url = URL(string: str)
-      else { return self }
+//      else { return self }
 
       view.loadImage(value) { [weak view] image in
          view?.image = image

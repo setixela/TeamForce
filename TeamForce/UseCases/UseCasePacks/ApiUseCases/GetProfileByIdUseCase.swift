@@ -19,8 +19,6 @@ struct GetProfileByIdUseCase: UseCaseProtocol {
                work.fail()
             }
             .doMap {
-               print("input")
-               print(work.input)
                guard let input = work.input else { return nil }
                let request = RequestWithId(token: $0, id: input)
                return request

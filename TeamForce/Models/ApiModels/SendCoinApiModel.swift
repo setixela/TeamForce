@@ -60,12 +60,6 @@ final class SendCoinApiWorker: BaseApiWorker<SendCoinRequest, Void> {
                if let response = result.response as? HTTPURLResponse {
                   if response.statusCode == 400 {
                      print("400 happened")
-                     guard let data = result.data else {
-                        work.fail()
-                        return
-                     }
-
-                     let errorArray = try JSONSerialization.jsonObject(with: data) as? [String]
 
                      work.fail()
                      return
