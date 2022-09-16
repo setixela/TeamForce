@@ -10,9 +10,8 @@ import Foundation
 import UIKit
 
 struct Config {
-   static let urlBase = "http://176.99.6.251:8888"
+   static let urlBase = "http://176.99.6.251:8889"
    static let isDebug = false
-//   static let startDebugScene: KeyPath<ProductionAsset.Scene, SceneModelProtocol> = \.login
 
    static let isDebugView = true
 

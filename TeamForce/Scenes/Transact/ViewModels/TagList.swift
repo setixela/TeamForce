@@ -10,8 +10,7 @@ import ReactiveWorks
 extension TagList: Eventable {
    struct Events: InitProtocol {
       var saveButtonDidTap: Set<Tag>?
-      var didSelectTag: Tag?
-      var didDeselectTag: Tag?
+      var exit: Void?
    }
 }
 
@@ -66,6 +65,7 @@ final class TagList<Asset: AssetProtocol>: ModalDoubleStackModel<Asset> {
       saveButton.on(\.didTap, self) {
          $0.send(\.saveButtonDidTap, $0.selctedTags)
          $0.saveButton.set(Design.state.button.inactive)
+         $0.send(\.exit)
       }
    }
 
@@ -117,6 +117,7 @@ final class TagList<Asset: AssetProtocol>: ModalDoubleStackModel<Asset> {
 
 enum TagListState {
    case clear
+   case selectTags(Set<Tag>)
 }
 
 extension TagList: StateMachine {
@@ -126,6 +127,15 @@ extension TagList: StateMachine {
          items = []
          setItemsToTable()
          loadTags()
+      case .selectTags(let tags):
+         self.selctedTags = tags
+         saveButton.set(Design.state.button.inactive)
+         items = items.map {
+            var wrappedTag = $0
+            wrappedTag.isSelected = tags.contains(wrappedTag.value)
+            return wrappedTag
+         }
+         setItemsToTable()
       }
    }
 }

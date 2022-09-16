@@ -44,6 +44,7 @@ enum TransactState {
    case presentPickedImage(UIImage)
    case setHideAddPhotoButton(Bool)
 
+   case presentTagsSelector(Set<Tag>)
    case updateSelectedTags(Set<Tag>)
 
    case sendButtonPressed
@@ -70,6 +71,7 @@ final class TransactScene<Asset: AssetProtocol>: ModalDoubleStackModel<Asset>, S
          reasonInputChanged: viewModels.reasonTextView.onEvent(\.didEditingChanged),
          anonymousSetOff: viewModels.options.anonimParamModel.switcher.on(\.turnedOff),
          anonymousSetOn: viewModels.options.anonimParamModel.switcher.on(\.turnedOn),
+         presentTagsSelectorDidTap: viewModels.options.addTagParamModel.optionModel.on(\.didTap),
          enableTags: viewModels.options.addTagParamModel.on(\.turnedOn),
          disableTags: viewModels.options.addTagParamModel.on(\.turnedOff),
          setTags: tagList.on(\.saveButtonDidTap),
@@ -133,13 +135,6 @@ final class TransactScene<Asset: AssetProtocol>: ModalDoubleStackModel<Asset>, S
          self?.scenario.start()
          self?.scenario2.start()
          self?.setToInitialCondition()
-      }
-      viewModels.options.addTagParamModel.optionModel.on(\.didTap, self) { slf in
-         slf.bottomPopupPresenter.send(\.present, (model: slf.tagList, onView: slf.vcModel?.view.rootSuperview))
-         slf.tagList.saveButton.set(Design.state.button.inactive)
-         slf.tagList.closeButton.on(\.didTap) {
-            slf.bottomPopupPresenter.send(\.hide)
-         }
       }
    }
 
@@ -291,6 +286,18 @@ extension TransactScene: StateMachine {
          guard let baseVC = vcModel else { return }
          imagePicker.sendEvent(\.presentOn, baseVC)
       //
+      case .presentTagsSelector(let tags):
+
+         bottomPopupPresenter.send(\.present, (model: tagList, onView: vcModel?.view.rootSuperview))
+
+         tagList.setState(.selectTags(tags))
+         tagList.on(\.exit, self) {
+            $0.bottomPopupPresenter.send(\.hide)
+         }
+         tagList.closeButton.on(\.didTap, self) {
+            $0.bottomPopupPresenter.send(\.hide)
+         }
+
       case .updateSelectedTags(let tags):
          if tags.isEmpty {
             viewModels.options.addTagParamModel.optionModel.setState(.clear)
@@ -298,7 +305,9 @@ extension TransactScene: StateMachine {
             viewModels.options.addTagParamModel.optionModel.setState(.selected(mapTagsToModels(tags)))
          }
          tagList.saveButton.set(Design.state.button.default)
+
       }
+      
    }
 }
 
