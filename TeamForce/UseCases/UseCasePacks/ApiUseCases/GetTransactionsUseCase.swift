@@ -19,14 +19,14 @@ struct GetTransactionsUseCase: UseCaseProtocol {
             .doAsync("token")
             .onFail {
                log("No token")
-               work.fail(())
+               work.fail()
             }
             .doNext(worker: getTransactionsApiWorker)
             .onSuccess {
                work.success(result: $0)
             }
             .onFail {
-               work.fail(())
+               work.fail()
             }
       }
    }

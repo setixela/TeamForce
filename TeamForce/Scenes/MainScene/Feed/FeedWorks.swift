@@ -29,7 +29,7 @@ final class FeedWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedWorksTempStorage
          let user = work.input,
          let userName = user?.profile.tgName
       else {
-         work.fail(())
+         work.fail()
          return
       }
       Self.store.currentUserName = userName
@@ -38,10 +38,10 @@ final class FeedWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedWorksTempStorage
          .doAsync()
          .onSuccess {
             Self.store.feed = $0
-            work.success(result: ())
+            work.success()
          }
          .onFail {
-            work.fail(())
+            work.fail()
          }
    }}
 

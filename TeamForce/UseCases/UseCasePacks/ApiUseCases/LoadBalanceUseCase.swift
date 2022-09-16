@@ -17,14 +17,14 @@ struct LoadBalanceUseCase: UseCaseProtocol {
       loadToken
          .doAsync()
          .onFail {
-            work.fail(())
+            work.fail()
          }
          .doNext(worker: balanceApiModel)
          .onSuccess {
             work.success(result: $0)
          }
          .onFail {
-            work.fail(())
+            work.fail()
          }
    } }
 }

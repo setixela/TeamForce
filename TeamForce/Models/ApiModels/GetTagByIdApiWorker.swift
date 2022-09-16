@@ -12,7 +12,7 @@ final class GetTagByIdApiWorker: BaseApiWorker<RequestWithId, Tag> {
       guard
          let request = work.input
       else {
-         work.fail(())
+         work.fail()
          return
       }
       apiEngine?
@@ -25,13 +25,13 @@ final class GetTagByIdApiWorker: BaseApiWorker<RequestWithId, Tag> {
                let data = result.data,
                let tags: Tag = decoder.parse(data)
             else {
-               work.fail(())
+               work.fail()
                return
             }
             work.success(result: tags)
          }
          .catch { _ in
-            work.fail(())
+            work.fail()
          }
    }
 }

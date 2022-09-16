@@ -17,14 +17,14 @@ struct GetFeedUseCase: UseCaseProtocol {
          safeStringStorage
             .doAsync("token")
             .onFail {
-               work.fail(())
+               work.fail()
             }
             .doNext(worker: getFeedsApiWorker)
             .onSuccess {
                work.success(result: $0)
             }
             .onFail {
-               work.fail(())
+               work.fail()
             }
       }
    }

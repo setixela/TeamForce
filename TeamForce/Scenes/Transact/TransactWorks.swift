@@ -29,8 +29,8 @@ protocol TransactWorksProtocol: TempStorage {
    var addImage: Work<UIImage, UIImage> { get }
    var removeImage: Work<UIImage, Void> { get }
    //
-   var addSelectedTag: Work<Tag, Void> { get }
-   var removeSelectedTag: Work<Tag, Void> { get }
+   var enableTags: Work<Bool, Void> { get }
+   var setTags: Work<Set<Tag>, Void> { get }
    var getSelectedTags: Work<Void, Set<Tag>> { get }
 }
 
@@ -75,9 +75,9 @@ final class TransactWorks<Asset: AssetProtocol>: BaseSceneWorks<TransactWorks.Te
          .onSuccess {
             Self.store.tokens.token = $0
             Self.store.tokens.csrf = $1
-            work.success(result: ())
+            work.success()
          }.onFail {
-            work.fail(())
+            work.fail()
          }
    }.retainBy(retainer) }
 
@@ -89,7 +89,7 @@ final class TransactWorks<Asset: AssetProtocol>: BaseSceneWorks<TransactWorks.Te
             work.success(result: $0)
          }
          .onFail {
-            work.fail(())
+            work.fail()
          }
    }.retainBy(retainer) }
 
@@ -102,139 +102,116 @@ final class TransactWorks<Asset: AssetProtocol>: BaseSceneWorks<TransactWorks.Te
             work.success(result: $0)
          }
          .onFail {
-            work.fail(())
+            work.fail()
          }
 
    }.retainBy(retainer) }
 
-   var searchUser: Work<String, [FoundUser]> {
-      .init { [weak self] work in
-         let request = SearchUserRequest(
-            data: work.unsafeInput,
-            token: Self.store.tokens.token,
-            csrfToken: Self.store.tokens.csrf
-         )
+   var searchUser: Work<String, [FoundUser]> { .init { [weak self] work in
+      let request = SearchUserRequest(
+         data: work.unsafeInput,
+         token: Self.store.tokens.token,
+         csrfToken: Self.store.tokens.csrf
+      )
 
-         self?.apiUseCase.userSearch
-            .doAsync(request)
-            .onSuccess { result in
-               Self.store.foundUsers = result
-               work.success(result: result)
-            }.onFail {
-               work.fail(())
-            }
-      }
-   }
+      self?.apiUseCase.userSearch
+         .doAsync(request)
+         .onSuccess { result in
+            Self.store.foundUsers = result
+            work.success(result: result)
+         }.onFail {
+            work.fail()
+         }
+   } }
 
    var enableTags: Work<Bool, Void> { .init(retainedBy: retainer) { work in
       Self.store.isTagsEnabled = work.unsafeInput
-      work.success(result: ())
+      work.success()
+   } }
+
+   var getSelectedTags: Work<Void, Set<Tag>> { .init(retainedBy: retainer) { work in
+      work.success(result: Self.store.tags)
+   } }
+
+   var setTags: Work<Set<Tag>, Void> { .init(retainedBy: retainer) { work in
+      Self.store.tags = work.unsafeInput
+      work.success()
    }}
 
-   var addSelectedTag: Work<Tag, Void> {
-      .init(retainedBy: retainer) { work in
-         Self.store.tags.insert(work.unsafeInput)
-         work.success(result: ())
-      }
-   }
+   var sendCoins: VoidWork<(recipient: String, info: SendCoinRequest)> { .init { [weak self] work in
+      let request = SendCoinRequest(
+         token: Self.store.tokens.token,
+         csrfToken: Self.store.tokens.csrf,
+         recipient: Self.store.recipientID,
+         amount: Self.store.inputAmountText,
+         reason: Self.store.inputReasonText,
+         isAnonymous: Self.store.isAnonymous,
+         photo: Self.store.images.first,
+         tags: Self.store.isTagsEnabled ? Self.store.tags.map { String($0.id) }.joined(separator: " ") : nil
+      )
 
-   var removeSelectedTag: Work<Tag, Void> {
-      .init(retainedBy: retainer) { work in
-         Self.store.tags.remove(work.unsafeInput)
-         work.success(result: ())
-      }
-   }
+      self?.apiUseCase.sendCoin
+         .doAsync(request)
+         .onSuccess {
+            let tuple = (Self.store.recipientUsername, request)
+            work.success(result: tuple)
+         }.onFail {
+            work.fail()
+         }
+   } }
 
-   var getSelectedTags: Work<Void, Set<Tag>> {
-      .init(retainedBy: retainer) { work in
-         work.success(result: Self.store.tags)
-      }
-   }
+   var getUserList: Work<Void, [FoundUser]> { .init { [weak self] work in
+      self?.apiUseCase.getUsersList
+         .doAsync()
+         .onSuccess { result in
+            Self.store.foundUsers = result
+            work.success(result: result)
+         }.onFail {
+            work.fail()
+         }
+   } }
 
-   var sendCoins: VoidWork<(recipient: String, info: SendCoinRequest)> {
-      .init { [weak self] work in
-         let request = SendCoinRequest(
-            token: Self.store.tokens.token,
-            csrfToken: Self.store.tokens.csrf,
-            recipient: Self.store.recipientID,
-            amount: Self.store.inputAmountText,
-            reason: Self.store.inputReasonText,
-            isAnonymous: Self.store.isAnonymous,
-            photo: Self.store.images.first,
-            tags: Self.store.isTagsEnabled ? Self.store.tags.map { String($0.id) }.joined(separator: " ") : nil
-         )
+   var mapIndexToUser: Work<Int, FoundUser> { .init { work in
 
-         self?.apiUseCase.sendCoin
-            .doAsync(request)
-            .onSuccess {
-               let tuple = (Self.store.recipientUsername, request)
-               work.success(result: tuple)
-            }.onFail {
-               work.fail(())
-            }
-      }
-   }
+      // TODO: - 2d sections mapping to 1d array error
+      let user = Self.store.foundUsers[work.unsafeInput]
 
-   var getUserList: Work<Void, [FoundUser]> {
-      .init { [weak self] work in
-         self?.apiUseCase.getUsersList
-            .doAsync()
-            .onSuccess { result in
-               Self.store.foundUsers = result
-               work.success(result: result)
-            }.onFail {
-               work.fail(())
-            }
-      }
-   }
+      Self.store.recipientUsername = user.name.string
+      Self.store.recipientID = user.userId
+      work.success(result: user)
+   } }
 
-   var mapIndexToUser: Work<Int, FoundUser> {
-      .init { work in
+   var coinInputParsing: Work<String, String> { .init { [weak self] work in
+      self?.coinInputParser.work
+         .retainBy(self?.retainer)
+         .doAsync(work.input)
+         .onSuccess {
+            Self.store.inputAmountText = $0
+            Self.store.isCorrectCoinInput = true
+            work.success(result: $0)
+         }
+         .onFail { (text: String) in
+            Self.store.inputAmountText = ""
+            Self.store.isCorrectCoinInput = false
+            work.fail(text)
+         }
+   } }
 
-         // TODO: - 2d sections mapping to 1d array error
-         let user = Self.store.foundUsers[work.unsafeInput]
-
-         Self.store.recipientUsername = user.name.string
-         Self.store.recipientID = user.userId
-         work.success(result: user)
-      }
-   }
-
-   var coinInputParsing: Work<String, String> {
-      .init { [weak self] work in
-         self?.coinInputParser.work
-            .retainBy(self?.retainer)
-            .doAsync(work.input)
-            .onSuccess {
-               Self.store.inputAmountText = $0
-               Self.store.isCorrectCoinInput = true
-               work.success(result: $0)
-            }
-            .onFail { (text: String) in
-               Self.store.inputAmountText = ""
-               Self.store.isCorrectCoinInput = false
-               work.fail(text)
-            }
-      }
-   }
-
-   var reasonInputParsing: Work<String, String> {
-      .init { [weak self] work in
-         self?.reasonInputParser.work
-            .retainBy(self?.retainer)
-            .doAsync(work.input)
-            .onSuccess {
-               Self.store.inputReasonText = $0
-               Self.store.isCorrectReasonInput = true
-               work.success(result: $0)
-            }
-            .onFail { (text: String) in
-               Self.store.inputReasonText = ""
-               Self.store.isCorrectReasonInput = false
-               work.fail(text)
-            }
-      }
-   }
+   var reasonInputParsing: Work<String, String> { .init { [weak self] work in
+      self?.reasonInputParser.work
+         .retainBy(self?.retainer)
+         .doAsync(work.input)
+         .onSuccess {
+            Self.store.inputReasonText = $0
+            Self.store.isCorrectReasonInput = true
+            work.success(result: $0)
+         }
+         .onFail { (text: String) in
+            Self.store.inputReasonText = ""
+            Self.store.isCorrectReasonInput = false
+            work.fail(text)
+         }
+   } }
 
    lazy var reset = VoidWork<Void> { work in
       Self.store.inputAmountText = ""
@@ -245,17 +222,17 @@ final class TransactWorks<Asset: AssetProtocol>: BaseSceneWorks<TransactWorks.Te
       Self.store.images = []
       Self.store.isTagsEnabled = false
       Self.store.tags = []
-      work.success(result: ())
+      work.success()
    }
 
    lazy var anonymousOn = VoidWork<Void> { work in
       Self.store.isAnonymous = true
-      work.success(result: ())
+      work.success()
    }
 
    lazy var anonymousOff = VoidWork<Void> { work in
       Self.store.isAnonymous = false
-      work.success(result: ())
+      work.success()
    }
 
    var updateAmount: Work<(String, Bool), Void> { .init { work in
@@ -263,21 +240,21 @@ final class TransactWorks<Asset: AssetProtocol>: BaseSceneWorks<TransactWorks.Te
 
       Self.store.inputAmountText = input.0
       Self.store.isCorrectCoinInput = input.1
-      work.success(result: ())
+      work.success()
    }.retainBy(retainer) }
 
    var updateReason: Work<(String, Bool), Void> { .init { work in
       guard let input = work.input else { return }
       Self.store.inputReasonText = input.0
       Self.store.isCorrectReasonInput = input.1
-      work.success(result: ())
+      work.success()
    }.retainBy(retainer) }
 
    var isCorrectBothInputs: Work<Void, Void> { .init { work in
       if Self.store.isCorrectReasonInput, Self.store.isCorrectCoinInput {
-         work.success(result: ())
+         work.success()
       } else {
-         work.fail(())
+         work.fail()
       }
    }.retainBy(retainer) }
 }
@@ -289,6 +266,6 @@ extension TransactWorks {
    } }
    var removeImage: Work<UIImage, Void> { .init { work in
       Self.store.images = Self.store.images.filter { $0 !== work.unsafeInput }
-      work.success(result: ())
+      work.success()
    } }
 }

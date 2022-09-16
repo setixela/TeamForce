@@ -72,8 +72,7 @@ final class TransactScene<Asset: AssetProtocol>: ModalDoubleStackModel<Asset>, S
          anonymousSetOn: viewModels.options.anonimParamModel.switcher.on(\.turnedOn),
          enableTags: viewModels.options.addTagParamModel.on(\.turnedOn),
          disableTags: viewModels.options.addTagParamModel.on(\.turnedOff),
-         addTag: tagList.on(\.didSelectTag),
-         removeTag: tagList.on(\.didDeselectTag),
+         setTags: tagList.on(\.saveButtonDidTap),
          cancelButtonDidTap: closeButton.on(\.didTap)
       )
    )
@@ -137,6 +136,7 @@ final class TransactScene<Asset: AssetProtocol>: ModalDoubleStackModel<Asset>, S
       }
       viewModels.options.addTagParamModel.optionModel.on(\.didTap, self) { slf in
          slf.bottomPopupPresenter.send(\.present, (model: slf.tagList, onView: slf.vcModel?.view.rootSuperview))
+         slf.tagList.saveButton.set(Design.state.button.inactive)
          slf.tagList.closeButton.on(\.didTap) {
             slf.bottomPopupPresenter.send(\.hide)
          }
@@ -297,6 +297,7 @@ extension TransactScene: StateMachine {
          } else {
             viewModels.options.addTagParamModel.optionModel.setState(.selected(mapTagsToModels(tags)))
          }
+         tagList.saveButton.set(Design.state.button.default)
       }
    }
 }
@@ -344,6 +345,7 @@ private extension TransactScene {
          .placeholder(Design.Text.title.reasonPlaceholder)
       viewModels.options.addTagParamModel.labelSwitcher.switcher.applyState(.turnOff)
       viewModels.options.addTagParamModel.optionModel.setState(.clear)
+      viewModels.options.addTagParamModel.optionModel.hidden(true)
       tagList.setState(.clear)
    }
 

@@ -16,7 +16,7 @@ final class GetPeriodsFromDateApiWorker: BaseApiWorker<RequestWithDate, [Period]
          let cookie = HTTPCookieStorage.shared.cookies?.first(where: { $0.name == cookieName })
       else {
          print("No csrf cookie")
-         work.fail(())
+         work.fail()
          return
       }
       apiEngine?
@@ -30,13 +30,13 @@ final class GetPeriodsFromDateApiWorker: BaseApiWorker<RequestWithDate, [Period]
                let data = result.data,
                let periods: [Period] = decoder.parse(data)
             else {
-               work.fail(())
+               work.fail()
                return
             }
             work.success(result: periods)
          }
          .catch { _ in
-            work.fail(())
+            work.fail()
          }
    }
 }

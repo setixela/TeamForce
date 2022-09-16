@@ -33,7 +33,7 @@ final class SendCoinApiWorker: BaseApiWorker<SendCoinRequest, Void> {
          let cookie = HTTPCookieStorage.shared.cookies?.first(where: { $0.name == cookieName })
       else {
          print("No csrf cookie")
-         work.fail(())
+         work.fail()
          return
       }
 
@@ -61,21 +61,21 @@ final class SendCoinApiWorker: BaseApiWorker<SendCoinRequest, Void> {
                   if response.statusCode == 400 {
                      print("400 happened")
                      guard let data = result.data else {
-                        work.fail(())
+                        work.fail()
                         return
                      }
 
                      let errorArray = try JSONSerialization.jsonObject(with: data) as? [String]
 
-                     work.fail(())
+                     work.fail()
                      return
                   }
                }
-               work.success(result: ())
+               work.success()
             }
             .catch { error in
                print("error coin sending: \(error)")
-               work.fail(())
+               work.fail()
             }
       } else {
          apiEngine?
@@ -90,7 +90,7 @@ final class SendCoinApiWorker: BaseApiWorker<SendCoinRequest, Void> {
                   if response.statusCode == 400 {
                      print("400 happened")
                      guard let data = result.data else {
-                        work.fail(())
+                        work.fail()
                         return
                      }
 
@@ -100,11 +100,11 @@ final class SendCoinApiWorker: BaseApiWorker<SendCoinRequest, Void> {
                      return
                   }
                }
-               work.success(result: ())
+               work.success()
             }
             .catch { error in
                print("error coin sending: \(error)")
-               work.fail(())
+               work.fail()
             }
       }
    }

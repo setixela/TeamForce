@@ -17,7 +17,7 @@ struct UpdateProfileImageUseCase: UseCaseProtocol {
          safeStringStorage
             .doAsync("token")
             .onFail {
-               work.fail(())
+               work.fail()
             }
             .doMap {
                guard
@@ -28,10 +28,10 @@ struct UpdateProfileImageUseCase: UseCaseProtocol {
             }
             .doNext(worker: updateProfileImageApiWorker)
             .onSuccess {
-               work.success(result: ())
+               work.success()
             }
             .onFail {
-               work.fail(())
+               work.fail()
             }
       }
    }

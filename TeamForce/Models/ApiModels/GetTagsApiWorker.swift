@@ -38,13 +38,13 @@ final class GetTagsApiWorker: BaseApiWorker<String, [Tag]> {
                let data = result.data,
                let tags: [Tag] = decoder.parse(data)
             else {
-               work.fail(())
+               work.fail()
                return
             }
             work.success(result: tags)
          }
          .catch { _ in
-            work.fail(())
+            work.fail()
          }
    }
 }

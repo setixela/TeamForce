@@ -17,7 +17,7 @@ struct CancelTransactionByIdUseCase: UseCaseProtocol {
          safeStringStorage
             .doAsync("token") // TODO: - Token key input
             .onFail {
-               work.fail(()) // TODO: - Error
+               work.fail() // TODO: - Error
             }
             .doMap {
                guard let id = work.input else { return nil }
@@ -25,10 +25,10 @@ struct CancelTransactionByIdUseCase: UseCaseProtocol {
             }
             .doNext(worker: cancelTransactionByIdApiWorker)
             .onSuccess {
-               work.success(result: ())
+               work.success()
             }
             .onFail {
-               work.fail(()) // TODO: - Error
+               work.fail() // TODO: - Error
             }
       }
    }

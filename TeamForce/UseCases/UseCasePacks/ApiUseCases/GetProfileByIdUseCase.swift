@@ -16,7 +16,7 @@ struct GetProfileByIdUseCase: UseCaseProtocol {
          safeStringStorage
             .doAsync("token")
             .onFail {
-               work.fail(())
+               work.fail()
             }
             .doMap {
                print("input")
@@ -30,7 +30,7 @@ struct GetProfileByIdUseCase: UseCaseProtocol {
                work.success(result: $0)
             }
             .onFail {
-               work.fail(())
+               work.fail()
             }
       }
       

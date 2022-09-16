@@ -22,8 +22,8 @@ struct TransactScenarioEvents {
 
    let enableTags: VoidWorkVoid
    let disableTags: VoidWorkVoid
-   let addTag: VoidWork<Tag>
-   let removeTag: VoidWork<Tag>
+
+   let setTags: VoidWork<Set<Tag>>
 
    let cancelButtonDidTap: VoidWorkVoid
 }
@@ -123,20 +123,6 @@ final class TransactScenario<Asset: AssetProtocol>:
       events.cancelButtonDidTap
          .onSuccess(setState, .cancelButtonPressed)
 
-      events.addTag
-         .doNext(work: works.addSelectedTag)
-         .doNext(work: works.getSelectedTags)
-         .onSuccess(setState) {
-            .updateSelectedTags($0)
-         }
-
-      events.removeTag
-         .doNext(work: works.removeSelectedTag)
-         .doNext(work: works.getSelectedTags)
-         .onSuccess(setState) {
-            .updateSelectedTags($0)
-         }
-
       events.enableTags
          .doInput(true)
          .doNext(work: works.enableTags)
@@ -144,5 +130,12 @@ final class TransactScenario<Asset: AssetProtocol>:
       events.disableTags
          .doInput(false)
          .doNext(work: works.enableTags)
+
+      events.setTags
+         .doNext(work: works.setTags)
+         .doNext(work: works.getSelectedTags)
+         .onSuccess(setState) {
+            .updateSelectedTags($0)
+         }
    }
 }

@@ -42,15 +42,12 @@ final class HistoryCellModel<Design: DSP>:
             .setAll { sumText, cancelButton in
                sumText
                   .set(Design.state.label.body3)
-                  .padTop(8)
-                  .padBottom(6)
                   .alignment(.right)
                cancelButton
                   .set(.tapGesturing)
                   .size(.square(25))
                   .hidden(false)
-                  .padding(.left(8))
-                  .padding(.right(-8))
+                  .padding(.init(top: 7, left: 6, bottom: -7, right: -6))
                cancelButton.view.startTapGesture()
                cancelButton.view.on(\.didTap) { [self] in
                   send(\.cancelButtonPressed)

@@ -85,13 +85,13 @@ final class GetFeedsApiWorker: BaseApiWorker<String, [Feed]> {
                let data = result.data,
                let feeds: [Feed] = decoder.parse(data)
             else {
-               work.fail(())
+               work.fail()
                return
             }
             work.success(result: feeds)
          }
          .catch { _ in
-            work.fail(())
+            work.fail()
          }
    }
 }

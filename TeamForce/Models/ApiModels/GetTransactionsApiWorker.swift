@@ -121,13 +121,13 @@ final class GetTransactionsApiWorker: BaseApiWorker<String, [Transaction]> {
                let data = result.data,
                let transactions: [Transaction] = decoder.parse(data)
             else {
-               work.fail(())
+               work.fail()
                return
             }
             work.success(result: transactions)
          }
          .catch { _ in
-            work.fail(())
+            work.fail()
          }
    }
 }

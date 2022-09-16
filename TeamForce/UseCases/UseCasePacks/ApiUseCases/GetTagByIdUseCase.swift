@@ -19,7 +19,7 @@ struct GetTagByIdUseCase: UseCaseProtocol {
                work.success(result: $0)
             }
             .onFail {
-               work.fail(())
+               work.fail()
             }
       }
    }

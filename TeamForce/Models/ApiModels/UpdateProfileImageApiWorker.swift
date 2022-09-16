@@ -24,7 +24,7 @@ final class UpdateProfileImageApiWorker: BaseApiWorker<UpdateImageRequest, Void>
          let cookie = HTTPCookieStorage.shared.cookies?.first(where: { $0.name == cookieName })
       else {
          print("No csrf cookie")
-         work.fail(())
+         work.fail()
          return
       }
       let endpoint = TeamForceEndpoints.UpdateProfileImage(
@@ -37,10 +37,10 @@ final class UpdateProfileImageApiWorker: BaseApiWorker<UpdateImageRequest, Void>
          .processWithImage(endpoint: endpoint,
                            image: updateImageRequest.photo)
          .done { result in
-            work.success(result: ())
+            work.success()
          }
          .catch { _ in
-            work.fail(())
+            work.fail()
          }
    }
 }

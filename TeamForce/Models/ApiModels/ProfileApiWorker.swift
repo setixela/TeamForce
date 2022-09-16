@@ -23,13 +23,13 @@ final class ProfileApiWorker: BaseApiWorker<TokenRequest, UserData> {
                     let data = result.data,
                     let user: UserData = decoder.parse(data)
                 else {
-                    work.fail(())
+                    work.fail()
                     return
                 }
                 work.success(result: user)
             }
             .catch { error in
-                work.fail(())
+                work.fail()
             }
     }
 }

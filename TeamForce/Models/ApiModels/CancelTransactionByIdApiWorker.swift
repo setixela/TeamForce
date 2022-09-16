@@ -17,7 +17,7 @@ final class CancelTransactionByIdApiWorker: BaseApiWorker<RequestWithId, Void> {
          let cookie = HTTPCookieStorage.shared.cookies?.first(where: { $0.name == cookieName })
       else {
          print("No csrf cookie")
-         work.fail(())
+         work.fail()
          return
       }
       let endpoint = TeamForceEndpoints.CancelTransaction(
@@ -30,10 +30,10 @@ final class CancelTransactionByIdApiWorker: BaseApiWorker<RequestWithId, Void> {
       apiEngine?
          .processPUT(endpoint: endpoint)
          .done { result in
-            work.success(result: ())
+            work.success()
          }
          .catch { _ in
-            work.fail(())
+            work.fail()
          }
    }
 }

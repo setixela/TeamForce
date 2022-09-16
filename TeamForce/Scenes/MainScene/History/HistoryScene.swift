@@ -37,7 +37,7 @@ final class HistoryScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>
 
    private lazy var activityIndicator = ActivityIndicator<Design>()
    private lazy var errorBlock = CommonErrorBlock<Design>()
-   //private lazy var presenter = HistoryPresenters<Design>()
+
    // MARK: - Start
 
    override func start() {
@@ -131,6 +131,7 @@ extension HistoryScene: StateMachine {
                                        navType: .presentModally(.automatic),
                                        payload: value)
       case .cancelTransaction:
+         scenario.start()
          print("transaction cancelled")
       }
    }

@@ -16,7 +16,7 @@ struct UpdateContactUseCase: UseCaseProtocol {
          safeStringStorage
             .doAsync("token")
             .onFail {
-               work.fail(())
+               work.fail()
             }
             .doMap {
                guard let input = work.input else { return nil }
@@ -27,7 +27,7 @@ struct UpdateContactUseCase: UseCaseProtocol {
                work.success(result: $0)
             }
             .onFail {
-               work.fail(())
+               work.fail()
             }
       }
    }

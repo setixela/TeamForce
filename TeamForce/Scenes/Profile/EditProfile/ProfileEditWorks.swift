@@ -54,7 +54,7 @@ final class ProfileEditWorks<Asset: AssetProtocol>: BaseSceneWorks<ProfileEditWo
             work.success(result: $0)
          }
          .onFail {
-            work.fail(())
+            work.fail()
          }
 
    }.retainBy(retainer) }
@@ -68,7 +68,7 @@ final class ProfileEditWorks<Asset: AssetProtocol>: BaseSceneWorks<ProfileEditWo
                work.success(result: $0)
             }
             .onFail {
-               work.fail(())
+               work.fail()
             }
       }.retainBy(retainer)
    }
@@ -84,7 +84,7 @@ final class ProfileEditWorks<Asset: AssetProtocol>: BaseSceneWorks<ProfileEditWo
             }
             .onFail {
                print("failed to create few contacts")
-               work.fail(())
+               work.fail()
             }
       }.retainBy(retainer)
    }
@@ -98,7 +98,7 @@ final class ProfileEditWorks<Asset: AssetProtocol>: BaseSceneWorks<ProfileEditWo
                work.success(result: $0)
             }
             .onFail {
-               work.fail(())
+               work.fail()
             }
       }.retainBy(retainer)
    }
@@ -108,7 +108,7 @@ final class ProfileEditWorks<Asset: AssetProtocol>: BaseSceneWorks<ProfileEditWo
          guard let input = work.input else { return }
 
          Self.store.contacts = input
-         work.success(result: ())
+         work.success()
       }.retainBy(retainer)
    }
 
@@ -121,30 +121,30 @@ final class ProfileEditWorks<Asset: AssetProtocol>: BaseSceneWorks<ProfileEditWo
          .doAsync(updateProfileRequest)
          .onSuccess {
             if fewContactsRequest == nil && avatarRequest == nil {
-               work.success(result: ())
+               work.success()
             }
          }
          .onFail {
-            work.fail(())
+            work.fail()
          }
          .doMap { fewContactsRequest }
          .doNext(work: self.createFewContacts)
          .onSuccess {
             if avatarRequest == nil {
-               work.success(result: ())
+               work.success()
             }
             
          }
          .onFail {
-            work.fail(())
+            work.fail()
          }
          .doMap { avatarRequest }
          .doNext(work: self.updateAvatar)
          .onSuccess {
-            work.success(result: ())
+            work.success()
          }
          .onFail {
-            work.fail(())
+            work.fail()
          }
    }
 }

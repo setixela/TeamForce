@@ -23,7 +23,7 @@ final class UpdateContactApiWorker: BaseApiWorker<UpdateContactRequest, Void> {
          let cookie = HTTPCookieStorage.shared.cookies?.first(where: { $0.name == cookieName })
       else {
          print("No csrf cookie")
-         work.fail(())
+         work.fail()
          return
       }
       let endpoint = TeamForceEndpoints.UpdateContact(
@@ -39,10 +39,10 @@ final class UpdateContactApiWorker: BaseApiWorker<UpdateContactRequest, Void> {
 //            let str = String(decoding: result.data!, as: UTF8.self)
 //            print("result body \(str)")
 //            print("response status \(result.response)")
-            work.success(result: ())
+            work.success()
          }
          .catch { _ in
-            work.fail(())
+            work.fail()
          }
    }
 }

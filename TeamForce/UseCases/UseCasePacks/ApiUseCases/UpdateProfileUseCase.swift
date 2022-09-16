@@ -17,7 +17,7 @@ struct UpdateProfileUseCase: UseCaseProtocol {
          safeStringStorage
             .doAsync("token")
             .onFail {
-               work.fail(())
+               work.fail()
             }
             .doMap {
                guard
@@ -30,10 +30,10 @@ struct UpdateProfileUseCase: UseCaseProtocol {
             }
             .doNext(worker: updateProfileApiWorker)
             .onSuccess {
-               work.success(result: ())
+               work.success()
             }
             .onFail {
-               work.fail(())
+               work.fail()
             }
       }
    }

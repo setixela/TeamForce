@@ -41,7 +41,7 @@ final class HistoryWorks<Asset: AssetProtocol>: BaseSceneWorks<HistoryWorks.Temp
                work.success(result: $0)
             }
             .onFail {
-               work.fail(())
+               work.fail()
             }
       }
       .retainBy(retainer)
@@ -56,7 +56,7 @@ final class HistoryWorks<Asset: AssetProtocol>: BaseSceneWorks<HistoryWorks.Temp
                work.success(result: $0)
             }
             .onFail {
-               work.fail(())
+               work.fail()
             }
       }
       .retainBy(retainer)
@@ -70,7 +70,7 @@ final class HistoryWorks<Asset: AssetProtocol>: BaseSceneWorks<HistoryWorks.Temp
                work.success(result: $0)
             }
             .onFail {
-               work.fail(())
+               work.fail()
             }
       }
       .retainBy(retainer)
@@ -89,7 +89,7 @@ final class HistoryWorks<Asset: AssetProtocol>: BaseSceneWorks<HistoryWorks.Temp
             let transaction = filtered[index]
             work.success(result: transaction)
          } else {
-            work.fail(())
+            work.fail()
          }
       }
       .retainBy(retainer)
@@ -101,10 +101,10 @@ final class HistoryWorks<Asset: AssetProtocol>: BaseSceneWorks<HistoryWorks.Temp
             .doAsync()
             .onSuccess {
                Self.store.currentUser = $0.profile.tgName
-               work.success(result: ())
+               work.success()
             }
             .onFail {
-               work.fail(())
+               work.fail()
             }
       }
       .retainBy(retainer)
@@ -149,10 +149,10 @@ final class HistoryWorks<Asset: AssetProtocol>: BaseSceneWorks<HistoryWorks.Temp
             .doAsync(work.input)
             .onSuccess {
                print("cancelled transaction successfully")
-               work.success(result: ())
+               work.success()
             }
             .onFail {
-               work.fail(())
+               work.fail()
             }
          
       }.retainBy(retainer)

@@ -17,14 +17,14 @@ struct GetUsersListUseCase: UseCaseProtocol {
          safeStringStorage
             .doAsync("token")
             .onFail {
-               work.fail(())
+               work.fail()
             }
             .doNext(worker: getUsersListApiWorker)
             .onSuccess {
                work.success(result: $0)
             }
             .onFail {
-               work.fail(())
+               work.fail()
             }
       }
    }

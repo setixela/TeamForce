@@ -42,7 +42,7 @@ final class LoginWorks<Asset: AssetProtocol>: BaseSceneWorks<LoginWorks.Temp, As
             work.success(result: $0)
          }
          .onFail {
-            work.fail(())
+            work.fail()
          }
    }}
 
@@ -52,7 +52,7 @@ final class LoginWorks<Asset: AssetProtocol>: BaseSceneWorks<LoginWorks.Temp, As
          let inputCode = Self.store.smsCodeInput,
          let authResult = Self.store.authResult
       else {
-         work.fail(())
+         work.fail()
          return
       }
 
@@ -67,7 +67,7 @@ final class LoginWorks<Asset: AssetProtocol>: BaseSceneWorks<LoginWorks.Temp, As
             work.success(result: $0)
          }
          .onFail {
-            work.fail(())
+            work.fail()
          }
    }}
 
@@ -107,6 +107,6 @@ final class LoginWorks<Asset: AssetProtocol>: BaseSceneWorks<LoginWorks.Temp, As
 
       UserDefaults.standard.setIsLoggedIn(value: true)
 
-      work.success(result: ())
+      work.success()
    }}
 }

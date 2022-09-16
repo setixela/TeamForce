@@ -20,7 +20,7 @@ struct ApiEngineResult {
 
 final class ApiEngine: ApiEngineProtocol {
    func process(endpoint: EndpointProtocol) -> Promise<ApiEngineResult> {
-      return Promise { seal in
+      Promise { seal in
          guard let url = URL(string: endpoint.endPoint) else {
             seal.reject(ApiEngineError.unknown)
             return
@@ -48,7 +48,6 @@ final class ApiEngine: ApiEngineProtocol {
                .joined(separator: "&")
                .data(using: .utf8)
          }
-         
 
          log(request, "REQUEST")
 
@@ -57,7 +56,7 @@ final class ApiEngine: ApiEngineProtocol {
    }
 
    func processWithImage(endpoint: EndpointProtocol, image: UIImage) -> Promise<ApiEngineResult> {
-      return Promise { seal in
+      Promise { seal in
          guard let url = URL(string: endpoint.endPoint) else {
             seal.reject(ApiEngineError.unknown)
             return
@@ -89,14 +88,14 @@ final class ApiEngine: ApiEngineProtocol {
          start(request: request, seal: seal)
       }
    }
-   
+
    func processPUT(endpoint: EndpointProtocol) -> Promise<ApiEngineResult> {
-      return Promise { seal in
+      Promise { seal in
          guard let url = URL(string: endpoint.endPoint) else {
             seal.reject(ApiEngineError.unknown)
             return
          }
-         
+
          let boundary = UUID().uuidString
 
          let method = endpoint.method
@@ -150,8 +149,8 @@ final class ApiEngine: ApiEngineProtocol {
 
          guard
             let httpResponse = apiResult.response as? HTTPURLResponse,
-            case 200 ... 299 = httpResponse.statusCode else
-         {
+            case 200 ... 299 = httpResponse.statusCode
+         else {
             seal.reject(ApiEngineError.unknown)
             return
          }
@@ -166,8 +165,8 @@ final class ApiEngine: ApiEngineProtocol {
       let lineBreak = "\r\n"
       var body = Data()
 
-      if let parameters = params {
-         for (key, value) in parameters {
+      if let params {
+         for (key, value) in params {
             body.append("--\(boundary + lineBreak)")
             body.append("Content-Disposition: form-data; name=\"\(key)\"\(lineBreak + lineBreak)")
             // body.append("\(value) + lineBreak)")
@@ -177,7 +176,7 @@ final class ApiEngine: ApiEngineProtocol {
          }
       }
 
-      if let media = media {
+      if let media {
          for photo in media {
             body.append("--\(boundary + lineBreak)")
             body.append("Content-Disposition: form-data; name=\"\(photo.key)\"; filename=\"\(photo.fileName)\"\(lineBreak)")
@@ -195,7 +194,7 @@ final class ApiEngine: ApiEngineProtocol {
 
 extension UIImage {
    func resized(to size: CGSize) -> UIImage {
-      return UIGraphicsImageRenderer(size: size).image { _ in
+      UIGraphicsImageRenderer(size: size).image { _ in
          draw(in: CGRect(origin: .zero, size: size))
       }
    }

@@ -12,7 +12,7 @@ final class GetProfileByIdApiWorker: BaseApiWorker<RequestWithId, UserData> {
       guard
          let request = work.input
       else {
-         work.fail(())
+         work.fail()
          return
       }
       apiEngine?
@@ -25,13 +25,13 @@ final class GetProfileByIdApiWorker: BaseApiWorker<RequestWithId, UserData> {
                let data = result.data,
                let profile: UserData = decoder.parse(data)
             else {
-               work.fail(())
+               work.fail()
                return
             }
             work.success(result: profile)
          }
          .catch { _ in
-            work.fail(())
+            work.fail()
          }
    }
 }

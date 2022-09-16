@@ -140,7 +140,7 @@ final class AuthApiWorker: BaseApiWorker<String, AuthResult> {
             guard
                let xCode = result.response?.headerValueFor("X-Code")
             else {
-               work.fail(())
+               work.fail()
                return
             }
             let account: Account?
@@ -160,7 +160,7 @@ final class AuthApiWorker: BaseApiWorker<String, AuthResult> {
             work.success(result: AuthResult(xId: xId, xCode: xCode, account: account))
          }
          .catch { _ in
-            work.fail(())
+            work.fail()
          }
    }
 }
