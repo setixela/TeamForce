@@ -8,9 +8,16 @@
 import ReactiveWorks
 
 final class TagCell<Design: DSP>: IconTitleX, Designable {
-   private let badgeImage = ImageViewModel()
+   private lazy var outline = ViewModel()
+      .backColor(Design.color.transparent)
+      .borderWidth(2)
+      .borderColor(Design.color.iconBrand)
+      .cornerRadius(50 / 2)
+      .hidden(true)
+
+   private lazy var badgeImage = ImageViewModel()
       .size(.square(24))
-//      .image(Design.icon.tablerCircleCheck)
+      .image(Design.icon.tablerCircleCheck)
       .backColor(Design.color.background)
       .imageTintColor(Design.color.iconBrand)
       .cornerRadius(24 / 2)
@@ -22,13 +29,28 @@ final class TagCell<Design: DSP>: IconTitleX, Designable {
       backColor(Design.color.background)
       label.set(Design.state.label.body1)
 
+      icon
+         .size(.square(50))
+         .cornerRadius(50 / 2)
+         .backColor(Design.color.backgroundInfoSecondary)
+         .contentMode(.scaleAspectFit)
+
       icon.view.clipsToBounds = false
-      icon.view.layer.shouldRasterize = true
-      icon.addModel(badgeImage) {
-         $0
-            .constSquare(size: 24)
-            .fitToBottomRight($1)
-      }
+      icon.view.layer.masksToBounds = false
+
+      icon
+         .addModel(outline) {
+            $0
+               .fitToView($1)
+         }
+         .addModel(badgeImage) {
+            $0
+               .constSquare(size: 24)
+               .fitToBottomRight($1, offset: -4, sideOffset: -4)
+         }
+
+      badgeImage.view.clipsToBounds = false
+      badgeImage.view.layer.masksToBounds = false
    }
 }
 
@@ -36,14 +58,12 @@ extension TagCell: StateMachine {
    func setState(_ state: SelectState) {
       switch state {
       case .none:
-         icon.borderWidth(0)
-         icon.borderColor(Design.color.transparent)
+         icon.imageTintColor(Design.color.iconBrand)
          badgeImage.hidden(true)
+         outline.hidden(true)
       case .selected:
-
-         icon.borderWidth(2)
-         icon.borderColor(Design.color.iconBrand)
-
+         icon.imageTintColor(Design.color.iconContrast)
+         outline.hidden(false)
          badgeImage.hidden(false)
       }
    }

@@ -95,16 +95,11 @@ final class TagList<Asset: AssetProtocol>: ModalDoubleStackModel<Asset> {
       let iconLabel = TagCell<Design>()
          .setAll { icon, label in
             icon
-               .size(.square(50))
-               .cornerRadius(50 / 2)
-               .backColor(Design.color.backgroundInfoSecondary)
-               .contentMode(.scaleAspectFit)
                .image(Design.icon.tablerDiamond.withInset(.outline(5)))
                .imageTintColor(Design.color.iconBrand)
             label
                .padLeft(16)
                .text(tag.name.string)
-               .backColor(Design.color.background)
                .height(70)
          }
          .alignment(.center)

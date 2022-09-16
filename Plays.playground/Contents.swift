@@ -2,11 +2,8 @@
 
 import PlaygroundSupport
 import ReactiveWorks
-import UIKit
 @testable import TeamForce
-
-typealias Design = ProductionAsset.Design
-typealias Text = ProductionAsset.Design.Text
+import UIKit
 
 func example(_ name: String = "", action: () -> Void) {
    print("\n--- Example \(name):")
@@ -25,9 +22,30 @@ if true {
    class VC: UIViewController {
       override func loadView() {
 //         view = scene.makeMainView()
-//         view = UIView()
+         view = UIView()
+
+         let subview = UIView()
+         subview.backgroundColor = .red
+         subview.frame = .init(x: 100, y: 100, width: 100, height: 100)
+         subview.layer.borderColor = UIColor.black.cgColor
+         subview.layer.borderWidth = 3
+         subview.layer.zPosition = -1
+
+
+         let v2 = UIView()
+         let v3 = UIView()
+         v3.frame = .init(x: -10, y: -10, width: 30, height: 30)
+         v2.backgroundColor = .lightGray
+         v2.frame = .init(x: -10, y: -10, width: 30, height: 30)
+       //  v2.layer.masksToBounds = true
+       //  v2.layer.mask = v3.layer
+
+         subview.addSubview(v2)
+      //   subview.addSubview(v3)
 
 //         view = model.uiView
+
+         view.addSubview(subview)
       }
    }
 
@@ -37,48 +55,5 @@ if true {
    PlaygroundPage.current.needsIndefiniteExecution = true
 }
 
-// let scene = MainScene<ProductionAsset>()
 
-let model = TagCell<Design>()
-//
-final class TagCell<Design: DesignProtocol>: IconTitleX, Designable {
-//   private let badgeImage = ImageViewModel()
-//      .size(.square(24))
-//      //      .image(Design.icon.tablerCircleCheck)
-//      .backColor(Design.color.background)
-//      .imageTintColor(Design.color.iconBrand)
-//      .cornerRadius(24 / 2)
-//      .hidden(true)
-//
-//   override func start() {
-//      super.start()
-//
-//      backColor(Design.color.background)
-//      label.set(Design.state.label.body1)
-//
-//      icon.view.clipsToBounds = false
-//      icon.view.layer.shouldRasterize = true
-//      icon.addModel(badgeImage) {
-//         $0
-//            .constSquare(size: 24)
-//            .fitToBottomRight($1)
-//      }
-//   }
-}
 
-//extension TagCell: StateMachine {
-//   func setState(_ state: SelectState) {
-//      switch state {
-//      case .none:
-//         icon.borderWidth(0)
-//         icon.borderColor(Design.color.transparent)
-//         badgeImage.hidden(true)
-//      case .selected:
-//
-//         icon.borderWidth(2)
-//         icon.borderColor(Design.color.iconBrand)
-//
-//         badgeImage.hidden(false)
-//      }
-//   }
-//}
