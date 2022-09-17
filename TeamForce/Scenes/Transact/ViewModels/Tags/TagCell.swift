@@ -7,6 +7,11 @@
 
 import ReactiveWorks
 
+enum SelectState {
+   case none
+   case selected
+}
+
 final class TagCell<Design: DSP>: IconTitleX, Designable {
    private lazy var outline = ViewModel()
       .backColor(Design.color.transparent)

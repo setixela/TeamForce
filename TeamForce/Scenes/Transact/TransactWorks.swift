@@ -32,6 +32,7 @@ protocol TransactWorksProtocol: TempStorage {
    var enableTags: Work<Bool, Void> { get }
    var setTags: Work<Set<Tag>, Void> { get }
    var getSelectedTags: Work<Void, Set<Tag>> { get }
+   var removeTag: Work<Tag, Void> { get }
 }
 
 // Transact Works - (если нужно хранилище временное, то наследуемся от BaseSceneWorks)
@@ -137,6 +138,11 @@ final class TransactWorks<Asset: AssetProtocol>: BaseSceneWorks<TransactWorks.Te
       Self.store.tags = work.unsafeInput
       work.success()
    }}
+
+   var removeTag: Work<Tag, Void> { .init(retainedBy: retainer) { work in
+      Self.store.tags.remove(work.unsafeInput)
+      work.success()
+   } }
 
    var sendCoins: VoidWork<(recipient: String, info: SendCoinRequest)> { .init { [weak self] work in
       let request = SendCoinRequest(

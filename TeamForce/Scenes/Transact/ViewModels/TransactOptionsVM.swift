@@ -11,7 +11,7 @@ final class TransactOptionsVM<Design: DSP>: BaseViewModel<StackViewExtended>, De
    typealias State = StackState
    //
    lazy var anonimParamModel = LabelSwitcherXDT<Design>.switcherWith(text: "Анонимно")
-   lazy var addTagParamModel = SwitcherBox<SelectTagButton<Design>, Design>()
+   lazy var tagsPanelSwitcher = SwitcherBox<TagsOptionsPanel<Design>, Design>()
       .setAll { switcher, option in
          switcher.label.text("Добавить ценность")
          option.button.label.text("Выберите ценность")
@@ -28,7 +28,7 @@ final class TransactOptionsVM<Design: DSP>: BaseViewModel<StackViewExtended>, De
    override func start() {
       arrangedModels([
          anonimParamModel,
-         addTagParamModel
+         tagsPanelSwitcher
       ])
    }
 }

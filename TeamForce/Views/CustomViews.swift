@@ -122,7 +122,10 @@ final class PaddingImageView: UIImageView, Marginable, AlamoLoader {
    }
 
    func startTapGesture() {
-      addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.didTap)))
+      let gesture = UITapGestureRecognizer(target: self, action: #selector(self.didTap))
+      gesture.cancelsTouchesInView = true
+      addGestureRecognizer(gesture)
+      isUserInteractionEnabled = true
    }
 
    @objc private func didTap() {
@@ -157,7 +160,9 @@ final class StackViewExtended: UIStackView, Eventable {
 
    var didTapClosure: VoidClosure? {
       didSet {
-         addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.didTap)))
+         let gesture = UITapGestureRecognizer(target: self, action: #selector(self.didTap))
+         gesture.cancelsTouchesInView = false
+         addGestureRecognizer(gesture)
       }
    }
 

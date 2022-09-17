@@ -138,7 +138,7 @@
 		19AE3AF22869230C00A0C6E4 /* AuthApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19AE3AF12869230C00A0C6E4 /* AuthApiWorker.swift */; };
 		19B2C5D428B7D37A00E7B47D /* Shadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B2C5D328B7D37A00E7B47D /* Shadow.swift */; };
 		19B39E5928D341B900BB2C77 /* TagList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B39E5828D341B900BB2C77 /* TagList.swift */; };
-		19B39E5B28D3433400BB2C77 /* SelectTagButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B39E5A28D3433300BB2C77 /* SelectTagButton.swift */; };
+		19B39E5B28D3433400BB2C77 /* TagsOptionsPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B39E5A28D3433300BB2C77 /* TagsOptionsPanel.swift */; };
 		19B39E5D28D3437000BB2C77 /* TagCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B39E5C28D3437000BB2C77 /* TagCell.swift */; };
 		19B39E5F28D343B300BB2C77 /* SelectWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B39E5E28D343B300BB2C77 /* SelectWrapper.swift */; };
 		19BD2A8728ABB35C00FCC00A /* LoginScenario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19BD2A8628ABB35C00FCC00A /* LoginScenario.swift */; };
@@ -394,7 +394,7 @@
 		19AE3AF12869230C00A0C6E4 /* AuthApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthApiWorker.swift; sourceTree = "<group>"; };
 		19B2C5D328B7D37A00E7B47D /* Shadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shadow.swift; sourceTree = "<group>"; };
 		19B39E5828D341B900BB2C77 /* TagList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagList.swift; sourceTree = "<group>"; };
-		19B39E5A28D3433300BB2C77 /* SelectTagButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectTagButton.swift; sourceTree = "<group>"; };
+		19B39E5A28D3433300BB2C77 /* TagsOptionsPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsOptionsPanel.swift; sourceTree = "<group>"; };
 		19B39E5C28D3437000BB2C77 /* TagCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCell.swift; sourceTree = "<group>"; };
 		19B39E5E28D343B300BB2C77 /* SelectWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectWrapper.swift; sourceTree = "<group>"; };
 		19BD2A8628ABB35C00FCC00A /* LoginScenario.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginScenario.swift; sourceTree = "<group>"; };
@@ -1101,6 +1101,16 @@
 			path = ViewModels;
 			sourceTree = "<group>";
 		};
+		19C6117C28D6463900CBF0D4 /* Tags */ = {
+			isa = PBXGroup;
+			children = (
+				19B39E5C28D3437000BB2C77 /* TagCell.swift */,
+				19B39E5A28D3433300BB2C77 /* TagsOptionsPanel.swift */,
+				19B39E5828D341B900BB2C77 /* TagList.swift */,
+			);
+			path = Tags;
+			sourceTree = "<group>";
+		};
 		19CAB9C628B41C4E00A0A3B1 /* CommonCombos */ = {
 			isa = PBXGroup;
 			children = (
@@ -1113,14 +1123,12 @@
 		19CAB9CF28B4265000A0A3B1 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				19C6117C28D6463900CBF0D4 /* Tags */,
 				63AD437A28992045000511B9 /* TransactionStatusViewModel.swift */,
 				19A9BE7D28C2EB7D0099F8EA /* TransactSendErrorViewModel.swift */,
 				6368D8292894091B0049EEAB /* TransactInputViewModel.swift */,
 				19A9BE7B28C2E9790099F8EA /* SendCoinRecipentCell.swift */,
 				19CAB9D028B4265C00A0A3B1 /* TransactOptionsVM.swift */,
-				19B39E5C28D3437000BB2C77 /* TagCell.swift */,
-				19B39E5A28D3433300BB2C77 /* SelectTagButton.swift */,
-				19B39E5828D341B900BB2C77 /* TagList.swift */,
 				19A9BE6E28C1B2A20099F8EA /* PickedImagePanel.swift */,
 			);
 			path = ViewModels;
@@ -1540,7 +1548,7 @@
 				1985A12628B2966400B017E0 /* SegmentControlButtons.swift in Sources */,
 				19171F4D28AD663F000926B1 /* TableItemsModel.swift in Sources */,
 				197A361228BBB221006E44C1 /* FeedFilterButtons.swift in Sources */,
-				19B39E5B28D3433400BB2C77 /* SelectTagButton.swift in Sources */,
+				19B39E5B28D3433400BB2C77 /* TagsOptionsPanel.swift in Sources */,
 				190C1D16285D15FF00FB3518 /* ViewController.swift in Sources */,
 				19ECD54128623D1F001765F6 /* LabelModel.swift in Sources */,
 				196750B0286518F80019A6DE /* DoubleStacksModel.swift in Sources */,

@@ -71,9 +71,10 @@ final class TransactScene<Asset: AssetProtocol>: ModalDoubleStackModel<Asset>, S
          reasonInputChanged: viewModels.reasonTextView.onEvent(\.didEditingChanged),
          anonymousSetOff: viewModels.options.anonimParamModel.switcher.on(\.turnedOff),
          anonymousSetOn: viewModels.options.anonimParamModel.switcher.on(\.turnedOn),
-         presentTagsSelectorDidTap: viewModels.options.addTagParamModel.optionModel.on(\.didTap),
-         enableTags: viewModels.options.addTagParamModel.on(\.turnedOn),
-         disableTags: viewModels.options.addTagParamModel.on(\.turnedOff),
+         presentTagsSelectorDidTap: viewModels.options.tagsPanelSwitcher.optionModel.on(\.didTap),
+         enableTags: viewModels.options.tagsPanelSwitcher.on(\.turnedOn),
+         disableTags: viewModels.options.tagsPanelSwitcher.on(\.turnedOff),
+         removeTag: viewModels.options.tagsPanelSwitcher.optionModel.on(\.didTapTag),
          setTags: tagList.on(\.saveButtonDidTap),
          cancelButtonDidTap: closeButton.on(\.didTap)
       )
@@ -297,39 +298,14 @@ extension TransactScene: StateMachine {
          tagList.closeButton.on(\.didTap, self) {
             $0.bottomPopupPresenter.send(\.hide)
          }
-
+      //
       case .updateSelectedTags(let tags):
          if tags.isEmpty {
-            viewModels.options.addTagParamModel.optionModel.setState(.clear)
+            viewModels.options.tagsPanelSwitcher.optionModel.setState(.clear)
          } else {
-            viewModels.options.addTagParamModel.optionModel.setState(.selected(mapTagsToModels(tags)))
+            viewModels.options.tagsPanelSwitcher.optionModel.setState(.selected(tags))
          }
          tagList.saveButton.set(Design.state.button.default)
-
-      }
-      
-   }
-}
-
-private extension TransactScene {
-   func mapTagsToModels(_ tags: Set<Tag>) -> [UIViewModel] {
-      tags.map { tag in
-         let model = TitleIconX()
-            .setAll { title, icon in
-               title
-                  .set(Design.state.label.caption2)
-                  .textColor(Design.color.textBrand)
-                  .text(tag.name.string)
-
-               icon
-                  .image(Design.icon.tablerMark)
-                  .size(.init(width: 24, height: 12))
-                  .imageTintColor(Design.color.iconBrand)
-            }
-            .cornerRadius(Design.params.cornerRadiusMini)
-            .backColor(Design.color.backgroundBrandSecondary)
-            .padding(.init(top: 8, left: 8, bottom: 8, right: 0))
-         return model
       }
    }
 }
@@ -352,9 +328,9 @@ private extension TransactScene {
       viewModels.reasonTextView
          .text("")
          .placeholder(Design.Text.title.reasonPlaceholder)
-      viewModels.options.addTagParamModel.labelSwitcher.switcher.applyState(.turnOff)
-      viewModels.options.addTagParamModel.optionModel.setState(.clear)
-      viewModels.options.addTagParamModel.optionModel.hidden(true)
+      viewModels.options.tagsPanelSwitcher.labelSwitcher.switcher.applyState(.turnOff)
+      viewModels.options.tagsPanelSwitcher.optionModel.setState(.clear)
+      viewModels.options.tagsPanelSwitcher.optionModel.hidden(true)
       tagList.setState(.clear)
    }
 

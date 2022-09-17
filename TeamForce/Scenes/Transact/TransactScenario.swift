@@ -23,6 +23,7 @@ struct TransactScenarioEvents {
    let presentTagsSelectorDidTap: VoidWorkVoid
    let enableTags: VoidWorkVoid
    let disableTags: VoidWorkVoid
+   let removeTag: VoidWork<Tag>
 
    let setTags: VoidWork<Set<Tag>>
 
@@ -134,6 +135,13 @@ final class TransactScenario<Asset: AssetProtocol>:
 
       events.setTags
          .doNext(work: works.setTags)
+         .doNext(work: works.getSelectedTags)
+         .onSuccess(setState) {
+            .updateSelectedTags($0)
+         }
+
+      events.removeTag
+         .doNext(work: works.removeTag)
          .doNext(work: works.getSelectedTags)
          .onSuccess(setState) {
             .updateSelectedTags($0)

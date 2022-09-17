@@ -7,12 +7,7 @@
 
 import ReactiveWorks
 
-enum SelectState {
-   case none
-   case selected
-}
-
-final class SelectTagButton<Design: DSP>: M<ScrollViewModelX>.D<TitleIconX>.Combo, Designable {
+final class TagsOptionsPanel<Design: DSP>: M<ScrollViewModelX>.D<TitleIconX>.Combo, Designable {
    var events: EventsStore = .init()
 
    var button: TitleIconX { models.down }
@@ -56,10 +51,10 @@ final class SelectTagButton<Design: DSP>: M<ScrollViewModelX>.D<TitleIconX>.Comb
 
 enum SelectTagButtonState {
    case clear
-   case selected([UIViewModel])
+   case selected(Set<Tag>)
 }
 
-extension SelectTagButton: StateMachine {
+extension TagsOptionsPanel: StateMachine {
    func setState(_ state: SelectTagButtonState) {
       switch state {
       case .clear:
@@ -67,13 +62,44 @@ extension SelectTagButton: StateMachine {
          selectedTagsPanel.hidden(true)
          button.label.text("Выберите ценность")
       case .selected(let tags):
-         selectedTagsPanel.set(.arrangedModels(tags))
+         selectedTagsPanel.set(.arrangedModels(mapTagsToModels(tags)))
          selectedTagsPanel.hidden(false)
          button.label.text("Добавлено \(tags.count) ценности. Добавить еще?")
       }
    }
+
+   private func mapTagsToModels(_ tags: Set<Tag>) -> [UIViewModel] {
+      tags.map { tag in
+         let model = TitleIconX()
+            .setAll { title, icon in
+               title
+                  .set(Design.state.label.caption2)
+                  .textColor(Design.color.textBrand)
+                  .text(tag.name.string)
+
+               icon
+                  .image(Design.icon.tablerMark)
+                  .size(.init(width: 24, height: 12))
+                  .imageTintColor(Design.color.iconBrand)
+
+               icon.view.startTapGesture()
+               icon.view
+                  .on(\.didTap, self) {
+                     $0.send(\.didTapTag, tag)
+                  }
+            }
+            .cornerRadius(Design.params.cornerRadiusMini)
+            .backColor(Design.color.backgroundBrandSecondary)
+            .padding(.init(top: 8, left: 8, bottom: 8, right: 0))
+
+         return model
+      }
+   }
 }
 
-extension SelectTagButton: Eventable {
-   typealias Events = ButtonEvents
+extension TagsOptionsPanel: Eventable {
+   struct Events: InitProtocol {
+      var didTap: Void?
+      var didTapTag: Tag?
+   }
 }
