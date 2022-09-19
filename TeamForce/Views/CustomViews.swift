@@ -182,11 +182,14 @@ final class StackViewExtended: UIStackView, Eventable {
       var didTap: Void?
    }
 
-
+   private var isGestured = false
 
    var events: EventsStore = .init() {
       didSet {
-         startTapGestureRecognize()
+         if !isGestured {
+            startTapGestureRecognize()
+            isGestured = true
+         }
       }
    }
 
