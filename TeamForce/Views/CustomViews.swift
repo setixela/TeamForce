@@ -14,7 +14,10 @@ protocol Marginable {
 
 protocol Tappable: Eventable where Events == ButtonEvents {}
 
-@objc protocol TappableView {}
+@objc protocol TappableView {
+   func startTapGestureRecognize()
+   @objc func didTap()
+}
 
 extension UIView: TappableView {
    func startTapGestureRecognize() {
@@ -34,7 +37,11 @@ extension UIView: ButtonTapAnimator {}
 // MARK: - PaddingLabel -------------------------
 
 final class PaddingLabel: UILabel, Marginable, Tappable {
-   var events: EventsStore = .init()
+   var events: EventsStore = .init() {
+      didSet {
+         startTapGestureRecognize()
+      }
+   }
 
    var padding: UIEdgeInsets = .init()
 
@@ -66,10 +73,6 @@ final class PaddingLabel: UILabel, Marginable, Tappable {
       return contentSize
    }
 }
-
-// extension PaddingLabel: Eventable {
-//   typealias Events = ButtonEvents
-// }
 
 // MARK: - PaddingTextField -------------------------
 
@@ -136,8 +139,14 @@ extension AlamoLoader {
 }
 
 final class PaddingImageView: UIImageView, Marginable, AlamoLoader, Tappable {
+
    var padding: UIEdgeInsets = .init()
-   var events: EventsStore = .init()
+
+   var events: EventsStore = .init(){
+      didSet {
+         startTapGestureRecognize()
+      }
+   }
 
    override var alignmentRectInsets: UIEdgeInsets {
       .init(top: -padding.top,
@@ -170,17 +179,16 @@ final class StackViewExtended: UIStackView, Eventable {
    struct Events: InitProtocol {
       var willAppear: Void?
       var willDisappear: Void?
+      var didTap: Void?
    }
 
-   var didTapClosure: VoidClosure? {
+
+
+   var events: EventsStore = .init() {
       didSet {
-         let gesture = UITapGestureRecognizer(target: self, action: #selector(didTap))
-         gesture.cancelsTouchesInView = false
-         addGestureRecognizer(gesture)
+         startTapGestureRecognize()
       }
    }
-
-   var events: EventsStore = .init()
 
    weak var backView: UIView?
 
@@ -195,6 +203,17 @@ final class StackViewExtended: UIStackView, Eventable {
    @available(*, unavailable)
    required init(coder: NSCoder) {
       fatalError("init(coder:) has not been implemented")
+   }
+
+   override func startTapGestureRecognize() {
+      let gesture = UITapGestureRecognizer(target: self, action: #selector(didTap))
+      gesture.cancelsTouchesInView = false
+      addGestureRecognizer(gesture)
+      isUserInteractionEnabled = true
+   }
+
+   @objc override func didTap() {
+      send(\.didTap)
    }
 
    override func layoutSubviews() {
@@ -236,10 +255,6 @@ final class StackViewExtended: UIStackView, Eventable {
       }
 
       return super.hitTest(point, with: event)
-   }
-
-   @objc override func didTap() {
-      didTapClosure?()
    }
 }
 

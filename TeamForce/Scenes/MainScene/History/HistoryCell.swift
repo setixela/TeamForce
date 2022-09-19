@@ -48,7 +48,6 @@ final class HistoryCellModel<Design: DSP>:
                   .size(.square(25))
                   .hidden(false)
                   .padding(.init(top: 7, left: 6, bottom: -7, right: -6))
-               cancelButton.view.startTapGestureRecognize()
                cancelButton.view.on(\.didTap) { [self] in
                   send(\.cancelButtonPressed)
                }

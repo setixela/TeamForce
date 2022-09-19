@@ -35,7 +35,6 @@ extension ImageViewModel: Stateable3, ButtonTapAnimator {
    func applyState(_ state: TapGestureState) {
       switch state {
       case .tapGesturing:
-         view.startTapGestureRecognize()
          view.on(\.didTap, self) {
             $0.send(\.didTap)
          }
