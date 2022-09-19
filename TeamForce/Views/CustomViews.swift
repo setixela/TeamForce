@@ -25,8 +25,11 @@ extension UIView: TappableView {
 
    @objc func didTap() {
       (self as? any Tappable)?.send(\.didTap)
+      animateTap(uiView: self)
    }
 }
+
+extension UIView: ButtonTapAnimator {}
 
 // MARK: - PaddingLabel -------------------------
 
@@ -282,18 +285,18 @@ final class ButtonExtended: UIButton, AlamoLoader {
 
 // MARK: - Tap animator -------------------------
 
-protocol ButtonTapAnimator: UIViewModel {}
+protocol ButtonTapAnimator {}
 
 extension ButtonTapAnimator {
-   func animateTap() {
+   func animateTap(uiView: UIView) {
       let frame = uiView.frame
       uiView.frame = uiView.frame.inset(by: .init(top: 3, left: 2, bottom: -2, right: 3))
       UIView.animate(withDuration: 0.3) {
-         self.uiView.frame = frame
+         uiView.frame = frame
       }
    }
 
-   func animateTapWithShadow() {
+   func animateTapWithShadow(uiView: UIView) {
       let frame = uiView.frame
       uiView.frame = uiView.frame.inset(by: .init(top: 5, left: 2, bottom: -3, right: 3))
       let layer = uiView.layer
@@ -308,15 +311,15 @@ extension ButtonTapAnimator {
       layer.shadowColor = UIColor.black.cgColor
       layer.shadowRadius = 5
       UIView.animate(withDuration: 0.3) {
-         self.uiView.frame = frame
+         uiView.frame = frame
          layer.shadowOpacity = opacity
          layer.shadowColor = color
          layer.shadowRadius = 100
-         self.uiView.setNeedsDisplay()
+         uiView.setNeedsDisplay()
       } completion: { _ in
          layer.shadowRadius = radius
          layer.masksToBounds = masksToBounds
-         self.uiView.clipsToBounds = clipsToBounds
+         uiView.clipsToBounds = clipsToBounds
       }
    }
 }

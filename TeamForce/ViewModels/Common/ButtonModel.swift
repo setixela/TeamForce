@@ -30,7 +30,7 @@ class ButtonModel: BaseViewModel<ButtonExtended>, ButtonModelProtocol {
          send(\.didTap)
          print("Did tap")
 
-         animateTap()
+         animateTap(uiView: uiView)
       }
    }
 }
