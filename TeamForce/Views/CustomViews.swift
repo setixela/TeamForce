@@ -12,9 +12,27 @@ protocol Marginable {
    var padding: UIEdgeInsets { get set }
 }
 
+protocol Tappable: Eventable where Events == ButtonEvents {}
+
+@objc protocol TappableView {}
+
+extension UIView: TappableView {
+   func startTapGestureRecognize() {
+      let gesture = UITapGestureRecognizer(target: self, action: #selector(didTap))
+      addGestureRecognizer(gesture)
+      isUserInteractionEnabled = true
+   }
+
+   @objc func didTap() {
+      (self as? any Tappable)?.send(\.didTap)
+   }
+}
+
 // MARK: - PaddingLabel -------------------------
 
-final class PaddingLabel: UILabel, Marginable {
+final class PaddingLabel: UILabel, Marginable, Tappable {
+   var events: EventsStore = .init()
+
    var padding: UIEdgeInsets = .init()
 
    override public func draw(_ rect: CGRect) {
@@ -46,6 +64,10 @@ final class PaddingLabel: UILabel, Marginable {
    }
 }
 
+// extension PaddingLabel: Eventable {
+//   typealias Events = ButtonEvents
+// }
+
 // MARK: - PaddingTextField -------------------------
 
 /// Description
@@ -56,15 +78,15 @@ final class PaddingTextField: UITextField, Marginable {
    var isOnlyDigitsMode = false
 
    override func textRect(forBounds bounds: CGRect) -> CGRect {
-      return bounds.inset(by: padding)
+      bounds.inset(by: padding)
    }
 
    override func placeholderRect(forBounds bounds: CGRect) -> CGRect {
-      return bounds.inset(by: padding)
+      bounds.inset(by: padding)
    }
 
    override func editingRect(forBounds bounds: CGRect) -> CGRect {
-      return bounds.inset(by: padding)
+      bounds.inset(by: padding)
    }
 }
 
@@ -110,26 +132,15 @@ extension AlamoLoader {
    }
 }
 
-final class PaddingImageView: UIImageView, Marginable, AlamoLoader {
+final class PaddingImageView: UIImageView, Marginable, AlamoLoader, Tappable {
    var padding: UIEdgeInsets = .init()
    var events: EventsStore = .init()
 
    override var alignmentRectInsets: UIEdgeInsets {
-      return .init(top: -padding.top,
-                   left: -padding.left,
-                   bottom: -padding.bottom,
-                   right: -padding.right)
-   }
-
-   func startTapGesture() {
-      let gesture = UITapGestureRecognizer(target: self, action: #selector(self.didTap))
-      gesture.cancelsTouchesInView = true
-      addGestureRecognizer(gesture)
-      isUserInteractionEnabled = true
-   }
-
-   @objc private func didTap() {
-      send(\.didTap)
+      .init(top: -padding.top,
+            left: -padding.left,
+            bottom: -padding.bottom,
+            right: -padding.right)
    }
 }
 
@@ -143,10 +154,10 @@ final class PaddingView: UIView, Marginable {
    var padding: UIEdgeInsets = .init()
 
    override var alignmentRectInsets: UIEdgeInsets {
-      return .init(top: -padding.top,
-                   left: -padding.left,
-                   bottom: -padding.bottom,
-                   right: -padding.right)
+      .init(top: -padding.top,
+            left: -padding.left,
+            bottom: -padding.bottom,
+            right: -padding.right)
    }
 }
 
@@ -160,7 +171,7 @@ final class StackViewExtended: UIStackView, Eventable {
 
    var didTapClosure: VoidClosure? {
       didSet {
-         let gesture = UITapGestureRecognizer(target: self, action: #selector(self.didTap))
+         let gesture = UITapGestureRecognizer(target: self, action: #selector(didTap))
          gesture.cancelsTouchesInView = false
          addGestureRecognizer(gesture)
       }
@@ -206,7 +217,7 @@ final class StackViewExtended: UIStackView, Eventable {
    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
       if !clipsToBounds, !isHidden, alpha > 0 {
          let button = subviews.flatMap {
-            $0.subviews.flatMap { $0.subviews }
+            $0.subviews.flatMap(\.subviews)
          }
          .filter {
             $0 is UIButton
@@ -224,7 +235,7 @@ final class StackViewExtended: UIStackView, Eventable {
       return super.hitTest(point, with: event)
    }
 
-   @objc private func didTap() {
+   @objc override func didTap() {
       didTapClosure?()
    }
 }

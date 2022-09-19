@@ -36,7 +36,7 @@ extension ImageViewModel: Stateable3, ButtonTapAnimator {
       switch state {
       case .tapGesturing:
        //  view.isUserInteractionEnabled = true
-         view.startTapGesture()
+         view.startTapGestureRecognize()
          view.on(\.didTap, self) {
             $0.send(\.didTap)
          }
