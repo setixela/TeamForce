@@ -67,7 +67,7 @@ enum StackState {
    case borderColor(UIColor)
    case height(CGFloat)
    case arrangedModels([UIViewModel])
-   case hidden(Bool)
+   case hidden(Bool, isAnimated: Bool = false)
    case backView(UIView, inset: UIEdgeInsets = .zero)
    case backImage(UIImage)
    case backViewModel(UIViewModel, inset: UIEdgeInsets = .zero)
@@ -106,8 +106,8 @@ extension ViewModelProtocol where Self: Stateable, View: StackViewExtended {
          borderColor(value)
       case .borderWidth(let value):
          borderWidth(value)
-      case .hidden(let value):
-         hidden(value)
+      case .hidden(let value, let animated):
+         hidden(value, isAnimated: animated)
       case .backViewModel(let value, let inset):
          backViewModel(value, inset: inset)
       case .shadow(let value):
@@ -200,7 +200,6 @@ enum ButtonState {
    case image(UIImage)
    case tint(UIColor)
    case vertical(Bool)
-   case hidden(Bool)
 
    case borderWidth(CGFloat)
    case borderColor(UIColor)
@@ -233,8 +232,6 @@ extension ViewModelProtocol where Self: Stateable, View: ButtonExtended {
          tint(value)
       case .vertical(let value):
          vertical(value)
-      case .hidden(let value):
-         hidden(value)
 
       case .borderColor(let value):
          borderColor(value)
@@ -264,7 +261,6 @@ enum TextFieldState {
    case borderWidth(CGFloat)
    case borderColor(UIColor)
    case size(CGSize)
-   case hidden(Bool)
    case zPosition(CGFloat)
    case placing(CGPoint)
 }
@@ -297,8 +293,6 @@ extension ViewModelProtocol where Self: Stateable, View: PaddingTextField {
          borderColor(value)
       case .borderWidth(let value):
          borderWidth(value)
-      case .hidden(let value):
-         hidden(value)
       case .size(let value):
          size(value)
       case .zPosition(let value):

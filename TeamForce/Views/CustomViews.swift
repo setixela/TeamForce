@@ -12,9 +12,37 @@ protocol Marginable {
    var padding: UIEdgeInsets { get set }
 }
 
+protocol Tappable: Eventable where Events == ButtonEvents {}
+
+@objc protocol TappableView {
+   func startTapGestureRecognize()
+   @objc func didTap()
+}
+
+extension UIView: TappableView {
+   func startTapGestureRecognize() {
+      let gesture = UITapGestureRecognizer(target: self, action: #selector(didTap))
+      addGestureRecognizer(gesture)
+      isUserInteractionEnabled = true
+   }
+
+   @objc func didTap() {
+      (self as? any Tappable)?.send(\.didTap)
+      animateTap(uiView: self)
+   }
+}
+
+extension UIView: ButtonTapAnimator {}
+
 // MARK: - PaddingLabel -------------------------
 
-final class PaddingLabel: UILabel, Marginable {
+final class PaddingLabel: UILabel, Marginable, Tappable {
+   var events: EventsStore = .init() {
+      didSet {
+         startTapGestureRecognize()
+      }
+   }
+
    var padding: UIEdgeInsets = .init()
 
    override public func draw(_ rect: CGRect) {
@@ -56,15 +84,15 @@ final class PaddingTextField: UITextField, Marginable {
    var isOnlyDigitsMode = false
 
    override func textRect(forBounds bounds: CGRect) -> CGRect {
-      return bounds.inset(by: padding)
+      bounds.inset(by: padding)
    }
 
    override func placeholderRect(forBounds bounds: CGRect) -> CGRect {
-      return bounds.inset(by: padding)
+      bounds.inset(by: padding)
    }
 
    override func editingRect(forBounds bounds: CGRect) -> CGRect {
-      return bounds.inset(by: padding)
+      bounds.inset(by: padding)
    }
 }
 
@@ -110,26 +138,20 @@ extension AlamoLoader {
    }
 }
 
-final class PaddingImageView: UIImageView, Marginable, AlamoLoader {
+final class PaddingImageView: UIImageView, Marginable, AlamoLoader, Tappable {
    var padding: UIEdgeInsets = .init()
-   var events: EventsStore = .init()
+
+   var events: EventsStore = .init() {
+      didSet {
+         startTapGestureRecognize()
+      }
+   }
 
    override var alignmentRectInsets: UIEdgeInsets {
-      return .init(top: -padding.top,
-                   left: -padding.left,
-                   bottom: -padding.bottom,
-                   right: -padding.right)
-   }
-
-   func startTapGesture() {
-      let gesture = UITapGestureRecognizer(target: self, action: #selector(self.didTap))
-      gesture.cancelsTouchesInView = true
-      addGestureRecognizer(gesture)
-      isUserInteractionEnabled = true
-   }
-
-   @objc private func didTap() {
-      send(\.didTap)
+      .init(top: -padding.top,
+            left: -padding.left,
+            bottom: -padding.bottom,
+            right: -padding.right)
    }
 }
 
@@ -143,10 +165,10 @@ final class PaddingView: UIView, Marginable {
    var padding: UIEdgeInsets = .init()
 
    override var alignmentRectInsets: UIEdgeInsets {
-      return .init(top: -padding.top,
-                   left: -padding.left,
-                   bottom: -padding.bottom,
-                   right: -padding.right)
+      .init(top: -padding.top,
+            left: -padding.left,
+            bottom: -padding.bottom,
+            right: -padding.right)
    }
 }
 
@@ -156,17 +178,19 @@ final class StackViewExtended: UIStackView, Eventable {
    struct Events: InitProtocol {
       var willAppear: Void?
       var willDisappear: Void?
+      var didTap: Void?
    }
 
-   var didTapClosure: VoidClosure? {
+   private var isGestured = false
+
+   var events: EventsStore = .init() {
       didSet {
-         let gesture = UITapGestureRecognizer(target: self, action: #selector(self.didTap))
-         gesture.cancelsTouchesInView = false
-         addGestureRecognizer(gesture)
+         if !isGestured {
+            startTapGestureRecognize()
+            isGestured = true
+         }
       }
    }
-
-   var events: EventsStore = .init()
 
    weak var backView: UIView?
 
@@ -181,6 +205,17 @@ final class StackViewExtended: UIStackView, Eventable {
    @available(*, unavailable)
    required init(coder: NSCoder) {
       fatalError("init(coder:) has not been implemented")
+   }
+
+   override func startTapGestureRecognize() {
+      let gesture = UITapGestureRecognizer(target: self, action: #selector(didTap))
+      gesture.cancelsTouchesInView = false
+      addGestureRecognizer(gesture)
+      isUserInteractionEnabled = true
+   }
+
+   @objc override func didTap() {
+      send(\.didTap)
    }
 
    override func layoutSubviews() {
@@ -206,7 +241,7 @@ final class StackViewExtended: UIStackView, Eventable {
    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
       if !clipsToBounds, !isHidden, alpha > 0 {
          let button = subviews.flatMap {
-            $0.subviews.flatMap { $0.subviews }
+            $0.subviews.flatMap(\.subviews)
          }
          .filter {
             $0 is UIButton
@@ -222,10 +257,6 @@ final class StackViewExtended: UIStackView, Eventable {
       }
 
       return super.hitTest(point, with: event)
-   }
-
-   @objc private func didTap() {
-      didTapClosure?()
    }
 }
 
@@ -271,18 +302,18 @@ final class ButtonExtended: UIButton, AlamoLoader {
 
 // MARK: - Tap animator -------------------------
 
-protocol ButtonTapAnimator: UIViewModel {}
+protocol ButtonTapAnimator {}
 
 extension ButtonTapAnimator {
-   func animateTap() {
+   func animateTap(uiView: UIView) {
       let frame = uiView.frame
       uiView.frame = uiView.frame.inset(by: .init(top: 3, left: 2, bottom: -2, right: 3))
       UIView.animate(withDuration: 0.3) {
-         self.uiView.frame = frame
+         uiView.frame = frame
       }
    }
 
-   func animateTapWithShadow() {
+   func animateTapWithShadow(uiView: UIView) {
       let frame = uiView.frame
       uiView.frame = uiView.frame.inset(by: .init(top: 5, left: 2, bottom: -3, right: 3))
       let layer = uiView.layer
@@ -297,15 +328,15 @@ extension ButtonTapAnimator {
       layer.shadowColor = UIColor.black.cgColor
       layer.shadowRadius = 5
       UIView.animate(withDuration: 0.3) {
-         self.uiView.frame = frame
+         uiView.frame = frame
          layer.shadowOpacity = opacity
          layer.shadowColor = color
          layer.shadowRadius = 100
-         self.uiView.setNeedsDisplay()
+         uiView.setNeedsDisplay()
       } completion: { _ in
          layer.shadowRadius = radius
          layer.masksToBounds = masksToBounds
-         self.uiView.clipsToBounds = clipsToBounds
+         uiView.clipsToBounds = clipsToBounds
       }
    }
 }

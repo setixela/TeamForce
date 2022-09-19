@@ -51,7 +51,7 @@ final class CurrencyButtonDT<Design: DSP>: CurrencyLabelDT<Design>, Eventable, M
 
    @objc private func didTap() {
       send(\.didTap)
-      animateTapWithShadow()
+      animateTapWithShadow(uiView: uiView)
    }
 }
 

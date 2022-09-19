@@ -24,7 +24,7 @@ final class ImageViewModel: BaseViewModel<PaddingImageView>, Eventable {
       send(\.didTap)
       print("Did tap")
 
-      animateTap()
+      animateTap(uiView: uiView)
    }
 }
 
@@ -35,12 +35,9 @@ extension ImageViewModel: Stateable3, ButtonTapAnimator {
    func applyState(_ state: TapGestureState) {
       switch state {
       case .tapGesturing:
-       //  view.isUserInteractionEnabled = true
-         view.startTapGesture()
          view.on(\.didTap, self) {
             $0.send(\.didTap)
          }
-       //  view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTap)))
       }
    }
 }

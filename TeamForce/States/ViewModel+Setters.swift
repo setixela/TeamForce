@@ -5,9 +5,28 @@
 //  Created by Aleksandr Solovyev on 14.08.2022.
 //
 
-import ReactiveWorks
 import Anchorage
+import ReactiveWorks
 import UIKit
+
+final class StaticAnimation {
+   private(set) static var animateCount = 0
+   static let animateStep: Double = 0.05
+
+   static func increment() {
+      animateCount += 1
+   }
+
+   static func decrement() {
+      if animateCount > 0 {
+         animateCount -= 1
+      }
+   }
+
+   static var delay: Double {
+      Double(animateCount - 1) * animateStep
+   }
+}
 
 extension ViewModelProtocol where Self: Stateable {
    @discardableResult func backColor(_ value: UIColor) -> Self {
@@ -82,8 +101,33 @@ extension ViewModelProtocol where Self: Stateable {
       return self
    }
 
-   @discardableResult func hidden(_ value: Bool) -> Self {
-      view.isHidden = value
+   @discardableResult func hidden(_ value: Bool, isAnimated: Bool = false) -> Self {
+      guard isAnimated, value != view.isHidden else {
+         view.isHidden = value
+         return self
+      }
+
+      var curAlpha = view.alpha
+      if !value {
+         view.alpha = 0
+         StaticAnimation.increment()
+         UIView.animate(withDuration: StaticAnimation.animateStep, delay: StaticAnimation.delay) {
+            self.view.alpha = curAlpha
+         } completion: { _ in
+            StaticAnimation.decrement()
+         }
+         view.isHidden = value
+      } else {
+         StaticAnimation.increment()
+         UIView.animate(withDuration: StaticAnimation.animateStep, delay: StaticAnimation.delay) {
+            self.view.alpha = 0
+         } completion: { _ in
+            self.view.alpha = curAlpha
+            self.view.isHidden = value
+            StaticAnimation.decrement()
+            self.view.isHidden = value
+         }
+      }
       return self
    }
 

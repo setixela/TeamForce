@@ -335,29 +335,34 @@ private extension TransactScene {
    }
 
    func applySelectUserMode() {
-      viewModels.pickedImages.hidden(true)
-      viewModels.balanceInfo.set(.hidden(true))
-      viewModels.amountInputModel.set(.hidden(true))
-      viewModels.reasonTextView.set(.hidden(true))
-      viewModels.options.hidden(true)
-      viewModels.addPhotoButton.hidden(true)
-      footerStack.hidden(true)
+      footerStack.hidden(true, isAnimated: true)
+      viewModels.options.hidden(true, isAnimated: true)
+      viewModels.addPhotoButton.hidden(true, isAnimated: true)
+      viewModels.pickedImages.hidden(true, isAnimated: true)
+      viewModels.reasonTextView.hidden(true, isAnimated: true)
+      viewModels.amountInputModel.set(.hidden(true, isAnimated: true))
+      viewModels.userSearchTextField.hidden(false, isAnimated: true)
+      viewModels.balanceInfo.set(.hidden(true, isAnimated: true))
+
       viewModels.notFoundBlock.hidden(true)
-      viewModels.userSearchTextField.hidden(false)
+
+      view.endEditing(true)
    }
 
    func presentBalanceInfo() {
-      viewModels.notFoundBlock.hidden(true)
-      viewModels.balanceInfo.set(.hidden(false))
+      viewModels.notFoundBlock.hidden(true, isAnimated: true)
+      viewModels.balanceInfo.set(.hidden(false, isAnimated: true))
    }
 
    func applyReadyToSendMode() {
-      viewModels.pickedImages.hidden(false)
-      viewModels.amountInputModel.set(.hidden(false))
-      viewModels.reasonTextView.set(.hidden(false))
-      viewModels.options.hidden(false)
-      viewModels.addPhotoButton.hidden(false)
-      footerStack.hidden(false)
+      viewModels.amountInputModel.hidden(false, isAnimated: true)
+      viewModels.reasonTextView.hidden(false, isAnimated: true)
+      viewModels.pickedImages.hidden(false, isAnimated: true)
+      viewModels.addPhotoButton.hidden(false, isAnimated: true)
+      viewModels.options.hidden(false, isAnimated: true)
+      footerStack.hidden(false, isAnimated: true)
+
+      view.endEditing(true)
    }
 }
 

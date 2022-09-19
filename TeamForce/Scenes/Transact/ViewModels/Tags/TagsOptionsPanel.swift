@@ -43,8 +43,8 @@ final class TagsOptionsPanel<Design: DSP>: M<ScrollViewModelX>.D<TitleIconX>.Com
    override func start() {
       super.start()
 
-      view.didTapClosure = { [weak self] in
-         self?.send(\.didTap)
+      view.on(\.didTap, self) {
+         $0.send(\.didTap)
       }
    }
 }
@@ -82,7 +82,6 @@ extension TagsOptionsPanel: StateMachine {
                   .size(.init(width: 24, height: 12))
                   .imageTintColor(Design.color.iconBrand)
 
-               icon.view.startTapGesture()
                icon.view
                   .on(\.didTap, self) {
                      $0.send(\.didTapTag, tag)
