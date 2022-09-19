@@ -139,10 +139,9 @@ extension AlamoLoader {
 }
 
 final class PaddingImageView: UIImageView, Marginable, AlamoLoader, Tappable {
-
    var padding: UIEdgeInsets = .init()
 
-   var events: EventsStore = .init(){
+   var events: EventsStore = .init() {
       didSet {
          startTapGestureRecognize()
       }

@@ -66,6 +66,7 @@ enum TextViewState {
    case height(CGFloat)
    case width(CGFloat)
 }
+
 extension TextViewModel: Stateable3 {
    typealias State = ViewState
    typealias State2 = TextViewState
