@@ -65,4 +65,17 @@ final class FeedWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedWorksTempStorage
       }
       work.success(result: (filtered, Self.store.currentUserName))
    }}
+   
+   var pressLike: Work<PressLikeRequest, Void> { .init { [weak self] work in
+         guard let input = work.input else { return }
+         self?.apiUseCase.pressLike
+            .doAsync(input)
+            .onSuccess {
+               work.success(result: $0)
+            }
+            .onFail {
+               work.fail()
+            }
+      }.retainBy(retainer)
+   }
 }

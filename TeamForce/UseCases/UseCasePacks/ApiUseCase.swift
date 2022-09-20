@@ -231,6 +231,14 @@ final class ApiUseCase<Asset: AssetProtocol>: InitProtocol, Assetable, WorkBaske
       )
       .retainedWork(retainer)
    }
+   
+   var pressLike: PressLikeUseCase.WRK {
+      PressLikeUseCase(
+         safeStringStorage: safeStringStorage,
+         pressLikeApiWorker: pressLikeApiWorker
+      )
+      .retainedWork(retainer)
+   }
 
    // MARK: - Dependencies
 
@@ -265,5 +273,7 @@ final class ApiUseCase<Asset: AssetProtocol>: InitProtocol, Assetable, WorkBaske
    private var getTagByIdApiWorker: GetTagByIdApiWorker { .init(apiEngine:
        Asset.service.apiEngine) }
    private var getProfileByIdApiWorker: GetProfileByIdApiWorker { .init(apiEngine:
+       Asset.service.apiEngine) }
+   private var pressLikeApiWorker: PressLikeApiWorker { .init(apiEngine:
        Asset.service.apiEngine) }
 }

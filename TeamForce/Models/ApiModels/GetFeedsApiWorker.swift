@@ -30,6 +30,12 @@ struct Feed: Codable {
          case hasScope = "has_scope"
       }
    }
+   
+   struct Reaction: Codable {
+      let id: Int
+      let code: String?
+      let counter: Int?
+   }
 
    struct Transaction: Codable {
       let id: Int
@@ -45,6 +51,11 @@ struct Feed: Codable {
       let recipientFirstName: String?
       let recipientSurname: String?
       let tags: [FeedTag]?
+      let commentsAmount: Int?
+      let lastLikeCommentTime: String?
+      let userLiked: Bool?
+      let userDisliked: Bool?
+      let reactions: [Reaction]?
 
       enum CodingKeys: String, CodingKey {
          case id
@@ -60,6 +71,11 @@ struct Feed: Codable {
          case recipientFirstName = "recipient_first_name"
          case recipientSurname = "recipient_surname"
          case tags
+         case commentsAmount = "comments_amount"
+         case lastLikeCommentTime = "last_like_comment_tim"
+         case userLiked = "user_liked"
+         case userDisliked = "user_disliked"
+         case reactions
       }
 
       var photoUrl: String? {

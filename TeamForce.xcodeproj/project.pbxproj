@@ -228,6 +228,8 @@
 		63AD689128D0E59A00675C69 /* GetProfileById.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AD689028D0E59A00675C69 /* GetProfileById.swift */; };
 		63AD689328D0F33A00675C69 /* GetProfileByIdUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AD689228D0F33A00675C69 /* GetProfileByIdUseCase.swift */; };
 		63BB2C0A28D9293A00C1E3DB /* FeedPresenters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BB2C0928D9293A00C1E3DB /* FeedPresenters.swift */; };
+		63BB2C0C28DA160B00C1E3DB /* PressLikeApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BB2C0B28DA160B00C1E3DB /* PressLikeApiWorker.swift */; };
+		63BB2C0E28DA179D00C1E3DB /* PressLikeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BB2C0D28DA179D00C1E3DB /* PressLikeUseCase.swift */; };
 		63C6D11428B2E1F200887AD1 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C6D11328B2E1F200887AD1 /* SettingsViewModel.swift */; };
 		63C6D11628B2ECD000887AD1 /* DoubleLabelHorizontal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C6D11528B2ECD000887AD1 /* DoubleLabelHorizontal.swift */; };
 		63CFA196289C38A9000E4D1E /* GetTransactionsApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63CFA195289C38A9000E4D1E /* GetTransactionsApiWorker.swift */; };
@@ -482,6 +484,8 @@
 		63AD689028D0E59A00675C69 /* GetProfileById.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetProfileById.swift; sourceTree = "<group>"; };
 		63AD689228D0F33A00675C69 /* GetProfileByIdUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetProfileByIdUseCase.swift; sourceTree = "<group>"; };
 		63BB2C0928D9293A00C1E3DB /* FeedPresenters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedPresenters.swift; sourceTree = "<group>"; };
+		63BB2C0B28DA160B00C1E3DB /* PressLikeApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PressLikeApiWorker.swift; sourceTree = "<group>"; };
+		63BB2C0D28DA179D00C1E3DB /* PressLikeUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PressLikeUseCase.swift; sourceTree = "<group>"; };
 		63C6D11328B2E1F200887AD1 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		63C6D11528B2ECD000887AD1 /* DoubleLabelHorizontal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleLabelHorizontal.swift; sourceTree = "<group>"; };
 		63CFA195289C38A9000E4D1E /* GetTransactionsApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTransactionsApiWorker.swift; sourceTree = "<group>"; };
@@ -1198,6 +1202,7 @@
 				63A2233E28CF772900D92615 /* GetTagsApiWorker.swift */,
 				63A2234228CF923F00D92615 /* GetTagByIdApiWorker.swift */,
 				63AD689028D0E59A00675C69 /* GetProfileById.swift */,
+				63BB2C0B28DA160B00C1E3DB /* PressLikeApiWorker.swift */,
 			);
 			path = ApiModels;
 			sourceTree = "<group>";
@@ -1239,6 +1244,7 @@
 				63A2234028CF797600D92615 /* GetTagsUseCase.swift */,
 				63A2234428CF960E00D92615 /* GetTagByIdUseCase.swift */,
 				63AD689228D0F33A00675C69 /* GetProfileByIdUseCase.swift */,
+				63BB2C0D28DA179D00C1E3DB /* PressLikeUseCase.swift */,
 			);
 			path = ApiUseCases;
 			sourceTree = "<group>";
@@ -1486,6 +1492,7 @@
 				63AB071528BD8E6200FD650F /* ProfileEditWorks.swift in Sources */,
 				19A9BE6928C167E30099F8EA /* AtivityIndicator.swift in Sources */,
 				19221EE828C9ADC300B7B604 /* ProfileEditScenario.swift in Sources */,
+				63BB2C0C28DA160B00C1E3DB /* PressLikeApiWorker.swift in Sources */,
 				63CFA198289C3FB6000E4D1E /* GetTransactionsUseCase.swift in Sources */,
 				1977BE5828A7343400D554EA /* InputCheckers.swift in Sources */,
 				63AB070F28BD552A00FD650F /* CreateContactApiWorker.swift in Sources */,
@@ -1606,6 +1613,7 @@
 				19D0835D286F428600F75E4A /* BarButtonModel.swift in Sources */,
 				63AB070928BD4C1B00FD650F /* UpdateProfileApiWorker.swift in Sources */,
 				196750AC2865189C0019A6DE /* TextFieldModel.swift in Sources */,
+				63BB2C0E28DA179D00C1E3DB /* PressLikeUseCase.swift in Sources */,
 				63AB071B28C0E3AF00FD650F /* BalanceScenario.swift in Sources */,
 				63E7A74728AFBDE500FB2C80 /* GetPeriodsFromDateUseCase.swift in Sources */,
 				6368D8222891508C0049EEAB /* ProfileScene.swift in Sources */,
