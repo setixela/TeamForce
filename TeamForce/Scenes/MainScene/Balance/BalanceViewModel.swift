@@ -100,14 +100,18 @@ final class BalanceScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>
       set(.distribution(.fill))
       set(.alignment(.fill))
       set(.arrangedModels([
-         selectPeriod,
-         Spacer(20),
-         frameCellStackModel,
-         Spacer(27),
-         annulationFrame,
-         Spacer(8),
-         inProgessFrame,
-         Grid.xxx.spacer,
+         ScrollViewModelY()
+            .set(.arrangedModels([
+               selectPeriod,
+               Spacer(20),
+               frameCellStackModel,
+               Spacer(27),
+               annulationFrame,
+               Spacer(8),
+               inProgessFrame,
+               Grid.x128.spacer,
+               Grid.xxx.spacer
+            ]))
       ]))
    }
 }
@@ -140,7 +144,7 @@ extension BalanceScene {
          let date2 = Date()
          diffs = Calendar.current.numberOf24DaysBetween(date2, and: date1)
       }
-      
+
       leftToSendFrame
          .set(.text(String(distr.amount)))
          .set(.caption("\(Text.title.sended): \(distr.sent)"))
