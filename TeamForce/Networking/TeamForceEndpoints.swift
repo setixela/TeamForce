@@ -307,4 +307,14 @@ enum TeamForceEndpoints {
          self.headers = headers
       }
    }
+   
+   struct PressLike: EndpointProtocol {
+      let method = HTTPMethod.post
+      
+      var endPoint: String { urlBase + "/press-like/" }
+      
+      var headers: [String : String]
+      
+      var body: [String : Any]
+   }
 }
