@@ -89,6 +89,18 @@ final class BalanceScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>
       }
       .backColor(Design.color.successSecondary)
 
+   private lazy var scrollWrapper = ScrollViewModelY()
+      .set(.arrangedModels([
+         selectPeriod,
+         Spacer(20),
+         frameCellStackModel,
+         Spacer(27),
+         annulationFrame,
+         Spacer(8),
+         inProgessFrame,
+         Grid.xxx.spacer
+      ]))
+
    // MARK: - Services
 
    private lazy var useCase = Asset.apiUseCase
@@ -100,19 +112,17 @@ final class BalanceScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>
       set(.distribution(.fill))
       set(.alignment(.fill))
       set(.arrangedModels([
-         ScrollViewModelY()
-            .set(.arrangedModels([
-               selectPeriod,
-               Spacer(20),
-               frameCellStackModel,
-               Spacer(27),
-               annulationFrame,
-               Spacer(8),
-               inProgessFrame,
-               Grid.x128.spacer,
-               Grid.xxx.spacer
-            ]))
+         scrollWrapper
       ]))
+
+      scrollWrapper
+         .on(\.didScroll) { [weak self] in
+            self?.sendEvent(\.didScroll, $0)
+         }
+         .on(\.willEndDragging) { [weak self] in
+            self?.sendEvent(\.willEndDragging, $0)
+         }
+      scrollWrapper.view.alwaysBounceVertical = true
    }
 }
 
@@ -140,7 +150,7 @@ extension BalanceScene {
       let dateFormatter = DateFormatter()
       dateFormatter.dateFormat = "yyyy-MM-dd"
       var diffs = 0
-      if let date1 = dateFormatter.date(from: distr.expireDate!) {
+      if let date1 = dateFormatter.date(from: distr.expireDate.string) {
          let date2 = Date()
          diffs = Calendar.current.numberOf24DaysBetween(date2, and: date1)
       }
