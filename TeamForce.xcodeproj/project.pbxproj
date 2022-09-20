@@ -227,6 +227,7 @@
 		63AD437B28992045000511B9 /* TransactionStatusViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AD437A28992045000511B9 /* TransactionStatusViewModel.swift */; };
 		63AD689128D0E59A00675C69 /* GetProfileById.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AD689028D0E59A00675C69 /* GetProfileById.swift */; };
 		63AD689328D0F33A00675C69 /* GetProfileByIdUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AD689228D0F33A00675C69 /* GetProfileByIdUseCase.swift */; };
+		63BB2C0A28D9293A00C1E3DB /* FeedPresenters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BB2C0928D9293A00C1E3DB /* FeedPresenters.swift */; };
 		63C6D11428B2E1F200887AD1 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C6D11328B2E1F200887AD1 /* SettingsViewModel.swift */; };
 		63C6D11628B2ECD000887AD1 /* DoubleLabelHorizontal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C6D11528B2ECD000887AD1 /* DoubleLabelHorizontal.swift */; };
 		63CFA196289C38A9000E4D1E /* GetTransactionsApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63CFA195289C38A9000E4D1E /* GetTransactionsApiWorker.swift */; };
@@ -480,6 +481,7 @@
 		63AD437A28992045000511B9 /* TransactionStatusViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionStatusViewModel.swift; sourceTree = "<group>"; };
 		63AD689028D0E59A00675C69 /* GetProfileById.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetProfileById.swift; sourceTree = "<group>"; };
 		63AD689228D0F33A00675C69 /* GetProfileByIdUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetProfileByIdUseCase.swift; sourceTree = "<group>"; };
+		63BB2C0928D9293A00C1E3DB /* FeedPresenters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedPresenters.swift; sourceTree = "<group>"; };
 		63C6D11328B2E1F200887AD1 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		63C6D11528B2ECD000887AD1 /* DoubleLabelHorizontal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleLabelHorizontal.swift; sourceTree = "<group>"; };
 		63CFA195289C38A9000E4D1E /* GetTransactionsApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTransactionsApiWorker.swift; sourceTree = "<group>"; };
@@ -1006,6 +1008,7 @@
 				197A360528BADC83006E44C1 /* FeedViewModels.swift */,
 				197A360728BADC8D006E44C1 /* FeedScenario.swift */,
 				197A360928BADC95006E44C1 /* FeedWorks.swift */,
+				63BB2C0928D9293A00C1E3DB /* FeedPresenters.swift */,
 				197A361028BBB205006E44C1 /* ViewModels */,
 			);
 			path = Feed;
@@ -1381,6 +1384,7 @@
 				194C095628759FD900D88D5B /* ViewModel+Stateable.swift in Sources */,
 				19A8229628A925760081D385 /* ViewModel+Setters.swift in Sources */,
 				19A9BE6528BEB57C0099F8EA /* ImagePickerViewModel.swift in Sources */,
+				63BB2C0A28D9293A00C1E3DB /* FeedPresenters.swift in Sources */,
 				199C4B6D2863299E008AD6FD /* DesignSystem.swift in Sources */,
 				63578E5828AB8DA000423957 /* GetTransactionsByPeriodApiWorker.swift in Sources */,
 				19221EF328CDBCB000B7B604 /* SetupProtocol.swift in Sources */,
