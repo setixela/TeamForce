@@ -9,6 +9,7 @@ import Anchorage
 import ReactiveWorks
 import UIKit
 
+// TODO: - сделать нормально
 final class StaticAnimation {
    private(set) static var animateCount = 0
    static let animateStep: Double = 0.05

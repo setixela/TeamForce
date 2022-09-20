@@ -54,10 +54,6 @@ final class TagCell<Design: DSP>: IconTitleX, Designable {
                .fitToBottomRight($1, offset: -4, sideOffset: -4)
          }
 
-      icon.view.on(\.didTap) {
-
-      }
-
       badgeImage.view.clipsToBounds = false
       badgeImage.view.layer.masksToBounds = false
    }

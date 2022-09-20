@@ -17,7 +17,18 @@ enum ScrollState {
    case padding(UIEdgeInsets)
 }
 
-final class ScrollViewModelY: BaseViewModel<UIScrollView> {
+struct ScrollEvents: ScrollEventsProtocol {
+   var didScroll: CGFloat?
+   var willEndDragging: CGFloat?
+}
+
+protocol ScrollWrapper: UIScrollViewDelegate, Eventable where Events == ScrollEvents {}
+
+final class ScrollViewModelY: BaseViewModel<UIScrollView>, ScrollWrapper {
+   var events: ReactiveWorks.EventsStore = .init()
+
+   private var prevScrollOffset: CGFloat = 0
+
    private lazy var stack = StackModel()
       .axis(.vertical)
       .distribution(.equalSpacing)
@@ -26,6 +37,7 @@ final class ScrollViewModelY: BaseViewModel<UIScrollView> {
 
    override func start() {
       view.addSubview(stack.uiView)
+      view.delegate = self
 
       stack.view.addAnchors
          .top(view.topAnchor)
@@ -33,6 +45,19 @@ final class ScrollViewModelY: BaseViewModel<UIScrollView> {
          .trailing(view.trailingAnchor)
          .bottom(view.bottomAnchor)
          .width(view.widthAnchor)
+   }
+
+   func scrollViewDidScroll(_ scrollView: UIScrollView) {
+      let velocity = scrollView.contentOffset.y - prevScrollOffset
+      prevScrollOffset = scrollView.contentOffset.y
+      send(\.didScroll, velocity)
+   }
+
+   func scrollViewWillEndDragging(_ scrollView: UIScrollView,
+                                  withVelocity velocity: CGPoint,
+                                  targetContentOffset: UnsafeMutablePointer<CGPoint>)
+   {
+      send(\.willEndDragging, velocity.y)
    }
 }
 
@@ -60,7 +85,9 @@ extension ScrollViewModelY: Stateable2 {
    }
 }
 
-final class ScrollViewModelX: BaseViewModel<UIScrollView> {
+final class ScrollViewModelX: BaseViewModel<UIScrollView>, ScrollWrapper {
+   var events: ReactiveWorks.EventsStore = .init()
+
    private lazy var stack = StackModel()
       .axis(.horizontal)
 

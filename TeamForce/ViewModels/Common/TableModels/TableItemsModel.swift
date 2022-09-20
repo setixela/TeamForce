@@ -23,7 +23,14 @@ enum TableItemsState {
    case presenters([PresenterProtocol])
 }
 
-struct TableItemsEvents: InitProtocol {
+protocol ScrollEventsProtocol: InitProtocol {
+   // TODO: - Обьединять ивенты как Стейты
+   var didScroll: CGFloat? { get set }
+   var willEndDragging: CGFloat? { get set }
+}
+
+
+struct TableItemsEvents: ScrollEventsProtocol {
    var didSelectRow: (IndexPath, Int)?
 
    // TODO: - Обьединять ивенты как Стейты
@@ -48,7 +55,7 @@ final class TableItemsModel<Design: DSP>: BaseViewModel<UITableView>,
    private var itemSections: [TableItemsSection] = []
 
    private var prevScrollOffset: CGFloat = 0
-  // private var velocity: CGFloat = 0
+   // private var velocity: CGFloat = 0
 
    // MARK: - Start
 
@@ -145,7 +152,8 @@ final class TableItemsModel<Design: DSP>: BaseViewModel<UITableView>,
 
    func scrollViewWillEndDragging(_ scrollView: UIScrollView,
                                   withVelocity velocity: CGPoint,
-                                  targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+                                  targetContentOffset: UnsafeMutablePointer<CGPoint>)
+   {
       send(\.willEndDragging, velocity.y)
    }
 }
