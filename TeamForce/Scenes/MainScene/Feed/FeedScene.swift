@@ -26,7 +26,8 @@ final class FeedScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>,
          loadFeedForCurrentUser: onEvent(\.userDidLoad),
          presentAllFeed: viewModels.filterButtons.on(\.didTapAll),
          presentMyFeed: viewModels.filterButtons.on(\.didTapMy),
-         presentPublicFeed: viewModels.filterButtons.on(\.didTapPublic)
+         presentPublicFeed: viewModels.filterButtons.on(\.didTapPublic),
+         presentProfile: viewModels.presenter.on(\.didSelect)
       )
    )
 
@@ -62,6 +63,7 @@ enum FeedSceneState {
    case initial
    case presentFeed(([Feed], String))
    case loadFeedError
+   case presentProfile(Int)
 }
 
 extension FeedScene: StateMachine {
@@ -80,6 +82,8 @@ extension FeedScene: StateMachine {
          log("Feed Error!")
          activityIndicator.hidden(true)
          errorBlock.hidden(false)
+      case .presentProfile(let id):
+         Asset.router?.route(\.profile, navType: .push, payload: id)
       }
    }
 }

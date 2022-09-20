@@ -13,6 +13,7 @@ protocol ButtonModelProtocol: UIViewModel, InitProtocol, Eventable where Events 
 
 struct ButtonEvents: InitProtocol {
    var didTap: Void?
+   var didSelect: String?
 }
 
 class ButtonModel: BaseViewModel<ButtonExtended>, ButtonModelProtocol {

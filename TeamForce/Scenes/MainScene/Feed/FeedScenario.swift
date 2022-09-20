@@ -13,6 +13,7 @@ struct FeedScenarioInputEvents {
    let presentAllFeed: VoidWork<Void>
    let presentMyFeed: VoidWork<Void>
    let presentPublicFeed: VoidWork<Void>
+   let presentProfile: VoidWork<Int>
 }
 
 final class FeedScenario<Asset: AssetProtocol>:
@@ -43,5 +44,8 @@ final class FeedScenario<Asset: AssetProtocol>:
          .doNext(work: works.getPublicFeed)
          .onSuccess(setState) { .presentFeed($0) }
          .onFail(setState, .loadFeedError)
+      
+      events.presentProfile
+         .onSuccess(setState) { .presentProfile($0) }
    }
 }

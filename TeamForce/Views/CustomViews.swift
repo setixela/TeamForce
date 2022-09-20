@@ -39,7 +39,8 @@ extension UIView: ButtonTapAnimator {}
 final class PaddingLabel: UILabel, Marginable, Tappable {
    var events: EventsStore = .init() {
       didSet {
-         startTapGestureRecognize()
+         //startTapGestureRecognize()
+         //print("started events")
       }
    }
 
@@ -71,6 +72,33 @@ final class PaddingLabel: UILabel, Marginable, Tappable {
       contentSize.width = ceil(newSize.size.width) + insetsWidth
 
       return contentSize
+   }
+   
+   func makePartsClickable(user1: String?, user2: String?) {
+      isUserInteractionEnabled = true
+      let tapGesture = CustomTap(target: self,
+                                 action: #selector(tappedOnLabel(gesture:)))
+      tapGesture.user1 = user1
+      tapGesture.user2 = user2
+      addGestureRecognizer(tapGesture)
+      lineBreakMode = .byWordWrapping
+   }
+   
+   @objc func tappedOnLabel(gesture: CustomTap) {
+      
+      guard let text = self.text else { return }
+      
+      let firstRange = (text as NSString).range(of: gesture.user1.string)
+      let secondRange = (text as NSString).range(of: gesture.user2.string)
+      print("first range \(firstRange)")
+      print("second range \(secondRange)")
+      if gesture.didTapAttributedTextInLabel(label: self, inRange: firstRange) {
+         print("firstRange tapped")
+         send(\.didSelect, gesture.user1.string)
+      } else if gesture.didTapAttributedTextInLabel(label: self, inRange: secondRange) {
+         print("secondRange tapped")
+         send(\.didSelect, gesture.user2.string)
+      }
    }
 }
 

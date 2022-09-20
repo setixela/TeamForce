@@ -16,7 +16,7 @@ final class ProfileScene<Asset: AssetProtocol>: BaseSceneModel<
    DefaultVCModel,
    DoubleStacksBrandedVM<Asset.Design>,
    Asset,
-   Void
+   Int
 > {
    lazy var userModel = Design.model.profile.userEditPanel
 
@@ -77,7 +77,7 @@ final class ProfileScene<Asset: AssetProtocol>: BaseSceneModel<
 
    private lazy var userProfileApiModel = ProfileApiWorker(apiEngine: Asset.service.apiEngine)
    private lazy var safeStringStorageModel = StringStorageWorker(engine: Asset.service.safeStringStorage)
-
+   private lazy var useCase = Asset.apiUseCase
    private var balance: Balance?
 
    override func start() {
@@ -119,20 +119,35 @@ final class ProfileScene<Asset: AssetProtocol>: BaseSceneModel<
    }
 
    private func configureProfile() {
-      safeStringStorageModel
-         .doAsync("token")
-         .onFail {
-            print("token not found")
-         }
-         .doMap {
-            TokenRequest(token: $0)
-         }
-         .doNext(worker: userProfileApiModel)
-         .onSuccess { [weak self] userData in
-            self?.setLabels(userData: userData)
-         }.onFail {
-            print("load profile error")
-         }
+      if let input = inputValue {
+         print("input is \(input)")
+         useCase.getProfileById
+            .doAsync(input)
+            .onSuccess { [weak self] userData in
+               self?.setLabels(userData: userData)
+            }
+            .onFail {
+               print("failed to load profile")
+            }
+         userModel.models.right2.hidden(true)
+         
+      } else {
+         safeStringStorageModel
+            .doAsync("token")
+            .onFail {
+               print("token not found")
+            }
+            .doMap {
+               TokenRequest(token: $0)
+            }
+            .doNext(worker: userProfileApiModel)
+            .onSuccess { [weak self] userData in
+               self?.setLabels(userData: userData)
+            }.onFail {
+               print("load profile error")
+            }
+      }
+      
    }
    
    private func clearLabels() {
