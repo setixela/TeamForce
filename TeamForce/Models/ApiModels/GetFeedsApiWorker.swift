@@ -33,7 +33,9 @@ struct Feed: Codable {
 
    struct Transaction: Codable {
       let id: Int
+      let senderId: Int?
       let sender: String
+      let recipientId: Int?
       let recipient: String
       let status: String
       let isAnonymous: Bool
@@ -46,7 +48,9 @@ struct Feed: Codable {
 
       enum CodingKeys: String, CodingKey {
          case id
+         case senderId = "sender_id"
          case sender
+         case recipientId = "recipient_id"
          case recipient
          case status
          case isAnonymous = "is_anonymous"

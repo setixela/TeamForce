@@ -26,7 +26,8 @@ final class FeedScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>,
          loadFeedForCurrentUser: onEvent(\.userDidLoad),
          presentAllFeed: viewModels.filterButtons.on(\.didTapAll),
          presentMyFeed: viewModels.filterButtons.on(\.didTapMy),
-         presentPublicFeed: viewModels.filterButtons.on(\.didTapPublic)
+         presentPublicFeed: viewModels.filterButtons.on(\.didTapPublic),
+         presentProfile: viewModels.presenter.on(\.didSelect)
       )
    )
 
