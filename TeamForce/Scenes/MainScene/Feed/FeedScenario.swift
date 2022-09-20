@@ -46,11 +46,6 @@ final class FeedScenario<Asset: AssetProtocol>:
          .onFail(setState, .loadFeedError)
       
       events.presentProfile
-         .onSuccess {
-            print("Hello \($0)")
-         }
-         .onFail {
-            print("failed to present")
-         }
+         .onSuccess(setState) { .presentProfile($0) }
    }
 }

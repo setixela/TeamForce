@@ -63,6 +63,7 @@ enum FeedSceneState {
    case initial
    case presentFeed(([Feed], String))
    case loadFeedError
+   case presentProfile(Int)
 }
 
 extension FeedScene: StateMachine {
@@ -81,6 +82,8 @@ extension FeedScene: StateMachine {
          log("Feed Error!")
          activityIndicator.hidden(true)
          errorBlock.hidden(false)
+      case .presentProfile(let id):
+         Asset.router?.route(\.profile, navType: .push, payload: id)
       }
    }
 }
