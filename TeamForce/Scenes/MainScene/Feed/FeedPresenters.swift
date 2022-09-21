@@ -82,6 +82,13 @@ class FeedPresenters<Design: DesignProtocol>: Designable {
                $1.text(dislikeAmount)
             }
          
+         if feed.transaction.userLiked == true {
+            likeButton.models.main.imageTintColor(Design.color.activeButtonBack)
+         }
+         if feed.transaction.userDisliked == true {
+            dislikeButton.models.main.imageTintColor(Design.color.activeButtonBack)
+         }
+         
          likeButton.view.startTapGestureRecognize()
          dislikeButton.view.startTapGestureRecognize()
          
