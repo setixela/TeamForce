@@ -14,6 +14,7 @@ struct FeedScenarioInputEvents {
    let presentMyFeed: VoidWork<Void>
    let presentPublicFeed: VoidWork<Void>
    let presentProfile: VoidWork<Int>
+   let reactionPressed: VoidWork<PressLikeRequest>
 }
 
 final class FeedScenario<Asset: AssetProtocol>:
@@ -47,5 +48,20 @@ final class FeedScenario<Asset: AssetProtocol>:
       
       events.presentProfile
          .onSuccess(setState) { .presentProfile($0) }
+      
+      events.reactionPressed
+         .doNext(work: works.pressLike)
+         .onFail {
+            print("failed to like")
+         }
+         .doMap() {
+            self.events.loadFeedForCurrentUser.result
+         }
+         .doNext(work: works.loadFeedForCurrentUser)
+         .onFail(setState, .loadFeedError)
+         .doNext(work: works.getAllFeed)
+         .onSuccess(setState) { .presentFeed($0) }
+         .onFail(setState, .loadFeedError)
+         
    }
 }

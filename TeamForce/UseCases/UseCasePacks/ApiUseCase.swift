@@ -239,6 +239,14 @@ final class ApiUseCase<Asset: AssetProtocol>: InitProtocol, Assetable, WorkBaske
       )
       .retainedWork(retainer)
    }
+   
+   var getTransactStatistics: GetTransactionStatisticsUseCase.WRK {
+      GetTransactionStatisticsUseCase(
+         safeStringStorage: safeStringStorage,
+         getTransactionStatisticsApiWorker: getTransactionStatisticsApiWorker
+      )
+      .retainedWork(retainer)
+   }
 
    // MARK: - Dependencies
 
@@ -276,4 +284,5 @@ final class ApiUseCase<Asset: AssetProtocol>: InitProtocol, Assetable, WorkBaske
        Asset.service.apiEngine) }
    private var pressLikeApiWorker: PressLikeApiWorker { .init(apiEngine:
        Asset.service.apiEngine) }
+   private var getTransactionStatisticsApiWorker: GetTransactionStatisticsApiWorker { .init(apiEngine: Asset.service.apiEngine) }
 }
