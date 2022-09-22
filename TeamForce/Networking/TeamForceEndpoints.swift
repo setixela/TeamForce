@@ -317,4 +317,14 @@ enum TeamForceEndpoints {
       
       var body: [String : Any]
    }
+   
+   struct GetTransactionStatistics: EndpointProtocol {
+      let method = HTTPMethod.post
+      
+      var endPoint: String { urlBase + "/get-transaction-statistics/" }
+      
+      var headers: [String : String]
+      
+      var body: [String : Any]
+   }
 }

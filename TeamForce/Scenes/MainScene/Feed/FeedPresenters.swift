@@ -24,6 +24,7 @@ class FeedPresenters<Design: DesignProtocol>: Designable {
          let recipientId = feed.transaction.recipientId
          let sender = "@" + feed.transaction.sender
          let recipient = "@" + feed.transaction.recipient
+         let transactionId = feed.transaction.id
          
          let isPersonal = feed.eventType.isPersonal
          let hasScope = feed.eventType.hasScope
@@ -55,18 +56,54 @@ class FeedPresenters<Design: DesignProtocol>: Designable {
                $0.image(Design.icon.messageCloud)
                $1.text("0")
             }
+         var likeAmount = "0"
+         var dislikeAmount = "0"
+        
+         if let reactions = feed.transaction.reactions {
+            for reaction in reactions {
+               if reaction.code == "like" {
+                  likeAmount = String(reaction.counter ?? 0)
+               } else if reaction.code == "dislike" {
+                  dislikeAmount = String(reaction.counter ?? 0)
+               }
+            }
+         }
          
+        
          let likeButton = ReactionButton<Design>()
             .setAll {
                $0.image(Design.icon.like)
-               $1.text("0")
+               $1.text(likeAmount)
             }
          
          let dislikeButton = ReactionButton<Design>()
             .setAll {
                $0.image(Design.icon.dislike)
-               $1.text("0")
+               $1.text(dislikeAmount)
             }
+         
+         if feed.transaction.userLiked == true {
+            likeButton.models.main.imageTintColor(Design.color.activeButtonBack)
+         }
+         if feed.transaction.userDisliked == true {
+            dislikeButton.models.main.imageTintColor(Design.color.activeButtonBack)
+         }
+         
+         likeButton.view.startTapGestureRecognize()
+         dislikeButton.view.startTapGestureRecognize()
+         
+         likeButton.view.on(\.didTap) {
+            let request = PressLikeRequest(token: "",
+                                           likeKind: 1,
+                                           transactionId: transactionId)
+            self.send(\.reactionPressed, request)
+         }
+         dislikeButton.view.on(\.didTap) {
+            let request = PressLikeRequest(token: "",
+                                           likeKind: 2,
+                                           transactionId: transactionId)
+            self.send(\.reactionPressed, request)
+         }
          
          let reactionsBlock = StackModel()
             .axis(.horizontal)
@@ -241,5 +278,7 @@ private enum FeedTransactType {
 extension FeedPresenters: Eventable {
    struct Events: InitProtocol {
       var didSelect: Int?
+      var reactionPressed: PressLikeRequest?
+      //var dislikePressed: Int?
    }
 }
