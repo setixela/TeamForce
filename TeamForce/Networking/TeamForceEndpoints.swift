@@ -363,4 +363,17 @@ enum TeamForceEndpoints {
          self.body = body
       }
    }
+   
+   struct DeleteComment: EndpointProtocol {
+      let method = HTTPMethod.delete
+      
+      var endPoint: String = urlBase + "/delete-comment/"
+      
+      var headers: [String : String]
+      
+      init(id: String, headers: [String : String]) {
+         self.endPoint = endPoint + id + "/"
+         self.headers = headers
+      }
+   }
 }
