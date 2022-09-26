@@ -327,4 +327,14 @@ enum TeamForceEndpoints {
       
       var body: [String : Any]
    }
+   
+   struct GetComments: EndpointProtocol {
+      let method = HTTPMethod.post
+      
+      var endPoint: String { urlBase + "/get-comments/" }
+      
+      var headers: [String : String]
+      
+      var body: [String : Any]
+   }
 }
