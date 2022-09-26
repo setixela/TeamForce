@@ -347,4 +347,20 @@ enum TeamForceEndpoints {
       
       var body: [String : Any]
    }
+   
+   struct UpdateComment: EndpointProtocol {
+      let method = HTTPMethod.put
+      
+      var endPoint: String = urlBase + "/update-comment/"
+      
+      var body: [String : Any]
+      
+      var headers: [String : String]
+      
+      init(id: String, headers: [String : String], body: [String : Any]) {
+         endPoint = endPoint + id + "/"
+         self.headers = headers
+         self.body = body
+      }
+   }
 }

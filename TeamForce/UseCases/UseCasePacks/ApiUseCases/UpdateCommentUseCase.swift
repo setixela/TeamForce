@@ -1,5 +1,5 @@
 //
-//  CreateCommentUseCase.swift
+//  UpdateCommentUseCase.swift
 //  TeamForce
 //
 //  Created by Yerzhan Gapurinov on 26.09.2022.
@@ -7,12 +7,12 @@
 
 import ReactiveWorks
 
-struct CreateCommentUseCase: UseCaseProtocol {
+struct UpdateCommentUseCase: UseCaseProtocol {
    let safeStringStorage: StringStorageWorker
-   let createCommentApiWorker: CreateCommentApiWorker
+   let updateCommentApiWorker: UpdateCommentApiWorker
 
-   var work: Work<CreateCommentRequest, Void> {
-      Work<CreateCommentRequest, Void>() { work in
+   var work: Work<UpdateCommentRequest, Void> {
+      Work<UpdateCommentRequest, Void>() { work in
          safeStringStorage
             .doAsync("token")
             .onFail {
@@ -20,11 +20,12 @@ struct CreateCommentUseCase: UseCaseProtocol {
             }
             .doMap {
                guard let input = work.input else { return nil }
-               let request = CreateCommentRequest(token: $0,
-                                                 body: input.body)
+               let request = UpdateCommentRequest(token: $0,
+                                                  id: input.id,
+                                                  body: input.body)
                return request
             }
-            .doNext(worker: createCommentApiWorker)
+            .doNext(worker: updateCommentApiWorker)
             .onSuccess {
                work.success(result: $0)
             }

@@ -237,6 +237,8 @@
 		63BB2C1828E132E600C1E3DB /* GetCommentsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BB2C1728E132E600C1E3DB /* GetCommentsUseCase.swift */; };
 		63BB2C1A28E1384700C1E3DB /* CreateCommentApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BB2C1928E1384700C1E3DB /* CreateCommentApiWorker.swift */; };
 		63BB2C1C28E13A5400C1E3DB /* CreateCommentUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BB2C1B28E13A5400C1E3DB /* CreateCommentUseCase.swift */; };
+		63BB2C1E28E14AAF00C1E3DB /* UpdateCommentApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BB2C1D28E14AAF00C1E3DB /* UpdateCommentApiWorker.swift */; };
+		63BB2C2028E14BFA00C1E3DB /* UpdateCommentUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BB2C1F28E14BFA00C1E3DB /* UpdateCommentUseCase.swift */; };
 		63C6D11428B2E1F200887AD1 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C6D11328B2E1F200887AD1 /* SettingsViewModel.swift */; };
 		63C6D11628B2ECD000887AD1 /* DoubleLabelHorizontal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C6D11528B2ECD000887AD1 /* DoubleLabelHorizontal.swift */; };
 		63CFA196289C38A9000E4D1E /* GetTransactionsApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63CFA195289C38A9000E4D1E /* GetTransactionsApiWorker.swift */; };
@@ -500,6 +502,8 @@
 		63BB2C1728E132E600C1E3DB /* GetCommentsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetCommentsUseCase.swift; sourceTree = "<group>"; };
 		63BB2C1928E1384700C1E3DB /* CreateCommentApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCommentApiWorker.swift; sourceTree = "<group>"; };
 		63BB2C1B28E13A5400C1E3DB /* CreateCommentUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCommentUseCase.swift; sourceTree = "<group>"; };
+		63BB2C1D28E14AAF00C1E3DB /* UpdateCommentApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateCommentApiWorker.swift; sourceTree = "<group>"; };
+		63BB2C1F28E14BFA00C1E3DB /* UpdateCommentUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateCommentUseCase.swift; sourceTree = "<group>"; };
 		63C6D11328B2E1F200887AD1 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		63C6D11528B2ECD000887AD1 /* DoubleLabelHorizontal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleLabelHorizontal.swift; sourceTree = "<group>"; };
 		63CFA195289C38A9000E4D1E /* GetTransactionsApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTransactionsApiWorker.swift; sourceTree = "<group>"; };
@@ -1221,6 +1225,7 @@
 				63BB2C0F28DB38C900C1E3DB /* GetTransactionStatisticsApiWorker.swift */,
 				63BB2C1528E128BF00C1E3DB /* GetCommentsApiWorker.swift */,
 				63BB2C1928E1384700C1E3DB /* CreateCommentApiWorker.swift */,
+				63BB2C1D28E14AAF00C1E3DB /* UpdateCommentApiWorker.swift */,
 			);
 			path = ApiModels;
 			sourceTree = "<group>";
@@ -1266,6 +1271,7 @@
 				63BB2C1128DB3D2A00C1E3DB /* GetTransactionStatisticsUseCase.swift */,
 				63BB2C1728E132E600C1E3DB /* GetCommentsUseCase.swift */,
 				63BB2C1B28E13A5400C1E3DB /* CreateCommentUseCase.swift */,
+				63BB2C1F28E14BFA00C1E3DB /* UpdateCommentUseCase.swift */,
 			);
 			path = ApiUseCases;
 			sourceTree = "<group>";
@@ -1415,6 +1421,7 @@
 				199C4B6D2863299E008AD6FD /* DesignSystem.swift in Sources */,
 				63578E5828AB8DA000423957 /* GetTransactionsByPeriodApiWorker.swift in Sources */,
 				19221EF328CDBCB000B7B604 /* SetupProtocol.swift in Sources */,
+				63BB2C1E28E14AAF00C1E3DB /* UpdateCommentApiWorker.swift in Sources */,
 				197A771828AD90800082CD81 /* XelaLog.swift in Sources */,
 				19A9BE7E28C2EB7D0099F8EA /* TransactSendErrorViewModel.swift in Sources */,
 				19A9232F28B2E34E0080D491 /* CurrencyLabelDT.swift in Sources */,
@@ -1499,6 +1506,7 @@
 				19A73BEB28A4510E000B74CF /* BadgedViewModel.swift in Sources */,
 				198BBEEE28B698040006CD30 /* LoadCsrfTokenUseCase.swift in Sources */,
 				198FE1D02899E0BF00BAF1A5 /* IsEmpty.swift in Sources */,
+				63BB2C2028E14BFA00C1E3DB /* UpdateCommentUseCase.swift in Sources */,
 				19AE3AF22869230C00A0C6E4 /* AuthApiWorker.swift in Sources */,
 				195870F228A8C8040075D505 /* KeyPathMaker.swift in Sources */,
 				19017B6B28A6989000B06345 /* TitleSubtitleY.swift in Sources */,
