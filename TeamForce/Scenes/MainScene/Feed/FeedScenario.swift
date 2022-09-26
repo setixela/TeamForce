@@ -6,6 +6,7 @@
 //
 
 import ReactiveWorks
+import UIKit
 
 struct FeedScenarioInputEvents {
    let loadFeedForCurrentUser: VoidWork<UserData?>
@@ -15,6 +16,7 @@ struct FeedScenarioInputEvents {
    let presentPublicFeed: VoidWork<Void>
    let presentProfile: VoidWork<Int>
    let reactionPressed: VoidWork<PressLikeRequest>
+   let presentDetail: VoidWork<(IndexPath, Int)>
 }
 
 final class FeedScenario<Asset: AssetProtocol>:
@@ -62,6 +64,14 @@ final class FeedScenario<Asset: AssetProtocol>:
          .doNext(work: works.getAllFeed)
          .onSuccess(setState) { .presentFeed($0) }
          .onFail(setState, .loadFeedError)
+      
+      events.presentDetail
+         .doNext(work: works.getFeedByRowNumber)
+         .onSuccess(setState) { .presentDetailView($0)}
+         .onFail {
+            print("fail ")
+         }
+      
          
    }
 }
