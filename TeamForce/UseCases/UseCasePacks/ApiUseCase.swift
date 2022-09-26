@@ -255,6 +255,14 @@ final class ApiUseCase<Asset: AssetProtocol>: InitProtocol, Assetable, WorkBaske
       )
       .retainedWork(retainer)
    }
+   
+   var createComment: CreateCommentUseCase.WRK {
+      CreateCommentUseCase(
+         safeStringStorage: safeStringStorage,
+         createCommentsApiWorker: createCommentApiWorker
+      )
+      .retainedWork(retainer)
+   }
 
    // MARK: - Dependencies
 
@@ -294,5 +302,7 @@ final class ApiUseCase<Asset: AssetProtocol>: InitProtocol, Assetable, WorkBaske
        Asset.service.apiEngine) }
    private var getTransactionStatisticsApiWorker: GetTransactionStatisticsApiWorker { .init(apiEngine: Asset.service.apiEngine) }
    private var getCommentsApiWorker: GetCommentsApiWorker { .init(apiEngine:
+       Asset.service.apiEngine) }
+   private var createCommentApiWorker: CreateCommentApiWorker { .init(apiEngine:
        Asset.service.apiEngine) }
 }

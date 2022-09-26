@@ -235,6 +235,8 @@
 		63BB2C1428E10D1600C1E3DB /* FeedDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BB2C1328E10D1600C1E3DB /* FeedDetailViewModel.swift */; };
 		63BB2C1628E128C000C1E3DB /* GetCommentsApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BB2C1528E128BF00C1E3DB /* GetCommentsApiWorker.swift */; };
 		63BB2C1828E132E600C1E3DB /* GetCommentsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BB2C1728E132E600C1E3DB /* GetCommentsUseCase.swift */; };
+		63BB2C1A28E1384700C1E3DB /* CreateCommentApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BB2C1928E1384700C1E3DB /* CreateCommentApiWorker.swift */; };
+		63BB2C1C28E13A5400C1E3DB /* CreateCommentUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BB2C1B28E13A5400C1E3DB /* CreateCommentUseCase.swift */; };
 		63C6D11428B2E1F200887AD1 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C6D11328B2E1F200887AD1 /* SettingsViewModel.swift */; };
 		63C6D11628B2ECD000887AD1 /* DoubleLabelHorizontal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C6D11528B2ECD000887AD1 /* DoubleLabelHorizontal.swift */; };
 		63CFA196289C38A9000E4D1E /* GetTransactionsApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63CFA195289C38A9000E4D1E /* GetTransactionsApiWorker.swift */; };
@@ -496,6 +498,8 @@
 		63BB2C1328E10D1600C1E3DB /* FeedDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedDetailViewModel.swift; sourceTree = "<group>"; };
 		63BB2C1528E128BF00C1E3DB /* GetCommentsApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetCommentsApiWorker.swift; sourceTree = "<group>"; };
 		63BB2C1728E132E600C1E3DB /* GetCommentsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetCommentsUseCase.swift; sourceTree = "<group>"; };
+		63BB2C1928E1384700C1E3DB /* CreateCommentApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCommentApiWorker.swift; sourceTree = "<group>"; };
+		63BB2C1B28E13A5400C1E3DB /* CreateCommentUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCommentUseCase.swift; sourceTree = "<group>"; };
 		63C6D11328B2E1F200887AD1 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		63C6D11528B2ECD000887AD1 /* DoubleLabelHorizontal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleLabelHorizontal.swift; sourceTree = "<group>"; };
 		63CFA195289C38A9000E4D1E /* GetTransactionsApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTransactionsApiWorker.swift; sourceTree = "<group>"; };
@@ -1216,6 +1220,7 @@
 				63BB2C0B28DA160B00C1E3DB /* PressLikeApiWorker.swift */,
 				63BB2C0F28DB38C900C1E3DB /* GetTransactionStatisticsApiWorker.swift */,
 				63BB2C1528E128BF00C1E3DB /* GetCommentsApiWorker.swift */,
+				63BB2C1928E1384700C1E3DB /* CreateCommentApiWorker.swift */,
 			);
 			path = ApiModels;
 			sourceTree = "<group>";
@@ -1260,6 +1265,7 @@
 				63BB2C0D28DA179D00C1E3DB /* PressLikeUseCase.swift */,
 				63BB2C1128DB3D2A00C1E3DB /* GetTransactionStatisticsUseCase.swift */,
 				63BB2C1728E132E600C1E3DB /* GetCommentsUseCase.swift */,
+				63BB2C1B28E13A5400C1E3DB /* CreateCommentUseCase.swift */,
 			);
 			path = ApiUseCases;
 			sourceTree = "<group>";
@@ -1519,6 +1525,7 @@
 				63D419EF28AA81800024E22C /* GetPeriodsApiWorker.swift in Sources */,
 				19EF32AB287CE80B0078F53D /* StringStorageWorker.swift in Sources */,
 				198BBEEC28B697410006CD30 /* LoadTokenUseCase.swift in Sources */,
+				63BB2C1C28E13A5400C1E3DB /* CreateCommentUseCase.swift in Sources */,
 				63AD689128D0E59A00675C69 /* GetProfileById.swift in Sources */,
 				196750A6286516F40019A6DE /* LoginScene.swift in Sources */,
 				19017B6728A697DF00B06345 /* AligningModels.swift in Sources */,
@@ -1625,6 +1632,7 @@
 				63BB2C1428E10D1600C1E3DB /* FeedDetailViewModel.swift in Sources */,
 				190991E628AA9D2A00371909 /* VerifyCodeUseCase.swift in Sources */,
 				197A360A28BADC95006E44C1 /* FeedWorks.swift in Sources */,
+				63BB2C1A28E1384700C1E3DB /* CreateCommentApiWorker.swift in Sources */,
 				19A8229828A9305D0081D385 /* UIEdgeInsets+Padding.swift in Sources */,
 				19466E03289FFC040052F0AB /* IconTitleSubtitleModel.swift in Sources */,
 				19EE849028AB20CE00D862EE /* DoubleStacksBrandedVM.swift in Sources */,
