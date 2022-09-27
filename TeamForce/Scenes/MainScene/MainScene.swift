@@ -49,6 +49,8 @@ final class MainScene<Asset: AssetProtocol>:
    private var currentState = MainSceneState.initial
 
    private lazy var bottomPopupPresenter = BottomPopupPresenter()
+   
+   private lazy var selectedModel: Int = 0
 
    // MARK: - Start
 
@@ -63,6 +65,8 @@ final class MainScene<Asset: AssetProtocol>:
       vcModel?.onEvent(\.viewWillAppear) { [weak self] in
          self?.scenario.start()
       }
+      tabBarPanel.button1.setMode(\.normal)
+      selectedModel = 0
    }
 
    private func unlockTabButtons() {
@@ -82,6 +86,7 @@ private extension MainScene {
             $0.vcModel?.sendEvent(\.setTitle, "Лента событий")
             $0.presentModel($0.feedViewModel)
             $0.tabBarPanel.button1.setMode(\.normal)
+            $0.selectedModel = 0
          }
 
       tabBarPanel.button2
@@ -91,6 +96,7 @@ private extension MainScene {
             self?.vcModel?.sendEvent(\.setTitle, "Баланс")
             self?.presentModel(self?.balanceViewModel)
             self?.tabBarPanel.button2.setMode(\.normal)
+            self?.selectedModel = 1
          }
 
       tabBarPanel.buttonMain
@@ -105,6 +111,7 @@ private extension MainScene {
             self?.vcModel?.sendEvent(\.setTitle, "История")
             self?.presentModel(self?.historyViewModel)
             self?.tabBarPanel.button3.setMode(\.normal)
+            self?.selectedModel = 2
          }
 
       tabBarPanel.button4
@@ -114,6 +121,7 @@ private extension MainScene {
             self?.vcModel?.sendEvent(\.setTitle, "Настройки")
             self?.presentModel(self?.settingsViewModel)
             self?.tabBarPanel.button4.setMode(\.normal)
+            self?.selectedModel = 3
          }
    }
 }
@@ -129,9 +137,18 @@ extension MainScene: StateMachine {
          break
       case .profileDidLoad(let userData):
          currentUser = userData
-
-         presentModel(feedViewModel)
-         tabBarPanel.button1.setMode(\.normal)
+         switch selectedModel {
+         case 0:
+            presentModel(feedViewModel)
+         case 1:
+            presentModel(balanceViewModel)
+         case 2:
+            presentModel(historyViewModel)
+         case 3:
+            presentModel(settingsViewModel)
+         default:
+            print("selected model error")
+         }
 
          configButtons()
 

@@ -332,6 +332,7 @@ private extension TransactScene {
       viewModels.options.tagsPanelSwitcher.optionModel.setState(.clear)
       viewModels.options.tagsPanelSwitcher.optionModel.hidden(true)
       tagList.setState(.clear)
+      viewModels.pickedImages.clear()
    }
 
    func applySelectUserMode() {

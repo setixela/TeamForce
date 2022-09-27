@@ -174,7 +174,7 @@ class FeedPresenters<Design: DesignProtocol>: Designable {
 private extension FeedPresenters {
    func makeInfoDateLabel(feed: Feed) -> LabelModel {
       let dateAgoText = feed.time.timeAgoConverted
-      let eventText = feed.transaction.isAnonymous ? "" : " • " + "Публичный перевод"
+      let eventText = feed.transaction.isAnonymous ? "" : " • " + "Публичная благодарность"
       let titleText = dateAgoText + eventText
 
       let dateLabel = LabelModel()

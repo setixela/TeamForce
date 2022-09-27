@@ -327,4 +327,53 @@ enum TeamForceEndpoints {
       
       var body: [String : Any]
    }
+   
+   struct GetComments: EndpointProtocol {
+      let method = HTTPMethod.post
+      
+      var endPoint: String { urlBase + "/get-comments/" }
+      
+      var headers: [String : String]
+      
+      var body: [String : Any]
+   }
+   
+   struct CreateComment: EndpointProtocol {
+      let method = HTTPMethod.post
+      
+      var endPoint: String { urlBase + "/create-comment/" }
+      
+      var headers: [String : String]
+      
+      var body: [String : Any]
+   }
+   
+   struct UpdateComment: EndpointProtocol {
+      let method = HTTPMethod.put
+      
+      var endPoint: String = urlBase + "/update-comment/"
+      
+      var body: [String : Any]
+      
+      var headers: [String : String]
+      
+      init(id: String, headers: [String : String], body: [String : Any]) {
+         endPoint = endPoint + id + "/"
+         self.headers = headers
+         self.body = body
+      }
+   }
+   
+   struct DeleteComment: EndpointProtocol {
+      let method = HTTPMethod.delete
+      
+      var endPoint: String = urlBase + "/delete-comment/"
+      
+      var headers: [String : String]
+      
+      init(id: String, headers: [String : String]) {
+         self.endPoint = endPoint + id + "/"
+         self.headers = headers
+      }
+   }
 }

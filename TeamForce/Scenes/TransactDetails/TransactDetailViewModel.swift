@@ -50,7 +50,7 @@ final class TransactDeatilViewModel<Asset: AssetProtocol>: BaseSceneModel<
    lazy var statusLabel = SettingsTitleBodyDT<Design>()
       .setAll {
          $0
-            .text("Статус перевода")
+            .text("Статус благодарности")
             .set(Design.state.label.body4)
          $1
             .text("-")
@@ -162,14 +162,17 @@ final class TransactDeatilViewModel<Asset: AssetProtocol>: BaseSceneModel<
       wS?.input = input
 
       print("detail input \(input)")
+      currencyLabel.label
+         .text(input.amount ?? "")
       switch input.sender?.senderTgName == currentUser {
       case true:
+         currencyLabel.models.main.textColor(Design.color.textError)
+         currencyLabel.models.right.imageTintColor(Design.color.textError)
          transactionOwnerLabel
             .set(.text("Вы отправили @" + (input.recipient?.recipientTgName ?? "")))
          amountLabel
             .set(.text((input.amount ?? "") + " спасибок"))
-         currencyLabel.label
-            .text("-" + (input.amount ?? ""))
+         
          if let urlSuffix = input.recipient?.recipientPhoto {
             let urlString = TeamForceEndpoints.urlBase + urlSuffix
             image.subModel.url(urlString)
@@ -190,8 +193,6 @@ final class TransactDeatilViewModel<Asset: AssetProtocol>: BaseSceneModel<
             .set(.text("Вы получили от @" + (input.sender?.senderTgName ?? "")))
          amountLabel
             .set(.text((input.amount ?? "") + " спасибок"))
-         currencyLabel.label
-            .text("+" + (input.amount ?? ""))
          if let urlSuffix = input.sender?.senderPhoto {
             let urlString = TeamForceEndpoints.urlBase + urlSuffix
             image.subModel.url(urlString)
@@ -208,9 +209,9 @@ final class TransactDeatilViewModel<Asset: AssetProtocol>: BaseSceneModel<
                .backColor(Design.color.backgroundBrand)
          }
          statusLabel
-            .models.main.text("Тип перевода")
+            .models.main.text("Тип благодарности")
          statusLabel
-            .models.down.text("Входящий перевод")
+            .models.down.text("Входящая благодарность")
       }
 
       var textColor = UIColor.black
@@ -233,7 +234,7 @@ final class TransactDeatilViewModel<Asset: AssetProtocol>: BaseSceneModel<
       reasonLabel.models.down.text(input.reason ?? "")
 
       if let photoLink = input.photo {
-         transactPhoto.models.down.url(photoLink)
+         transactPhoto.models.down.url(TeamForceEndpoints.urlBase + photoLink)
          transactPhoto.hidden(false)
       }
       guard let convertedDate = (input.createdAt ?? "").convertToDate() else { return }
@@ -249,6 +250,7 @@ extension String {
       guard let convertedDate = inputFormatter.date(from: self) else { return nil }
 
       let outputFormatter = DateFormatter()
+      outputFormatter.locale = Locale(identifier: "ru_RU")
       outputFormatter.dateFormat = "d MMM y HH:mm"
 
       return outputFormatter.string(from: convertedDate)

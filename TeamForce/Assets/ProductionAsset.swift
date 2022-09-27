@@ -26,6 +26,7 @@ protocol ScenesProtocol: InitProtocol {
 
    // plays
    var playground: SceneModelProtocol { get }
+   var feedDetail: SceneModelProtocol { get }
 }
 
 
@@ -38,6 +39,7 @@ struct Scenes: ScenesProtocol {
    var profile: SceneModelProtocol { ProfileScene<ProductionAsset>() }
    var transactionDetail: SceneModelProtocol { TransactDeatilViewModel<ProductionAsset>() }
    //var profileEdit: SceneModelProtocol { ProfileEditScene<ProductionAsset>() }
+   var feedDetail: SceneModelProtocol { FeedDeatilViewModel<ProductionAsset>() }
 }
 
 struct ProductionService: ServiceProtocol {

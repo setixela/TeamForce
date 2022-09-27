@@ -158,7 +158,24 @@ extension BalanceScene {
       leftToSendFrame
          .set(.text(String(distr.amount)))
          .set(.caption("\(Text.title.sended): \(distr.sent)"))
-         .set(.burn("Cгорят через\n\(diffs) дня"))
+         .set(.burn("\(diffs) \(getDeclension(abs(diffs)))"))
+   }
+
+   private func getDeclension(_ day: Int) -> String {
+      let preLastDigit = day % 100 / 10
+      if preLastDigit == 1 {
+         return "дней"
+      }
+      else {
+         switch day % 10 {
+         case 1:
+            return "день"
+         case 2, 3, 4:
+            return "дня"
+         default:
+            return "дней"
+         }
+      }
    }
 }
 

@@ -247,6 +247,38 @@ final class ApiUseCase<Asset: AssetProtocol>: InitProtocol, Assetable, WorkBaske
       )
       .retainedWork(retainer)
    }
+   
+   var getComments: GetCommentsUseCase.WRK {
+      GetCommentsUseCase(
+         safeStringStorage: safeStringStorage,
+         getCommentsApiWorker: getCommentsApiWorker
+      )
+      .retainedWork(retainer)
+   }
+   
+   var createComment: CreateCommentUseCase.WRK {
+      CreateCommentUseCase(
+         safeStringStorage: safeStringStorage,
+         createCommentApiWorker: createCommentApiWorker
+      )
+      .retainedWork(retainer)
+   }
+   
+   var updateComment: UpdateCommentUseCase.WRK {
+      UpdateCommentUseCase(
+         safeStringStorage: safeStringStorage,
+         updateCommentApiWorker: updateCommentApiWorker
+      )
+      .retainedWork(retainer)
+   }
+   
+   var deleteComment: DeleteCommentUseCase.WRK {
+      DeleteCommentUseCase(
+         safeStringStorage: safeStringStorage,
+         deleteCommentApiWorker: deleteCommentApiWorker
+      )
+      .retainedWork(retainer)
+   }
 
    // MARK: - Dependencies
 
@@ -285,4 +317,12 @@ final class ApiUseCase<Asset: AssetProtocol>: InitProtocol, Assetable, WorkBaske
    private var pressLikeApiWorker: PressLikeApiWorker { .init(apiEngine:
        Asset.service.apiEngine) }
    private var getTransactionStatisticsApiWorker: GetTransactionStatisticsApiWorker { .init(apiEngine: Asset.service.apiEngine) }
+   private var getCommentsApiWorker: GetCommentsApiWorker { .init(apiEngine:
+       Asset.service.apiEngine) }
+   private var createCommentApiWorker: CreateCommentApiWorker { .init(apiEngine:
+       Asset.service.apiEngine) }
+   private var updateCommentApiWorker: UpdateCommentApiWorker { .init(apiEngine:
+       Asset.service.apiEngine) }
+   private var deleteCommentApiWorker: DeleteCommentApiWorker { .init(apiEngine:
+       Asset.service.apiEngine) }
 }

@@ -63,16 +63,14 @@ final class GetTransactionStatisticsApiWorker: BaseApiWorker<TransactStatRequest
          ]))
          .done { result in
             let decoder = DataToDecodableParser()
-            print("data is \(result.data)")
             guard
                let data = result.data,
-               let stat: [TransactStatistics] = decoder.parse(data)
+               let stat: TransactStatistics = decoder.parse(data)
             else {
-               print("parsing error")
                work.fail()
                return
             }
-            work.success(result: stat[0])
+            work.success(result: stat)
          }
          .catch { _ in
             work.fail()
