@@ -233,7 +233,7 @@ final class TransactDeatilViewModel<Asset: AssetProtocol>: BaseSceneModel<
       reasonLabel.models.down.text(input.reason ?? "")
 
       if let photoLink = input.photo {
-         transactPhoto.models.down.url(photoLink)
+         transactPhoto.models.down.url(TeamForceEndpoints.urlBase + photoLink)
          transactPhoto.hidden(false)
       }
       guard let convertedDate = (input.createdAt ?? "").convertToDate() else { return }

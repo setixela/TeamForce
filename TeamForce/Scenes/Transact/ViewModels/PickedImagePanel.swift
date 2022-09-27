@@ -50,6 +50,11 @@ final class PickedImagePanel<Design: DSP>: StackModel, Designable, Eventable {
          send(\.didMaximumReached)
       }
    }
+   
+   func clear() {
+      picked.removeAll()
+      arrangedModels([])
+   }
 }
 
 final class PickedImage<Design: DSP>: StackModel, Designable {
