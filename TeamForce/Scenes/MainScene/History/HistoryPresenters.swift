@@ -25,6 +25,7 @@ class HistoryPresenters<Design: DesignProtocol>: Designable {
          var statusText: String
          var statusColor: UIColor
          var sumText: String
+         var textColor: UIColor = Design.color.text
          // var image = ImageViewModel()
 
          if let nameFirstLetter = item.recipient.recipientFirstName?.first,
@@ -33,11 +34,13 @@ class HistoryPresenters<Design: DesignProtocol>: Designable {
             userIconText = String(nameFirstLetter) + String(surnameFirstLetter)
          }
 
+         sumText = item.amount
          switch item.state {
          case .recieved:
             userNameText = item.sender.senderTgName.string
             statusText = ""
-            sumText = "+" + item.amount
+            textColor = Design.color.success
+            //sumText = "+" + item.amount
             statusColor = .clear
             statusHidden = true
             if let nameFirstLetter = item.sender.senderFirstName?.first,
@@ -49,35 +52,35 @@ class HistoryPresenters<Design: DesignProtocol>: Designable {
          case .waiting:
             userNameText = item.recipient.recipientTgName.string
             statusText = "   Выполняется   "
-            sumText = "-" + item.amount
+            //sumText = "-" + item.amount
             statusColor = Design.color.iconBrand
             statusHidden = false
 //            image = Design.icon.sendCoinIcon
          case .approved:
             userNameText = item.recipient.recipientTgName.string
             statusText = "   Выполнен   "
-            sumText = "-" + item.amount
+            //sumText = "-" + item.amount
             statusColor = Design.color.success
             statusHidden = false
 //            image = Design.icon.sendCoinIcon
          case .cancelled:
             userNameText = item.recipient.recipientTgName.string
             statusText = "   Отменен   "
-            sumText = "-" + item.amount
+            //sumText = "-" + item.amount
             statusColor = Design.color.textSecondary
             statusHidden = false
 //            image = Design.icon.sendCoinIcon
          case .declined:
             userNameText = item.recipient.recipientTgName.string
             statusText = "   Отклонен   "
-            sumText = "-" + item.amount
+            //sumText = "-" + item.amount
             statusColor = Design.color.textError
             statusHidden = false
 //            image = Design.icon.sendCoinIcon
          default:
             userNameText = item.recipient.recipientTgName.string
             statusText = "   Выполнен   "
-            sumText = "-" + item.amount
+            //sumText = "-" + item.amount
             statusColor = Design.color.success
             statusHidden = false
 //            image = Design.icon.sendCoinIcon
@@ -116,6 +119,7 @@ class HistoryPresenters<Design: DesignProtocol>: Designable {
                   .setAll { sumLabel, cancelButton in
                      sumLabel
                         .text(sumText)
+                        .textColor(textColor)
 
                      guard item.state == .waiting else {
                         cancelButton.hidden(true)

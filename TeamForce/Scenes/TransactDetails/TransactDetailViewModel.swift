@@ -162,14 +162,17 @@ final class TransactDeatilViewModel<Asset: AssetProtocol>: BaseSceneModel<
       wS?.input = input
 
       print("detail input \(input)")
+      currencyLabel.label
+         .text(input.amount ?? "")
       switch input.sender?.senderTgName == currentUser {
       case true:
+         currencyLabel.models.main.textColor(Design.color.textError)
+         currencyLabel.models.right.imageTintColor(Design.color.textError)
          transactionOwnerLabel
             .set(.text("Вы отправили @" + (input.recipient?.recipientTgName ?? "")))
          amountLabel
             .set(.text((input.amount ?? "") + " спасибок"))
-         currencyLabel.label
-            .text("-" + (input.amount ?? ""))
+         
          if let urlSuffix = input.recipient?.recipientPhoto {
             let urlString = TeamForceEndpoints.urlBase + urlSuffix
             image.subModel.url(urlString)
@@ -190,8 +193,6 @@ final class TransactDeatilViewModel<Asset: AssetProtocol>: BaseSceneModel<
             .set(.text("Вы получили от @" + (input.sender?.senderTgName ?? "")))
          amountLabel
             .set(.text((input.amount ?? "") + " спасибок"))
-         currencyLabel.label
-            .text("+" + (input.amount ?? ""))
          if let urlSuffix = input.sender?.senderPhoto {
             let urlString = TeamForceEndpoints.urlBase + urlSuffix
             image.subModel.url(urlString)
