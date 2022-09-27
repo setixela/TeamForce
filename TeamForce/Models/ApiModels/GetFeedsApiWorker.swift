@@ -45,7 +45,7 @@ struct Feed: Codable {
       let recipient: String
       let status: String
       let isAnonymous: Bool
-      let reason: String
+      let reason: String?
       let amount: Float
       let recipientPhoto: String?
       let recipientFirstName: String?
