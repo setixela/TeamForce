@@ -249,6 +249,7 @@ extension String {
       guard let convertedDate = inputFormatter.date(from: self) else { return nil }
 
       let outputFormatter = DateFormatter()
+      outputFormatter.locale = Locale(identifier: "ru_RU")
       outputFormatter.dateFormat = "d MMM y HH:mm"
 
       return outputFormatter.string(from: convertedDate)

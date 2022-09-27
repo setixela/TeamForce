@@ -21,6 +21,7 @@ extension String {
       guard let convertedDate = dateConvertedToDate else { return "" }
 
       let outputFormatter = DateFormatter()
+      outputFormatter.locale = Locale(identifier: "ru_RU")
       outputFormatter.dateFormat = "d MMM y"
 
       return outputFormatter.string(from: convertedDate)
@@ -32,6 +33,7 @@ extension String {
       guard let convertedDate = inputFormatter.date(from: self) else { return "" }
 
       let formatter = RelativeDateTimeFormatter()
+      formatter.locale = Locale(identifier: "ru_RU")
       formatter.unitsStyle = .full
       return formatter.localizedString(for: convertedDate, relativeTo: Date())
    }
