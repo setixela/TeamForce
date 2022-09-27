@@ -129,7 +129,7 @@ struct TitleTexts: TitleTextsProtocol {
    var sended: String { "Распределено" }
 
    // transact
-   var newTransact: String { "Новый перевод" }
+   var newTransact: String { "Новая благодарность" }
    var close: String { "Закрыть" }
    var chooseRecipient: String { "Выберите получателя" }
    var sendThanks: String { "Перевести спасибок" }

@@ -50,7 +50,7 @@ final class TransactDeatilViewModel<Asset: AssetProtocol>: BaseSceneModel<
    lazy var statusLabel = SettingsTitleBodyDT<Design>()
       .setAll {
          $0
-            .text("Статус перевода")
+            .text("Статус благодарности")
             .set(Design.state.label.body4)
          $1
             .text("-")
@@ -208,9 +208,9 @@ final class TransactDeatilViewModel<Asset: AssetProtocol>: BaseSceneModel<
                .backColor(Design.color.backgroundBrand)
          }
          statusLabel
-            .models.main.text("Тип перевода")
+            .models.main.text("Тип благодарности")
          statusLabel
-            .models.down.text("Входящий перевод")
+            .models.down.text("Входящая благодарность")
       }
 
       var textColor = UIColor.black

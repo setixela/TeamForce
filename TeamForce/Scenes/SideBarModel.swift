@@ -32,7 +32,7 @@ final class SideBarModel<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>
 
    internal lazy var item2 = IconLabelX<Asset>()
       .set(.padding(Design.params.contentPadding))
-      .set(.text("Новый перевод"))
+      .set(.text("Новая благодарность"))
       .set(.icon(Design.icon.upload2Fill))
 
    internal lazy var item3 = IconLabelX<Asset>()
