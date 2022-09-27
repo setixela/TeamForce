@@ -108,7 +108,7 @@ extension ViewModelProtocol where Self: Stateable {
          return self
       }
 
-      var curAlpha = view.alpha
+      let curAlpha = view.alpha
       if !value {
          view.alpha = 0
          StaticAnimation.increment()

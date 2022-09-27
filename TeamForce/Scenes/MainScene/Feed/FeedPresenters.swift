@@ -92,17 +92,18 @@ class FeedPresenters<Design: DesignProtocol>: Designable {
          likeButton.view.startTapGestureRecognize()
          dislikeButton.view.startTapGestureRecognize()
          
-         likeButton.view.on(\.didTap) {
+         likeButton.view.on(\.didTap, self) {
             let request = PressLikeRequest(token: "",
                                            likeKind: 1,
                                            transactionId: transactionId)
-            self.send(\.reactionPressed, request)
+            $0.send(\.reactionPressed, request)
          }
-         dislikeButton.view.on(\.didTap) {
+
+         dislikeButton.view.on(\.didTap, self) {
             let request = PressLikeRequest(token: "",
                                            likeKind: 2,
                                            transactionId: transactionId)
-            self.send(\.reactionPressed, request)
+            $0.send(\.reactionPressed, request)
          }
          
          let reactionsBlock = StackModel()
