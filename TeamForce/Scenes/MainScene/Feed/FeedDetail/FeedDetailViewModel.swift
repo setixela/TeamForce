@@ -119,7 +119,6 @@ BaseSceneModel<
       .arrangedModels([
          likeButton,
          dislikeButton,
-         commentTableModel,
          Grid.xxx.spacer
       ])
    
