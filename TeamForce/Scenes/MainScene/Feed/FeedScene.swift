@@ -91,7 +91,7 @@ extension FeedScene: StateMachine {
       case .reactionChanged:
          print("Hello")
       case .presentDetailView(let feed):
-         Asset.router?.route(\.feedDetail, navType: .push, payload: feed)
+         Asset.router?.route(\.feedDetail, navType: .push, payload: (feed, viewModels.userName))
       }
    }
 }

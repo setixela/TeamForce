@@ -32,8 +32,8 @@ class FeedPresenters<Design: DesignProtocol>: Designable {
          
          let type = FeedTransactType.make(feed: feed, currentUserName: self.userName)
          
-         let dateLabel = self.makeInfoDateLabel(feed: feed)
-         let infoLabel = self.makeInfoLabel(feed: feed, type: type)
+         let dateLabel = FeedPresenters.makeInfoDateLabel(feed: feed)
+         let infoLabel = FeedPresenters.makeInfoLabel(feed: feed, type: type)
          let icon = self.makeIcon(feed: feed)
          
          infoLabel.view.on(\.didSelect) {
@@ -50,11 +50,13 @@ class FeedPresenters<Design: DesignProtocol>: Designable {
          let tagBlock = StackModel()
             .axis(.horizontal)
             .spacing(4)
+         var commentsAmount = "0"
+         commentsAmount = String(feed.transaction.commentsAmount ?? 0)
          
          let messageButton = ReactionButton<Design>()
             .setAll {
                $0.image(Design.icon.messageCloud)
-               $1.text("0")
+               $1.text(commentsAmount)
             }
          var likeAmount = "0"
          var dislikeAmount = "0"
@@ -171,8 +173,8 @@ class FeedPresenters<Design: DesignProtocol>: Designable {
    }
 }
 
-private extension FeedPresenters {
-   func makeInfoDateLabel(feed: Feed) -> LabelModel {
+extension FeedPresenters {
+   static func makeInfoDateLabel(feed: Feed) -> LabelModel {
       let dateAgoText = feed.time.timeAgoConverted
       let eventText = feed.transaction.isAnonymous ? "" : " • " + "Публичная благодарность"
       let titleText = dateAgoText + eventText
@@ -186,7 +188,7 @@ private extension FeedPresenters {
       return dateLabel
    }
 
-   func makeInfoLabel(feed: Feed, type: FeedTransactType) -> LabelModel {
+   static func makeInfoLabel(feed: Feed, type: FeedTransactType) -> LabelModel {
       let recipientName = "@" + feed.transaction.recipient
       let senderName = "@" + feed.transaction.sender
       let amountText = "\(Int(feed.transaction.amount))" + " " + "спасибок"
@@ -254,7 +256,7 @@ private extension FeedPresenters {
    }
 }
 
-private enum FeedTransactType {
+enum FeedTransactType {
    static func make(feed: Feed, currentUserName: String) -> Self {
       if feed.transaction.recipient == currentUserName {
          if feed.transaction.isAnonymous {
