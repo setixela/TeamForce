@@ -28,9 +28,24 @@ BaseSceneModel<
    
    var userName: String = ""
    lazy var presenter = CommentPresenters<Design>()
-   
-   lazy var commentTableModel = TableItemsModel<Design>()
-      .backColor(Design.color.background)
+
+   private lazy var topBlock = StackModel()
+      .distribution(.fill)
+      .alignment(.center)
+      .arrangedModels([
+         Spacer(maxSize: 32),
+         image,
+         Spacer(maxSize: 32),
+         dateLabel,
+         Spacer(maxSize: 8),
+         infoLabel,
+         Spacer(maxSize: 8),
+         reactionsBlock,
+         Spacer(maxSize: 8)
+      ])
+
+   private lazy var commentTableModel = TableItemsModel<Design>()
+      .backColor(.lightGray)//Design.color.background)
       .set(.presenters([
          presenter.commentCellPresenter,
          SpacerPresenter.presenter
@@ -112,20 +127,13 @@ BaseSceneModel<
       mainVM.headerStack.arrangedModels([Grid.x64.spacer])
       mainVM.bodyStack
          .set(Design.state.stack.default)
-         .alignment(.center)
+         .alignment(.fill)
+         .distribution(.fill)
          .set(.backColor(Design.color.backgroundSecondary))
          .arrangedModels([
-            Spacer(maxSize: 32),
-            image,
-            Spacer(maxSize: 32),
-            dateLabel,
-            Spacer(maxSize: 8),
-            infoLabel,
-            Spacer(maxSize: 8),
-            reactionsBlock,
-//            Spacer(maxSize: 8),
-//            commentTableModel,
-            Grid.xxx.spacer,
+            topBlock,
+            commentTableModel,
+            Grid.xxx.spacer
          ])
    }
    
