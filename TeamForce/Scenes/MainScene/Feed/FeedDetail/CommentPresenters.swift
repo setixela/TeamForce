@@ -14,14 +14,13 @@ class CommentPresenters<Design: DesignProtocol>: Designable {
    
    var commentCellPresenter: Presenter<Comment, WrappedX<StackModel>> {
       Presenter { [weak self] work in
-         print("hello")
          guard let self = self else { return }
          
          let comment = work.unsafeInput
          
          let text = comment.text
          let picture = comment.picture
-         let created = comment.created
+         let created = comment.created?.timeAgoConverted
          let edited = comment.edited
          let user = comment.user
          
@@ -36,6 +35,7 @@ class CommentPresenters<Design: DesignProtocol>: Designable {
          
          let dateLabel = LabelModel()
             .text(created.string)
+            .set(Design.state.label.caption)
             .numberOfLines(0)
             .textColor(Design.color.textSecondary)
          
@@ -83,7 +83,7 @@ class CommentPresenters<Design: DesignProtocol>: Designable {
             .cornerRadius(Grid.x36.value / 2)
          
          if let avatar = user?.avatar {
-            icon.url(avatar)
+            icon.url(TeamForceEndpoints.urlBase + avatar)
          } else {
             if let nameFirstLetter = user?.name?.first,
                let surnameFirstLetter = user?.surname?.first

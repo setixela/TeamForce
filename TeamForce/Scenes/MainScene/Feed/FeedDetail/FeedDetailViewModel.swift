@@ -33,19 +33,20 @@ BaseSceneModel<
       .distribution(.fill)
       .alignment(.center)
       .arrangedModels([
-         Spacer(maxSize: 32),
+         Spacer(32),
          image,
-         Spacer(maxSize: 32),
+         Spacer(8),
          dateLabel,
-         Spacer(maxSize: 8),
+         Spacer(8),
          infoLabel,
-         Spacer(maxSize: 8),
+         Spacer(16),
          reactionsBlock,
-         Spacer(maxSize: 8)
+         Spacer(16)
       ])
 
    private lazy var commentTableModel = TableItemsModel<Design>()
-      .backColor(.lightGray)//Design.color.background)
+      //.backColor(.lightGray)//Design.color.background)
+      .backColor(Design.color.background)
       .set(.presenters([
          presenter.commentCellPresenter,
          SpacerPresenter.presenter
@@ -57,7 +58,10 @@ BaseSceneModel<
    override func start() {
       guard let transactionId = inputValue?.0.transaction.id else { return }
       let request = CommentsRequest(token: "",
-                                    body: CommentsRequestBody(transactionId: transactionId))
+                                    body: CommentsRequestBody(
+                                       transactionId: transactionId,
+                                       includeName: true
+                                    ))
       apiUseCase.getComments
          .doAsync(request)
          .onSuccess {

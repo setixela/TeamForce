@@ -335,7 +335,7 @@ enum TeamForceEndpoints {
       
       var headers: [String : String]
       
-      var body: [String : Any]
+      let jsonData: Data?
    }
    
    struct CreateComment: EndpointProtocol {
