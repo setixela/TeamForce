@@ -197,6 +197,9 @@ final class FeedDetailViewModels<Design: DSP>: BaseModel, Designable {
       let transactionId = feed.transaction.id
       send(\.saveInput, feed)
       
+      likeButton.view.startTapGestureRecognize()
+      dislikeButton.view.startTapGestureRecognize()
+      
       likeButton.view.on(\.didTap, self) {
          let request = PressLikeRequest(token: "",
                                         likeKind: 1,
