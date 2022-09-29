@@ -19,6 +19,9 @@ final class MainScenario<Asset: AssetProtocol>:
       works.loadProfile
          .doAsync()
          .onSuccess(setState) { .profileDidLoad($0) }
-         .onFail(setState, .loadProfileError)
+         .onFail {
+            UserDefaults.standard.setIsLoggedIn(value: false)
+            Asset.router?.route(\.digitalThanks, navType: .presentInitial, payload: ())
+         }
    }
 }
