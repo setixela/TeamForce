@@ -80,6 +80,45 @@ final class FeedDetailViewModels<Design: DSP>: BaseModel, Designable {
          Spacer(16)
       ])
    
+   private lazy var reasonLabel = SettingsTitleBodyDT<Design>()
+      .setAll {
+         $0
+            .text("Cообщение")
+            .set(Design.state.label.body4)
+         $1
+            .text("-")
+            .set(Design.state.label.caption)
+      }
+      .hidden(true)
+   
+   private lazy var transactPhoto = Combos<SComboMD<LabelModel, ImageViewModel>>()
+      .setAll {
+         $0
+            .padBottom(10)
+            .set(Design.state.label.body4)
+            .text("Фотография")
+         $1
+            .image(Design.icon.transactSuccess)
+            .maxHeight(130)
+            .maxWidth(130)
+            .contentMode(.scaleAspectFill)
+            .cornerRadius(Design.params.cornerRadiusSmall)
+      }
+      .hidden(true)
+   
+   lazy var infoStack = UserProfileStack<Design>()
+      .arrangedModels([
+         LabelModel()
+            .text("ИНФОРМАЦИЯ")
+            .set(Design.state.label.captionSecondary),
+         reasonLabel,
+         //transactPhoto,
+         Grid.xxx.spacer
+      ])
+      .distribution(.fill)
+      .alignment(.leading)
+      .hidden(true)
+   
    override func start() {
       filterButtons.buttonComments.setMode(\.selected)
    }
@@ -110,6 +149,18 @@ final class FeedDetailViewModels<Design: DSP>: BaseModel, Designable {
       
       likeButton.models.right.text(likeAmount)
       dislikeButton.models.right.text(dislikeAmount)
+      
+      if let reason = feed.transaction.reason {
+         reasonLabel.models.down.text(reason)
+         reasonLabel.hidden(false)
+         infoStack.hidden(false)
+      }
+      
+//      if let photoLink = feed.transaction.photoUrl {
+//         transactPhoto.models.down.url(TeamForceEndpoints.urlBase + photoLink)
+//         transactPhoto.hidden(false)
+//         infoStack.hidden(false)
+//      }
    }
    
    private func configureImage(feed: Feed) {
