@@ -92,8 +92,9 @@ final class BalanceScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>
    private lazy var scrollWrapper = ScrollViewModelY()
       .set(.bounce(false))
       .set(.arrangedModels([
-         selectPeriod,
-         Spacer(20),
+      //   selectPeriod, // TODO: - Period select
+      //   Spacer(20),
+         Spacer(8),
          frameCellStackModel,
          Spacer(27),
          annulationFrame,

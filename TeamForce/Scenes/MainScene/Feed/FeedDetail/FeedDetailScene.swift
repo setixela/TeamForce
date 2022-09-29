@@ -53,6 +53,7 @@ final class FeedDetailScene<Asset: AssetProtocol>: // ModalDoubleStackModel<Asse
          .distribution(.fill)
          .set(.backColor(Design.color.backgroundSecondary))
          .arrangedModels([
+            Spacer(32),
             viewModels.topBlock,
             viewModels.infoStack,
             Spacer(8),
@@ -61,6 +62,7 @@ final class FeedDetailScene<Asset: AssetProtocol>: // ModalDoubleStackModel<Asse
             viewModels.commentTableModel,
             Grid.xxx.spacer
          ])
+      mainVM.footerStack.arrangedModels([viewModels.commentField])
    }
 }
 
