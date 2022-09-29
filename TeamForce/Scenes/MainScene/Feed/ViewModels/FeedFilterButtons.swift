@@ -79,3 +79,52 @@ final class FeedFilterButtons<Design: DSP>: StackModel, Designable, Eventable {
       }
    }
 }
+
+final class FeedDetailFilterButtons<Design: DSP>: StackModel, Designable, Eventable {
+   struct Events: InitProtocol {
+      var didTapComments: Void?
+      var didTapReactions: Void?
+   }
+
+   var events = [Int: LambdaProtocol?]()
+
+   lazy var buttonComments = SecondaryButtonDT<Design>()
+      .title("Комментарии")
+      .on(\.didTap) { [weak self] in
+         self?.select(0)
+         self?.send(\.didTapComments)
+      }
+
+   lazy var buttonReactions = SecondaryButtonDT<Design>()
+      .title("Оценки")
+      .on(\.didTap) { [weak self] in
+         self?.select(1)
+         self?.send(\.didTapReactions)
+      }
+
+   override func start() {
+      axis(.horizontal)
+      spacing(Grid.x8.value)
+      padBottom(8)
+      arrangedModels([
+         buttonComments,
+         buttonReactions,
+         Grid.xxx.spacer,
+      ])
+   }
+
+   private func deselectAll() {
+      buttonComments.setMode(\.normal)
+      buttonReactions.setMode(\.normal)
+   }
+
+   private func select(_ index: Int) {
+      deselectAll()
+      switch index {
+      case 1:
+         buttonReactions.setMode(\.selected)
+      default:
+         buttonComments.setMode(\.selected)
+      }
+   }
+}
