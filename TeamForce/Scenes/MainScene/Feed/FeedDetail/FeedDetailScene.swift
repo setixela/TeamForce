@@ -26,24 +26,26 @@ final class FeedDetailScene<Asset: AssetProtocol>: // ModalDoubleStackModel<Asse
       stateDelegate: stateDelegate,
       events: FeedDetailEvents(
          presentComment: viewModels.filterButtons.on(\.didTapComments),
-         presentReactions: viewModels.filterButtons.on(\.didTapReactions)
+         presentReactions: viewModels.filterButtons.on(\.didTapReactions),
+         reactionPressed: viewModels.on(\.reactionPressed),
+         saveInput: viewModels.on(\.saveInput)
       )
    )
    
    lazy var scenario: Scenario = scenario1
    
    override func start() {
-      guard let transactionId = inputValue?.0.transaction.id else { return }
       configure()
       guard
          let feed = inputValue?.0,
          let userName = inputValue?.1
       else { return }
+      scenario.start()
       
       viewModels.configureLabels(input: (feed, userName))
+      viewModels.configureEvents(feed: feed)
       
-      scenario1.transactId = transactionId
-      scenario.start()
+      
    }
 
    private var state = FeedDetailSceneState.initial
@@ -69,6 +71,8 @@ final class FeedDetailScene<Asset: AssetProtocol>: // ModalDoubleStackModel<Asse
 enum FeedDetailSceneState {
    case initial
    case presentComments([Comment])
+   case failedToReact
+   case updateReactions((TransactStatistics, (Bool, Bool)))
 }
 
 extension FeedDetailScene: StateMachine {
@@ -79,6 +83,29 @@ extension FeedDetailScene: StateMachine {
          print("hello")
       case .presentComments(let tuple):
          viewModels.commentTableModel.set(.items(tuple + [SpacerItem(size: Grid.x64.value)]))
+      case .failedToReact:
+         print("failed to like")
+      case .updateReactions(let value):
+         var likeColor = Design.color.activeButtonBack
+         var dislikeColor = Design.color.activeButtonBack
+         if value.1.0 == false {
+            likeColor = Design.color.text
+         }
+         if value.1.1 == false {
+            dislikeColor = Design.color.text
+         }
+         viewModels.likeButton.models.main.imageTintColor(likeColor)
+         viewModels.dislikeButton.models.main.imageTintColor(dislikeColor)
+         
+         if let reactions = value.0.likes {
+            for reaction in reactions {
+               if reaction.likeKind?.code == "like" {
+                  viewModels.likeButton.models.right.text(String(reaction.counter ?? 0))
+               } else if reaction.likeKind?.code == "dislike" {
+                  viewModels.dislikeButton.models.right.text(String(reaction.counter ?? 0))
+               }
+            }
+         }
       }
    }
 }

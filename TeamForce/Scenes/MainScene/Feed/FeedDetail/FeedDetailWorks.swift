@@ -14,17 +14,35 @@ final class FeedDetailWorksTempStorage: InitProtocol {
    lazy var currentUserName = ""
    var segmentId: Int?
    var currentTransactId: Int?
+   var currentFeed: Feed?
+   var userLiked: Bool = false
+   var userDisliked: Bool = false
 }
 
 final class FeedDetailWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedDetailWorksTempStorage, Asset> {
    private lazy var apiUseCase = Asset.apiUseCase
 
-
+   var saveInput: Work<Feed, Void> { .init { [weak self] work in
+      guard let input = work.input else { return }
+      Self.store.currentFeed = input
+      Self.store.currentTransactId = input.transaction.id
+      Self.store.userLiked = input.transaction.userLiked ?? false
+      Self.store.userDisliked = input.transaction.userDisliked ?? false
+      work.success()
+   }.retainBy(retainer) }
+   
    var pressLike: Work<PressLikeRequest, Void> { .init { [weak self] work in
       guard let input = work.input else { return }
       self?.apiUseCase.pressLike
          .doAsync(input)
          .onSuccess {
+            if input.likeKind == 1 {
+               Self.store.userLiked = !Self.store.userLiked
+               Self.store.userDisliked = false
+            } else if input.likeKind == 2 {
+               Self.store.userDisliked = !Self.store.userDisliked
+               Self.store.userLiked = false
+            }
             work.success(result: $0)
          }
          .onFail {
@@ -32,22 +50,29 @@ final class FeedDetailWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedDetailWork
          }
    }.retainBy(retainer) }
 
-   var getTransactStat: Work<TransactStatRequest, TransactStatistics> { .init { [weak self] work in
-      guard let input = work.input else { return }
+   var getTransactStat: Work<Void, (TransactStatistics, (Bool, Bool))> { .init { [weak self] work in
+      guard let transactId = Self.store.currentTransactId else { return }
+      let request = TransactStatRequest(token: "", transactionId: transactId)
       self?.apiUseCase.getTransactStatistics
-         .doAsync(input)
+         .doAsync(request)
          .onSuccess {
-            work.success(result: $0)
+            let likes = (Self.store.userLiked, Self.store.userDisliked)
+            work.success(result: ($0, likes))
          }
          .onFail {
             work.fail()
          }
    }.retainBy(retainer) }
    
-   var getComments: Work<CommentsRequest, [Comment]> { .init { [weak self] work in
-      guard let input = work.input else { return }
+   var getComments: Work<Void, [Comment]> { .init { [weak self] work in
+      guard let transactId = Self.store.currentTransactId else { return }
+      let request = CommentsRequest(token: "",
+                                    body: CommentsRequestBody(
+                                       transactionId: transactId,
+                                       includeName: true
+                                    ))
       self?.apiUseCase.getComments
-         .doAsync(input)
+         .doAsync(request)
          .onSuccess {
             work.success(result: $0)
          }

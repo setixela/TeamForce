@@ -14,26 +14,28 @@ import UIKit
 struct FeedDetailEvents {
    let presentComment: VoidWork<Void>
    let presentReactions: VoidWork<Void>
+   let reactionPressed: VoidWork<PressLikeRequest>
+   let saveInput: VoidWork<Feed>
 }
 
 final class FeedDetailScenario<Asset: AssetProtocol>:
    BaseScenario<FeedDetailEvents, FeedDetailSceneState, FeedDetailWorks<Asset>>, Assetable
 {
-   var transactId: Int?
-   
    override func start() {
-      if let id = transactId {
-         let request = CommentsRequest(token: "",
-                                       body: CommentsRequestBody(
-                                          transactionId: id,
-                                          includeName: true
-                                       ))
-         works.getComments
-            .doAsync(request)
-            .onSuccess(setState) { .presentComments($0)}
-            .onFail {
-               print("failed")
-            }
-      }
+      
+      events.reactionPressed
+         .doNext(work: works.pressLike)
+         .onFail(setState) { .failedToReact }
+         .doNext(work: works.getTransactStat)
+         .onSuccess(setState) { .updateReactions($0) }
+      
+      events.saveInput
+         .doNext(work: works.saveInput)
+         .onSuccess {
+            print("saved input")
+         }
+         .doNext(work: works.getComments)
+         .onSuccess(setState) { .presentComments($0) }
+      
    }
 }

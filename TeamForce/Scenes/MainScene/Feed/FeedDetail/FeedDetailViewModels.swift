@@ -10,6 +10,7 @@ import ReactiveWorks
 import UIKit
 
 final class FeedDetailViewModels<Design: DSP>: BaseModel, Designable {
+   var events: EventsStore = .init()
    
    lazy var presenter = CommentPresenters<Design>()
    
@@ -42,13 +43,13 @@ final class FeedDetailViewModels<Design: DSP>: BaseModel, Designable {
       .set(Design.state.label.caption)
       .textColor(Design.color.iconBrand)
    
-   private lazy var likeButton = ReactionButton<Design>()
+   lazy var likeButton = ReactionButton<Design>()
       .setAll {
          $0.image(Design.icon.like)
          $1.text("0")
       }
    
-   private lazy var dislikeButton = ReactionButton<Design>()
+   lazy var dislikeButton = ReactionButton<Design>()
       .setAll {
          $0.image(Design.icon.dislike)
          $1.text("0")
@@ -121,12 +122,12 @@ final class FeedDetailViewModels<Design: DSP>: BaseModel, Designable {
    
    override func start() {
       filterButtons.buttonComments.setMode(\.selected)
+      
    }
    
    func configureLabels(input: (Feed, String)) {
       let feed = input.0
       let userName = input.1
-      
       configureImage(feed: feed)
       let dateText = FeedPresenters<Design>.makeInfoDateLabel(feed: feed).view.text
       dateLabel.text(dateText ?? "")
@@ -149,6 +150,14 @@ final class FeedDetailViewModels<Design: DSP>: BaseModel, Designable {
       
       likeButton.models.right.text(likeAmount)
       dislikeButton.models.right.text(dislikeAmount)
+      
+      if feed.transaction.userLiked == true {
+         likeButton.models.main.imageTintColor(Design.color.activeButtonBack)
+      }
+      if feed.transaction.userDisliked == true {
+         dislikeButton.models.main.imageTintColor(Design.color.activeButtonBack)
+      }
+
       
       if let reason = feed.transaction.reason {
          reasonLabel.models.down.text(reason)
@@ -182,4 +191,32 @@ final class FeedDetailViewModels<Design: DSP>: BaseModel, Designable {
          }
       }
    }
+   
+   func configureEvents(feed: Feed) {
+     
+      let transactionId = feed.transaction.id
+      send(\.saveInput, feed)
+      
+      likeButton.view.on(\.didTap, self) {
+         let request = PressLikeRequest(token: "",
+                                        likeKind: 1,
+                                        transactionId: transactionId)
+         $0.send(\.reactionPressed, request)
+      }
+
+      dislikeButton.view.on(\.didTap, self) {
+         let request = PressLikeRequest(token: "",
+                                        likeKind: 2,
+                                        transactionId: transactionId)
+         $0.send(\.reactionPressed, request)
+      }
+   }
 }
+
+extension FeedDetailViewModels: Eventable {
+   struct Events: InitProtocol {
+      var reactionPressed: PressLikeRequest?
+      var saveInput: Feed?
+   }
+}
+
