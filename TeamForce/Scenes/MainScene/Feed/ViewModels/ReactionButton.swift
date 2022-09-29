@@ -22,3 +22,14 @@ final class ReactionButton<Design: DSP>: M<ImageViewModel>.R<LabelModel>.Combo, 
       padding(.sideOffset(8))
    }
 }
+
+extension ReactionButton: StateMachine {
+   func setState(_ state: SelectState) {
+      switch state {
+      case .none:
+         models.main.imageTintColor(Design.color.iconContrast)
+      case .selected:
+         models.main.imageTintColor(Design.color.activeButtonBack)
+      }
+   }
+}

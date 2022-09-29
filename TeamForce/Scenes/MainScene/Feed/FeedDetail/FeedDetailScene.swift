@@ -11,7 +11,7 @@ import UIKit
 final class FeedDetailScene<Asset: AssetProtocol>: // ModalDoubleStackModel<Asset>, Eventable
    BaseSceneModel<
       DefaultVCModel,
-      DoubleStacksBrandedVM<Asset.Design>,
+      TripleStacksBrandedVM<Asset.Design>,
       Asset,
       (Feed, String)
    >, Scenarible
@@ -21,7 +21,7 @@ final class FeedDetailScene<Asset: AssetProtocol>: // ModalDoubleStackModel<Asse
    
    private lazy var viewModels = FeedDetailViewModels<Design>()
    
-   lazy var scenario1 = FeedDetailScenario<Asset>(
+   lazy var scenario: Scenario = FeedDetailScenario<Asset>(
       works: FeedDetailWorks<Asset>(),
       stateDelegate: stateDelegate,
       events: FeedDetailEvents(
@@ -31,8 +31,6 @@ final class FeedDetailScene<Asset: AssetProtocol>: // ModalDoubleStackModel<Asse
          saveInput: viewModels.on(\.saveInput)
       )
    )
-   
-   lazy var scenario: Scenario = scenario1
    
    override func start() {
       configure()
@@ -44,13 +42,11 @@ final class FeedDetailScene<Asset: AssetProtocol>: // ModalDoubleStackModel<Asse
       
       viewModels.configureLabels(input: (feed, userName))
       viewModels.configureEvents(feed: feed)
-      
-      
    }
 
    private var state = FeedDetailSceneState.initial
    private func configure() {
-      mainVM.headerStack.arrangedModels([Grid.x64.spacer])
+      mainVM.headerStack.arrangedModels([Spacer(8)])
       mainVM.bodyStack
          .set(Design.state.stack.default)
          .alignment(.fill)

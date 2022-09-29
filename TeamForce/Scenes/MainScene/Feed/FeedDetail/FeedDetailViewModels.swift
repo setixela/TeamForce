@@ -23,8 +23,7 @@ final class FeedDetailViewModels<Design: DSP>: BaseModel, Designable {
       ]))
    
    lazy var filterButtons = FeedDetailFilterButtons<Design>()
-   
-   
+
    private lazy var image = WrappedY(ImageViewModel()
       .image(Design.icon.avatarPlaceholder)
       .contentMode(.scaleAspectFill)

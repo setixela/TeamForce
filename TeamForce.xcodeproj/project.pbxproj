@@ -68,7 +68,7 @@
 		196750B0286518F80019A6DE /* DoubleStacksModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196750AF286518F80019A6DE /* DoubleStacksModel.swift */; };
 		196750B22865190D0019A6DE /* ImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196750B12865190D0019A6DE /* ImageViewModel.swift */; };
 		196750B4286519660019A6DE /* ProductionAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196750B3286519660019A6DE /* ProductionAsset.swift */; };
-		196D883428ADB6EC00F4C09D /* TripleStacksBrandedVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196D883328ADB6EC00F4C09D /* TripleStacksBrandedVM.swift */; };
+		196D883428ADB6EC00F4C09D /* MainScreenVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196D883328ADB6EC00F4C09D /* MainScreenVM.swift */; };
 		196D883628ADB74800F4C09D /* TabBarPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196D883528ADB74800F4C09D /* TabBarPanel.swift */; };
 		1977518D28A8329F006CFAF3 /* ReactiveWorks in Frameworks */ = {isa = PBXBuildFile; productRef = 1977518C28A8329F006CFAF3 /* ReactiveWorks */; };
 		1977519028A83395006CFAF3 /* SwiftCSSParser in Frameworks */ = {isa = PBXBuildFile; productRef = 1977518F28A83395006CFAF3 /* SwiftCSSParser */; };
@@ -343,7 +343,7 @@
 		196750AF286518F80019A6DE /* DoubleStacksModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleStacksModel.swift; sourceTree = "<group>"; };
 		196750B12865190D0019A6DE /* ImageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewModel.swift; sourceTree = "<group>"; };
 		196750B3286519660019A6DE /* ProductionAsset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductionAsset.swift; sourceTree = "<group>"; };
-		196D883328ADB6EC00F4C09D /* TripleStacksBrandedVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripleStacksBrandedVM.swift; sourceTree = "<group>"; };
+		196D883328ADB6EC00F4C09D /* MainScreenVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenVM.swift; sourceTree = "<group>"; };
 		196D883528ADB74800F4C09D /* TabBarPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarPanel.swift; sourceTree = "<group>"; };
 		19775FFD28C5922B008DF8E0 /* ImagePickingScenario.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickingScenario.swift; sourceTree = "<group>"; };
 		1977BE5428A7238F00D554EA /* TextFieldStates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldStates.swift; sourceTree = "<group>"; };
@@ -1197,7 +1197,7 @@
 			isa = PBXGroup;
 			children = (
 				192FCFFE28C9477100E6FACC /* ModalDoubleStackModel.swift */,
-				196D883328ADB6EC00F4C09D /* TripleStacksBrandedVM.swift */,
+				196D883328ADB6EC00F4C09D /* MainScreenVM.swift */,
 				196D883528ADB74800F4C09D /* TabBarPanel.swift */,
 				19EE848F28AB20CE00D862EE /* DoubleStacksBrandedVM.swift */,
 			);
@@ -1452,7 +1452,7 @@
 				197A771828AD90800082CD81 /* XelaLog.swift in Sources */,
 				19A9BE7E28C2EB7D0099F8EA /* TransactSendErrorViewModel.swift in Sources */,
 				19A9232F28B2E34E0080D491 /* CurrencyLabelDT.swift in Sources */,
-				196D883428ADB6EC00F4C09D /* TripleStacksBrandedVM.swift in Sources */,
+				196D883428ADB6EC00F4C09D /* MainScreenVM.swift in Sources */,
 				19AE3AEF28691B2E00A0C6E4 /* MainScene.swift in Sources */,
 				197A2DA428A9BF4B00190656 /* Combos.swift in Sources */,
 				19F15389289964D200ECF000 /* ApiUseCase.swift in Sources */,

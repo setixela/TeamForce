@@ -15,6 +15,7 @@ enum ScrollState {
    case hideHorizontalScrollIndicator
    case hideVerticalScrollIndicator
    case padding(UIEdgeInsets)
+   case bounce(Bool)
 }
 
 struct ScrollEvents: ScrollEventsProtocol {
@@ -81,6 +82,8 @@ extension ScrollViewModelY: Stateable2 {
          view.showsVerticalScrollIndicator = false
       case .padding(let value):
          stack.padding(value)
+      case .bounce(let value):
+         view.bounces = value
       }
    }
 }
@@ -124,6 +127,8 @@ extension ScrollViewModelX: Stateable2 {
          view.showsVerticalScrollIndicator = false
       case .padding(let value):
          stack.padding(value)
+      case .bounce(let value):
+         view.bounces = value
       }
    }
 }

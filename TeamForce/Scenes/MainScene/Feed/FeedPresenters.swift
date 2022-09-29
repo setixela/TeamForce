@@ -85,10 +85,10 @@ class FeedPresenters<Design: DesignProtocol>: Designable {
             }
          
          if feed.transaction.userLiked == true {
-            likeButton.models.main.imageTintColor(Design.color.activeButtonBack)
+            likeButton.setState(.selected)
          }
          if feed.transaction.userDisliked == true {
-            dislikeButton.models.main.imageTintColor(Design.color.activeButtonBack)
+            dislikeButton.setState(.selected)
          }
          
          likeButton.view.startTapGestureRecognize(cancelTouch: true)
@@ -99,6 +99,9 @@ class FeedPresenters<Design: DesignProtocol>: Designable {
                                            likeKind: 1,
                                            transactionId: transactionId)
             $0.send(\.reactionPressed, request)
+
+            likeButton.setState(.selected)
+            dislikeButton.setState(.none)
          }
 
          dislikeButton.view.on(\.didTap, self) {
@@ -106,6 +109,8 @@ class FeedPresenters<Design: DesignProtocol>: Designable {
                                            likeKind: 2,
                                            transactionId: transactionId)
             $0.send(\.reactionPressed, request)
+            dislikeButton.setState(.selected)
+            likeButton.setState(.none)
          }
          
          let reactionsBlock = StackModel()

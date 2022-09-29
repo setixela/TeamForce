@@ -90,6 +90,7 @@ final class BalanceScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>
       .backColor(Design.color.successSecondary)
 
    private lazy var scrollWrapper = ScrollViewModelY()
+      .set(.bounce(false))
       .set(.arrangedModels([
          selectPeriod,
          Spacer(20),

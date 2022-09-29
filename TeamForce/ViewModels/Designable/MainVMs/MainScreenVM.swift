@@ -10,7 +10,7 @@ import ReactiveWorks
 
 // MARK: - View Models --------------------------------------------------------------
 
-final class TripleStacksBrandedVM<Design: DesignProtocol>:
+final class MainScreenVM<Design: DesignProtocol>:
    Combos<SComboMDD<StackModel, WrappedY<StackModel>, TabBarPanel<Design>>>,
    Designable
 {
@@ -78,7 +78,7 @@ enum TripleStacksState {
    case presentHeaderTitle
 }
 
-extension TripleStacksBrandedVM: StateMachine {
+extension MainScreenVM: StateMachine {
    func setState(_ state: TripleStacksState) {
       switch state {
       case .hideHeaderTitle:
