@@ -15,13 +15,14 @@ protocol Marginable {
 protocol Tappable: Eventable where Events == ButtonEvents {}
 
 @objc protocol TappableView {
-   func startTapGestureRecognize()
+   func startTapGestureRecognize(cancelTouch: Bool)
    @objc func didTap()
 }
 
 extension UIView: TappableView {
-   func startTapGestureRecognize() {
+   func startTapGestureRecognize(cancelTouch: Bool = false) {
       let gesture = UITapGestureRecognizer(target: self, action: #selector(didTap))
+      gesture.cancelsTouchesInView = cancelTouch
       addGestureRecognizer(gesture)
       isUserInteractionEnabled = true
    }
@@ -211,14 +212,15 @@ final class StackViewExtended: UIStackView, Eventable {
 
    private var isGestured = false
 
-   var events: EventsStore = .init() {
-      didSet {
-         if !isGestured {
-            startTapGestureRecognize()
-            isGestured = true
-         }
-      }
-   }
+   var events: EventsStore = .init()
+//   {
+//      didSet {
+//         if !isGestured {
+//            startTapGestureRecognize()
+//            isGestured = true
+//         }
+//      }
+//   }
 
    weak var backView: UIView?
 
@@ -235,9 +237,9 @@ final class StackViewExtended: UIStackView, Eventable {
       fatalError("init(coder:) has not been implemented")
    }
 
-   override func startTapGestureRecognize() {
+   override func startTapGestureRecognize(cancelTouch: Bool = false) {
       let gesture = UITapGestureRecognizer(target: self, action: #selector(didTap))
-      gesture.cancelsTouchesInView = false
+      gesture.cancelsTouchesInView = cancelTouch
       addGestureRecognizer(gesture)
       isUserInteractionEnabled = true
    }

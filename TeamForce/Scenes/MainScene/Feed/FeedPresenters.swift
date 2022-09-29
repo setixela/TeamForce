@@ -26,9 +26,9 @@ class FeedPresenters<Design: DesignProtocol>: Designable {
          let recipient = "@" + feed.transaction.recipient
          let transactionId = feed.transaction.id
          
-         let isPersonal = feed.eventType.isPersonal
-         let hasScope = feed.eventType.hasScope
-         let isAnonTransact = feed.transaction.isAnonymous
+//         let isPersonal = feed.eventType.isPersonal
+//         let hasScope = feed.eventType.hasScope
+//         let isAnonTransact = feed.transaction.isAnonymous
          
          let type = FeedTransactType.make(feed: feed, currentUserName: self.userName)
          
@@ -47,9 +47,9 @@ class FeedPresenters<Design: DesignProtocol>: Designable {
             }
          }
          
-         let tagBlock = StackModel()
-            .axis(.horizontal)
-            .spacing(4)
+//         let tagBlock = StackModel()
+//            .axis(.horizontal)
+//            .spacing(4)
          var commentsAmount = "0"
          commentsAmount = String(feed.transaction.commentsAmount ?? 0)
          
@@ -91,8 +91,8 @@ class FeedPresenters<Design: DesignProtocol>: Designable {
             dislikeButton.models.main.imageTintColor(Design.color.activeButtonBack)
          }
          
-         likeButton.view.startTapGestureRecognize()
-         dislikeButton.view.startTapGestureRecognize()
+         likeButton.view.startTapGestureRecognize(cancelTouch: true)
+         dislikeButton.view.startTapGestureRecognize(cancelTouch: true)
          
          likeButton.view.on(\.didTap, self) {
             let request = PressLikeRequest(token: "",

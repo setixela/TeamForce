@@ -67,7 +67,8 @@ final class FeedScenario<Asset: AssetProtocol>:
       
       events.presentDetail
          .doNext(work: works.getFeedByRowNumber)
-         .onSuccess(setState) { .presentDetailView($0)}
+         .onSuccess(setState) {
+            .presentDetailView($0)}
          .onFail {
             print("fail ")
          }
