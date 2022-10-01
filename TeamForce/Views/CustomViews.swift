@@ -40,8 +40,8 @@ extension UIView: ButtonTapAnimator {}
 final class PaddingLabel: UILabel, Marginable, Tappable {
    var events: EventsStore = .init() {
       didSet {
-         //startTapGestureRecognize()
-         //print("started events")
+         // startTapGestureRecognize()
+         // print("started events")
       }
    }
 
@@ -74,7 +74,7 @@ final class PaddingLabel: UILabel, Marginable, Tappable {
 
       return contentSize
    }
-   
+
    func makePartsClickable(user1: String?, user2: String?) {
       isUserInteractionEnabled = true
       let tapGesture = CustomTap(target: self,
@@ -84,11 +84,10 @@ final class PaddingLabel: UILabel, Marginable, Tappable {
       addGestureRecognizer(tapGesture)
       lineBreakMode = .byWordWrapping
    }
-   
+
    @objc func tappedOnLabel(gesture: CustomTap) {
-      
-      guard let text = self.text else { return }
-      
+      guard let text = text else { return }
+
       let firstRange = (text as NSString).range(of: gesture.user1.string)
       let secondRange = (text as NSString).range(of: gesture.user2.string)
       print("first range \(firstRange)")
@@ -213,14 +212,6 @@ final class StackViewExtended: UIStackView, Eventable {
    private var isGestured = false
 
    var events: EventsStore = .init()
-//   {
-//      didSet {
-//         if !isGestured {
-//            startTapGestureRecognize()
-//            isGestured = true
-//         }
-//      }
-//   }
 
    weak var backView: UIView?
 

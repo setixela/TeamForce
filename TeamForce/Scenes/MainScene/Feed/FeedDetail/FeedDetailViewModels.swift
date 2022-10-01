@@ -8,6 +8,77 @@
 import ReactiveWorks
 import UIKit
 
+/*
+   common: InfoBlock
+           selectorsBlock
+
+   details: reason
+            tags
+            photo
+
+   comments: commentsTable
+             textfieldFooter
+
+   reactions: buttonsBlock (all, likes, dislikes)
+              reactorUserList
+
+ */
+
+struct FeedDetailsBlock<Design: DSP>: Designable {
+   lazy var reasonLabel = SettingsTitleBodyDT<Design>()
+      .setAll {
+         $0
+            .text("Cообщение")
+            .set(Design.state.label.body4)
+         $1
+            .text("-")
+            .set(Design.state.label.caption)
+      }
+      .hidden(true)
+
+   lazy var hashTagBlock = ScrollViewModelX()
+      .set(.spacing(4))
+      .set(.hideHorizontalScrollIndicator)
+
+   lazy var transactPhoto = Combos<SComboMD<LabelModel, ImageViewModel>>()
+      .setAll {
+         $0
+            .padBottom(10)
+            .set(Design.state.label.body4)
+            .text("Фотография")
+         $1
+            .image(Design.icon.transactSuccess)
+            .maxHeight(130)
+            .maxWidth(130)
+            .contentMode(.scaleAspectFill)
+            .cornerRadius(Design.params.cornerRadiusSmall)
+      }
+}
+
+struct FeedCommentsBlock<Design: DSP>: Designable {
+   lazy var commentTableModel = TableItemsModel<Design>()
+      .backColor(Design.color.background)
+      .set(.presenters([
+         CommentPresenters<Design>().commentCellPresenter,
+         SpacerPresenter.presenter
+      ]))
+
+   lazy var commentField = TextFieldModel()
+      .set(Design.state.textField.default)
+      .placeholder(Design.Text.title.comment)
+      .placeholderColor(Design.color.textFieldPlaceholder)
+}
+
+struct FeedReactionsBlock<Design: DSP>: Designable {
+
+}
+
+enum FeedDetailsState {
+   case details
+   case comments
+   case reactions
+}
+
 final class FeedDetailViewModels<Design: DSP>: BaseModel, Designable {
    var events: EventsStore = .init()
 
@@ -239,5 +310,18 @@ extension FeedDetailViewModels: Eventable {
    struct Events: InitProtocol {
       var reactionPressed: PressLikeRequest?
       var saveInput: Feed?
+   }
+}
+
+extension FeedDetailViewModels: StateMachine {
+   func setState(_ state: FeedDetailsState) {
+      switch state {
+      case .details:
+         break
+      case .comments:
+         break
+      case .reactions:
+         break
+      }
    }
 }

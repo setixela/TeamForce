@@ -12,30 +12,30 @@ class FeedPresenters<Design: DesignProtocol>: Designable {
    var events: EventsStore = .init()
    var userName: String = ""
    private lazy var retainer = Retainer()
-   
+
    var feedCellPresenter: Presenter<Feed, WrappedX<StackModel>> {
       Presenter { [weak self] work in
-         
+
          guard let self = self else { return }
-         
+
          let feed = work.unsafeInput
-         
+
          let senderId = feed.transaction.senderId
          let recipientId = feed.transaction.recipientId
          let sender = "@" + feed.transaction.sender
          let recipient = "@" + feed.transaction.recipient
          let transactionId = feed.transaction.id
-         
+
 //         let isPersonal = feed.eventType.isPersonal
 //         let hasScope = feed.eventType.hasScope
 //         let isAnonTransact = feed.transaction.isAnonymous
-         
+
          let type = FeedTransactType.make(feed: feed, currentUserName: self.userName)
-         
+
          let dateLabel = FeedPresenters.makeInfoDateLabel(feed: feed)
          let infoLabel = FeedPresenters.makeInfoLabel(feed: feed, type: type)
          let icon = self.makeIcon(feed: feed)
-         
+
          infoLabel.view.on(\.didSelect) {
             switch $0 {
             case sender:
@@ -46,13 +46,13 @@ class FeedPresenters<Design: DesignProtocol>: Designable {
                print("selected error")
             }
          }
-         
+
 //         let tagBlock = StackModel()
 //            .axis(.horizontal)
 //            .spacing(4)
          var commentsAmount = "0"
          commentsAmount = String(feed.transaction.commentsAmount ?? 0)
-         
+
          let messageButton = ReactionButton<Design>()
             .setAll {
                $0.image(Design.icon.messageCloud)
@@ -60,7 +60,7 @@ class FeedPresenters<Design: DesignProtocol>: Designable {
             }
          var likeAmount = "0"
          var dislikeAmount = "0"
-        
+
          if let reactions = feed.transaction.reactions {
             for reaction in reactions {
                if reaction.code == "like" {
@@ -70,30 +70,29 @@ class FeedPresenters<Design: DesignProtocol>: Designable {
                }
             }
          }
-         
-        
+
          let likeButton = ReactionButton<Design>()
             .setAll {
                $0.image(Design.icon.like)
                $1.text(likeAmount)
             }
-         
+
          let dislikeButton = ReactionButton<Design>()
             .setAll {
                $0.image(Design.icon.dislike)
                $1.text(dislikeAmount)
             }
-         
+
          if feed.transaction.userLiked == true {
             likeButton.setState(.selected)
          }
          if feed.transaction.userDisliked == true {
             dislikeButton.setState(.selected)
          }
-         
+
          likeButton.view.startTapGestureRecognize(cancelTouch: true)
          dislikeButton.view.startTapGestureRecognize(cancelTouch: true)
-         
+
          likeButton.view.on(\.didTap, self) {
             let request = PressLikeRequest(token: "",
                                            likeKind: 1,
@@ -112,7 +111,7 @@ class FeedPresenters<Design: DesignProtocol>: Designable {
             dislikeButton.setState(.selected)
             likeButton.setState(.none)
          }
-         
+
          let reactionsBlock = StackModel()
             .axis(.horizontal)
             .alignment(.leading)
@@ -124,23 +123,23 @@ class FeedPresenters<Design: DesignProtocol>: Designable {
                dislikeButton,
                Grid.xxx.spacer
             ])
-         
+
          let tags = (feed.transaction.tags ?? []).map { tag in
             WrappedX(
                LabelModel()
                   .set(Design.state.label.caption2)
                   .text("# " + tag.name)
-               
             )
             .backColor(Design.color.infoSecondary)
             .cornerRadius(Design.params.cornerRadiusMini)
             .padding(.outline(8))
          }
+
          let hashTagBlock = ScrollViewModelX()
             .set(.spacing(4))
             .set(.arrangedModels(tags))
             .set(.hideHorizontalScrollIndicator)
-         
+
          let infoBlock = StackModel()
             .spacing(Grid.x10.value)
             .axis(.vertical)
@@ -151,12 +150,12 @@ class FeedPresenters<Design: DesignProtocol>: Designable {
                reactionsBlock,
                hashTagBlock
             ])
-         
+
          var backColor = Design.color.background
          if type == .youGotAmountFromSome || type == .youGotAmountFromAnonym {
             backColor = Design.color.successSecondary
          }
-         
+
          let cellStack = WrappedX(
             StackModel()
                .padding(.outline(Grid.x8.value))
@@ -170,8 +169,8 @@ class FeedPresenters<Design: DesignProtocol>: Designable {
                .backColor(backColor)
                .cornerRadius(Design.params.cornerRadiusSmall)
          )
-            .padding(.verticalOffset(Grid.x16.value))
-         
+         .padding(.verticalOffset(Grid.x16.value))
+
          self.retainer.retain(work)
          work.success(result: cellStack)
       }
@@ -227,7 +226,7 @@ extension FeedPresenters {
          .set(Design.state.label.caption)
          .textColor(Design.color.iconBrand)
          .attributedText(infoText)
-      
+
       infoLabel.view.makePartsClickable(user1: recipientName, user2: senderName)
 
       return infoLabel
@@ -287,6 +286,6 @@ extension FeedPresenters: Eventable {
    struct Events: InitProtocol {
       var didSelect: Int?
       var reactionPressed: PressLikeRequest?
-      //var dislikePressed: Int?
+      // var dislikePressed: Int?
    }
 }
