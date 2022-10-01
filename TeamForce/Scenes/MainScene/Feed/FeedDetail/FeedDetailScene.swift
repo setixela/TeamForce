@@ -8,7 +8,7 @@
 import ReactiveWorks
 import UIKit
 
-final class FeedDetailScene<Asset: AssetProtocol>: // ModalDoubleStackModel<Asset>, Eventable
+final class FeedDetailScene<Asset: AssetProtocol>:
    BaseSceneModel<
       DefaultVCModel,
       TripleStacksBrandedVM<Asset.Design>,
@@ -18,28 +18,28 @@ final class FeedDetailScene<Asset: AssetProtocol>: // ModalDoubleStackModel<Asse
 {
    typealias State = ViewState
    typealias State2 = StackState
-   
-   private lazy var viewModels = FeedDetailViewModels<Design>()
-   
+
+   private lazy var feedDetailVM = FeedDetailViewModels<Design>()
+
    lazy var scenario: Scenario = FeedDetailScenario<Asset>(
       works: FeedDetailWorks<Asset>(),
       stateDelegate: stateDelegate,
       events: FeedDetailEvents(
-         presentComment: viewModels.topBlock.filterButtons.on(\.didTapComments),
-         presentReactions: viewModels.topBlock.filterButtons.on(\.didTapReactions),
-         reactionPressed: viewModels.on(\.reactionPressed),
-         saveInput: viewModels.on(\.saveInput)
+         presentComment: feedDetailVM.topBlock.filterButtons.on(\.didTapComments),
+         presentReactions: feedDetailVM.topBlock.filterButtons.on(\.didTapReactions),
+         reactionPressed: feedDetailVM.on(\.reactionPressed),
+         saveInput: feedDetailVM.on(\.saveInput)
       )
    )
-   
+
    override func start() {
       configure()
-      guard         let inputValue      else { return }
+
+      guard let inputValue else { return }
 
       scenario.start()
-      
-      viewModels.setState(.initial(inputValue))
-//      viewModels.configureEvents(feed: feed)
+
+      feedDetailVM.setState(.initial(inputValue))
    }
 
    private var state = FeedDetailSceneState.initial
@@ -53,7 +53,7 @@ final class FeedDetailScene<Asset: AssetProtocol>: // ModalDoubleStackModel<Asse
          .set(.backColor(Design.color.backgroundSecondary))
          .arrangedModels([
             Spacer(32),
-            viewModels
+            feedDetailVM
          ])
    }
 }
@@ -71,12 +71,8 @@ extension FeedDetailScene: StateMachine {
       switch state {
       case .initial:
          print("hello")
-         
       case .presentComments(let comments):
-//         viewModels.commentTableModel.set(.items(tuple + [SpacerItem(size: Grid.x64.value)]))
-
-         viewModels.setState(.comments(comments))
-         break
+         feedDetailVM.setState(.comments(comments))
       case .failedToReact:
          print("failed to like")
       case .updateReactions(let value):

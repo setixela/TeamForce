@@ -22,6 +22,7 @@ final class FeedDetailViewModels<Design: DSP>: StackModel, Designable {
 
    lazy var topBlock = FeedDetailUserInfoBlock<Design>()
 
+   private lazy var detailsBlock = FeedDetailsBlock<Design>()
    private lazy var commentsBlock = FeedCommentsBlock<Design>()
 
    override func start() {
@@ -65,12 +66,14 @@ extension FeedDetailViewModels: StateMachine {
       case .initial(let tuple):
          send(\.saveInput, tuple.0)
          arrangedModels([
-            topBlock
+            topBlock,
+            detailsBlock
          ])
          topBlock.setup(tuple)
       case .details:
          arrangedModels([
-            topBlock
+            topBlock,
+            detailsBlock
          ])
       case .comments(let comments):
          commentsBlock.setup(comments)

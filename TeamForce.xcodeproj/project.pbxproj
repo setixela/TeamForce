@@ -58,6 +58,7 @@
 		1953CEFE28E8A15C00C670A6 /* FeedCommentsBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1953CEFD28E8A15C00C670A6 /* FeedCommentsBlock.swift */; };
 		1953CF0028E8A19A00C670A6 /* FeedReactionsBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1953CEFF28E8A19A00C670A6 /* FeedReactionsBlock.swift */; };
 		1953CF0228E8A1C500C670A6 /* FeedDetailsBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1953CF0128E8A1C500C670A6 /* FeedDetailsBlock.swift */; };
+		1953CF0428E8DF8500C670A6 /* InternetRechability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1953CF0328E8DF8500C670A6 /* InternetRechability.swift */; };
 		1953DE7F2878BCB5000DC537 /* SwiftKeychainWrapper in Frameworks */ = {isa = PBXBuildFile; productRef = 1953DE7E2878BCB5000DC537 /* SwiftKeychainWrapper */; };
 		1953DE812879FC55000DC537 /* SearchUserApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1953DE802879FC55000DC537 /* SearchUserApiWorker.swift */; };
 		1953DE842879FDE3000DC537 /* TransactViewModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1953DE832879FDE3000DC537 /* TransactViewModels.swift */; };
@@ -338,6 +339,7 @@
 		1953CEFD28E8A15C00C670A6 /* FeedCommentsBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCommentsBlock.swift; sourceTree = "<group>"; };
 		1953CEFF28E8A19A00C670A6 /* FeedReactionsBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedReactionsBlock.swift; sourceTree = "<group>"; };
 		1953CF0128E8A1C500C670A6 /* FeedDetailsBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedDetailsBlock.swift; sourceTree = "<group>"; };
+		1953CF0328E8DF8500C670A6 /* InternetRechability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternetRechability.swift; sourceTree = "<group>"; };
 		1953DE802879FC55000DC537 /* SearchUserApiWorker.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = SearchUserApiWorker.swift; sourceTree = "<group>"; tabWidth = 2; };
 		1953DE832879FDE3000DC537 /* TransactViewModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactViewModels.swift; sourceTree = "<group>"; };
 		1953DE852879FE30000DC537 /* PickerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerViewModel.swift; sourceTree = "<group>"; };
@@ -1113,6 +1115,7 @@
 				19C1E984285F426B00E7976D /* Abstract */,
 				19C1E988285F426B00E7976D /* TeamForceApi.swift */,
 				19C1E98B285F426B00E7976D /* ApiEngine.swift */,
+				1953CF0328E8DF8500C670A6 /* InternetRechability.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -1552,6 +1555,7 @@
 				19C1E9A328610E4E00E7976D /* MainRouter.swift in Sources */,
 				19A9BE7328C255690099F8EA /* TransactBuilder.swift in Sources */,
 				19221EF528CE1D1B00B7B604 /* EditContactsViewModels.swift in Sources */,
+				1953CF0428E8DF8500C670A6 /* InternetRechability.swift in Sources */,
 				19A73BEB28A4510E000B74CF /* BadgedViewModel.swift in Sources */,
 				198BBEEE28B698040006CD30 /* LoadCsrfTokenUseCase.swift in Sources */,
 				198FE1D02899E0BF00BAF1A5 /* IsEmpty.swift in Sources */,
