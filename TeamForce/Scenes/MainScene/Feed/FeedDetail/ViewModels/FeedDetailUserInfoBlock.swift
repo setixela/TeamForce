@@ -6,8 +6,17 @@
 //
 
 import Foundation
+import ReactiveWorks
+
+extension FeedDetailUserInfoBlock: Eventable {
+   struct Events: InitProtocol {
+      var reactionPressed: PressLikeRequest?
+   }
+}
 
 final class FeedDetailUserInfoBlock<Design: DSP>: StackModel, Designable {
+   var events: EventsStore = .init()
+
    lazy var filterButtons = FeedDetailFilterButtons<Design>()
 
    lazy var image = WrappedY(ImageViewModel()
@@ -101,8 +110,10 @@ extension FeedDetailUserInfoBlock: SetupProtocol {
          dislikeButton.models.main.imageTintColor(Design.color.activeButtonBack)
       }
    }
+}
 
-   private func configureImage(feed: Feed) {
+private extension FeedDetailUserInfoBlock {
+   func configureImage(feed: Feed) {
       if let recipientPhoto = feed.transaction.photoUrl {
          image.subModel.url(recipientPhoto)
       } else {
@@ -119,6 +130,27 @@ extension FeedDetailUserInfoBlock: SetupProtocol {
                }
             }
          }
+      }
+   }
+
+   func configureEvents(feed: Feed) {
+      let transactionId = feed.transaction.id
+      
+      likeButton.view.startTapGestureRecognize()
+      dislikeButton.view.startTapGestureRecognize()
+
+      likeButton.view.on(\.didTap, self) {
+         let request = PressLikeRequest(token: "",
+                                        likeKind: 1,
+                                        transactionId: transactionId)
+         $0.send(\.reactionPressed, request)
+      }
+
+      dislikeButton.view.on(\.didTap, self) {
+         let request = PressLikeRequest(token: "",
+                                        likeKind: 2,
+                                        transactionId: transactionId)
+         $0.send(\.reactionPressed, request)
       }
    }
 }

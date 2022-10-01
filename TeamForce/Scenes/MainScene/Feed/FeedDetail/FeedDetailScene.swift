@@ -34,14 +34,12 @@ final class FeedDetailScene<Asset: AssetProtocol>: // ModalDoubleStackModel<Asse
    
    override func start() {
       configure()
-      guard
-         let feed = inputValue?.0,
-         let userName = inputValue?.1
-      else { return }
+      guard         let inputValue      else { return }
+
       scenario.start()
       
-      viewModels.topBlock.setup((feed, userName))
-      viewModels.configureEvents(feed: feed)
+      viewModels.setState(.initial(inputValue))
+//      viewModels.configureEvents(feed: feed)
    }
 
    private var state = FeedDetailSceneState.initial
@@ -73,20 +71,23 @@ extension FeedDetailScene: StateMachine {
       switch state {
       case .initial:
          print("hello")
-      case .presentComments(let tuple):
+         
+      case .presentComments(let comments):
 //         viewModels.commentTableModel.set(.items(tuple + [SpacerItem(size: Grid.x64.value)]))
+
+         viewModels.setState(.comments(comments))
          break
       case .failedToReact:
          print("failed to like")
       case .updateReactions(let value):
-         var likeColor = Design.color.activeButtonBack
-         var dislikeColor = Design.color.activeButtonBack
-         if value.1.0 == false {
-            likeColor = Design.color.text
-         }
-         if value.1.1 == false {
-            dislikeColor = Design.color.text
-         }
+//         var likeColor = Design.color.activeButtonBack
+//         var dislikeColor = Design.color.activeButtonBack
+//         if value.1.0 == false {
+//            likeColor = Design.color.text
+//         }
+//         if value.1.1 == false {
+//            dislikeColor = Design.color.text
+//         }
 //         viewModels.likeButton.models.main.imageTintColor(likeColor)
 //         viewModels.dislikeButton.models.main.imageTintColor(dislikeColor)
 //
@@ -99,6 +100,7 @@ extension FeedDetailScene: StateMachine {
 //               }
 //            }
 //         }
+         break
       }
    }
 }

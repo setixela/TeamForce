@@ -9,8 +9,9 @@ import ReactiveWorks
 import UIKit
 
 enum FeedDetailsState {
+   case initial((Feed, String))
    case details
-   case comments
+   case comments([Comment])
    case reactions
 }
 
@@ -18,14 +19,15 @@ final class FeedDetailViewModels<Design: DSP>: StackModel, Designable {
    var events: EventsStore = .init()
 
    private lazy var presenter = CommentPresenters<Design>()
+
    lazy var topBlock = FeedDetailUserInfoBlock<Design>()
+
+   private lazy var commentsBlock = FeedCommentsBlock<Design>()
 
    override func start() {
       setState(.details)
       topBlock.filterButtons.buttonComments.setMode(\.selected)
    }
-
-//   func configureLabels(input: (Feed, String)) {
 
 //      if let reason = feed.transaction.reason {
 //         topBlock.reasonLabel.models.down.text(reason)
@@ -38,28 +40,6 @@ final class FeedDetailViewModels<Design: DSP>: StackModel, Designable {
 //         transactPhoto.hidden(false)
 //         infoStack.hidden(false)
 //      }
-//   }
-
-   func configureEvents(feed: Feed) {
-      let transactionId = feed.transaction.id
-      send(\.saveInput, feed)
-
-      topBlock.likeButton.view.startTapGestureRecognize()
-      topBlock.dislikeButton.view.startTapGestureRecognize()
-
-      topBlock.likeButton.view.on(\.didTap, self) {
-         let request = PressLikeRequest(token: "",
-                                        likeKind: 1,
-                                        transactionId: transactionId)
-         $0.send(\.reactionPressed, request)
-      }
-
-      topBlock.dislikeButton.view.on(\.didTap, self) {
-         let request = PressLikeRequest(token: "",
-                                        likeKind: 2,
-                                        transactionId: transactionId)
-         $0.send(\.reactionPressed, request)
-      }
 
 //      commentField
 //         .on(\.didBeginEditing, self) { slf, _ in
@@ -70,7 +50,6 @@ final class FeedDetailViewModels<Design: DSP>: StackModel, Designable {
 //            slf.infoStack.hidden(false)
 //            slf.topBlock.hidden(false)
 //         }
-   }
 }
 
 extension FeedDetailViewModels: Eventable {
@@ -83,11 +62,18 @@ extension FeedDetailViewModels: Eventable {
 extension FeedDetailViewModels: StateMachine {
    func setState(_ state: FeedDetailsState) {
       switch state {
+      case .initial(let tuple):
+         send(\.saveInput, tuple.0)
+         arrangedModels([
+            topBlock
+         ])
+         topBlock.setup(tuple)
       case .details:
          arrangedModels([
             topBlock
          ])
-      case .comments:
+      case .comments(let comments):
+         commentsBlock.setup(comments)
          arrangedModels([
             topBlock
          ])

@@ -32,3 +32,9 @@ final class FeedCommentsBlock<Design: DSP>: DoubleStacksModel, Designable {
       ])
    }
 }
+
+extension FeedCommentsBlock: SetupProtocol {
+   func setup(_ data: [Comment]) {
+      commentTableModel.set(.items(data + [SpacerItem(size: Grid.x64.value)]))
+   }
+}

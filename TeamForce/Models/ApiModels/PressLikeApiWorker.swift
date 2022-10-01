@@ -7,6 +7,8 @@
 
 import Foundation
 import ReactiveWorks
+
+
 struct PressLikeRequest {
    let token: String
    let likeKind: Int
