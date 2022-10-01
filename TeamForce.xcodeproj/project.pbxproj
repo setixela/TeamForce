@@ -54,6 +54,10 @@
 		1952EA6B28A71399003F7852 /* DesignElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1952EA6A28A71399003F7852 /* DesignElements.swift */; };
 		1952EA6D28A71537003F7852 /* ButtonElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1952EA6C28A71537003F7852 /* ButtonElements.swift */; };
 		1952EA7128A718AE003F7852 /* Params.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1952EA7028A718AE003F7852 /* Params.swift */; };
+		1953CEFC28E89FEE00C670A6 /* FeedDetailUserInfoBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1953CEFB28E89FEE00C670A6 /* FeedDetailUserInfoBlock.swift */; };
+		1953CEFE28E8A15C00C670A6 /* FeedCommentsBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1953CEFD28E8A15C00C670A6 /* FeedCommentsBlock.swift */; };
+		1953CF0028E8A19A00C670A6 /* FeedReactionsBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1953CEFF28E8A19A00C670A6 /* FeedReactionsBlock.swift */; };
+		1953CF0228E8A1C500C670A6 /* FeedDetailsBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1953CF0128E8A1C500C670A6 /* FeedDetailsBlock.swift */; };
 		1953DE7F2878BCB5000DC537 /* SwiftKeychainWrapper in Frameworks */ = {isa = PBXBuildFile; productRef = 1953DE7E2878BCB5000DC537 /* SwiftKeychainWrapper */; };
 		1953DE812879FC55000DC537 /* SearchUserApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1953DE802879FC55000DC537 /* SearchUserApiWorker.swift */; };
 		1953DE842879FDE3000DC537 /* TransactViewModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1953DE832879FDE3000DC537 /* TransactViewModels.swift */; };
@@ -330,6 +334,10 @@
 		1952EA6A28A71399003F7852 /* DesignElements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignElements.swift; sourceTree = "<group>"; };
 		1952EA6C28A71537003F7852 /* ButtonElements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonElements.swift; sourceTree = "<group>"; };
 		1952EA7028A718AE003F7852 /* Params.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Params.swift; sourceTree = "<group>"; };
+		1953CEFB28E89FEE00C670A6 /* FeedDetailUserInfoBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedDetailUserInfoBlock.swift; sourceTree = "<group>"; };
+		1953CEFD28E8A15C00C670A6 /* FeedCommentsBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCommentsBlock.swift; sourceTree = "<group>"; };
+		1953CEFF28E8A19A00C670A6 /* FeedReactionsBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedReactionsBlock.swift; sourceTree = "<group>"; };
+		1953CF0128E8A1C500C670A6 /* FeedDetailsBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedDetailsBlock.swift; sourceTree = "<group>"; };
 		1953DE802879FC55000DC537 /* SearchUserApiWorker.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = SearchUserApiWorker.swift; sourceTree = "<group>"; tabWidth = 2; };
 		1953DE832879FDE3000DC537 /* TransactViewModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactViewModels.swift; sourceTree = "<group>"; };
 		1953DE852879FE30000DC537 /* PickerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerViewModel.swift; sourceTree = "<group>"; };
@@ -734,6 +742,18 @@
 				1952EA6428A7115C003F7852 /* StackStateBuilder.swift */,
 			);
 			path = StackStates;
+			sourceTree = "<group>";
+		};
+		1953CEFA28E89FC200C670A6 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				633FBC8528E542540071FF8C /* FeedDetailViewModels.swift */,
+				1953CEFB28E89FEE00C670A6 /* FeedDetailUserInfoBlock.swift */,
+				1953CF0128E8A1C500C670A6 /* FeedDetailsBlock.swift */,
+				1953CEFD28E8A15C00C670A6 /* FeedCommentsBlock.swift */,
+				1953CEFF28E8A19A00C670A6 /* FeedReactionsBlock.swift */,
+			);
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 		1953DE822879FDB3000DC537 /* MainScene */ = {
@@ -1308,7 +1328,7 @@
 				63BB2C2528E3DD8D00C1E3DB /* CommentPresenters.swift */,
 				63BB2C2828E3E7B600C1E3DB /* FeedDetailScenario.swift */,
 				633FBC8328E535600071FF8C /* FeedDetailWorks.swift */,
-				633FBC8528E542540071FF8C /* FeedDetailViewModels.swift */,
+				1953CEFA28E89FC200C670A6 /* ViewModels */,
 			);
 			path = FeedDetail;
 			sourceTree = "<group>";
@@ -1583,6 +1603,7 @@
 				197A2DA328A9BF4B00190656 /* Combos+Init.swift in Sources */,
 				1967509F286492780019A6DE /* Labels.swift in Sources */,
 				63AB071728BD8F2300FD650F /* UpdateProfileUseCase.swift in Sources */,
+				1953CEFE28E8A15C00C670A6 /* FeedCommentsBlock.swift in Sources */,
 				63C6D11628B2ECD000887AD1 /* DoubleLabelHorizontal.swift in Sources */,
 				19C1E98E285F426B00E7976D /* ApiEngineProtocol.swift in Sources */,
 				19CF792828A54D60001531B8 /* Config.swift in Sources */,
@@ -1592,6 +1613,7 @@
 				19D08361286F430B00F75E4A /* Designable.swift in Sources */,
 				63578E5A28AB8F6000423957 /* GetTransactionsByPeriodUseCase.swift in Sources */,
 				6368D82A2894091B0049EEAB /* TransactInputViewModel.swift in Sources */,
+				1953CEFC28E89FEE00C670A6 /* FeedDetailUserInfoBlock.swift in Sources */,
 				63E7A74B28AFCB1800FB2C80 /* UpdateProfileImageApiWorker.swift in Sources */,
 				1918CC79286F6C69004373F3 /* VerifyApiModel.swift in Sources */,
 				63EB469928AC35A30070A271 /* HistoryWorks.swift in Sources */,
@@ -1636,12 +1658,14 @@
 				19017B6D28A698BC00B06345 /* TitleSubtitleCaptionY.swift in Sources */,
 				63D419EB28AA500A0024E22C /* GetFeedsApiWorker.swift in Sources */,
 				19A9BE7628C283270099F8EA /* CommonModelBuilder.swift in Sources */,
+				1953CF0028E8A19A00C670A6 /* FeedReactionsBlock.swift in Sources */,
 				19D7BE9928B3E55F00C95053 /* ScrollViewModels.swift in Sources */,
 				197A360628BADC83006E44C1 /* FeedViewModels.swift in Sources */,
 				19C1E990285F426B00E7976D /* TeamForceEndpoints.swift in Sources */,
 				1953DE862879FE30000DC537 /* PickerViewModel.swift in Sources */,
 				6368D82C289415EC0049EEAB /* TextViewModel.swift in Sources */,
 				19B2C5D428B7D37A00E7B47D /* Shadow.swift in Sources */,
+				1953CF0228E8A1C500C670A6 /* FeedDetailsBlock.swift in Sources */,
 				190C1D12285D15FF00FB3518 /* AppDelegate.swift in Sources */,
 				19FF0D9028B4999000B78346 /* FeedScene.swift in Sources */,
 				190C1D14285D15FF00FB3518 /* SceneDelegate.swift in Sources */,

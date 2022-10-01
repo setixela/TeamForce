@@ -16,7 +16,6 @@ protocol StateMachine: AnyObject {
 extension StateMachine {
 
    var stateDelegate: (ModelState) -> Void {
-
       let fun: (ModelState) -> Void = { [weak self] in
          self?.setState($0)
       }
@@ -29,3 +28,6 @@ extension StateMachine {
    }
 }
 
+enum ValueState<T> {
+   case value(T)
+}
