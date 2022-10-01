@@ -768,6 +768,7 @@
 				197A360328B90BD3006E44C1 /* MainSceneEvents.swift */,
 				19ACB3CB28A599DF00B5AD71 /* Balance */,
 				19ACB3CD28A599ED00B5AD71 /* Feed */,
+				63BB2C2728E3E78300C1E3DB /* FeedDetail */,
 				19ACB3CC28A599E600B5AD71 /* History */,
 				63C6D11228B2E1A600887AD1 /* Settings */,
 			);
@@ -1060,7 +1061,6 @@
 		19ACB3CD28A599ED00B5AD71 /* Feed */ = {
 			isa = PBXGroup;
 			children = (
-				63BB2C2728E3E78300C1E3DB /* FeedDetail */,
 				19FF0D8F28B4999000B78346 /* FeedScene.swift */,
 				197A360528BADC83006E44C1 /* FeedViewModels.swift */,
 				197A360728BADC8D006E44C1 /* FeedScenario.swift */,

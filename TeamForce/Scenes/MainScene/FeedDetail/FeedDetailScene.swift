@@ -11,7 +11,7 @@ import UIKit
 final class FeedDetailScene<Asset: AssetProtocol>:
    BaseSceneModel<
       DefaultVCModel,
-      TripleStacksBrandedVM<Asset.Design>,
+      DoubleStacksBrandedVM<Asset.Design>,
       Asset,
       (Feed, String)
    >, Scenarible
@@ -25,10 +25,11 @@ final class FeedDetailScene<Asset: AssetProtocol>:
       works: FeedDetailWorks<Asset>(),
       stateDelegate: stateDelegate,
       events: FeedDetailEvents(
-         presentComment: feedDetailVM.topBlock.filterButtons.on(\.didTapComments),
-         presentReactions: feedDetailVM.topBlock.filterButtons.on(\.didTapReactions),
+         presentDetails: feedDetailVM.filterButtons.on(\.didTapDetails),
+         presentComment: feedDetailVM.filterButtons.on(\.didTapComments),
+         presentReactions: feedDetailVM.filterButtons.on(\.didTapReactions),
          reactionPressed: feedDetailVM.on(\.reactionPressed),
-         saveInput: feedDetailVM.on(\.saveInput)
+         saveInput: on(\.input)
       )
    )
 
@@ -53,13 +54,15 @@ final class FeedDetailScene<Asset: AssetProtocol>:
          .set(.backColor(Design.color.backgroundSecondary))
          .arrangedModels([
             Spacer(32),
-            feedDetailVM
+            feedDetailVM,
+            Spacer()
          ])
    }
 }
 
 enum FeedDetailSceneState {
    case initial
+   case presentDetails
    case presentComments([Comment])
    case failedToReact
    case updateReactions((TransactStatistics, (Bool, Bool)))
@@ -96,6 +99,9 @@ extension FeedDetailScene: StateMachine {
 //               }
 //            }
 //         }
+         break
+      case .presentDetails:
+         feedDetailVM.setState(.details)
          break
       }
    }

@@ -6,6 +6,7 @@
 //
 
 final class FeedDetailsBlock<Design: DSP>: StackModel, Designable {
+
    lazy var reasonLabel = SettingsTitleBodyDT<Design>()
       .setAll {
          $0
@@ -51,6 +52,7 @@ final class FeedDetailsBlock<Design: DSP>: StackModel, Designable {
    override func start() {
       super.start()
 
+      backColor(.red)
       arrangedModels([
          infoStack,
          hashTagBlock,

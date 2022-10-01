@@ -22,12 +22,14 @@ final class FeedDetailViewModels<Design: DSP>: StackModel, Designable {
 
    lazy var topBlock = FeedDetailUserInfoBlock<Design>()
 
+   lazy var filterButtons = FeedDetailFilterButtons<Design>()
+
    private lazy var detailsBlock = FeedDetailsBlock<Design>()
    private lazy var commentsBlock = FeedCommentsBlock<Design>()
 
    override func start() {
       setState(.details)
-      topBlock.filterButtons.buttonComments.setMode(\.selected)
+      filterButtons.buttonComments.setMode(\.selected)
    }
 
 //      if let reason = feed.transaction.reason {
@@ -67,22 +69,26 @@ extension FeedDetailViewModels: StateMachine {
          send(\.saveInput, tuple.0)
          arrangedModels([
             topBlock,
+            filterButtons,
             detailsBlock
          ])
          topBlock.setup(tuple)
       case .details:
          arrangedModels([
             topBlock,
+            filterButtons,
             detailsBlock
          ])
       case .comments(let comments):
          commentsBlock.setup(comments)
          arrangedModels([
-            topBlock
+            topBlock,
+            filterButtons,
          ])
       case .reactions:
          arrangedModels([
-            topBlock
+            topBlock,
+            filterButtons,
          ])
       }
    }

@@ -8,7 +8,6 @@
 import Foundation
 import ReactiveWorks
 
-
 final class FeedDetailWorksTempStorage: InitProtocol {
    var feed: [Feed]?
    lazy var currentUserName = ""
@@ -22,15 +21,16 @@ final class FeedDetailWorksTempStorage: InitProtocol {
 final class FeedDetailWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedDetailWorksTempStorage, Asset> {
    private lazy var apiUseCase = Asset.apiUseCase
 
-   var saveInput: Work<Feed, Void> { .init { [weak self] work in
+   var saveInput: Work<(Feed, String), Void> { .init { work in
       guard let input = work.input else { return }
-      Self.store.currentFeed = input
-      Self.store.currentTransactId = input.transaction.id
-      Self.store.userLiked = input.transaction.userLiked ?? false
-      Self.store.userDisliked = input.transaction.userDisliked ?? false
+
+      Self.store.currentFeed = input.0
+      Self.store.currentTransactId = input.0.transaction.id
+      Self.store.userLiked = input.0.transaction.userLiked ?? false
+      Self.store.userDisliked = input.0.transaction.userDisliked ?? false
       work.success()
    }.retainBy(retainer) }
-   
+
    var pressLike: Work<PressLikeRequest, Void> { .init { [weak self] work in
       guard let input = work.input else { return }
       self?.apiUseCase.pressLike
@@ -63,7 +63,7 @@ final class FeedDetailWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedDetailWork
             work.fail()
          }
    }.retainBy(retainer) }
-   
+
    var getComments: Work<Void, [Comment]> { .init { [weak self] work in
       guard let transactId = Self.store.currentTransactId else { return }
       let request = CommentsRequest(token: "",
@@ -80,7 +80,7 @@ final class FeedDetailWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedDetailWork
             work.fail()
          }
    }.retainBy(retainer) }
-   
+
    var createComment: Work<CreateCommentRequest, Void> { .init { [weak self] work in
       guard let input = work.input else { return }
       self?.apiUseCase.createComment
@@ -92,7 +92,7 @@ final class FeedDetailWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedDetailWork
             work.fail()
          }
    }.retainBy(retainer) }
-   
+
    var updateComment: Work<UpdateCommentRequest, Void> { .init { [weak self] work in
       guard let input = work.input else { return }
       self?.apiUseCase.updateComment
@@ -104,7 +104,7 @@ final class FeedDetailWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedDetailWork
             work.fail()
          }
    }.retainBy(retainer) }
-   
+
    var deleteComment: Work<RequestWithId, Void> { .init { [weak self] work in
       guard let input = work.input else { return }
       self?.apiUseCase.deleteComment

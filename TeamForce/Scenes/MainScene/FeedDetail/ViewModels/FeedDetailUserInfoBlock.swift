@@ -17,8 +17,6 @@ extension FeedDetailUserInfoBlock: Eventable {
 final class FeedDetailUserInfoBlock<Design: DSP>: StackModel, Designable {
    var events: EventsStore = .init()
 
-   lazy var filterButtons = FeedDetailFilterButtons<Design>()
-
    lazy var image = WrappedY(ImageViewModel()
       .image(Design.icon.avatarPlaceholder)
       .contentMode(.scaleAspectFill)
@@ -72,7 +70,7 @@ final class FeedDetailUserInfoBlock<Design: DSP>: StackModel, Designable {
          infoLabel,
          Spacer(16),
          reactionsBlock,
-         Spacer(16)
+         Spacer(32)
       ])
    }
 }
