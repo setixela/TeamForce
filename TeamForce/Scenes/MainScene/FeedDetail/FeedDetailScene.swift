@@ -62,7 +62,7 @@ final class FeedDetailScene<Asset: AssetProtocol>:
 
 enum FeedDetailSceneState {
    case initial
-   case presentDetails
+   case presentDetails(Feed)
    case presentComments([Comment])
    case failedToReact
    case updateReactions((TransactStatistics, (Bool, Bool)))
@@ -100,8 +100,8 @@ extension FeedDetailScene: StateMachine {
 //            }
 //         }
          break
-      case .presentDetails:
-         feedDetailVM.setState(.details)
+      case .presentDetails(let feed):
+         feedDetailVM.setState(.details(feed))
          break
       }
    }

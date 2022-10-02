@@ -6,30 +6,22 @@
 //
 
 final class FeedDetailsBlock<Design: DSP>: StackModel, Designable {
-
-   lazy var reasonLabel = SettingsTitleBodyDT<Design>()
-      .setAll {
-         $0
-            .text("Cообщение")
-            .set(Design.state.label.body4)
-         $1
-            .text("-")
-            .set(Design.state.label.caption)
-      }
-      .hidden(true)
+   lazy var reasonLabel = LabelModel()
+      .text("Текст")
+      .set(Design.state.label.body4)
 
    lazy var infoStack = UserProfileStack<Design>()
       .arrangedModels([
          LabelModel()
-            .text("ИНФОРМАЦИЯ")
+            .text("За что")
             .set(Design.state.label.captionSecondary),
          reasonLabel,
-         transactPhoto,
          Grid.xxx.spacer
       ])
       .distribution(.fill)
       .alignment(.leading)
       .hidden(true)
+
 
    lazy var hashTagBlock = ScrollViewModelX()
       .set(.spacing(4))
@@ -52,11 +44,25 @@ final class FeedDetailsBlock<Design: DSP>: StackModel, Designable {
    override func start() {
       super.start()
 
-      backColor(.red)
       arrangedModels([
          infoStack,
          hashTagBlock,
          transactPhoto
       ])
+   }
+}
+
+extension FeedDetailsBlock: SetupProtocol {
+   func setup(_ data: Feed) {
+      if let reason = data.transaction.reason, reason != "" {
+         reasonLabel.text(reason)
+         infoStack.hidden(false)
+      }
+
+      if let photoLink = data.transaction.photoUrl {
+         transactPhoto.models.down.url(TeamForceEndpoints.urlBase + photoLink)
+         transactPhoto.hidden(false)
+         infoStack.hidden(false)
+      }
    }
 }

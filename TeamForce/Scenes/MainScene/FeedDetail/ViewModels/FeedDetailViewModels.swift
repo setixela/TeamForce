@@ -10,7 +10,7 @@ import UIKit
 
 enum FeedDetailsState {
    case initial((Feed, String))
-   case details
+   case details(Feed)
    case comments([Comment])
    case reactions
 }
@@ -28,8 +28,7 @@ final class FeedDetailViewModels<Design: DSP>: StackModel, Designable {
    private lazy var commentsBlock = FeedCommentsBlock<Design>()
 
    override func start() {
-      setState(.details)
-      filterButtons.buttonComments.setMode(\.selected)
+      filterButtons.buttonDetails.setMode(\.selected)
    }
 
 //      if let reason = feed.transaction.reason {
@@ -73,7 +72,8 @@ extension FeedDetailViewModels: StateMachine {
             detailsBlock
          ])
          topBlock.setup(tuple)
-      case .details:
+      case .details(let feed):
+         detailsBlock.setup(feed)
          arrangedModels([
             topBlock,
             filterButtons,

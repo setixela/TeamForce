@@ -21,14 +21,14 @@ final class FeedDetailWorksTempStorage: InitProtocol {
 final class FeedDetailWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedDetailWorksTempStorage, Asset> {
    private lazy var apiUseCase = Asset.apiUseCase
 
-   var saveInput: Work<(Feed, String), Void> { .init { work in
+   var saveInput: Work<(Feed, String), Feed> { .init { work in
       guard let input = work.input else { return }
 
       Self.store.currentFeed = input.0
       Self.store.currentTransactId = input.0.transaction.id
       Self.store.userLiked = input.0.transaction.userLiked ?? false
       Self.store.userDisliked = input.0.transaction.userDisliked ?? false
-      work.success()
+      work.success(result: input.0)
    }.retainBy(retainer) }
 
    var pressLike: Work<PressLikeRequest, Void> { .init { [weak self] work in
