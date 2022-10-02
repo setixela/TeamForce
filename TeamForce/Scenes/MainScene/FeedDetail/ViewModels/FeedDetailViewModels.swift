@@ -31,18 +31,6 @@ final class FeedDetailViewModels<Design: DSP>: StackModel, Designable {
       filterButtons.buttonDetails.setMode(\.selected)
    }
 
-//      if let reason = feed.transaction.reason {
-//         topBlock.reasonLabel.models.down.text(reason)
-//         topBlock.reasonLabel.hidden(false)
-//         topBlock.infoStack.hidden(false)
-//      }
-
-//      if let photoLink = feed.transaction.photoUrl {
-//         transactPhoto.models.down.url(TeamForceEndpoints.urlBase + photoLink)
-//         transactPhoto.hidden(false)
-//         infoStack.hidden(false)
-//      }
-
 //      commentField
 //         .on(\.didBeginEditing, self) { slf, _ in
 //            slf.infoStack.hidden(true)

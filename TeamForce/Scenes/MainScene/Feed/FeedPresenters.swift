@@ -289,3 +289,7 @@ extension FeedPresenters: Eventable {
       // var dislikePressed: Int?
    }
 }
+
+final class HashTagsScrollModel: ScrollViewModelX {
+
+}

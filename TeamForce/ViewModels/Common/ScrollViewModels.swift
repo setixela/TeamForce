@@ -25,7 +25,7 @@ struct ScrollEvents: ScrollEventsProtocol {
 
 protocol ScrollWrapper: UIScrollViewDelegate, Eventable where Events == ScrollEvents {}
 
-final class ScrollViewModelY: BaseViewModel<UIScrollView>, ScrollWrapper {
+class ScrollViewModelY: BaseViewModel<UIScrollView>, ScrollWrapper {
    var events: ReactiveWorks.EventsStore = .init()
 
    private var prevScrollOffset: CGFloat = 0
@@ -88,7 +88,7 @@ extension ScrollViewModelY: Stateable2 {
    }
 }
 
-final class ScrollViewModelX: BaseViewModel<UIScrollView>, ScrollWrapper {
+class ScrollViewModelX: BaseViewModel<UIScrollView>, ScrollWrapper {
    var events: ReactiveWorks.EventsStore = .init()
 
    private lazy var stack = StackModel()
