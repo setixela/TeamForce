@@ -15,13 +15,14 @@ protocol Marginable {
 protocol Tappable: Eventable where Events == ButtonEvents {}
 
 @objc protocol TappableView {
-   func startTapGestureRecognize()
+   func startTapGestureRecognize(cancelTouch: Bool)
    @objc func didTap()
 }
 
 extension UIView: TappableView {
-   func startTapGestureRecognize() {
+   func startTapGestureRecognize(cancelTouch: Bool = false) {
       let gesture = UITapGestureRecognizer(target: self, action: #selector(didTap))
+      gesture.cancelsTouchesInView = cancelTouch
       addGestureRecognizer(gesture)
       isUserInteractionEnabled = true
    }
@@ -39,8 +40,8 @@ extension UIView: ButtonTapAnimator {}
 final class PaddingLabel: UILabel, Marginable, Tappable {
    var events: EventsStore = .init() {
       didSet {
-         //startTapGestureRecognize()
-         //print("started events")
+         // startTapGestureRecognize()
+         // print("started events")
       }
    }
 
@@ -73,7 +74,7 @@ final class PaddingLabel: UILabel, Marginable, Tappable {
 
       return contentSize
    }
-   
+
    func makePartsClickable(user1: String?, user2: String?) {
       isUserInteractionEnabled = true
       let tapGesture = CustomTap(target: self,
@@ -83,11 +84,10 @@ final class PaddingLabel: UILabel, Marginable, Tappable {
       addGestureRecognizer(tapGesture)
       lineBreakMode = .byWordWrapping
    }
-   
+
    @objc func tappedOnLabel(gesture: CustomTap) {
-      
-      guard let text = self.text else { return }
-      
+      guard let text = text else { return }
+
       let firstRange = (text as NSString).range(of: gesture.user1.string)
       let secondRange = (text as NSString).range(of: gesture.user2.string)
       print("first range \(firstRange)")
@@ -211,14 +211,7 @@ final class StackViewExtended: UIStackView, Eventable {
 
    private var isGestured = false
 
-   var events: EventsStore = .init() {
-      didSet {
-         if !isGestured {
-            startTapGestureRecognize()
-            isGestured = true
-         }
-      }
-   }
+   var events: EventsStore = .init()
 
    weak var backView: UIView?
 
@@ -235,9 +228,9 @@ final class StackViewExtended: UIStackView, Eventable {
       fatalError("init(coder:) has not been implemented")
    }
 
-   override func startTapGestureRecognize() {
+   override func startTapGestureRecognize(cancelTouch: Bool = false) {
       let gesture = UITapGestureRecognizer(target: self, action: #selector(didTap))
-      gesture.cancelsTouchesInView = false
+      gesture.cancelsTouchesInView = cancelTouch
       addGestureRecognizer(gesture)
       isUserInteractionEnabled = true
    }

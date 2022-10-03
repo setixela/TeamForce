@@ -19,7 +19,7 @@ struct CommentsRequestBody: Codable {
    let limit: Int?
    let includeName: Bool?
    let isReverseOrder: Bool?
-   
+
    enum CodingKeys: String, CodingKey {
       case transactionId = "transaction_id"
       case offset
@@ -27,12 +27,13 @@ struct CommentsRequestBody: Codable {
       case includeName = "include_name"
       case isReverseOrder = "is_reverse_order"
    }
+
    init(transactionId: Int,
         offset: Int? = nil,
         limit: Int? = nil,
         includeName: Bool? = nil,
-        isReverseOrder: Bool? = nil
-   ) {
+        isReverseOrder: Bool? = nil)
+   {
       self.transactionId = transactionId
       self.offset = offset
       self.limit = limit
@@ -40,6 +41,7 @@ struct CommentsRequestBody: Codable {
       self.isReverseOrder = isReverseOrder
    }
 }
+
 struct User: Codable {
    let id: Int
    let name: String?
@@ -59,12 +61,11 @@ struct Comment: Codable {
 struct CommentsResponse: Codable {
    let transactionId: Int
    let comments: [Comment]?
-   
+
    enum CodingKeys: String, CodingKey {
       case transactionId = "transaction_id"
       case comments
    }
-   
 }
 
 final class GetCommentsApiWorker: BaseApiWorker<CommentsRequest, [Comment]> {
@@ -78,12 +79,15 @@ final class GetCommentsApiWorker: BaseApiWorker<CommentsRequest, [Comment]> {
          print("No csrf cookie")
          return
       }
-     
+      let jsonData = try? JSONEncoder().encode(request.body)
+      let endpoint = TeamForceEndpoints.GetComments(
+         headers: ["Authorization": request.token,
+                   "X-CSRFToken": cookie.value,
+                   "Content-Type": "application/json"],
+         jsonData: jsonData
+      )
       apiEngine?
-         .process(endpoint: TeamForceEndpoints.GetComments(headers: [
-            "Authorization": request.token,
-            "X-CSRFToken": cookie.value
-         ], body: request.body.dictionary ?? [:]))
+         .process(endpoint: endpoint)
          .done { result in
             let decoder = DataToDecodableParser()
             guard
@@ -102,8 +106,8 @@ final class GetCommentsApiWorker: BaseApiWorker<CommentsRequest, [Comment]> {
 }
 
 extension Encodable {
-  var dictionary: [String: Any]? {
-    guard let data = try? JSONEncoder().encode(self) else { return nil }
-    return (try? JSONSerialization.jsonObject(with: data, options: .allowFragments)).flatMap { $0 as? [String: Any] }
-  }
+   var dictionary: [String: Any]? {
+      guard let data = try? JSONEncoder().encode(self) else { return nil }
+      return (try? JSONSerialization.jsonObject(with: data, options: .allowFragments)).flatMap { $0 as? [String: Any] }
+   }
 }

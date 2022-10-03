@@ -19,6 +19,14 @@ final class MainScenario<Asset: AssetProtocol>:
       works.loadProfile
          .doAsync()
          .onSuccess(setState) { .profileDidLoad($0) }
-         .onFail(setState, .loadProfileError)
+         .onFail { [weak self] in
+            guard InternetRechability.isConnectedToInternet else {
+               self?.setState(.loadProfileError)
+               return
+            }
+
+            UserDefaults.standard.setIsLoggedIn(value: false)
+            Asset.router?.route(\.digitalThanks, navType: .presentInitial, payload: ())
+         }
    }
 }

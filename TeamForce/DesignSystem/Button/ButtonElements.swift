@@ -25,6 +25,7 @@ struct ButtonStateBuilder<Design: DesignProtocol>: ButtonStateProtocol {
    var `default`: [ButtonState] { [
       .backColor(Design.color.activeButtonBack),
       .textColor(Design.color.textInvert),
+      .tint(Design.color.iconInvert),
       .cornerRadius(Design.params.cornerRadius),
       .height(Design.params.buttonHeight),
       .enabled(true),
@@ -43,6 +44,7 @@ struct ButtonStateBuilder<Design: DesignProtocol>: ButtonStateProtocol {
       .cornerRadius(Design.params.cornerRadius),
       .height(Design.params.buttonHeight),
       .textColor(Design.color.textInvert),
+      .tint(Design.color.iconInvert),
       .enabled(false),
    ] }
 

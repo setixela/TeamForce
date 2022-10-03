@@ -168,7 +168,6 @@ extension ViewModelProtocol where Self: Stateable {
       view.layer.shadowOffset = .init(width: value.offset.x, height: value.offset.y)
       view.layer.shadowRadius = value.radius
       view.layer.shadowOpacity = Float(value.opacity)
-//      view.layer.shouldRasterize = true
       return self
    }
 
@@ -469,6 +468,7 @@ extension ViewModelProtocol where Self: Stateable, View: ButtonExtended {
 
    @discardableResult func tint(_ value: UIColor) -> Self {
       view.tintColor = value
+      view.setTitleColor(value, for: .normal)
       view.imageView?.tintColor = value
       return self
    }
@@ -501,6 +501,15 @@ extension ViewModelProtocol where Self: Stateable, View: ButtonExtended {
    @discardableResult func cornerRadius(_ value: CGFloat) -> Self {
       view.layer.cornerRadius = value
       view.clipsToBounds = true
+      return self
+   }
+
+   @discardableResult func shadow(_ value: Shadow) -> Self {
+      view.layer.shadowColor = value.color.cgColor
+      view.layer.shadowOffset = .init(width: value.offset.x, height: value.offset.y)
+      view.layer.shadowRadius = value.radius
+      view.layer.shadowOpacity = Float(value.opacity)
+      view.clipsToBounds = false
       return self
    }
 }

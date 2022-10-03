@@ -20,7 +20,7 @@ enum MainSceneState {
 final class MainScene<Asset: AssetProtocol>:
    BaseSceneModel<
       DefaultVCModel,
-      TripleStacksBrandedVM<Asset.Design>,
+      MainScreenVM<Asset.Design>,
       Asset,
       Void
    >, Scenarible

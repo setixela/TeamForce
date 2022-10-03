@@ -66,7 +66,6 @@ struct StackStateBuilder<Design: DesignProtocol>: StackStatesProtocol {
 
    var bottomShadowedPanel: [StackState] { [
       .axis(.vertical),
-      //.spacing(Design.params.buttonsSpacingY),
       .alignment(.fill),
       .distribution(.fill),
       .backColor(Design.color.background),

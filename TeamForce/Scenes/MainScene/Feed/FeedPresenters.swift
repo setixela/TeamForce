@@ -12,30 +12,30 @@ class FeedPresenters<Design: DesignProtocol>: Designable {
    var events: EventsStore = .init()
    var userName: String = ""
    private lazy var retainer = Retainer()
-   
+
    var feedCellPresenter: Presenter<Feed, WrappedX<StackModel>> {
       Presenter { [weak self] work in
-         
+
          guard let self = self else { return }
-         
+
          let feed = work.unsafeInput
-         
+
          let senderId = feed.transaction.senderId
          let recipientId = feed.transaction.recipientId
          let sender = "@" + feed.transaction.sender
          let recipient = "@" + feed.transaction.recipient
          let transactionId = feed.transaction.id
-         
-         let isPersonal = feed.eventType.isPersonal
-         let hasScope = feed.eventType.hasScope
-         let isAnonTransact = feed.transaction.isAnonymous
-         
+
+//         let isPersonal = feed.eventType.isPersonal
+//         let hasScope = feed.eventType.hasScope
+//         let isAnonTransact = feed.transaction.isAnonymous
+
          let type = FeedTransactType.make(feed: feed, currentUserName: self.userName)
-         
-         let dateLabel = self.makeInfoDateLabel(feed: feed)
-         let infoLabel = self.makeInfoLabel(feed: feed, type: type)
+
+         let dateLabel = FeedPresenters.makeInfoDateLabel(feed: feed)
+         let infoLabel = FeedPresenters.makeInfoLabel(feed: feed, type: type)
          let icon = self.makeIcon(feed: feed)
-         
+
          infoLabel.view.on(\.didSelect) {
             switch $0 {
             case sender:
@@ -46,19 +46,21 @@ class FeedPresenters<Design: DesignProtocol>: Designable {
                print("selected error")
             }
          }
-         
-         let tagBlock = StackModel()
-            .axis(.horizontal)
-            .spacing(4)
-         
+
+//         let tagBlock = StackModel()
+//            .axis(.horizontal)
+//            .spacing(4)
+         var commentsAmount = "0"
+         commentsAmount = String(feed.transaction.commentsAmount ?? 0)
+
          let messageButton = ReactionButton<Design>()
             .setAll {
                $0.image(Design.icon.messageCloud)
-               $1.text("0")
+               $1.text(commentsAmount)
             }
          var likeAmount = "0"
          var dislikeAmount = "0"
-        
+
          if let reactions = feed.transaction.reactions {
             for reaction in reactions {
                if reaction.code == "like" {
@@ -68,35 +70,37 @@ class FeedPresenters<Design: DesignProtocol>: Designable {
                }
             }
          }
-         
-        
+
          let likeButton = ReactionButton<Design>()
             .setAll {
                $0.image(Design.icon.like)
                $1.text(likeAmount)
             }
-         
+
          let dislikeButton = ReactionButton<Design>()
             .setAll {
                $0.image(Design.icon.dislike)
                $1.text(dislikeAmount)
             }
-         
+
          if feed.transaction.userLiked == true {
-            likeButton.models.main.imageTintColor(Design.color.activeButtonBack)
+            likeButton.setState(.selected)
          }
          if feed.transaction.userDisliked == true {
-            dislikeButton.models.main.imageTintColor(Design.color.activeButtonBack)
+            dislikeButton.setState(.selected)
          }
-         
-         likeButton.view.startTapGestureRecognize()
-         dislikeButton.view.startTapGestureRecognize()
-         
+
+         likeButton.view.startTapGestureRecognize(cancelTouch: true)
+         dislikeButton.view.startTapGestureRecognize(cancelTouch: true)
+
          likeButton.view.on(\.didTap, self) {
             let request = PressLikeRequest(token: "",
                                            likeKind: 1,
                                            transactionId: transactionId)
             $0.send(\.reactionPressed, request)
+
+            likeButton.setState(.selected)
+            dislikeButton.setState(.none)
          }
 
          dislikeButton.view.on(\.didTap, self) {
@@ -104,8 +108,10 @@ class FeedPresenters<Design: DesignProtocol>: Designable {
                                            likeKind: 2,
                                            transactionId: transactionId)
             $0.send(\.reactionPressed, request)
+            dislikeButton.setState(.selected)
+            likeButton.setState(.none)
          }
-         
+
          let reactionsBlock = StackModel()
             .axis(.horizontal)
             .alignment(.leading)
@@ -117,23 +123,10 @@ class FeedPresenters<Design: DesignProtocol>: Designable {
                dislikeButton,
                Grid.xxx.spacer
             ])
-         
-         let tags = (feed.transaction.tags ?? []).map { tag in
-            WrappedX(
-               LabelModel()
-                  .set(Design.state.label.caption2)
-                  .text("# " + tag.name)
-               
-            )
-            .backColor(Design.color.infoSecondary)
-            .cornerRadius(Design.params.cornerRadiusMini)
-            .padding(.outline(8))
-         }
-         let hashTagBlock = ScrollViewModelX()
-            .set(.spacing(4))
-            .set(.arrangedModels(tags))
-            .set(.hideHorizontalScrollIndicator)
-         
+
+         let hashTagBlock = HashTagsScrollModel<Design>()
+         hashTagBlock.setup(feed)
+
          let infoBlock = StackModel()
             .spacing(Grid.x10.value)
             .axis(.vertical)
@@ -144,12 +137,12 @@ class FeedPresenters<Design: DesignProtocol>: Designable {
                reactionsBlock,
                hashTagBlock
             ])
-         
+
          var backColor = Design.color.background
          if type == .youGotAmountFromSome || type == .youGotAmountFromAnonym {
             backColor = Design.color.successSecondary
          }
-         
+
          let cellStack = WrappedX(
             StackModel()
                .padding(.outline(Grid.x8.value))
@@ -163,16 +156,16 @@ class FeedPresenters<Design: DesignProtocol>: Designable {
                .backColor(backColor)
                .cornerRadius(Design.params.cornerRadiusSmall)
          )
-            .padding(.verticalOffset(Grid.x16.value))
-         
+         .padding(.verticalOffset(Grid.x16.value))
+
          self.retainer.retain(work)
          work.success(result: cellStack)
       }
    }
 }
 
-private extension FeedPresenters {
-   func makeInfoDateLabel(feed: Feed) -> LabelModel {
+extension FeedPresenters {
+   static func makeInfoDateLabel(feed: Feed) -> LabelModel {
       let dateAgoText = feed.time.timeAgoConverted
       let eventText = feed.transaction.isAnonymous ? "" : " • " + "Публичная благодарность"
       let titleText = dateAgoText + eventText
@@ -186,7 +179,7 @@ private extension FeedPresenters {
       return dateLabel
    }
 
-   func makeInfoLabel(feed: Feed, type: FeedTransactType) -> LabelModel {
+   static func makeInfoLabel(feed: Feed, type: FeedTransactType) -> LabelModel {
       let recipientName = "@" + feed.transaction.recipient
       let senderName = "@" + feed.transaction.sender
       let amountText = "\(Int(feed.transaction.amount))" + " " + "спасибок"
@@ -220,7 +213,7 @@ private extension FeedPresenters {
          .set(Design.state.label.caption)
          .textColor(Design.color.iconBrand)
          .attributedText(infoText)
-      
+
       infoLabel.view.makePartsClickable(user1: recipientName, user2: senderName)
 
       return infoLabel
@@ -254,7 +247,7 @@ private extension FeedPresenters {
    }
 }
 
-private enum FeedTransactType {
+enum FeedTransactType {
    static func make(feed: Feed, currentUserName: String) -> Self {
       if feed.transaction.recipient == currentUserName {
          if feed.transaction.isAnonymous {
@@ -280,6 +273,7 @@ extension FeedPresenters: Eventable {
    struct Events: InitProtocol {
       var didSelect: Int?
       var reactionPressed: PressLikeRequest?
-      //var dislikePressed: Int?
+      // var dislikePressed: Int?
    }
 }
+

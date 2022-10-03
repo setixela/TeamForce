@@ -31,7 +31,7 @@ protocol DesignProtocol: DesignRoot where
    Text: TextsProtocol,
    Color: ColorsProtocol,
    Icon: IconElements,
-//   Font: FontProtocol,
+   Font: FontProtocol,
    Label: LabelProtocol,
    Button: ButtonBuilderProtocol,
 

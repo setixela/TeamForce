@@ -15,16 +15,16 @@ final class TabBarPanel<Design: DesignProtocol>: BaseViewModel<StackViewExtended
 
    // MARK: - View Models
 
-   let button1: ButtonModelModableOld = BottomPanelVMBuilder<Design>.button
+   let button1: ButtonModelModable = BottomPanelVMBuilder<Design>.button
       .image(Design.icon.tabBarButton1)
-   let button2: ButtonModelModableOld = BottomPanelVMBuilder<Design>.button
+   let button2: ButtonModelModable = BottomPanelVMBuilder<Design>.button
       .image(Design.icon.tabBarButton2)
 
-   let buttonMain: ButtonModelModableOld = BottomPanelVMBuilder<Design>.mainButton
+   let buttonMain: ButtonModelModable = BottomPanelVMBuilder<Design>.mainButton
 
-   let button3: ButtonModelModableOld = BottomPanelVMBuilder<Design>.button
+   let button3: ButtonModelModable = BottomPanelVMBuilder<Design>.button
       .image(Design.icon.tabBarButton3)
-   let button4: ButtonModelModableOld = BottomPanelVMBuilder<Design>.button
+   let button4: ButtonModelModable = BottomPanelVMBuilder<Design>.button
       .image(Design.icon.tabBarButton4)
 
    // MARK: - Private
@@ -60,8 +60,8 @@ final class TabBarPanel<Design: DesignProtocol>: BaseViewModel<StackViewExtended
 }
 
 struct BottomPanelVMBuilder<Design: DesignProtocol>: Designable {
-   static var mainButton: ButtonModelModableOld {
-      ButtonModelModableOld()
+   static var mainButton: ButtonModelModable {
+      ButtonModelModable()
          .safeAreaOffsetDisabled()
          //
          .backImage(Design.icon.tabBarMainButton)
@@ -69,8 +69,8 @@ struct BottomPanelVMBuilder<Design: DesignProtocol>: Designable {
          .shadow(Design.params.panelMainButtonShadow)
    }
 
-   static var button: ButtonModelModableOld {
-      ButtonModelModableOld()
+   static var button: ButtonModelModable {
+      ButtonModelModable()
          .safeAreaOffsetDisabled()
          //
          .width(55)

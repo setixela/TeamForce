@@ -86,6 +86,9 @@ protocol TitleTextsProtocol: InitProtocol {
    // historyScene
    var today: String { get }
    var yesterday: String { get }
+
+   // feed deatail
+   var comment: String { get }
 }
 
 // MARK: - Button texts implements
@@ -153,9 +156,12 @@ struct TitleTexts: TitleTextsProtocol {
    var messageEmail: String { "Проверьте корректность введенной почты" }
    var messageTelegram: String { "Перейдите в диалог с ботом (ссылка), напишите ему что-нибудь после чего повторите процедуру аутентификации." }
    
-   //historyScene
+   // historyScene
    var today: String { "Сегодня" }
    var yesterday: String { "Вчера" }
+
+   // feed deatail
+   var comment: String { "Комментарий" }
 }
 
 struct TextBuilder: TextsProtocol {

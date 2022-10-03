@@ -164,6 +164,7 @@ final class TransactScene<Asset: AssetProtocol>: ModalDoubleStackModel<Asset>, S
       //
       footerStack
          .arrangedModels([
+            Spacer(16),
             viewModels.sendButton
          ])
    }
@@ -178,7 +179,7 @@ extension TransactScene: StateMachine {
          activityIndicator.hidden(false)
       //
       case .error:
-         viewModels.userSearchTextField.hidden(true)
+        // viewModels.userSearchTextField.hidden(true)
          activityIndicator.hidden(true)
          presentFoundUsers(users: [])
 
@@ -346,8 +347,6 @@ private extension TransactScene {
       viewModels.balanceInfo.set(.hidden(true, isAnimated: true))
 
       viewModels.notFoundBlock.hidden(true)
-
-      view.endEditing(true)
    }
 
    func presentBalanceInfo() {

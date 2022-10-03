@@ -145,6 +145,13 @@ final class TransactWorks<Asset: AssetProtocol>: BaseSceneWorks<TransactWorks.Te
    } }
 
    var sendCoins: VoidWork<(recipient: String, info: SendCoinRequest)> { .init { [weak self] work in
+      var sendImage: UIImage?
+      if let image = Self.store.images.first {
+         let size = image.size
+         let coef = size.width / size.height
+         let newSize = CGSize(width: 1920, height: 1920 / coef)
+         sendImage = image.resized(to: newSize)
+      }
       let request = SendCoinRequest(
          token: Self.store.tokens.token,
          csrfToken: Self.store.tokens.csrf,
@@ -152,7 +159,7 @@ final class TransactWorks<Asset: AssetProtocol>: BaseSceneWorks<TransactWorks.Te
          amount: Self.store.inputAmountText,
          reason: Self.store.inputReasonText,
          isAnonymous: Self.store.isAnonymous,
-         photo: Self.store.images.first,
+         photo: sendImage,
          tags: Self.store.isTagsEnabled ? Self.store.tags.map { String($0.id) }.joined(separator: " ") : nil
       )
 

@@ -79,3 +79,67 @@ final class FeedFilterButtons<Design: DSP>: StackModel, Designable, Eventable {
       }
    }
 }
+
+final class FeedDetailFilterButtons<Design: DSP>: StackModel, Designable, Eventable {
+   struct Events: InitProtocol {
+      var didTapDetails: Void?
+      var didTapComments: Void?
+      var didTapReactions: Void?
+   }
+
+   var events = [Int: LambdaProtocol?]()
+
+   lazy var buttonDetails = SecondaryButtonDT<Design>()
+      .title("Детали")
+      .font(Design.font.default)
+      .on(\.didTap, self) {
+         $0.select(0)
+         $0.send(\.didTapDetails)
+      }
+
+   lazy var buttonComments = SecondaryButtonDT<Design>()
+      .title("Комментарии")
+      .font(Design.font.default)
+      .on(\.didTap, self) {
+         $0.select(1)
+         $0.send(\.didTapComments)
+      }
+
+   lazy var buttonReactions = SecondaryButtonDT<Design>()
+      .title("Оценки")
+      .font(Design.font.default)
+      .on(\.didTap, self) {
+         $0.select(2)
+         $0.send(\.didTapReactions)
+      }
+
+   override func start() {
+      axis(.horizontal)
+      spacing(Grid.x8.value)
+      padBottom(8)
+      arrangedModels([
+         buttonDetails,
+         buttonComments,
+         buttonReactions,
+         Grid.xxx.spacer,
+      ])
+   }
+
+   private func deselectAll() {
+      buttonDetails.setMode(\.normal)
+      buttonComments.setMode(\.normal)
+      buttonReactions.setMode(\.normal)
+   }
+
+   private func select(_ index: Int) {
+      deselectAll()
+      switch index {
+      case 0:
+         buttonDetails.setMode(\.selected)
+      case 1:
+         buttonComments.setMode(\.selected)
+      default:
+         buttonReactions.setMode(\.selected)
+      }
+   }
+}

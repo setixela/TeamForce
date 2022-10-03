@@ -65,8 +65,8 @@ final class TransactDeatilViewModel<Asset: AssetProtocol>: BaseSceneModel<
             .text("Фотография")
          $1
             .image(Design.icon.transactSuccess)
-            .maxHeight(130)
-            .maxWidth(130)
+            .height(130)
+            .width(130)
             .contentMode(.scaleAspectFill)
             .cornerRadius(Design.params.cornerRadiusSmall)
       }

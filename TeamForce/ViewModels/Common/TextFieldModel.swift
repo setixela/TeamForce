@@ -13,6 +13,7 @@ struct TextFieldEvents: InitProtocol {
    var didEditingChanged: String?
    var didTap: String?
    var didBeginEditing: String?
+   var didEndEditing: String?
 }
 
 class TextFieldModel: BaseViewModel<PaddingTextField>,
@@ -29,6 +30,7 @@ class TextFieldModel: BaseViewModel<PaddingTextField>,
       view.delegate = self
       view.addTarget(self, action: #selector(changValue), for: .editingChanged)
       view.addTarget(self, action: #selector(didEditingBegin), for: .editingDidBegin)
+      view.addTarget(self, action: #selector(didEndEditing), for: .editingDidEnd)
    }
 
    @objc func changValue() {
@@ -41,6 +43,10 @@ class TextFieldModel: BaseViewModel<PaddingTextField>,
       guard let text = view.text else { return }
       send(\.didBeginEditing, text)
       print("Did tap textfield")
+   }
+
+   @objc func didEndEditing() {
+      send(\.didEndEditing, view.text.string)
    }
 
    func textFieldDidBeginEditing(_ textField: UITextField) {

@@ -15,6 +15,7 @@ enum ScrollState {
    case hideHorizontalScrollIndicator
    case hideVerticalScrollIndicator
    case padding(UIEdgeInsets)
+   case bounce(Bool)
 }
 
 struct ScrollEvents: ScrollEventsProtocol {
@@ -24,7 +25,7 @@ struct ScrollEvents: ScrollEventsProtocol {
 
 protocol ScrollWrapper: UIScrollViewDelegate, Eventable where Events == ScrollEvents {}
 
-final class ScrollViewModelY: BaseViewModel<UIScrollView>, ScrollWrapper {
+class ScrollViewModelY: BaseViewModel<UIScrollView>, ScrollWrapper {
    var events: ReactiveWorks.EventsStore = .init()
 
    private var prevScrollOffset: CGFloat = 0
@@ -81,11 +82,13 @@ extension ScrollViewModelY: Stateable2 {
          view.showsVerticalScrollIndicator = false
       case .padding(let value):
          stack.padding(value)
+      case .bounce(let value):
+         view.bounces = value
       }
    }
 }
 
-final class ScrollViewModelX: BaseViewModel<UIScrollView>, ScrollWrapper {
+class ScrollViewModelX: BaseViewModel<UIScrollView>, ScrollWrapper {
    var events: ReactiveWorks.EventsStore = .init()
 
    private lazy var stack = StackModel()
@@ -124,6 +127,8 @@ extension ScrollViewModelX: Stateable2 {
          view.showsVerticalScrollIndicator = false
       case .padding(let value):
          stack.padding(value)
+      case .bounce(let value):
+         view.bounces = value
       }
    }
 }

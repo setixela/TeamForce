@@ -23,7 +23,7 @@ final class FeedViewModels<Design: DSP>: BaseModel, Designable, Stateable {
          SpacerPresenter.presenter
       ]))
 
-   private var userName = ""
+   var userName = ""
 
    override func start() {
       filterButtons.buttonAll.setMode(\.selected)
@@ -38,27 +38,27 @@ final class FeedViewModels<Design: DSP>: BaseModel, Designable, Stateable {
    }
 }
 
-private enum FeedTransactType {
-   static func make(feed: Feed, currentUserName: String) -> Self {
-      if feed.transaction.recipient == currentUserName {
-         if feed.transaction.isAnonymous {
-            return .youGotAmountFromAnonym
-         } else {
-            return .youGotAmountFromSome
-         }
-      }
-      if feed.transaction.isAnonymous {
-         return .someGotAmountFromAnonym
-      }
-      return .someGotAmountFromSome
-   }
-
-   case youGotAmountFromSome
-   case youGotAmountFromAnonym
-
-   case someGotAmountFromSome
-   case someGotAmountFromAnonym
-}
+//private enum FeedTransactType {
+//   static func make(feed: Feed, currentUserName: String) -> Self {
+//      if feed.transaction.recipient == currentUserName {
+//         if feed.transaction.isAnonymous {
+//            return .youGotAmountFromAnonym
+//         } else {
+//            return .youGotAmountFromSome
+//         }
+//      }
+//      if feed.transaction.isAnonymous {
+//         return .someGotAmountFromAnonym
+//      }
+//      return .someGotAmountFromSome
+//   }
+//
+//   case youGotAmountFromSome
+//   case youGotAmountFromAnonym
+//
+//   case someGotAmountFromSome
+//   case someGotAmountFromAnonym
+//}
 
 extension String {
    func colored(_ color: UIColor) -> NSAttributedString {

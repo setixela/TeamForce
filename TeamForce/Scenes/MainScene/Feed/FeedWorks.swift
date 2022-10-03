@@ -20,6 +20,7 @@ final class FeedWorksTempStorage: InitProtocol {
    var feed: [Feed]?
    lazy var currentUserName = ""
    var segmentId: Int?
+   var currentTransactId: Int?
 }
 
 final class FeedWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedWorksTempStorage, Asset>, FeedWorksProtocol {
@@ -73,6 +74,7 @@ final class FeedWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedWorksTempStorage
       
       if let index = work.input?.1 {
          let feed = filtered[index]
+         Self.store.currentTransactId = feed.id
          work.success(result: feed)
       } else {
          work.fail()
@@ -105,10 +107,16 @@ final class FeedWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedWorksTempStorage
          }
    }.retainBy(retainer) }
    
-   var getComments: Work<CommentsRequest, [Comment]> { .init { [weak self] work in
-      guard let input = work.input else { return }
+   var getComments: Work<Void, [Comment]> { .init { [weak self] work in
+      print("i am here")
+      guard let id = Self.store.currentTransactId else { return }
+      let request = CommentsRequest(token: "",
+                                    body: CommentsRequestBody(
+                                       transactionId: id,
+                                       includeName: true
+                                    ))
       self?.apiUseCase.getComments
-         .doAsync(input)
+         .doAsync(request)
          .onSuccess {
             work.success(result: $0)
          }
@@ -117,41 +125,41 @@ final class FeedWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedWorksTempStorage
          }
    }.retainBy(retainer) }
    
-   var createComment: Work<CreateCommentRequest, Void> { .init { [weak self] work in
-      guard let input = work.input else { return }
-      self?.apiUseCase.createComment
-         .doAsync(input)
-         .onSuccess {
-            work.success()
-         }
-         .onFail {
-            work.fail()
-         }
-   }.retainBy(retainer) }
-   
-   var updateComment: Work<UpdateCommentRequest, Void> { .init { [weak self] work in
-      guard let input = work.input else { return }
-      self?.apiUseCase.updateComment
-         .doAsync(input)
-         .onSuccess {
-            work.success()
-         }
-         .onFail {
-            work.fail()
-         }
-   }.retainBy(retainer) }
-   
-   var deleteComment: Work<RequestWithId, Void> { .init { [weak self] work in
-      guard let input = work.input else { return }
-      self?.apiUseCase.deleteComment
-         .doAsync(input)
-         .onSuccess {
-            work.success()
-         }
-         .onFail {
-            work.fail()
-         }
-   }.retainBy(retainer) }
+//   var createComment: Work<CreateCommentRequest, Void> { .init { [weak self] work in
+//      guard let input = work.input else { return }
+//      self?.apiUseCase.createComment
+//         .doAsync(input)
+//         .onSuccess {
+//            work.success()
+//         }
+//         .onFail {
+//            work.fail()
+//         }
+//   }.retainBy(retainer) }
+//   
+//   var updateComment: Work<UpdateCommentRequest, Void> { .init { [weak self] work in
+//      guard let input = work.input else { return }
+//      self?.apiUseCase.updateComment
+//         .doAsync(input)
+//         .onSuccess {
+//            work.success()
+//         }
+//         .onFail {
+//            work.fail()
+//         }
+//   }.retainBy(retainer) }
+//   
+//   var deleteComment: Work<RequestWithId, Void> { .init { [weak self] work in
+//      guard let input = work.input else { return }
+//      self?.apiUseCase.deleteComment
+//         .doAsync(input)
+//         .onSuccess {
+//            work.success()
+//         }
+//         .onFail {
+//            work.fail()
+//         }
+//   }.retainBy(retainer) }
 }
 
 private extension FeedWorks {
