@@ -164,6 +164,7 @@ final class TransactScene<Asset: AssetProtocol>: ModalDoubleStackModel<Asset>, S
       //
       footerStack
          .arrangedModels([
+            Spacer(16),
             viewModels.sendButton
          ])
    }

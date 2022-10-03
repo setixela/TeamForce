@@ -56,6 +56,7 @@ struct Feed: Codable {
       let userLiked: Bool?
       let userDisliked: Bool?
       let reactions: [Reaction]?
+      let photo: String?
 
       enum CodingKeys: String, CodingKey {
          case id
@@ -76,6 +77,7 @@ struct Feed: Codable {
          case userLiked = "user_liked"
          case userDisliked = "user_disliked"
          case reactions
+         case photo
       }
 
       var photoUrl: String? {

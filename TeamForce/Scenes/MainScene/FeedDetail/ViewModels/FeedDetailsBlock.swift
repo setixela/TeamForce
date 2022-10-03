@@ -66,8 +66,8 @@ extension FeedDetailsBlock: SetupProtocol {
          hashTagBlock.hidden(false)
       }
 
-      if let photoLink = data.transaction.photoUrl {
-         transactPhoto.models.down.url(photoLink)
+      if let photoLink = data.transaction.photo {
+         transactPhoto.models.down.url(TeamForceEndpoints.urlBase + photoLink)
          transactPhoto.hidden(false)
       }
    }
