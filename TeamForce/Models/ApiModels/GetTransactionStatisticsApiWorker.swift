@@ -17,11 +17,23 @@ struct Like: Codable {
    let likeKind: LikeKind?
    let counter: Int?
    let lastChanged: String?
+   let items: [Item]?
+   
+   struct Item: Codable {
+      let timeOf: String
+      let user: User
+      
+      enum CodingKeys: String, CodingKey {
+         case timeOf = "time_of"
+         case user
+      }
+   }
 
    enum CodingKeys: String, CodingKey {
       case likeKind = "like_kind"
       case counter
       case lastChanged = "last_changed"
+      case items
    }
 }
 

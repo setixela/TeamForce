@@ -32,7 +32,7 @@ final class FeedDetailWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedDetailWork
    }.retainBy(retainer) }
 
    var getFeed: VoidWork<Feed> { .init { work in
-      guard let curFeed =  Self.store.currentFeed else {
+      guard let curFeed = Self.store.currentFeed else {
          work.fail()
          return
       }
@@ -119,6 +119,26 @@ final class FeedDetailWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedDetailWork
          .doAsync(input)
          .onSuccess {
             work.success()
+         }
+         .onFail {
+            work.fail()
+         }
+   }.retainBy(retainer) }
+
+   var getLikesByTransaction: Work<Int, [Like]> { .init { [weak self] work in
+      //input 1 for likes
+      //input 2 for dislikes
+      guard
+         let input = work.input,
+         let transactId = Self.store.currentTransactId
+      else { return }
+
+      let request = LikesByTransactRequest(token: "", body: LikesByTransactBody(transactionId: transactId, likeKind: input))
+
+      self?.apiUseCase.getLikesByTransaction
+         .doAsync(request)
+         .onSuccess {
+            work.success(result: $0)
          }
          .onFail {
             work.fail()
