@@ -31,6 +31,14 @@ final class FeedDetailWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedDetailWork
       work.success(result: input.0)
    }.retainBy(retainer) }
 
+   var getFeed: VoidWork<Feed> { .init { work in
+      guard let curFeed =  Self.store.currentFeed else {
+         work.fail()
+         return
+      }
+      work.success(result: curFeed)
+   }}
+
    var pressLike: Work<PressLikeRequest, Void> { .init { [weak self] work in
       guard let input = work.input else { return }
       self?.apiUseCase.pressLike

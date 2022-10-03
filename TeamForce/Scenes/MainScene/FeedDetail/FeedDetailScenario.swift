@@ -33,6 +33,14 @@ final class FeedDetailScenario<Asset: AssetProtocol>:
       events.saveInput
          .doNext(work: works.saveInput)
          .onSuccess(setState) { .presentDetails($0) }
-//         .doNext(work: works.getComments)
+
+      events.presentDetails
+         .doNext(works.getFeed)
+         .onSuccess(setState) { .presentDetails($0) }
+      
+      events.presentComment
+         .doNext(works.getComments)
+         .onSuccess(setState) { .presentComments($0) }
+      events.presentDetails
    }
 }
