@@ -35,13 +35,13 @@ final class FeedDetailUserInfoBlock<Design: DSP>: StackModel, Designable {
       .set(Design.state.label.caption)
       .textColor(Design.color.iconBrand)
 
-   lazy var likeButton = ReactionButton<Design>()
+   lazy var likeButton = ReactionButton<Design>(height: 40)
       .setAll {
          $0.image(Design.icon.like)
          $1.text("0")
       }
 
-   lazy var dislikeButton = ReactionButton<Design>()
+   lazy var dislikeButton = ReactionButton<Design>(height: 40)
       .setAll {
          $0.image(Design.icon.dislike)
          $1.text("0")
@@ -51,7 +51,7 @@ final class FeedDetailUserInfoBlock<Design: DSP>: StackModel, Designable {
       .axis(.horizontal)
       .alignment(.leading)
       .distribution(.fill)
-      .spacing(4)
+      .spacing(8)
       .arrangedModels([
          likeButton,
          dislikeButton,
