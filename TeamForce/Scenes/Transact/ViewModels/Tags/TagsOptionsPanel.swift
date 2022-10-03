@@ -46,6 +46,7 @@ final class TagsOptionsPanel<Design: DSP>: M<ScrollViewModelX>.D<TitleIconX>.Com
       view.on(\.didTap, self) {
          $0.send(\.didTap)
       }
+      view.startTapGestureRecognize()
    }
 }
 
