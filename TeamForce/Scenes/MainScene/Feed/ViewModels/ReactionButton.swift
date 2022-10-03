@@ -6,6 +6,7 @@
 //
 
 import ReactiveWorks
+import CoreFoundation
 
 final class ReactionButton<Design: DSP>: M<ImageViewModel>.R<LabelModel>.Combo, Designable {
    required init() {
@@ -20,6 +21,19 @@ final class ReactionButton<Design: DSP>: M<ImageViewModel>.R<LabelModel>.Combo, 
       cornerRadius(Design.params.cornerRadiusMini)
       height(26)
       padding(.sideOffset(8))
+   }
+   
+   init(height: Int) {
+      super.init()
+      setAll {
+         $0.size(.square(Grid.x20.value))
+         $1.set(Design.state.label.caption)
+      }
+      spacing(8)
+      backColor(Design.color.backgroundInfoSecondary)
+      cornerRadius(Design.params.cornerRadiusMini)
+      padding(.sideOffset(32))
+      self.height(CGFloat(height))
    }
 }
 
