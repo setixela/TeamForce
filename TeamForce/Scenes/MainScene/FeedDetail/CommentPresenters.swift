@@ -10,50 +10,47 @@ import UIKit
 
 class CommentPresenters<Design: DesignProtocol>: Designable {
    var events: EventsStore = .init()
-   private lazy var retainer = Retainer()
-   
+
    var commentCellPresenter: Presenter<Comment, WrappedX<StackModel>> {
-      Presenter { [weak self] work in
-         guard let self else { assert(false); return }
-         
+      Presenter { work in
          let comment = work.unsafeInput
-         
+
          let text = comment.text
          let picture = comment.picture
          let created = comment.created?.timeAgoConverted
          let edited = comment.edited
          let user = comment.user
-         
+
          let senderLabel = LabelModel()
             .text((user?.name.string ?? "") + " " + (user?.surname.string ?? ""))
             .set(Design.state.label.body1)
-         
+
          let textLabel = LabelModel()
             .set(Design.state.label.caption)
             .text(text.string)
             .numberOfLines(0)
-         
+
          let dateLabel = LabelModel()
             .text(created.string)
             .set(Design.state.label.caption)
             .numberOfLines(0)
             .textColor(Design.color.textSecondary)
-         
+
          var likeAmount = "0"
          var dislikeAmount = "0"
-        
+
          let likeButton = ReactionButton<Design>()
             .setAll {
                $0.image(Design.icon.like)
                $1.text(likeAmount)
             }
-         
+
          let dislikeButton = ReactionButton<Design>()
             .setAll {
                $0.image(Design.icon.dislike)
                $1.text(dislikeAmount)
             }
-         
+
          let reactionsBlock = StackModel()
             .axis(.horizontal)
             .alignment(.leading)
@@ -64,7 +61,7 @@ class CommentPresenters<Design: DesignProtocol>: Designable {
                dislikeButton,
                Grid.xxx.spacer
             ])
-         
+
          let infoBlock = StackModel()
             .spacing(Grid.x10.value)
             .axis(.vertical)
@@ -75,13 +72,13 @@ class CommentPresenters<Design: DesignProtocol>: Designable {
                dateLabel,
                reactionsBlock
             ])
-         
+
          let icon = ImageViewModel()
             .contentMode(.scaleAspectFill)
             .image(Design.icon.avatarPlaceholder)
             .size(.square(Grid.x36.value))
             .cornerRadius(Grid.x36.value / 2)
-         
+
          if let avatar = user?.avatar {
             icon.url(TeamForceEndpoints.urlBase + avatar)
          } else {
@@ -99,7 +96,7 @@ class CommentPresenters<Design: DesignProtocol>: Designable {
                }
             }
          }
-         
+
          let cellStack = WrappedX(
             StackModel()
                .padding(.outline(Grid.x8.value))
@@ -112,14 +109,12 @@ class CommentPresenters<Design: DesignProtocol>: Designable {
                ])
                .cornerRadius(Design.params.cornerRadiusSmall)
          )
-            .padding(.verticalOffset(Grid.x16.value))
-         
-         self.retainer.retain(work)
+         .padding(.verticalOffset(Grid.x16.value))
+
          work.success(result: cellStack)
       }
    }
 }
-
 
 extension CommentPresenters: Eventable {
    struct Events: InitProtocol {
