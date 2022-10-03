@@ -68,6 +68,11 @@ enum FeedDetailSceneState {
    case failedToReact
    case updateReactions((TransactStatistics, (Bool, Bool)))
    case presntActivityIndicator
+   case sendButtonDisabled
+   case sendButtonEnabled
+   case commentDidSend
+
+   case error
 }
 
 extension FeedDetailScene: StateMachine {
@@ -106,6 +111,15 @@ extension FeedDetailScene: StateMachine {
          feedDetailVM.setState(.details(feed))
       case .presntActivityIndicator:
          feedDetailVM.setState(.loadingActivity)
+      case .sendButtonDisabled:
+         feedDetailVM.setState(.sendButtonDisabled)
+      case .sendButtonEnabled:
+         feedDetailVM.setState(.sendButtonEnabled)
+      case .commentDidSend:
+         feedDetailVM.filterButtons.send(\.didTapComments)
+         feedDetailVM.setState(.commentDidSend)
+      case .error:
+         print("Load token error")
       }
    }
 }

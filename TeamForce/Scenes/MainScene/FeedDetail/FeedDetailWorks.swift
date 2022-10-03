@@ -16,10 +16,26 @@ final class FeedDetailWorksTempStorage: InitProtocol {
    var currentFeed: Feed?
    var userLiked: Bool = false
    var userDisliked: Bool = false
+   var token: String?
+
+   var inputComment = ""
 }
 
 final class FeedDetailWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedDetailWorksTempStorage, Asset> {
    private lazy var apiUseCase = Asset.apiUseCase
+   private lazy var storeUseCase = Asset.storageUseCase
+
+   var loadToken: VoidWorkVoid { .init { [weak self] work in
+      self?.storeUseCase.loadToken
+         .doAsync()
+         .onSuccess {
+            Self.store.token = $0
+            work.success()
+         }
+         .onFail {
+            work.fail()
+         }
+   }.retainBy(retainer)}
 
    var saveInput: Work<(Feed, String), Feed> { .init { work in
       guard let input = work.input else { return }
@@ -32,7 +48,7 @@ final class FeedDetailWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedDetailWork
    }.retainBy(retainer) }
 
    var getFeed: VoidWork<Feed> { .init { work in
-      guard let curFeed =  Self.store.currentFeed else {
+      guard let curFeed = Self.store.currentFeed else {
          work.fail()
          return
       }
@@ -89,12 +105,25 @@ final class FeedDetailWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedDetailWork
          }
    }.retainBy(retainer) }
 
-   var createComment: Work<CreateCommentRequest, Void> { .init { [weak self] work in
-      guard let input = work.input else { return }
+   var updateInputComment: Work<String, String> { .init { work in
+      Self.store.inputComment = work.unsafeInput
+      work.success(result: work.unsafeInput)
+   }.retainBy(retainer) }
+
+   var createComment: Work<Void, Void> { .init { [weak self] work in
+      guard
+         let token = Self.store.token,
+         let id = Self.store.currentTransactId
+      else { return }
+
+      let body = CreateCommentBody(transaction: id, text: Self.store.inputComment)
+      let request = CreateCommentRequest(token: token, body: body)
+
       self?.apiUseCase.createComment
-         .doAsync(input)
+         .doAsync(request)
          .onSuccess {
             work.success()
+            Self.store.inputComment = ""
          }
          .onFail {
             work.fail()

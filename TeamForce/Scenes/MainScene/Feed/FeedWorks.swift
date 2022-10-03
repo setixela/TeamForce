@@ -125,41 +125,41 @@ final class FeedWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedWorksTempStorage
          }
    }.retainBy(retainer) }
    
-   var createComment: Work<CreateCommentRequest, Void> { .init { [weak self] work in
-      guard let input = work.input else { return }
-      self?.apiUseCase.createComment
-         .doAsync(input)
-         .onSuccess {
-            work.success()
-         }
-         .onFail {
-            work.fail()
-         }
-   }.retainBy(retainer) }
-   
-   var updateComment: Work<UpdateCommentRequest, Void> { .init { [weak self] work in
-      guard let input = work.input else { return }
-      self?.apiUseCase.updateComment
-         .doAsync(input)
-         .onSuccess {
-            work.success()
-         }
-         .onFail {
-            work.fail()
-         }
-   }.retainBy(retainer) }
-   
-   var deleteComment: Work<RequestWithId, Void> { .init { [weak self] work in
-      guard let input = work.input else { return }
-      self?.apiUseCase.deleteComment
-         .doAsync(input)
-         .onSuccess {
-            work.success()
-         }
-         .onFail {
-            work.fail()
-         }
-   }.retainBy(retainer) }
+//   var createComment: Work<CreateCommentRequest, Void> { .init { [weak self] work in
+//      guard let input = work.input else { return }
+//      self?.apiUseCase.createComment
+//         .doAsync(input)
+//         .onSuccess {
+//            work.success()
+//         }
+//         .onFail {
+//            work.fail()
+//         }
+//   }.retainBy(retainer) }
+//   
+//   var updateComment: Work<UpdateCommentRequest, Void> { .init { [weak self] work in
+//      guard let input = work.input else { return }
+//      self?.apiUseCase.updateComment
+//         .doAsync(input)
+//         .onSuccess {
+//            work.success()
+//         }
+//         .onFail {
+//            work.fail()
+//         }
+//   }.retainBy(retainer) }
+//   
+//   var deleteComment: Work<RequestWithId, Void> { .init { [weak self] work in
+//      guard let input = work.input else { return }
+//      self?.apiUseCase.deleteComment
+//         .doAsync(input)
+//         .onSuccess {
+//            work.success()
+//         }
+//         .onFail {
+//            work.fail()
+//         }
+//   }.retainBy(retainer) }
 }
 
 private extension FeedWorks {

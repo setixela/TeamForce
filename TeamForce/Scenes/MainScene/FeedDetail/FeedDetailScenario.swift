@@ -26,6 +26,9 @@ final class FeedDetailScenario<Asset: AssetProtocol>:
    BaseScenario<FeedDetailEvents, FeedDetailSceneState, FeedDetailWorks<Asset>>, Assetable
 {
    override func start() {
+      works.loadToken
+         .doAsync()
+         .onFail(setState, .error)
 
       events.reactionPressed
          .doNext(work: works.pressLike)
@@ -47,7 +50,17 @@ final class FeedDetailScenario<Asset: AssetProtocol>:
          .doNext(works.getComments)
          .onSuccess(setState) { .presentComments($0) }
 
-      events.presentDetails
-         .onSuccess(setState, .presntActivityIndicator)
+      events.didEditingComment
+         .doNext(works.updateInputComment)
+         .doNext(usecase: IsEmpty())
+         .onSuccess(setState, .sendButtonDisabled)
+         .onFail(setState, .sendButtonEnabled)
+
+
+      events.didSendCommentPressed
+         .onSuccess(setState, .sendButtonDisabled)
+         .doNext(works.createComment)
+         .onSuccess(setState, .commentDidSend)
+         .onFail(setState, .error)
    }
 }

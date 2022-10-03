@@ -14,6 +14,10 @@ enum FeedDetailsState {
    case comments([Comment])
    case reactions
    case loadingActivity
+
+   case sendButtonDisabled
+   case sendButtonEnabled
+   case commentDidSend
 }
 
 final class FeedDetailViewModels<Design: DSP>: DoubleStacksModel, Designable {
@@ -74,6 +78,13 @@ extension FeedDetailViewModels: StateMachine {
             ActivityIndicator<Design>(),
             Spacer()
          ])
+      case .sendButtonDisabled:
+         commentsBlock.setState(.sendButtonDisabled)
+      case .sendButtonEnabled:
+         commentsBlock.setState(.sendButtonEnabled)
+      case .commentDidSend:
+         commentsBlock.commentField.text("")
+         commentsBlock.setState(.sendButtonDisabled)
       }
    }
 }
