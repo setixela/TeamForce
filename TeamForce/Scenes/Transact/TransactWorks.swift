@@ -149,7 +149,8 @@ final class TransactWorks<Asset: AssetProtocol>: BaseSceneWorks<TransactWorks.Te
       if let image = Self.store.images.first {
          let size = image.size
          let coef = size.width / size.height
-         sendImage = image.resized(to: .init(width: 1920, height: 1920 / coef))
+         let newSize = CGSize(width: 1920, height: 1920 / coef)
+         sendImage = image.resized(to: newSize)
       }
       let request = SendCoinRequest(
          token: Self.store.tokens.token,
