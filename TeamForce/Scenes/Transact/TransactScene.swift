@@ -178,7 +178,7 @@ extension TransactScene: StateMachine {
          activityIndicator.hidden(false)
       //
       case .error:
-         viewModels.userSearchTextField.hidden(true)
+        // viewModels.userSearchTextField.hidden(true)
          activityIndicator.hidden(true)
          presentFoundUsers(users: [])
 
