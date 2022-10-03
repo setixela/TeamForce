@@ -42,12 +42,12 @@ extension ButtonModel: Stateable {
 
 extension ButtonModel: Eventable, ButtonTapAnimator {}
 
-class ButtonModelModableOld: ButtonModel, SelfModable {
+class ButtonModelModable: ButtonModel, SelfModable {
 
    var modes: Mode = .init()
 
    struct Mode: WeakSelfied {
-      typealias WeakSelf = ButtonModelModableOld
+      typealias WeakSelf = ButtonModelModable
 
       var normal: Event<WeakSelf?>?
       var inactive: Event<WeakSelf?>?

@@ -44,6 +44,7 @@ struct ButtonStateBuilder<Design: DesignProtocol>: ButtonStateProtocol {
       .cornerRadius(Design.params.cornerRadius),
       .height(Design.params.buttonHeight),
       .textColor(Design.color.textInvert),
+      .tint(Design.color.iconInvert),
       .enabled(false),
    ] }
 

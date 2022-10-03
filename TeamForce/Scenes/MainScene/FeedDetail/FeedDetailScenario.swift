@@ -17,6 +17,9 @@ struct FeedDetailEvents {
    let presentReactions: VoidWork<Void>
    let reactionPressed: VoidWork<PressLikeRequest>
    let saveInput: VoidWork<(Feed, String)>
+
+   let didEditingComment: VoidWork<String>
+   let didSendCommentPressed: VoidWorkVoid
 }
 
 final class FeedDetailScenario<Asset: AssetProtocol>:

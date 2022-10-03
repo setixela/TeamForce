@@ -16,7 +16,7 @@ enum FeedDetailsState {
    case loadingActivity
 }
 
-final class FeedDetailViewModels<Design: DSP>: StackModel, Designable {
+final class FeedDetailViewModels<Design: DSP>: DoubleStacksModel, Designable {
    var events: EventsStore = .init()
 
    private lazy var presenter = CommentPresenters<Design>()
@@ -26,17 +26,23 @@ final class FeedDetailViewModels<Design: DSP>: StackModel, Designable {
    lazy var filterButtons = FeedDetailFilterButtons<Design>()
 
    private lazy var detailsBlock = FeedDetailsBlock<Design>()
-   private lazy var commentsBlock = FeedCommentsBlock<Design>()
+   lazy var commentsBlock = FeedCommentsBlock<Design>()
 
    override func start() {
+      super.start()
+
+      bodyStack.arrangedModels([
+         topBlock,
+         filterButtons
+      ])
+
       filterButtons.buttonDetails.setMode(\.selected)
    }
-
 }
 
 extension FeedDetailViewModels: Eventable {
    struct Events: InitProtocol {
-      //var reactionPressed: PressLikeRequest?
+      // var reactionPressed: PressLikeRequest?
       var saveInput: Feed?
    }
 }
@@ -46,38 +52,27 @@ extension FeedDetailViewModels: StateMachine {
       switch state {
       case .initial(let tuple):
          send(\.saveInput, tuple.0)
-         arrangedModels([
-            topBlock,
-            filterButtons,
-            detailsBlock,
-            Spacer()
-         ])
          topBlock.setup(tuple)
+         setState(.details(tuple.0))
       case .details(let feed):
          detailsBlock.setup(feed)
-         arrangedModels([
-            topBlock,
-            filterButtons,
+         footerStack.arrangedModels([
             detailsBlock,
             Spacer()
          ])
       case .comments(let comments):
          commentsBlock.setup(comments)
-         arrangedModels([
-            topBlock,
-            filterButtons,
-            commentsBlock,
+         footerStack.arrangedModels([
+            commentsBlock
          ])
       case .reactions:
-         arrangedModels([
-            topBlock,
-            filterButtons,
+         footerStack.arrangedModels([
+
          ])
       case .loadingActivity:
-         arrangedModels([
-            topBlock,
-            filterButtons,
-            ActivityIndicator<Design>()
+         footerStack.arrangedModels([
+            ActivityIndicator<Design>(),
+            Spacer()
          ])
       }
    }

@@ -29,7 +29,9 @@ final class FeedDetailScene<Asset: AssetProtocol>:
          presentComment: feedDetailVM.filterButtons.on(\.didTapComments),
          presentReactions: feedDetailVM.filterButtons.on(\.didTapReactions),
          reactionPressed: feedDetailVM.topBlock.on(\.reactionPressed),
-         saveInput: on(\.input)
+         saveInput: on(\.input),
+         didEditingComment: feedDetailVM.commentsBlock.commentField.on(\.didEditingChanged),
+         didSendCommentPressed: feedDetailVM.commentsBlock.sendButton.on(\.didTap)
       )
    )
 
