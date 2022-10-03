@@ -57,7 +57,7 @@ extension FeedDetailViewModels: StateMachine {
          arrangedModels([
             topBlock,
             filterButtons,
-            detailsBlock
+            detailsBlock,
          ])
          topBlock.setup(tuple)
       case .details(let feed):

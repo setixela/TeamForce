@@ -15,7 +15,7 @@ final class FeedDetailsBlock<Design: DSP>: StackModel, Designable {
       .arrangedModels([
          LabelModel()
             .text("За что")
-            .set(Design.state.label.captionSecondary),
+            .set(Design.state.label.subtitleSecondary),
          reasonLabel
       ])
       .distribution(.fill)
@@ -23,33 +23,33 @@ final class FeedDetailsBlock<Design: DSP>: StackModel, Designable {
       .hidden(true)
 
    private lazy var hashTagBlock = HashTagsScrollModel<Design>()
+      .hidden(true)
 
    private lazy var transactPhoto = Combos<SComboMD<LabelModel, ImageViewModel>>()
       .setAll {
          $0
             .padBottom(10)
-            .set(Design.state.label.body4)
+            .set(Design.state.label.subtitleSecondary)
             .text("Фотография")
          $1
             .image(Design.icon.transactSuccess)
-            .maxHeight(130)
-            .maxWidth(130)
+            .height(130)
+            .width(130)
             .contentMode(.scaleAspectFill)
             .cornerRadius(Design.params.cornerRadiusSmall)
       }
+      .alignment(.leading)
       .hidden(true)
 
    override func start() {
       super.start()
 
+      spacing(18)
       arrangedModels([
-         Spacer(18),
+         Spacer(8),
          reasonStack,
-         Spacer(18),
          hashTagBlock,
-         Spacer(18),
-         transactPhoto,
-         Spacer()
+         transactPhoto
       ])
    }
 }
@@ -67,7 +67,7 @@ extension FeedDetailsBlock: SetupProtocol {
       }
 
       if let photoLink = data.transaction.photoUrl {
-         transactPhoto.models.down.url(TeamForceEndpoints.urlBase + photoLink)
+         transactPhoto.models.down.url(photoLink)
          transactPhoto.hidden(false)
       }
    }

@@ -27,6 +27,7 @@ protocol TypographyElements: InitProtocol, DesignElementable {
    var body4: DesignElement { get }
 
    var subtitle: DesignElement { get }
+   var subtitleSecondary: DesignElement { get }
 
    var caption: DesignElement { get }
    var captionSecondary: DesignElement { get }
@@ -57,6 +58,7 @@ struct LabelBuilder<Design: DSP>: LabelProtocol, Designable {
    var title2: LabelModel { .init(Design.state.label.title2) }
 
    var subtitle: LabelModel { .init(Design.state.label.subtitle) }
+   var subtitleSecondary: LabelModel { .init(Design.state.label.subtitleSecondary) }
 
    var body1: LabelModel { .init(Design.state.label.body1) }
    var body2: LabelModel { .init(Design.state.label.body2) }
@@ -147,6 +149,11 @@ struct LabelStateBuilder<Design: DSP>: LabelStateProtocol, Designable {
    var subtitle: [LabelState] { [
       .font(.systemFont(ofSize: 16, weight: .regular)),
       .textColor(Design.color.text)
+   ] }
+
+   var subtitleSecondary: [LabelState] { [
+      .font(.systemFont(ofSize: 16, weight: .regular)),
+      .textColor(Design.color.textSecondary)
    ] }
 
    var caption: [LabelState] { [
