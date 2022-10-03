@@ -347,8 +347,6 @@ private extension TransactScene {
       viewModels.balanceInfo.set(.hidden(true, isAnimated: true))
 
       viewModels.notFoundBlock.hidden(true)
-
-      view.endEditing(true)
    }
 
    func presentBalanceInfo() {

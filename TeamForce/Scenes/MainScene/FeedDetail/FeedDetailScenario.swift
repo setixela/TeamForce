@@ -37,10 +37,11 @@ final class FeedDetailScenario<Asset: AssetProtocol>:
       events.presentDetails
          .doNext(works.getFeed)
          .onSuccess(setState) { .presentDetails($0) }
-      
+
       events.presentComment
          .doNext(works.getComments)
          .onSuccess(setState) { .presentComments($0) }
+
       events.presentDetails
    }
 }

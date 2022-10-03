@@ -54,8 +54,7 @@ final class FeedDetailScene<Asset: AssetProtocol>:
          .set(.backColor(Design.color.backgroundSecondary))
          .arrangedModels([
             Spacer(32),
-            feedDetailVM,
-            Spacer()
+            feedDetailVM
          ])
    }
 }

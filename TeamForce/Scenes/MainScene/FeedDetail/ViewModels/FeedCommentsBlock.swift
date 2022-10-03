@@ -24,7 +24,8 @@ final class FeedCommentsBlock<Design: DSP>: DoubleStacksModel, Designable {
       super.start()
 
       bodyStack.arrangedModels([
-         commentTableModel
+         commentTableModel,
+         Spacer()
       ])
 
       footerStack.arrangedModels([

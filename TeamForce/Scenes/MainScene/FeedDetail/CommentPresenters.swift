@@ -14,7 +14,7 @@ class CommentPresenters<Design: DesignProtocol>: Designable {
    
    var commentCellPresenter: Presenter<Comment, WrappedX<StackModel>> {
       Presenter { [weak self] work in
-         guard let self = self else { return }
+         guard let self else { assert(false); return }
          
          let comment = work.unsafeInput
          
