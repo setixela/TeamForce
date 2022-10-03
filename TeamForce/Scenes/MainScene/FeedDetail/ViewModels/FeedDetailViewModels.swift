@@ -32,20 +32,11 @@ final class FeedDetailViewModels<Design: DSP>: StackModel, Designable {
       filterButtons.buttonDetails.setMode(\.selected)
    }
 
-//      commentField
-//         .on(\.didBeginEditing, self) { slf, _ in
-//            slf.infoStack.hidden(true)
-//            slf.topBlock.hidden(true)
-//         }
-//         .on(\.didEndEditing, self) { slf, _ in
-//            slf.infoStack.hidden(false)
-//            slf.topBlock.hidden(false)
-//         }
 }
 
 extension FeedDetailViewModels: Eventable {
    struct Events: InitProtocol {
-      var reactionPressed: PressLikeRequest?
+      //var reactionPressed: PressLikeRequest?
       var saveInput: Feed?
    }
 }

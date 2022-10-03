@@ -80,6 +80,7 @@ extension FeedDetailUserInfoBlock: SetupProtocol {
       let feed = data.0
       let userName = data.1
       configureImage(feed: feed)
+      configureEvents(feed: feed)
       let dateText = FeedPresenters<Design>.makeInfoDateLabel(feed: feed).view.text
       dateLabel.text(dateText ?? "")
       let type = FeedTransactType.make(feed: feed, currentUserName: userName)
