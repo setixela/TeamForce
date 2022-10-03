@@ -124,21 +124,8 @@ class FeedPresenters<Design: DesignProtocol>: Designable {
                Grid.xxx.spacer
             ])
 
-         let tags = (feed.transaction.tags ?? []).map { tag in
-            WrappedX(
-               LabelModel()
-                  .set(Design.state.label.caption2)
-                  .text("# " + tag.name)
-            )
-            .backColor(Design.color.infoSecondary)
-            .cornerRadius(Design.params.cornerRadiusMini)
-            .padding(.outline(8))
-         }
-
-         let hashTagBlock = ScrollViewModelX()
-            .set(.spacing(4))
-            .set(.arrangedModels(tags))
-            .set(.hideHorizontalScrollIndicator)
+         let hashTagBlock = HashTagsScrollModel<Design>()
+         hashTagBlock.setup(feed)
 
          let infoBlock = StackModel()
             .spacing(Grid.x10.value)
@@ -290,6 +277,3 @@ extension FeedPresenters: Eventable {
    }
 }
 
-final class HashTagsScrollModel: ScrollViewModelX {
-
-}

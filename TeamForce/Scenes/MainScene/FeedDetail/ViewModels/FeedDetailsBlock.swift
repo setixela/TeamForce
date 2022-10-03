@@ -8,6 +8,7 @@
 final class FeedDetailsBlock<Design: DSP>: StackModel, Designable {
    private lazy var reasonLabel = LabelModel()
       .text("Текст")
+      .numberOfLines(0)
       .set(Design.state.label.body4)
 
    private lazy var reasonStack = UserProfileStack<Design>()
@@ -21,9 +22,7 @@ final class FeedDetailsBlock<Design: DSP>: StackModel, Designable {
       .alignment(.leading)
       .hidden(true)
 
-   private lazy var hashTagBlock = ScrollViewModelX()
-      .set(.spacing(4))
-      .set(.hideHorizontalScrollIndicator)
+   private lazy var hashTagBlock = HashTagsScrollModel<Design>()
 
    private lazy var transactPhoto = Combos<SComboMD<LabelModel, ImageViewModel>>()
       .setAll {
@@ -38,13 +37,17 @@ final class FeedDetailsBlock<Design: DSP>: StackModel, Designable {
             .contentMode(.scaleAspectFill)
             .cornerRadius(Design.params.cornerRadiusSmall)
       }
+      .hidden(true)
 
    override func start() {
       super.start()
 
       arrangedModels([
+         Spacer(18),
          reasonStack,
+         Spacer(18),
          hashTagBlock,
+         Spacer(18),
          transactPhoto,
          Spacer()
       ])
@@ -56,6 +59,11 @@ extension FeedDetailsBlock: SetupProtocol {
       if let reason = data.transaction.reason, reason != "" {
          reasonLabel.text(reason)
          reasonStack.hidden(false)
+      }
+
+      if data.transaction.tags?.isEmpty == false {
+         hashTagBlock.setup(data)
+         hashTagBlock.hidden(false)
       }
 
       if let photoLink = data.transaction.photoUrl {
