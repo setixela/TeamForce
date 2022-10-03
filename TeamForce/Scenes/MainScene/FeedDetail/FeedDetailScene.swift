@@ -65,6 +65,7 @@ enum FeedDetailSceneState {
    case presentComments([Comment])
    case failedToReact
    case updateReactions((TransactStatistics, (Bool, Bool)))
+   case presntActivityIndicator
 }
 
 extension FeedDetailScene: StateMachine {
@@ -101,7 +102,8 @@ extension FeedDetailScene: StateMachine {
          break
       case .presentDetails(let feed):
          feedDetailVM.setState(.details(feed))
-         break
+      case .presntActivityIndicator:
+         feedDetailVM.setState(.loadingActivity)
       }
    }
 }

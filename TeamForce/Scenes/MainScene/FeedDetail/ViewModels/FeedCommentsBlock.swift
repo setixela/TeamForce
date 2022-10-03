@@ -20,6 +20,19 @@ final class FeedCommentsBlock<Design: DSP>: DoubleStacksModel, Designable {
       .placeholder(Design.Text.title.comment)
       .placeholderColor(Design.color.textFieldPlaceholder)
 
+   lazy var sendButton = ButtonModel()
+      .image(Design.icon.tablerBrandTelegram)
+      .set(Design.state.button.default)
+      .width(Design.params.buttonHeight)
+
+   private lazy var commentPanel = StackModel()
+      .arrangedModels([
+         commentField,
+         sendButton
+      ])
+      .axis(.horizontal)
+      .spacing(8)
+
    override func start() {
       super.start()
 
@@ -29,7 +42,8 @@ final class FeedCommentsBlock<Design: DSP>: DoubleStacksModel, Designable {
       ])
 
       footerStack.arrangedModels([
-         commentField
+         Spacer(16),
+         commentPanel
       ])
    }
 }

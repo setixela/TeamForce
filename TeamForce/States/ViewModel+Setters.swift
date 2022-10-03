@@ -468,6 +468,7 @@ extension ViewModelProtocol where Self: Stateable, View: ButtonExtended {
 
    @discardableResult func tint(_ value: UIColor) -> Self {
       view.tintColor = value
+      view.setTitleColor(value, for: .normal)
       view.imageView?.tintColor = value
       return self
    }

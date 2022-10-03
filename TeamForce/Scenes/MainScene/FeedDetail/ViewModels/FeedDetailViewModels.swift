@@ -13,6 +13,7 @@ enum FeedDetailsState {
    case details(Feed)
    case comments([Comment])
    case reactions
+   case loadingActivity
 }
 
 final class FeedDetailViewModels<Design: DSP>: StackModel, Designable {
@@ -80,6 +81,12 @@ extension FeedDetailViewModels: StateMachine {
          arrangedModels([
             topBlock,
             filterButtons,
+         ])
+      case .loadingActivity:
+         arrangedModels([
+            topBlock,
+            filterButtons,
+            ActivityIndicator<Design>()
          ])
       }
    }

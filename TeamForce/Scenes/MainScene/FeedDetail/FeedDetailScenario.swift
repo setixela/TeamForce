@@ -35,13 +35,16 @@ final class FeedDetailScenario<Asset: AssetProtocol>:
          .onSuccess(setState) { .presentDetails($0) }
 
       events.presentDetails
+         .onSuccess(setState, .presntActivityIndicator)
          .doNext(works.getFeed)
          .onSuccess(setState) { .presentDetails($0) }
 
       events.presentComment
+         .onSuccess(setState, .presntActivityIndicator)
          .doNext(works.getComments)
          .onSuccess(setState) { .presentComments($0) }
 
       events.presentDetails
+         .onSuccess(setState, .presntActivityIndicator)
    }
 }
