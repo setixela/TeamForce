@@ -225,7 +225,7 @@ enum TeamForceEndpoints {
    struct UpdateProfile: EndpointProtocol {
       let method = HTTPMethod.put
       
-      var endPoint: String = urlBase + "/update-profile-by-user/" 
+      var endPoint: String = urlBase + "/update-profile-by-user/"
       
       var body: [String : Any]
       
@@ -375,5 +375,15 @@ enum TeamForceEndpoints {
          self.endPoint = endPoint + id + "/"
          self.headers = headers
       }
+   }
+   
+   struct GetLikesByTransaction: EndpointProtocol {
+      let method = HTTPMethod.post
+
+      var endPoint: String { urlBase + "/get-likes-by-transaction/" }
+
+      var headers: [String: String]
+
+      let jsonData: Data?
    }
 }

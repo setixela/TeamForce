@@ -154,4 +154,24 @@ final class FeedDetailWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedDetailWork
             work.fail()
          }
    }.retainBy(retainer) }
+   
+   var getLikesByTransaction: Work<Int, [Like]> { .init { [weak self] work in
+      // input 1 for likes
+      // input 2 for dislikes
+      guard
+         let input = work.input,
+         let transactId = Self.store.currentTransactId
+      else { return }
+
+      let request = LikesByTransactRequest(token: "", body: LikesByTransactBody(transactionId: transactId, likeKind: input))
+
+      self?.apiUseCase.getLikesByTransaction
+         .doAsync(request)
+         .onSuccess {
+            work.success(result: $0)
+         }
+         .onFail {
+            work.fail()
+         }
+   }.retainBy(retainer) }
 }
