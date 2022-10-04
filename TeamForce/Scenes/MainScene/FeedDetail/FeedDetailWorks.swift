@@ -35,7 +35,7 @@ final class FeedDetailWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedDetailWork
          .onFail {
             work.fail()
          }
-   }.retainBy(retainer)}
+   }.retainBy(retainer) }
 
    var saveInput: Work<(Feed, String), Feed> { .init { work in
       guard let input = work.input else { return }
@@ -93,7 +93,8 @@ final class FeedDetailWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedDetailWork
       let request = CommentsRequest(token: "",
                                     body: CommentsRequestBody(
                                        transactionId: transactId,
-                                       includeName: true
+                                       includeName: true,
+                                       isReverseOrder: true
                                     ))
       self?.apiUseCase.getComments
          .doAsync(request)
