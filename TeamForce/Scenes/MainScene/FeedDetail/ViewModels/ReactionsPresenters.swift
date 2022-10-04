@@ -46,17 +46,18 @@ class ReactionsPresenters<Design: DesignProtocol>: Designable {
          
          let cellStack = WrappedX(
             StackModel()
-               .padding(.outline(Grid.x8.value))
+               .padding(Design.params.cellContentPadding)
                .spacing(Grid.x12.value)
                .axis(.horizontal)
-               .alignment(.top)
+               .alignment(.center)
                .arrangedModels([
                   icon,
                   senderLabel
                ])
                .cornerRadius(Design.params.cornerRadiusSmall)
+               .backColor(Design.color.backgroundInfoSecondary)
          )
-         .padding(.verticalOffset(Grid.x16.value))
+         .padding(.outline(Grid.x2.value))
          
          work.success(result: cellStack)
       }
