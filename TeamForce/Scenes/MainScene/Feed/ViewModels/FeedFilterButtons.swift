@@ -155,13 +155,14 @@ final class FeedReactionsFilterButtons<Design: DSP>: StackModel, Designable, Eve
 
    lazy var buttonAll = SecondaryButtonDT<Design>()
       .title("Все")
+      .font(Design.font.default)
       .on(\.didTap) { [weak self] in
          self?.select(0)
          self?.send(\.didTapAll)
       }
-
    lazy var buttonLikes = SecondaryButtonDT<Design>()
       .title("Лайк")
+      .font(Design.font.default)
       .on(\.didTap) { [weak self] in
          self?.select(1)
          self?.send(\.didTapLikes)
@@ -169,6 +170,7 @@ final class FeedReactionsFilterButtons<Design: DSP>: StackModel, Designable, Eve
 
    lazy var buttonDislikes = SecondaryButtonDT<Design>()
       .title("Дизлайк")
+      .font(Design.font.default)
       .on(\.didTap) { [weak self] in
          self?.select(2)
          self?.send(\.didTapDislikes)

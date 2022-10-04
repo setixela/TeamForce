@@ -9,7 +9,7 @@ import ReactiveWorks
 import UIKit
 
 final class FeedReactionsBlock<Design: DSP>: StackModel, Designable {
-   lazy var likeButtonsPanel = FeedReactionsFilterButtons<Design>()
+   lazy var filterButtons = FeedReactionsFilterButtons<Design>()
    lazy var reactedUsersTableModel = TableItemsModel<Design>()
       .backColor(Design.color.background)
       .set(.presenters([
@@ -19,9 +19,11 @@ final class FeedReactionsBlock<Design: DSP>: StackModel, Designable {
 
    override func start() {
       super.start()
+      filterButtons.buttonAll.setMode(\.selected)
+      
       arrangedModels([
          Spacer(8),
-         likeButtonsPanel,
+         filterButtons,
          reactedUsersTableModel
       ])
    }

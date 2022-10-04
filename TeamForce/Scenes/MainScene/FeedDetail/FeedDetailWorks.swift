@@ -19,6 +19,7 @@ final class FeedDetailWorksTempStorage: InitProtocol {
    var likes: [Like]?
 
    var inputComment = ""
+   var reactionSegment = 0
 }
 
 final class FeedDetailWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedDetailWorksTempStorage, Asset> {
@@ -178,16 +179,34 @@ final class FeedDetailWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedDetailWork
    
    var getAllReactions: VoidWork<[ReactItem]> { .init { work in
       let filtered = Self.filteredAll()
+      Self.store.reactionSegment = 0
       work.success(result: filtered)
    }}
    
    var getLikeReactions: VoidWork<[ReactItem]> { .init { work in
       let filtered = Self.filteredLikes()
+      Self.store.reactionSegment = 1
       work.success(result: filtered)
    }}
    
    var getDislikeReactions: VoidWork<[ReactItem]> { .init { work in
       let filtered = Self.filteredDislikes()
+      Self.store.reactionSegment = 2
+      work.success(result: filtered)
+   }}
+   
+   var getSelectedReactions: VoidWork<[ReactItem]> { .init { work in
+      var filtered: [ReactItem] = []
+      switch(Self.store.reactionSegment) {
+      case 0:
+         filtered = Self.filteredAll()
+      case 1:
+         filtered = Self.filteredLikes()
+      case 2:
+         filtered = Self.filteredDislikes()
+      default:
+         filtered = Self.filteredAll()
+      }
       work.success(result: filtered)
    }}
 }
