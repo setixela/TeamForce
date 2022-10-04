@@ -9,14 +9,14 @@ import Foundation
 import ReactiveWorks
 
 final class FeedDetailWorksTempStorage: InitProtocol {
-   var feed: [Feed]?
    lazy var currentUserName = ""
-   var segmentId: Int?
    var currentTransactId: Int?
    var currentFeed: Feed?
    var userLiked: Bool = false
    var userDisliked: Bool = false
    var token: String?
+   
+   var likes: [Like]?
 
    var inputComment = ""
 }
@@ -155,23 +155,81 @@ final class FeedDetailWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedDetailWork
          }
    }.retainBy(retainer) }
    
-   var getLikesByTransaction: Work<Int, [Like]> { .init { [weak self] work in
+   var getLikesByTransaction: Work<Void, Void> { .init { [weak self] work in
       // input 1 for likes
       // input 2 for dislikes
       guard
-         let input = work.input,
          let transactId = Self.store.currentTransactId
       else { return }
 
-      let request = LikesByTransactRequest(token: "", body: LikesByTransactBody(transactionId: transactId, likeKind: input))
+      let request = LikesByTransactRequest(token: "", body: LikesByTransactBody(transactionId: transactId,
+                              includeName: true))
 
       self?.apiUseCase.getLikesByTransaction
          .doAsync(request)
          .onSuccess {
-            work.success(result: $0)
+            Self.store.likes = $0
+            work.success()
          }
          .onFail {
             work.fail()
          }
    }.retainBy(retainer) }
+   
+   var getAllReactions: VoidWork<[Item]> { .init { work in
+      let filtered = Self.filteredAll()
+      work.success(result: filtered)
+   }}
+   
+   var getLikeReactions: VoidWork<[Item]> { .init { work in
+      let filtered = Self.filteredLikes()
+      work.success(result: filtered)
+   }}
+   
+   var getDislikeReactions: VoidWork<[Item]> { .init { work in
+      let filtered = Self.filteredDislikes()
+      work.success(result: filtered)
+   }}
+}
+
+private extension FeedDetailWorks {
+   static func filteredAll() -> [Item] {
+      guard let likes = store.likes else {
+         return []
+      }
+
+      var items: [Item] = []
+      for like in likes {
+         items += like.items ?? []
+      }
+      return items
+   }
+
+   static func filteredLikes() -> [Item] {
+      guard let likes = store.likes else {
+         return []
+      }
+
+      var items: [Item] = []
+      for like in likes {
+         if like.likeKind?.code == "like" {
+            items += like.items ?? []
+         }
+      }
+      return items
+   }
+
+   static func filteredDislikes() -> [Item] {
+      guard let likes = store.likes else {
+         return []
+      }
+
+      var items: [Item] = []
+      for like in likes {
+         if like.likeKind?.code == "dislike" {
+            items += like.items ?? []
+         }
+      }
+      return items
+   }
 }

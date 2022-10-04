@@ -207,6 +207,7 @@
 		63578E5E28ABA2E500423957 /* CancelTransactionByIdUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63578E5D28ABA2E500423957 /* CancelTransactionByIdUseCase.swift */; };
 		635FC6BC28EBE50800826B67 /* GetLikesByTransactionApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635FC6BB28EBE50800826B67 /* GetLikesByTransactionApiWorker.swift */; };
 		635FC6BE28EBE56400826B67 /* GetLikesByTransactionUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635FC6BD28EBE56400826B67 /* GetLikesByTransactionUseCase.swift */; };
+		635FC6C028EC17B500826B67 /* ReactionsPresenters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635FC6BF28EC17B500826B67 /* ReactionsPresenters.swift */; };
 		6368D8222891508C0049EEAB /* ProfileScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6368D8212891508C0049EEAB /* ProfileScene.swift */; };
 		6368D824289168740049EEAB /* CustomCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6368D823289168740049EEAB /* CustomCellModel.swift */; };
 		6368D826289187B50049EEAB /* SendCoinApiModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6368D825289187B50049EEAB /* SendCoinApiModel.swift */; };
@@ -486,6 +487,7 @@
 		63578E5D28ABA2E500423957 /* CancelTransactionByIdUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelTransactionByIdUseCase.swift; sourceTree = "<group>"; };
 		635FC6BB28EBE50800826B67 /* GetLikesByTransactionApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLikesByTransactionApiWorker.swift; sourceTree = "<group>"; };
 		635FC6BD28EBE56400826B67 /* GetLikesByTransactionUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLikesByTransactionUseCase.swift; sourceTree = "<group>"; };
+		635FC6BF28EC17B500826B67 /* ReactionsPresenters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionsPresenters.swift; sourceTree = "<group>"; };
 		6368D8212891508C0049EEAB /* ProfileScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileScene.swift; sourceTree = "<group>"; };
 		6368D823289168740049EEAB /* CustomCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCellModel.swift; sourceTree = "<group>"; };
 		6368D825289187B50049EEAB /* SendCoinApiModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendCoinApiModel.swift; sourceTree = "<group>"; };
@@ -760,6 +762,7 @@
 				1953CF0128E8A1C500C670A6 /* FeedDetailsBlock.swift */,
 				1953CEFD28E8A15C00C670A6 /* FeedCommentsBlock.swift */,
 				1953CEFF28E8A19A00C670A6 /* FeedReactionsBlock.swift */,
+				635FC6BF28EC17B500826B67 /* ReactionsPresenters.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -1536,6 +1539,7 @@
 				19CAB9CC28B41CB400A0A3B1 /* TitleBodySwitcherDT.swift in Sources */,
 				19BD2A8928ABB72500FCC00A /* Scenarible.swift in Sources */,
 				63E7A74128AFA0D200FB2C80 /* GetPeriodByDateApiWorker.swift in Sources */,
+				635FC6C028EC17B500826B67 /* ReactionsPresenters.swift in Sources */,
 				63C6D11428B2E1F200887AD1 /* SettingsViewModel.swift in Sources */,
 				19017B8128A6A39800B06345 /* TransactDetailViewModel.swift in Sources */,
 				63EB469528AC35720070A271 /* HistoryScene.swift in Sources */,

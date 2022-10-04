@@ -12,7 +12,7 @@ enum FeedDetailsState {
    case initial((Feed, String))
    case details(Feed)
    case comments([Comment])
-   case reactions
+   case reactions([Item])
    case loadingActivity
 
    case sendButtonDisabled
@@ -23,14 +23,13 @@ enum FeedDetailsState {
 final class FeedDetailViewModels<Design: DSP>: DoubleStacksModel, Designable {
    var events: EventsStore = .init()
 
-   private lazy var presenter = CommentPresenters<Design>()
-
    lazy var topBlock = FeedDetailUserInfoBlock<Design>()
 
    lazy var filterButtons = FeedDetailFilterButtons<Design>()
 
    private lazy var detailsBlock = FeedDetailsBlock<Design>()
    lazy var commentsBlock = FeedCommentsBlock<Design>()
+   lazy var reactionsBlock = FeedReactionsBlock<Design>()
 
    override func start() {
       super.start()
@@ -69,9 +68,10 @@ extension FeedDetailViewModels: StateMachine {
          footerStack.arrangedModels([
             commentsBlock
          ])
-      case .reactions:
+      case .reactions(let items):
+         reactionsBlock.setup(items)
          footerStack.arrangedModels([
-
+            reactionsBlock
          ])
       case .loadingActivity:
          footerStack.arrangedModels([

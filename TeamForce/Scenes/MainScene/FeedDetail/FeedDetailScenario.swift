@@ -49,6 +49,16 @@ final class FeedDetailScenario<Asset: AssetProtocol>:
          .onSuccess(setState, .presntActivityIndicator)
          .doNext(works.getComments)
          .onSuccess(setState) { .presentComments($0) }
+      
+      events.presentReactions
+         .onSuccess(setState, .presntActivityIndicator)
+         .doNext(work: works.getLikesByTransaction)
+         .doNext(work: works.getAllReactions)
+         .onSuccess(setState) { .presentReactions($0) }
+         .onFail {
+            print("failed to present reactions")
+         }
+         
 
       events.didEditingComment
          .doNext(works.updateInputComment)

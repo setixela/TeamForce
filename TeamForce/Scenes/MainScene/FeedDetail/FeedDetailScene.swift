@@ -65,6 +65,7 @@ enum FeedDetailSceneState {
    case initial
    case presentDetails(Feed)
    case presentComments([Comment])
+   case presentReactions([Item])
    case failedToReact
    case updateReactions((TransactStatistics, (Bool, Bool)))
    case presntActivityIndicator
@@ -83,6 +84,8 @@ extension FeedDetailScene: StateMachine {
          print("hello")
       case .presentComments(let comments):
          feedDetailVM.setState(.comments(comments))
+      case .presentReactions(let items):
+         feedDetailVM.setState(.reactions(items))
       case .failedToReact:
          print("failed to like")
       case .updateReactions(let value):

@@ -35,7 +35,7 @@ struct LikesByTransactBody: Codable {
         limit: Int? = nil,
         includeName: Bool? = nil,
         includeCode: Bool? = nil,
-        likeKind: Int?)
+        likeKind: Int? = nil)
    {
       self.transactionId = transactionId
       self.offset = offset
@@ -49,6 +49,11 @@ struct LikesByTransactBody: Codable {
 struct LikesByTransacResponse: Codable {
    let transactionId: Int
    let likes: [Like]?
+   
+   enum CodingKeys: String, CodingKey {
+      case transactionId = "transaction_id"
+      case likes
+   }
 }
 
 final class GetLikesByTransactionApiWorker: BaseApiWorker<LikesByTransactRequest, [Like]> {
