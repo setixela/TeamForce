@@ -11,9 +11,8 @@ import UIKit
 class ReactionsPresenters<Design: DesignProtocol>: Designable {
    var events: EventsStore = .init()
    
-   var reactionsCellPresenter: Presenter<Item, WrappedX<StackModel>> {
+   var reactionsCellPresenter: Presenter<ReactItem, WrappedX<StackModel>> {
       Presenter { work in
-         print("Presenter")
          let item = work.unsafeInput
          let user = item.user
 

@@ -12,7 +12,7 @@ enum FeedDetailsState {
    case initial((Feed, String))
    case details(Feed)
    case comments([Comment])
-   case reactions([Item])
+   case reactions([ReactItem])
    case loadingActivity
 
    case sendButtonDisabled

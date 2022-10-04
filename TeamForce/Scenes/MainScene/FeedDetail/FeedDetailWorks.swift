@@ -176,41 +176,41 @@ final class FeedDetailWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedDetailWork
          }
    }.retainBy(retainer) }
    
-   var getAllReactions: VoidWork<[Item]> { .init { work in
+   var getAllReactions: VoidWork<[ReactItem]> { .init { work in
       let filtered = Self.filteredAll()
       work.success(result: filtered)
    }}
    
-   var getLikeReactions: VoidWork<[Item]> { .init { work in
+   var getLikeReactions: VoidWork<[ReactItem]> { .init { work in
       let filtered = Self.filteredLikes()
       work.success(result: filtered)
    }}
    
-   var getDislikeReactions: VoidWork<[Item]> { .init { work in
+   var getDislikeReactions: VoidWork<[ReactItem]> { .init { work in
       let filtered = Self.filteredDislikes()
       work.success(result: filtered)
    }}
 }
 
 private extension FeedDetailWorks {
-   static func filteredAll() -> [Item] {
+   static func filteredAll() -> [ReactItem] {
       guard let likes = store.likes else {
          return []
       }
 
-      var items: [Item] = []
+      var items: [ReactItem] = []
       for like in likes {
          items += like.items ?? []
       }
       return items
    }
 
-   static func filteredLikes() -> [Item] {
+   static func filteredLikes() -> [ReactItem] {
       guard let likes = store.likes else {
          return []
       }
 
-      var items: [Item] = []
+      var items: [ReactItem] = []
       for like in likes {
          if like.likeKind?.code == "like" {
             items += like.items ?? []
@@ -219,12 +219,12 @@ private extension FeedDetailWorks {
       return items
    }
 
-   static func filteredDislikes() -> [Item] {
+   static func filteredDislikes() -> [ReactItem] {
       guard let likes = store.likes else {
          return []
       }
 
-      var items: [Item] = []
+      var items: [ReactItem] = []
       for like in likes {
          if like.likeKind?.code == "dislike" {
             items += like.items ?? []

@@ -13,7 +13,7 @@ struct LikeKind: Codable {
    let code: String?
 }
 
-struct Item: Codable {
+struct ReactItem: Codable {
    let timeOf: String
    let user: User
 
@@ -27,7 +27,7 @@ struct Like: Codable {
    let likeKind: LikeKind?
    let counter: Int?
    let lastChanged: String?
-   let items: [Item]?
+   let items: [ReactItem]?
 
    enum CodingKeys: String, CodingKey {
       case likeKind = "like_kind"

@@ -65,7 +65,7 @@ enum FeedDetailSceneState {
    case initial
    case presentDetails(Feed)
    case presentComments([Comment])
-   case presentReactions([Item])
+   case presentReactions([ReactItem])
    case failedToReact
    case updateReactions((TransactStatistics, (Bool, Bool)))
    case presntActivityIndicator

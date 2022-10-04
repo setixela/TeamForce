@@ -9,7 +9,6 @@ import ReactiveWorks
 import UIKit
 
 final class FeedReactionsBlock<Design: DSP>: StackModel, Designable {
-   
    lazy var likeButtonsPanel = FeedReactionsFilterButtons<Design>()
    lazy var reactedUsersTableModel = TableItemsModel<Design>()
       .backColor(Design.color.background)
@@ -23,14 +22,13 @@ final class FeedReactionsBlock<Design: DSP>: StackModel, Designable {
       arrangedModels([
          Spacer(8),
          likeButtonsPanel,
-         reactedUsersTableModel,
-         Spacer()
+         reactedUsersTableModel
       ])
    }
 }
 
 extension FeedReactionsBlock: SetupProtocol {
-   func setup(_ data: [Item]) {
+   func setup(_ data: [ReactItem]) {
       reactedUsersTableModel.set(.items(data + [SpacerItem(size: Grid.x64.value)]))
    }
 }
