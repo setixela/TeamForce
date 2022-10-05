@@ -205,6 +205,9 @@
 		63578E5A28AB8F6000423957 /* GetTransactionsByPeriodUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63578E5928AB8F6000423957 /* GetTransactionsByPeriodUseCase.swift */; };
 		63578E5C28AB9B3E00423957 /* CancelTransactionByIdApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63578E5B28AB9B3E00423957 /* CancelTransactionByIdApiWorker.swift */; };
 		63578E5E28ABA2E500423957 /* CancelTransactionByIdUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63578E5D28ABA2E500423957 /* CancelTransactionByIdUseCase.swift */; };
+		635FC6BC28EBE50800826B67 /* GetLikesByTransactionApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635FC6BB28EBE50800826B67 /* GetLikesByTransactionApiWorker.swift */; };
+		635FC6BE28EBE56400826B67 /* GetLikesByTransactionUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635FC6BD28EBE56400826B67 /* GetLikesByTransactionUseCase.swift */; };
+		635FC6C028EC17B500826B67 /* ReactionsPresenters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635FC6BF28EC17B500826B67 /* ReactionsPresenters.swift */; };
 		6368D8222891508C0049EEAB /* ProfileScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6368D8212891508C0049EEAB /* ProfileScene.swift */; };
 		6368D824289168740049EEAB /* CustomCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6368D823289168740049EEAB /* CustomCellModel.swift */; };
 		6368D826289187B50049EEAB /* SendCoinApiModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6368D825289187B50049EEAB /* SendCoinApiModel.swift */; };
@@ -482,6 +485,9 @@
 		63578E5928AB8F6000423957 /* GetTransactionsByPeriodUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTransactionsByPeriodUseCase.swift; sourceTree = "<group>"; };
 		63578E5B28AB9B3E00423957 /* CancelTransactionByIdApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelTransactionByIdApiWorker.swift; sourceTree = "<group>"; };
 		63578E5D28ABA2E500423957 /* CancelTransactionByIdUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelTransactionByIdUseCase.swift; sourceTree = "<group>"; };
+		635FC6BB28EBE50800826B67 /* GetLikesByTransactionApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLikesByTransactionApiWorker.swift; sourceTree = "<group>"; };
+		635FC6BD28EBE56400826B67 /* GetLikesByTransactionUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLikesByTransactionUseCase.swift; sourceTree = "<group>"; };
+		635FC6BF28EC17B500826B67 /* ReactionsPresenters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionsPresenters.swift; sourceTree = "<group>"; };
 		6368D8212891508C0049EEAB /* ProfileScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileScene.swift; sourceTree = "<group>"; };
 		6368D823289168740049EEAB /* CustomCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCellModel.swift; sourceTree = "<group>"; };
 		6368D825289187B50049EEAB /* SendCoinApiModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendCoinApiModel.swift; sourceTree = "<group>"; };
@@ -756,6 +762,7 @@
 				1953CF0128E8A1C500C670A6 /* FeedDetailsBlock.swift */,
 				1953CEFD28E8A15C00C670A6 /* FeedCommentsBlock.swift */,
 				1953CEFF28E8A19A00C670A6 /* FeedReactionsBlock.swift */,
+				635FC6BF28EC17B500826B67 /* ReactionsPresenters.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -1265,6 +1272,7 @@
 				63BB2C1928E1384700C1E3DB /* CreateCommentApiWorker.swift */,
 				63BB2C1D28E14AAF00C1E3DB /* UpdateCommentApiWorker.swift */,
 				63BB2C2128E150CA00C1E3DB /* DeleteCommentApiWorker.swift */,
+				635FC6BB28EBE50800826B67 /* GetLikesByTransactionApiWorker.swift */,
 			);
 			path = ApiModels;
 			sourceTree = "<group>";
@@ -1312,6 +1320,7 @@
 				63BB2C1B28E13A5400C1E3DB /* CreateCommentUseCase.swift */,
 				63BB2C1F28E14BFA00C1E3DB /* UpdateCommentUseCase.swift */,
 				63BB2C2328E1513000C1E3DB /* DeleteCommentUseCase.swift */,
+				635FC6BD28EBE56400826B67 /* GetLikesByTransactionUseCase.swift */,
 			);
 			path = ApiUseCases;
 			sourceTree = "<group>";
@@ -1530,6 +1539,7 @@
 				19CAB9CC28B41CB400A0A3B1 /* TitleBodySwitcherDT.swift in Sources */,
 				19BD2A8928ABB72500FCC00A /* Scenarible.swift in Sources */,
 				63E7A74128AFA0D200FB2C80 /* GetPeriodByDateApiWorker.swift in Sources */,
+				635FC6C028EC17B500826B67 /* ReactionsPresenters.swift in Sources */,
 				63C6D11428B2E1F200887AD1 /* SettingsViewModel.swift in Sources */,
 				19017B8128A6A39800B06345 /* TransactDetailViewModel.swift in Sources */,
 				63EB469528AC35720070A271 /* HistoryScene.swift in Sources */,
@@ -1540,6 +1550,7 @@
 				19D08355286F405500F75E4A /* DoubleLabelModel.swift in Sources */,
 				197A2D9928A98F4300190656 /* UIColor+Random.swift in Sources */,
 				63AD132628A39B4900CFF75B /* GetTransactionByIdApiWorker.swift in Sources */,
+				635FC6BC28EBE50800826B67 /* GetLikesByTransactionApiWorker.swift in Sources */,
 				63A2234128CF797600D92615 /* GetTagsUseCase.swift in Sources */,
 				63AD689328D0F33A00675C69 /* GetProfileByIdUseCase.swift in Sources */,
 				19B39E5D28D3437000BB2C77 /* TagCell.swift in Sources */,
@@ -1588,6 +1599,7 @@
 				191B0C272865E5C1001CF3D9 /* IconBuilder.swift in Sources */,
 				190BE97928ADDFAB0062CCD5 /* TransactScenario.swift in Sources */,
 				63D419EF28AA81800024E22C /* GetPeriodsApiWorker.swift in Sources */,
+				635FC6BE28EBE56400826B67 /* GetLikesByTransactionUseCase.swift in Sources */,
 				19EF32AB287CE80B0078F53D /* StringStorageWorker.swift in Sources */,
 				198BBEEC28B697410006CD30 /* LoadTokenUseCase.swift in Sources */,
 				63BB2C1C28E13A5400C1E3DB /* CreateCommentUseCase.swift in Sources */,

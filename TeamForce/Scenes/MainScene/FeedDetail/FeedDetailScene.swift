@@ -31,7 +31,10 @@ final class FeedDetailScene<Asset: AssetProtocol>:
          reactionPressed: feedDetailVM.topBlock.on(\.reactionPressed),
          saveInput: on(\.input),
          didEditingComment: feedDetailVM.commentsBlock.commentField.on(\.didEditingChanged),
-         didSendCommentPressed: feedDetailVM.commentsBlock.sendButton.on(\.didTap)
+         didSendCommentPressed: feedDetailVM.commentsBlock.sendButton.on(\.didTap),
+         presentAllReactions: feedDetailVM.reactionsBlock.filterButtons.on(\.didTapAll),
+         presentLikeReactions: feedDetailVM.reactionsBlock.filterButtons.on(\.didTapLikes),
+         presentDislikeReactions: feedDetailVM.reactionsBlock.filterButtons.on(\.didTapDislikes)
       )
    )
 
@@ -65,6 +68,7 @@ enum FeedDetailSceneState {
    case initial
    case presentDetails(Feed)
    case presentComments([Comment])
+   case presentReactions([ReactItem])
    case failedToReact
    case updateReactions((TransactStatistics, (Bool, Bool)))
    case presntActivityIndicator
@@ -83,6 +87,8 @@ extension FeedDetailScene: StateMachine {
          print("hello")
       case .presentComments(let comments):
          feedDetailVM.setState(.comments(comments))
+      case .presentReactions(let items):
+         feedDetailVM.setState(.reactions(items))
       case .failedToReact:
          print("failed to like")
       case .updateReactions(let value):

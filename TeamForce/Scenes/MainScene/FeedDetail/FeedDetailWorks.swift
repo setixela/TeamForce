@@ -9,16 +9,17 @@ import Foundation
 import ReactiveWorks
 
 final class FeedDetailWorksTempStorage: InitProtocol {
-   var feed: [Feed]?
    lazy var currentUserName = ""
-   var segmentId: Int?
    var currentTransactId: Int?
    var currentFeed: Feed?
    var userLiked: Bool = false
    var userDisliked: Bool = false
    var token: String?
+   
+   var likes: [Like]?
 
    var inputComment = ""
+   var reactionSegment = 0
 }
 
 final class FeedDetailWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedDetailWorksTempStorage, Asset> {
@@ -35,7 +36,7 @@ final class FeedDetailWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedDetailWork
          .onFail {
             work.fail()
          }
-   }.retainBy(retainer)}
+   }.retainBy(retainer) }
 
    var saveInput: Work<(Feed, String), Feed> { .init { work in
       guard let input = work.input else { return }
@@ -93,7 +94,8 @@ final class FeedDetailWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedDetailWork
       let request = CommentsRequest(token: "",
                                     body: CommentsRequestBody(
                                        transactionId: transactId,
-                                       includeName: true
+                                       includeName: true,
+                                       isReverseOrder: true
                                     ))
       self?.apiUseCase.getComments
          .doAsync(request)
@@ -153,4 +155,100 @@ final class FeedDetailWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedDetailWork
             work.fail()
          }
    }.retainBy(retainer) }
+   
+   var getLikesByTransaction: Work<Void, Void> { .init { [weak self] work in
+      // input 1 for likes
+      // input 2 for dislikes
+      guard
+         let transactId = Self.store.currentTransactId
+      else { return }
+
+      let request = LikesByTransactRequest(token: "", body: LikesByTransactBody(transactionId: transactId,
+                              includeName: true))
+
+      self?.apiUseCase.getLikesByTransaction
+         .doAsync(request)
+         .onSuccess {
+            Self.store.likes = $0
+            work.success()
+         }
+         .onFail {
+            work.fail()
+         }
+   }.retainBy(retainer) }
+   
+   var getAllReactions: VoidWork<[ReactItem]> { .init { work in
+      let filtered = Self.filteredAll()
+      Self.store.reactionSegment = 0
+      work.success(result: filtered)
+   }}
+   
+   var getLikeReactions: VoidWork<[ReactItem]> { .init { work in
+      let filtered = Self.filteredLikes()
+      Self.store.reactionSegment = 1
+      work.success(result: filtered)
+   }}
+   
+   var getDislikeReactions: VoidWork<[ReactItem]> { .init { work in
+      let filtered = Self.filteredDislikes()
+      Self.store.reactionSegment = 2
+      work.success(result: filtered)
+   }}
+   
+   var getSelectedReactions: VoidWork<[ReactItem]> { .init { work in
+      var filtered: [ReactItem] = []
+      switch(Self.store.reactionSegment) {
+      case 0:
+         filtered = Self.filteredAll()
+      case 1:
+         filtered = Self.filteredLikes()
+      case 2:
+         filtered = Self.filteredDislikes()
+      default:
+         filtered = Self.filteredAll()
+      }
+      work.success(result: filtered)
+   }}
+}
+
+private extension FeedDetailWorks {
+   static func filteredAll() -> [ReactItem] {
+      guard let likes = store.likes else {
+         return []
+      }
+
+      var items: [ReactItem] = []
+      for like in likes {
+         items += like.items ?? []
+      }
+      return items
+   }
+
+   static func filteredLikes() -> [ReactItem] {
+      guard let likes = store.likes else {
+         return []
+      }
+
+      var items: [ReactItem] = []
+      for like in likes {
+         if like.likeKind?.code == "like" {
+            items += like.items ?? []
+         }
+      }
+      return items
+   }
+
+   static func filteredDislikes() -> [ReactItem] {
+      guard let likes = store.likes else {
+         return []
+      }
+
+      var items: [ReactItem] = []
+      for like in likes {
+         if like.likeKind?.code == "dislike" {
+            items += like.items ?? []
+         }
+      }
+      return items
+   }
 }
