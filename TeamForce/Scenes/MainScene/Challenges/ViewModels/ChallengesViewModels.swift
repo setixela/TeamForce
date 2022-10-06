@@ -15,6 +15,8 @@ final class ChallengesViewModel<Design: DSP>: StackModel, Designable {
 
    private lazy var filterButtons = ChallengesFilterButtons<Design>()
 
+   private lazy var challengesTable = TableItemsModel<Design>()
+
    override func start() {
       super.start()
 
@@ -22,6 +24,8 @@ final class ChallengesViewModel<Design: DSP>: StackModel, Designable {
          createChallengeButton,
          Grid.x16.spacer,
          filterButtons,
+         Grid.x16.spacer,
+         challengesTable,
          Grid.xxx.spacer
       ])
    }
@@ -78,4 +82,23 @@ final class ChallengesFilterButtons<Design: DSP>: StackModel, Designable, Eventa
       }
    }
 }
+
+final class ChallengeCell<Design: DSP>:
+   M<StackModel>
+   .R<StackModel>.Combo, Designable {
+   override func start() {
+      setAll { infoBlock, statusBlock in
+
+      }
+   }
+}
+
+final class ChallengeCellInfoBlock:
+   M<StackModel>
+   .D<StackModel>.R<StackModel>
+   .D2<StackModel>
+   .D3<StackModel>
+   .Combo {
+      
+   }
 
