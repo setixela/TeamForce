@@ -104,15 +104,3 @@ final class GetChallengesApiWorker: BaseApiWorker<String, [Challenge]> {
          }
    }
 }
-
-//var getChallenges: Work<Void, [Challenge]> { .init { [weak self] work in
-//   //guard let input = work.input else { return }
-//   self?.apiUseCase.getChanllenges
-//      .doAsync()
-//      .onSuccess {
-//         work.success(result: $0)
-//      }
-//      .onFail {
-//         work.fail()
-//      }
-//}.retainBy(retainer) }

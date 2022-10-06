@@ -42,14 +42,3 @@ final class GetChallengeByIdApiWorker: BaseApiWorker<RequestWithId, Challenge> {
          }
    }
 }
-//var getChallengeById: Work<Int, Challenge> { .init{ [weak self] work in
-//   guard let input = work.input else { return }
-//   self?.apiUseCase.GetChallengeById
-//      .doAsync(input)
-//      .onSuccess {
-//         work.success(result: $0)
-//      }
-//      .onFail {
-//         work.fail()
-//      }
-//}.retainBy(retainer) }

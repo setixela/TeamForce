@@ -54,14 +54,3 @@ final class GetChallengeContendersApiWorker: BaseApiWorker<RequestWithId, [Conte
          }
    }
 }
-//var getChallengeContenders: Work<Int, [Contender]> { .init{ [weak self] work in
-//   guard let input = work.input else { return }
-//   self?.apiUseCase.GetChallengeContenders
-//      .doAsync(input)
-//      .onSuccess {
-//         work.success(result: $0)
-//      }
-//      .onFail {
-//         work.fail()
-//      }
-//}.retainBy(retainer) }
