@@ -221,6 +221,8 @@
 		63A2234128CF797600D92615 /* GetTagsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A2234028CF797600D92615 /* GetTagsUseCase.swift */; };
 		63A2234328CF924000D92615 /* GetTagByIdApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A2234228CF923F00D92615 /* GetTagByIdApiWorker.swift */; };
 		63A2234528CF960E00D92615 /* GetTagByIdUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A2234428CF960E00D92615 /* GetTagByIdUseCase.swift */; };
+		63A37EA228EE874100DBD59F /* GetChallengeByIdApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A37EA128EE874100DBD59F /* GetChallengeByIdApiWorker.swift */; };
+		63A37EA428EE881600DBD59F /* GetChallengeByIdUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A37EA328EE881600DBD59F /* GetChallengeByIdUseCase.swift */; };
 		63A529F528A1F8AB004A858D /* SegmentedControlModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A529F428A1F8AA004A858D /* SegmentedControlModel.swift */; };
 		63AB070928BD4C1B00FD650F /* UpdateProfileApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AB070828BD4C1B00FD650F /* UpdateProfileApiWorker.swift */; };
 		63AB070D28BD526700FD650F /* UpdateContactApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AB070C28BD526700FD650F /* UpdateContactApiWorker.swift */; };
@@ -503,6 +505,8 @@
 		63A2234028CF797600D92615 /* GetTagsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTagsUseCase.swift; sourceTree = "<group>"; };
 		63A2234228CF923F00D92615 /* GetTagByIdApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTagByIdApiWorker.swift; sourceTree = "<group>"; };
 		63A2234428CF960E00D92615 /* GetTagByIdUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTagByIdUseCase.swift; sourceTree = "<group>"; };
+		63A37EA128EE874100DBD59F /* GetChallengeByIdApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetChallengeByIdApiWorker.swift; sourceTree = "<group>"; };
+		63A37EA328EE881600DBD59F /* GetChallengeByIdUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetChallengeByIdUseCase.swift; sourceTree = "<group>"; };
 		63A529F428A1F8AA004A858D /* SegmentedControlModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentedControlModel.swift; sourceTree = "<group>"; };
 		63AB070828BD4C1B00FD650F /* UpdateProfileApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateProfileApiWorker.swift; sourceTree = "<group>"; };
 		63AB070C28BD526700FD650F /* UpdateContactApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateContactApiWorker.swift; sourceTree = "<group>"; };
@@ -1346,6 +1350,7 @@
 			isa = PBXGroup;
 			children = (
 				635FC6C228EE7ACC00826B67 /* GetChallengesApiWorker.swift */,
+				63A37EA128EE874100DBD59F /* GetChallengeByIdApiWorker.swift */,
 			);
 			path = Challenge;
 			sourceTree = "<group>";
@@ -1354,6 +1359,7 @@
 			isa = PBXGroup;
 			children = (
 				635FC6C528EE7F3800826B67 /* GetChallengesUseCase.swift */,
+				63A37EA328EE881600DBD59F /* GetChallengeByIdUseCase.swift */,
 			);
 			path = Challenge;
 			sourceTree = "<group>";
@@ -1658,6 +1664,7 @@
 				63578E5A28AB8F6000423957 /* GetTransactionsByPeriodUseCase.swift in Sources */,
 				6368D82A2894091B0049EEAB /* TransactInputViewModel.swift in Sources */,
 				1953CEFC28E89FEE00C670A6 /* FeedDetailUserInfoBlock.swift in Sources */,
+				63A37EA428EE881600DBD59F /* GetChallengeByIdUseCase.swift in Sources */,
 				63E7A74B28AFCB1800FB2C80 /* UpdateProfileImageApiWorker.swift in Sources */,
 				1918CC79286F6C69004373F3 /* VerifyApiModel.swift in Sources */,
 				63EB469928AC35A30070A271 /* HistoryWorks.swift in Sources */,
@@ -1750,6 +1757,7 @@
 				196750AC2865189C0019A6DE /* TextFieldModel.swift in Sources */,
 				63BB2C0E28DA179D00C1E3DB /* PressLikeUseCase.swift in Sources */,
 				63AB071B28C0E3AF00FD650F /* BalanceScenario.swift in Sources */,
+				63A37EA228EE874100DBD59F /* GetChallengeByIdApiWorker.swift in Sources */,
 				63E7A74728AFBDE500FB2C80 /* GetPeriodsFromDateUseCase.swift in Sources */,
 				6368D8222891508C0049EEAB /* ProfileScene.swift in Sources */,
 				198FE1C92899994A00BAF1A5 /* LoginUseCase.swift in Sources */,

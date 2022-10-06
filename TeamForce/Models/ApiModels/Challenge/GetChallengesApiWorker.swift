@@ -14,15 +14,26 @@ struct Challenge: Codable {
    let photo: String?
    let updatedAt: String?
    let states: [String]?
+   let description: String?
    let startBalance: Int?
    let creatorId: Int
    let parameters: [Parameter]?
+   let endAt: String?
    let approvedReportsAmount: Int
    let status: String?
    let isNewReports: Bool
+   let winnersCount: Int?
+   let creatorOrganizationId: Int?
    let prizeSize: Int
    let awardees: Int
    let fund: Int
+   let creatorName: String?
+   let creatorSurname: String?
+   let creatorPhoto: String?
+   let creatorTgName: String?
+   let active: Bool?
+   let completed: Bool?
+   let remainingTopPlaces: Int?
 
    struct Parameter: Codable {
       let id: Int
@@ -40,14 +51,24 @@ struct Challenge: Codable {
       case id, name, photo
       case updatedAt = "updated_at"
       case states
+      case description
       case startBalance = "start_balance"
       case creatorId = "creator_id"
       case parameters
+      case endAt = "end_at"
       case approvedReportsAmount = "approved_reports_amount"
       case status
       case isNewReports = "is_new_reports"
+      case winnersCount = "winners_count"
+      case creatorOrganizationId = "creator_organization_id"
       case prizeSize = "prize_size"
       case awardees, fund
+      case creatorName = "creator_name"
+      case creatorSurname = "creator_surname"
+      case creatorPhoto = "creator_photo"
+      case creatorTgName = "creator_tg_name"
+      case active, completed
+      case remainingTopPlaces = "remaining_top_places"
    }
 }
 

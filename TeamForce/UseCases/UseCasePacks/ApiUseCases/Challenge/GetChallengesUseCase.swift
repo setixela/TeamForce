@@ -5,7 +5,6 @@
 //  Created by Yerzhan Gapurinov on 06.10.2022.
 //
 
-import Foundation
 import ReactiveWorks
 
 struct GetChallengesUseCase: UseCaseProtocol {
