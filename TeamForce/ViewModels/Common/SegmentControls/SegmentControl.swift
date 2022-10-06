@@ -11,6 +11,20 @@ protocol SegmentControlEventsProtocol: InitProtocol {
    func sendEventBy(index: Int)
 }
 
+struct SegmentControl2Events: SegmentControlEventsProtocol {
+   var selected0: Event<Void>?
+   var selected1: Event<Void>?
+
+   func sendEventBy(index: Int) {
+      switch index {
+      case 0:
+         selected0?(())
+      default:
+         selected1?(())
+      }
+   }
+}
+
 struct SegmentControl3Events: SegmentControlEventsProtocol {
    var selected0: Event<Void>?
    var selected1: Event<Void>?

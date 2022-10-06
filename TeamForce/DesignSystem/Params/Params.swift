@@ -49,7 +49,7 @@ struct ParamBuilder<Design: DSP>: ParamsProtocol {
    var commonSideOffset: CGFloat { 16 }
    //
    var cornerRadiusMini: CGFloat { 8 }
-   var cornerRadiusSmall: CGFloat { 11 }
+   var cornerRadiusSmall: CGFloat { 12 }
    var cornerRadius: CGFloat { 14 }
    var cornerRadiusMedium: CGFloat { 20 }
    //
@@ -61,7 +61,7 @@ struct ParamBuilder<Design: DSP>: ParamsProtocol {
    var buttonHeight: CGFloat { 52 }
    var buttonsSpacingX: CGFloat { 8 }
    var buttonsSpacingY: CGFloat { 16 }
-   var buttonSecondaryHeight: CGFloat { 33 }
+   var buttonSecondaryHeight: CGFloat { 38 }
    //
    var infoFrameHeight: CGFloat { 70 }
    //

@@ -34,7 +34,7 @@ final class MainScene<Asset: AssetProtocol>:
    private lazy var balanceViewModel = BalanceScene<Asset>()
    private lazy var historyViewModel = HistoryScene<Asset>()
    private lazy var feedViewModel = FeedScene<Asset>()
-   private lazy var challengesViewModel = SettingsViewModel<Asset>()
+   private lazy var challengesViewModel = ChallengesScene<Asset>()
 
    private lazy var transactModel: TransactScene = TransactScene<Asset>(vcModel: vcModel)
 

@@ -15,7 +15,7 @@ final class SecondaryButtonDT<Design: DSP>: ButtonModel, Designable, Modable {
 
       padding(.sideOffset(Grid.x14.value))
       height(Design.params.buttonSecondaryHeight)
-      cornerRadius(Design.params.cornerRadiusMini)
+      cornerRadius(Design.params.cornerRadiusSmall)
       shadow(Design.params.cellShadow)
       onModeChanged(\.normal) { [weak self] in
          self?.backColor(Design.color.background)

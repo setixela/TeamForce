@@ -38,6 +38,7 @@
 		1921A13328EECABE00E41E86 /* ChallengesScenario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1921A13228EECABE00E41E86 /* ChallengesScenario.swift */; };
 		1921A13528EECAC900E41E86 /* ChallengesScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1921A13428EECAC900E41E86 /* ChallengesScene.swift */; };
 		1921A13728EECAD500E41E86 /* ChallengesWorks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1921A13628EECAD500E41E86 /* ChallengesWorks.swift */; };
+		1921A13B28EEE16A00E41E86 /* ChallengesViewModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1921A13A28EEE16A00E41E86 /* ChallengesViewModels.swift */; };
 		19221EE828C9ADC300B7B604 /* ProfileEditScenario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19221EE728C9ADC300B7B604 /* ProfileEditScenario.swift */; };
 		19221EEA28C9AF3400B7B604 /* Optional+Unwrap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19221EE928C9AF3400B7B604 /* Optional+Unwrap.swift */; };
 		19221EEC28C9B04700B7B604 /* TitledTextFieldY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19221EEB28C9B04700B7B604 /* TitledTextFieldY.swift */; };
@@ -332,6 +333,7 @@
 		1921A13228EECABE00E41E86 /* ChallengesScenario.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengesScenario.swift; sourceTree = "<group>"; };
 		1921A13428EECAC900E41E86 /* ChallengesScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengesScene.swift; sourceTree = "<group>"; };
 		1921A13628EECAD500E41E86 /* ChallengesWorks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengesWorks.swift; sourceTree = "<group>"; };
+		1921A13A28EEE16A00E41E86 /* ChallengesViewModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengesViewModels.swift; sourceTree = "<group>"; };
 		19221EE728C9ADC300B7B604 /* ProfileEditScenario.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditScenario.swift; sourceTree = "<group>"; };
 		19221EE928C9AF3400B7B604 /* Optional+Unwrap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Optional+Unwrap.swift"; sourceTree = "<group>"; };
 		19221EEB28C9B04700B7B604 /* TitledTextFieldY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitledTextFieldY.swift; sourceTree = "<group>"; };
@@ -730,8 +732,17 @@
 				1921A13428EECAC900E41E86 /* ChallengesScene.swift */,
 				1921A13228EECABE00E41E86 /* ChallengesScenario.swift */,
 				1921A13628EECAD500E41E86 /* ChallengesWorks.swift */,
+				1921A13928EEE15100E41E86 /* ViewModels */,
 			);
 			path = Challenges;
+			sourceTree = "<group>";
+		};
+		1921A13928EEE15100E41E86 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				1921A13A28EEE16A00E41E86 /* ChallengesViewModels.swift */,
+			);
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 		19221EED28CB17CD00B7B604 /* EditProfile */ = {
@@ -1574,6 +1585,7 @@
 				63BB2C2928E3E7B600C1E3DB /* FeedDetailScenario.swift in Sources */,
 				1921A13728EECAD500E41E86 /* ChallengesWorks.swift in Sources */,
 				191571D1289F12350061510F /* PlaygroundScene.swift in Sources */,
+				1921A13B28EEE16A00E41E86 /* ChallengesViewModels.swift in Sources */,
 				19221EEA28C9AF3400B7B604 /* Optional+Unwrap.swift in Sources */,
 				199C4B6628624B4C008AD6FD /* Spacer.swift in Sources */,
 				63578E5E28ABA2E500423957 /* CancelTransactionByIdUseCase.swift in Sources */,

@@ -22,11 +22,23 @@ final class ChallengesScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtend
 
    var events: EventsStore = .init()
 
+   // MARK: - Scenario
+
    lazy var scenario: Scenario = ChallengesScenario(
       works: ChallengesWorks<Asset>(),
       stateDelegate: stateDelegate,
       events: ChallengesEvents()
    )
+
+   // MARK: - View Models
+
+   private lazy var viewModel = ChallengesViewModel<Design>()
+
+   override func start() {
+      arrangedModels([
+         viewModel,
+      ])
+   }
 }
 
 enum ChallengesState {
@@ -36,7 +48,6 @@ enum ChallengesState {
 extension ChallengesScene: StateMachine {
    func setState(_ state: ChallengesState) {
       switch state {
-
       case .initial:
          break
       }
