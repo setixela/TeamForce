@@ -420,4 +420,14 @@ enum TeamForceEndpoints {
          self.headers = headers
       }
    }
+   
+   struct CreateChallenge: EndpointProtocol {
+      let method = HTTPMethod.post
+      
+      var endPoint: String { urlBase + "/create-challenge/" }
+      
+      let headers: [String : String]
+      
+      var body: [String : Any]
+   }
 }
