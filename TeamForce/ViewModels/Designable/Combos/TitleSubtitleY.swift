@@ -29,3 +29,23 @@ class TitleSubtitleY<Design: DesignProtocol>:
       }
    }
 }
+
+class TitleBodyY: M<LabelModel>.D<LabelModel>.Combo {
+
+   var title: LabelModel { models.main }
+   var body: LabelModel { models.down }
+
+   required init() {
+      super.init()
+
+      setMain {
+         $0
+            .set(.numberOfLines(0))
+            .set(.alignment(.left))
+      } setDown: {
+         $0
+            .set(.numberOfLines(0))
+            .set(.alignment(.left))
+      }
+   }
+}

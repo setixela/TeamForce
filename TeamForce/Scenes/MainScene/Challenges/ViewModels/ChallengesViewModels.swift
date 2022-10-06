@@ -26,7 +26,7 @@ final class ChallengesViewModel<Design: DSP>: StackModel, Designable {
          filterButtons,
          Grid.x16.spacer,
          challengesTable,
-         Grid.xxx.spacer
+         Grid.xxx.spacer,
       ])
    }
 }
@@ -84,21 +84,34 @@ final class ChallengesFilterButtons<Design: DSP>: StackModel, Designable, Eventa
 }
 
 final class ChallengeCell<Design: DSP>:
-   M<StackModel>
+   M<ChallengeCellInfoBlock>
    .R<StackModel>.Combo, Designable {
-   override func start() {
-      setAll { infoBlock, statusBlock in
+   required init() {
+      super.init()
 
+      setAll { infoBlock, _ in
+         infoBlock.setAll { title, participant, winner, prizeFund, prizes in
+            title.text("Заголовок")
+
+            participant.title.text("2131")
+            participant.body.text("Участников")
+
+            winner.title.text("2131")
+            winner.body.text("Победителей")
+
+            prizeFund.title.text("2131")
+            prizeFund.body.text("Призовой фонд")
+
+            prizes.title.text("2131")
+            prizes.body.text("Призовых мест")
+         }
       }
    }
 }
 
 final class ChallengeCellInfoBlock:
-   M<StackModel>
-   .D<StackModel>.R<StackModel>
-   .D2<StackModel>
-   .D3<StackModel>
-   .Combo {
-      
-   }
-
+   M<LabelModel>
+   .D<TitleBodyY>.R<TitleBodyY>
+   .D2<TitleBodyY>
+   .D3<TitleBodyY>
+   .Combo {}
