@@ -1,5 +1,5 @@
 //
-//  GetChallengeByIdApiWorker.swift
+//  GetChallengeContenders.swift
 //  TeamForce
 //
 //  Created by Yerzhan Gapurinov on 06.10.2022.
@@ -8,7 +8,19 @@
 import Foundation
 import ReactiveWorks
 
-final class GetChallengeByIdApiWorker: BaseApiWorker<RequestWithId, Challenge> {
+struct Contender: Codable {
+   let participantID: Int
+   let participantPhoto: String?
+   let participantName: String?
+   let participantSurname: String?
+   let reportCreatedAt: String
+   let reportText: String?
+   let reportPhoto: String?
+   let reportId: Int
+   
+}
+
+final class GetChallengeContendersApiWorker: BaseApiWorker<RequestWithId, [Contender]> {
    override func doAsync(work: Wrk) {
       let cookieName = "csrftoken"
 
@@ -20,7 +32,7 @@ final class GetChallengeByIdApiWorker: BaseApiWorker<RequestWithId, Challenge> {
          return
       }
       apiEngine?
-         .process(endpoint: TeamForceEndpoints.GetChallengeById(
+         .process(endpoint: TeamForceEndpoints.GetChallengeContenders(
             id: String(input.id),
             headers: [
                "Authorization": input.token,
@@ -30,21 +42,21 @@ final class GetChallengeByIdApiWorker: BaseApiWorker<RequestWithId, Challenge> {
             let decoder = DataToDecodableParser()
             guard
                let data = result.data,
-               let challenge: Challenge = decoder.parse(data)
+               let contenders: [Contender] = decoder.parse(data)
             else {
                work.fail()
                return
             }
-            work.success(result: challenge)
+            work.success(result: contenders)
          }
          .catch { _ in
             work.fail()
          }
    }
 }
-//var getChallengeById: Work<Int, Challenge> { .init{ [weak self] work in
+//var getChallengeContenders: Work<Int, [Contender]> { .init{ [weak self] work in
 //   guard let input = work.input else { return }
-//   self?.apiUseCase.GetChallengeById
+//   self?.apiUseCase.GetChallengeContenders
 //      .doAsync(input)
 //      .onSuccess {
 //         work.success(result: $0)
