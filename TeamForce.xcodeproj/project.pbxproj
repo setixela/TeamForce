@@ -35,6 +35,9 @@
 		1918CC7D286F6CAC004373F3 /* GetBalanceApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1918CC7C286F6CAC004373F3 /* GetBalanceApiWorker.swift */; };
 		191B0C272865E5C1001CF3D9 /* IconBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191B0C262865E5C1001CF3D9 /* IconBuilder.swift */; };
 		191B0C292865F119001CF3D9 /* TextBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191B0C282865F119001CF3D9 /* TextBuilder.swift */; };
+		1921A13328EECABE00E41E86 /* ChallengesScenario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1921A13228EECABE00E41E86 /* ChallengesScenario.swift */; };
+		1921A13528EECAC900E41E86 /* ChallengesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1921A13428EECAC900E41E86 /* ChallengesViewModel.swift */; };
+		1921A13728EECAD500E41E86 /* ChallengesWorks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1921A13628EECAD500E41E86 /* ChallengesWorks.swift */; };
 		19221EE828C9ADC300B7B604 /* ProfileEditScenario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19221EE728C9ADC300B7B604 /* ProfileEditScenario.swift */; };
 		19221EEA28C9AF3400B7B604 /* Optional+Unwrap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19221EE928C9AF3400B7B604 /* Optional+Unwrap.swift */; };
 		19221EEC28C9B04700B7B604 /* TitledTextFieldY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19221EEB28C9B04700B7B604 /* TitledTextFieldY.swift */; };
@@ -324,6 +327,9 @@
 		1918CC7C286F6CAC004373F3 /* GetBalanceApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetBalanceApiWorker.swift; sourceTree = "<group>"; };
 		191B0C262865E5C1001CF3D9 /* IconBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconBuilder.swift; sourceTree = "<group>"; };
 		191B0C282865F119001CF3D9 /* TextBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextBuilder.swift; sourceTree = "<group>"; };
+		1921A13228EECABE00E41E86 /* ChallengesScenario.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengesScenario.swift; sourceTree = "<group>"; };
+		1921A13428EECAC900E41E86 /* ChallengesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengesViewModel.swift; sourceTree = "<group>"; };
+		1921A13628EECAD500E41E86 /* ChallengesWorks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengesWorks.swift; sourceTree = "<group>"; };
 		19221EE728C9ADC300B7B604 /* ProfileEditScenario.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditScenario.swift; sourceTree = "<group>"; };
 		19221EE928C9AF3400B7B604 /* Optional+Unwrap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Optional+Unwrap.swift"; sourceTree = "<group>"; };
 		19221EEB28C9B04700B7B604 /* TitledTextFieldY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitledTextFieldY.swift; sourceTree = "<group>"; };
@@ -714,6 +720,16 @@
 			path = Main;
 			sourceTree = "<group>";
 		};
+		1921A12F28EEC93300E41E86 /* Challenges */ = {
+			isa = PBXGroup;
+			children = (
+				1921A13428EECAC900E41E86 /* ChallengesViewModel.swift */,
+				1921A13228EECABE00E41E86 /* ChallengesScenario.swift */,
+				1921A13628EECAD500E41E86 /* ChallengesWorks.swift */,
+			);
+			path = Challenges;
+			sourceTree = "<group>";
+		};
 		19221EED28CB17CD00B7B604 /* EditProfile */ = {
 			isa = PBXGroup;
 			children = (
@@ -783,6 +799,7 @@
 				197A361728BBC9AC006E44C1 /* MainScenario.swift */,
 				197A361928BBC9B3006E44C1 /* MainWorks.swift */,
 				197A360328B90BD3006E44C1 /* MainSceneEvents.swift */,
+				1921A12F28EEC93300E41E86 /* Challenges */,
 				19ACB3CB28A599DF00B5AD71 /* Balance */,
 				19ACB3CD28A599ED00B5AD71 /* Feed */,
 				63BB2C2728E3E78300C1E3DB /* FeedDetail */,
@@ -1545,9 +1562,11 @@
 				63D419E928A5109E0024E22C /* GetUsersListUseCase.swift in Sources */,
 				197A771A28AD90B30082CD81 /* Presenting.swift in Sources */,
 				19221EF828CE262A00B7B604 /* WorkingPlaceViewModels.swift in Sources */,
+				1921A13528EECAC900E41E86 /* ChallengesViewModel.swift in Sources */,
 				63D419ED28AA56570024E22C /* GetFeedUseCase.swift in Sources */,
 				1977BE5528A7238F00D554EA /* TextFieldStates.swift in Sources */,
 				63BB2C2928E3E7B600C1E3DB /* FeedDetailScenario.swift in Sources */,
+				1921A13728EECAD500E41E86 /* ChallengesWorks.swift in Sources */,
 				191571D1289F12350061510F /* PlaygroundScene.swift in Sources */,
 				19221EEA28C9AF3400B7B604 /* Optional+Unwrap.swift in Sources */,
 				199C4B6628624B4C008AD6FD /* Spacer.swift in Sources */,
@@ -1755,6 +1774,7 @@
 				63BB2C2228E150CA00C1E3DB /* DeleteCommentApiWorker.swift in Sources */,
 				63AB070928BD4C1B00FD650F /* UpdateProfileApiWorker.swift in Sources */,
 				196750AC2865189C0019A6DE /* TextFieldModel.swift in Sources */,
+				1921A13328EECABE00E41E86 /* ChallengesScenario.swift in Sources */,
 				63BB2C0E28DA179D00C1E3DB /* PressLikeUseCase.swift in Sources */,
 				63AB071B28C0E3AF00FD650F /* BalanceScenario.swift in Sources */,
 				63A37EA228EE874100DBD59F /* GetChallengeByIdApiWorker.swift in Sources */,

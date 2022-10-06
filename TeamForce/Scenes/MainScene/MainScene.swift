@@ -33,8 +33,8 @@ final class MainScene<Asset: AssetProtocol>:
 
    private lazy var balanceViewModel = BalanceScene<Asset>()
    private lazy var historyViewModel = HistoryScene<Asset>()
-   private lazy var settingsViewModel = SettingsViewModel<Asset>()
    private lazy var feedViewModel = FeedScene<Asset>()
+   private lazy var challengesViewModel = SettingsViewModel<Asset>()
 
    private lazy var transactModel: TransactScene = TransactScene<Asset>(vcModel: vcModel)
 
@@ -117,9 +117,9 @@ private extension MainScene {
       tabBarPanel.button4
          .on(\.didTap) { [weak self] in
             self?.unlockTabButtons()
-            self?.mainVM.header.text("Настройки")
-            self?.vcModel?.sendEvent(\.setTitle, "Настройки")
-            self?.presentModel(self?.settingsViewModel)
+            self?.mainVM.header.text("Челленджи")
+            self?.vcModel?.sendEvent(\.setTitle, "Челленджи")
+            self?.presentModel(self?.challengesViewModel)
             self?.tabBarPanel.button4.setMode(\.normal)
             self?.selectedModel = 3
          }
@@ -145,7 +145,7 @@ extension MainScene: StateMachine {
          case 2:
             presentModel(historyViewModel)
          case 3:
-            presentModel(settingsViewModel)
+            presentModel(challengesViewModel)
          default:
             print("selected model error")
          }
