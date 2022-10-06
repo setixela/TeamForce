@@ -287,6 +287,14 @@ final class ApiUseCase<Asset: AssetProtocol>: InitProtocol, Assetable, WorkBaske
       )
       .retainedWork(retainer)
    }
+   
+   var getChanllenges: GetChallengesUseCase.WRK {
+      GetChallengesUseCase(
+         safeStringStorage: safeStringStorage,
+         getChallengesApiWorker: getChallengesApiWorker
+      )
+      .retainedWork(retainer)
+   }
 
 
    // MARK: - Dependencies
@@ -335,4 +343,6 @@ final class ApiUseCase<Asset: AssetProtocol>: InitProtocol, Assetable, WorkBaske
    private var deleteCommentApiWorker: DeleteCommentApiWorker { .init(apiEngine:
        Asset.service.apiEngine) }
    private var getLikesByTransactionApiWorker: GetLikesByTransactionApiWorker { .init(apiEngine: Asset.service.apiEngine) }
+   private var getChallengesApiWorker: GetChallengesApiWorker { .init(apiEngine:
+      Asset.service.apiEngine) }
 }
