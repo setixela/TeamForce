@@ -27,7 +27,6 @@ final class ChallengesViewModel<Design: DSP>: StackModel, Designable {
          filterButtons,
          Grid.x16.spacer,
          challengesTable,
-         Grid.xxx.spacer,
       ])
    }
 }
@@ -101,8 +100,13 @@ final class ChallengeCell<Design: DSP>:
    M<ChallengeCellInfoBlock>
    .R<StackModel>.Combo, Designable
 {
+
+   private lazy var back = ViewModel()
+      .backColor(Design.color.backgroundBrandSecondary)
+      .cornerRadius(Design.params.cornerRadius)
+
    required init() {
-      super.init()
+      super.init(isAutoreleaseView: true)
 
       setAll { infoBlock, _ in
          infoBlock.setAll { title, participant, winner, prizeFund, prizes in
@@ -121,6 +125,9 @@ final class ChallengeCell<Design: DSP>:
             prizes.body.text("Призовых мест")
          }
       }
+      height(208)
+      padding(.init(top: 20, left: 16, bottom: 20, right: 16))
+      backViewModel(back, inset: .verticalOffset(4))
    }
 }
 
@@ -129,11 +136,37 @@ final class ChallengeCellInfoBlock:
    .D<TitleBodyY>.R<TitleBodyY>
    .D2<TitleBodyY>
    .D3<TitleBodyY>
-   .Combo {}
+   .Combo
+{
+   override func start() {
+      super.start()
+
+      spacing(12)
+   }
+}
 
 struct ChallengeCellPresenters<Design: DSP>: Designable {
    var presenter: Presenter<Challenge, ChallengeCell<Design>> { .init { work in
+      let data = work.unsafeInput
+
       let model = ChallengeCell<Design>()
+         .setAll { infoBlock, _ in
+            infoBlock.setAll { title, participant, winner, prizeFund, prizes in
+               title.text("Заголовок")
+
+               participant.title.text(data.approvedReportsAmount.toString)
+               participant.body.text("Участников")
+
+               winner.title.text(data.awardees.toString)
+               winner.body.text("Победителей")
+
+               prizeFund.title.text(data.fund.toString)
+               prizeFund.body.text("Призовой фонд")
+
+               prizes.title.text(data.prizeSize.toString)
+               prizes.body.text("Призовых мест")
+            }
+         }
 
       work.success(model)
    } }

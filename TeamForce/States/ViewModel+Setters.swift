@@ -279,7 +279,7 @@ extension ViewModelProtocol where Self: Stateable, View: StackViewExtended {
       value.addAnchors.fitToViewInsetted(view, inset)
       value.contentMode = .scaleAspectFill
       value.clipsToBounds = true
-      value.layer.masksToBounds = true
+      value.layer.masksToBounds = false
       return self
    }
 
@@ -292,7 +292,7 @@ extension ViewModelProtocol where Self: Stateable, View: StackViewExtended {
 
    @discardableResult func backViewModel(_ value: UIViewModel, inset: UIEdgeInsets = .zero) -> Self {
       let new = value.uiView
-      backView(new)
+      backView(new, inset: inset)
       return self
    }
 
