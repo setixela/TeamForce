@@ -82,4 +82,16 @@ extension ChallengesWorks: ChallengesWorksProtocol {
          }
    }.retainBy(retainer) }
    
+   var createChallengeReport: Work<ChallengeReportBody, Void> { .init{ [weak self] work in
+      guard let input = work.input else { return }
+      self?.apiUseCase.CreateChallengeReport
+         .doAsync(input)
+         .onSuccess {
+            work.success(result: $0)
+         }
+         .onFail {
+            work.fail()
+         }
+   }.retainBy(retainer) }
+   
 }

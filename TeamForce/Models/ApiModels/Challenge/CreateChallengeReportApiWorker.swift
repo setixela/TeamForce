@@ -1,56 +1,39 @@
 //
-//  CreateChallengeApiWorker.swift
+//  CreateChallengeReportApiWorker.swift
 //  TeamForce
 //
-//  Created by Yerzhan Gapurinov on 06.10.2022.
+//  Created by Yerzhan Gapurinov on 07.10.2022.
 //
 
 import Foundation
 import ReactiveWorks
 import UIKit
 
-
-struct ChallengeRequestBody: Encodable {
-   let name: String
-   let description: String?
-   let endAt: String?
-   let startBalance: Int
+struct ChallengeReportBody: Encodable {
+   let challengeId: Int
+   let text: String?
    let photo: UIImage?
-   let parameterId: Int?
-   let parameterValue: Int?
-
+   
    enum CodingKeys: String, CodingKey {
-      case name, description // , photo
-      case endAt = "end_at"
-      case startBalance = "start_balance"
-      case parameterId = "parameter_id"
-      case parameterValue = "parameter_value"
+      case challengeId = "challenge"
+      case text
+      //case photo
    }
-
-   init(name: String,
-        description: String? = nil,
-        endAt: String? = nil,
-        startBalance: Int,
-        photo: UIImage? = nil,
-        parameterId: Int? = nil,
-        parameterValue: Int? = nil)
-   {
-      self.name = name
-      self.description = description
-      self.endAt = endAt
-      self.startBalance = startBalance
+   init(challengeId: Int,
+        text: String? = nil,
+        photo: UIImage? = nil) {
+      self.challengeId = challengeId
+      self.text = text
       self.photo = photo
-      self.parameterId = parameterId
-      self.parameterValue = parameterValue
    }
 }
 
-struct CreateChallengeRequest {
+struct CreateChallengeReportRequest {
    let token: String
-   let body: ChallengeRequestBody
+   let body: ChallengeReportBody
 }
 
-final class CreateChallengeApiWorker: BaseApiWorker<CreateChallengeRequest, Void> {
+final class CreateChallengeReportApiWorker: BaseApiWorker<CreateChallengeReportRequest, Void> {
    override func doAsync(work: Wrk) {
       let cookieName = "csrftoken"
 
@@ -63,7 +46,7 @@ final class CreateChallengeApiWorker: BaseApiWorker<CreateChallengeRequest, Void
       }
       let body = request.body.dictionary ?? [:]
 
-      let endpoint = TeamForceEndpoints.CreateChallenge(
+      let endpoint = TeamForceEndpoints.CreateChallengeReport(
          headers: [
             "Authorization": request.token,
             "X-CSRFToken": cookie.value
