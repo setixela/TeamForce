@@ -38,6 +38,8 @@ final class ChallengesScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtend
       arrangedModels([
          viewModel,
       ])
+      
+      scenario.start()
    }
 }
 

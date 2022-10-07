@@ -312,7 +312,22 @@ final class ApiUseCase<Asset: AssetProtocol>: InitProtocol, Assetable, WorkBaske
       .retainedWork(retainer)
    }
 
-
+   var CreateChallenge: CreateChallengeUseCase.WRK {
+      CreateChallengeUseCase(
+         safeStringStorage: safeStringStorage,
+         createChallengeApiWorker: createChallengeApiWorker
+      )
+      .retainedWork(retainer)
+   }
+   
+   var GetChallengeWinners: GetChallengeWinnersUseCase.WRK {
+      GetChallengeWinnersUseCase(
+         safeStringStorage: safeStringStorage,
+         getChallengeWinnersApiWorker: getChallengeWinnersApiWorker
+      )
+      .retainedWork(retainer)
+   }
+   
    // MARK: - Dependencies
 
    private var userProfileApiModel: ProfileApiWorker { .init(apiEngine: Asset.service.apiEngine) }
@@ -360,8 +375,11 @@ final class ApiUseCase<Asset: AssetProtocol>: InitProtocol, Assetable, WorkBaske
        Asset.service.apiEngine) }
    private var getLikesByTransactionApiWorker: GetLikesByTransactionApiWorker { .init(apiEngine: Asset.service.apiEngine) }
    private var getChallengesApiWorker: GetChallengesApiWorker { .init(apiEngine:
-      Asset.service.apiEngine) }
+       Asset.service.apiEngine) }
    private var getChallengeByIdApiWorker: GetChallengeByIdApiWorker{ .init(apiEngine:
-      Asset.service.apiEngine) }
+       Asset.service.apiEngine) }
    private var getChallengeContendersApiWorker: GetChallengeContendersApiWorker { .init(apiEngine: Asset.service.apiEngine) }
+   private var createChallengeApiWorker: CreateChallengeApiWorker { .init(apiEngine:
+       Asset.service.apiEngine) }
+   private var getChallengeWinnersApiWorker: GetChallengeWinnersApiWorker { .init(apiEngine: Asset.service.apiEngine) }
 }
