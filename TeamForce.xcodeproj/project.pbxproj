@@ -233,6 +233,8 @@
 		63A37EAE28EF1D6300DBD59F /* CreateChallengeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A37EAD28EF1D6300DBD59F /* CreateChallengeUseCase.swift */; };
 		63A37EB028F0528800DBD59F /* GetChallengeWinnersApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A37EAF28F0528800DBD59F /* GetChallengeWinnersApiWorker.swift */; };
 		63A37EB228F054F300DBD59F /* GetChallengeWinnersUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A37EB128F054F300DBD59F /* GetChallengeWinnersUseCase.swift */; };
+		63A37EB428F059D800DBD59F /* CreateChallengeReportApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A37EB328F059D800DBD59F /* CreateChallengeReportApiWorker.swift */; };
+		63A37EB628F05DDD00DBD59F /* CreateChallengeReportUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A37EB528F05DDD00DBD59F /* CreateChallengeReportUseCase.swift */; };
 		63A529F528A1F8AB004A858D /* SegmentedControlModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A529F428A1F8AA004A858D /* SegmentedControlModel.swift */; };
 		63AB070928BD4C1B00FD650F /* UpdateProfileApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AB070828BD4C1B00FD650F /* UpdateProfileApiWorker.swift */; };
 		63AB070D28BD526700FD650F /* UpdateContactApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AB070C28BD526700FD650F /* UpdateContactApiWorker.swift */; };
@@ -527,6 +529,8 @@
 		63A37EAD28EF1D6300DBD59F /* CreateChallengeUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateChallengeUseCase.swift; sourceTree = "<group>"; };
 		63A37EAF28F0528800DBD59F /* GetChallengeWinnersApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetChallengeWinnersApiWorker.swift; sourceTree = "<group>"; };
 		63A37EB128F054F300DBD59F /* GetChallengeWinnersUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetChallengeWinnersUseCase.swift; sourceTree = "<group>"; };
+		63A37EB328F059D800DBD59F /* CreateChallengeReportApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateChallengeReportApiWorker.swift; sourceTree = "<group>"; };
+		63A37EB528F05DDD00DBD59F /* CreateChallengeReportUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateChallengeReportUseCase.swift; sourceTree = "<group>"; };
 		63A529F428A1F8AA004A858D /* SegmentedControlModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentedControlModel.swift; sourceTree = "<group>"; };
 		63AB070828BD4C1B00FD650F /* UpdateProfileApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateProfileApiWorker.swift; sourceTree = "<group>"; };
 		63AB070C28BD526700FD650F /* UpdateContactApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateContactApiWorker.swift; sourceTree = "<group>"; };
@@ -1394,6 +1398,7 @@
 				63A37EA728EECF8400DBD59F /* GetChallengeContendersApiWorker.swift */,
 				63A37EAB28EF1B3400DBD59F /* CreateChallengeApiWorker.swift */,
 				63A37EAF28F0528800DBD59F /* GetChallengeWinnersApiWorker.swift */,
+				63A37EB328F059D800DBD59F /* CreateChallengeReportApiWorker.swift */,
 			);
 			path = Challenge;
 			sourceTree = "<group>";
@@ -1406,6 +1411,7 @@
 				63A37EA528EECEBB00DBD59F /* GetChallengeContendersUseCase.swift */,
 				63A37EAD28EF1D6300DBD59F /* CreateChallengeUseCase.swift */,
 				63A37EB128F054F300DBD59F /* GetChallengeWinnersUseCase.swift */,
+				63A37EB528F05DDD00DBD59F /* CreateChallengeReportUseCase.swift */,
 			);
 			path = Challenge;
 			sourceTree = "<group>";
@@ -1685,6 +1691,7 @@
 				63AD689128D0E59A00675C69 /* GetProfileById.swift in Sources */,
 				196750A6286516F40019A6DE /* LoginScene.swift in Sources */,
 				19017B6728A697DF00B06345 /* AligningModels.swift in Sources */,
+				63A37EB628F05DDD00DBD59F /* CreateChallengeReportUseCase.swift in Sources */,
 				6368D826289187B50049EEAB /* SendCoinApiModel.swift in Sources */,
 				63AB072128C8048C00FD650F /* CreateFewContactsApiWorker.swift in Sources */,
 				1918CC7D286F6CAC004373F3 /* GetBalanceApiWorker.swift in Sources */,
@@ -1811,6 +1818,7 @@
 				196750AC2865189C0019A6DE /* TextFieldModel.swift in Sources */,
 				1921A13328EECABE00E41E86 /* ChallengesScenario.swift in Sources */,
 				63BB2C0E28DA179D00C1E3DB /* PressLikeUseCase.swift in Sources */,
+				63A37EB428F059D800DBD59F /* CreateChallengeReportApiWorker.swift in Sources */,
 				63A37EA828EECF8400DBD59F /* GetChallengeContendersApiWorker.swift in Sources */,
 				63AB071B28C0E3AF00FD650F /* BalanceScenario.swift in Sources */,
 				63A37EA228EE874100DBD59F /* GetChallengeByIdApiWorker.swift in Sources */,
