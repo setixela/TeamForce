@@ -11,6 +11,8 @@ import UIKit
 protocol FontProtocol: TypographyElements where DesignElement == UIFont {}
 
 struct FontBuilder: FontProtocol {
+   var `default`: UIFont { .systemFont(ofSize: 14, weight: .regular) }
+   
    var defaultBrand: UIFont { .systemFont(ofSize: 14, weight: .regular) }
 
    var defaultError: UIFont { .systemFont(ofSize: 14, weight: .regular) }
@@ -20,8 +22,6 @@ struct FontBuilder: FontProtocol {
    var captionSecondary: UIFont { .systemFont(ofSize: 12, weight: .regular) }
 
    var captionError: UIFont { .systemFont(ofSize: 12, weight: .regular) }
-
-   var `default`: UIFont { .systemFont(ofSize: 14, weight: .regular) }
 
    var headline2: UIFont { .systemFont(ofSize: 54, weight: .semibold) }
    var headline3: UIFont { .systemFont(ofSize: 48, weight: .regular) }

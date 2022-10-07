@@ -376,6 +376,7 @@ import AlamofireImage
 extension ViewModelProtocol where Self: Stateable, View: PaddingImageView {
    @discardableResult func image(_ value: UIImage) -> Self {
       view.image = value
+      view.layer.masksToBounds = true
       return self
    }
 
@@ -409,6 +410,7 @@ extension ViewModelProtocol where Self: Stateable, View: PaddingImageView {
 //         let url = URL(string: str)
 //      else { return self }
 
+      view.layer.masksToBounds = true
       view.loadImage(value) { [weak view] image in
          view?.image = image
       }
