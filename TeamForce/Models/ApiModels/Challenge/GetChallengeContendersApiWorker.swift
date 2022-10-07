@@ -9,7 +9,7 @@ import Foundation
 import ReactiveWorks
 
 struct Contender: Codable {
-   let participantID: Int
+   let participantId: Int
    let participantPhoto: String?
    let participantName: String?
    let participantSurname: String?
@@ -17,6 +17,19 @@ struct Contender: Codable {
    let reportText: String?
    let reportPhoto: String?
    let reportId: Int
+   let awardedAt: String?
+   
+   enum CodingKeys: String, CodingKey {
+      case participantId = "participant_id"
+      case participantPhoto = "participant_photo"
+      case participantName = "participant_name"
+      case participantSurname = "participant_surname"
+      case reportCreatedAt = "report_created_at"
+      case reportText = "report_text"
+      case reportPhoto = "report_photo"
+      case reportId = "report_id"
+      case awardedAt = "awarded_at"
+   }
    
 }
 

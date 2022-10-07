@@ -430,4 +430,17 @@ enum TeamForceEndpoints {
       
       var body: [String : Any]
    }
+   
+   struct ChallengeWinners: EndpointProtocol {
+      let method = HTTPMethod.get
+      
+      var endPoint: String = urlBase + "/challenge-winners/"
+      
+      let headers: [String : String]
+      
+      init(id: String, headers: [String : String]) {
+         endPoint = endPoint + id + "/"
+         self.headers = headers
+      }
+   }
 }

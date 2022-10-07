@@ -19,11 +19,20 @@ final class ChallengesScenario<Asset: AssetProtocol>:
 //         .onFail {
 //            print("not created challenge")
 //         }
-
+//
 //      works.getChallenges
 //         .doAsync()
 //         .onSuccess {
 //            print("challenges \($0)")
+//         }
+//      
+//      works.getChallengeWinners
+//         .doAsync(18)
+//         .onSuccess {
+//            print("winners \($0)")
+//         }
+//         .onFail {
+//            print("fail winners")
 //         }
    }
 }
