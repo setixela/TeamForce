@@ -12,11 +12,13 @@ import UIKit
 ///////// """ STATEABLE -> PARAMETRIC """
 
 final class BalanceScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>,
-   Communicable,
+   Eventable,
    Stateable,
    Assetable,
    Scenarible
 {
+   typealias Events = MainSceneEvents
+
    typealias State2 = ViewState
    typealias State = StackState
 
@@ -26,7 +28,7 @@ final class BalanceScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>
       events: BalanceScenarioInputEvents()
    )
 
-   var events: MainSceneEvents = .init()
+   var events: EventsStore = .init()
 
    // MARK: - Frame Cells
 
@@ -119,10 +121,10 @@ final class BalanceScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>
 
       scrollWrapper
          .on(\.didScroll) { [weak self] in
-            self?.sendEvent(\.didScroll, $0)
+            self?.send(\.didScroll, $0)
          }
          .on(\.willEndDragging) { [weak self] in
-            self?.sendEvent(\.willEndDragging, $0)
+            self?.send(\.willEndDragging, $0)
          }
       scrollWrapper.view.alwaysBounceVertical = true
    }

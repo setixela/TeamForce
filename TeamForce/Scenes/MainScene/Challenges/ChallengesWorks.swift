@@ -8,7 +8,6 @@
 import ReactiveWorks
 
 protocol ChallengesWorksProtocol {
-   var testWork: VoidWorkVoid { get }
    var getChallenges: Work<Void, [Challenge]> { get }
    var getChallengeById: Work<Int, Challenge> { get }
    var getChallengeContenders: Work<Int, [Contender]>  { get }
@@ -23,10 +22,7 @@ final class ChallengesWorks<Asset: AssetProtocol>:
 }
 
 extension ChallengesWorks: ChallengesWorksProtocol {
-   var testWork: VoidWorkVoid { .init { work in
 
-   }.retainBy(retainer) }
-   
    var getChallenges: Work<Void, [Challenge]> { .init { [weak self] work in
       self?.apiUseCase.getChanllenges
          .doAsync()

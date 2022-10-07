@@ -7,15 +7,13 @@
 
 import ReactiveWorks
 
-struct ChallengesEvents: InitProtocol {}
-
 final class ChallengesScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>,
    Eventable,
    Stateable,
    Assetable,
    Scenarible
 {
-   typealias Events = ChallengesEvents
+   typealias Events = MainSceneEvents
 
    typealias State2 = ViewState
    typealias State = StackState
@@ -27,7 +25,7 @@ final class ChallengesScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtend
    lazy var scenario: Scenario = ChallengesScenario(
       works: ChallengesWorks<Asset>(),
       stateDelegate: stateDelegate,
-      events: ChallengesEvents()
+      events: ChallengesScenarioInputEvents()
    )
 
    // MARK: - View Models
@@ -38,13 +36,12 @@ final class ChallengesScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtend
       arrangedModels([
          viewModel,
       ])
-      
-      scenario.start()
    }
 }
 
 enum ChallengesState {
    case initial
+   case presentChallenges([Challenge])
 }
 
 extension ChallengesScene: StateMachine {
@@ -52,6 +49,8 @@ extension ChallengesScene: StateMachine {
       switch state {
       case .initial:
          break
+      case .presentChallenges(let challenges):
+         viewModel.setState(.presentChallenges(challenges))
       }
    }
 }

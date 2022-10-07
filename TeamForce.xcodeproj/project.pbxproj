@@ -29,7 +29,7 @@
 		191571D1289F12350061510F /* PlaygroundScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191571D0289F12350061510F /* PlaygroundScene.swift */; };
 		19171F4B28AD23AE000926B1 /* HistoryViewModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19171F4A28AD23AE000926B1 /* HistoryViewModels.swift */; };
 		19171F4D28AD663F000926B1 /* TableItemsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19171F4C28AD663F000926B1 /* TableItemsModel.swift */; };
-		1918CC77286F67EB004373F3 /* BalanceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1918CC76286F67EB004373F3 /* BalanceViewModel.swift */; };
+		1918CC77286F67EB004373F3 /* BalanceScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1918CC76286F67EB004373F3 /* BalanceScene.swift */; };
 		1918CC79286F6C69004373F3 /* VerifyApiModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1918CC78286F6C69004373F3 /* VerifyApiModel.swift */; };
 		1918CC7B286F6C84004373F3 /* ProfileApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1918CC7A286F6C83004373F3 /* ProfileApiWorker.swift */; };
 		1918CC7D286F6CAC004373F3 /* GetBalanceApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1918CC7C286F6CAC004373F3 /* GetBalanceApiWorker.swift */; };
@@ -328,7 +328,7 @@
 		191571D0289F12350061510F /* PlaygroundScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundScene.swift; sourceTree = "<group>"; };
 		19171F4A28AD23AE000926B1 /* HistoryViewModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewModels.swift; sourceTree = "<group>"; };
 		19171F4C28AD663F000926B1 /* TableItemsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableItemsModel.swift; sourceTree = "<group>"; };
-		1918CC76286F67EB004373F3 /* BalanceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceViewModel.swift; sourceTree = "<group>"; };
+		1918CC76286F67EB004373F3 /* BalanceScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceScene.swift; sourceTree = "<group>"; };
 		1918CC78286F6C69004373F3 /* VerifyApiModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyApiModel.swift; sourceTree = "<group>"; };
 		1918CC7A286F6C83004373F3 /* ProfileApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileApiWorker.swift; sourceTree = "<group>"; };
 		1918CC7C286F6CAC004373F3 /* GetBalanceApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetBalanceApiWorker.swift; sourceTree = "<group>"; };
@@ -1096,7 +1096,7 @@
 		19ACB3CB28A599DF00B5AD71 /* Balance */ = {
 			isa = PBXGroup;
 			children = (
-				1918CC76286F67EB004373F3 /* BalanceViewModel.swift */,
+				1918CC76286F67EB004373F3 /* BalanceScene.swift */,
 				63AB071A28C0E3AF00FD650F /* BalanceScenario.swift */,
 				63AB071C28C0E44300FD650F /* BalanceWorks.swift */,
 			);
@@ -1709,7 +1709,7 @@
 				19CF792828A54D60001531B8 /* Config.swift in Sources */,
 				6368D824289168740049EEAB /* CustomCellModel.swift in Sources */,
 				197A361628BBB282006E44C1 /* String+Random.swift in Sources */,
-				1918CC77286F67EB004373F3 /* BalanceViewModel.swift in Sources */,
+				1918CC77286F67EB004373F3 /* BalanceScene.swift in Sources */,
 				19D08361286F430B00F75E4A /* Designable.swift in Sources */,
 				63578E5A28AB8F6000423957 /* GetTransactionsByPeriodUseCase.swift in Sources */,
 				6368D82A2894091B0049EEAB /* TransactInputViewModel.swift in Sources */,

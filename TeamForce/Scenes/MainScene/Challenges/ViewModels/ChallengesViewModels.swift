@@ -16,6 +16,7 @@ final class ChallengesViewModel<Design: DSP>: StackModel, Designable {
    private lazy var filterButtons = ChallengesFilterButtons<Design>()
 
    private lazy var challengesTable = TableItemsModel<Design>()
+      .set(.presenters([ChallengeCellPresenters<Design>().presenter]))
 
    override func start() {
       super.start()
@@ -28,6 +29,19 @@ final class ChallengesViewModel<Design: DSP>: StackModel, Designable {
          challengesTable,
          Grid.xxx.spacer,
       ])
+   }
+}
+
+enum ChallengesViewModelState {
+   case presentChallenges([Challenge])
+}
+
+extension ChallengesViewModel: StateMachine {
+   func setState(_ state: ChallengesViewModelState) {
+      switch state {
+      case .presentChallenges(let challenges):
+         challengesTable.set(.items(challenges))
+      }
    }
 }
 
@@ -85,7 +99,8 @@ final class ChallengesFilterButtons<Design: DSP>: StackModel, Designable, Eventa
 
 final class ChallengeCell<Design: DSP>:
    M<ChallengeCellInfoBlock>
-   .R<StackModel>.Combo, Designable {
+   .R<StackModel>.Combo, Designable
+{
    required init() {
       super.init()
 
@@ -115,3 +130,11 @@ final class ChallengeCellInfoBlock:
    .D2<TitleBodyY>
    .D3<TitleBodyY>
    .Combo {}
+
+struct ChallengeCellPresenters<Design: DSP>: Designable {
+   var presenter: Presenter<Challenge, ChallengeCell<Design>> { .init { work in
+      let model = ChallengeCell<Design>()
+
+      work.success(model)
+   } }
+}

@@ -8,8 +8,8 @@
 import ReactiveWorks
 import UIKit
 
-typealias CommunicableUIViewModel = UIViewModel & Communicable
-typealias ScenaribleCommunicableUIViewModel = Scenarible & Communicable & UIViewModel
+typealias EventableUIViewModel = UIViewModel & Eventable
+typealias ScenaribleEventableUIViewModel = Scenarible & Eventable & UIViewModel
 
 enum MainSceneState {
    case initial
@@ -170,10 +170,10 @@ extension MainScene: StateMachine {
 
 extension MainScene {
    // Presenting Balance, Feed, History
-   private func presentModel<M: Scenarible & Communicable & UIViewModel>(_ model: M?) where M.Events == MainSceneEvents {
+   private func presentModel<M: ScenaribleEventableUIViewModel>(_ model: M?) where M.Events == MainSceneEvents {
       guard let model = model else { return }
 
-      model.onEvent(\.willEndDragging) { [weak self] velocity in
+      model.on(\.willEndDragging) { [weak self] velocity in
          if velocity > 0 {
             self?.presentHeader()
          } else if velocity < 0 {
@@ -186,7 +186,7 @@ extension MainScene {
          ])
 
       model.scenario.start()
-      model.sendEvent(\.userDidLoad, currentUser)
+      model.send(\.userDidLoad, currentUser)
 
       activeScreen = model
    }

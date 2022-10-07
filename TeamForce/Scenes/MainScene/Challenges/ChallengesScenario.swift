@@ -7,9 +7,16 @@
 
 import ReactiveWorks
 
+struct ChallengesScenarioInputEvents {}
+
 final class ChallengesScenario<Asset: AssetProtocol>:
-   BaseScenario<ChallengesEvents, ChallengesState, ChallengesWorks<Asset>>, Assetable {
+   BaseScenario<ChallengesScenarioInputEvents, ChallengesState, ChallengesWorks<Asset>>, Assetable
+{
    override func start() {
+      works.getChallenges
+         .doAsync()
+         .onSuccess(setState) { .presentChallenges($0) }
+
 //      let input = ChallengeRequestBody(name: "Challenge 13", description: "some description", startBalance: 1)
 //      works.createChallenge
 //         .doAsync(input)
@@ -20,12 +27,8 @@ final class ChallengesScenario<Asset: AssetProtocol>:
 //            print("not created challenge")
 //         }
 //
-//      works.getChallenges
-//         .doAsync()
-//         .onSuccess {
-//            print("challenges \($0)")
-//         }
-//      
+
+//
 //      works.getChallengeWinners
 //         .doAsync(18)
 //         .onSuccess {
