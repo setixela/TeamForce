@@ -5,8 +5,8 @@
 //  Created by Aleksandr Solovyev on 06.10.2022.
 //
 
-import ReactiveWorks
 import Foundation
+import ReactiveWorks
 
 final class ChallengesViewModel<Design: DSP>: StackModel, Designable {
    //
@@ -43,7 +43,7 @@ extension ChallengesViewModel: StateMachine {
    func setState(_ state: ChallengesViewModelState) {
       switch state {
       case .presentChallenges(let challenges):
-         challengesTable.set(.items(challenges + [Grid.x128.spacer]))
+         challengesTable.set(.items(challenges + [SpacerItem(size: 96)]))
       }
    }
 }
@@ -135,33 +135,14 @@ final class ChallengeCell<Design: DSP>:
 }
 
 enum ChallengeCellState {
-   case normal
    case inverted
 }
 
 extension ChallengeCell: StateMachine {
    func setState(_ state: ChallengeCellState) {
       switch state {
-      case .normal:
-         setAll { infoBlock, _ in
-            infoBlock.setAll { title, participant, winner, prizeFund, prizes in
-               title.textColor(Design.color.text)
-
-               participant.title.textColor(Design.color.text)
-               participant.body.textColor(Design.color.text)
-
-               winner.title.textColor(Design.color.text)
-               winner.body.textColor(Design.color.text)
-
-               prizeFund.title.textColor(Design.color.text)
-               prizeFund.body.textColor(Design.color.text)
-
-               prizes.title.textColor(Design.color.text)
-               prizes.body.textColor(Design.color.text)
-            }
-         }
       case .inverted:
-         setAll { infoBlock, _ in
+         setAll { infoBlock, statusBlock in
             infoBlock.setAll { title, participant, winner, prizeFund, prizes in
                title.textColor(Design.color.textInvert)
 
@@ -177,6 +158,12 @@ extension ChallengeCell: StateMachine {
                prizes.title.textColor(Design.color.textInvert)
                prizes.body.textColor(Design.color.textInvert)
             }
+
+            statusBlock.backImage.hidden(true)
+            statusBlock.dateLabel
+               .backColor(Design.color.transparent)
+               .textColor(Design.color.textInvert)
+               .borderColor(Design.color.textInvert)
          }
       }
    }
@@ -208,8 +195,10 @@ final class ChallengeCellStatusBlock<Design: DSP>: StackModel, Designable {
       .set(Design.state.label.caption)
       .cornerRadius(Design.params.cornerRadiusMini)
       .height(Design.params.buttonHeightMini)
-      .backColor(Design.color.background)
       .padding(.horizontalOffset(8))
+      .backColor(Design.color.backgroundBrandSecondary)
+      .borderColor(Design.color.iconContrast)
+      .borderWidth(1)
 
    lazy var backImage = ImageViewModel()
 
@@ -250,7 +239,7 @@ struct ChallengeCellPresenters<Design: DSP>: Designable {
             }
 
             let updatedDateString = data.updatedAt.string.convertToDate(.digits)
-            statusBlock.statusLabel.text("Активен")
+            statusBlock.statusLabel.text(data.active.bool ? "Активен" : "Завершен")
             statusBlock.dateLabel.text("Обновлен: " + updatedDateString.string)
             statusBlock.backImage
                .image(Design.icon.challengeWinnerIllustrate)
