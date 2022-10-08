@@ -7,6 +7,25 @@
 
 import Foundation
 
+enum DateFormat: String {
+   case full = "d MMM y HH:mm"
+   case digits = "dd.MM.yyyy"
+}
+
+extension String {
+   func convertToDate(_ format: DateFormat = .full) -> String? {
+      let inputFormatter = DateFormatter()
+      inputFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+      guard let convertedDate = inputFormatter.date(from: self) else { return nil }
+
+      let outputFormatter = DateFormatter()
+      outputFormatter.locale = Locale(identifier: "ru_RU")
+      outputFormatter.dateFormat = format.rawValue
+
+      return outputFormatter.string(from: convertedDate)
+   }
+}
+
 extension String {
    private var dateFormat: String { "yyyy-MM-dd'T'HH:mm:ss.SSSZ" }
 
@@ -16,7 +35,7 @@ extension String {
       guard let convertedDate = inputFormatter.date(from: self) else { return nil }
       return convertedDate
    }
-   
+
    var dateConverted: String {
       guard let convertedDate = dateConvertedToDate else { return "" }
 

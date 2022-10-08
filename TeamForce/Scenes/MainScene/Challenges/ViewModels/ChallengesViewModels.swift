@@ -6,6 +6,7 @@
 //
 
 import ReactiveWorks
+import Foundation
 
 final class ChallengesViewModel<Design: DSP>: StackModel, Designable {
    //
@@ -196,21 +197,33 @@ final class ChallengeCellInfoBlock:
 }
 
 final class ChallengeCellStatusBlock<Design: DSP>: StackModel, Designable {
-
    lazy var statusLabel = LabelModel()
       .set(Design.state.label.caption)
       .cornerRadius(Design.params.cornerRadiusMini)
       .height(Design.params.buttonHeightMini)
       .backColor(Design.color.background)
-      .padding(.verticalOffset(8))
+      .padding(.horizontalOffset(8))
+
+   lazy var dateLabel = LabelModel()
+      .set(Design.state.label.caption)
+      .cornerRadius(Design.params.cornerRadiusMini)
+      .height(Design.params.buttonHeightMini)
+      .backColor(Design.color.background)
+      .padding(.horizontalOffset(8))
+
+   lazy var backImage = ImageViewModel()
 
    override func start() {
       super.start()
 
+      alignment(.trailing)
       arrangedModels([
          statusLabel,
-         Grid.xxx.spacer
+         Grid.xxx.spacer,
+         dateLabel,
       ])
+
+      backViewModel(backImage, inset: .init(top: 16, left: 16, bottom: 0, right: 0))
    }
 }
 
@@ -236,8 +249,12 @@ struct ChallengeCellPresenters<Design: DSP>: Designable {
                prizes.body.text("Призовых мест")
             }
 
-            statusBlock.statusLabel
-               .text("Активен")
+            let updatedDateString = data.updatedAt.string.convertToDate(.digits)
+            statusBlock.statusLabel.text("Активен")
+            statusBlock.dateLabel.text("Обновлен: " + updatedDateString.string)
+            statusBlock.backImage
+               .image(Design.icon.challengeWinnerIllustrate)
+               .contentMode(.scaleAspectFit)
          }
 
       if let suffix = data.photo {

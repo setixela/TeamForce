@@ -62,7 +62,7 @@ final class PaddingLabel: UILabel, Marginable, Tappable {
       insetsWidth += padding.left + padding.right
       insetsHeight += padding.top + padding.bottom
 
-      textWidth -= insetsWidth
+      textWidth += insetsWidth
 
       let newSize = text.boundingRect(with: CGSize(width: textWidth, height: .greatestFiniteMagnitude),
                                       options: [.usesLineFragmentOrigin],
