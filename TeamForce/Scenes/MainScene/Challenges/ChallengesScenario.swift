@@ -16,7 +16,25 @@ final class ChallengesScenario<Asset: AssetProtocol>:
       works.getChallenges
          .doAsync()
          .onSuccess(setState) { .presentChallenges($0) }
-
+      
+//      works.getChallengeContenders
+//         .doAsync(14)
+//         .onSuccess {
+//            print("contenders \($0)")
+//         }
+//         .onFail {
+//            print("fail winners")
+//         }
+      
+//      let request = CheckReportRequestBody(id: 7, state: CheckReportRequestBody.State.D)
+//      works.checkChallengeReport
+//         .doAsync(request)
+//         .onSuccess {
+//            print("dona decline")
+//         }
+//         .onSuccess {
+//            print("print fail to decline dona")
+//         }
 //      let input = ChallengeRequestBody(name: "Challenge 13", description: "some description", startBalance: 1)
 //      works.createChallenge
 //         .doAsync(input)

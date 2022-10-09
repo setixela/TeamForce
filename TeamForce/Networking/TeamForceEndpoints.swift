@@ -453,4 +453,20 @@ enum TeamForceEndpoints {
       
       let body: [String : Any]
    }
+   
+   struct CheckChallengeReport: EndpointProtocol {
+      let method = HTTPMethod.put
+      
+      var endPoint: String = urlBase + "/check-challenge-report/"
+      
+      let headers: [String : String]
+      
+      let jsonData: Data?
+      
+      init(id: String, headers: [String : String], jsonData: Data?) {
+         endPoint = endPoint + id + "/"
+         self.headers = headers
+         self.jsonData = jsonData
+      }
+   }
 }

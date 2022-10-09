@@ -336,6 +336,14 @@ final class ApiUseCase<Asset: AssetProtocol>: InitProtocol, Assetable, WorkBaske
       .retainedWork(retainer)
    }
    
+   var CheckChallengeReport: CheckChallengeReportUseCase.WRK {
+      CheckChallengeReportUseCase(
+         safeStringStorage: safeStringStorage,
+         checkChallengeReportApiWorker: checkChallengeReportApiWorker
+      )
+      .retainedWork(retainer)
+   }
+   
    // MARK: - Dependencies
 
    private var userProfileApiModel: ProfileApiWorker { .init(apiEngine: Asset.service.apiEngine) }
@@ -391,4 +399,6 @@ final class ApiUseCase<Asset: AssetProtocol>: InitProtocol, Assetable, WorkBaske
        Asset.service.apiEngine) }
    private var getChallengeWinnersApiWorker: GetChallengeWinnersApiWorker { .init(apiEngine: Asset.service.apiEngine) }
    private var createChallengeReportApiWorker: CreateChallengeReportApiWorker { .init(apiEngine: Asset.service.apiEngine) }
+   private var checkChallengeReportApiWorker: CheckChallengeReportApiWorker {
+       .init(apiEngine: Asset.service.apiEngine) }
 }
