@@ -28,6 +28,15 @@ enum ChallengeState: String, Codable {
    case Y = "Подтверждение будет выполняться судейской коллегией (через выдачу ими баллов)"
 }
 
+enum ChallengeStatus: String, Codable {
+   case owner = "Вы создатель челленджа"
+   case canSendReport = "Можно отправить отчёт"
+   case reportSent = "Отчет отправлен"
+   case reportAccepted = "Отчет подтвержден"
+   case reportDeclined = "Отчет отклонен"
+   case rewarded = "Получено вознаграждение"
+}
+
 struct Challenge: Codable {
    let id: Int
    let name: String?
@@ -40,7 +49,7 @@ struct Challenge: Codable {
    let parameters: [Parameter]?
    let endAt: String?
    let approvedReportsAmount: Int
-   let status: String?
+   let status: ChallengeStatus?
    let isNewReports: Bool
    let winnersCount: Int?
    let creatorOrganizationId: Int?
