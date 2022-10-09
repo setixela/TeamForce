@@ -10,6 +10,8 @@ import ReactiveWorks
 struct ChallengesScenarioInputEvents {
    let presentAllChallenges: VoidWork<Void>
    let presentActiveChallenges: VoidWork<Void>
+
+   let didSelectChallengeIndex: VoidWork<Int>
 }
 
 final class ChallengesScenario<Asset: AssetProtocol>:
@@ -27,6 +29,11 @@ final class ChallengesScenario<Asset: AssetProtocol>:
       events.presentActiveChallenges
          .doNext(works.getActiveChallenges)
          .onSuccess(setState) { .presentChallenges($0) }
+
+      events.didSelectChallengeIndex
+         .doNext(works.getPresentedChallengeByIndex)
+         .onSuccess(setState) { .presentChallengeDetails($0) }
+      
 //      let input = ChallengeRequestBody(name: "Challenge 13", description: "some description", startBalance: 1)
 //      works.createChallenge
 //         .doAsync(input)

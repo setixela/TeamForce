@@ -16,10 +16,12 @@ protocol ChallengesWorksProtocol {
 
    var getAllChallenges: Work<Void, [Challenge]> { get }
    var getActiveChallenges: Work<Void, [Challenge]> { get }
+   var getPresentedChallengeByIndex: Work<Int, Challenge> { get }
 }
 
 final class ChallengesTempStorage: InitProtocol {
    var challenges: [Challenge] = []
+   var presentingChallenges: [Challenge] = []
 }
 
 final class ChallengesWorks<Asset: AssetProtocol>: BaseSceneWorks<ChallengesTempStorage, Asset> {
@@ -32,6 +34,7 @@ extension ChallengesWorks: ChallengesWorksProtocol {
          .doAsync()
          .onSuccess {
             Self.store.challenges = $0
+            Self.store.presentingChallenges = $0
             work.success(result: $0)
          }
          .onFail {
@@ -40,11 +43,17 @@ extension ChallengesWorks: ChallengesWorksProtocol {
    }.retainBy(retainer) }
 
    var getAllChallenges: VoidWork<[Challenge]> { .init {  work in
-      work.success(Self.store.challenges)
+      Self.store.presentingChallenges = Self.store.challenges
+      work.success(Self.store.presentingChallenges)
    }.retainBy(retainer) }
 
    var getActiveChallenges: VoidWork<[Challenge]> { .init {  work in
-      work.success(Self.store.challenges.filter(\.active.bool))
+      Self.store.presentingChallenges = Self.store.challenges.filter(\.active.bool)
+      work.success(Self.store.presentingChallenges)
+   }.retainBy(retainer) }
+
+   var getPresentedChallengeByIndex: Work<Int, Challenge> { .init {  work in
+      work.success(Self.store.presentingChallenges[work.unsafeInput])
    }.retainBy(retainer) }
 
    var getChallengeById: Work<Int, Challenge> { .init { [weak self] work in

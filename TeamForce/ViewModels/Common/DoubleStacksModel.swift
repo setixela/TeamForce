@@ -31,3 +31,31 @@ extension DoubleStacksModel: Stateable2 {
    typealias State = StackState
    typealias State2 = ViewState
 }
+
+class TripleStacksModel: BaseViewModel<StackViewExtended> {
+   let headerStack = StackModel(.axis(.vertical),
+                           .alignment(.fill),
+                           .distribution(.fill))
+   let bodyStack = StackModel(.axis(.vertical),
+                              .alignment(.fill),
+                              .distribution(.fill))
+   let footerStack = StackModel(.axis(.vertical),
+                                .alignment(.fill),
+                                .distribution(.fill))
+
+   override func start() {
+      axis(.vertical)
+      alignment(.fill)
+      distribution(.fill)
+      arrangedModels([
+         headerStack,
+         bodyStack,
+         footerStack
+      ])
+   }
+}
+
+extension TripleStacksModel: Stateable2 {
+   typealias State = StackState
+   typealias State2 = ViewState
+}

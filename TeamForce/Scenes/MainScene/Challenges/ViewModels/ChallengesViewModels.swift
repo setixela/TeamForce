@@ -13,6 +13,7 @@ final class ChallengesViewModel<Design: DSP>: StackModel, Designable, Eventable 
    struct Events: InitProtocol {
       var didTapFilterAll: Void?
       var didTapFilterActive: Void?
+      var didSelectChallenge: Int?
    }
 
    var events: EventsStore = .init()
@@ -54,6 +55,10 @@ final class ChallengesViewModel<Design: DSP>: StackModel, Designable, Eventable 
          case .didTapButton2:
             $0.send(\.didTapFilterActive)
          }
+      }
+
+      challengesTable.on(\.didSelectRowInt, self) {
+         $0.send(\.didSelectChallenge, $1)
       }
    }
 }

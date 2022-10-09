@@ -27,7 +27,8 @@ final class ChallengesScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtend
       stateDelegate: stateDelegate,
       events: ChallengesScenarioInputEvents(
          presentAllChallenges: viewModel.on(\.didTapFilterAll),
-         presentActiveChallenges: viewModel.on(\.didTapFilterActive)
+         presentActiveChallenges: viewModel.on(\.didTapFilterActive),
+         didSelectChallengeIndex: viewModel.on(\.didSelectChallenge)
       )
    )
 
@@ -45,6 +46,7 @@ final class ChallengesScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtend
 enum ChallengesState {
    case initial
    case presentChallenges([Challenge])
+   case presentChallengeDetails(Challenge)
 }
 
 extension ChallengesScene: StateMachine {
@@ -54,6 +56,10 @@ extension ChallengesScene: StateMachine {
          break
       case .presentChallenges(let challenges):
          viewModel.setState(.presentChallenges(challenges))
+      case .presentChallengeDetails(let challenge):
+         ProductionAsset.router?.route(\.challengeDetails,
+                                       navType: .presentModally(.automatic),
+                                       payload: challenge)
       }
    }
 }

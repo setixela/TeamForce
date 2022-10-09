@@ -47,6 +47,9 @@ final class SlidedIndexButtons<ButtEvents: ManyButtonEvent>: BaseViewModel<UIScr
          .leading(view.leadingAnchor)
          .trailing(view.trailingAnchor)
          .height(view.heightAnchor)
+
+      view.layer.masksToBounds = false
+      view.clipsToBounds = false
    }
 
    required init() {
