@@ -65,15 +65,15 @@ final class MainScene<Asset: AssetProtocol>:
       vcModel?.onEvent(\.viewWillAppear) { [weak self] in
          self?.scenario.start()
       }
-      tabBarPanel.button1.setMode(\.normal)
+      tabBarPanel.button1.setSelfMode(\.normal)
       selectedModel = 0
    }
 
    private func unlockTabButtons() {
-      tabBarPanel.button1.setMode(\.inactive)
-      tabBarPanel.button2.setMode(\.inactive)
-      tabBarPanel.button3.setMode(\.inactive)
-      tabBarPanel.button4.setMode(\.inactive)
+      tabBarPanel.button1.setSelfMode(\.inactive)
+      tabBarPanel.button2.setSelfMode(\.inactive)
+      tabBarPanel.button3.setSelfMode(\.inactive)
+      tabBarPanel.button4.setSelfMode(\.inactive)
    }
 }
 
@@ -85,7 +85,7 @@ private extension MainScene {
             $0.mainVM.header.text("Лента событий")
             $0.vcModel?.sendEvent(\.setTitle, "Лента событий")
             $0.presentModel($0.feedViewModel)
-            $0.tabBarPanel.button1.setMode(\.normal)
+            $0.tabBarPanel.button1.setSelfMode(\.normal)
             $0.selectedModel = 0
          }
 
@@ -95,7 +95,7 @@ private extension MainScene {
             self?.mainVM.header.text("Баланс")
             self?.vcModel?.sendEvent(\.setTitle, "Баланс")
             self?.presentModel(self?.balanceViewModel)
-            self?.tabBarPanel.button2.setMode(\.normal)
+            self?.tabBarPanel.button2.setSelfMode(\.normal)
             self?.selectedModel = 1
          }
 
@@ -110,7 +110,7 @@ private extension MainScene {
             self?.mainVM.header.text("История")
             self?.vcModel?.sendEvent(\.setTitle, "История")
             self?.presentModel(self?.historyViewModel)
-            self?.tabBarPanel.button3.setMode(\.normal)
+            self?.tabBarPanel.button3.setSelfMode(\.normal)
             self?.selectedModel = 2
          }
 
@@ -120,7 +120,7 @@ private extension MainScene {
             self?.mainVM.header.text("Челленджи")
             self?.vcModel?.sendEvent(\.setTitle, "Челленджи")
             self?.presentModel(self?.challengesViewModel)
-            self?.tabBarPanel.button4.setMode(\.normal)
+            self?.tabBarPanel.button4.setSelfMode(\.normal)
             self?.selectedModel = 3
          }
    }

@@ -7,7 +7,10 @@
 
 import ReactiveWorks
 
-struct ChallengesScenarioInputEvents {}
+struct ChallengesScenarioInputEvents {
+   let presentAllChallenges: VoidWork<Void>
+   let presentActiveChallenges: VoidWork<Void>
+}
 
 final class ChallengesScenario<Asset: AssetProtocol>:
    BaseScenario<ChallengesScenarioInputEvents, ChallengesState, ChallengesWorks<Asset>>, Assetable
@@ -17,6 +20,13 @@ final class ChallengesScenario<Asset: AssetProtocol>:
          .doAsync()
          .onSuccess(setState) { .presentChallenges($0) }
 
+      events.presentAllChallenges
+         .doNext(works.getAllChallenges)
+         .onSuccess(setState) { .presentChallenges($0) }
+
+      events.presentActiveChallenges
+         .doNext(works.getActiveChallenges)
+         .onSuccess(setState) { .presentChallenges($0) }
 //      let input = ChallengeRequestBody(name: "Challenge 13", description: "some description", startBalance: 1)
 //      works.createChallenge
 //         .doAsync(input)

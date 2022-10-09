@@ -20,6 +20,7 @@ class ButtonModel: BaseViewModel<ButtonExtended>, ButtonModelProtocol {
    //
 
    typealias Events = ButtonEvents
+
    var events = [Int: LambdaProtocol?]()
 
    override func start() {
@@ -42,15 +43,17 @@ extension ButtonModel: Stateable {
 
 extension ButtonModel: Eventable, ButtonTapAnimator {}
 
-class ButtonModelModable: ButtonModel, SelfModable {
+class ModableButton: ButtonModel, Modable {
+   var modes: ButtonMode = .init()
+}
 
-   var modes: Mode = .init()
+class ButtonSelfModable: ButtonModel, SelfModable {
+   var selfMode: SelfMode = .init()
 
-   struct Mode: WeakSelfied {
-      typealias WeakSelf = ButtonModelModable
+   struct SelfMode: WeakSelfied {
+      typealias WeakSelf = ButtonSelfModable
 
       var normal: Event<WeakSelf?>?
       var inactive: Event<WeakSelf?>?
    }
 }
-

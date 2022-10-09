@@ -80,6 +80,7 @@
 		196750B4286519660019A6DE /* ProductionAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196750B3286519660019A6DE /* ProductionAsset.swift */; };
 		196D883428ADB6EC00F4C09D /* MainScreenVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196D883328ADB6EC00F4C09D /* MainScreenVM.swift */; };
 		196D883628ADB74800F4C09D /* TabBarPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196D883528ADB74800F4C09D /* TabBarPanel.swift */; };
+		196F642228F32C37002F5187 /* ManyButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196F642128F32C37002F5187 /* ManyButtons.swift */; };
 		1977518D28A8329F006CFAF3 /* ReactiveWorks in Frameworks */ = {isa = PBXBuildFile; productRef = 1977518C28A8329F006CFAF3 /* ReactiveWorks */; };
 		1977519028A83395006CFAF3 /* SwiftCSSParser in Frameworks */ = {isa = PBXBuildFile; productRef = 1977518F28A83395006CFAF3 /* SwiftCSSParser */; };
 		19775FFE28C5922B008DF8E0 /* ImagePickingScenario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19775FFD28C5922B008DF8E0 /* ImagePickingScenario.swift */; };
@@ -380,6 +381,7 @@
 		196750B3286519660019A6DE /* ProductionAsset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductionAsset.swift; sourceTree = "<group>"; };
 		196D883328ADB6EC00F4C09D /* MainScreenVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenVM.swift; sourceTree = "<group>"; };
 		196D883528ADB74800F4C09D /* TabBarPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarPanel.swift; sourceTree = "<group>"; };
+		196F642128F32C37002F5187 /* ManyButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManyButtons.swift; sourceTree = "<group>"; };
 		19775FFD28C5922B008DF8E0 /* ImagePickingScenario.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickingScenario.swift; sourceTree = "<group>"; };
 		1977BE5428A7238F00D554EA /* TextFieldStates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldStates.swift; sourceTree = "<group>"; };
 		1977BE5728A7343400D554EA /* InputCheckers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputCheckers.swift; sourceTree = "<group>"; };
@@ -890,6 +892,14 @@
 			path = Scenes;
 			sourceTree = "<group>";
 		};
+		196F642028F32C2B002F5187 /* Experimental */ = {
+			isa = PBXGroup;
+			children = (
+				196F642128F32C37002F5187 /* ManyButtons.swift */,
+			);
+			path = Experimental;
+			sourceTree = "<group>";
+		};
 		1977518B28A83281006CFAF3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -1216,6 +1226,7 @@
 		19C1E9A428610E6F00E7976D /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				196F642028F32C2B002F5187 /* Experimental */,
 				19A9BE7728C283650099F8EA /* ModelBuilder.swift */,
 				19A9BE7428C255800099F8EA /* Scenes */,
 				19A9232D28B2DB1B0080D491 /* Designable */,
@@ -1694,6 +1705,7 @@
 				63A37EB628F05DDD00DBD59F /* CreateChallengeReportUseCase.swift in Sources */,
 				6368D826289187B50049EEAB /* SendCoinApiModel.swift in Sources */,
 				63AB072128C8048C00FD650F /* CreateFewContactsApiWorker.swift in Sources */,
+				196F642228F32C37002F5187 /* ManyButtons.swift in Sources */,
 				1918CC7D286F6CAC004373F3 /* GetBalanceApiWorker.swift in Sources */,
 				1952EA6328A7102B003F7852 /* StateProtocol.swift in Sources */,
 				19A9BE8028C307000099F8EA /* Queue.swift in Sources */,

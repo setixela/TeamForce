@@ -8,13 +8,27 @@
 import Foundation
 import ReactiveWorks
 
-final class ChallengesViewModel<Design: DSP>: StackModel, Designable {
+final class ChallengesViewModel<Design: DSP>: StackModel, Designable, Eventable {
+
+   struct Events: InitProtocol {
+      var didTapFilterAll: Void?
+      var didTapFilterActive: Void?
+   }
+
+   var events: EventsStore = .init()
+
    //
    private lazy var createChallengeButton = ButtonModel()
       .set(Design.state.button.default)
       .title("Создать челлендж")
 
-   private lazy var filterButtons = ChallengesFilterButtons<Design>()
+   private lazy var filterButtons = SlidedIndexButtons<Button2Event>(buttons:
+      SecondaryButtonDT<Design>()
+         .title("Все")
+         .font(Design.font.default),
+      SecondaryButtonDT<Design>()
+         .title("Активные")
+         .font(Design.font.default))
 
    private lazy var challengesTable = TableItemsModel<Design>()
       .set(.presenters([
@@ -32,6 +46,15 @@ final class ChallengesViewModel<Design: DSP>: StackModel, Designable {
          Grid.x16.spacer,
          challengesTable,
       ])
+
+      filterButtons.on(\.didTapButtons, self) {
+         switch $1 {
+         case .didTapButton1:
+            $0.send(\.didTapFilterAll)
+         case .didTapButton2:
+            $0.send(\.didTapFilterActive)
+         }
+      }
    }
 }
 
@@ -44,58 +67,6 @@ extension ChallengesViewModel: StateMachine {
       switch state {
       case .presentChallenges(let challenges):
          challengesTable.set(.items(challenges + [SpacerItem(size: 96)]))
-      }
-   }
-}
-
-final class ChallengesFilterButtons<Design: DSP>: StackModel, Designable, Eventable {
-   struct Events: InitProtocol {
-      var didTapAll: Void?
-      var didTapActive: Void?
-   }
-
-   var events = [Int: LambdaProtocol?]()
-
-   lazy var buttonAll = SecondaryButtonDT<Design>()
-      .title("Все")
-      .font(Design.font.default)
-      .on(\.didTap, self) {
-         $0.select(0)
-         $0.send(\.didTapAll)
-      }
-
-   lazy var buttonActive = SecondaryButtonDT<Design>()
-      .title("Активные")
-      .font(Design.font.default)
-      .on(\.didTap, self) {
-         $0.select(1)
-         $0.send(\.didTapActive)
-      }
-
-   override func start() {
-      axis(.horizontal)
-      spacing(Grid.x8.value)
-      padBottom(8)
-      arrangedModels([
-         buttonAll,
-         buttonActive,
-         Grid.xxx.spacer,
-      ])
-      select(0)
-   }
-
-   private func deselectAll() {
-      buttonAll.setMode(\.normal)
-      buttonActive.setMode(\.normal)
-   }
-
-   private func select(_ index: Int) {
-      deselectAll()
-      switch index {
-      case 0:
-         buttonAll.setMode(\.selected)
-      default:
-         buttonActive.setMode(\.selected)
       }
    }
 }

@@ -25,7 +25,10 @@ final class ChallengesScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtend
    lazy var scenario: Scenario = ChallengesScenario(
       works: ChallengesWorks<Asset>(),
       stateDelegate: stateDelegate,
-      events: ChallengesScenarioInputEvents()
+      events: ChallengesScenarioInputEvents(
+         presentAllChallenges: viewModel.on(\.didTapFilterAll),
+         presentActiveChallenges: viewModel.on(\.didTapFilterActive)
+      )
    )
 
    // MARK: - View Models

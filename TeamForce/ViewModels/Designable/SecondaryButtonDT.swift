@@ -7,8 +7,8 @@
 
 import ReactiveWorks
 
-final class SecondaryButtonDT<Design: DSP>: ButtonModel, Designable, Modable {
-   var modes = ButtonMode()
+
+final class SecondaryButtonDT<Design: DSP>: ModableButton, Designable {
 
    override func start() {
       super.start()

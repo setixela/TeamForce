@@ -20,17 +20,17 @@ final class FeedCommentsBlock<Design: DSP>: DoubleStacksModel, Designable {
       .placeholder(Design.Text.title.comment)
       .placeholderColor(Design.color.textFieldPlaceholder)
 
-   lazy var sendButton = ButtonModelModable()
+   lazy var sendButton = ButtonSelfModable()
       .image(Design.icon.tablerBrandTelegram)
       .set(Design.state.button.default)
       .width(Design.params.buttonHeight)
-      .onModeChanged(\.inactive) {
+      .onSelfModeChanged(\.inactive) {
          $0?.set(Design.state.button.inactive)
       }
-      .onModeChanged(\.normal) {
+      .onSelfModeChanged(\.normal) {
          $0?.set(Design.state.button.default)
       }
-      .setMode(\.inactive)
+      .setSelfMode(\.inactive)
 
    private lazy var commentPanel = StackModel()
       .arrangedModels([
@@ -70,9 +70,9 @@ extension FeedCommentsBlock: StateMachine {
    func setState(_ state: FeedCommentsState) {
       switch state {
       case .sendButtonDisabled:
-         sendButton.setMode(\.inactive)
+         sendButton.setSelfMode(\.inactive)
       case .sendButtonEnabled:
-         sendButton.setMode(\.normal)
+         sendButton.setSelfMode(\.normal)
       }
    }
 }
