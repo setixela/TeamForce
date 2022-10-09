@@ -7,20 +7,49 @@
 
 import Foundation
 import ReactiveWorks
+enum ChallengeState: String, Codable {
+   case O = "От имени организации"
+   case U = "От имени пользователя"
+   case P = "Является публичным"
+   case C = "Является командным"
+   case R = "Нужна регистрация"
+   case G = "Нужна картинка"
+   case M = "Запрет комментариев"
+   case E = "Разрешить комментарии только для участников"
+   case L = "Лайки запрещены"
+   case T = "Разрешить лайки только для участников"
+   case X = "Комментарии отчетов разрешены только автору отчета, организатору и судьям"
+   case W = "Комментарии отчетов разрешены только участникам"
+   case I = "Лайки отчетов разрешены только участникам"
+   case N = "Участник может использовать никнейм"
+   case H = "Участник может сделать отчёт приватным"
+   case A = "Отчеты анонимизированы до подведения итогов, не видны ни имена пользователей, ни псевдонимы"
+   case Q = "Участник может рассылать приглашения"
+   case Y = "Подтверждение будет выполняться судейской коллегией (через выдачу ими баллов)"
+}
+
+enum ChallengeStatus: String, Codable {
+   case owner = "Вы создатель челленджа"
+   case canSendReport = "Можно отправить отчёт"
+   case reportSent = "Отчет отправлен"
+   case reportAccepted = "Отчет подтвержден"
+   case reportDeclined = "Отчет отклонен"
+   case rewarded = "Получено вознаграждение"
+}
 
 struct Challenge: Codable {
    let id: Int
    let name: String?
    let photo: String?
    let updatedAt: String?
-   let states: [String]?
+   let states: [ChallengeState]?
    let description: String?
    let startBalance: Int?
    let creatorId: Int
    let parameters: [Parameter]?
    let endAt: String?
    let approvedReportsAmount: Int
-   let status: String?
+   let status: ChallengeStatus?
    let isNewReports: Bool
    let winnersCount: Int?
    let creatorOrganizationId: Int?
