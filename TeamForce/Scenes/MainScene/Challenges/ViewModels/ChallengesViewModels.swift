@@ -9,7 +9,6 @@ import Foundation
 import ReactiveWorks
 
 final class ChallengesViewModel<Design: DSP>: StackModel, Designable, Eventable {
-
    struct Events: InitProtocol {
       var didTapFilterAll: Void?
       var didTapFilterActive: Void?
@@ -89,7 +88,11 @@ final class ChallengeCell<Design: DSP>:
 
       setAll { infoBlock, _ in
          infoBlock.setAll { title, participant, winner, prizeFund, prizes in
-            title.set(Design.state.label.body4)
+            title
+               .set(Design.state.label.body4)
+               .numberOfLines(1)
+               .lineBreakMode(.byWordWrapping)
+               .height(20)
 
             participant.title.set(Design.state.label.body2)
             participant.body.set(Design.state.label.caption)
@@ -103,6 +106,8 @@ final class ChallengeCell<Design: DSP>:
             prizes.title.set(Design.state.label.body2)
             prizes.body.set(Design.state.label.caption)
          }
+         .alignment(.leading)
+         .padding(.right(-80))
       }
       height(208)
       padding(.init(top: 20, left: 16, bottom: 20, right: 16))
@@ -154,7 +159,6 @@ final class ChallengeCellInfoBlock:
 {
    override func start() {
       super.start()
-
       spacing(12)
    }
 }
@@ -199,7 +203,7 @@ struct ChallengeCellPresenters<Design: DSP>: Designable {
       let model = ChallengeCell<Design>()
          .setAll { infoBlock, statusBlock in
             infoBlock.setAll { title, participant, winner, prizeFund, prizes in
-               //title.text("Заголовок")
+               // title.text("Заголовок")
                title.text(data.name.string)
 
                participant.title.text(data.approvedReportsAmount.toString)

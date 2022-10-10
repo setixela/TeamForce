@@ -38,12 +38,7 @@ extension UIView: ButtonTapAnimator {}
 // MARK: - PaddingLabel -------------------------
 
 final class PaddingLabel: UILabel, Marginable, Tappable {
-   var events: EventsStore = .init() {
-      didSet {
-         // startTapGestureRecognize()
-         // print("started events")
-      }
-   }
+   var events: EventsStore = .init()
 
    var padding: UIEdgeInsets = .init()
 

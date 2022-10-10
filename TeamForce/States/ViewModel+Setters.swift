@@ -273,6 +273,14 @@ extension ViewModelProtocol where Self: Stateable, View: StackViewExtended {
       return self
    }
 
+   @discardableResult func addArrangedModels(_ value: [UIViewModel]) -> Self {
+      value.forEach {
+         let subview = $0.uiView
+         view.addArrangedSubview(subview)
+      }
+      return self
+   }
+
    @discardableResult func backView(_ value: UIView, inset: UIEdgeInsets = .zero) -> Self {
       view.insertSubview(value, at: 0)
       view.backView = value
@@ -367,6 +375,11 @@ extension ViewModelProtocol where Self: Stateable, View: PaddingLabel {
    @discardableResult func cornerRadius(_ value: CGFloat) -> Self {
       view.layer.cornerRadius = value
       view.clipsToBounds = true
+      return self
+   }
+
+   @discardableResult func lineBreakMode(_ value: NSLineBreakMode) -> Self {
+      view.lineBreakMode = value
       return self
    }
 }

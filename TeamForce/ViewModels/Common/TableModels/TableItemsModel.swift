@@ -113,7 +113,7 @@ final class TableItemsModel<Design: DSP>: BaseViewModel<UITableView>,
       cell.contentView.subviews.forEach { $0.removeFromSuperview() }
       cell.contentView.addSubview(modelView)
       modelView.addAnchors.fitToView(cell.contentView)
-//      cell.selectionStyle = .none
+      cell.contentView.setNeedsLayout()
 
       return cell
    }
