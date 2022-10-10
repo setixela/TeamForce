@@ -31,9 +31,9 @@ enum ChallengeState: String, Codable {
 enum ChallengeStatus: String, Codable {
    case owner = "Вы создатель челленджа"
    case canSendReport = "Можно отправить отчёт"
-   case reportSent = "Отчет отправлен"
-   case reportAccepted = "Отчет подтвержден"
-   case reportDeclined = "Отчет отклонен"
+   case reportSent = "Отчёт отправлен"
+   case reportAccepted = "Отчёт подтверждён"
+   case reportDeclined = "Отчёт отклонён"
    case rewarded = "Получено вознаграждение"
 }
 

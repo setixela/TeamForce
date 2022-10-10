@@ -199,7 +199,8 @@ struct ChallengeCellPresenters<Design: DSP>: Designable {
       let model = ChallengeCell<Design>()
          .setAll { infoBlock, statusBlock in
             infoBlock.setAll { title, participant, winner, prizeFund, prizes in
-               title.text("Заголовок")
+               //title.text("Заголовок")
+               title.text(data.name.string)
 
                participant.title.text(data.approvedReportsAmount.toString)
                participant.body.text("Участников")

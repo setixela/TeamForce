@@ -45,23 +45,5 @@ final class ChallengesScenario<Asset: AssetProtocol>:
 //         }
 //
 
-//
-//      works.getChallengeWinners
-//         .doAsync(18)
-//         .onSuccess {
-//            print("winners \($0)")
-//         }
-//         .onFail {
-//            print("fail winners")
-//         }
-//      let request = ChallengeReportBody(challengeId: 20, text: "Report text", photo: Design.icon.like)
-//      works.createChallengeReport
-//         .doAsync(request)
-//         .onSuccess {
-//            print("successful report")
-//         }
-//         .onFail {
-//            print("failed report")
-//         }
    }
 }

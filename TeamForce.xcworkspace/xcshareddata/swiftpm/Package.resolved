@@ -37,6 +37,15 @@
       }
     },
     {
+      "identity" : "reactiveworks",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/setixela/ReactiveWorks.git",
+      "state" : {
+        "branch" : "master",
+        "revision" : "4364ca08d393ef3cc60ac4cfefa6e24363c1f906"
+      }
+    },
+    {
       "identity" : "realm-core",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/realm/realm-core",
