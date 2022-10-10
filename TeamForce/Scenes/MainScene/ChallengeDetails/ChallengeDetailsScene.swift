@@ -16,10 +16,14 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
    lazy var scenario: Scenario = ChallengeDetailsScenario(
       works: ChallengeDetailsWorks<Asset>(),
       stateDelegate: setState,
-      events: ChallengeDetailsInputEvents()
+      events: ChallengeDetailsInputEvents(
+         saveInput: on(\.input)
+         //getContenders: ,
+         //getWinners: ,
+      )
    )
 
-   private var filteButtons = SlidedIndexButtons<Button3Event>(buttons:
+   private var filterButtons = SlidedIndexButtons<Button3Event>(buttons:
       SecondaryButtonDT<Design>()
          .title("Детали")
          .font(Design.font.default),
@@ -53,24 +57,33 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
             right: Design.params.commonSideOffset
          ))
          .arrangedModels([
-            filteButtons
+            filterButtons
          ])
 
       mainVM.footerStack
          .arrangedModels([
             viewModel
          ])
+      scenario.start()
 
-      on(\.input, self) {
-         $0.viewModel.setState(.details($1))
-      }
+//      on(\.input, self) {
+//         $0.viewModel.setState(.details($1))
+//      }
    }
 }
 
 enum ChallengeDetailsState {
    case initial
+   case presentChallenge(Challenge)
 }
 
 extension ChallengeDetailsScene: StateMachine {
-   func setState(_ state: ChallengeDetailsState) {}
+   func setState(_ state: ChallengeDetailsState) {
+      switch state {
+      case .initial:
+         break
+      case .presentChallenge(let challenge):
+         viewModel.setState(.details(challenge))
+      }
+   }
 }
