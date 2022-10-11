@@ -14,3 +14,7 @@ extension Optional where Wrapped == String {
 extension Optional where Wrapped == Bool {
    var bool: Bool { self ?? false }
 }
+
+extension Optional where Wrapped == Int {
+   var int: Int { self ?? 0 }
+}

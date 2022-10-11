@@ -91,7 +91,7 @@ final class ChallengeCell<Design: DSP>:
             title
                .set(Design.state.label.body4)
                .numberOfLines(1)
-               .lineBreakMode(.byWordWrapping)
+               .lineBreakMode(.byTruncatingTail)
                .height(20)
 
             participant.title.set(Design.state.label.body2)
@@ -107,7 +107,7 @@ final class ChallengeCell<Design: DSP>:
             prizes.body.set(Design.state.label.caption)
          }
          .alignment(.leading)
-         .padding(.right(-80))
+         .padding(.right(-70))
       }
       height(208)
       padding(.init(top: 20, left: 16, bottom: 20, right: 16))

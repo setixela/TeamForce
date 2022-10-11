@@ -13,6 +13,7 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
    Asset,
    Challenge
 >, Scenarible {
+   //
    lazy var scenario: Scenario = ChallengeDetailsScenario(
       works: ChallengeDetailsWorks<Asset>(),
       stateDelegate: setState,
@@ -64,6 +65,7 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
          .arrangedModels([
             viewModel
          ])
+
       scenario.start()
 
 //      on(\.input, self) {
