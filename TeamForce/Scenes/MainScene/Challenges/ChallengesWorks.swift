@@ -9,7 +9,6 @@ import ReactiveWorks
 
 protocol ChallengesWorksProtocol {
    var getChallenges: Work<Void, [Challenge]> { get }
-   var getChallengeById: Work<Int, Challenge> { get }
 
    var getAllChallenges: Work<Void, [Challenge]> { get }
    var getActiveChallenges: Work<Void, [Challenge]> { get }
@@ -51,18 +50,6 @@ extension ChallengesWorks: ChallengesWorksProtocol {
 
    var getPresentedChallengeByIndex: Work<Int, Challenge> { .init {  work in
       work.success(Self.store.presentingChallenges[work.unsafeInput])
-   }.retainBy(retainer) }
-
-   var getChallengeById: Work<Int, Challenge> { .init { [weak self] work in
-      guard let input = work.input else { return }
-      self?.apiUseCase.GetChallengeById
-         .doAsync(input)
-         .onSuccess {
-            work.success(result: $0)
-         }
-         .onFail {
-            work.fail()
-         }
    }.retainBy(retainer) }
 
    var createChallenge: Work<ChallengeRequestBody, Void> { .init { [weak self] work in

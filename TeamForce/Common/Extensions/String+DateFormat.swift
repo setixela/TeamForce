@@ -12,26 +12,33 @@ enum DateFormat: String {
    case digits = "dd.MM.yyyy"
 }
 
+enum BackEndDateFormat: String, CaseIterable {
+   case dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+   case dateFormatFull = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+}
+
 extension String {
+
    func convertToDate(_ format: DateFormat = .full) -> String? {
       let inputFormatter = DateFormatter()
-      inputFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
-      guard let convertedDate = inputFormatter.date(from: self) else { return nil }
+      return BackEndDateFormat.allCases.compactMap {
+         inputFormatter.dateFormat = $0.rawValue
+         if let convertedDate = inputFormatter.date(from: self) {
+            let outputFormatter = DateFormatter()
+            outputFormatter.locale = Locale(identifier: "ru_RU")
+            outputFormatter.dateFormat = format.rawValue
 
-      let outputFormatter = DateFormatter()
-      outputFormatter.locale = Locale(identifier: "ru_RU")
-      outputFormatter.dateFormat = format.rawValue
-
-      return outputFormatter.string(from: convertedDate)
+            return outputFormatter.string(from: convertedDate)
+         }
+         return nil
+      }.first
    }
 }
 
 extension String {
-   private var dateFormat: String { "yyyy-MM-dd'T'HH:mm:ss.SSSZ" }
-
    var dateConvertedToDate: Date? {
       let inputFormatter = DateFormatter()
-      inputFormatter.dateFormat = dateFormat
+      inputFormatter.dateFormat = BackEndDateFormat.dateFormatFull.rawValue
       guard let convertedDate = inputFormatter.date(from: self) else { return nil }
       return convertedDate
    }
@@ -48,7 +55,7 @@ extension String {
 
    var timeAgoConverted: String {
       let inputFormatter = DateFormatter()
-      inputFormatter.dateFormat = dateFormat
+      inputFormatter.dateFormat = BackEndDateFormat.dateFormatFull.rawValue
       guard let convertedDate = inputFormatter.date(from: self) else { return "" }
 
       let formatter = RelativeDateTimeFormatter()

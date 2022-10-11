@@ -18,13 +18,18 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
       works: ChallengeDetailsWorks<Asset>(),
       stateDelegate: setState,
       events: ChallengeDetailsInputEvents(
-         saveInput: on(\.input)
+         saveInputAndLoadChallenge: on(\.input)
          //getContenders: ,
          //getWinners: ,
       )
    )
 
-   private var filterButtons = SlidedIndexButtons<Button3Event>(buttons:
+   private lazy var headerImage = ImageViewModel()
+      .image(Design.icon.challengeWinnerIllustrate)
+     // .padding(.verticalOffset(16))
+      .contentMode(.scaleAspectFit)
+
+   private lazy var filterButtons = SlidedIndexButtons<Button3Event>(buttons:
       SecondaryButtonDT<Design>()
          .title("Детали")
          .font(Design.font.default),
@@ -43,11 +48,8 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
       mainVM.headerStack
          .backColor(Design.color.backgroundBrandSecondary)
          .height(200)
-         .padding(.verticalOffset(16))
          .arrangedModels([
-            ImageViewModel()
-               .image(Design.icon.challengeWinnerIllustrate)
-               .contentMode(.scaleAspectFit)
+            headerImage
          ])
 
       mainVM.bodyStack
@@ -77,6 +79,7 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
 enum ChallengeDetailsState {
    case initial
    case presentChallenge(Challenge)
+   case updateDetails(Challenge)
 }
 
 extension ChallengeDetailsScene: StateMachine {
@@ -85,7 +88,15 @@ extension ChallengeDetailsScene: StateMachine {
       case .initial:
          break
       case .presentChallenge(let challenge):
-         viewModel.setState(.details(challenge))
+         if let url = challenge.photo {
+            headerImage
+               .url(TeamForceEndpoints.urlBase + url)
+              // .padding(.verticalOffset(0))
+               .contentMode(.scaleAspectFill)
+         }
+         viewModel.setState(.presentChallenge(challenge))
+      case .updateDetails(let challenge):
+         viewModel.setState(.updateDetails(challenge))
       }
    }
 }

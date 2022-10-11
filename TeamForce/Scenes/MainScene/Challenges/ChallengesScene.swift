@@ -35,10 +35,12 @@ final class ChallengesScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtend
    // MARK: - View Models
 
    private lazy var viewModel = ChallengesViewModel<Design>()
+   private lazy var activity = ActivityIndicator<Design>()
 
    override func start() {
       arrangedModels([
          viewModel,
+         activity,
       ])
    }
 }
@@ -55,6 +57,7 @@ extension ChallengesScene: StateMachine {
       case .initial:
          break
       case .presentChallenges(let challenges):
+         activity.hidden(true)
          viewModel.setState(.presentChallenges(challenges))
       case .presentChallengeDetails(let challenge):
          ProductionAsset.router?.route(\.challengeDetails,
