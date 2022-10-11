@@ -7,24 +7,25 @@
 
 import ReactiveWorks
 
-final class ChallengeDetailsViewModel<Design: DSP>: StackModel, Designable {
+final class ChallengeDetailsViewModel<Design: DSP>: ScrollViewModelY, Designable {
+   //
    private lazy var challengeInfo = ChallengeInfoVM<Design>()
 
    private lazy var prizeSizeCell = ChallengeDetailsInfoCell<Design>()
-      .setAll { icon, title, _, info in
+      .setAll { icon, title, _, _ in
          icon.image(Design.icon.strangeLogo)
          title.text("Призовой фонд")
       }
 
    private lazy var finishDateCell = ChallengeDetailsInfoCell<Design>()
-      .setAll { icon, title, _, info in
+      .setAll { icon, title, _, _ in
          icon.image(Design.icon.tablerClock)
          title.text("Дата завершения")
       }
       .hidden(true)
 
    private lazy var prizePlacesCell = ChallengeDetailsInfoCell<Design>()
-      .setAll { icon, title, _, info in
+      .setAll { icon, title, _, _ in
          icon.image(Design.icon.tablerGift)
          title.text("Призовых мест")
       }
@@ -35,16 +36,14 @@ final class ChallengeDetailsViewModel<Design: DSP>: StackModel, Designable {
    override func start() {
       super.start()
 
-      arrangedModels([
+      set(.spacing(8))
+      set(.arrangedModels([
          challengeInfo,
          prizeSizeCell,
          finishDateCell,
          prizePlacesCell,
-         activity,
-         Spacer()
-      ])
-      .spacing(8)
-      .padding(.horizontalOffset(16))
+         activity
+      ]))
    }
 }
 
@@ -70,7 +69,6 @@ extension ChallengeDetailsViewModel: StateMachine {
          prizePlacesCell.models.right3
             .text(challenge.winnersCount.int.toString + " / " + challenge.awardees.toString)
          prizePlacesCell.hidden(challenge.winnersCount == nil)
-
       case .updateDetails(let challenge):
          activity.hidden(true)
          setState(.presentChallenge(challenge))
@@ -87,6 +85,7 @@ extension ChallengeDetailsViewModel: SetupProtocol {
 final class ChallengeInfoVM<Design: DSP>: StackModel, Designable {
    lazy var title = Design.label.headline6
    lazy var body = Design.label.caption
+      .numberOfLines(0)
    lazy var tags = StackModel()
       .spacing(8)
 
@@ -148,5 +147,53 @@ final class ChallengeDetailsInfoCell<Design: DSP>:
       .spacing(12)
       .alignment(.center)
       .padding(.horizontalOffset(16))
+   }
+}
+
+final class SendChallengePanel<Design: DSP>: StackModel, Designable {
+   private lazy var userPanel = Design.model.profile.userPanel
+
+   private lazy var buttons = M<ButtonModel>.R<ButtonModel>.R2<ButtonModel>.Combo()
+      .setAll { sendButton, dislikeButton, likeButton in
+         sendButton
+            .set(Design.state.button.default)
+            .font(Design.font.body1)
+            .title("Отправить результат")
+         dislikeButton
+            .set(Design.state.button.secondary)
+            .image(Design.icon.dislike)
+            .width(68)
+            .backColor(Design.color.backgroundInfoSecondary)
+            .title("13")
+         likeButton
+            .set(Design.state.button.secondary)
+            .image(Design.icon.like)
+            .width(68)
+            .backColor(Design.color.backgroundInfoSecondary)
+            .title("25")
+      }
+      .spacing(8)
+
+   override func start() {
+      super.start()
+
+      arrangedModels([
+         userPanel,
+         Grid.x16.spacer,
+         buttons
+      ])
+   }
+}
+
+extension SendChallengePanel: SetupProtocol {
+   func setup(_ data: Challenge) {
+      let creatorName = data.creatorName.string
+      let creatorSurname = data.creatorSurname.string
+      let creatorTgName = "@" + data.creatorTgName.string
+      userPanel.models.right.fullName.text(creatorName + " " + creatorSurname)
+      userPanel.models.right.nickName.text(creatorTgName)
+      if let creatorPhoto = data.photo {
+         userPanel.models.main.url(TeamForceEndpoints.urlBase + creatorPhoto)
+      }
    }
 }

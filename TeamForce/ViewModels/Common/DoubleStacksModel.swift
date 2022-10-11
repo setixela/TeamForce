@@ -34,8 +34,8 @@ extension DoubleStacksModel: Stateable2 {
 
 class TripleStacksModel: BaseViewModel<StackViewExtended> {
    let headerStack = StackModel(.axis(.vertical),
-                           .alignment(.fill),
-                           .distribution(.fill))
+                                .alignment(.fill),
+                                .distribution(.fill))
    let bodyStack = StackModel(.axis(.vertical),
                               .alignment(.fill),
                               .distribution(.fill))
@@ -56,6 +56,38 @@ class TripleStacksModel: BaseViewModel<StackViewExtended> {
 }
 
 extension TripleStacksModel: Stateable2 {
+   typealias State = StackState
+   typealias State2 = ViewState
+}
+
+class QuadroStacksModel: BaseViewModel<StackViewExtended> {
+   let headerStack = StackModel(.axis(.vertical),
+                                .alignment(.fill),
+                                .distribution(.fill))
+   let bodyStack = StackModel(.axis(.vertical),
+                              .alignment(.fill),
+                              .distribution(.fill))
+   let captionStack = StackModel(.axis(.vertical),
+                                 .alignment(.fill),
+                                 .distribution(.fill))
+   let footerStack = StackModel(.axis(.vertical),
+                                .alignment(.fill),
+                                .distribution(.fill))
+
+   override func start() {
+      axis(.vertical)
+      alignment(.fill)
+      distribution(.fill)
+      arrangedModels([
+         headerStack,
+         bodyStack,
+         captionStack,
+         footerStack
+      ])
+   }
+}
+
+extension QuadroStacksModel: Stateable2 {
    typealias State = StackState
    typealias State2 = ViewState
 }

@@ -159,7 +159,9 @@ final class ChallengeCellInfoBlock:
 {
    override func start() {
       super.start()
+
       spacing(12)
+      distribution(.equalSpacing)
    }
 }
 

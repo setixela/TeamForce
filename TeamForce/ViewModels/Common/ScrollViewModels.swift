@@ -40,6 +40,7 @@ class ScrollViewModelY: BaseViewModel<UIScrollView>, ScrollWrapper {
       view.addSubview(stack.uiView)
       view.delegate = self
 
+      view.layer.masksToBounds = false
       stack.view.addAnchors
          .top(view.topAnchor)
          .leading(view.leadingAnchor)
@@ -99,6 +100,7 @@ class ScrollViewModelX: BaseViewModel<UIScrollView>, ScrollWrapper {
    override func start() {
       view.addSubview(stack.uiView)
 
+      view.layer.masksToBounds = false
       stack.view.addAnchors
          .top(view.topAnchor)
          .leading(view.leadingAnchor)

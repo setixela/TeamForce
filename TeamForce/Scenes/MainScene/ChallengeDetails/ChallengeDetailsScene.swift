@@ -6,10 +6,11 @@
 //
 
 import ReactiveWorks
+import UIKit
 
 final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
    DefaultVCModel,
-   TripleStacksModel,
+   QuadroStacksModel,
    Asset,
    Challenge
 >, Scenarible {
@@ -19,14 +20,14 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
       stateDelegate: setState,
       events: ChallengeDetailsInputEvents(
          saveInputAndLoadChallenge: on(\.input)
-         //getContenders: ,
-         //getWinners: ,
+         // getContenders: ,
+         // getWinners: ,
       )
    )
 
    private lazy var headerImage = ImageViewModel()
       .image(Design.icon.challengeWinnerIllustrate)
-     // .padding(.verticalOffset(16))
+      // .padding(.verticalOffset(16))
       .contentMode(.scaleAspectFit)
 
    private lazy var filterButtons = SlidedIndexButtons<Button3Event>(buttons:
@@ -40,7 +41,9 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
          .title("Участники")
          .font(Design.font.default))
 
-   private var viewModel = ChallengeDetailsViewModel<Design>()
+   private lazy var viewModel = ChallengeDetailsViewModel<Design>()
+
+   private lazy var sendPanel = SendChallengePanel<Design>()
 
    override func start() {
       super.start()
@@ -63,16 +66,39 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
             filterButtons
          ])
 
-      mainVM.footerStack
+      mainVM.captionStack
+         .padding(.init(
+            top: 0,
+            left: Design.params.commonSideOffset,
+            bottom: 0,
+            right: Design.params.commonSideOffset
+         ))
          .arrangedModels([
             viewModel
          ])
 
+      mainVM.footerStack
+         .padding(.init(
+            top: 16,
+            left: Design.params.commonSideOffset,
+            bottom: 16,
+            right: Design.params.commonSideOffset
+         ))
+         .arrangedModels([
+            sendPanel
+         ])
+
       scenario.start()
 
-//      on(\.input, self) {
-//         $0.viewModel.setState(.details($1))
-//      }
+      viewModel.on(\.willEndDragging) { [weak self] velocity in
+         if velocity < 0 {
+            self?.presentHeader()
+         } else if velocity > 0 {
+            self?.hideHeader()
+         } else {
+            self?.presentHeader()
+         }
+      }
    }
 }
 
@@ -91,12 +117,33 @@ extension ChallengeDetailsScene: StateMachine {
          if let url = challenge.photo {
             headerImage
                .url(TeamForceEndpoints.urlBase + url)
-              // .padding(.verticalOffset(0))
+               // .padding(.verticalOffset(0))
                .contentMode(.scaleAspectFill)
          }
+         sendPanel.setup(challenge)
          viewModel.setState(.presentChallenge(challenge))
       case .updateDetails(let challenge):
          viewModel.setState(.updateDetails(challenge))
+      }
+   }
+}
+
+// MARK: - Header animation
+
+extension ChallengeDetailsScene {
+   private func presentHeader() {
+      UIView.animate(withDuration: 0.36) {
+         self.mainVM.headerStack
+            .hidden(false)
+            .alpha(1)
+      }
+   }
+
+   private func hideHeader() {
+      UIView.animate(withDuration: 0.36) {
+         self.mainVM.headerStack
+            .alpha(0)
+            .hidden(true)
       }
    }
 }

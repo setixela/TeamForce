@@ -7,11 +7,15 @@
 
 import ReactiveWorks
 
-final class SlidedIndexButtons<ButtEvents: ManyButtonEvent>: BaseViewModel<UIScrollView>, IndexedButtonsProtocol {
+final class SlidedIndexButtons<ButtEvents: ManyButtonEvent>: BaseViewModel<UIScrollView>,
+   IndexedButtonsProtocol,
+   Stateable
+{
    typealias Button = ModableButton
 
    //
 
+   typealias State = ViewModel
    typealias Events = TapIndexEvents<ButtEvents>
 
    var events: EventsStore = .init()
@@ -39,6 +43,7 @@ final class SlidedIndexButtons<ButtEvents: ManyButtonEvent>: BaseViewModel<UIScr
 
       stack
          .spacing(Grid.x8.value)
+         .alignment(.center)
          .arrangedModels(buttons)
       view.addSubview(stack.uiView)
 
