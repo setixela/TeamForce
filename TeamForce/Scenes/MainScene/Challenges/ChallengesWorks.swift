@@ -64,16 +64,4 @@ extension ChallengesWorks: ChallengesWorksProtocol {
             work.fail()
          }
    }.retainBy(retainer) }
-
-   var createChallenge: Work<ChallengeRequestBody, Void> { .init { [weak self] work in
-      guard let input = work.input else { return }
-      self?.apiUseCase.CreateChallenge
-         .doAsync(input)
-         .onSuccess {
-            work.success()
-         }
-         .onFail {
-            work.fail()
-         }
-   }.retainBy(retainer) }
 }
