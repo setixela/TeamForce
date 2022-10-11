@@ -469,4 +469,12 @@ enum TeamForceEndpoints {
          self.jsonData = jsonData
       }
    }
+   
+   struct SendCoinSettings: EndpointProtocol {
+      let method = HTTPMethod.get
+      
+      var endPoint: String { urlBase + "/send-coins-settings/" }
+      
+      let headers: [String : String]
+   }
 }

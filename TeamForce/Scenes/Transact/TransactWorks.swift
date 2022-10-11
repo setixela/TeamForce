@@ -82,6 +82,17 @@ final class TransactWorks<Asset: AssetProtocol>: BaseSceneWorks<TransactWorks.Te
          }
    }.retainBy(retainer) }
 
+   var getSettings: Work<Void, SendCoinSettings> { .init { [weak self] work in
+      self?.apiUseCase.GetSendCoinSettings
+         .doAsync(Self.store.tokens.token)
+         .onSuccess {
+            work.success(result: $0)
+         }
+         .onFail {
+            work.fail()
+         }
+   }.retainBy(retainer) }
+   
    var getTags: Work<Void, [Tag]> { .init { [weak self] work in
       self?.apiUseCase.getTags
          .doAsync(Self.store.tokens.token)

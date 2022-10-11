@@ -210,6 +210,8 @@
 		631995B228F53F6800EB2638 /* ChallengeCreateScenario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631995B128F53F6800EB2638 /* ChallengeCreateScenario.swift */; };
 		631995B428F53F7600EB2638 /* ChallengeCreateWorks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631995B328F53F7600EB2638 /* ChallengeCreateWorks.swift */; };
 		631995B628F53F8D00EB2638 /* ChallengeCreateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631995B528F53F8D00EB2638 /* ChallengeCreateViewModel.swift */; };
+		631995B828F5A4D400EB2638 /* GetSendCoinSettingsApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631995B728F5A4D400EB2638 /* GetSendCoinSettingsApiWorker.swift */; };
+		631995BA28F5A56D00EB2638 /* GetSendCoinSettingsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631995B928F5A56D00EB2638 /* GetSendCoinSettingsUseCase.swift */; };
 		63352DE7289AA69A00489F5F /* SendCoinUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63352DE6289AA69A00489F5F /* SendCoinUseCase.swift */; };
 		633FBC8428E535600071FF8C /* FeedDetailWorks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633FBC8328E535600071FF8C /* FeedDetailWorks.swift */; };
 		633FBC8628E542540071FF8C /* FeedDetailViewModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633FBC8528E542540071FF8C /* FeedDetailViewModels.swift */; };
@@ -517,6 +519,8 @@
 		631995B128F53F6800EB2638 /* ChallengeCreateScenario.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeCreateScenario.swift; sourceTree = "<group>"; };
 		631995B328F53F7600EB2638 /* ChallengeCreateWorks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeCreateWorks.swift; sourceTree = "<group>"; };
 		631995B528F53F8D00EB2638 /* ChallengeCreateViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeCreateViewModel.swift; sourceTree = "<group>"; };
+		631995B728F5A4D400EB2638 /* GetSendCoinSettingsApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSendCoinSettingsApiWorker.swift; sourceTree = "<group>"; };
+		631995B928F5A56D00EB2638 /* GetSendCoinSettingsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSendCoinSettingsUseCase.swift; sourceTree = "<group>"; };
 		63352DE6289AA69A00489F5F /* SendCoinUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendCoinUseCase.swift; sourceTree = "<group>"; };
 		633FBC8328E535600071FF8C /* FeedDetailWorks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedDetailWorks.swift; sourceTree = "<group>"; };
 		633FBC8528E542540071FF8C /* FeedDetailViewModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedDetailViewModels.swift; sourceTree = "<group>"; };
@@ -1378,6 +1382,7 @@
 				63BB2C1D28E14AAF00C1E3DB /* UpdateCommentApiWorker.swift */,
 				63BB2C2128E150CA00C1E3DB /* DeleteCommentApiWorker.swift */,
 				635FC6BB28EBE50800826B67 /* GetLikesByTransactionApiWorker.swift */,
+				631995B728F5A4D400EB2638 /* GetSendCoinSettingsApiWorker.swift */,
 			);
 			path = ApiModels;
 			sourceTree = "<group>";
@@ -1427,6 +1432,7 @@
 				63BB2C1F28E14BFA00C1E3DB /* UpdateCommentUseCase.swift */,
 				63BB2C2328E1513000C1E3DB /* DeleteCommentUseCase.swift */,
 				635FC6BD28EBE56400826B67 /* GetLikesByTransactionUseCase.swift */,
+				631995B928F5A56D00EB2638 /* GetSendCoinSettingsUseCase.swift */,
 			);
 			path = ApiUseCases;
 			sourceTree = "<group>";
@@ -1663,6 +1669,7 @@
 				196750B22865190D0019A6DE /* ImageViewModel.swift in Sources */,
 				633FBC8628E542540071FF8C /* FeedDetailViewModels.swift in Sources */,
 				63D419E928A5109E0024E22C /* GetUsersListUseCase.swift in Sources */,
+				631995B828F5A4D400EB2638 /* GetSendCoinSettingsApiWorker.swift in Sources */,
 				197A771A28AD90B30082CD81 /* Presenting.swift in Sources */,
 				19221EF828CE262A00B7B604 /* WorkingPlaceViewModels.swift in Sources */,
 				1921A13528EECAC900E41E86 /* ChallengesScene.swift in Sources */,
@@ -1727,6 +1734,7 @@
 				19A73BEB28A4510E000B74CF /* BadgedViewModel.swift in Sources */,
 				198BBEEE28B698040006CD30 /* LoadCsrfTokenUseCase.swift in Sources */,
 				198FE1D02899E0BF00BAF1A5 /* IsEmpty.swift in Sources */,
+				631995BA28F5A56D00EB2638 /* GetSendCoinSettingsUseCase.swift in Sources */,
 				63BB2C2028E14BFA00C1E3DB /* UpdateCommentUseCase.swift in Sources */,
 				19AE3AF22869230C00A0C6E4 /* AuthApiWorker.swift in Sources */,
 				195870F228A8C8040075D505 /* KeyPathMaker.swift in Sources */,
