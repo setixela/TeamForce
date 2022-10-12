@@ -28,7 +28,7 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
    private lazy var headerImage = ImageViewModel()
       .image(Design.icon.challengeWinnerIllustrate)
       .contentMode(.scaleAspectFit)
-   private lazy var viewModel = ChallengeDetailsViewModel<Design>()
+   private lazy var challDetails = ChallengeDetailsViewModel<Design>()
       .set(.padding(.horizontalOffset(Design.params.commonSideOffset)))
       .backColor(Design.color.background)
 
@@ -52,13 +52,13 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
             right: 0
          ))
          .arrangedModels([
-            viewModel
+            challDetails
          ])
          .backColor(Design.color.background)
 
       scenario.start()
 
-      viewModel.models.main.on(\.willEndDragging) { [weak self] velocity in
+      challDetails.models.main.on(\.willEndDragging) { [weak self] velocity in
          if velocity < 0 {
             self?.presentHeader()
          } else if velocity > 0 {
@@ -88,10 +88,10 @@ extension ChallengeDetailsScene: StateMachine {
                .contentMode(.scaleAspectFill)
          }
          sendPanel.setup(challenge)
-         viewModel.setState(.presentChallenge(challenge))
+         challDetails.setState(.presentChallenge(challenge))
       case .updateDetails(let challenge):
          sendPanel.setup(challenge)
-         viewModel.setState(.updateDetails(challenge))
+         challDetails.setState(.updateDetails(challenge))
       }
    }
 }
