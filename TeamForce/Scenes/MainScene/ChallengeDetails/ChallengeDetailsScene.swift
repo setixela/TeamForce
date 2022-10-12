@@ -10,7 +10,7 @@ import UIKit
 
 final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
    DefaultVCModel,
-   TripleStacksModel,
+   DoubleStacksModel,
    Asset,
    Challenge
 >, Scenarible {
@@ -37,14 +37,14 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
    override func start() {
       super.start()
 
-      mainVM.headerStack
+      mainVM.bodyStack
          .backColor(Design.color.backgroundBrandSecondary)
          .height(200)
          .arrangedModels([
             headerImage
          ])
 
-      mainVM.bodyStack
+      mainVM.footerStack
          .padding(.init(
             top: 16,
             left: 0,
@@ -56,20 +56,9 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
          ])
          .backColor(Design.color.background)
 
-      mainVM.footerStack
-         .padding(.init(
-            top: 16,
-            left: Design.params.commonSideOffset,
-            bottom: 16,
-            right: Design.params.commonSideOffset
-         ))
-         .arrangedModels([
-            sendPanel
-         ])
-
       scenario.start()
 
-      viewModel.on(\.willEndDragging) { [weak self] velocity in
+      viewModel.models.main.on(\.willEndDragging) { [weak self] velocity in
          if velocity < 0 {
             self?.presentHeader()
          } else if velocity > 0 {
@@ -112,7 +101,7 @@ extension ChallengeDetailsScene: StateMachine {
 extension ChallengeDetailsScene {
    private func presentHeader() {
       UIView.animate(withDuration: 0.36) {
-         self.mainVM.headerStack
+         self.mainVM.bodyStack
             .hidden(false)
             .alpha(1)
       }
@@ -120,7 +109,7 @@ extension ChallengeDetailsScene {
 
    private func hideHeader() {
       UIView.animate(withDuration: 0.36) {
-         self.mainVM.headerStack
+         self.mainVM.bodyStack
             .alpha(0)
             .hidden(true)
       }
