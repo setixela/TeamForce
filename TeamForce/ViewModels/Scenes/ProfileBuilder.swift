@@ -11,6 +11,7 @@ protocol ProfileModelBuilder: InitProtocol, Designable {
    var userNameTitleSubtitle: FullAndNickNameY<Design> { get }
 
    var userEditPanel: M<ImageViewModel>.R<FullAndNickNameY<Design>>.R2<ButtonModel>.Combo { get }
+   var userPanel: M<ImageViewModel>.R<FullAndNickNameY<Design>>.Combo { get }
    var editPhotoBlock: EditPhotoBlock<Design> { get }
 
    var titledTextField: TitledTextFieldY<Design> { get }
@@ -44,8 +45,34 @@ struct ProfileBuilder<Design: DSP>: ProfileModelBuilder {
       .backColor(Design.color.background)
       .cornerRadius(Design.params.cornerRadius)
       .padding(Design.params.cellContentPadding)
-      .shadow(Design.params.profileUserPanelShadow)
+      .shadow(Design.params.cellShadow)
       .height(76)
+   }
+
+   var userPanel: M<ImageViewModel>.R<FullAndNickNameY<Design>>.Combo { .init()
+         .setMain { image in
+            image
+               .image(Design.icon.avatarPlaceholder)
+               .contentMode(.scaleAspectFill)
+               .cornerRadius(52 / 2)
+               .set(.size(.square(52)))
+         } setRight: { name in
+            name.fullName
+               .textColor(Design.color.text)
+               .padLeft(Grid.x12.value)
+               .height(Grid.x24.value)
+            name.nickName
+               .set(Design.state.label.defaultBrand)
+               .padLeft(Grid.x12.value)
+               .height(Grid.x24.value)
+         }
+         .alignment(.center)
+         .distribution(.fill)
+         .backColor(Design.color.background)
+         .cornerRadius(Design.params.cornerRadius)
+         .padding(Design.params.cellContentPadding)
+         .shadow(Design.params.profileUserPanelShadow)
+         .height(76)
    }
 
    var editPhotoBlock: EditPhotoBlock<Design> { .init() }

@@ -123,6 +123,19 @@ extension Combos
       return self
    }
 
+   // MARK: - New setAll
+
+   @discardableResult func setAll<M, R, R2, R3>(_ setAll: VariadicClosure4<M, R, R2, R3>) -> Self where S == SComboMRRR<M, R, R2, R3>
+   {
+      setAll(models.main, models.right, models.right2, models.right3)
+      if !isConfigured
+      {
+         configure()
+         isConfigured = true
+      }
+      return self
+   }
+
    @discardableResult func setMain<M, R, D>(
       _ setMain: GenericClosure<M>,
       setRight: GenericClosure<R>,

@@ -8,7 +8,7 @@
 import ReactiveWorks
 
 struct ChallengeDetailsInputEvents {
-   let saveInput: VoidWork<Challenge>
+   let saveInputAndLoadChallenge: VoidWork<Challenge>
 //   let getContenders: VoidWork<Void>
 //   let getWinners: VoidWork<Void>
 //   let checkReport: VoidWork<CheckReportRequestBody.State>
@@ -20,9 +20,12 @@ final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<Challen
                                       ChallengeDetailsWorks<Asset>> {
    
    override func start() {
-      events.saveInput
+      events.saveInputAndLoadChallenge
          .doNext(work: works.saveInput)
          .onSuccess(setState) { .presentChallenge($0) }
+         .doVoidNext(works.getChallengeById)
+         .onSuccess(setState) { .updateDetails($0) }
+         .doNext(works.saveInput)
       
 //      events.getContenders
 //         .doNext(work: works.getChallengeContenders)

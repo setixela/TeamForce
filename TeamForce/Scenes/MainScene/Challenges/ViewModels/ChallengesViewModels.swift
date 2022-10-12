@@ -10,25 +10,12 @@ import ReactiveWorks
 
 final class ChallengesViewModel<Design: DSP>: StackModel, Designable, Eventable {
    struct Events: InitProtocol {
-      var didTapFilterAll: Void?
-      var didTapFilterActive: Void?
       var didSelectChallenge: Int?
    }
 
    var events: EventsStore = .init()
 
    //
-   private lazy var createChallengeButton = ButtonModel()
-      .set(Design.state.button.default)
-      .title("Создать челлендж")
-
-   private lazy var filterButtons = SlidedIndexButtons<Button2Event>(buttons:
-      SecondaryButtonDT<Design>()
-         .title("Все")
-         .font(Design.font.default),
-      SecondaryButtonDT<Design>()
-         .title("Активные")
-         .font(Design.font.default))
 
    private lazy var challengesTable = TableItemsModel<Design>()
       .set(.presenters([
@@ -40,21 +27,8 @@ final class ChallengesViewModel<Design: DSP>: StackModel, Designable, Eventable 
       super.start()
 
       arrangedModels([
-         createChallengeButton,
-         Grid.x16.spacer,
-         filterButtons,
-         Grid.x16.spacer,
          challengesTable,
       ])
-
-      filterButtons.on(\.didTapButtons, self) {
-         switch $1 {
-         case .didTapButton1:
-            $0.send(\.didTapFilterAll)
-         case .didTapButton2:
-            $0.send(\.didTapFilterActive)
-         }
-      }
 
       challengesTable.on(\.didSelectRowInt, self) {
          $0.send(\.didSelectChallenge, $1)
@@ -91,7 +65,7 @@ final class ChallengeCell<Design: DSP>:
             title
                .set(Design.state.label.body4)
                .numberOfLines(1)
-               .lineBreakMode(.byWordWrapping)
+               .lineBreakMode(.byTruncatingTail)
                .height(20)
 
             participant.title.set(Design.state.label.body2)
@@ -107,7 +81,7 @@ final class ChallengeCell<Design: DSP>:
             prizes.body.set(Design.state.label.caption)
          }
          .alignment(.leading)
-         .padding(.right(-80))
+         .padding(.right(-70))
       }
       height(208)
       padding(.init(top: 20, left: 16, bottom: 20, right: 16))
@@ -159,7 +133,9 @@ final class ChallengeCellInfoBlock:
 {
    override func start() {
       super.start()
+
       spacing(12)
+      distribution(.equalSpacing)
    }
 }
 
@@ -243,4 +219,46 @@ struct ChallengeCellPresenters<Design: DSP>: Designable {
 
       work.success(model)
    } }
+}
+
+final class CreateChallengePanel<Design: DSP>: StackModel, Designable {
+   var events: EventsStore = .init()
+
+   private lazy var createChallengeButton = ButtonModel()
+      .set(Design.state.button.default)
+      .title("Создать челлендж")
+
+   private lazy var filterButtons = SlidedIndexButtons<Button2Event>(buttons:
+                                                                        SecondaryButtonDT<Design>()
+      .title("Все")
+      .font(Design.font.default),
+                                                                     SecondaryButtonDT<Design>()
+      .title("Активные")
+      .font(Design.font.default))
+
+   override func start() {
+      super.start()
+
+      arrangedModels([
+         createChallengeButton,
+         Grid.x16.spacer,
+         filterButtons,
+      ])
+
+      filterButtons.on(\.didTapButtons, self) {
+         switch $1 {
+         case .didTapButton1:
+            $0.send(\.didTapFilterAll)
+         case .didTapButton2:
+            $0.send(\.didTapFilterActive)
+         }
+      }
+   }
+}
+
+extension CreateChallengePanel: Eventable {
+   struct Events: InitProtocol {
+      var didTapFilterAll: Void?
+      var didTapFilterActive: Void?
+   }
 }

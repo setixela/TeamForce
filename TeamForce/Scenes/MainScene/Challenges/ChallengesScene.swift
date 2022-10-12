@@ -26,18 +26,24 @@ final class ChallengesScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtend
       works: ChallengesWorks<Asset>(),
       stateDelegate: stateDelegate,
       events: ChallengesScenarioInputEvents(
-         presentAllChallenges: viewModel.on(\.didTapFilterAll),
-         presentActiveChallenges: viewModel.on(\.didTapFilterActive),
+         presentAllChallenges: createChellPanel.on(\.didTapFilterAll),
+         presentActiveChallenges: createChellPanel.on(\.didTapFilterActive),
          didSelectChallengeIndex: viewModel.on(\.didSelectChallenge)
       )
    )
 
    // MARK: - View Models
 
+ 
+   private lazy var createChellPanel = CreateChallengePanel<Design>()
    private lazy var viewModel = ChallengesViewModel<Design>()
+   private lazy var activity = ActivityIndicator<Design>()
 
    override func start() {
       arrangedModels([
+         createChellPanel,
+         Grid.x16.spacer,
+         activity,
          viewModel,
       ])
    }
@@ -55,6 +61,7 @@ extension ChallengesScene: StateMachine {
       case .initial:
          break
       case .presentChallenges(let challenges):
+         activity.hidden(true)
          viewModel.setState(.presentChallenges(challenges))
       case .presentChallengeDetails(let challenge):
          ProductionAsset.router?.route(\.challengeDetails,

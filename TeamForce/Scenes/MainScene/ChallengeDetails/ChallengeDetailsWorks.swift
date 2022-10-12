@@ -29,7 +29,7 @@ final class ChallengeDetailsWorks<Asset: AssetProtocol>: BaseSceneWorks<Challeng
       guard let input = work.input else { return }
       Self.store.challenge = input
       Self.store.challengeId = input.id
-      
+
       work.success(result: input)
    }.retainBy(retainer) }
    
@@ -103,4 +103,5 @@ extension ChallengeDetailsWorks: ChallengeDetailsWorksProtocol {
             work.fail()
          }
    }.retainBy(retainer) }
+   
 }

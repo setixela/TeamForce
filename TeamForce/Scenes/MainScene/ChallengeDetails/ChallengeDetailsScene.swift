@@ -6,24 +6,31 @@
 //
 
 import ReactiveWorks
+import UIKit
 
 final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
    DefaultVCModel,
-   TripleStacksModel,
+   QuadroStacksModel,
    Asset,
    Challenge
 >, Scenarible {
+   //
    lazy var scenario: Scenario = ChallengeDetailsScenario(
       works: ChallengeDetailsWorks<Asset>(),
       stateDelegate: setState,
       events: ChallengeDetailsInputEvents(
-         saveInput: on(\.input)
-         //getContenders: ,
-         //getWinners: ,
+         saveInputAndLoadChallenge: on(\.input)
+         // getContenders: ,
+         // getWinners: ,
       )
    )
 
-   private var filterButtons = SlidedIndexButtons<Button3Event>(buttons:
+   private lazy var headerImage = ImageViewModel()
+      .image(Design.icon.challengeWinnerIllustrate)
+      // .padding(.verticalOffset(16))
+      .contentMode(.scaleAspectFit)
+
+   private lazy var filterButtons = SlidedIndexButtons<Button3Event>(buttons:
       SecondaryButtonDT<Design>()
          .title("Детали")
          .font(Design.font.default),
@@ -34,7 +41,9 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
          .title("Участники")
          .font(Design.font.default))
 
-   private var viewModel = ChallengeDetailsViewModel<Design>()
+   private lazy var viewModel = ChallengeDetailsViewModel<Design>()
+
+   private lazy var sendPanel = SendChallengePanel<Design>()
 
    override func start() {
       super.start()
@@ -42,11 +51,8 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
       mainVM.headerStack
          .backColor(Design.color.backgroundBrandSecondary)
          .height(200)
-         .padding(.verticalOffset(16))
          .arrangedModels([
-            ImageViewModel()
-               .image(Design.icon.challengeWinnerIllustrate)
-               .contentMode(.scaleAspectFit)
+            headerImage
          ])
 
       mainVM.bodyStack
@@ -60,21 +66,46 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
             filterButtons
          ])
 
-      mainVM.footerStack
+      mainVM.captionStack
+         .padding(.init(
+            top: 0,
+            left: Design.params.commonSideOffset,
+            bottom: 0,
+            right: Design.params.commonSideOffset
+         ))
          .arrangedModels([
             viewModel
          ])
+
+      mainVM.footerStack
+         .padding(.init(
+            top: 16,
+            left: Design.params.commonSideOffset,
+            bottom: 16,
+            right: Design.params.commonSideOffset
+         ))
+         .arrangedModels([
+            sendPanel
+         ])
+
       scenario.start()
 
-//      on(\.input, self) {
-//         $0.viewModel.setState(.details($1))
-//      }
+      viewModel.on(\.willEndDragging) { [weak self] velocity in
+         if velocity < 0 {
+            self?.presentHeader()
+         } else if velocity > 0 {
+            self?.hideHeader()
+         } else {
+            self?.presentHeader()
+         }
+      }
    }
 }
 
 enum ChallengeDetailsState {
    case initial
    case presentChallenge(Challenge)
+   case updateDetails(Challenge)
 }
 
 extension ChallengeDetailsScene: StateMachine {
@@ -83,7 +114,37 @@ extension ChallengeDetailsScene: StateMachine {
       case .initial:
          break
       case .presentChallenge(let challenge):
-         viewModel.setState(.details(challenge))
+         if let url = challenge.photo {
+            headerImage
+               .url(TeamForceEndpoints.urlBase + url)
+               // .padding(.verticalOffset(0))
+               .contentMode(.scaleAspectFill)
+         }
+         sendPanel.setup(challenge)
+         viewModel.setState(.presentChallenge(challenge))
+      case .updateDetails(let challenge):
+         sendPanel.setup(challenge)
+         viewModel.setState(.updateDetails(challenge))
+      }
+   }
+}
+
+// MARK: - Header animation
+
+extension ChallengeDetailsScene {
+   private func presentHeader() {
+      UIView.animate(withDuration: 0.36) {
+         self.mainVM.headerStack
+            .hidden(false)
+            .alpha(1)
+      }
+   }
+
+   private func hideHeader() {
+      UIView.animate(withDuration: 0.36) {
+         self.mainVM.headerStack
+            .alpha(0)
+            .hidden(true)
       }
    }
 }
