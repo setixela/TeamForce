@@ -21,7 +21,7 @@ final class ChallengeResultScene<Asset: AssetProtocol>: BaseSceneModel<
    lazy var scenario: Scenario = ChallengeResultScenario<Asset>(
       works: ChallengeResultWorks(),
       stateDelegate: stateDelegate,
-      events: ChallengeResultEvents(commentInputChanged: inputView.onEvent(\.didEditingChanged))
+      events: ChallengeResultEvents(commentInputChanged: inputView.on(\.didEditingChanged))
    )
 
    private lazy var inputView = Design.model.transact.reasonInputTextView

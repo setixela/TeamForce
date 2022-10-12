@@ -68,7 +68,7 @@ final class TransactScene<Asset: AssetProtocol>: ModalDoubleStackModel<Asset>, S
          userSelected: viewModels.foundUsersList.onEvent(\.didSelectRow),
          sendButtonEvent: viewModels.sendButton.on(\.didTap),
          amountInputChanged: viewModels.amountInputModel.textField.on(\.didEditingChanged),
-         reasonInputChanged: viewModels.reasonTextView.onEvent(\.didEditingChanged),
+         reasonInputChanged: viewModels.reasonTextView.on(\.didEditingChanged),
          anonymousSetOff: viewModels.options.anonimParamModel.switcher.on(\.turnedOff),
          anonymousSetOn: viewModels.options.anonimParamModel.switcher.on(\.turnedOn),
          presentTagsSelectorDidTap: viewModels.options.tagsPanelSwitcher.optionModel.on(\.didTap),
