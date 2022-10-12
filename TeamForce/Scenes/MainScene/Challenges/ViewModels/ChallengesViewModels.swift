@@ -10,25 +10,12 @@ import ReactiveWorks
 
 final class ChallengesViewModel<Design: DSP>: StackModel, Designable, Eventable {
    struct Events: InitProtocol {
-      var didTapFilterAll: Void?
-      var didTapFilterActive: Void?
       var didSelectChallenge: Int?
    }
 
    var events: EventsStore = .init()
 
    //
-   private lazy var createChallengeButton = ButtonModel()
-      .set(Design.state.button.default)
-      .title("Создать челлендж")
-
-   private lazy var filterButtons = SlidedIndexButtons<Button2Event>(buttons:
-      SecondaryButtonDT<Design>()
-         .title("Все")
-         .font(Design.font.default),
-      SecondaryButtonDT<Design>()
-         .title("Активные")
-         .font(Design.font.default))
 
    private lazy var challengesTable = TableItemsModel<Design>()
       .set(.presenters([
@@ -40,21 +27,8 @@ final class ChallengesViewModel<Design: DSP>: StackModel, Designable, Eventable 
       super.start()
 
       arrangedModels([
-         createChallengeButton,
-         Grid.x16.spacer,
-         filterButtons,
-         Grid.x16.spacer,
          challengesTable,
       ])
-
-      filterButtons.on(\.didTapButtons, self) {
-         switch $1 {
-         case .didTapButton1:
-            $0.send(\.didTapFilterAll)
-         case .didTapButton2:
-            $0.send(\.didTapFilterActive)
-         }
-      }
 
       challengesTable.on(\.didSelectRowInt, self) {
          $0.send(\.didSelectChallenge, $1)
@@ -245,4 +219,46 @@ struct ChallengeCellPresenters<Design: DSP>: Designable {
 
       work.success(model)
    } }
+}
+
+final class CreateChallengePanel<Design: DSP>: StackModel, Designable {
+   var events: EventsStore = .init()
+
+   private lazy var createChallengeButton = ButtonModel()
+      .set(Design.state.button.default)
+      .title("Создать челлендж")
+
+   private lazy var filterButtons = SlidedIndexButtons<Button2Event>(buttons:
+                                                                        SecondaryButtonDT<Design>()
+      .title("Все")
+      .font(Design.font.default),
+                                                                     SecondaryButtonDT<Design>()
+      .title("Активные")
+      .font(Design.font.default))
+
+   override func start() {
+      super.start()
+
+      arrangedModels([
+         createChallengeButton,
+         Grid.x16.spacer,
+         filterButtons,
+      ])
+
+      filterButtons.on(\.didTapButtons, self) {
+         switch $1 {
+         case .didTapButton1:
+            $0.send(\.didTapFilterAll)
+         case .didTapButton2:
+            $0.send(\.didTapFilterActive)
+         }
+      }
+   }
+}
+
+extension CreateChallengePanel: Eventable {
+   struct Events: InitProtocol {
+      var didTapFilterAll: Void?
+      var didTapFilterActive: Void?
+   }
 }
