@@ -10,7 +10,7 @@ import UIKit
 
 final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
    DefaultVCModel,
-   QuadroStacksModel,
+   TripleStacksModel,
    Asset,
    Challenge
 >, Scenarible {
@@ -27,21 +27,10 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
 
    private lazy var headerImage = ImageViewModel()
       .image(Design.icon.challengeWinnerIllustrate)
-      // .padding(.verticalOffset(16))
       .contentMode(.scaleAspectFit)
-
-   private lazy var filterButtons = SlidedIndexButtons<Button3Event>(buttons:
-      SecondaryButtonDT<Design>()
-         .title("Детали")
-         .font(Design.font.default),
-      SecondaryButtonDT<Design>()
-         .title("Комментарии")
-         .font(Design.font.default),
-      SecondaryButtonDT<Design>()
-         .title("Участники")
-         .font(Design.font.default))
-
    private lazy var viewModel = ChallengeDetailsViewModel<Design>()
+      .set(.padding(.horizontalOffset(Design.params.commonSideOffset)))
+      .backColor(Design.color.background)
 
    private lazy var sendPanel = SendChallengePanel<Design>()
 
@@ -57,25 +46,15 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
 
       mainVM.bodyStack
          .padding(.init(
-            top: 24,
-            left: Design.params.commonSideOffset,
+            top: 16,
+            left: 0,
             bottom: 16,
-            right: Design.params.commonSideOffset
-         ))
-         .arrangedModels([
-            filterButtons
-         ])
-
-      mainVM.captionStack
-         .padding(.init(
-            top: 0,
-            left: Design.params.commonSideOffset,
-            bottom: 0,
-            right: Design.params.commonSideOffset
+            right: 0
          ))
          .arrangedModels([
             viewModel
          ])
+         .backColor(Design.color.background)
 
       mainVM.footerStack
          .padding(.init(
@@ -117,7 +96,6 @@ extension ChallengeDetailsScene: StateMachine {
          if let url = challenge.photo {
             headerImage
                .url(TeamForceEndpoints.urlBase + url)
-               // .padding(.verticalOffset(0))
                .contentMode(.scaleAspectFill)
          }
          sendPanel.setup(challenge)

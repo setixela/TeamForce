@@ -9,6 +9,18 @@ import ReactiveWorks
 
 final class ChallengeDetailsViewModel<Design: DSP>: ScrollViewModelY, Designable {
    //
+   private lazy var filterButtons = SlidedIndexButtons<Button3Event>(buttons:
+      SecondaryButtonDT<Design>()
+         .title("Детали")
+         .font(Design.font.default),
+      SecondaryButtonDT<Design>()
+         .title("Комментарии")
+         .font(Design.font.default),
+      SecondaryButtonDT<Design>()
+         .title("Участники")
+         .font(Design.font.default))
+      .height(32+38)
+
    private lazy var challengeInfo = ChallengeInfoVM<Design>()
 
    private lazy var prizeSizeCell = ChallengeDetailsInfoCell<Design>()
@@ -37,7 +49,9 @@ final class ChallengeDetailsViewModel<Design: DSP>: ScrollViewModelY, Designable
       super.start()
 
       set(.spacing(8))
+      set(.bounce(false))
       set(.arrangedModels([
+         filterButtons,
          challengeInfo,
          prizeSizeCell,
          finishDateCell,

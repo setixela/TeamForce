@@ -15,22 +15,27 @@ enum ScrollState {
    case hideHorizontalScrollIndicator
    case hideVerticalScrollIndicator
    case padding(UIEdgeInsets)
+   case contentInset(UIEdgeInsets)
    case bounce(Bool)
 }
 
 struct ScrollEvents: ScrollEventsProtocol {
    var didScroll: CGFloat?
    var willEndDragging: CGFloat?
+   var willBeginDragging: Void?
+   var willBeginDecelerating: Void?
 }
 
 protocol ScrollWrapper: UIScrollViewDelegate, Eventable where Events == ScrollEvents {}
 
-class ScrollViewModelY: BaseViewModel<UIScrollView>, ScrollWrapper {
+class ScrollViewModelY: BaseViewModel<UIScrollView>, ScrollWrapper, Stateable {
    var events: ReactiveWorks.EventsStore = .init()
+
+   typealias State = ViewState
 
    private var prevScrollOffset: CGFloat = 0
 
-   private lazy var stack = StackModel()
+   lazy var stack = StackModel()
       .axis(.vertical)
       .distribution(.equalSpacing)
 
@@ -40,6 +45,8 @@ class ScrollViewModelY: BaseViewModel<UIScrollView>, ScrollWrapper {
       view.addSubview(stack.uiView)
       view.delegate = self
 
+      view.isDirectionalLockEnabled = true
+      view.showsHorizontalScrollIndicator = false
       view.layer.masksToBounds = false
       stack.view.addAnchors
          .top(view.topAnchor)
@@ -51,6 +58,7 @@ class ScrollViewModelY: BaseViewModel<UIScrollView>, ScrollWrapper {
 
    func scrollViewDidScroll(_ scrollView: UIScrollView) {
       let velocity = scrollView.contentOffset.y - prevScrollOffset
+      scrollView.contentOffset.x = 0
       prevScrollOffset = scrollView.contentOffset.y
       send(\.didScroll, velocity)
    }
@@ -60,6 +68,14 @@ class ScrollViewModelY: BaseViewModel<UIScrollView>, ScrollWrapper {
                                   targetContentOffset: UnsafeMutablePointer<CGPoint>)
    {
       send(\.willEndDragging, velocity.y)
+   }
+
+   func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+      send(\.willBeginDragging)
+   }
+
+   func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
+      send(\.willBeginDecelerating)
    }
 }
 
@@ -83,6 +99,15 @@ extension ScrollViewModelY: Stateable2 {
          view.showsVerticalScrollIndicator = false
       case .padding(let value):
          stack.padding(value)
+      case .contentInset(let value):
+         stack.view.addAnchors.fitToViewInsetted(view, value)
+//         let pos = stack.view.frame.origin
+//         let siz = stack.view.frame.size
+//         let frame = CGRect(x: pos.x + value.left,
+//                                  y: pos.y + value.top,
+//                                  width: siz.width - value.right - value.left,
+//                                  height: siz.height - value.bottom - value.top)
+//         stack.view.frame = frame
       case .bounce(let value):
          view.bounces = value
       }
@@ -129,6 +154,8 @@ extension ScrollViewModelX: Stateable2 {
          view.showsVerticalScrollIndicator = false
       case .padding(let value):
          stack.padding(value)
+      case .contentInset(let value):
+         view.contentInset = value
       case .bounce(let value):
          view.bounces = value
       }
