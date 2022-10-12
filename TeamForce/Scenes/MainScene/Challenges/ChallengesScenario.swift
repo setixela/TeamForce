@@ -21,6 +21,7 @@ final class ChallengesScenario<Asset: AssetProtocol>:
       works.getChallenges
          .doAsync()
          .onSuccess(setState) { .presentChallenges($0) }
+         .onFail(setState) { .presentChallenges([]) }
 
       events.presentAllChallenges
          .doNext(works.getAllChallenges)
