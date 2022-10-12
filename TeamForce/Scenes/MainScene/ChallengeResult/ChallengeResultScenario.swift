@@ -14,6 +14,9 @@ struct ChallengeResultEvents {
 final class ChallengeResultScenario<Asset: AssetProtocol>: BaseScenario<ChallengeResultEvents, ChallengeResultSceneState, ChallengeResultWorks<Asset>> {
 
    override func start() {
-
+      events.commentInputChanged
+         .doNext(work: works.reasonInputParsing)
+         .onSuccess(setState, .sendingEnabled)
+         .onFail(setState, .sendingDisabled)
    }
 }

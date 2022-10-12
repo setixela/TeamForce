@@ -9,6 +9,9 @@ import ReactiveWorks
 
 enum ChallengeResultSceneState {
    case initial
+
+   case sendingEnabled
+   case sendingDisabled
 }
 
 final class ChallengeResultScene<Asset: AssetProtocol>: BaseSceneModel<
@@ -19,7 +22,7 @@ final class ChallengeResultScene<Asset: AssetProtocol>: BaseSceneModel<
 >, Scenarible {
 //
    lazy var scenario: Scenario = ChallengeResultScenario<Asset>(
-      works: ChallengeResultWorks(),
+      works: ChallengeResultWorks<Asset>(),
       stateDelegate: stateDelegate,
       events: ChallengeResultEvents(commentInputChanged: inputView.on(\.didEditingChanged))
    )
@@ -56,6 +59,8 @@ final class ChallengeResultScene<Asset: AssetProtocol>: BaseSceneModel<
          .on(\.didTap, self) {
             $0.vcModel?.dismiss(animated: true)
          }
+
+      scenario.start()
    }
 }
 
@@ -64,6 +69,10 @@ extension ChallengeResultScene: StateMachine {
       switch state {
       case .initial:
          break
+      case .sendingEnabled:
+         sendButton.set(Design.state.button.default)
+      case .sendingDisabled:
+         sendButton.set(Design.state.button.inactive)
       }
    }
 }
