@@ -12,6 +12,7 @@ protocol ButtonElements: InitProtocol, DesignElementable {
    var `default`: DesignElement { get }
    var transparent: DesignElement { get }
    var inactive: DesignElement { get }
+   var secondary: DesignElement { get }
 
    var tabBar: DesignElement { get }
    var brandTransparent: DesignElement { get }
@@ -24,6 +25,15 @@ protocol ButtonStateProtocol: ButtonElements where DesignElement == [ButtonState
 struct ButtonStateBuilder<Design: DesignProtocol>: ButtonStateProtocol {
    var `default`: [ButtonState] { [
       .backColor(Design.color.activeButtonBack),
+      .textColor(Design.color.textInvert),
+      .tint(Design.color.iconInvert),
+      .cornerRadius(Design.params.cornerRadius),
+      .height(Design.params.buttonHeight),
+      .enabled(true),
+   ] }
+
+   var secondary: [ButtonState] { [
+      .backColor(Design.color.backgroundInfoSecondary),
       .textColor(Design.color.textInvert),
       .tint(Design.color.iconInvert),
       .cornerRadius(Design.params.cornerRadius),
@@ -79,6 +89,10 @@ protocol ButtonBuilderProtocol: ButtonElements, Designable where DesignElement =
 final class ButtonBuilder<Design: DesignProtocol>: ButtonBuilderProtocol {
    var `default`: ButtonModel {
       .init(Design.state.button.default)
+   }
+
+   var secondary: ButtonModel {
+      .init(Design.state.button.secondary)
    }
 
    var transparent: ButtonModel {

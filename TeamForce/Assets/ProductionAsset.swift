@@ -22,7 +22,10 @@ protocol ScenesProtocol: InitProtocol {
    var login: SceneModelProtocol { get }
    var main: SceneModelProtocol { get }
    var profile: SceneModelProtocol { get }
-  // var profileEdit: SceneModelProtocol { get }
+   var transactionDetail: SceneModelProtocol { get }
+   var challengeDetails: SceneModelProtocol { get }
+   var challengeCreate: SceneModelProtocol { get }
+   var challengeSendResult: SceneModelProtocol { get }
 
    // plays
    var playground: SceneModelProtocol { get }
@@ -31,6 +34,9 @@ protocol ScenesProtocol: InitProtocol {
 
 
 struct Scenes: ScenesProtocol {
+   var challengeCreate: SceneModelProtocol { fatalError() }
+   var challengeSendResult: SceneModelProtocol { ChallengeResultScene<ProductionAsset>() }
+
    var playground: SceneModelProtocol { PlaygroundScene<ProductionAsset>()}
    //
    var digitalThanks: SceneModelProtocol { DigitalThanksScene<ProductionAsset>() }
@@ -40,6 +46,7 @@ struct Scenes: ScenesProtocol {
    var transactionDetail: SceneModelProtocol { TransactDeatilViewModel<ProductionAsset>() }
    //var profileEdit: SceneModelProtocol { ProfileEditScene<ProductionAsset>() }
    var feedDetail: SceneModelProtocol { FeedDetailScene<ProductionAsset>() }
+   var challengeDetails: SceneModelProtocol { ChallengeDetailsScene<ProductionAsset>() }
 }
 
 struct ProductionService: ServiceProtocol {

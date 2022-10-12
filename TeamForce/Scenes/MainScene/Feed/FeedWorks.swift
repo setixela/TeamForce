@@ -136,7 +136,7 @@ final class FeedWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedWorksTempStorage
 //            work.fail()
 //         }
 //   }.retainBy(retainer) }
-//   
+//
 //   var updateComment: Work<UpdateCommentRequest, Void> { .init { [weak self] work in
 //      guard let input = work.input else { return }
 //      self?.apiUseCase.updateComment
@@ -148,7 +148,7 @@ final class FeedWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedWorksTempStorage
 //            work.fail()
 //         }
 //   }.retainBy(retainer) }
-//   
+//
 //   var deleteComment: Work<RequestWithId, Void> { .init { [weak self] work in
 //      guard let input = work.input else { return }
 //      self?.apiUseCase.deleteComment

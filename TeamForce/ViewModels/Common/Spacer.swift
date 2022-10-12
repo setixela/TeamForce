@@ -38,6 +38,7 @@ enum Grid: CGFloat {
    case x90 = 90
    case x100 = 100
    case x128 = 128
+   case x256 = 256
 
    // case infinity
    case xxx = 0
@@ -71,6 +72,7 @@ enum GridAsp: CGFloat {
    case x90 = 90
    case x100 = 100
    case x128 = 128
+   case x256 = 256
 
    // case infinity
    case xxx = 0

@@ -25,9 +25,12 @@ protocol ParamsProtocol: InitProtocol, Designable {
    var globalTopOffset: CGFloat { get }
    //
    var buttonHeight: CGFloat { get }
+   var buttonHeightSmall: CGFloat { get }
+   var buttonHeightMini: CGFloat { get }
+
    var buttonsSpacingX: CGFloat { get }
    var buttonsSpacingY: CGFloat { get }
-   var buttonSecondaryHeight: CGFloat { get }
+
    //
    var infoFrameHeight: CGFloat { get }
    //
@@ -38,7 +41,7 @@ protocol ParamsProtocol: InitProtocol, Designable {
    var profileUserPanelShadow: Shadow { get }
    // paddings
    var contentPadding: UIEdgeInsets { get }
-   var contentVerticalPadding: UIEdgeInsets  { get }
+   var contentVerticalPadding: UIEdgeInsets { get }
    var cellContentPadding: UIEdgeInsets { get }
    var userInfoHeaderPadding: UIEdgeInsets { get }
    var infoFramePadding: UIEdgeInsets { get }
@@ -49,7 +52,7 @@ struct ParamBuilder<Design: DSP>: ParamsProtocol {
    var commonSideOffset: CGFloat { 16 }
    //
    var cornerRadiusMini: CGFloat { 8 }
-   var cornerRadiusSmall: CGFloat { 11 }
+   var cornerRadiusSmall: CGFloat { 12 }
    var cornerRadius: CGFloat { 14 }
    var cornerRadiusMedium: CGFloat { 20 }
    //
@@ -59,9 +62,11 @@ struct ParamBuilder<Design: DSP>: ParamsProtocol {
    var globalTopOffset: CGFloat { 24 }
    //
    var buttonHeight: CGFloat { 52 }
+   var buttonHeightSmall: CGFloat { 38 }
+   var buttonHeightMini: CGFloat { 24 }
+   //
    var buttonsSpacingX: CGFloat { 8 }
    var buttonsSpacingY: CGFloat { 16 }
-   var buttonSecondaryHeight: CGFloat { 33 }
    //
    var infoFrameHeight: CGFloat { 70 }
    //

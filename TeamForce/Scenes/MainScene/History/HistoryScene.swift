@@ -14,12 +14,13 @@ final class HistoryScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>
    Assetable,
    Stateable,
    Scenarible,
-   Communicable
+   Eventable
 {
    //
+   typealias Events = MainSceneEvents
    typealias State = StackState
 
-   var events = MainSceneEvents()
+   var events: EventsStore = .init()
 
    private lazy var viewModels = HistoryViewModels<Design>()
 
@@ -50,10 +51,10 @@ final class HistoryScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>
          ]))
 
       viewModels.tableModel.on(\.didScroll) { [weak self] in
-         self?.sendEvent(\.didScroll, $0)
+         self?.send(\.didScroll, $0)
       }
       viewModels.tableModel.on(\.willEndDragging) { [weak self] in
-         self?.sendEvent(\.willEndDragging, $0)
+         self?.send(\.willEndDragging, $0)
       }
       
       

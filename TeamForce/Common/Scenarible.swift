@@ -25,14 +25,14 @@ protocol Scenario {
    func start()
 }
 
-class BaseScenario<Events, State, Works: TempStorage>: Scenario {
+class BaseScenario<Events, State, Works>: Scenario {
    var works: Works
    var events: Events
    var setState: (State) -> Void = { _ in
       log("stateDelegate (setState:) did not injected into Scenario")
    }
 
-   required init(works: Works, stateDelegate: ((State) -> Void)? = nil, events: Events) {
+   required init(works: Works, stateDelegate: ((State) -> Void)?, events: Events) {
       self.events = events
       self.works = works
       if let setStateFunc = stateDelegate {

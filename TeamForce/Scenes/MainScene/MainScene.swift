@@ -8,8 +8,8 @@
 import ReactiveWorks
 import UIKit
 
-typealias CommunicableUIViewModel = UIViewModel & Communicable
-typealias ScenaribleCommunicableUIViewModel = Scenarible & Communicable & UIViewModel
+typealias EventableUIViewModel = UIViewModel & Eventable
+typealias ScenaribleEventableUIViewModel = Scenarible & Eventable & UIViewModel
 
 enum MainSceneState {
    case initial
@@ -33,8 +33,8 @@ final class MainScene<Asset: AssetProtocol>:
 
    private lazy var balanceViewModel = BalanceScene<Asset>()
    private lazy var historyViewModel = HistoryScene<Asset>()
-   private lazy var settingsViewModel = SettingsViewModel<Asset>()
    private lazy var feedViewModel = FeedScene<Asset>()
+   private lazy var challengesViewModel = ChallengesScene<Asset>()
 
    private lazy var transactModel: TransactScene = TransactScene<Asset>(vcModel: vcModel)
 
@@ -65,15 +65,15 @@ final class MainScene<Asset: AssetProtocol>:
       vcModel?.onEvent(\.viewWillAppear) { [weak self] in
          self?.scenario.start()
       }
-      tabBarPanel.button1.setMode(\.normal)
+      tabBarPanel.button1.setSelfMode(\.normal)
       selectedModel = 0
    }
 
    private func unlockTabButtons() {
-      tabBarPanel.button1.setMode(\.inactive)
-      tabBarPanel.button2.setMode(\.inactive)
-      tabBarPanel.button3.setMode(\.inactive)
-      tabBarPanel.button4.setMode(\.inactive)
+      tabBarPanel.button1.setSelfMode(\.inactive)
+      tabBarPanel.button2.setSelfMode(\.inactive)
+      tabBarPanel.button3.setSelfMode(\.inactive)
+      tabBarPanel.button4.setSelfMode(\.inactive)
    }
 }
 
@@ -85,7 +85,7 @@ private extension MainScene {
             $0.mainVM.header.text("Лента событий")
             $0.vcModel?.sendEvent(\.setTitle, "Лента событий")
             $0.presentModel($0.feedViewModel)
-            $0.tabBarPanel.button1.setMode(\.normal)
+            $0.tabBarPanel.button1.setSelfMode(\.normal)
             $0.selectedModel = 0
          }
 
@@ -95,7 +95,7 @@ private extension MainScene {
             self?.mainVM.header.text("Баланс")
             self?.vcModel?.sendEvent(\.setTitle, "Баланс")
             self?.presentModel(self?.balanceViewModel)
-            self?.tabBarPanel.button2.setMode(\.normal)
+            self?.tabBarPanel.button2.setSelfMode(\.normal)
             self?.selectedModel = 1
          }
 
@@ -110,17 +110,17 @@ private extension MainScene {
             self?.mainVM.header.text("История")
             self?.vcModel?.sendEvent(\.setTitle, "История")
             self?.presentModel(self?.historyViewModel)
-            self?.tabBarPanel.button3.setMode(\.normal)
+            self?.tabBarPanel.button3.setSelfMode(\.normal)
             self?.selectedModel = 2
          }
 
       tabBarPanel.button4
          .on(\.didTap) { [weak self] in
             self?.unlockTabButtons()
-            self?.mainVM.header.text("Настройки")
-            self?.vcModel?.sendEvent(\.setTitle, "Настройки")
-            self?.presentModel(self?.settingsViewModel)
-            self?.tabBarPanel.button4.setMode(\.normal)
+            self?.mainVM.header.text("Челленджи")
+            self?.vcModel?.sendEvent(\.setTitle, "Челленджи")
+            self?.presentModel(self?.challengesViewModel)
+            self?.tabBarPanel.button4.setSelfMode(\.normal)
             self?.selectedModel = 3
          }
    }
@@ -145,7 +145,7 @@ extension MainScene: StateMachine {
          case 2:
             presentModel(historyViewModel)
          case 3:
-            presentModel(settingsViewModel)
+            presentModel(challengesViewModel)
          default:
             print("selected model error")
          }
@@ -170,10 +170,10 @@ extension MainScene: StateMachine {
 
 extension MainScene {
    // Presenting Balance, Feed, History
-   private func presentModel<M: Scenarible & Communicable & UIViewModel>(_ model: M?) where M.Events == MainSceneEvents {
+   private func presentModel<M: ScenaribleEventableUIViewModel>(_ model: M?) where M.Events == MainSceneEvents {
       guard let model = model else { return }
 
-      model.onEvent(\.willEndDragging) { [weak self] velocity in
+      model.on(\.willEndDragging) { [weak self] velocity in
          if velocity > 0 {
             self?.presentHeader()
          } else if velocity < 0 {
@@ -186,12 +186,11 @@ extension MainScene {
          ])
 
       model.scenario.start()
-      model.sendEvent(\.userDidLoad, currentUser)
+      model.send(\.userDidLoad, currentUser)
 
       activeScreen = model
    }
 
-   // Presenting Settings
    private func presentModel<M: UIViewModel>(_ model: M?) {
       guard let model = model else { return }
 

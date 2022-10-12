@@ -242,17 +242,3 @@ final class TransactDeatilViewModel<Asset: AssetProtocol>: BaseSceneModel<
          .set(.text(convertedDate))
    }
 }
-
-extension String {
-   func convertToDate() -> String? {
-      let inputFormatter = DateFormatter()
-      inputFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
-      guard let convertedDate = inputFormatter.date(from: self) else { return nil }
-
-      let outputFormatter = DateFormatter()
-      outputFormatter.locale = Locale(identifier: "ru_RU")
-      outputFormatter.dateFormat = "d MMM y HH:mm"
-
-      return outputFormatter.string(from: convertedDate)
-   }
-}

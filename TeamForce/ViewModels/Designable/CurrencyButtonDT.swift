@@ -32,7 +32,7 @@ final class CurrencyButtonDT<Design: DSP>: CurrencyLabelDT<Design>, Eventable, M
          $1.width(Grid.x14.value)
       }
 
-      height(Design.params.buttonSecondaryHeight)
+      height(Design.params.buttonHeightSmall)
       cornerRadius(Design.params.cornerRadiusMini)
       padding(.sideOffset(Grid.x10.value))
       onModeChanged(\.normal) { [weak self] in

@@ -273,13 +273,21 @@ extension ViewModelProtocol where Self: Stateable, View: StackViewExtended {
       return self
    }
 
+   @discardableResult func addArrangedModels(_ value: [UIViewModel]) -> Self {
+      value.forEach {
+         let subview = $0.uiView
+         view.addArrangedSubview(subview)
+      }
+      return self
+   }
+
    @discardableResult func backView(_ value: UIView, inset: UIEdgeInsets = .zero) -> Self {
       view.insertSubview(value, at: 0)
       view.backView = value
       value.addAnchors.fitToViewInsetted(view, inset)
       value.contentMode = .scaleAspectFill
       value.clipsToBounds = true
-      value.layer.masksToBounds = true
+      value.layer.masksToBounds = false
       return self
    }
 
@@ -292,7 +300,7 @@ extension ViewModelProtocol where Self: Stateable, View: StackViewExtended {
 
    @discardableResult func backViewModel(_ value: UIViewModel, inset: UIEdgeInsets = .zero) -> Self {
       let new = value.uiView
-      backView(new)
+      backView(new, inset: inset)
       return self
    }
 
@@ -369,6 +377,11 @@ extension ViewModelProtocol where Self: Stateable, View: PaddingLabel {
       view.clipsToBounds = true
       return self
    }
+
+   @discardableResult func lineBreakMode(_ value: NSLineBreakMode) -> Self {
+      view.lineBreakMode = value
+      return self
+   }
 }
 
 import AlamofireImage
@@ -376,6 +389,7 @@ import AlamofireImage
 extension ViewModelProtocol where Self: Stateable, View: PaddingImageView {
    @discardableResult func image(_ value: UIImage) -> Self {
       view.image = value
+      view.layer.masksToBounds = true
       return self
    }
 
@@ -409,6 +423,7 @@ extension ViewModelProtocol where Self: Stateable, View: PaddingImageView {
 //         let url = URL(string: str)
 //      else { return self }
 
+      view.layer.masksToBounds = true
       view.loadImage(value) { [weak view] image in
          view?.image = image
       }

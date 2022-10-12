@@ -5,10 +5,10 @@
 //  Created by Aleksandr Solovyev on 09.08.2022.
 //
 
-import UIKit
 import ReactiveWorks
+import UIKit
 
- extension Combos
+extension Combos
 {
    func configure<M>() where S == SComboM<M>
    {
@@ -39,17 +39,17 @@ import ReactiveWorks
       view.addArrangedSubview(models.right2.uiView)
    }
 
-    // M R R R
-    // _ _ _ _
-    // _ _ _ _
-    func configure<M, R, R2, R3>() where S == SComboMRRR<M, R, R2, R3>
-    {
-       configureRightStart()
-       view.addArrangedSubview(models.main.uiView)
-       view.addArrangedSubview(models.right.uiView)
-       view.addArrangedSubview(models.right2.uiView)
-       view.addArrangedSubview(models.right3.uiView)
-    }
+   // M R R R
+   // _ _ _ _
+   // _ _ _ _
+   func configure<M, R, R2, R3>() where S == SComboMRRR<M, R, R2, R3>
+   {
+      configureRightStart()
+      view.addArrangedSubview(models.main.uiView)
+      view.addArrangedSubview(models.right.uiView)
+      view.addArrangedSubview(models.right2.uiView)
+      view.addArrangedSubview(models.right3.uiView)
+   }
 
    // M R _
    // _ D _
@@ -154,7 +154,6 @@ import ReactiveWorks
       horz.addArrangedSubview(models.down2.uiView)
       horz.addArrangedSubview(models.right.uiView)
       view.addArrangedSubview(horz)
-
    }
 
    // M _ _
@@ -169,6 +168,22 @@ import ReactiveWorks
       horz.addArrangedSubview(models.right.uiView)
       view.addArrangedSubview(horz)
       view.addArrangedSubview(models.down2.uiView)
+   }
+
+   // M _ _
+   // D R _
+   // D _ _
+   // D _ _
+   func configure<M, D, R, D2, D3>() where S == SComboMDRDD<M, D, R, D2, D3>
+   {
+      configureDownStart()
+      view.addArrangedSubview(models.main.uiView)
+      let horz = horizontal
+      horz.addArrangedSubview(models.down.uiView)
+      horz.addArrangedSubview(models.right.uiView)
+      view.addArrangedSubview(horz)
+      view.addArrangedSubview(models.down2.uiView)
+      view.addArrangedSubview(models.down3.uiView)
    }
 
    // M _ _
@@ -200,7 +215,8 @@ private extension Combos
       view.axis = .vertical
    }
 
-   private func clear() {
+   private func clear()
+   {
       view.subviews.forEach { $0.removeFromSuperview() }
    }
 

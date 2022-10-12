@@ -11,19 +11,20 @@ import UIKit
 final class FeedScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>,
    Assetable,
    Stateable2,
-   Communicable,
+   Eventable,
    Scenarible
 {
+   typealias Events = MainSceneEvents
    typealias State = ViewState
    typealias State2 = StackState
 
-   var events = MainSceneEvents()
+   var events: EventsStore = .init()
 
    lazy var scenario: Scenario = FeedScenario<Asset>(
       works: FeedWorks<Asset>(),
       stateDelegate: stateDelegate,
       events: FeedScenarioInputEvents(
-         loadFeedForCurrentUser: onEvent(\.userDidLoad),
+         loadFeedForCurrentUser: on(\.userDidLoad),
          presentAllFeed: viewModels.filterButtons.on(\.didTapAll),
          presentMyFeed: viewModels.filterButtons.on(\.didTapMy),
          presentPublicFeed: viewModels.filterButtons.on(\.didTapPublic),
@@ -51,10 +52,10 @@ final class FeedScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>,
 
       viewModels.feedTableModel
          .on(\.didScroll) { [weak self] in
-            self?.sendEvent(\.didScroll, $0)
+            self?.send(\.didScroll, $0)
          }
          .on(\.willEndDragging) { [weak self] in
-            self?.sendEvent(\.willEndDragging, $0)
+            self?.send(\.willEndDragging, $0)
          }
 
       setState(.initial)

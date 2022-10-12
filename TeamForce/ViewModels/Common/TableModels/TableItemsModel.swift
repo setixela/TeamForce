@@ -32,6 +32,7 @@ protocol ScrollEventsProtocol: InitProtocol {
 
 struct TableItemsEvents: ScrollEventsProtocol {
    var didSelectRow: (IndexPath, Int)?
+   var didSelectRowInt: Int?
 
    // TODO: - Обьединять ивенты как Стейты
    var didScroll: CGFloat?
@@ -83,6 +84,7 @@ final class TableItemsModel<Design: DSP>: BaseViewModel<UITableView>,
       }
 
       send(\.didSelectRow, (indexPath, rowNumber))
+      send(\.didSelectRowInt, rowNumber)
       tableView.deselectRow(at: indexPath, animated: true)
    }
 
@@ -111,7 +113,7 @@ final class TableItemsModel<Design: DSP>: BaseViewModel<UITableView>,
       cell.contentView.subviews.forEach { $0.removeFromSuperview() }
       cell.contentView.addSubview(modelView)
       modelView.addAnchors.fitToView(cell.contentView)
-//      cell.selectionStyle = .none
+      cell.contentView.setNeedsLayout()
 
       return cell
    }

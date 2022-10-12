@@ -287,8 +287,70 @@ final class ApiUseCase<Asset: AssetProtocol>: InitProtocol, Assetable, WorkBaske
       )
       .retainedWork(retainer)
    }
+   
+   var getChanllenges: GetChallengesUseCase.WRK {
+      GetChallengesUseCase(
+         safeStringStorage: safeStringStorage,
+         getChallengesApiWorker: getChallengesApiWorker
+      )
+      .retainedWork(retainer)
+   }
+   
+   var GetChallengeById: GetChallengeByIdUseCase.WRK {
+      GetChallengeByIdUseCase(
+         safeStringStorage: safeStringStorage,
+         getChallengeByIdApiWorker: getChallengeByIdApiWorker
+      )
+      .retainedWork(retainer)
+   }
+   
+   var GetChallengeContenders: GetChallengeContendersUseCase.WRK {
+      GetChallengeContendersUseCase(
+         safeStringStorage: safeStringStorage,
+         getChallengeContendersApiWorker: getChallengeContendersApiWorker
+      )
+      .retainedWork(retainer)
+   }
 
-
+   var CreateChallenge: CreateChallengeUseCase.WRK {
+      CreateChallengeUseCase(
+         safeStringStorage: safeStringStorage,
+         createChallengeApiWorker: createChallengeApiWorker
+      )
+      .retainedWork(retainer)
+   }
+   
+   var GetChallengeWinners: GetChallengeWinnersUseCase.WRK {
+      GetChallengeWinnersUseCase(
+         safeStringStorage: safeStringStorage,
+         getChallengeWinnersApiWorker: getChallengeWinnersApiWorker
+      )
+      .retainedWork(retainer)
+   }
+   
+   var CreateChallengeReport: CreateChallengeReportUseCase.WRK {
+      CreateChallengeReportUseCase(
+         safeStringStorage: safeStringStorage,
+         createChallengeReportApiWorker: createChallengeReportApiWorker
+      )
+      .retainedWork(retainer)
+   }
+   
+   var CheckChallengeReport: CheckChallengeReportUseCase.WRK {
+      CheckChallengeReportUseCase(
+         safeStringStorage: safeStringStorage,
+         checkChallengeReportApiWorker: checkChallengeReportApiWorker
+      )
+      .retainedWork(retainer)
+   }
+   
+   var GetSendCoinSettings: GetSendCoinSettingsUseCase.WRK {
+      GetSendCoinSettingsUseCase(
+         getSendCoinSettingsApiWorker: getSendCoinSettingsApiWorker
+      )
+      .retainedWork(retainer)
+   }
+   
    // MARK: - Dependencies
 
    private var userProfileApiModel: ProfileApiWorker { .init(apiEngine: Asset.service.apiEngine) }
@@ -335,4 +397,17 @@ final class ApiUseCase<Asset: AssetProtocol>: InitProtocol, Assetable, WorkBaske
    private var deleteCommentApiWorker: DeleteCommentApiWorker { .init(apiEngine:
        Asset.service.apiEngine) }
    private var getLikesByTransactionApiWorker: GetLikesByTransactionApiWorker { .init(apiEngine: Asset.service.apiEngine) }
+   private var getChallengesApiWorker: GetChallengesApiWorker { .init(apiEngine:
+       Asset.service.apiEngine) }
+   private var getChallengeByIdApiWorker: GetChallengeByIdApiWorker{ .init(apiEngine:
+       Asset.service.apiEngine) }
+   private var getChallengeContendersApiWorker: GetChallengeContendersApiWorker { .init(apiEngine: Asset.service.apiEngine) }
+   private var createChallengeApiWorker: CreateChallengeApiWorker { .init(apiEngine:
+       Asset.service.apiEngine) }
+   private var getChallengeWinnersApiWorker: GetChallengeWinnersApiWorker { .init(apiEngine: Asset.service.apiEngine) }
+   private var createChallengeReportApiWorker: CreateChallengeReportApiWorker { .init(apiEngine: Asset.service.apiEngine) }
+   private var checkChallengeReportApiWorker: CheckChallengeReportApiWorker {
+       .init(apiEngine: Asset.service.apiEngine) }
+   private var getSendCoinSettingsApiWorker: GetSendCoinSettingsApiWorker {
+       .init(apiEngine: Asset.service.apiEngine) }
 }

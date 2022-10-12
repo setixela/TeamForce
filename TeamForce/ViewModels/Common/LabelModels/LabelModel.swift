@@ -8,7 +8,7 @@
 import ReactiveWorks
 import UIKit
 
-final class LabelModel: BaseViewModel<PaddingLabel>, Eventable {
+class LabelModel: BaseViewModel<PaddingLabel>, Eventable {
    typealias Events = ButtonEvents
    var events = [Int: LambdaProtocol?]()
    

@@ -10,11 +10,12 @@ import ReactiveWorks
 import UIKit
 
 struct TextViewEvents: InitProtocol {
-   var didEditingChanged: Event<String>?
+   var didEditingChanged: String?
 }
 
 class TextViewModel: BaseViewModel<UITextView>, UITextViewDelegate {
-   var events: TextViewEvents = .init()
+
+   var events: EventsStore = .init()
 
    private var placeholder: String = ""
    private var isPlaceholded = false
@@ -27,11 +28,11 @@ class TextViewModel: BaseViewModel<UITextView>, UITextViewDelegate {
    @objc func changValue() {
       guard let text = view.text else { return }
 
-      sendEvent(\.didEditingChanged, text)
+      send(\.didEditingChanged, text)
    }
 
    func textViewDidChange(_ textView: UITextView) {
-      sendEvent(\.didEditingChanged, textView.text)
+      send(\.didEditingChanged, textView.text)
    }
 
    func textViewDidBeginEditing(_ textView: UITextView) {
@@ -91,4 +92,6 @@ extension TextViewModel: Stateable3 {
    }
 }
 
-extension TextViewModel: Communicable {}
+extension TextViewModel: Eventable {
+   typealias Events = TextViewEvents
+}

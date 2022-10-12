@@ -123,6 +123,19 @@ extension Combos
       return self
    }
 
+   // MARK: - New setAll
+
+   @discardableResult func setAll<M, R, R2, R3>(_ setAll: VariadicClosure4<M, R, R2, R3>) -> Self where S == SComboMRRR<M, R, R2, R3>
+   {
+      setAll(models.main, models.right, models.right2, models.right3)
+      if !isConfigured
+      {
+         configure()
+         isConfigured = true
+      }
+      return self
+   }
+
    @discardableResult func setMain<M, R, D>(
       _ setMain: GenericClosure<M>,
       setRight: GenericClosure<R>,
@@ -332,6 +345,41 @@ extension Combos
       setDown(models.down)
       setRight(models.right)
       setDown2(models.down2)
+      if !isConfigured
+      {
+         configure()
+         isConfigured = true
+      }
+      return self
+   }
+
+   @discardableResult func setMain<M, D, R, D2, D3>(
+      _ setMain: GenericClosure<M>,
+      setDown: GenericClosure<D>,
+      setRight: GenericClosure<R>,
+      setDown2: GenericClosure<D2>,
+      setDown3: GenericClosure<D3>) -> Self where S == SComboMDRDD<M, D, R, D2, D3>
+   {
+      setMain(models.main)
+      setDown(models.down)
+      setRight(models.right)
+      setDown2(models.down2)
+      setDown3(models.down3)
+      if !isConfigured
+      {
+         configure()
+         isConfigured = true
+      }
+      return self
+   }
+
+   // MARK: - New setAll
+
+   @discardableResult func setAll<M, D, R, D2, D3>(
+      _ setAll: VariadicClosure5<M, D, R, D2, D3>) -> Self where S == SComboMDRDD<M, D, R, D2, D3>
+   {
+      setAll(models.main, models.down, models.right, models.down2, models.down3)
+
       if !isConfigured
       {
          configure()

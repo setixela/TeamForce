@@ -37,7 +37,6 @@ struct TransactBuilder<Design: DSP>: TransactModelBuilder {
       .borderWidth(Design.params.borderWidth)
       .cornerRadius(Design.params.cornerRadius)
       .minHeight(144)
-      .hidden(true)
    }
 
    var userSearchTextField: TextFieldModel { .init()
@@ -45,7 +44,6 @@ struct TransactBuilder<Design: DSP>: TransactModelBuilder {
       .placeholder(Design.Text.title.chooseRecipient)
       .placeholderColor(Design.color.textFieldPlaceholder)
       .disableAutocorrection()
-      .hidden(true)
    }
 
    var balanceInfo: M<LabelModel>.D<CurrencyLabelDT<Design>>.Combo { .init()
@@ -63,12 +61,9 @@ struct TransactBuilder<Design: DSP>: TransactModelBuilder {
       .backColor(Design.color.iconContrast)
       .cornerRadius(Design.params.cornerRadius)
       .padding(Design.params.infoFramePadding)
-      .hidden(true)
    }
 
-   var amountIputViewModel: TransactInputViewModel<Design> { .init()
-      .hidden(true)
-   }
+   var amountIputViewModel: TransactInputViewModel<Design> { .init() }
 
    var sendButton: ButtonModel { .init()
       .set(Design.state.button.inactive)
@@ -79,7 +74,6 @@ struct TransactBuilder<Design: DSP>: TransactModelBuilder {
       .title("Добавить фото")
       .image(Design.icon.attach.withTintColor(Design.color.iconBrand))
       .set(Design.state.button.brandTransparent)
-      .hidden(true)
    }
 
    var foundUsersList: StackItemsModel { .init()
@@ -104,9 +98,7 @@ struct TransactBuilder<Design: DSP>: TransactModelBuilder {
       )
    }
 
-   var transactOptionsBlock: TransactOptionsVM<Design> { .init()
-      .hidden(true)
-   }
+   var transactOptionsBlock: TransactOptionsVM<Design> { .init() }
 
    var recipientCell: SendCoinRecipentCell<Design> { .init() }
 

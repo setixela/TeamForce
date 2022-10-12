@@ -29,12 +29,16 @@
 		191571D1289F12350061510F /* PlaygroundScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191571D0289F12350061510F /* PlaygroundScene.swift */; };
 		19171F4B28AD23AE000926B1 /* HistoryViewModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19171F4A28AD23AE000926B1 /* HistoryViewModels.swift */; };
 		19171F4D28AD663F000926B1 /* TableItemsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19171F4C28AD663F000926B1 /* TableItemsModel.swift */; };
-		1918CC77286F67EB004373F3 /* BalanceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1918CC76286F67EB004373F3 /* BalanceViewModel.swift */; };
+		1918CC77286F67EB004373F3 /* BalanceScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1918CC76286F67EB004373F3 /* BalanceScene.swift */; };
 		1918CC79286F6C69004373F3 /* VerifyApiModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1918CC78286F6C69004373F3 /* VerifyApiModel.swift */; };
 		1918CC7B286F6C84004373F3 /* ProfileApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1918CC7A286F6C83004373F3 /* ProfileApiWorker.swift */; };
 		1918CC7D286F6CAC004373F3 /* GetBalanceApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1918CC7C286F6CAC004373F3 /* GetBalanceApiWorker.swift */; };
 		191B0C272865E5C1001CF3D9 /* IconBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191B0C262865E5C1001CF3D9 /* IconBuilder.swift */; };
 		191B0C292865F119001CF3D9 /* TextBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191B0C282865F119001CF3D9 /* TextBuilder.swift */; };
+		1921A13328EECABE00E41E86 /* ChallengesScenario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1921A13228EECABE00E41E86 /* ChallengesScenario.swift */; };
+		1921A13528EECAC900E41E86 /* ChallengesScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1921A13428EECAC900E41E86 /* ChallengesScene.swift */; };
+		1921A13728EECAD500E41E86 /* ChallengesWorks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1921A13628EECAD500E41E86 /* ChallengesWorks.swift */; };
+		1921A13B28EEE16A00E41E86 /* ChallengesViewModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1921A13A28EEE16A00E41E86 /* ChallengesViewModels.swift */; };
 		19221EE828C9ADC300B7B604 /* ProfileEditScenario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19221EE728C9ADC300B7B604 /* ProfileEditScenario.swift */; };
 		19221EEA28C9AF3400B7B604 /* Optional+Unwrap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19221EE928C9AF3400B7B604 /* Optional+Unwrap.swift */; };
 		19221EEC28C9B04700B7B604 /* TitledTextFieldY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19221EEB28C9B04700B7B604 /* TitledTextFieldY.swift */; };
@@ -48,6 +52,10 @@
 		19466E03289FFC040052F0AB /* IconTitleSubtitleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19466E02289FFC040052F0AB /* IconTitleSubtitleModel.swift */; };
 		194C095628759FD900D88D5B /* ViewModel+Stateable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 194C095528759FD900D88D5B /* ViewModel+Stateable.swift */; };
 		194D7B5A28B17DD4002DE840 /* WorksTests2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 194D7B5928B17DD4002DE840 /* WorksTests2.swift */; };
+		194E307C28F35DBF001E2967 /* ChallengeDetailsScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 194E307B28F35DBF001E2967 /* ChallengeDetailsScene.swift */; };
+		194E307E28F36650001E2967 /* ChallengeDetailsScenario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 194E307D28F36650001E2967 /* ChallengeDetailsScenario.swift */; };
+		194E308028F36657001E2967 /* ChallengeDetailsWorks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 194E307F28F36657001E2967 /* ChallengeDetailsWorks.swift */; };
+		194E308228F36661001E2967 /* ChallengeDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 194E308128F36661001E2967 /* ChallengeDetailsViewModel.swift */; };
 		1952EA6328A7102B003F7852 /* StateProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1952EA6228A7102B003F7852 /* StateProtocol.swift */; };
 		1952EA6528A7115D003F7852 /* StackStateBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1952EA6428A7115C003F7852 /* StackStateBuilder.swift */; };
 		1952EA6928A711F2003F7852 /* Associated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1952EA6828A711F2003F7852 /* Associated.swift */; };
@@ -65,6 +73,11 @@
 		1953DE842879FDE3000DC537 /* TransactViewModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1953DE832879FDE3000DC537 /* TransactViewModels.swift */; };
 		1953DE862879FE30000DC537 /* PickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1953DE852879FE30000DC537 /* PickerViewModel.swift */; };
 		1953DE88287B4574000DC537 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1953DE87287B4574000DC537 /* Fonts.swift */; };
+		1955878B28F6EFCD0001F734 /* ChallCommentsBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1955878A28F6EFCD0001F734 /* ChallCommentsBlock.swift */; };
+		1955878E28F733AA0001F734 /* ChallengeResultScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1955878D28F733AA0001F734 /* ChallengeResultScene.swift */; };
+		1955879028F733C50001F734 /* ChallengeResultScenario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1955878F28F733C50001F734 /* ChallengeResultScenario.swift */; };
+		1955879228F733D30001F734 /* ChallengeResultWorks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1955879128F733D30001F734 /* ChallengeResultWorks.swift */; };
+		1955879428F733DC0001F734 /* ChallengeResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1955879328F733DC0001F734 /* ChallengeResultViewModel.swift */; };
 		195870F228A8C8040075D505 /* KeyPathMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 195870F128A8C8040075D505 /* KeyPathMaker.swift */; };
 		1959F27428AA8E9700DEEE5C /* LoginWorks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1959F27328AA8E9700DEEE5C /* LoginWorks.swift */; };
 		1967509F286492780019A6DE /* Labels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1967509E286492780019A6DE /* Labels.swift */; };
@@ -76,6 +89,7 @@
 		196750B4286519660019A6DE /* ProductionAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196750B3286519660019A6DE /* ProductionAsset.swift */; };
 		196D883428ADB6EC00F4C09D /* MainScreenVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196D883328ADB6EC00F4C09D /* MainScreenVM.swift */; };
 		196D883628ADB74800F4C09D /* TabBarPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196D883528ADB74800F4C09D /* TabBarPanel.swift */; };
+		196F642228F32C37002F5187 /* ManyButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196F642128F32C37002F5187 /* ManyButtons.swift */; };
 		1977518D28A8329F006CFAF3 /* ReactiveWorks in Frameworks */ = {isa = PBXBuildFile; productRef = 1977518C28A8329F006CFAF3 /* ReactiveWorks */; };
 		1977519028A83395006CFAF3 /* SwiftCSSParser in Frameworks */ = {isa = PBXBuildFile; productRef = 1977518F28A83395006CFAF3 /* SwiftCSSParser */; };
 		19775FFE28C5922B008DF8E0 /* ImagePickingScenario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19775FFD28C5922B008DF8E0 /* ImagePickingScenario.swift */; };
@@ -197,6 +211,12 @@
 		19F15389289964D200ECF000 /* ApiUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F15388289964D200ECF000 /* ApiUseCase.swift */; };
 		19F1538E2899692D00ECF000 /* UserSearchUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F1538D2899692D00ECF000 /* UserSearchUseCase.swift */; };
 		19FF0D9028B4999000B78346 /* FeedScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FF0D8F28B4999000B78346 /* FeedScene.swift */; };
+		631995B028F53ED000EB2638 /* ChallengeCreateScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631995AF28F53ED000EB2638 /* ChallengeCreateScene.swift */; };
+		631995B228F53F6800EB2638 /* ChallengeCreateScenario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631995B128F53F6800EB2638 /* ChallengeCreateScenario.swift */; };
+		631995B428F53F7600EB2638 /* ChallengeCreateWorks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631995B328F53F7600EB2638 /* ChallengeCreateWorks.swift */; };
+		631995B628F53F8D00EB2638 /* ChallengeCreateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631995B528F53F8D00EB2638 /* ChallengeCreateViewModel.swift */; };
+		631995B828F5A4D400EB2638 /* GetSendCoinSettingsApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631995B728F5A4D400EB2638 /* GetSendCoinSettingsApiWorker.swift */; };
+		631995BA28F5A56D00EB2638 /* GetSendCoinSettingsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631995B928F5A56D00EB2638 /* GetSendCoinSettingsUseCase.swift */; };
 		63352DE7289AA69A00489F5F /* SendCoinUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63352DE6289AA69A00489F5F /* SendCoinUseCase.swift */; };
 		633FBC8428E535600071FF8C /* FeedDetailWorks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633FBC8328E535600071FF8C /* FeedDetailWorks.swift */; };
 		633FBC8628E542540071FF8C /* FeedDetailViewModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633FBC8528E542540071FF8C /* FeedDetailViewModels.swift */; };
@@ -208,6 +228,8 @@
 		635FC6BC28EBE50800826B67 /* GetLikesByTransactionApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635FC6BB28EBE50800826B67 /* GetLikesByTransactionApiWorker.swift */; };
 		635FC6BE28EBE56400826B67 /* GetLikesByTransactionUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635FC6BD28EBE56400826B67 /* GetLikesByTransactionUseCase.swift */; };
 		635FC6C028EC17B500826B67 /* ReactionsPresenters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635FC6BF28EC17B500826B67 /* ReactionsPresenters.swift */; };
+		635FC6C328EE7ACC00826B67 /* GetChallengesApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635FC6C228EE7ACC00826B67 /* GetChallengesApiWorker.swift */; };
+		635FC6C628EE7F3800826B67 /* GetChallengesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635FC6C528EE7F3800826B67 /* GetChallengesUseCase.swift */; };
 		6368D8222891508C0049EEAB /* ProfileScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6368D8212891508C0049EEAB /* ProfileScene.swift */; };
 		6368D824289168740049EEAB /* CustomCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6368D823289168740049EEAB /* CustomCellModel.swift */; };
 		6368D826289187B50049EEAB /* SendCoinApiModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6368D825289187B50049EEAB /* SendCoinApiModel.swift */; };
@@ -219,6 +241,18 @@
 		63A2234128CF797600D92615 /* GetTagsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A2234028CF797600D92615 /* GetTagsUseCase.swift */; };
 		63A2234328CF924000D92615 /* GetTagByIdApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A2234228CF923F00D92615 /* GetTagByIdApiWorker.swift */; };
 		63A2234528CF960E00D92615 /* GetTagByIdUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A2234428CF960E00D92615 /* GetTagByIdUseCase.swift */; };
+		63A37EA228EE874100DBD59F /* GetChallengeByIdApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A37EA128EE874100DBD59F /* GetChallengeByIdApiWorker.swift */; };
+		63A37EA428EE881600DBD59F /* GetChallengeByIdUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A37EA328EE881600DBD59F /* GetChallengeByIdUseCase.swift */; };
+		63A37EA628EECEBB00DBD59F /* GetChallengeContendersUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A37EA528EECEBB00DBD59F /* GetChallengeContendersUseCase.swift */; };
+		63A37EA828EECF8400DBD59F /* GetChallengeContendersApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A37EA728EECF8400DBD59F /* GetChallengeContendersApiWorker.swift */; };
+		63A37EAC28EF1B3400DBD59F /* CreateChallengeApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A37EAB28EF1B3400DBD59F /* CreateChallengeApiWorker.swift */; };
+		63A37EAE28EF1D6300DBD59F /* CreateChallengeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A37EAD28EF1D6300DBD59F /* CreateChallengeUseCase.swift */; };
+		63A37EB028F0528800DBD59F /* GetChallengeWinnersApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A37EAF28F0528800DBD59F /* GetChallengeWinnersApiWorker.swift */; };
+		63A37EB228F054F300DBD59F /* GetChallengeWinnersUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A37EB128F054F300DBD59F /* GetChallengeWinnersUseCase.swift */; };
+		63A37EB428F059D800DBD59F /* CreateChallengeReportApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A37EB328F059D800DBD59F /* CreateChallengeReportApiWorker.swift */; };
+		63A37EB628F05DDD00DBD59F /* CreateChallengeReportUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A37EB528F05DDD00DBD59F /* CreateChallengeReportUseCase.swift */; };
+		63A37EB828F3199D00DBD59F /* CheckChallengeReportApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A37EB728F3199C00DBD59F /* CheckChallengeReportApiWorker.swift */; };
+		63A37EBA28F3289900DBD59F /* CheckChallengeReportUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A37EB928F3289900DBD59F /* CheckChallengeReportUseCase.swift */; };
 		63A529F528A1F8AB004A858D /* SegmentedControlModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A529F428A1F8AA004A858D /* SegmentedControlModel.swift */; };
 		63AB070928BD4C1B00FD650F /* UpdateProfileApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AB070828BD4C1B00FD650F /* UpdateProfileApiWorker.swift */; };
 		63AB070D28BD526700FD650F /* UpdateContactApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AB070C28BD526700FD650F /* UpdateContactApiWorker.swift */; };
@@ -314,12 +348,16 @@
 		191571D0289F12350061510F /* PlaygroundScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundScene.swift; sourceTree = "<group>"; };
 		19171F4A28AD23AE000926B1 /* HistoryViewModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewModels.swift; sourceTree = "<group>"; };
 		19171F4C28AD663F000926B1 /* TableItemsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableItemsModel.swift; sourceTree = "<group>"; };
-		1918CC76286F67EB004373F3 /* BalanceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceViewModel.swift; sourceTree = "<group>"; };
+		1918CC76286F67EB004373F3 /* BalanceScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceScene.swift; sourceTree = "<group>"; };
 		1918CC78286F6C69004373F3 /* VerifyApiModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyApiModel.swift; sourceTree = "<group>"; };
 		1918CC7A286F6C83004373F3 /* ProfileApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileApiWorker.swift; sourceTree = "<group>"; };
 		1918CC7C286F6CAC004373F3 /* GetBalanceApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetBalanceApiWorker.swift; sourceTree = "<group>"; };
 		191B0C262865E5C1001CF3D9 /* IconBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconBuilder.swift; sourceTree = "<group>"; };
 		191B0C282865F119001CF3D9 /* TextBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextBuilder.swift; sourceTree = "<group>"; };
+		1921A13228EECABE00E41E86 /* ChallengesScenario.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengesScenario.swift; sourceTree = "<group>"; };
+		1921A13428EECAC900E41E86 /* ChallengesScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengesScene.swift; sourceTree = "<group>"; };
+		1921A13628EECAD500E41E86 /* ChallengesWorks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengesWorks.swift; sourceTree = "<group>"; };
+		1921A13A28EEE16A00E41E86 /* ChallengesViewModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengesViewModels.swift; sourceTree = "<group>"; };
 		19221EE728C9ADC300B7B604 /* ProfileEditScenario.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditScenario.swift; sourceTree = "<group>"; };
 		19221EE928C9AF3400B7B604 /* Optional+Unwrap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Optional+Unwrap.swift"; sourceTree = "<group>"; };
 		19221EEB28C9B04700B7B604 /* TitledTextFieldY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitledTextFieldY.swift; sourceTree = "<group>"; };
@@ -333,6 +371,10 @@
 		19466E02289FFC040052F0AB /* IconTitleSubtitleModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconTitleSubtitleModel.swift; sourceTree = "<group>"; };
 		194C095528759FD900D88D5B /* ViewModel+Stateable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewModel+Stateable.swift"; sourceTree = "<group>"; };
 		194D7B5928B17DD4002DE840 /* WorksTests2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorksTests2.swift; sourceTree = "<group>"; };
+		194E307B28F35DBF001E2967 /* ChallengeDetailsScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeDetailsScene.swift; sourceTree = "<group>"; };
+		194E307D28F36650001E2967 /* ChallengeDetailsScenario.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeDetailsScenario.swift; sourceTree = "<group>"; };
+		194E307F28F36657001E2967 /* ChallengeDetailsWorks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeDetailsWorks.swift; sourceTree = "<group>"; };
+		194E308128F36661001E2967 /* ChallengeDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeDetailsViewModel.swift; sourceTree = "<group>"; };
 		1952EA6228A7102B003F7852 /* StateProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateProtocol.swift; sourceTree = "<group>"; };
 		1952EA6428A7115C003F7852 /* StackStateBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackStateBuilder.swift; sourceTree = "<group>"; };
 		1952EA6828A711F2003F7852 /* Associated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Associated.swift; sourceTree = "<group>"; };
@@ -349,6 +391,11 @@
 		1953DE832879FDE3000DC537 /* TransactViewModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactViewModels.swift; sourceTree = "<group>"; };
 		1953DE852879FE30000DC537 /* PickerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerViewModel.swift; sourceTree = "<group>"; };
 		1953DE87287B4574000DC537 /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
+		1955878A28F6EFCD0001F734 /* ChallCommentsBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallCommentsBlock.swift; sourceTree = "<group>"; };
+		1955878D28F733AA0001F734 /* ChallengeResultScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeResultScene.swift; sourceTree = "<group>"; };
+		1955878F28F733C50001F734 /* ChallengeResultScenario.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeResultScenario.swift; sourceTree = "<group>"; };
+		1955879128F733D30001F734 /* ChallengeResultWorks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeResultWorks.swift; sourceTree = "<group>"; };
+		1955879328F733DC0001F734 /* ChallengeResultViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeResultViewModel.swift; sourceTree = "<group>"; };
 		195870F128A8C8040075D505 /* KeyPathMaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyPathMaker.swift; sourceTree = "<group>"; };
 		1959F27328AA8E9700DEEE5C /* LoginWorks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginWorks.swift; sourceTree = "<group>"; };
 		1967509E286492780019A6DE /* Labels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Labels.swift; sourceTree = "<group>"; };
@@ -360,6 +407,7 @@
 		196750B3286519660019A6DE /* ProductionAsset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductionAsset.swift; sourceTree = "<group>"; };
 		196D883328ADB6EC00F4C09D /* MainScreenVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenVM.swift; sourceTree = "<group>"; };
 		196D883528ADB74800F4C09D /* TabBarPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarPanel.swift; sourceTree = "<group>"; };
+		196F642128F32C37002F5187 /* ManyButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManyButtons.swift; sourceTree = "<group>"; };
 		19775FFD28C5922B008DF8E0 /* ImagePickingScenario.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickingScenario.swift; sourceTree = "<group>"; };
 		1977BE5428A7238F00D554EA /* TextFieldStates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldStates.swift; sourceTree = "<group>"; };
 		1977BE5728A7343400D554EA /* InputCheckers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputCheckers.swift; sourceTree = "<group>"; };
@@ -477,6 +525,12 @@
 		19F15388289964D200ECF000 /* ApiUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiUseCase.swift; sourceTree = "<group>"; };
 		19F1538D2899692D00ECF000 /* UserSearchUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSearchUseCase.swift; sourceTree = "<group>"; };
 		19FF0D8F28B4999000B78346 /* FeedScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedScene.swift; sourceTree = "<group>"; };
+		631995AF28F53ED000EB2638 /* ChallengeCreateScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeCreateScene.swift; sourceTree = "<group>"; };
+		631995B128F53F6800EB2638 /* ChallengeCreateScenario.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeCreateScenario.swift; sourceTree = "<group>"; };
+		631995B328F53F7600EB2638 /* ChallengeCreateWorks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeCreateWorks.swift; sourceTree = "<group>"; };
+		631995B528F53F8D00EB2638 /* ChallengeCreateViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeCreateViewModel.swift; sourceTree = "<group>"; };
+		631995B728F5A4D400EB2638 /* GetSendCoinSettingsApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSendCoinSettingsApiWorker.swift; sourceTree = "<group>"; };
+		631995B928F5A56D00EB2638 /* GetSendCoinSettingsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSendCoinSettingsUseCase.swift; sourceTree = "<group>"; };
 		63352DE6289AA69A00489F5F /* SendCoinUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendCoinUseCase.swift; sourceTree = "<group>"; };
 		633FBC8328E535600071FF8C /* FeedDetailWorks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedDetailWorks.swift; sourceTree = "<group>"; };
 		633FBC8528E542540071FF8C /* FeedDetailViewModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedDetailViewModels.swift; sourceTree = "<group>"; };
@@ -488,6 +542,8 @@
 		635FC6BB28EBE50800826B67 /* GetLikesByTransactionApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLikesByTransactionApiWorker.swift; sourceTree = "<group>"; };
 		635FC6BD28EBE56400826B67 /* GetLikesByTransactionUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLikesByTransactionUseCase.swift; sourceTree = "<group>"; };
 		635FC6BF28EC17B500826B67 /* ReactionsPresenters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionsPresenters.swift; sourceTree = "<group>"; };
+		635FC6C228EE7ACC00826B67 /* GetChallengesApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetChallengesApiWorker.swift; sourceTree = "<group>"; };
+		635FC6C528EE7F3800826B67 /* GetChallengesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetChallengesUseCase.swift; sourceTree = "<group>"; };
 		6368D8212891508C0049EEAB /* ProfileScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileScene.swift; sourceTree = "<group>"; };
 		6368D823289168740049EEAB /* CustomCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCellModel.swift; sourceTree = "<group>"; };
 		6368D825289187B50049EEAB /* SendCoinApiModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendCoinApiModel.swift; sourceTree = "<group>"; };
@@ -499,6 +555,18 @@
 		63A2234028CF797600D92615 /* GetTagsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTagsUseCase.swift; sourceTree = "<group>"; };
 		63A2234228CF923F00D92615 /* GetTagByIdApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTagByIdApiWorker.swift; sourceTree = "<group>"; };
 		63A2234428CF960E00D92615 /* GetTagByIdUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTagByIdUseCase.swift; sourceTree = "<group>"; };
+		63A37EA128EE874100DBD59F /* GetChallengeByIdApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetChallengeByIdApiWorker.swift; sourceTree = "<group>"; };
+		63A37EA328EE881600DBD59F /* GetChallengeByIdUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetChallengeByIdUseCase.swift; sourceTree = "<group>"; };
+		63A37EA528EECEBB00DBD59F /* GetChallengeContendersUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetChallengeContendersUseCase.swift; sourceTree = "<group>"; };
+		63A37EA728EECF8400DBD59F /* GetChallengeContendersApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetChallengeContendersApiWorker.swift; sourceTree = "<group>"; };
+		63A37EAB28EF1B3400DBD59F /* CreateChallengeApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateChallengeApiWorker.swift; sourceTree = "<group>"; };
+		63A37EAD28EF1D6300DBD59F /* CreateChallengeUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateChallengeUseCase.swift; sourceTree = "<group>"; };
+		63A37EAF28F0528800DBD59F /* GetChallengeWinnersApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetChallengeWinnersApiWorker.swift; sourceTree = "<group>"; };
+		63A37EB128F054F300DBD59F /* GetChallengeWinnersUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetChallengeWinnersUseCase.swift; sourceTree = "<group>"; };
+		63A37EB328F059D800DBD59F /* CreateChallengeReportApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateChallengeReportApiWorker.swift; sourceTree = "<group>"; };
+		63A37EB528F05DDD00DBD59F /* CreateChallengeReportUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateChallengeReportUseCase.swift; sourceTree = "<group>"; };
+		63A37EB728F3199C00DBD59F /* CheckChallengeReportApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckChallengeReportApiWorker.swift; sourceTree = "<group>"; };
+		63A37EB928F3289900DBD59F /* CheckChallengeReportUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckChallengeReportUseCase.swift; sourceTree = "<group>"; };
 		63A529F428A1F8AA004A858D /* SegmentedControlModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentedControlModel.swift; sourceTree = "<group>"; };
 		63AB070828BD4C1B00FD650F /* UpdateProfileApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateProfileApiWorker.swift; sourceTree = "<group>"; };
 		63AB070C28BD526700FD650F /* UpdateContactApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateContactApiWorker.swift; sourceTree = "<group>"; };
@@ -706,6 +774,25 @@
 			path = Main;
 			sourceTree = "<group>";
 		};
+		1921A12F28EEC93300E41E86 /* Challenges */ = {
+			isa = PBXGroup;
+			children = (
+				1921A13428EECAC900E41E86 /* ChallengesScene.swift */,
+				1921A13228EECABE00E41E86 /* ChallengesScenario.swift */,
+				1921A13628EECAD500E41E86 /* ChallengesWorks.swift */,
+				1921A13928EEE15100E41E86 /* ViewModels */,
+			);
+			path = Challenges;
+			sourceTree = "<group>";
+		};
+		1921A13928EEE15100E41E86 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				1921A13A28EEE16A00E41E86 /* ChallengesViewModels.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
 		19221EED28CB17CD00B7B604 /* EditProfile */ = {
 			isa = PBXGroup;
 			children = (
@@ -736,6 +823,26 @@
 				19D08356286F41B200F75E4A /* DoubleLabelPairModel.swift */,
 			);
 			path = LabelModels;
+			sourceTree = "<group>";
+		};
+		194E307A28F35D90001E2967 /* ChallengeDetails */ = {
+			isa = PBXGroup;
+			children = (
+				194E307B28F35DBF001E2967 /* ChallengeDetailsScene.swift */,
+				194E307D28F36650001E2967 /* ChallengeDetailsScenario.swift */,
+				194E307F28F36657001E2967 /* ChallengeDetailsWorks.swift */,
+				194E308328F3666B001E2967 /* ViewModels */,
+			);
+			path = ChallengeDetails;
+			sourceTree = "<group>";
+		};
+		194E308328F3666B001E2967 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				194E308128F36661001E2967 /* ChallengeDetailsViewModel.swift */,
+				1955878A28F6EFCD0001F734 /* ChallCommentsBlock.swift */,
+			);
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 		1952EA5E28A70FEE003F7852 /* States */ = {
@@ -775,6 +882,10 @@
 				197A361728BBC9AC006E44C1 /* MainScenario.swift */,
 				197A361928BBC9B3006E44C1 /* MainWorks.swift */,
 				197A360328B90BD3006E44C1 /* MainSceneEvents.swift */,
+				1955878C28F7337E0001F734 /* ChallengeResult */,
+				1921A12F28EEC93300E41E86 /* Challenges */,
+				194E307A28F35D90001E2967 /* ChallengeDetails */,
+				631995AE28F53EA800EB2638 /* ChallengeCreate */,
 				19ACB3CB28A599DF00B5AD71 /* Balance */,
 				19ACB3CD28A599ED00B5AD71 /* Feed */,
 				63BB2C2728E3E78300C1E3DB /* FeedDetail */,
@@ -791,6 +902,17 @@
 				1953DE87287B4574000DC537 /* Fonts.swift */,
 			);
 			path = Typography;
+			sourceTree = "<group>";
+		};
+		1955878C28F7337E0001F734 /* ChallengeResult */ = {
+			isa = PBXGroup;
+			children = (
+				1955878D28F733AA0001F734 /* ChallengeResultScene.swift */,
+				1955878F28F733C50001F734 /* ChallengeResultScenario.swift */,
+				1955879128F733D30001F734 /* ChallengeResultWorks.swift */,
+				1955879328F733DC0001F734 /* ChallengeResultViewModel.swift */,
+			);
+			path = ChallengeResult;
 			sourceTree = "<group>";
 		};
 		195870F328A8CDD90075D505 /* Assets */ = {
@@ -836,6 +958,14 @@
 				191571D0289F12350061510F /* PlaygroundScene.swift */,
 			);
 			path = Scenes;
+			sourceTree = "<group>";
+		};
+		196F642028F32C2B002F5187 /* Experimental */ = {
+			isa = PBXGroup;
+			children = (
+				196F642128F32C37002F5187 /* ManyButtons.swift */,
+			);
+			path = Experimental;
 			sourceTree = "<group>";
 		};
 		1977518B28A83281006CFAF3 /* Frameworks */ = {
@@ -1048,7 +1178,7 @@
 		19ACB3CB28A599DF00B5AD71 /* Balance */ = {
 			isa = PBXGroup;
 			children = (
-				1918CC76286F67EB004373F3 /* BalanceViewModel.swift */,
+				1918CC76286F67EB004373F3 /* BalanceScene.swift */,
 				63AB071A28C0E3AF00FD650F /* BalanceScenario.swift */,
 				63AB071C28C0E44300FD650F /* BalanceWorks.swift */,
 			);
@@ -1164,6 +1294,7 @@
 		19C1E9A428610E6F00E7976D /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				196F642028F32C2B002F5187 /* Experimental */,
 				19A9BE7728C283650099F8EA /* ModelBuilder.swift */,
 				19A9BE7428C255800099F8EA /* Scenes */,
 				19A9232D28B2DB1B0080D491 /* Designable */,
@@ -1240,6 +1371,7 @@
 		19EF32AC287CE8140078F53D /* ApiModels */ = {
 			isa = PBXGroup;
 			children = (
+				635FC6C128EE7A8F00826B67 /* Challenge */,
 				19AE3AF12869230C00A0C6E4 /* AuthApiWorker.swift */,
 				1918CC7C286F6CAC004373F3 /* GetBalanceApiWorker.swift */,
 				1918CC7A286F6C83004373F3 /* ProfileApiWorker.swift */,
@@ -1273,6 +1405,7 @@
 				63BB2C1D28E14AAF00C1E3DB /* UpdateCommentApiWorker.swift */,
 				63BB2C2128E150CA00C1E3DB /* DeleteCommentApiWorker.swift */,
 				635FC6BB28EBE50800826B67 /* GetLikesByTransactionApiWorker.swift */,
+				631995B728F5A4D400EB2638 /* GetSendCoinSettingsApiWorker.swift */,
 			);
 			path = ApiModels;
 			sourceTree = "<group>";
@@ -1288,6 +1421,7 @@
 		19F153822899647100ECF000 /* ApiUseCases */ = {
 			isa = PBXGroup;
 			children = (
+				635FC6C428EE7F1E00826B67 /* Challenge */,
 				19F153832899649900ECF000 /* LoadProfileUseCase.swift */,
 				19F15385289964AA00ECF000 /* LogoutUseCase.swift */,
 				198FE1C82899994A00BAF1A5 /* LoginUseCase.swift */,
@@ -1321,6 +1455,7 @@
 				63BB2C1F28E14BFA00C1E3DB /* UpdateCommentUseCase.swift */,
 				63BB2C2328E1513000C1E3DB /* DeleteCommentUseCase.swift */,
 				635FC6BD28EBE56400826B67 /* GetLikesByTransactionUseCase.swift */,
+				631995B928F5A56D00EB2638 /* GetSendCoinSettingsUseCase.swift */,
 			);
 			path = ApiUseCases;
 			sourceTree = "<group>";
@@ -1334,6 +1469,45 @@
 				19F153822899647100ECF000 /* ApiUseCases */,
 			);
 			path = UseCasePacks;
+			sourceTree = "<group>";
+		};
+		631995AE28F53EA800EB2638 /* ChallengeCreate */ = {
+			isa = PBXGroup;
+			children = (
+				631995AF28F53ED000EB2638 /* ChallengeCreateScene.swift */,
+				631995B128F53F6800EB2638 /* ChallengeCreateScenario.swift */,
+				631995B328F53F7600EB2638 /* ChallengeCreateWorks.swift */,
+				631995B528F53F8D00EB2638 /* ChallengeCreateViewModel.swift */,
+			);
+			path = ChallengeCreate;
+			sourceTree = "<group>";
+		};
+		635FC6C128EE7A8F00826B67 /* Challenge */ = {
+			isa = PBXGroup;
+			children = (
+				635FC6C228EE7ACC00826B67 /* GetChallengesApiWorker.swift */,
+				63A37EA128EE874100DBD59F /* GetChallengeByIdApiWorker.swift */,
+				63A37EA728EECF8400DBD59F /* GetChallengeContendersApiWorker.swift */,
+				63A37EAB28EF1B3400DBD59F /* CreateChallengeApiWorker.swift */,
+				63A37EAF28F0528800DBD59F /* GetChallengeWinnersApiWorker.swift */,
+				63A37EB328F059D800DBD59F /* CreateChallengeReportApiWorker.swift */,
+				63A37EB728F3199C00DBD59F /* CheckChallengeReportApiWorker.swift */,
+			);
+			path = Challenge;
+			sourceTree = "<group>";
+		};
+		635FC6C428EE7F1E00826B67 /* Challenge */ = {
+			isa = PBXGroup;
+			children = (
+				635FC6C528EE7F3800826B67 /* GetChallengesUseCase.swift */,
+				63A37EA328EE881600DBD59F /* GetChallengeByIdUseCase.swift */,
+				63A37EA528EECEBB00DBD59F /* GetChallengeContendersUseCase.swift */,
+				63A37EAD28EF1D6300DBD59F /* CreateChallengeUseCase.swift */,
+				63A37EB128F054F300DBD59F /* GetChallengeWinnersUseCase.swift */,
+				63A37EB528F05DDD00DBD59F /* CreateChallengeReportUseCase.swift */,
+				63A37EB928F3289900DBD59F /* CheckChallengeReportUseCase.swift */,
+			);
+			path = Challenge;
 			sourceTree = "<group>";
 		};
 		63BB2C2728E3E78300C1E3DB /* FeedDetail */ = {
@@ -1485,9 +1659,12 @@
 				63BB2C1E28E14AAF00C1E3DB /* UpdateCommentApiWorker.swift in Sources */,
 				63BB2C2428E1513000C1E3DB /* DeleteCommentUseCase.swift in Sources */,
 				197A771828AD90800082CD81 /* XelaLog.swift in Sources */,
+				631995B028F53ED000EB2638 /* ChallengeCreateScene.swift in Sources */,
 				19A9BE7E28C2EB7D0099F8EA /* TransactSendErrorViewModel.swift in Sources */,
+				631995B628F53F8D00EB2638 /* ChallengeCreateViewModel.swift in Sources */,
 				19A9232F28B2E34E0080D491 /* CurrencyLabelDT.swift in Sources */,
 				196D883428ADB6EC00F4C09D /* MainScreenVM.swift in Sources */,
+				631995B428F53F7600EB2638 /* ChallengeCreateWorks.swift in Sources */,
 				19AE3AEF28691B2E00A0C6E4 /* MainScene.swift in Sources */,
 				197A2DA428A9BF4B00190656 /* Combos.swift in Sources */,
 				19F15389289964D200ECF000 /* ApiUseCase.swift in Sources */,
@@ -1502,6 +1679,7 @@
 				63D419F128AA825F0024E22C /* GetPeriodsUseCase.swift in Sources */,
 				63E7A73F28AF9E8000FB2C80 /* ReadyWorks.swift in Sources */,
 				190D052328C7C1DC00466893 /* ProfileBuilder.swift in Sources */,
+				635FC6C328EE7ACC00826B67 /* GetChallengesApiWorker.swift in Sources */,
 				1953DE88287B4574000DC537 /* Fonts.swift in Sources */,
 				197A2DA228A9BF4B00190656 /* Combos+Configure.swift in Sources */,
 				199E321628BD3A790088BA71 /* TransactScene.swift in Sources */,
@@ -1514,12 +1692,16 @@
 				196750B22865190D0019A6DE /* ImageViewModel.swift in Sources */,
 				633FBC8628E542540071FF8C /* FeedDetailViewModels.swift in Sources */,
 				63D419E928A5109E0024E22C /* GetUsersListUseCase.swift in Sources */,
+				631995B828F5A4D400EB2638 /* GetSendCoinSettingsApiWorker.swift in Sources */,
 				197A771A28AD90B30082CD81 /* Presenting.swift in Sources */,
 				19221EF828CE262A00B7B604 /* WorkingPlaceViewModels.swift in Sources */,
+				1921A13528EECAC900E41E86 /* ChallengesScene.swift in Sources */,
 				63D419ED28AA56570024E22C /* GetFeedUseCase.swift in Sources */,
 				1977BE5528A7238F00D554EA /* TextFieldStates.swift in Sources */,
 				63BB2C2928E3E7B600C1E3DB /* FeedDetailScenario.swift in Sources */,
+				1921A13728EECAD500E41E86 /* ChallengesWorks.swift in Sources */,
 				191571D1289F12350061510F /* PlaygroundScene.swift in Sources */,
+				1921A13B28EEE16A00E41E86 /* ChallengesViewModels.swift in Sources */,
 				19221EEA28C9AF3400B7B604 /* Optional+Unwrap.swift in Sources */,
 				199C4B6628624B4C008AD6FD /* Spacer.swift in Sources */,
 				63578E5E28ABA2E500423957 /* CancelTransactionByIdUseCase.swift in Sources */,
@@ -1533,6 +1715,7 @@
 				19A9BE7828C283650099F8EA /* ModelBuilder.swift in Sources */,
 				19171F4B28AD23AE000926B1 /* HistoryViewModels.swift in Sources */,
 				19CAB9D128B4265C00A0A3B1 /* TransactOptionsVM.swift in Sources */,
+				194E308228F36661001E2967 /* ChallengeDetailsViewModel.swift in Sources */,
 				197A361828BBC9AC006E44C1 /* MainScenario.swift in Sources */,
 				199E321428BC1A560088BA71 /* String+DateFormat.swift in Sources */,
 				19C306D828ADF6C2002D5124 /* HistoryCell.swift in Sources */,
@@ -1567,12 +1750,14 @@
 				63AB071128BD6B0F00FD650F /* ProfileWorks.swift in Sources */,
 				63E1916D2889519E000FD312 /* BadgeModel.swift in Sources */,
 				19C1E9A328610E4E00E7976D /* MainRouter.swift in Sources */,
+				63A37EAE28EF1D6300DBD59F /* CreateChallengeUseCase.swift in Sources */,
 				19A9BE7328C255690099F8EA /* TransactBuilder.swift in Sources */,
 				19221EF528CE1D1B00B7B604 /* EditContactsViewModels.swift in Sources */,
 				1953CF0428E8DF8500C670A6 /* InternetRechability.swift in Sources */,
 				19A73BEB28A4510E000B74CF /* BadgedViewModel.swift in Sources */,
 				198BBEEE28B698040006CD30 /* LoadCsrfTokenUseCase.swift in Sources */,
 				198FE1D02899E0BF00BAF1A5 /* IsEmpty.swift in Sources */,
+				631995BA28F5A56D00EB2638 /* GetSendCoinSettingsUseCase.swift in Sources */,
 				63BB2C2028E14BFA00C1E3DB /* UpdateCommentUseCase.swift in Sources */,
 				19AE3AF22869230C00A0C6E4 /* AuthApiWorker.swift in Sources */,
 				195870F228A8C8040075D505 /* KeyPathMaker.swift in Sources */,
@@ -1606,18 +1791,23 @@
 				63AD689128D0E59A00675C69 /* GetProfileById.swift in Sources */,
 				196750A6286516F40019A6DE /* LoginScene.swift in Sources */,
 				19017B6728A697DF00B06345 /* AligningModels.swift in Sources */,
+				63A37EB628F05DDD00DBD59F /* CreateChallengeReportUseCase.swift in Sources */,
 				6368D826289187B50049EEAB /* SendCoinApiModel.swift in Sources */,
 				63AB072128C8048C00FD650F /* CreateFewContactsApiWorker.swift in Sources */,
+				196F642228F32C37002F5187 /* ManyButtons.swift in Sources */,
+				1955879428F733DC0001F734 /* ChallengeResultViewModel.swift in Sources */,
 				1918CC7D286F6CAC004373F3 /* GetBalanceApiWorker.swift in Sources */,
 				1952EA6328A7102B003F7852 /* StateProtocol.swift in Sources */,
 				19A9BE8028C307000099F8EA /* Queue.swift in Sources */,
 				19D08357286F41B200F75E4A /* DoubleLabelPairModel.swift in Sources */,
 				19B39E5928D341B900BB2C77 /* TagList.swift in Sources */,
 				1952EA6D28A71537003F7852 /* ButtonElements.swift in Sources */,
+				635FC6C628EE7F3800826B67 /* GetChallengesUseCase.swift in Sources */,
 				19DD3D95288766860085CDA8 /* LabelCellModel.swift in Sources */,
 				197A361A28BBC9B3006E44C1 /* MainWorks.swift in Sources */,
 				197A771C28AD91E20082CD81 /* HistoryPresenters.swift in Sources */,
 				1953CF0628EAC9FB00C670A6 /* HashTagsScrollModel.swift in Sources */,
+				631995B228F53F6800EB2638 /* ChallengeCreateScenario.swift in Sources */,
 				63CFA196289C38A9000E4D1E /* GetTransactionsApiWorker.swift in Sources */,
 				19221EEC28C9B04700B7B604 /* TitledTextFieldY.swift in Sources */,
 				197A2DA328A9BF4B00190656 /* Combos+Init.swift in Sources */,
@@ -1629,11 +1819,14 @@
 				19CF792828A54D60001531B8 /* Config.swift in Sources */,
 				6368D824289168740049EEAB /* CustomCellModel.swift in Sources */,
 				197A361628BBB282006E44C1 /* String+Random.swift in Sources */,
-				1918CC77286F67EB004373F3 /* BalanceViewModel.swift in Sources */,
+				1918CC77286F67EB004373F3 /* BalanceScene.swift in Sources */,
 				19D08361286F430B00F75E4A /* Designable.swift in Sources */,
 				63578E5A28AB8F6000423957 /* GetTransactionsByPeriodUseCase.swift in Sources */,
 				6368D82A2894091B0049EEAB /* TransactInputViewModel.swift in Sources */,
+				194E307E28F36650001E2967 /* ChallengeDetailsScenario.swift in Sources */,
 				1953CEFC28E89FEE00C670A6 /* FeedDetailUserInfoBlock.swift in Sources */,
+				63A37EA428EE881600DBD59F /* GetChallengeByIdUseCase.swift in Sources */,
+				63A37EB228F054F300DBD59F /* GetChallengeWinnersUseCase.swift in Sources */,
 				63E7A74B28AFCB1800FB2C80 /* UpdateProfileImageApiWorker.swift in Sources */,
 				1918CC79286F6C69004373F3 /* VerifyApiModel.swift in Sources */,
 				63EB469928AC35A30070A271 /* HistoryWorks.swift in Sources */,
@@ -1665,10 +1858,12 @@
 				197A361228BBB221006E44C1 /* FeedFilterButtons.swift in Sources */,
 				19B39E5B28D3433400BB2C77 /* TagsOptionsPanel.swift in Sources */,
 				190C1D16285D15FF00FB3518 /* ViewController.swift in Sources */,
+				1955878E28F733AA0001F734 /* ChallengeResultScene.swift in Sources */,
 				19ECD54128623D1F001765F6 /* LabelModel.swift in Sources */,
 				196750B0286518F80019A6DE /* DoubleStacksModel.swift in Sources */,
 				198FE1CC28999A2600BAF1A5 /* NilBlocker.swift in Sources */,
 				197A360828BADC8D006E44C1 /* FeedScenario.swift in Sources */,
+				1955878B28F6EFCD0001F734 /* ChallCommentsBlock.swift in Sources */,
 				19A9BE7A28C2B5C90099F8EA /* Main.swift in Sources */,
 				199C4B6B2863292F008AD6FD /* ButtonModel.swift in Sources */,
 				63AD437B28992045000511B9 /* TransactionStatusViewModel.swift in Sources */,
@@ -1677,6 +1872,7 @@
 				19ECD54328623D30001765F6 /* StackModel.swift in Sources */,
 				19017B6D28A698BC00B06345 /* TitleSubtitleCaptionY.swift in Sources */,
 				63D419EB28AA500A0024E22C /* GetFeedsApiWorker.swift in Sources */,
+				63A37EAC28EF1B3400DBD59F /* CreateChallengeApiWorker.swift in Sources */,
 				19A9BE7628C283270099F8EA /* CommonModelBuilder.swift in Sources */,
 				1953CF0028E8A19A00C670A6 /* FeedReactionsBlock.swift in Sources */,
 				19D7BE9928B3E55F00C95053 /* ScrollViewModels.swift in Sources */,
@@ -1687,6 +1883,7 @@
 				19B2C5D428B7D37A00E7B47D /* Shadow.swift in Sources */,
 				1953CF0228E8A1C500C670A6 /* FeedDetailsBlock.swift in Sources */,
 				190C1D12285D15FF00FB3518 /* AppDelegate.swift in Sources */,
+				63A37EA628EECEBB00DBD59F /* GetChallengeContendersUseCase.swift in Sources */,
 				19FF0D9028B4999000B78346 /* FeedScene.swift in Sources */,
 				190C1D14285D15FF00FB3518 /* SceneDelegate.swift in Sources */,
 				1953DE812879FC55000DC537 /* SearchUserApiWorker.swift in Sources */,
@@ -1695,9 +1892,12 @@
 				63E7A74D28AFCBF400FB2C80 /* UpdateProfileImageUseCase.swift in Sources */,
 				63AD132828A3B06C00CFF75B /* GetTransactionByIdUseCase.swift in Sources */,
 				63AB071D28C0E44300FD650F /* BalanceWorks.swift in Sources */,
+				194E308028F36657001E2967 /* ChallengeDetailsWorks.swift in Sources */,
 				1952EA6928A711F2003F7852 /* Associated.swift in Sources */,
 				19D08353286F403400F75E4A /* SideBarModel.swift in Sources */,
 				196D883628ADB74800F4C09D /* TabBarPanel.swift in Sources */,
+				1955879228F733D30001F734 /* ChallengeResultWorks.swift in Sources */,
+				63A37EBA28F3289900DBD59F /* CheckChallengeReportUseCase.swift in Sources */,
 				19CAB9C828B41C6500A0A3B1 /* LabelSwitcher.swift in Sources */,
 				1999B6FE28A2F5D300D3570B /* DataToDecodableParser.swift in Sources */,
 				19B39E5F28D343B300BB2C77 /* SelectWrapper.swift in Sources */,
@@ -1711,25 +1911,33 @@
 				197A360428B90BD3006E44C1 /* MainSceneEvents.swift in Sources */,
 				19C1E98C285F426B00E7976D /* EndpointProtocol.swift in Sources */,
 				196750B4286519660019A6DE /* ProductionAsset.swift in Sources */,
+				194E307C28F35DBF001E2967 /* ChallengeDetailsScene.swift in Sources */,
 				1918CC7B286F6C84004373F3 /* ProfileApiWorker.swift in Sources */,
 				63BB2C1428E10D1600C1E3DB /* FeedDetailScene.swift in Sources */,
 				190991E628AA9D2A00371909 /* VerifyCodeUseCase.swift in Sources */,
 				197A360A28BADC95006E44C1 /* FeedWorks.swift in Sources */,
 				63BB2C1A28E1384700C1E3DB /* CreateCommentApiWorker.swift in Sources */,
+				63A37EB028F0528800DBD59F /* GetChallengeWinnersApiWorker.swift in Sources */,
 				19A8229828A9305D0081D385 /* UIEdgeInsets+Padding.swift in Sources */,
 				19466E03289FFC040052F0AB /* IconTitleSubtitleModel.swift in Sources */,
 				19EE849028AB20CE00D862EE /* DoubleStacksBrandedVM.swift in Sources */,
 				198BBEF028B69C810006CD30 /* LoadBothTokensUseCase.swift in Sources */,
 				19D0835D286F428600F75E4A /* BarButtonModel.swift in Sources */,
 				63BB2C2228E150CA00C1E3DB /* DeleteCommentApiWorker.swift in Sources */,
+				63A37EB828F3199D00DBD59F /* CheckChallengeReportApiWorker.swift in Sources */,
 				63AB070928BD4C1B00FD650F /* UpdateProfileApiWorker.swift in Sources */,
 				196750AC2865189C0019A6DE /* TextFieldModel.swift in Sources */,
+				1921A13328EECABE00E41E86 /* ChallengesScenario.swift in Sources */,
 				63BB2C0E28DA179D00C1E3DB /* PressLikeUseCase.swift in Sources */,
+				63A37EB428F059D800DBD59F /* CreateChallengeReportApiWorker.swift in Sources */,
+				63A37EA828EECF8400DBD59F /* GetChallengeContendersApiWorker.swift in Sources */,
 				63AB071B28C0E3AF00FD650F /* BalanceScenario.swift in Sources */,
+				63A37EA228EE874100DBD59F /* GetChallengeByIdApiWorker.swift in Sources */,
 				63E7A74728AFBDE500FB2C80 /* GetPeriodsFromDateUseCase.swift in Sources */,
 				6368D8222891508C0049EEAB /* ProfileScene.swift in Sources */,
 				198FE1C92899994A00BAF1A5 /* LoginUseCase.swift in Sources */,
 				63BB2C1628E128C000C1E3DB /* GetCommentsApiWorker.swift in Sources */,
+				1955879028F733C50001F734 /* ChallengeResultScenario.swift in Sources */,
 				19A9BE6F28C1B2A20099F8EA /* PickedImagePanel.swift in Sources */,
 				1952EA7128A718AE003F7852 /* Params.swift in Sources */,
 			);

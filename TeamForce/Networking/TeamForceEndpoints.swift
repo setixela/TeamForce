@@ -386,4 +386,95 @@ enum TeamForceEndpoints {
 
       let jsonData: Data?
    }
+   
+   struct GetChallenges: EndpointProtocol {
+      let method = HTTPMethod.get
+      
+      var endPoint: String { urlBase + "/challenges/" }
+      
+      var headers: [String : String]
+   }
+   
+   struct GetChallengeById: EndpointProtocol {
+      let method = HTTPMethod.get
+      
+      var endPoint: String = urlBase + "/challenges/"
+      
+      var headers: [String : String]
+      
+      init(id: String, headers: [String : String]) {
+         endPoint = endPoint + id + "/"
+         self.headers = headers
+      }
+   }
+   
+   struct GetChallengeContenders: EndpointProtocol {
+      let method = HTTPMethod.get
+      
+      var endPoint: String = urlBase + "/challenge-contenders/"
+      
+      let headers: [String : String]
+      
+      init(id: String, headers: [String : String]) {
+         endPoint = endPoint + id + "/"
+         self.headers = headers
+      }
+   }
+   
+   struct CreateChallenge: EndpointProtocol {
+      let method = HTTPMethod.post
+      
+      var endPoint: String { urlBase + "/create-challenge/" }
+      
+      let headers: [String : String]
+      
+      var body: [String : Any]
+   }
+   
+   struct ChallengeWinners: EndpointProtocol {
+      let method = HTTPMethod.get
+      
+      var endPoint: String = urlBase + "/challenge-winners/"
+      
+      let headers: [String : String]
+      
+      init(id: String, headers: [String : String]) {
+         endPoint = endPoint + id + "/"
+         self.headers = headers
+      }
+   }
+   
+   struct CreateChallengeReport: EndpointProtocol {
+      let method = HTTPMethod.post
+      
+      var endPoint: String { urlBase + "/create-challenge-report/" }
+      
+      let headers: [String : String]
+      
+      let body: [String : Any]
+   }
+   
+   struct CheckChallengeReport: EndpointProtocol {
+      let method = HTTPMethod.put
+      
+      var endPoint: String = urlBase + "/check-challenge-report/"
+      
+      let headers: [String : String]
+      
+      let jsonData: Data?
+      
+      init(id: String, headers: [String : String], jsonData: Data?) {
+         endPoint = endPoint + id + "/"
+         self.headers = headers
+         self.jsonData = jsonData
+      }
+   }
+   
+   struct SendCoinSettings: EndpointProtocol {
+      let method = HTTPMethod.get
+      
+      var endPoint: String { urlBase + "/send-coins-settings/" }
+      
+      let headers: [String : String]
+   }
 }

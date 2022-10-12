@@ -43,9 +43,9 @@ final class FeedDetailScene<Asset: AssetProtocol>:
 
       guard let inputValue else { return }
 
-      scenario.start()
-
       feedDetailVM.setState(.initial(inputValue))
+
+      scenario.start()
    }
 
    private var state = FeedDetailSceneState.initial

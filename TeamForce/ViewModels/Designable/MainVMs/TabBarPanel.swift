@@ -15,16 +15,16 @@ final class TabBarPanel<Design: DesignProtocol>: BaseViewModel<StackViewExtended
 
    // MARK: - View Models
 
-   let button1: ButtonModelModable = BottomPanelVMBuilder<Design>.button
+   let button1: ButtonSelfModable = BottomPanelVMBuilder<Design>.button
       .image(Design.icon.tabBarButton1)
-   let button2: ButtonModelModable = BottomPanelVMBuilder<Design>.button
+   let button2: ButtonSelfModable = BottomPanelVMBuilder<Design>.button
       .image(Design.icon.tabBarButton2)
 
-   let buttonMain: ButtonModelModable = BottomPanelVMBuilder<Design>.mainButton
+   let buttonMain: ButtonSelfModable = BottomPanelVMBuilder<Design>.mainButton
 
-   let button3: ButtonModelModable = BottomPanelVMBuilder<Design>.button
+   let button3: ButtonSelfModable = BottomPanelVMBuilder<Design>.button
       .image(Design.icon.tabBarButton3)
-   let button4: ButtonModelModable = BottomPanelVMBuilder<Design>.button
+   let button4: ButtonSelfModable = BottomPanelVMBuilder<Design>.button
       .image(Design.icon.tabBarButton4)
 
    // MARK: - Private
@@ -60,8 +60,8 @@ final class TabBarPanel<Design: DesignProtocol>: BaseViewModel<StackViewExtended
 }
 
 struct BottomPanelVMBuilder<Design: DesignProtocol>: Designable {
-   static var mainButton: ButtonModelModable {
-      ButtonModelModable()
+   static var mainButton: ButtonSelfModable {
+      ButtonSelfModable()
          .safeAreaOffsetDisabled()
          //
          .backImage(Design.icon.tabBarMainButton)
@@ -69,25 +69,25 @@ struct BottomPanelVMBuilder<Design: DesignProtocol>: Designable {
          .shadow(Design.params.panelMainButtonShadow)
    }
 
-   static var button: ButtonModelModable {
-      ButtonModelModable()
+   static var button: ButtonSelfModable {
+      ButtonSelfModable()
          .safeAreaOffsetDisabled()
          //
          .width(55)
          .height(46)
          .cornerRadius(16)
-         .onModeChanged(\.normal) { button in
+         .onSelfModeChanged(\.normal) { button in
             button?
                .backColor(Design.color.backgroundBrandSecondary)
                .shadow(Design.params.panelButtonShadow)
             button?.uiView.layoutIfNeeded()
          }
-         .onModeChanged(\.inactive) { button in
+         .onSelfModeChanged(\.inactive) { button in
             button?
                .backColor(Design.color.transparent)
                .shadow(.noShadow)
          }
-         .setMode(\.inactive)
+         .setSelfMode(\.inactive)
    }
 }
 

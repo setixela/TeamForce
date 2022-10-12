@@ -53,6 +53,7 @@ final class FeedDetailScenario<Asset: AssetProtocol>:
          .onSuccess(setState, .presntActivityIndicator)
          .doNext(works.getComments)
          .onSuccess(setState) { .presentComments($0) }
+         .onFail(setState) { .presentComments([]) }
       
       events.presentReactions
          .onSuccess(setState, .presntActivityIndicator)
