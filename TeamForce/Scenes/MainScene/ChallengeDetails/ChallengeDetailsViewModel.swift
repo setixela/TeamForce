@@ -97,6 +97,7 @@ extension ChallengeDetailsViewModel: StateMachine {
          prizePlacesCell.models.right3
             .text(challenge.winnersCount.int.toString + " / " + challenge.awardees.toString)
          prizePlacesCell.hidden(challenge.winnersCount == nil)
+         models.down.setup(challenge)
       case .updateDetails(let challenge):
          activity.hidden(true)
          setState(.presentChallenge(challenge))

@@ -32,8 +32,6 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
       .set(.padding(.horizontalOffset(Design.params.commonSideOffset)))
       .backColor(Design.color.background)
 
-   private lazy var sendPanel = SendChallengePanel<Design>()
-
    override func start() {
       super.start()
 
@@ -87,10 +85,8 @@ extension ChallengeDetailsScene: StateMachine {
                .url(TeamForceEndpoints.urlBase + url)
                .contentMode(.scaleAspectFill)
          }
-         sendPanel.setup(challenge)
          challDetails.setState(.presentChallenge(challenge))
       case .updateDetails(let challenge):
-         sendPanel.setup(challenge)
          challDetails.setState(.updateDetails(challenge))
       }
    }
