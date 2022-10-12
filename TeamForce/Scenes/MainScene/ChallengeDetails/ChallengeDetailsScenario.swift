@@ -22,6 +22,9 @@ final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<Challen
    override func start() {
       events.saveInputAndLoadChallenge
          .doNext(work: works.saveInput)
+         .doMap{_ in
+         }
+         .doNext(work: works.getChallengeById)
          .onSuccess(setState) { .presentChallenge($0) }
          .doVoidNext(works.getChallengeById)
          .onSuccess(setState) { .updateDetails($0) }

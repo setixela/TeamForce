@@ -192,7 +192,7 @@ extension SendChallengePanel: SetupProtocol {
       let creatorTgName = "@" + data.creatorTgName.string
       userPanel.models.right.fullName.text(creatorName + " " + creatorSurname)
       userPanel.models.right.nickName.text(creatorTgName)
-      if let creatorPhoto = data.photo {
+      if let creatorPhoto = data.creatorPhoto {
          userPanel.models.main.url(TeamForceEndpoints.urlBase + creatorPhoto)
       }
    }
