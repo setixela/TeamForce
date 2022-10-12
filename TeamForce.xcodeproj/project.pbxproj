@@ -73,6 +73,11 @@
 		1953DE842879FDE3000DC537 /* TransactViewModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1953DE832879FDE3000DC537 /* TransactViewModels.swift */; };
 		1953DE862879FE30000DC537 /* PickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1953DE852879FE30000DC537 /* PickerViewModel.swift */; };
 		1953DE88287B4574000DC537 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1953DE87287B4574000DC537 /* Fonts.swift */; };
+		1955878B28F6EFCD0001F734 /* ChallCommentsBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1955878A28F6EFCD0001F734 /* ChallCommentsBlock.swift */; };
+		1955878E28F733AA0001F734 /* ChallengeResultScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1955878D28F733AA0001F734 /* ChallengeResultScene.swift */; };
+		1955879028F733C50001F734 /* ChallengeResultScenario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1955878F28F733C50001F734 /* ChallengeResultScenario.swift */; };
+		1955879228F733D30001F734 /* ChallengeResultWorks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1955879128F733D30001F734 /* ChallengeResultWorks.swift */; };
+		1955879428F733DC0001F734 /* ChallengeResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1955879328F733DC0001F734 /* ChallengeResultViewModel.swift */; };
 		195870F228A8C8040075D505 /* KeyPathMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 195870F128A8C8040075D505 /* KeyPathMaker.swift */; };
 		1959F27428AA8E9700DEEE5C /* LoginWorks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1959F27328AA8E9700DEEE5C /* LoginWorks.swift */; };
 		1967509F286492780019A6DE /* Labels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1967509E286492780019A6DE /* Labels.swift */; };
@@ -386,6 +391,11 @@
 		1953DE832879FDE3000DC537 /* TransactViewModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactViewModels.swift; sourceTree = "<group>"; };
 		1953DE852879FE30000DC537 /* PickerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerViewModel.swift; sourceTree = "<group>"; };
 		1953DE87287B4574000DC537 /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
+		1955878A28F6EFCD0001F734 /* ChallCommentsBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallCommentsBlock.swift; sourceTree = "<group>"; };
+		1955878D28F733AA0001F734 /* ChallengeResultScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeResultScene.swift; sourceTree = "<group>"; };
+		1955878F28F733C50001F734 /* ChallengeResultScenario.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeResultScenario.swift; sourceTree = "<group>"; };
+		1955879128F733D30001F734 /* ChallengeResultWorks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeResultWorks.swift; sourceTree = "<group>"; };
+		1955879328F733DC0001F734 /* ChallengeResultViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeResultViewModel.swift; sourceTree = "<group>"; };
 		195870F128A8C8040075D505 /* KeyPathMaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyPathMaker.swift; sourceTree = "<group>"; };
 		1959F27328AA8E9700DEEE5C /* LoginWorks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginWorks.swift; sourceTree = "<group>"; };
 		1967509E286492780019A6DE /* Labels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Labels.swift; sourceTree = "<group>"; };
@@ -821,7 +831,6 @@
 				194E307B28F35DBF001E2967 /* ChallengeDetailsScene.swift */,
 				194E307D28F36650001E2967 /* ChallengeDetailsScenario.swift */,
 				194E307F28F36657001E2967 /* ChallengeDetailsWorks.swift */,
-				194E308128F36661001E2967 /* ChallengeDetailsViewModel.swift */,
 				194E308328F3666B001E2967 /* ViewModels */,
 			);
 			path = ChallengeDetails;
@@ -830,6 +839,8 @@
 		194E308328F3666B001E2967 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				194E308128F36661001E2967 /* ChallengeDetailsViewModel.swift */,
+				1955878A28F6EFCD0001F734 /* ChallCommentsBlock.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -871,6 +882,7 @@
 				197A361728BBC9AC006E44C1 /* MainScenario.swift */,
 				197A361928BBC9B3006E44C1 /* MainWorks.swift */,
 				197A360328B90BD3006E44C1 /* MainSceneEvents.swift */,
+				1955878C28F7337E0001F734 /* ChallengeResult */,
 				1921A12F28EEC93300E41E86 /* Challenges */,
 				194E307A28F35D90001E2967 /* ChallengeDetails */,
 				631995AE28F53EA800EB2638 /* ChallengeCreate */,
@@ -890,6 +902,17 @@
 				1953DE87287B4574000DC537 /* Fonts.swift */,
 			);
 			path = Typography;
+			sourceTree = "<group>";
+		};
+		1955878C28F7337E0001F734 /* ChallengeResult */ = {
+			isa = PBXGroup;
+			children = (
+				1955878D28F733AA0001F734 /* ChallengeResultScene.swift */,
+				1955878F28F733C50001F734 /* ChallengeResultScenario.swift */,
+				1955879128F733D30001F734 /* ChallengeResultWorks.swift */,
+				1955879328F733DC0001F734 /* ChallengeResultViewModel.swift */,
+			);
+			path = ChallengeResult;
 			sourceTree = "<group>";
 		};
 		195870F328A8CDD90075D505 /* Assets */ = {
@@ -1772,6 +1795,7 @@
 				6368D826289187B50049EEAB /* SendCoinApiModel.swift in Sources */,
 				63AB072128C8048C00FD650F /* CreateFewContactsApiWorker.swift in Sources */,
 				196F642228F32C37002F5187 /* ManyButtons.swift in Sources */,
+				1955879428F733DC0001F734 /* ChallengeResultViewModel.swift in Sources */,
 				1918CC7D286F6CAC004373F3 /* GetBalanceApiWorker.swift in Sources */,
 				1952EA6328A7102B003F7852 /* StateProtocol.swift in Sources */,
 				19A9BE8028C307000099F8EA /* Queue.swift in Sources */,
@@ -1834,10 +1858,12 @@
 				197A361228BBB221006E44C1 /* FeedFilterButtons.swift in Sources */,
 				19B39E5B28D3433400BB2C77 /* TagsOptionsPanel.swift in Sources */,
 				190C1D16285D15FF00FB3518 /* ViewController.swift in Sources */,
+				1955878E28F733AA0001F734 /* ChallengeResultScene.swift in Sources */,
 				19ECD54128623D1F001765F6 /* LabelModel.swift in Sources */,
 				196750B0286518F80019A6DE /* DoubleStacksModel.swift in Sources */,
 				198FE1CC28999A2600BAF1A5 /* NilBlocker.swift in Sources */,
 				197A360828BADC8D006E44C1 /* FeedScenario.swift in Sources */,
+				1955878B28F6EFCD0001F734 /* ChallCommentsBlock.swift in Sources */,
 				19A9BE7A28C2B5C90099F8EA /* Main.swift in Sources */,
 				199C4B6B2863292F008AD6FD /* ButtonModel.swift in Sources */,
 				63AD437B28992045000511B9 /* TransactionStatusViewModel.swift in Sources */,
@@ -1870,6 +1896,7 @@
 				1952EA6928A711F2003F7852 /* Associated.swift in Sources */,
 				19D08353286F403400F75E4A /* SideBarModel.swift in Sources */,
 				196D883628ADB74800F4C09D /* TabBarPanel.swift in Sources */,
+				1955879228F733D30001F734 /* ChallengeResultWorks.swift in Sources */,
 				63A37EBA28F3289900DBD59F /* CheckChallengeReportUseCase.swift in Sources */,
 				19CAB9C828B41C6500A0A3B1 /* LabelSwitcher.swift in Sources */,
 				1999B6FE28A2F5D300D3570B /* DataToDecodableParser.swift in Sources */,
@@ -1910,6 +1937,7 @@
 				6368D8222891508C0049EEAB /* ProfileScene.swift in Sources */,
 				198FE1C92899994A00BAF1A5 /* LoginUseCase.swift in Sources */,
 				63BB2C1628E128C000C1E3DB /* GetCommentsApiWorker.swift in Sources */,
+				1955879028F733C50001F734 /* ChallengeResultScenario.swift in Sources */,
 				19A9BE6F28C1B2A20099F8EA /* PickedImagePanel.swift in Sources */,
 				1952EA7128A718AE003F7852 /* Params.swift in Sources */,
 			);

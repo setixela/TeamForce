@@ -25,7 +25,7 @@ protocol Scenario {
    func start()
 }
 
-class BaseScenario<Events, State, Works: TempStorage>: Scenario {
+class BaseScenario<Events, State, Works>: Scenario {
    var works: Works
    var events: Events
    var setState: (State) -> Void = { _ in

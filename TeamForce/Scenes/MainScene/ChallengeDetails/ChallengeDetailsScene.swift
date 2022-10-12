@@ -19,18 +19,22 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
       works: ChallengeDetailsWorks<Asset>(),
       stateDelegate: setState,
       events: ChallengeDetailsInputEvents(
-         saveInputAndLoadChallenge: on(\.input)
+         saveInputAndLoadChallenge: on(\.input),
          // getContenders: ,
          // getWinners: ,
+         ChallengeResult: challDetails.buttonsPanel.sendButton.on(\.didTap)
       )
    )
 
    private lazy var headerImage = ImageViewModel()
       .image(Design.icon.challengeWinnerIllustrate)
       .contentMode(.scaleAspectFit)
+
    private lazy var challDetails = ChallengeDetailsViewModel<Design>()
       .set(.padding(.horizontalOffset(Design.params.commonSideOffset)))
       .backColor(Design.color.background)
+
+   private lazy var challComments = FeedCommentsBlock<Design>()
 
    override func start() {
       super.start()
@@ -49,9 +53,6 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
             bottom: 16,
             right: 0
          ))
-         .arrangedModels([
-            challDetails
-         ])
          .backColor(Design.color.background)
 
       scenario.start()
@@ -72,6 +73,10 @@ enum ChallengeDetailsState {
    case initial
    case presentChallenge(Challenge)
    case updateDetails(Challenge)
+
+   case presentComments(Challenge)
+
+   case presentSendResultScreen
 }
 
 extension ChallengeDetailsScene: StateMachine {
@@ -80,6 +85,11 @@ extension ChallengeDetailsScene: StateMachine {
       case .initial:
          break
       case .presentChallenge(let challenge):
+         mainVM.footerStack
+            .arrangedModels([
+               challDetails
+            ])
+
          if let url = challenge.photo {
             headerImage
                .url(TeamForceEndpoints.urlBase + url)
@@ -88,6 +98,14 @@ extension ChallengeDetailsScene: StateMachine {
          challDetails.setState(.presentChallenge(challenge))
       case .updateDetails(let challenge):
          challDetails.setState(.updateDetails(challenge))
+      case .presentComments(let challenge):
+         mainVM.footerStack
+            .arrangedModels([
+               challComments
+            ])
+      case .presentSendResultScreen:
+         vcModel?.dismiss(animated: true)
+         Asset.router?.route(\.challengeSendResult, navType: .presentModally(.automatic))
       }
    }
 }

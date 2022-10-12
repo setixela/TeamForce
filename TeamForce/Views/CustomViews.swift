@@ -278,7 +278,7 @@ final class StackViewExtended: UIStackView, Eventable {
 
 // MARK: - ButtonExtended(UIButton) -------------------------
 
-final class ButtonExtended: UIButton, AlamoLoader {
+final class ButtonExtended: UIButton, AlamoLoader, Shimmering {
    var isVertical = false
 
    override init(frame: CGRect) {
@@ -371,3 +371,40 @@ extension UIImage {
       return UIGraphicsGetImageFromCurrentImageContext()?.withRenderingMode(renderingMode) ?? self
    }
 }
+
+protocol Shimmering: UIView {
+   func draw(_ rect: CGRect)
+}
+
+extension Shimmering {
+   private static var colors: [UIColor] { [.black, .white] }
+
+   func drawGradient(_ rect: CGRect) {
+      //      let context = UIGraphicsGetCurrentContext()!
+      //      context.saveGState()
+      //      let colors = Self.colors.map(\.cgColor)
+      //
+      //      let colorSpace = CGColorSpaceCreateDeviceRGB()
+      //
+      //      let colorLocations: [CGFloat] = [0.0, 1.0]
+      //
+      //      let gradient = CGGradient(colorsSpace: colorSpace,
+      //                                colors: colors as CFArray,
+      //                                locations: colorLocations)!
+      //
+      //      let startPoint = CGPoint(x: 0, y: bounds.height / 2)
+      //      let endPoint = CGPoint(x: bounds.width, y: bounds.height / 2)
+      //      let roundRect = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: bounds.width, height: bounds.height), byRoundingCorners: .allCorners, cornerRadii: CGSize(width: layer.cornerRadius, height: layer.cornerRadius))
+      //      roundRect.addClip()
+      //      context.drawLinearGradient(gradient,
+      //                                 start: startPoint,
+      //                                 end: endPoint,
+      //                                 options: [.drawsAfterEndLocation])
+      //      context.restoreGState()
+   }
+
+   private func animateShimmering() {
+
+   }
+}
+

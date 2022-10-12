@@ -12,6 +12,7 @@ final class ChallengeDetailsViewModel<Design: DSP>:
    .D<SendChallengePanel<Design>>.Combo,
    Designable
 {
+   var buttonsPanel: SendChallengePanel<Design> { models.down }
    //
    private lazy var filterButtons = SlidedIndexButtons<Button3Event>(buttons:
       SecondaryButtonDT<Design>()
@@ -23,7 +24,7 @@ final class ChallengeDetailsViewModel<Design: DSP>:
       SecondaryButtonDT<Design>()
          .title("Участники")
          .font(Design.font.default))
-      .height(32 + 38)
+      .height(16 + 38)
 
    private lazy var challengeInfo = ChallengeInfoVM<Design>()
 
@@ -180,6 +181,11 @@ final class ChallengeDetailsInfoCell<Design: DSP>:
 }
 
 final class SendChallengePanel<Design: DSP>: StackModel, Designable {
+
+   var sendButton: ButtonModel { buttons.models.main }
+
+   // Private
+
    private lazy var userPanel = Design.model.profile.userPanel
 
    private lazy var buttons = M<ButtonModel>.R<ButtonModel>.R2<ButtonModel>.Combo()

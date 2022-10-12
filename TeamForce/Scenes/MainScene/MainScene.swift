@@ -191,7 +191,6 @@ extension MainScene {
       activeScreen = model
    }
 
-   // Presenting Settings
    private func presentModel<M: UIViewModel>(_ model: M?) {
       guard let model = model else { return }
 

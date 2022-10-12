@@ -7,6 +7,11 @@
 
 import ReactiveWorks
 
+enum FeedCommentsState {
+   case sendButtonDisabled
+   case sendButtonEnabled
+}
+
 final class FeedCommentsBlock<Design: DSP>: DoubleStacksModel, Designable {
    lazy var commentTableModel = TableItemsModel<Design>()
       .backColor(Design.color.background)
@@ -59,11 +64,6 @@ extension FeedCommentsBlock: SetupProtocol {
    func setup(_ data: [Comment]) {
       commentTableModel.set(.items(data + [SpacerItem(size: Grid.x64.value)]))
    }
-}
-
-enum FeedCommentsState {
-   case sendButtonDisabled
-   case sendButtonEnabled
 }
 
 extension FeedCommentsBlock: StateMachine {

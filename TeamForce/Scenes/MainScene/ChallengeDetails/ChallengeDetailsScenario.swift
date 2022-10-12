@@ -13,6 +13,7 @@ struct ChallengeDetailsInputEvents {
 //   let getWinners: VoidWork<Void>
 //   let checkReport: VoidWork<CheckReportRequestBody.State>
 //   let didSelectContenderIndex: VoidWork<Int>
+   let ChallengeResult: VoidWorkVoid
 }
 
 final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<ChallengeDetailsInputEvents,
@@ -50,7 +51,9 @@ final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<Challen
 //         .onSuccess {
 //            print("succesffy took contender by index")
 //         }
-      
+
+      events.ChallengeResult
+         .onSuccess(setState, .presentSendResultScreen)
    }
    
 }
