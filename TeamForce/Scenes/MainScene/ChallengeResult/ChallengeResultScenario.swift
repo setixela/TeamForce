@@ -7,8 +7,8 @@
 
 import ReactiveWorks
 
-struct ChallengeResultEvents: InitProtocol {
-   
+struct ChallengeResultEvents {
+   let commentInputChanged: VoidWork<String>
 }
 
 final class ChallengeResultScenario<Asset: AssetProtocol>: BaseScenario<ChallengeResultEvents, ChallengeResultSceneState, ChallengeResultWorks<Asset>> {

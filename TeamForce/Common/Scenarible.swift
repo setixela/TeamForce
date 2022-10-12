@@ -32,7 +32,7 @@ class BaseScenario<Events, State, Works>: Scenario {
       log("stateDelegate (setState:) did not injected into Scenario")
    }
 
-   required init(works: Works, stateDelegate: ((State) -> Void)? = nil, events: Events) {
+   required init(works: Works, stateDelegate: ((State) -> Void)?, events: Events) {
       self.events = events
       self.works = works
       if let setStateFunc = stateDelegate {

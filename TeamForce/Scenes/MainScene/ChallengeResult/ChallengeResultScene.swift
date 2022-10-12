@@ -16,8 +16,14 @@ final class ChallengeResultScene<Asset: AssetProtocol>: BaseSceneModel<
    ModalDoubleStackModel<Asset>,
    Asset,
    Void
-> {
+>, Scenarible {
 //
+   lazy var scenario: Scenario = ChallengeResultScenario<Asset>(
+      works: ChallengeResultWorks(),
+      stateDelegate: stateDelegate,
+      events: ChallengeResultEvents(commentInputChanged: inputView.onEvent(\.didEditingChanged))
+   )
+
    private lazy var inputView = Design.model.transact.reasonInputTextView
       .placeholder(Design.Text.title.comment)
       .minHeight(166)
