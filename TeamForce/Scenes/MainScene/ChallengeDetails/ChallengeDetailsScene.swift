@@ -123,6 +123,7 @@ extension ChallengeDetailsScene: StateMachine {
          sendPanel.setup(challenge)
          viewModel.setState(.presentChallenge(challenge))
       case .updateDetails(let challenge):
+         sendPanel.setup(challenge)
          viewModel.setState(.updateDetails(challenge))
       }
    }

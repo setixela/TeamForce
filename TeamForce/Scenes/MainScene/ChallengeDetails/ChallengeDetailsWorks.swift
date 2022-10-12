@@ -54,7 +54,6 @@ extension ChallengeDetailsWorks: ChallengeDetailsWorksProtocol {
       self?.apiUseCase.GetChallengeById
          .doAsync(id)
          .onSuccess {
-            Self.store.challenge = $0
             work.success(result: $0)
          }
          .onFail {
