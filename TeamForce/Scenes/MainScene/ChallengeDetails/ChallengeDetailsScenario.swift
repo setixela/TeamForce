@@ -17,42 +17,42 @@ struct ChallengeDetailsInputEvents {
 }
 
 final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<ChallengeDetailsInputEvents,
-                                      ChallengeDetailsState,
-                                      ChallengeDetailsWorks<Asset>> {
-   
+   ChallengeDetailsState,
+   ChallengeDetailsWorks<Asset>>
+{
    override func start() {
       events.saveInputAndLoadChallenge
          .doNext(work: works.saveInput)
          .onSuccess(setState) { .presentChallenge($0) }
          .doVoidNext(works.getChallengeById)
          .onSuccess(setState) { .updateDetails($0) }
-         //.doNext(works.saveInput)
-         .doMap{ _ in }
+         // .doNext(works.saveInput)
+         .doMap { _ in }
          .doNext(work: works.amIOwner)
          .onSuccess(setState, .enableContenders)
-         .doMap{ _ in }
+         .doMap { _ in }
          .doNext(work: works.getChallengeId)
          .doNext(work: works.getChallengeResult)
          .onSuccess(setState) { .enableMyResult($0) }
-      
+
 //      events.getContenders
 //         .doNext(work: works.getChallengeContenders)
 //         .onSuccess {
 //            print("contenders => \($0)")
 //         }
-//      
+//
 //      events.getWinners
 //         .doNext(work: works.getChallengeWinners)
 //         .onSuccess {
 //            print("winners => \($0)")
 //         }
-      
+
 //      events.checkReport
 //         .doNext(work: works.checkChallengeReport)
 //         .onSuccess {
 //            print("succesfully checked")
 //         }
-      
+
 //      events.didSelectContenderIndex
 //         .doNext(work: works.getPresentedContenderByIndex)
 //         .onSuccess {
@@ -60,8 +60,11 @@ final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<Challen
 //         }
 
       events.ChallengeResult
-         .doNext(work: works.getChallengeId)
-         .onSuccess(setState) { .presentSendResultScreen($0) }
+         .doNext(work: works.getChallenge)
+         .doSaveResult()
+         .doVoidNext(works.getChallengeId)
+         .onSuccessMixSaved(setState) {
+            .presentSendResultScreen($1, $0)
+         }
    }
-   
 }

@@ -12,6 +12,7 @@ protocol ChallengeDetailsWorksProtocol {
    var getChallengeContenders: Work<Void, [Contender]> { get }
    var getChallengeWinners: Work<Void, [Contender]> { get }
    var checkChallengeReport: Work<CheckReportRequestBody.State, Void> { get }
+   var getChallenge: Work<Void, Challenge> { get }
 }
 
 final class ChallengeDetailsWorksStore: InitProtocol {
@@ -62,6 +63,11 @@ final class ChallengeDetailsWorks<Asset: AssetProtocol>: BaseSceneWorks<Challeng
    var getChallengeId: Work<Void, Int> { .init { work in
       guard let id = Self.store.challengeId else { return }
       work.success(id)
+   }.retainBy(retainer) }
+
+   var getChallenge: Work<Void, Challenge> { .init { work in
+      guard let challenge = Self.store.challenge else { return }
+      work.success(challenge)
    }.retainBy(retainer) }
    
 }

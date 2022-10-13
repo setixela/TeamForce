@@ -13,6 +13,7 @@ enum ChallengeResultSceneState {
    case sendingEnabled
    case sendingDisabled
 
+   case popScene
    case resultSent
 }
 
@@ -23,7 +24,6 @@ final class ChallengeResultScene<Asset: AssetProtocol>: BaseSceneModel<
    Int
 >, Scenarible2 {
 //
-
    private let works = ChallengeResultWorks<Asset>()
 
    lazy var scenario: Scenario = ChallengeResultScenario<Asset>(
@@ -51,7 +51,7 @@ final class ChallengeResultScene<Asset: AssetProtocol>: BaseSceneModel<
       .placeholder(Design.Text.title.comment)
       .minHeight(166)
 
-   private lazy var photosPanel = Design.model.transact.pickedImagesPanel
+   private lazy var photosPanel = Design.model.transact.pickedImagesPanel.hidden(true)
    private lazy var addPhotoButton = Design.model.transact.addPhotoButton
    private lazy var sendButton = Design.model.transact.sendButton
 
@@ -69,7 +69,8 @@ final class ChallengeResultScene<Asset: AssetProtocol>: BaseSceneModel<
             inputView,
             photosPanel.lefted(),
             addPhotoButton,
-            Spacer()
+            Spacer(),
+            Spacer(),
          ])
       mainVM.footerStack
          .arrangedModels([
@@ -96,8 +97,11 @@ extension ChallengeResultScene {
          sendButton.set(Design.state.button.default)
       case .sendingDisabled:
          sendButton.set(Design.state.button.inactive)
-      case .resultSent:
+      case .popScene:
          vcModel?.dismiss(animated: true)
+      case .resultSent:
+         send(\.finished)
+         finisher?.doAsync(true)
       }
    }
 }
@@ -114,7 +118,8 @@ extension ChallengeResultScene: StateMachine2 {
          imagePicker.sendEvent(\.presentOn, baseVC)
          //
       case .setHideAddPhotoButton(let value):
-         addPhotoButton.hidden(value)
+         photosPanel.hiddenAnimated(!value, duration: 0.2)
+         addPhotoButton.hiddenAnimated(value, duration: 0.2)
          //
       }
    }

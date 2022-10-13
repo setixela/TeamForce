@@ -20,6 +20,8 @@ enum NavType {
 final class MainRouter<Asset: AssetProtocol>: RouterProtocol, Assetable {
    let nc: UINavigationController
 
+   private lazy var retainer = Retainer()
+
    init(nc: UINavigationController) {
       self.nc = nc
    }
@@ -36,29 +38,42 @@ final class MainRouter<Asset: AssetProtocol>: RouterProtocol, Assetable {
       }
    }
 
-   func route(_ keypath: KeyPath<Scene, SceneModelProtocol>, navType: NavType, payload: Any? = nil) {
+   @discardableResult
+   func route(_ keypath: KeyPath<Scene, SceneModelProtocol>,
+              navType: NavType,
+              payload: Any? = nil) -> Work<Bool, Bool> {
+
+      let work = Work<Bool, Bool> { work in
+         work.success(work.unsafeInput)
+      }.retainBy(retainer)
+
       switch navType {
       case .push:
-         nc.pushViewController(makeVC(), animated: true)
+         nc.pushViewController(makeVC(work), animated: true)
       case .pop:
          nc.popViewController(animated: true)
       case .popToRoot:
          nc.popToRootViewController(animated: true)
       case .presentInitial:
-         nc.viewControllers = [makeVC()]
+         nc.viewControllers = [makeVC(work)]
       case .presentModally(let value):
-         let vc = makeVC()
+         let vc = makeVC(work)
          vc.modalPresentationStyle = value
          nc.present(vc, animated: true)
       }
 
       // local func
-      func makeVC() -> UIViewController {
+      func makeVC(_ work: Work<Bool, Bool>) -> UIViewController {
          let sceneModel = Scene()[keyPath: keypath]
          sceneModel.setInput(payload)
          let vc = sceneModel.makeVC()
+
+         sceneModel.finisher = work
+
          return vc
       }
+
+      return work
    }
 }
 
