@@ -29,3 +29,4 @@ final class ChallengeResultScenario<Asset: AssetProtocol>: BaseScenario<Challeng
          .onSuccess(setState, .resultSent)
    }
 }
+

@@ -12,7 +12,7 @@ enum ChallengeResultSceneState {
 
    case sendingEnabled
    case sendingDisabled
-   
+
    case resultSent
 }
 
@@ -21,10 +21,12 @@ final class ChallengeResultScene<Asset: AssetProtocol>: BaseSceneModel<
    ModalDoubleStackModel<Asset>,
    Asset,
    Int
->, Scenarible {
+>, Scenarible2 {
 //
+
+   private let works = ChallengeResultWorks<Asset>()
    lazy var scenario: Scenario = ChallengeResultScenario<Asset>(
-      works: ChallengeResultWorks<Asset>(),
+      works: works,
       stateDelegate: stateDelegate,
       events: ChallengeResultEvents(
          saveInput: on(\.input),
@@ -33,13 +35,26 @@ final class ChallengeResultScene<Asset: AssetProtocol>: BaseSceneModel<
       )
    )
 
+   lazy var scenario2: Scenario = ImagePickingScenario<Asset>(
+      works: works,
+      stateDelegate: stateDelegate2,
+      events: ImagePickingScenarioEvents(
+         startImagePicking: addPhotoButton.on(\.didTap),
+         addImageToBasket: imagePicker.onEvent(\.didImagePicked),
+         removeImageFromBasket: photosPanel.on(\.didCloseImage),
+         didMaximumReach: photosPanel.on(\.didMaximumReached)
+      )
+   )
+
    private lazy var inputView = Design.model.transact.reasonInputTextView
       .placeholder(Design.Text.title.comment)
       .minHeight(166)
 
-   private lazy var photosPanel = Design.model.transact.pickedImagesPanel.hidden(true)
+   private lazy var photosPanel = Design.model.transact.pickedImagesPanel
    private lazy var addPhotoButton = Design.model.transact.addPhotoButton
    private lazy var sendButton = Design.model.transact.sendButton
+
+   private lazy var imagePicker = Design.model.common.imagePicker
 
    override func start() {
       super.start()
@@ -51,7 +66,7 @@ final class ChallengeResultScene<Asset: AssetProtocol>: BaseSceneModel<
          .spacing(Grid.x16.value)
          .arrangedModels([
             inputView,
-            photosPanel,
+            photosPanel.lefted(),
             addPhotoButton,
             Spacer()
          ])
@@ -67,10 +82,11 @@ final class ChallengeResultScene<Asset: AssetProtocol>: BaseSceneModel<
          }
 
       scenario.start()
+      scenario2.start()
    }
 }
 
-extension ChallengeResultScene: StateMachine {
+extension ChallengeResultScene {
    func setState(_ state: ChallengeResultSceneState) {
       switch state {
       case .initial:
@@ -84,3 +100,22 @@ extension ChallengeResultScene: StateMachine {
       }
    }
 }
+
+extension ChallengeResultScene: StateMachine2 {
+   func setState2(_ state: ImagePickingState) {
+      switch state {
+         //
+      case .presentPickedImage(let image):
+         photosPanel.addButton(image: image)
+         //
+      case .presentImagePicker:
+         guard let baseVC = vcModel else { return }
+         imagePicker.sendEvent(\.presentOn, baseVC)
+         //
+      case .setHideAddPhotoButton(let value):
+         addPhotoButton.hidden(value)
+         //
+      }
+   }
+}
+

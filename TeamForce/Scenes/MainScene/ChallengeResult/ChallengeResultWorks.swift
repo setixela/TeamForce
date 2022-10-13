@@ -58,4 +58,5 @@ final class ChallengeResultWorks<Asset: AssetProtocol>: BaseSceneWorks<Challenge
    }.retainBy(retainer) }
 }
 
+// Добавляем Image Works
 extension ChallengeResultWorks: ImageWorks {}
