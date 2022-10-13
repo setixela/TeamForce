@@ -275,7 +275,7 @@ final class TransactWorks<Asset: AssetProtocol>: BaseSceneWorks<TransactWorks.Te
    }.retainBy(retainer) }
 
    var isCorrectBothInputs: Work<Void, Void> { .init { work in
-      if Self.store.isCorrectReasonInput, Self.store.isCorrectCoinInput {
+      if /*Self.store.isCorrectReasonInput,*/ Self.store.isCorrectCoinInput {
          work.success()
       } else {
          work.fail()
