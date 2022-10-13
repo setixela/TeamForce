@@ -10,7 +10,7 @@ import ReactiveWorks
 protocol ChallengeDetailsWorksProtocol {
    var getChallengeById: Work<Void, Challenge> { get }
    var getChallengeContenders: Work<Void, [Contender]> { get }
-   var getChallengeWinners: Work<Void, [Contender]> { get }
+   var getChallengeWinners: Work<Int, [Contender]> { get }
    var checkChallengeReport: Work<CheckReportRequestBody.State, Void> { get }
    var getChallenge: Work<Void, Challenge> { get }
 }
@@ -103,8 +103,8 @@ extension ChallengeDetailsWorks: ChallengeDetailsWorksProtocol {
          }
    }.retainBy(retainer) }
 
-   var getChallengeWinners: Work<Void, [Contender]> { .init { [weak self] work in
-      guard let id = Self.store.challengeId else { return }
+   var getChallengeWinners: Work<Int, [Contender]> { .init { [weak self] work in
+      guard let id = work.input else { return }
       self?.apiUseCase.GetChallengeWinners
          .doAsync(id)
          .onSuccess {
