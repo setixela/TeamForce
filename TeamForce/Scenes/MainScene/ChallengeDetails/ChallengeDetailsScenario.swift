@@ -8,7 +8,7 @@
 import ReactiveWorks
 
 struct ChallengeDetailsInputEvents {
-   let saveInputAndLoadChallenge: VoidWork<Challenge>
+   let saveInputAndLoadChallenge: VoidWork<(Challenge, Int)>
 //   let getContenders: VoidWork<Void>
 //   let getWinners: VoidWork<Void>
 //   let checkReport: VoidWork<CheckReportRequestBody.State>
@@ -26,7 +26,10 @@ final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<Challen
          .onSuccess(setState) { .presentChallenge($0) }
          .doVoidNext(works.getChallengeById)
          .onSuccess(setState) { .updateDetails($0) }
-         .doNext(works.saveInput)
+         //.doNext(works.saveInput)
+         .doMap{ _ in }
+         .doNext(work: works.amIOwner)
+         .onSuccess(setState, .enableContenders)
          .doMap{ _ in }
          .doNext(work: works.getChallengeId)
          .doNext(work: works.getChallengeResult)

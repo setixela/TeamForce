@@ -20,17 +20,29 @@ final class ChallengeDetailsWorksStore: InitProtocol {
    var currentContender: Contender?
    var contenders: [Contender]?
    var reportId: Int?
+   var profileId: Int?
 }
 
 final class ChallengeDetailsWorks<Asset: AssetProtocol>: BaseSceneWorks<ChallengeDetailsWorksStore, Asset> {
    private lazy var apiUseCase = Asset.apiUseCase
    
-   var saveInput: Work<Challenge, Challenge> { .init { work in
+   
+   var amIOwner: Work<Void, Bool> { .init { work in
+      guard
+         let profileId = Self.store.profileId,
+         let creatorId = Self.store.challenge?.creatorId
+      else { return }
+      let res: Bool = (profileId == creatorId)
+      work.success(res)
+   }.retainBy(retainer)}
+   
+   var saveInput: Work<(Challenge, Int), Challenge> { .init { work in
       guard let input = work.input else { return }
-      Self.store.challenge = input
-      Self.store.challengeId = input.id
+      Self.store.challenge = input.0
+      Self.store.challengeId = input.0.id
+      Self.store.profileId = input.1
 
-      work.success(result: input)
+      work.success(result: input.0)
    }.retainBy(retainer) }
    
    var saveCurrentContender: Work<Contender, Contender> { .init { work in
@@ -60,6 +72,7 @@ extension ChallengeDetailsWorks: ChallengeDetailsWorksProtocol {
       self?.apiUseCase.GetChallengeById
          .doAsync(id)
          .onSuccess {
+            Self.store.challenge = $0
             work.success(result: $0)
          }
          .onFail {
