@@ -26,6 +26,7 @@ final class ChallengesScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtend
       works: ChallengesWorks<Asset>(),
       stateDelegate: stateDelegate,
       events: ChallengesScenarioInputEvents(
+         saveProfileId: on(\.userDidLoad),
          presentAllChallenges: createChellPanel.on(\.didTapFilterAll),
          presentActiveChallenges: createChellPanel.on(\.didTapFilterActive),
          didSelectChallengeIndex: viewModel.on(\.didSelectChallenge)
@@ -52,7 +53,7 @@ final class ChallengesScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtend
 enum ChallengesState {
    case initial
    case presentChallenges([Challenge])
-   case presentChallengeDetails(Challenge)
+   case presentChallengeDetails((Challenge, Int))//challenge and profileId
 }
 
 extension ChallengesScene: StateMachine {
@@ -63,10 +64,10 @@ extension ChallengesScene: StateMachine {
       case .presentChallenges(let challenges):
          activity.hidden(true)
          viewModel.setState(.presentChallenges(challenges))
-      case .presentChallengeDetails(let challenge):
+      case .presentChallengeDetails(let value):
          ProductionAsset.router?.route(\.challengeDetails,
                                        navType: .presentModally(.automatic),
-                                       payload: challenge)
+                                       payload: value)
       }
    }
 }

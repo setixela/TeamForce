@@ -12,7 +12,7 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
    DefaultVCModel,
    TripleStacksModel,
    Asset,
-   Challenge
+   (Challenge, Int)
 >, Scenarible {
    //
    lazy var scenario: Scenario = ChallengeDetailsScenario(
@@ -113,6 +113,7 @@ enum ChallengeDetailsState {
 
    case presentSendResultScreen(Int)
    case enableMyResult([ChallengeResult])
+   case enableContenders
 }
 
 extension ChallengeDetailsScene: StateMachine {
@@ -146,6 +147,9 @@ extension ChallengeDetailsScene: StateMachine {
       case .enableMyResult(let value):
          print("value \(value)")
          filterButtons.buttons[1].hidden(false)
+         
+      case .enableContenders:
+         filterButtons.buttons[2].hidden(false)
       }
    }
 }

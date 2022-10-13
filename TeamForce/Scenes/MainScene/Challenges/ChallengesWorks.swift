@@ -18,6 +18,7 @@ protocol ChallengesWorksProtocol {
 final class ChallengesTempStorage: InitProtocol {
    var challenges: [Challenge] = []
    var presentingChallenges: [Challenge] = []
+   var profileId: Int?
 }
 
 final class ChallengesWorks<Asset: AssetProtocol>: BaseSceneWorks<ChallengesTempStorage, Asset> {
@@ -25,6 +26,21 @@ final class ChallengesWorks<Asset: AssetProtocol>: BaseSceneWorks<ChallengesTemp
 }
 
 extension ChallengesWorks: ChallengesWorksProtocol {
+   
+   var saveProfileId: Work<UserData?, Int> { .init { work in
+      guard
+         let user = work.input,
+         let id = user?.profile.id
+      else { return }
+      Self.store.profileId = id
+      work.success(id)
+   }.retainBy(retainer) }
+   
+   var getProfileId: Work<Void, Int> { .init { work in
+      guard let id = Self.store.profileId else { return }
+      work.success(id)
+   }.retainBy(retainer) }
+   
    var getChallenges: Work<Void, [Challenge]> { .init { [weak self] work in
       self?.apiUseCase.getChanllenges
          .doAsync()
