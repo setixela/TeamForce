@@ -65,9 +65,16 @@ extension ChallengesScene: StateMachine {
          activity.hidden(true)
          viewModel.setState(.presentChallenges(challenges))
       case .presentChallengeDetails(let value):
-         ProductionAsset.router?.route(\.challengeDetails,
+         Asset.router?.route(\.challengeDetails,
                                        navType: .presentModally(.automatic),
                                        payload: value)
+         .onSuccess {
+            print("reload table")
+         }
+         .onFail {
+            print("doNothing")
+         }
+         .retainBy(retainer)
       }
    }
 }

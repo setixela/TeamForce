@@ -20,8 +20,6 @@ enum NavType {
 final class MainRouter<Asset: AssetProtocol>: RouterProtocol, Assetable {
    let nc: UINavigationController
 
-   private lazy var retainer = Retainer()
-
    init(nc: UINavigationController) {
       self.nc = nc
    }
@@ -45,7 +43,7 @@ final class MainRouter<Asset: AssetProtocol>: RouterProtocol, Assetable {
 
       let work = Work<Bool, Bool> { work in
          work.success(work.unsafeInput)
-      }.retainBy(retainer)
+      }
 
       switch navType {
       case .push:

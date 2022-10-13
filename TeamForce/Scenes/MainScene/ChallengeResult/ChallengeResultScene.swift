@@ -100,7 +100,6 @@ extension ChallengeResultScene {
       case .popScene:
          vcModel?.dismiss(animated: true)
       case .resultSent:
-         send(\.finished)
          finisher?.doAsync(true)
       }
    }

@@ -159,6 +159,7 @@ extension ChallengeDetailsScene: StateMachine {
          .onFail {
             print("failure")
          }
+         .retainBy(retainer)
 
       case .enableMyResult(let value):
          print("value \(value)")
