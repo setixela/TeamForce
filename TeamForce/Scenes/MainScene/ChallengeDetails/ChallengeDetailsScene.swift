@@ -149,13 +149,12 @@ extension ChallengeDetailsScene: StateMachine {
             navType: .presentModally(.automatic),
             payload: challengeId
          )
-         .onSuccess { [weak self] in
+         .onSuccess {
             Asset.router?.route(
                \.challengeDetails,
                navType: .presentModally(.automatic),
                payload: (challenge, challengeId)
             )
-            print("success")
          }
          .onFail {
             print("failure")
