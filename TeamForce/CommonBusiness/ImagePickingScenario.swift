@@ -22,11 +22,11 @@ final class ImagePickingScenario<Asset: AssetProtocol>:
          .onSuccess(setState, .presentImagePicker)
 
       events.addImageToBasket
-         .doNext(work: works.addImage)
+         .doNext(works.addImage)
          .onSuccess(setState) { .presentPickedImage($0) }
 
       events.removeImageFromBasket
-         .doNext(work: works.removeImage)
+         .doNext(works.removeImage)
          .onSuccess(setState, .setHideAddPhotoButton(false))
 
       events.didMaximumReach

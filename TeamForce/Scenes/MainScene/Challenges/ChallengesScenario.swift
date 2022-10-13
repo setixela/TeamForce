@@ -26,7 +26,7 @@ final class ChallengesScenario<Asset: AssetProtocol>:
          .onFail(setState) { .presentChallenges([]) }
 
       events.saveProfileId
-         .doNext(work: works.saveProfileId)
+         .doNext(works.saveProfileId)
       
       events.presentAllChallenges
          .doNext(works.getAllChallenges)
@@ -37,10 +37,10 @@ final class ChallengesScenario<Asset: AssetProtocol>:
          .onSuccess(setState) { .presentChallenges($0) }
 
       events.didSelectChallengeIndex
-         .doNext(work: works.getPresentedChallengeByIndex)
+         .doNext(works.getPresentedChallengeByIndex)
          .doSaveResult()
          .doInput(())
-         .doNext(work: works.getProfileId)
+         .doNext(works.getProfileId)
          .onSuccessMixSaved(setState) { .presentChallengeDetails(($1, $0)) }
       
 //      let input = ChallengeRequestBody(name: "Challenge 13", description: "some description", startBalance: 1)

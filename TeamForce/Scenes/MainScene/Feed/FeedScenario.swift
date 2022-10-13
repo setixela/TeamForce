@@ -27,24 +27,24 @@ final class FeedScenario<Asset: AssetProtocol>:
    override func start() {
       
       events.loadFeedForCurrentUser
-         .doNext(work: works.loadFeedForCurrentUser)
+         .doNext(works.loadFeedForCurrentUser)
          .onFail(setState, .loadFeedError)
-         .doNext(work: works.getAllFeed)
+         .doNext(works.getAllFeed)
          .onSuccess(setState) { .presentFeed($0) }
          .onFail(setState, .loadFeedError)
 
       events.presentAllFeed
-         .doNext(work: works.getAllFeed)
+         .doNext(works.getAllFeed)
          .onSuccess(setState) { .presentFeed($0) }
          .onFail(setState, .loadFeedError)
 
       events.presentMyFeed
-         .doNext(work: works.getMyFeed)
+         .doNext(works.getMyFeed)
          .onSuccess(setState) { .presentFeed($0) }
          .onFail(setState, .loadFeedError)
 
       events.presentPublicFeed
-         .doNext(work: works.getPublicFeed)
+         .doNext(works.getPublicFeed)
          .onSuccess(setState) { .presentFeed($0) }
          .onFail(setState, .loadFeedError)
       
@@ -52,21 +52,21 @@ final class FeedScenario<Asset: AssetProtocol>:
          .onSuccess(setState) { .presentProfile($0) }
       
       events.reactionPressed
-         .doNext(work: works.pressLike)
+         .doNext(works.pressLike)
          .onFail {
             print("failed to like")
          }
          .doMap() {
             self.events.loadFeedForCurrentUser.result
          }
-         .doNext(work: works.loadFeedForCurrentUser)
+         .doNext(works.loadFeedForCurrentUser)
          .onFail(setState, .loadFeedError)
-         .doNext(work: works.getAllFeed)
+         .doNext(works.getAllFeed)
          .onSuccess(setState) { .presentFeed($0) }
          .onFail(setState, .loadFeedError)
       
       events.presentDetail
-         .doNext(work: works.getFeedByRowNumber)
+         .doNext(works.getFeedByRowNumber)
          .onSuccess(setState) {
             .presentDetailView($0)}
          .onFail {

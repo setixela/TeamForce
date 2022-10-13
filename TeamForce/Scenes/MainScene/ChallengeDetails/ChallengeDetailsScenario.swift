@@ -22,45 +22,45 @@ final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<Challen
 {
    override func start() {
       events.saveInputAndLoadChallenge
-         .doNext(work: works.saveInput)
+         .doNext(works.saveInput)
          .onSuccess(setState) { .presentChallenge($0) }
          .doVoidNext(works.getChallengeById)
          .onSuccess(setState) { .updateDetails($0) }
          // .doNext(works.saveInput)
          .doMap { _ in }
-         .doNext(work: works.amIOwner)
+         .doNext(works.amIOwner)
          .onSuccess(setState, .enableContenders)
          .doMap { _ in }
-         .doNext(work: works.getChallengeId)
-         .doNext(work: works.getChallengeResult)
+         .doNext(works.getChallengeId)
+         .doNext(works.getChallengeResult)
          .onSuccess(setState) { .enableMyResult($0) }
 
 //      events.getContenders
-//         .doNext(work: works.getChallengeContenders)
+//         .doNext(works.getChallengeContenders)
 //         .onSuccess {
 //            print("contenders => \($0)")
 //         }
 //
 //      events.getWinners
-//         .doNext(work: works.getChallengeWinners)
+//         .doNext(works.getChallengeWinners)
 //         .onSuccess {
 //            print("winners => \($0)")
 //         }
 
 //      events.checkReport
-//         .doNext(work: works.checkChallengeReport)
+//         .doNext(works.checkChallengeReport)
 //         .onSuccess {
 //            print("succesfully checked")
 //         }
 
 //      events.didSelectContenderIndex
-//         .doNext(work: works.getPresentedContenderByIndex)
+//         .doNext(works.getPresentedContenderByIndex)
 //         .onSuccess {
 //            print("succesffy took contender by index")
 //         }
 
       events.ChallengeResult
-         .doNext(work: works.getChallenge)
+         .doNext(works.getChallenge)
          .doSaveResult()
          .doVoidNext(works.getChallengeId)
          .onSuccessMixSaved(setState) {

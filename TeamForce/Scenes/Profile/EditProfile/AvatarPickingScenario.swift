@@ -20,7 +20,7 @@ final class AvatarPickingScenario<Asset: AssetProtocol>:
          .onSuccess(setState, .presentImagePicker)
 
       events.addImageToBasket
-         .doNext(work: works.addImage)
+         .doNext(works.addImage)
          .onSuccess(setState) { .presentPickedImage($0) }
    }
 }

@@ -100,7 +100,7 @@ extension SideBarModel {
    private func configureLogoutUseCase() {
       item4
          .on(\.didTap)
-         .doNext(work: useCase.logout)
+         .doNext(useCase.logout)
          .onSuccess {
             UserDefaults.standard.setIsLoggedIn(value: false)
             Asset.router?.route(\.digitalThanks, navType: .presentInitial, payload: ())

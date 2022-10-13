@@ -128,7 +128,7 @@ final class ProfileEditWorks<Asset: AssetProtocol>: BaseSceneWorks<ProfileEditWo
             work.fail()
          }
          .doMap { fewContactsRequest }
-         .doNext(work: self.createFewContacts)
+         .doNext(self.createFewContacts)
          .onSuccess {
             if avatarRequest == nil {
                work.success()
@@ -139,7 +139,7 @@ final class ProfileEditWorks<Asset: AssetProtocol>: BaseSceneWorks<ProfileEditWo
             work.fail()
          }
          .doMap { avatarRequest }
-         .doNext(work: self.updateAvatar)
+         .doNext(self.updateAvatar)
          .onSuccess {
             work.success()
          }
