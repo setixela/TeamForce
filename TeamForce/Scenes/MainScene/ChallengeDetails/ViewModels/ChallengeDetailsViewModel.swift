@@ -52,7 +52,8 @@ final class ChallengeDetailsViewModel<Design: DSP>:
 
    required init() {
       super.init()
-      setAll { _, sendPanel in
+      setAll { scroller, sendPanel in
+
          sendPanel
             .backColor(Design.color.background)
             .cornerRadius(Design.params.cornerRadius)
@@ -73,6 +74,7 @@ final class ChallengeDetailsViewModel<Design: DSP>:
             prizePlacesCell,
             activity
          ]))
+      models.main.view.layer.masksToBounds = false
    }
 }
 

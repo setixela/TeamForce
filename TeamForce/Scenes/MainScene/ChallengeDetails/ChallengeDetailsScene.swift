@@ -10,7 +10,7 @@ import UIKit
 
 final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
    DefaultVCModel,
-   DoubleStacksModel,
+   TripleStacksModel,
    Asset,
    Challenge
 >, Scenarible {
@@ -30,7 +30,7 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
       .image(Design.icon.challengeWinnerIllustrate)
       .contentMode(.scaleAspectFit)
       .height(200)
-   
+
    private lazy var filterButtons = SlidedIndexButtons<Button6Event>(buttons:
       SecondaryButtonDT<Design>()
          .title("Детали")
@@ -65,13 +65,21 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
    override func start() {
       super.start()
 
-      mainVM.bodyStack
+      mainVM.headerStack
          .backColor(Design.color.backgroundBrandSecondary)
-         //.height(200)
+         // .height(200)
          .arrangedModels([
-            headerImage,
+            headerImage
+
+         ])
+
+      mainVM.bodyStack
+         .arrangedModels([
             filterButtons
          ])
+         .padding(.horizontalOffset(Design.params.commonSideOffset))
+         .padTop(8)
+         .backColor(Design.color.background)
 
       mainVM.footerStack
          .padding(.init(
@@ -134,7 +142,7 @@ extension ChallengeDetailsScene: StateMachine {
       case .presentSendResultScreen(let challengeId):
          vcModel?.dismiss(animated: true)
          Asset.router?.route(\.challengeSendResult, navType: .presentModally(.automatic), payload: challengeId)
-         
+
       case .enableMyResult(let value):
          print("value \(value)")
          filterButtons.buttons[1].hidden(false)
@@ -147,7 +155,7 @@ extension ChallengeDetailsScene: StateMachine {
 extension ChallengeDetailsScene {
    private func presentHeader() {
       UIView.animate(withDuration: 0.36) {
-         self.mainVM.bodyStack
+         self.mainVM.headerStack
             .hidden(false)
             .alpha(1)
       }
@@ -155,7 +163,7 @@ extension ChallengeDetailsScene {
 
    private func hideHeader() {
       UIView.animate(withDuration: 0.36) {
-         self.mainVM.bodyStack
+         self.mainVM.headerStack
             .alpha(0)
             .hidden(true)
       }
