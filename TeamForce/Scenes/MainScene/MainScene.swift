@@ -271,7 +271,7 @@ extension MainScene {
    }
 
    private func hideHeader() {
-      vcModel?.sendEvent(\.setNavBarTintColor, Design.color.backgroundBrand)
+      vcModel?.sendEvent(\.setNavBarTintColor, Design.color.transparent)
       UIView.animate(withDuration: 0.36) {
          self.mainVM.setState(.presentHeaderTitle)
       }

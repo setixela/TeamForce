@@ -14,6 +14,8 @@ struct ChallengesScenarioInputEvents {
    let presentActiveChallenges: VoidWork<Void>
 
    let didSelectChallengeIndex: VoidWork<Int>
+
+   let createChallenge: VoidWorkVoid
 }
 
 final class ChallengesScenario<Asset: AssetProtocol>:
@@ -42,6 +44,9 @@ final class ChallengesScenario<Asset: AssetProtocol>:
          .doInput(())
          .doNext(works.getProfileId)
          .onSuccessMixSaved(setState) { .presentChallengeDetails(($1, $0)) }
+
+      events.createChallenge
+         .onSuccess(setState, .presentCreateChallenge)
       
 //      let input = ChallengeRequestBody(name: "Challenge 13", description: "some description", startBalance: 1)
 //      works.createChallenge

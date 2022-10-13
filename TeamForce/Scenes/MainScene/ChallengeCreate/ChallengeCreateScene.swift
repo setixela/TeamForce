@@ -15,11 +15,13 @@ struct ChallengeCreateEvents: InitProtocol {
    var finishWithError: Void?
 }
 
-final class ChallengeCreateScene<Asset: AssetProtocol>: ModalDoubleStackModel<Asset>, Scenarible, Eventable {
-   typealias Events = ChallengeCreateEvents
+final class ChallengeCreateScene<Asset: AssetProtocol>: BaseSceneModel<
+   DefaultVCModel,
+   ModalDoubleStackModel<Asset>,
+   Asset,
+   Void
+>, Scenarible {
    typealias State = StackState
-
-   var events: [Int: LambdaProtocol?] = [:]
 
    private lazy var works = ChallengeCreateWorks<Asset>()
 
@@ -40,6 +42,12 @@ final class ChallengeCreateScene<Asset: AssetProtocol>: ModalDoubleStackModel<As
 
    override func start() {
       super.start()
+
+      scenario.start()
+
+      mainVM.closeButton.on(\.didTap, self) {
+         $0.vcModel?.dismiss(animated: true)
+      }
    }
 }
 

@@ -224,10 +224,6 @@ struct ChallengeCellPresenters<Design: DSP>: Designable {
 final class CreateChallengePanel<Design: DSP>: StackModel, Designable {
    var events: EventsStore = .init()
 
-   private lazy var createChallengeButton = ButtonModel()
-      .set(Design.state.button.default)
-      .title("Создать челлендж")
-
    private lazy var filterButtons = SlidedIndexButtons<Button2Event>(buttons:
                                                                         SecondaryButtonDT<Design>()
       .title("Все")
@@ -240,8 +236,6 @@ final class CreateChallengePanel<Design: DSP>: StackModel, Designable {
       super.start()
 
       arrangedModels([
-         createChallengeButton,
-         Grid.x16.spacer,
          filterButtons,
       ])
 

@@ -27,22 +27,28 @@ final class ChallengesScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtend
       stateDelegate: stateDelegate,
       events: ChallengesScenarioInputEvents(
          saveProfileId: on(\.userDidLoad),
-         presentAllChallenges: createChellPanel.on(\.didTapFilterAll),
-         presentActiveChallenges: createChellPanel.on(\.didTapFilterActive),
-         didSelectChallengeIndex: viewModel.on(\.didSelectChallenge)
+         presentAllChallenges: filterButtons.on(\.didTapFilterAll),
+         presentActiveChallenges: filterButtons.on(\.didTapFilterActive),
+         didSelectChallengeIndex: viewModel.on(\.didSelectChallenge),
+         createChallenge: createChallengeButton.on(\.didTap)
       )
    )
 
    // MARK: - View Models
 
- 
-   private lazy var createChellPanel = CreateChallengePanel<Design>()
+   private lazy var createChallengeButton = ButtonModel()
+      .set(Design.state.button.default)
+      .title("Создать челлендж")
+
+   private lazy var filterButtons = CreateChallengePanel<Design>()
    private lazy var viewModel = ChallengesViewModel<Design>()
    private lazy var activity = ActivityIndicator<Design>()
 
    override func start() {
       arrangedModels([
-         createChellPanel,
+         createChallengeButton,
+         Grid.x16.spacer,
+         filterButtons,
          Grid.x16.spacer,
          activity,
          viewModel,
@@ -53,7 +59,8 @@ final class ChallengesScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtend
 enum ChallengesState {
    case initial
    case presentChallenges([Challenge])
-   case presentChallengeDetails((Challenge, Int))//challenge and profileId
+   case presentChallengeDetails((Challenge, Int)) // challenge and profileId
+   case presentCreateChallenge
 }
 
 extension ChallengesScene: StateMachine {
@@ -65,9 +72,11 @@ extension ChallengesScene: StateMachine {
          activity.hidden(true)
          viewModel.setState(.presentChallenges(challenges))
       case .presentChallengeDetails(let value):
-         Asset.router?.route(\.challengeDetails,
-                                       navType: .presentModally(.automatic),
-                                       payload: value)
+         Asset.router?.route(
+            \.challengeDetails,
+            navType: .presentModally(.automatic),
+            payload: value
+         )
          .onSuccess {
             print("reload table")
          }
@@ -75,6 +84,12 @@ extension ChallengesScene: StateMachine {
             print("doNothing")
          }
          .retainBy(retainer)
+      case .presentCreateChallenge:
+         Asset.router?.route(
+            \.challengeCreate,
+            navType: .presentModally(.automatic),
+            payload: ()
+         )
       }
    }
 }
