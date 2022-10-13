@@ -76,7 +76,7 @@ enum ChallengeDetailsState {
 
    case presentComments(Challenge)
 
-   case presentSendResultScreen
+   case presentSendResultScreen(Int)
 }
 
 extension ChallengeDetailsScene: StateMachine {
@@ -103,9 +103,9 @@ extension ChallengeDetailsScene: StateMachine {
             .arrangedModels([
                challComments
             ])
-      case .presentSendResultScreen:
+      case .presentSendResultScreen(let challengeId):
          vcModel?.dismiss(animated: true)
-         Asset.router?.route(\.challengeSendResult, navType: .presentModally(.automatic))
+         Asset.router?.route(\.challengeSendResult, navType: .presentModally(.automatic), payload: challengeId)
       }
    }
 }

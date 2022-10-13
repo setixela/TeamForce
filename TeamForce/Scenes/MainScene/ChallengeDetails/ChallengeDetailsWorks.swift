@@ -46,6 +46,12 @@ final class ChallengeDetailsWorks<Asset: AssetProtocol>: BaseSceneWorks<Challeng
       Self.store.currentContender = contender
       work.success(contender)
    }.retainBy(retainer) }
+   
+   var getChallengeId: Work<Void, Int> { .init { work in
+      guard let id = Self.store.challengeId else { return }
+      work.success(id)
+   }.retainBy(retainer) }
+   
 }
 
 extension ChallengeDetailsWorks: ChallengeDetailsWorksProtocol {

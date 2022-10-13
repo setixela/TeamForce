@@ -53,7 +53,8 @@ final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<Challen
 //         }
 
       events.ChallengeResult
-         .onSuccess(setState, .presentSendResultScreen)
+         .doNext(work: works.getChallengeId)
+         .onSuccess(setState) { .presentSendResultScreen($0) }
    }
    
 }

@@ -12,19 +12,25 @@ enum ChallengeResultSceneState {
 
    case sendingEnabled
    case sendingDisabled
+   
+   case resultSent
 }
 
 final class ChallengeResultScene<Asset: AssetProtocol>: BaseSceneModel<
    DefaultVCModel,
    ModalDoubleStackModel<Asset>,
    Asset,
-   Void
+   Int
 >, Scenarible {
 //
    lazy var scenario: Scenario = ChallengeResultScenario<Asset>(
       works: ChallengeResultWorks<Asset>(),
       stateDelegate: stateDelegate,
-      events: ChallengeResultEvents(commentInputChanged: inputView.on(\.didEditingChanged))
+      events: ChallengeResultEvents(
+         saveInput: on(\.input),
+         commentInputChanged: inputView.on(\.didEditingChanged),
+         sendResult: sendButton.on(\.didTap)
+      )
    )
 
    private lazy var inputView = Design.model.transact.reasonInputTextView
@@ -73,6 +79,8 @@ extension ChallengeResultScene: StateMachine {
          sendButton.set(Design.state.button.default)
       case .sendingDisabled:
          sendButton.set(Design.state.button.inactive)
+      case .resultSent:
+         print("result sent")
       }
    }
 }
