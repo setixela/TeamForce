@@ -28,16 +28,16 @@ final class ChallengeDetailsWorks<Asset: AssetProtocol>: BaseSceneWorks<Challeng
    private lazy var apiUseCase = Asset.apiUseCase
    
    
-   var amIOwner: Work<Void, Bool> { .init { work in
+   var amIOwner: Work<Void, Void> { .init { work in
       guard
          let profileId = Self.store.profileId,
          let creatorId = Self.store.challenge?.creatorId
       else { return }
       
       if profileId == creatorId {
-         work.success(true)
+         work.success(())
       } else {
-         work.fail(false)
+         work.fail()
       }
    }.retainBy(retainer) }
    

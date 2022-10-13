@@ -52,7 +52,8 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
          .font(Design.font.default),
       SecondaryButtonDT<Design>()
          .title("Участники")
-         .font(Design.font.default))
+         .font(Design.font.default)
+         .hidden(true))
       .height(16 + 38)
       .backColor(Design.color.background)
 

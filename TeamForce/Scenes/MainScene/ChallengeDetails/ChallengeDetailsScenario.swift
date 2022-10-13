@@ -27,11 +27,11 @@ final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<Challen
          .doVoidNext(works.getChallengeById)
          .onSuccess(setState) { .updateDetails($0) }
          // .doNext(works.saveInput)
-         .doMap { _ in }
-         .doNext(works.amIOwner)
+         .doVoidNext(works.amIOwner)
          .onSuccess(setState, .enableContenders)
-         .doMap { _ in }
-         .doNext(works.getChallengeId)
+         .onFail { print("you are not owner") }
+         .doRecover()
+         .doVoidNext(works.getChallengeId)
          .doNext(works.getChallengeResult)
          .onSuccess(setState) { .enableMyResult($0) }
 
