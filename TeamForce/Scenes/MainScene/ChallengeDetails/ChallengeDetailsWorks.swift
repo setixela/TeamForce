@@ -33,9 +33,13 @@ final class ChallengeDetailsWorks<Asset: AssetProtocol>: BaseSceneWorks<Challeng
          let profileId = Self.store.profileId,
          let creatorId = Self.store.challenge?.creatorId
       else { return }
-      let res: Bool = (profileId == creatorId)
-      work.success(res)
-   }.retainBy(retainer)}
+      
+      if profileId == creatorId {
+         work.success(true)
+      } else {
+         work.fail(false)
+      }
+   }.retainBy(retainer) }
    
    var saveInput: Work<(Challenge, Int), Challenge> { .init { work in
       guard let input = work.input else { return }
