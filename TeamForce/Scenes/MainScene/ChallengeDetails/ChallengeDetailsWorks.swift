@@ -46,6 +46,12 @@ final class ChallengeDetailsWorks<Asset: AssetProtocol>: BaseSceneWorks<Challeng
       Self.store.currentContender = contender
       work.success(contender)
    }.retainBy(retainer) }
+   
+   var getChallengeId: Work<Void, Int> { .init { work in
+      guard let id = Self.store.challengeId else { return }
+      work.success(id)
+   }.retainBy(retainer) }
+   
 }
 
 extension ChallengeDetailsWorks: ChallengeDetailsWorksProtocol {
@@ -98,6 +104,18 @@ extension ChallengeDetailsWorks: ChallengeDetailsWorksProtocol {
          .doAsync(request)
          .onSuccess {
             work.success(result: $0)
+         }
+         .onFail {
+            work.fail()
+         }
+   }.retainBy(retainer) }
+   
+   var getChallengeResult: Work<Int, [ChallengeResult]> { .init { [weak self] work in
+      guard let input = work.input else { return }
+      self?.apiUseCase.GetChallengeResult
+         .doAsync(input)
+         .onSuccess {
+            work.success($0)
          }
          .onFail {
             work.fail()

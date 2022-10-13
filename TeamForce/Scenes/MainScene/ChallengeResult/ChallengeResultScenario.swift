@@ -8,7 +8,9 @@
 import ReactiveWorks
 
 struct ChallengeResultEvents {
+   let saveInput: VoidWork<Int>
    let commentInputChanged: VoidWork<String>
+   let sendResult: VoidWork<Void>
 }
 
 final class ChallengeResultScenario<Asset: AssetProtocol>: BaseScenario<ChallengeResultEvents, ChallengeResultSceneState, ChallengeResultWorks<Asset>> {
@@ -18,5 +20,12 @@ final class ChallengeResultScenario<Asset: AssetProtocol>: BaseScenario<Challeng
          .doNext(work: works.reasonInputParsing)
          .onSuccess(setState, .sendingEnabled)
          .onFail(setState, .sendingDisabled)
+      
+      events.saveInput
+         .doNext(work: works.saveId)
+      
+      events.sendResult
+         .doNext(work: works.createChallengeReport)
+         .onSuccess(setState, .resultSent)
    }
 }

@@ -29,6 +29,32 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
    private lazy var headerImage = ImageViewModel()
       .image(Design.icon.challengeWinnerIllustrate)
       .contentMode(.scaleAspectFit)
+      .height(200)
+   
+   private lazy var filterButtons = SlidedIndexButtons<Button6Event>(buttons:
+      SecondaryButtonDT<Design>()
+         .title("Детали")
+         .font(Design.font.default),
+      SecondaryButtonDT<Design>()
+         .title("Мой результат")
+         .font(Design.font.default)
+         .hidden(true),
+      SecondaryButtonDT<Design>()
+         .title("Кандидаты")
+         .font(Design.font.default)
+         .hidden(true),
+      SecondaryButtonDT<Design>()
+         .title("Победители")
+         .font(Design.font.default)
+         .hidden(true),
+      SecondaryButtonDT<Design>()
+         .title("Комментарии")
+         .font(Design.font.default),
+      SecondaryButtonDT<Design>()
+         .title("Участники")
+         .font(Design.font.default))
+      .height(16 + 38)
+      .backColor(Design.color.background)
 
    private lazy var challDetails = ChallengeDetailsViewModel<Design>()
       .set(.padding(.horizontalOffset(Design.params.commonSideOffset)))
@@ -41,9 +67,10 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
 
       mainVM.bodyStack
          .backColor(Design.color.backgroundBrandSecondary)
-         .height(200)
+         //.height(200)
          .arrangedModels([
-            headerImage
+            headerImage,
+            filterButtons
          ])
 
       mainVM.footerStack
@@ -76,7 +103,8 @@ enum ChallengeDetailsState {
 
    case presentComments(Challenge)
 
-   case presentSendResultScreen
+   case presentSendResultScreen(Int)
+   case enableMyResult([ChallengeResult])
 }
 
 extension ChallengeDetailsScene: StateMachine {
@@ -103,9 +131,13 @@ extension ChallengeDetailsScene: StateMachine {
             .arrangedModels([
                challComments
             ])
-      case .presentSendResultScreen:
+      case .presentSendResultScreen(let challengeId):
          vcModel?.dismiss(animated: true)
-         Asset.router?.route(\.challengeSendResult, navType: .presentModally(.automatic))
+         Asset.router?.route(\.challengeSendResult, navType: .presentModally(.automatic), payload: challengeId)
+         
+      case .enableMyResult(let value):
+         print("value \(value)")
+         filterButtons.buttons[1].hidden(false)
       }
    }
 }

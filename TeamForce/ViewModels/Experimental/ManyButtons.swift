@@ -19,7 +19,7 @@ final class SlidedIndexButtons<ButtEvents: ManyButtonEvent>: BaseViewModel<UIScr
    typealias Events = TapIndexEvents<ButtEvents>
 
    var events: EventsStore = .init()
-
+   var buttons: [Button] = []
    private lazy var stack = StackModel()
       .axis(.horizontal)
 
@@ -27,12 +27,16 @@ final class SlidedIndexButtons<ButtEvents: ManyButtonEvent>: BaseViewModel<UIScr
       super.init()
 
       guard buttons.isEmpty == false else { return }
-
+      self.buttons = buttons
+      configure()
+   }
+   
+   private func configure() {
       buttons.first?.setMode(\.selected)
       buttons.enumerated().forEach { tuple in
          tuple.element
             .on(\.didTap, self) { slf in
-               buttons.forEach { but in but.setMode(\.normal) }
+               slf.buttons.forEach { but in but.setMode(\.normal) }
                tuple.element.setMode(\.selected)
 
                guard let eve = ButtEvents(rawValue: tuple.offset) else { return }
@@ -98,6 +102,15 @@ enum Button5Event: Int, ManyButtonEvent {
    case didTapButton5 = 4
 }
 
+enum Button6Event: Int, ManyButtonEvent {
+   case didTapButton1 = 0
+   case didTapButton2 = 1
+   case didTapButton3 = 2
+   case didTapButton4 = 3
+   case didTapButton5 = 4
+   case didTapButton6 = 5
+}
+
 protocol IndexedButtonsProtocol: Eventable where Events == TapIndexEvents<ButtEvents> {
    associatedtype Button: ModableButton
    associatedtype ButtEvents: ManyButtonEvent
@@ -141,5 +154,15 @@ extension IndexedButtonsProtocol {
         _ but5: Button) where Self.ButtEvents == Button5Event
    {
       self.init(buttons: but1, but2, but3, but4, but5)
+   }
+   
+   init(_ but1: Button,
+        _ but2: Button,
+        _ but3: Button,
+        _ but4: Button,
+        _ but5: Button,
+        _ but6: Button) where Self.ButtEvents == Button5Event
+   {
+      self.init(buttons: but1, but2, but3, but4, but5, but6)
    }
 }

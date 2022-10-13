@@ -217,6 +217,8 @@
 		631995B628F53F8D00EB2638 /* ChallengeCreateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631995B528F53F8D00EB2638 /* ChallengeCreateViewModel.swift */; };
 		631995B828F5A4D400EB2638 /* GetSendCoinSettingsApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631995B728F5A4D400EB2638 /* GetSendCoinSettingsApiWorker.swift */; };
 		631995BA28F5A56D00EB2638 /* GetSendCoinSettingsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631995B928F5A56D00EB2638 /* GetSendCoinSettingsUseCase.swift */; };
+		631D8EB528F78D4D005332BD /* GetChallengeResultApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631D8EB428F78D4D005332BD /* GetChallengeResultApiWorker.swift */; };
+		631D8EB728F78F04005332BD /* GetChallengeResultUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631D8EB628F78F04005332BD /* GetChallengeResultUseCase.swift */; };
 		63352DE7289AA69A00489F5F /* SendCoinUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63352DE6289AA69A00489F5F /* SendCoinUseCase.swift */; };
 		633FBC8428E535600071FF8C /* FeedDetailWorks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633FBC8328E535600071FF8C /* FeedDetailWorks.swift */; };
 		633FBC8628E542540071FF8C /* FeedDetailViewModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633FBC8528E542540071FF8C /* FeedDetailViewModels.swift */; };
@@ -531,6 +533,8 @@
 		631995B528F53F8D00EB2638 /* ChallengeCreateViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeCreateViewModel.swift; sourceTree = "<group>"; };
 		631995B728F5A4D400EB2638 /* GetSendCoinSettingsApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSendCoinSettingsApiWorker.swift; sourceTree = "<group>"; };
 		631995B928F5A56D00EB2638 /* GetSendCoinSettingsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSendCoinSettingsUseCase.swift; sourceTree = "<group>"; };
+		631D8EB428F78D4D005332BD /* GetChallengeResultApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetChallengeResultApiWorker.swift; sourceTree = "<group>"; };
+		631D8EB628F78F04005332BD /* GetChallengeResultUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetChallengeResultUseCase.swift; sourceTree = "<group>"; };
 		63352DE6289AA69A00489F5F /* SendCoinUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendCoinUseCase.swift; sourceTree = "<group>"; };
 		633FBC8328E535600071FF8C /* FeedDetailWorks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedDetailWorks.swift; sourceTree = "<group>"; };
 		633FBC8528E542540071FF8C /* FeedDetailViewModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedDetailViewModels.swift; sourceTree = "<group>"; };
@@ -1492,6 +1496,7 @@
 				63A37EAF28F0528800DBD59F /* GetChallengeWinnersApiWorker.swift */,
 				63A37EB328F059D800DBD59F /* CreateChallengeReportApiWorker.swift */,
 				63A37EB728F3199C00DBD59F /* CheckChallengeReportApiWorker.swift */,
+				631D8EB428F78D4D005332BD /* GetChallengeResultApiWorker.swift */,
 			);
 			path = Challenge;
 			sourceTree = "<group>";
@@ -1506,6 +1511,7 @@
 				63A37EB128F054F300DBD59F /* GetChallengeWinnersUseCase.swift */,
 				63A37EB528F05DDD00DBD59F /* CreateChallengeReportUseCase.swift */,
 				63A37EB928F3289900DBD59F /* CheckChallengeReportUseCase.swift */,
+				631D8EB628F78F04005332BD /* GetChallengeResultUseCase.swift */,
 			);
 			path = Challenge;
 			sourceTree = "<group>";
@@ -1779,6 +1785,7 @@
 				63CFA198289C3FB6000E4D1E /* GetTransactionsUseCase.swift in Sources */,
 				1977BE5828A7343400D554EA /* InputCheckers.swift in Sources */,
 				63AB070F28BD552A00FD650F /* CreateContactApiWorker.swift in Sources */,
+				631D8EB528F78D4D005332BD /* GetChallengeResultApiWorker.swift in Sources */,
 				19017B7328A69CD400B06345 /* DTLogoTitleX.swift in Sources */,
 				197A361428BBB25B006E44C1 /* ReactionButton.swift in Sources */,
 				191B0C272865E5C1001CF3D9 /* IconBuilder.swift in Sources */,
@@ -1809,6 +1816,7 @@
 				1953CF0628EAC9FB00C670A6 /* HashTagsScrollModel.swift in Sources */,
 				631995B228F53F6800EB2638 /* ChallengeCreateScenario.swift in Sources */,
 				63CFA196289C38A9000E4D1E /* GetTransactionsApiWorker.swift in Sources */,
+				631D8EB728F78F04005332BD /* GetChallengeResultUseCase.swift in Sources */,
 				19221EEC28C9B04700B7B604 /* TitledTextFieldY.swift in Sources */,
 				197A2DA328A9BF4B00190656 /* Combos+Init.swift in Sources */,
 				1967509F286492780019A6DE /* Labels.swift in Sources */,
