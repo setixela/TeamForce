@@ -49,7 +49,7 @@ struct Challenge: Codable {
    let parameters: [Parameter]?
    let endAt: String?
    let approvedReportsAmount: Int
-   let status: ChallengeStatus?
+   let status: String?
    let isNewReports: Bool
    let winnersCount: Int?
    let creatorOrganizationId: Int?
