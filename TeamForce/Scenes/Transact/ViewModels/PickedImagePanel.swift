@@ -72,6 +72,7 @@ final class PickedImage<Design: DSP>: StackModel, Designable {
       axis(.horizontal)
       alignment(.top)
       size(.square(Grid.x80.value))
+      clipsToBound(true)
       cornerRadius(Design.params.cornerRadius)
       arrangedModels([
          Grid.xxx.spacer,

@@ -13,6 +13,21 @@ protocol StateMachine: AnyObject {
    func setState(_ state: ModelState)
 }
 
+protocol StateMachine2: StateMachine {
+   associatedtype ModelState2
+
+   func setState2(_ state: ModelState2)
+}
+
+extension StateMachine2 {
+   var stateDelegate2: (ModelState2) -> Void {
+      let fun: (ModelState2) -> Void = { [weak self] in
+         self?.setState2($0)
+      }
+
+      return fun
+   }
+}
 extension StateMachine {
 
    var stateDelegate: (ModelState) -> Void {

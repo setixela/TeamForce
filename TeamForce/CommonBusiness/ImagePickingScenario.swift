@@ -15,7 +15,7 @@ struct ImagePickingScenarioEvents {
 }
 
 final class ImagePickingScenario<Asset: AssetProtocol>:
-   BaseScenario<ImagePickingScenarioEvents, TransactState, TransactWorks<Asset>>
+   BaseScenario<ImagePickingScenarioEvents, ImagePickingState, ImageWorks>
 {
    override func start() {
       events.startImagePicking

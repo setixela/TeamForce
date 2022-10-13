@@ -48,6 +48,7 @@
 		19221EF528CE1D1B00B7B604 /* EditContactsViewModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19221EF428CE1D1B00B7B604 /* EditContactsViewModels.swift */; };
 		19221EF828CE262A00B7B604 /* WorkingPlaceViewModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19221EF728CE262A00B7B604 /* WorkingPlaceViewModels.swift */; };
 		192FCFFF28C9477100E6FACC /* ModalDoubleStackModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 192FCFFE28C9477100E6FACC /* ModalDoubleStackModel.swift */; };
+		1938929E28F87EE100826522 /* ImageWorks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1938929D28F87EE100826522 /* ImageWorks.swift */; };
 		19466E01289FE28C0052F0AB /* TitleSubtitleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19466E00289FE28C0052F0AB /* TitleSubtitleModel.swift */; };
 		19466E03289FFC040052F0AB /* IconTitleSubtitleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19466E02289FFC040052F0AB /* IconTitleSubtitleModel.swift */; };
 		194C095628759FD900D88D5B /* ViewModel+Stateable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 194C095528759FD900D88D5B /* ViewModel+Stateable.swift */; };
@@ -369,6 +370,7 @@
 		19221EF428CE1D1B00B7B604 /* EditContactsViewModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditContactsViewModels.swift; sourceTree = "<group>"; };
 		19221EF728CE262A00B7B604 /* WorkingPlaceViewModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkingPlaceViewModels.swift; sourceTree = "<group>"; };
 		192FCFFE28C9477100E6FACC /* ModalDoubleStackModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalDoubleStackModel.swift; sourceTree = "<group>"; };
+		1938929D28F87EE100826522 /* ImageWorks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageWorks.swift; sourceTree = "<group>"; };
 		19466E00289FE28C0052F0AB /* TitleSubtitleModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleSubtitleModel.swift; sourceTree = "<group>"; };
 		19466E02289FFC040052F0AB /* IconTitleSubtitleModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconTitleSubtitleModel.swift; sourceTree = "<group>"; };
 		194C095528759FD900D88D5B /* ViewModel+Stateable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewModel+Stateable.swift"; sourceTree = "<group>"; };
@@ -735,6 +737,7 @@
 				19C1E9A228610E4E00E7976D /* MainRouter.swift */,
 				197A2D9728A95D7500190656 /* States */,
 				6368D8272891E7C30049EEAB /* UserDefault+helpers.swift */,
+				1938929C28F87ED800826522 /* CommonBusiness */,
 				195870F328A8CDD90075D505 /* Assets */,
 				196750A02865168F0019A6DE /* Scenes */,
 				199C4B6728632461008AD6FD /* DesignSystem */,
@@ -817,6 +820,15 @@
 				19221EF728CE262A00B7B604 /* WorkingPlaceViewModels.swift */,
 			);
 			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		1938929C28F87ED800826522 /* CommonBusiness */ = {
+			isa = PBXGroup;
+			children = (
+				1938929D28F87EE100826522 /* ImageWorks.swift */,
+				19775FFD28C5922B008DF8E0 /* ImagePickingScenario.swift */,
+			);
+			path = CommonBusiness;
 			sourceTree = "<group>";
 		};
 		19466DFF289FE0B20052F0AB /* LabelModels */ = {
@@ -1172,7 +1184,6 @@
 				199E321528BD3A790088BA71 /* TransactScene.swift */,
 				1953DE832879FDE3000DC537 /* TransactViewModels.swift */,
 				190BE97828ADDFAB0062CCD5 /* TransactScenario.swift */,
-				19775FFD28C5922B008DF8E0 /* ImagePickingScenario.swift */,
 				19CF792B28A587B9001531B8 /* TransactWorks.swift */,
 				19CAB9CF28B4265000A0A3B1 /* ViewModels */,
 			);
@@ -1763,6 +1774,7 @@
 				19A73BEB28A4510E000B74CF /* BadgedViewModel.swift in Sources */,
 				198BBEEE28B698040006CD30 /* LoadCsrfTokenUseCase.swift in Sources */,
 				198FE1D02899E0BF00BAF1A5 /* IsEmpty.swift in Sources */,
+				1938929E28F87EE100826522 /* ImageWorks.swift in Sources */,
 				631995BA28F5A56D00EB2638 /* GetSendCoinSettingsUseCase.swift in Sources */,
 				63BB2C2028E14BFA00C1E3DB /* UpdateCommentUseCase.swift in Sources */,
 				19AE3AF22869230C00A0C6E4 /* AuthApiWorker.swift in Sources */,
