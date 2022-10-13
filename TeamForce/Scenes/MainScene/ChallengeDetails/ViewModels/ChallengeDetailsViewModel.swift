@@ -14,17 +14,17 @@ final class ChallengeDetailsViewModel<Design: DSP>:
 {
    var buttonsPanel: SendChallengePanel<Design> { models.down }
    //
-   private lazy var filterButtons = SlidedIndexButtons<Button3Event>(buttons:
-      SecondaryButtonDT<Design>()
-         .title("Детали")
-         .font(Design.font.default),
-      SecondaryButtonDT<Design>()
-         .title("Комментарии")
-         .font(Design.font.default),
-      SecondaryButtonDT<Design>()
-         .title("Участники")
-         .font(Design.font.default))
-      .height(16 + 38)
+//   private lazy var filterButtons = SlidedIndexButtons<Button3Event>(buttons:
+//      SecondaryButtonDT<Design>()
+//         .title("Детали")
+//         .font(Design.font.default),
+//      SecondaryButtonDT<Design>()
+//         .title("Комментарии")
+//         .font(Design.font.default),
+//      SecondaryButtonDT<Design>()
+//         .title("Участники")
+//         .font(Design.font.default))
+//      .height(16 + 38)
 
    private lazy var challengeInfo = ChallengeInfoVM<Design>()
 
@@ -66,7 +66,7 @@ final class ChallengeDetailsViewModel<Design: DSP>:
          .set(.spacing(8))
          .set(.bounce(true))
          .set(.arrangedModels([
-            filterButtons,
+//            filterButtons,
             challengeInfo,
             prizeSizeCell,
             finishDateCell,
