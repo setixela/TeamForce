@@ -110,7 +110,7 @@ extension ChallengeDetailsWorks: ChallengeDetailsWorksProtocol {
          }
    }.retainBy(retainer) }
    
-   var getChallengeResult: Work<Int, ChallengeResult> { .init { [weak self] work in
+   var getChallengeResult: Work<Int, [ChallengeResult]> { .init { [weak self] work in
       guard let input = work.input else { return }
       self?.apiUseCase.GetChallengeResult
          .doAsync(input)

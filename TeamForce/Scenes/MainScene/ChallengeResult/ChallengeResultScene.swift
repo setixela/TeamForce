@@ -80,7 +80,7 @@ extension ChallengeResultScene: StateMachine {
       case .sendingDisabled:
          sendButton.set(Design.state.button.inactive)
       case .resultSent:
-         print("result sent")
+         vcModel?.dismiss(animated: true)
       }
    }
 }

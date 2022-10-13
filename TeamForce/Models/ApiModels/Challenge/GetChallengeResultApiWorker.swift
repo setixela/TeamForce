@@ -21,7 +21,7 @@ struct ChallengeResult: Codable {
    }
 }
 
-final class GetChallengeResultApiWorker: BaseApiWorker<RequestWithId, ChallengeResult> {
+final class GetChallengeResultApiWorker: BaseApiWorker<RequestWithId, [ChallengeResult]> {
    override func doAsync(work: Wrk) {
       let cookieName = "csrftoken"
 
@@ -46,12 +46,12 @@ final class GetChallengeResultApiWorker: BaseApiWorker<RequestWithId, ChallengeR
             let decoder = DataToDecodableParser()
             guard
                let data = result.data,
-               let challengeResult: ChallengeResult = decoder.parse(data)
+               let challengeResults: [ChallengeResult] = decoder.parse(data)
             else {
                work.fail()
                return
             }
-            work.success(result: challengeResult)
+            work.success(result: challengeResults)
          }
          .catch { _ in
             work.fail()

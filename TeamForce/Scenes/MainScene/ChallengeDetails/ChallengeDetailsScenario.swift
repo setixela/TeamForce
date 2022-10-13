@@ -27,6 +27,10 @@ final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<Challen
          .doVoidNext(works.getChallengeById)
          .onSuccess(setState) { .updateDetails($0) }
          .doNext(works.saveInput)
+         .doMap{ _ in }
+         .doNext(work: works.getChallengeId)
+         .doNext(work: works.getChallengeResult)
+         .onSuccess(setState) { .enableMyResult($0) }
       
 //      events.getContenders
 //         .doNext(work: works.getChallengeContenders)

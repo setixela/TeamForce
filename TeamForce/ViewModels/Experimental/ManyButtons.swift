@@ -19,7 +19,7 @@ final class SlidedIndexButtons<ButtEvents: ManyButtonEvent>: BaseViewModel<UIScr
    typealias Events = TapIndexEvents<ButtEvents>
 
    var events: EventsStore = .init()
-
+   var buttons: [Button] = []
    private lazy var stack = StackModel()
       .axis(.horizontal)
 
@@ -27,12 +27,16 @@ final class SlidedIndexButtons<ButtEvents: ManyButtonEvent>: BaseViewModel<UIScr
       super.init()
 
       guard buttons.isEmpty == false else { return }
-
+      self.buttons = buttons
+      configure()
+   }
+   
+   private func configure() {
       buttons.first?.setMode(\.selected)
       buttons.enumerated().forEach { tuple in
          tuple.element
             .on(\.didTap, self) { slf in
-               buttons.forEach { but in but.setMode(\.normal) }
+               slf.buttons.forEach { but in but.setMode(\.normal) }
                tuple.element.setMode(\.selected)
 
                guard let eve = ButtEvents(rawValue: tuple.offset) else { return }

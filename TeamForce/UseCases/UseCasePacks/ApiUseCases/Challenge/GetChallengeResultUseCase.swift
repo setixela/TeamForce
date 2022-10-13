@@ -12,8 +12,8 @@ struct GetChallengeResultUseCase: UseCaseProtocol {
    let safeStringStorage: StringStorageWorker
    let getChallengeResultApiWorker: GetChallengeResultApiWorker
 
-   var work: Work<Int, ChallengeResult> {
-      Work<Int, ChallengeResult>() { work in
+   var work: Work<Int, [ChallengeResult]> {
+      Work<Int, [ChallengeResult]>() { work in
          safeStringStorage
             .doAsync("token")
             .onFail {

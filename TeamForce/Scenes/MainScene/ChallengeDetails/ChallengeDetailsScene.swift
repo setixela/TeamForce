@@ -104,6 +104,7 @@ enum ChallengeDetailsState {
    case presentComments(Challenge)
 
    case presentSendResultScreen(Int)
+   case enableMyResult([ChallengeResult])
 }
 
 extension ChallengeDetailsScene: StateMachine {
@@ -133,6 +134,10 @@ extension ChallengeDetailsScene: StateMachine {
       case .presentSendResultScreen(let challengeId):
          vcModel?.dismiss(animated: true)
          Asset.router?.route(\.challengeSendResult, navType: .presentModally(.automatic), payload: challengeId)
+         
+      case .enableMyResult(let value):
+         print("value \(value)")
+         filterButtons.buttons[1].hidden(false)
       }
    }
 }
