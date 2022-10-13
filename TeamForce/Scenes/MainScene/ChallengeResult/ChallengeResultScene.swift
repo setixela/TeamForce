@@ -25,6 +25,7 @@ final class ChallengeResultScene<Asset: AssetProtocol>: BaseSceneModel<
 //
 
    private let works = ChallengeResultWorks<Asset>()
+
    lazy var scenario: Scenario = ChallengeResultScenario<Asset>(
       works: works,
       stateDelegate: stateDelegate,

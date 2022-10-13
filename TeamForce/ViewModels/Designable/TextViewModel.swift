@@ -53,7 +53,7 @@ class TextViewModel: BaseViewModel<UITextView>, UITextViewDelegate {
    }
 
    @discardableResult func placeholder(_ value: String) -> Self {
-      self.placeholder = value
+      set(.placeholder(value))
       textViewDidEndEditing(view)
       return self
    }

@@ -46,7 +46,8 @@ final class ChallengeResultWorks<Asset: AssetProtocol>: BaseSceneWorks<Challenge
    var createChallengeReport: Work<Void, Void> { .init { [weak self] work in
       guard let id = Self.store.challengeId else { return }
       let report = ChallengeReportBody(challengeId: id,
-                                       text: Self.store.inputReasonText)
+                                       text: Self.store.inputReasonText,
+                                       photo: Self.store.images.first)
       self?.apiUseCase.CreateChallengeReport
          .doAsync(report)
          .onSuccess {
