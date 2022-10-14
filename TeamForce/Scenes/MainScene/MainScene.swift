@@ -70,7 +70,7 @@ final class MainScene<Asset: AssetProtocol>:
 
       mainVM.header.text("Благодарности")
       vcModel?.sendEvent(\.setTitle, "Благодарности")
-      hideHeader()
+      presentHeader()
    }
 
    private func unlockTabButtons() {
