@@ -70,6 +70,10 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
    private lazy var winnersBlock = ChallWinnersViewModel<Design>()
       .set(.padding(.horizontalOffset(Design.params.commonSideOffset)))
       .backColor(Design.color.background)
+   
+   private lazy var contendersBlock = ChallContendersViewModel<Design>()
+      .set(.padding(.horizontalOffset(Design.params.commonSideOffset)))
+      .backColor(Design.color.background)
 
    private lazy var challComments = FeedCommentsBlock<Design>()
 
@@ -128,6 +132,7 @@ enum ChallengeDetailsState {
    
    case presentMyResults([ChallengeResult])
    case presentWinners([ChallengeWinner])
+   case presentContenders([Contender])
 }
 
 extension ChallengeDetailsScene: StateMachine {
@@ -194,6 +199,13 @@ extension ChallengeDetailsScene: StateMachine {
          mainVM.footerStack
             .arrangedModels([
                winnersBlock
+            ])
+         
+      case .presentContenders(let contenders):
+         contendersBlock.setup(contenders)
+         mainVM.footerStack
+            .arrangedModels([
+               contendersBlock
             ])
       }
    }

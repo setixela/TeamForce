@@ -80,6 +80,8 @@ final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<Challen
                stateFunc(.presentMyResults(value))
             case let value as [ChallengeWinner]:
                stateFunc(.presentWinners(value))
+            case let value as [Contender]:
+               stateFunc(.presentContenders(value))
             default:
                break
             }

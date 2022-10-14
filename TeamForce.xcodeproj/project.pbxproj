@@ -224,6 +224,8 @@
 		631D8EBF28F91ECF005332BD /* ChallResultsPresenters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631D8EBE28F91ECF005332BD /* ChallResultsPresenters.swift */; };
 		631D8EC128F94EC7005332BD /* ChallWinnersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631D8EC028F94EC7005332BD /* ChallWinnersViewModel.swift */; };
 		631D8EC328F94F39005332BD /* ChallWinnersPresenters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631D8EC228F94F39005332BD /* ChallWinnersPresenters.swift */; };
+		631D8EC528F96054005332BD /* ChallContendersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631D8EC428F96054005332BD /* ChallContendersViewModel.swift */; };
+		631D8EC728F960AE005332BD /* ChallContendersPresenters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631D8EC628F960AE005332BD /* ChallContendersPresenters.swift */; };
 		63352DE7289AA69A00489F5F /* SendCoinUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63352DE6289AA69A00489F5F /* SendCoinUseCase.swift */; };
 		633FBC8428E535600071FF8C /* FeedDetailWorks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633FBC8328E535600071FF8C /* FeedDetailWorks.swift */; };
 		633FBC8628E542540071FF8C /* FeedDetailViewModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633FBC8528E542540071FF8C /* FeedDetailViewModels.swift */; };
@@ -545,6 +547,8 @@
 		631D8EBE28F91ECF005332BD /* ChallResultsPresenters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallResultsPresenters.swift; sourceTree = "<group>"; };
 		631D8EC028F94EC7005332BD /* ChallWinnersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallWinnersViewModel.swift; sourceTree = "<group>"; };
 		631D8EC228F94F39005332BD /* ChallWinnersPresenters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallWinnersPresenters.swift; sourceTree = "<group>"; };
+		631D8EC428F96054005332BD /* ChallContendersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallContendersViewModel.swift; sourceTree = "<group>"; };
+		631D8EC628F960AE005332BD /* ChallContendersPresenters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallContendersPresenters.swift; sourceTree = "<group>"; };
 		63352DE6289AA69A00489F5F /* SendCoinUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendCoinUseCase.swift; sourceTree = "<group>"; };
 		633FBC8328E535600071FF8C /* FeedDetailWorks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedDetailWorks.swift; sourceTree = "<group>"; };
 		633FBC8528E542540071FF8C /* FeedDetailViewModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedDetailViewModels.swift; sourceTree = "<group>"; };
@@ -869,6 +873,8 @@
 				631D8EBE28F91ECF005332BD /* ChallResultsPresenters.swift */,
 				631D8EC028F94EC7005332BD /* ChallWinnersViewModel.swift */,
 				631D8EC228F94F39005332BD /* ChallWinnersPresenters.swift */,
+				631D8EC428F96054005332BD /* ChallContendersViewModel.swift */,
+				631D8EC628F960AE005332BD /* ChallContendersPresenters.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -1727,6 +1733,7 @@
 				1921A13528EECAC900E41E86 /* ChallengesScene.swift in Sources */,
 				63D419ED28AA56570024E22C /* GetFeedUseCase.swift in Sources */,
 				1977BE5528A7238F00D554EA /* TextFieldStates.swift in Sources */,
+				631D8EC528F96054005332BD /* ChallContendersViewModel.swift in Sources */,
 				63BB2C2928E3E7B600C1E3DB /* FeedDetailScenario.swift in Sources */,
 				1921A13728EECAD500E41E86 /* ChallengesWorks.swift in Sources */,
 				191571D1289F12350061510F /* PlaygroundScene.swift in Sources */,
@@ -1779,6 +1786,7 @@
 				63AB071128BD6B0F00FD650F /* ProfileWorks.swift in Sources */,
 				63E1916D2889519E000FD312 /* BadgeModel.swift in Sources */,
 				19C1E9A328610E4E00E7976D /* MainRouter.swift in Sources */,
+				631D8EC728F960AE005332BD /* ChallContendersPresenters.swift in Sources */,
 				63A37EAE28EF1D6300DBD59F /* CreateChallengeUseCase.swift in Sources */,
 				19A9BE7328C255690099F8EA /* TransactBuilder.swift in Sources */,
 				19221EF528CE1D1B00B7B604 /* EditContactsViewModels.swift in Sources */,
