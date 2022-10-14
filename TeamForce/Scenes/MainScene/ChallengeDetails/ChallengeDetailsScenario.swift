@@ -76,6 +76,8 @@ final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<Challen
             switch $0 {
             case let value as Challenge:
                stateFunc(.presentChallenge(value))
+            case let value as [ChallengeResult]:
+               stateFunc(.presentMyResults(value))
             default:
                break
             }

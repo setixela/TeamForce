@@ -220,6 +220,8 @@
 		631995BA28F5A56D00EB2638 /* GetSendCoinSettingsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631995B928F5A56D00EB2638 /* GetSendCoinSettingsUseCase.swift */; };
 		631D8EB528F78D4D005332BD /* GetChallengeResultApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631D8EB428F78D4D005332BD /* GetChallengeResultApiWorker.swift */; };
 		631D8EB728F78F04005332BD /* GetChallengeResultUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631D8EB628F78F04005332BD /* GetChallengeResultUseCase.swift */; };
+		631D8EBD28F91E5E005332BD /* ChallResultsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631D8EBC28F91E5E005332BD /* ChallResultsViewModel.swift */; };
+		631D8EBF28F91ECF005332BD /* ChallResultsPresenters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631D8EBE28F91ECF005332BD /* ChallResultsPresenters.swift */; };
 		63352DE7289AA69A00489F5F /* SendCoinUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63352DE6289AA69A00489F5F /* SendCoinUseCase.swift */; };
 		633FBC8428E535600071FF8C /* FeedDetailWorks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633FBC8328E535600071FF8C /* FeedDetailWorks.swift */; };
 		633FBC8628E542540071FF8C /* FeedDetailViewModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633FBC8528E542540071FF8C /* FeedDetailViewModels.swift */; };
@@ -537,6 +539,8 @@
 		631995B928F5A56D00EB2638 /* GetSendCoinSettingsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSendCoinSettingsUseCase.swift; sourceTree = "<group>"; };
 		631D8EB428F78D4D005332BD /* GetChallengeResultApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetChallengeResultApiWorker.swift; sourceTree = "<group>"; };
 		631D8EB628F78F04005332BD /* GetChallengeResultUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetChallengeResultUseCase.swift; sourceTree = "<group>"; };
+		631D8EBC28F91E5E005332BD /* ChallResultsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallResultsViewModel.swift; sourceTree = "<group>"; };
+		631D8EBE28F91ECF005332BD /* ChallResultsPresenters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallResultsPresenters.swift; sourceTree = "<group>"; };
 		63352DE6289AA69A00489F5F /* SendCoinUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendCoinUseCase.swift; sourceTree = "<group>"; };
 		633FBC8328E535600071FF8C /* FeedDetailWorks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedDetailWorks.swift; sourceTree = "<group>"; };
 		633FBC8528E542540071FF8C /* FeedDetailViewModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedDetailViewModels.swift; sourceTree = "<group>"; };
@@ -857,6 +861,8 @@
 			children = (
 				194E308128F36661001E2967 /* ChallengeDetailsViewModel.swift */,
 				1955878A28F6EFCD0001F734 /* ChallCommentsBlock.swift */,
+				631D8EBC28F91E5E005332BD /* ChallResultsViewModel.swift */,
+				631D8EBE28F91ECF005332BD /* ChallResultsPresenters.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -1826,6 +1832,7 @@
 				197A361A28BBC9B3006E44C1 /* MainWorks.swift in Sources */,
 				197A771C28AD91E20082CD81 /* HistoryPresenters.swift in Sources */,
 				1953CF0628EAC9FB00C670A6 /* HashTagsScrollModel.swift in Sources */,
+				631D8EBF28F91ECF005332BD /* ChallResultsPresenters.swift in Sources */,
 				631995B228F53F6800EB2638 /* ChallengeCreateScenario.swift in Sources */,
 				63CFA196289C38A9000E4D1E /* GetTransactionsApiWorker.swift in Sources */,
 				631D8EB728F78F04005332BD /* GetChallengeResultUseCase.swift in Sources */,
@@ -1874,6 +1881,7 @@
 				63E7A73D28AF9BC100FB2C80 /* GetCurrentPeriodUseCase.swift in Sources */,
 				19C1E9A128610E2800E7976D /* AssetProtocol.swift in Sources */,
 				1985A12628B2966400B017E0 /* SegmentControlButtons.swift in Sources */,
+				631D8EBD28F91E5E005332BD /* ChallResultsViewModel.swift in Sources */,
 				19171F4D28AD663F000926B1 /* TableItemsModel.swift in Sources */,
 				197A361228BBB221006E44C1 /* FeedFilterButtons.swift in Sources */,
 				19B39E5B28D3433400BB2C77 /* TagsOptionsPanel.swift in Sources */,

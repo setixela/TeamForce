@@ -72,4 +72,14 @@ extension String {
       formatter.unitsStyle = .full
       return formatter.localizedString(for: convertedDate, relativeTo: Date())
    }
+   
+   var dateFullConverted: String {
+      guard let convertedDate = dateConvertedToDate else { return "" }
+
+      let outputFormatter = DateFormatter()
+      outputFormatter.locale = Locale(identifier: "ru_RU")
+      outputFormatter.dateFormat = "d MMM y HH:mm"
+
+      return outputFormatter.string(from: convertedDate)
+   }
 }
