@@ -47,7 +47,7 @@ final class ChallengeResultWorks<Asset: AssetProtocol>: BaseSceneWorks<Challenge
       guard let id = Self.store.challengeId else { return }
       let report = ChallengeReportBody(challengeId: id,
                                        text: Self.store.inputReasonText,
-                                       photo: Self.store.images.first)
+                                       photo: Self.store.images.first?.resized(to: 1280))
       self?.apiUseCase.CreateChallengeReport
          .doAsync(report)
          .onSuccess {

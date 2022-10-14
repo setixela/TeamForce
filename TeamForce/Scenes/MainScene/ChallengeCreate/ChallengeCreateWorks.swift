@@ -9,7 +9,7 @@ import ReactiveWorks
 import UIKit
 
 protocol ChallengeCreateWorksProtocol {
-   var createChallenge: Work<ChallengeRequestBody, Void> { get }
+   var createChallenge: Work<Void, Void> { get }
 
    var setTitle: Work<String, Void> { get }
    var setDesription: Work<String, Void> { get }
@@ -60,10 +60,16 @@ extension ChallengeCreateWorks: ChallengeCreateWorksProtocol {
       work.success()
    }.retainBy(retainer) }
 
-   var createChallenge: Work<ChallengeRequestBody, Void> { .init { [weak self] work in
-      guard let input = work.input else { return }
-      self?.apiUseCase.CreateChallenge
-         .doAsync(input)
+   var createChallenge: Work<Void, Void> { .init { [weak self] work in
+      let body = ChallengeRequestBody(name: Self.store.title,
+                                      description: Self.store.desription,
+                                      endAt: nil,
+                                      startBalance: Int(Self.store.prizeFund).int,
+                                      photo: Self.store.images.first?.resized(to: 1280),
+                                      parameterId: nil,
+                                      parameterValue: nil)
+      self?.apiUseCase.createChallenge
+         .doAsync(body)
          .onSuccess {
             work.success()
          }

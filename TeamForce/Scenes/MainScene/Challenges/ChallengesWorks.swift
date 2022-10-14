@@ -70,7 +70,7 @@ extension ChallengesWorks: ChallengesWorksProtocol {
 
    var createChallenge: Work<ChallengeRequestBody, Void> { .init { [weak self] work in
       guard let input = work.input else { return }
-      self?.apiUseCase.CreateChallenge
+      self?.apiUseCase.createChallenge
          .doAsync(input)
          .onSuccess {
             work.success()

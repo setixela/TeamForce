@@ -29,7 +29,8 @@ final class ChallengeCreateScene<Asset: AssetProtocol>: BaseSceneModel<
       events: ChallengeCreateScenarioEvents(
          didTitleInputChanged: titleInput.on(\.didEditingChanged),
          didDescriptionInputChanged: descriptionInput.on(\.didEditingChanged),
-         didPrizeFundChanged: prizeFundInput.models.main.on(\.didEditingChanged)
+         didPrizeFundChanged: prizeFundInput.models.main.on(\.didEditingChanged),
+         didSendPressed: sendButton.on(\.didTap)
       )
    )
 
@@ -124,6 +125,7 @@ final class ChallengeCreateScene<Asset: AssetProtocol>: BaseSceneModel<
                   titleInput,
                   descriptionInput,
                   finishDateButton,
+                  DatePickerModel(),
                   prizeFundInput,
                   prizePlacesInput,
                   photosPanel.lefted(),
@@ -153,14 +155,7 @@ final class ChallengeCreateScene<Asset: AssetProtocol>: BaseSceneModel<
 
 enum ChallengeCreateSceneState {
    case initial
-
-   case presentImagePicker
-   case presentPickedImage(UIImage)
-   case setHideAddPhotoButton(Bool)
-
    case continueButtonPressed
-   case cancelButtonPressed
-
    case setReady(Bool)
 }
 
@@ -169,15 +164,8 @@ extension ChallengeCreateScene {
       switch state {
       case .initial:
          break
-      case .presentImagePicker:
-         break
-      case .presentPickedImage:
-         break
-      case .setHideAddPhotoButton:
-         break
       case .continueButtonPressed:
-         break
-      case .cancelButtonPressed:
+         vcModel?.dismiss(animated: true)
          break
       case .setReady(let isReady):
          if isReady {
@@ -205,5 +193,11 @@ extension ChallengeCreateScene: StateMachine2 {
          addPhotoButton.hiddenAnimated(value, duration: 0.2)
          //
       }
+   }
+}
+
+class DatePickerModel: BaseViewModel<UIDatePicker> {
+   override func start() {
+      view.datePickerMode = .date
    }
 }

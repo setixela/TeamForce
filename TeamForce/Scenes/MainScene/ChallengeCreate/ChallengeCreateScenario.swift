@@ -12,6 +12,8 @@ struct ChallengeCreateScenarioEvents {
    let didDescriptionInputChanged: VoidWork<String>
 
    let didPrizeFundChanged: VoidWork<String>
+
+   let didSendPressed: VoidWorkVoid
 }
 
 final class ChallengeCreateScenario<Asset: AssetProtocol>: BaseScenario<ChallengeCreateScenarioEvents, ChallengeCreateSceneState, ChallengeCreateWorks<Asset>> {
@@ -28,5 +30,12 @@ final class ChallengeCreateScenario<Asset: AssetProtocol>: BaseScenario<Challeng
          .doNext(works.setPrizeFund)
          .doNext(works.checkAllReady)
          .onSuccess(setState) { .setReady($0) }
+
+      events.didSendPressed
+         .doNext(works.createChallenge)
+         .onSuccess(setState, .continueButtonPressed)
+         .onFail {
+            print("Error createChallenge")
+         }
    }
 }
