@@ -42,7 +42,7 @@ final class TransactScenario<Asset: AssetProtocol>:
          .onSuccess(setState, .loadTokensSuccess)
          .onFail(setState, .error)
          // then load balance
-         .doNext(work: works.loadBalance)
+         .doNext(works.loadBalance)
          .onSuccess(setState) { .loadBalanceSuccess($0.distr.amount) }
          .onFail(setState, .error)
          // then break to void and load 10 user list
@@ -70,18 +70,18 @@ final class TransactScenario<Asset: AssetProtocol>:
 
       events.userSelected
          .doSaveResult()
-         .doNext(work: works.mapIndexToUser)
+         .doNext(works.mapIndexToUser)
          .onSuccessMixSaved(setState) { .userSelectedSuccess($0, $1) }
 
       events.sendButtonEvent
          .onSuccess(setState, .sendButtonPressed)
-         .doNext(work: works.sendCoins)
+         .doNext(works.sendCoins)
          .onSuccess(setState) { .sendCoinSuccess($0) }
          .onFail(setState, .sendCoinError)
          .doVoidNext(works.reset)
 
       events.amountInputChanged
-         .doNext(work: works.coinInputParsing)
+         .doNext(works.coinInputParsing)
          .onSuccess(setState) { .coinInputSuccess($0, true) }
          .onFail { [weak self] (text: String) in
             self?.setState(.resetCoinInput)
@@ -92,8 +92,8 @@ final class TransactScenario<Asset: AssetProtocol>:
          .doRecover()
          .doSaveResult() // save text
          .doMap { ($0, true) }
-         .doNext(work: works.updateAmount)
-         .doNext(work: works.isCorrectBothInputs)
+         .doNext(works.updateAmount)
+         .doNext(works.isCorrectBothInputs)
          .onSuccessMixSaved(setState) { _, savedText in
             .coinInputSuccess(savedText, true)
          }
@@ -102,7 +102,7 @@ final class TransactScenario<Asset: AssetProtocol>:
          }
 
       events.reasonInputChanged
-         .doNext(work: works.reasonInputParsing)
+         .doNext(works.reasonInputParsing)
          .onFail { [weak self] (text: String) in
             self?.works.updateReason
                .doAsync((text, false))
@@ -111,44 +111,44 @@ final class TransactScenario<Asset: AssetProtocol>:
          .doRecover()
          .doSaveResult()
          .doMap { ($0, true) }
-         .doNext(work: works.updateReason)
-         .doNext(work: works.isCorrectBothInputs)
+         .doNext(works.updateReason)
+         .doNext(works.isCorrectBothInputs)
          .onSuccessMixSaved(setState) { .reasonInputSuccess($1, true) }
          .onFailMixSaved(setState) { .reasonInputSuccess($1, false) }
 
       events.anonymousSetOff
-         .doNext(work: works.anonymousOff)
+         .doNext(works.anonymousOff)
 
       events.anonymousSetOn
-         .doNext(work: works.anonymousOn)
+         .doNext(works.anonymousOn)
 
       events.cancelButtonDidTap
          .onSuccess(setState, .cancelButtonPressed)
 
       events.enableTags
          .doInput(true)
-         .doNext(work: works.enableTags)
+         .doNext(works.enableTags)
 
       events.disableTags
          .doInput(false)
-         .doNext(work: works.enableTags)
+         .doNext(works.enableTags)
 
       events.setTags
-         .doNext(work: works.setTags)
-         .doNext(work: works.getSelectedTags)
+         .doNext(works.setTags)
+         .doNext(works.getSelectedTags)
          .onSuccess(setState) {
             .updateSelectedTags($0)
          }
 
       events.removeTag
-         .doNext(work: works.removeTag)
-         .doNext(work: works.getSelectedTags)
+         .doNext(works.removeTag)
+         .doNext(works.getSelectedTags)
          .onSuccess(setState) {
             .updateSelectedTags($0)
          }
 
       events.presentTagsSelectorDidTap
-         .doNext(work: works.getSelectedTags)
+         .doNext(works.getSelectedTags)
          .onSuccess(setState) { .presentTagsSelector($0) }
    }
 }

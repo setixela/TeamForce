@@ -12,7 +12,7 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
    DefaultVCModel,
    TripleStacksModel,
    Asset,
-   Challenge
+   (Challenge, Int)
 >, Scenarible {
    //
    lazy var scenario: Scenario = ChallengeDetailsScenario(
@@ -22,7 +22,8 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
          saveInputAndLoadChallenge: on(\.input),
          // getContenders: ,
          // getWinners: ,
-         ChallengeResult: challDetails.buttonsPanel.sendButton.on(\.didTap)
+         ChallengeResult: challDetails.buttonsPanel.sendButton.on(\.didTap),
+         filterButtonTapped: filterButtons.on(\.didTapButtons)
       )
    )
 
@@ -45,14 +46,16 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
          .hidden(true),
       SecondaryButtonDT<Design>()
          .title("Победители")
+         .font(Design.font.default),
+         //.hidden(true),
+      SecondaryButtonDT<Design>()
+         .title("Комментарии")
          .font(Design.font.default)
          .hidden(true),
       SecondaryButtonDT<Design>()
-         .title("Комментарии")
-         .font(Design.font.default),
-      SecondaryButtonDT<Design>()
          .title("Участники")
-         .font(Design.font.default))
+         .font(Design.font.default)
+         .hidden(true))
       .height(16 + 38)
       .backColor(Design.color.background)
 
@@ -111,8 +114,9 @@ enum ChallengeDetailsState {
 
    case presentComments(Challenge)
 
-   case presentSendResultScreen(Int)
+   case presentSendResultScreen(Challenge,Int)
    case enableMyResult([ChallengeResult])
+   case enableContenders
 }
 
 extension ChallengeDetailsScene: StateMachine {
@@ -139,13 +143,32 @@ extension ChallengeDetailsScene: StateMachine {
             .arrangedModels([
                challComments
             ])
-      case .presentSendResultScreen(let challengeId):
-         vcModel?.dismiss(animated: true)
-         Asset.router?.route(\.challengeSendResult, navType: .presentModally(.automatic), payload: challengeId)
+      case .presentSendResultScreen(let challenge, let challengeId):
+
+         vcModel?.dismiss(animated: false)
+
+         Asset.router?.route(
+            \.challengeSendResult,
+            navType: .presentModally(.automatic),
+            payload: challengeId
+         )
+         .onSuccess {
+            Asset.router?.route(
+               \.challengeDetails,
+               navType: .presentModally(.automatic),
+               payload: (challenge, challengeId)
+            )
+         }
+         .onFail {
+            print("failure")
+         }
+         .retainBy(retainer)
 
       case .enableMyResult(let value):
-         print("value \(value)")
          filterButtons.buttons[1].hidden(false)
+
+      case .enableContenders:
+         filterButtons.buttons[2].hidden(false)
       }
    }
 }

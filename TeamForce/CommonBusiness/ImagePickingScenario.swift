@@ -15,18 +15,18 @@ struct ImagePickingScenarioEvents {
 }
 
 final class ImagePickingScenario<Asset: AssetProtocol>:
-   BaseScenario<ImagePickingScenarioEvents, TransactState, TransactWorks<Asset>>
+   BaseScenario<ImagePickingScenarioEvents, ImagePickingState, ImageWorks>
 {
    override func start() {
       events.startImagePicking
          .onSuccess(setState, .presentImagePicker)
 
       events.addImageToBasket
-         .doNext(work: works.addImage)
+         .doNext(works.addImage)
          .onSuccess(setState) { .presentPickedImage($0) }
 
       events.removeImageFromBasket
-         .doNext(work: works.removeImage)
+         .doNext(works.removeImage)
          .onSuccess(setState, .setHideAddPhotoButton(false))
 
       events.didMaximumReach

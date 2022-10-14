@@ -8,10 +8,14 @@
 import ReactiveWorks
 
 struct ChallengesScenarioInputEvents {
+   let saveProfileId: VoidWork<UserData?>
+   
    let presentAllChallenges: VoidWork<Void>
    let presentActiveChallenges: VoidWork<Void>
 
    let didSelectChallengeIndex: VoidWork<Int>
+
+   let createChallenge: VoidWorkVoid
 }
 
 final class ChallengesScenario<Asset: AssetProtocol>:
@@ -23,6 +27,9 @@ final class ChallengesScenario<Asset: AssetProtocol>:
          .onSuccess(setState) { .presentChallenges($0) }
          .onFail(setState) { .presentChallenges([]) }
 
+      events.saveProfileId
+         .doNext(works.saveProfileId)
+      
       events.presentAllChallenges
          .doNext(works.getAllChallenges)
          .onSuccess(setState) { .presentChallenges($0) }
@@ -33,7 +40,13 @@ final class ChallengesScenario<Asset: AssetProtocol>:
 
       events.didSelectChallengeIndex
          .doNext(works.getPresentedChallengeByIndex)
-         .onSuccess(setState) { .presentChallengeDetails($0) }
+         .doSaveResult()
+         .doInput(())
+         .doNext(works.getProfileId)
+         .onSuccessMixSaved(setState) { .presentChallengeDetails(($1, $0)) }
+
+      events.createChallenge
+         .onSuccess(setState, .presentCreateChallenge)
       
 //      let input = ChallengeRequestBody(name: "Challenge 13", description: "some description", startBalance: 1)
 //      works.createChallenge

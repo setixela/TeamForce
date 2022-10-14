@@ -82,8 +82,8 @@ private extension MainScene {
       tabBarPanel.button1
          .on(\.didTap, self) {
             $0.unlockTabButtons()
-            $0.mainVM.header.text("Лента событий")
-            $0.vcModel?.sendEvent(\.setTitle, "Лента событий")
+            $0.mainVM.header.text("Благодарности")
+            $0.vcModel?.sendEvent(\.setTitle, "Благодарности")
             $0.presentModel($0.feedViewModel)
             $0.tabBarPanel.button1.setSelfMode(\.normal)
             $0.selectedModel = 0
@@ -271,7 +271,7 @@ extension MainScene {
    }
 
    private func hideHeader() {
-      vcModel?.sendEvent(\.setNavBarTintColor, Design.color.backgroundBrand)
+      vcModel?.sendEvent(\.setNavBarTintColor, Design.color.transparent)
       UIView.animate(withDuration: 0.36) {
          self.mainVM.setState(.presentHeaderTitle)
       }

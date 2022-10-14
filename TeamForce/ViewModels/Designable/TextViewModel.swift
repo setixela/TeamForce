@@ -18,11 +18,11 @@ class TextViewModel: BaseViewModel<UITextView>, UITextViewDelegate {
    var events: EventsStore = .init()
 
    private var placeholder: String = ""
-   private var isPlaceholded = false
+   private var isPlaceholded = true
 
    override func start() {
       view.delegate = self
-      
+      view.textColor = UIColor.lightGray
    }
 
    @objc func changValue() {
@@ -53,7 +53,7 @@ class TextViewModel: BaseViewModel<UITextView>, UITextViewDelegate {
    }
 
    @discardableResult func placeholder(_ value: String) -> Self {
-      self.placeholder = value
+      set(.placeholder(value))
       textViewDidEndEditing(view)
       return self
    }

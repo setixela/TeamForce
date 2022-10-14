@@ -17,15 +17,20 @@ final class ChallengeResultScenario<Asset: AssetProtocol>: BaseScenario<Challeng
 
    override func start() {
       events.commentInputChanged
-         .doNext(work: works.reasonInputParsing)
+         .doNext(works.reasonInputParsing)
          .onSuccess(setState, .sendingEnabled)
          .onFail(setState, .sendingDisabled)
       
       events.saveInput
-         .doNext(work: works.saveId)
+         .doNext(works.saveId)
       
       events.sendResult
-         .doNext(work: works.createChallengeReport)
+         .onSuccess(setState, .popScene)
+         .doNext(works.createChallengeReport)
          .onSuccess(setState, .resultSent)
+         .onFail {
+            print("Обработать ошибку")
+         }
    }
 }
+

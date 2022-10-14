@@ -12,7 +12,8 @@ enum ChallengeResultSceneState {
 
    case sendingEnabled
    case sendingDisabled
-   
+
+   case popScene
    case resultSent
 }
 
@@ -21,15 +22,28 @@ final class ChallengeResultScene<Asset: AssetProtocol>: BaseSceneModel<
    ModalDoubleStackModel<Asset>,
    Asset,
    Int
->, Scenarible {
+>, Scenarible2 {
 //
+   private let works = ChallengeResultWorks<Asset>()
+
    lazy var scenario: Scenario = ChallengeResultScenario<Asset>(
-      works: ChallengeResultWorks<Asset>(),
+      works: works,
       stateDelegate: stateDelegate,
       events: ChallengeResultEvents(
          saveInput: on(\.input),
          commentInputChanged: inputView.on(\.didEditingChanged),
          sendResult: sendButton.on(\.didTap)
+      )
+   )
+
+   lazy var scenario2: Scenario = ImagePickingScenario<Asset>(
+      works: works,
+      stateDelegate: stateDelegate2,
+      events: ImagePickingScenarioEvents(
+         startImagePicking: addPhotoButton.on(\.didTap),
+         addImageToBasket: imagePicker.onEvent(\.didImagePicked),
+         removeImageFromBasket: photosPanel.on(\.didCloseImage),
+         didMaximumReach: photosPanel.on(\.didMaximumReached)
       )
    )
 
@@ -41,6 +55,8 @@ final class ChallengeResultScene<Asset: AssetProtocol>: BaseSceneModel<
    private lazy var addPhotoButton = Design.model.transact.addPhotoButton
    private lazy var sendButton = Design.model.transact.sendButton
 
+   private lazy var imagePicker = Design.model.common.imagePicker
+
    override func start() {
       super.start()
 
@@ -51,9 +67,10 @@ final class ChallengeResultScene<Asset: AssetProtocol>: BaseSceneModel<
          .spacing(Grid.x16.value)
          .arrangedModels([
             inputView,
-            photosPanel,
+            photosPanel.lefted(),
             addPhotoButton,
-            Spacer()
+            Spacer(),
+            Spacer(),
          ])
       mainVM.footerStack
          .arrangedModels([
@@ -67,10 +84,11 @@ final class ChallengeResultScene<Asset: AssetProtocol>: BaseSceneModel<
          }
 
       scenario.start()
+      scenario2.start()
    }
 }
 
-extension ChallengeResultScene: StateMachine {
+extension ChallengeResultScene {
    func setState(_ state: ChallengeResultSceneState) {
       switch state {
       case .initial:
@@ -79,8 +97,30 @@ extension ChallengeResultScene: StateMachine {
          sendButton.set(Design.state.button.default)
       case .sendingDisabled:
          sendButton.set(Design.state.button.inactive)
-      case .resultSent:
+      case .popScene:
          vcModel?.dismiss(animated: true)
+      case .resultSent:
+         finisher?.doAsync(true)
       }
    }
 }
+
+extension ChallengeResultScene: StateMachine2 {
+   func setState2(_ state: ImagePickingState) {
+      switch state {
+         //
+      case .presentPickedImage(let image):
+         photosPanel.addButton(image: image)
+         //
+      case .presentImagePicker:
+         guard let baseVC = vcModel else { return }
+         imagePicker.sendEvent(\.presentOn, baseVC)
+         //
+      case .setHideAddPhotoButton(let value):
+         photosPanel.hiddenAnimated(!value, duration: 0.2)
+         addPhotoButton.hiddenAnimated(value, duration: 0.2)
+         //
+      }
+   }
+}
+

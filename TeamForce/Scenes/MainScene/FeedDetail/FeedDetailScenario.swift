@@ -35,13 +35,13 @@ final class FeedDetailScenario<Asset: AssetProtocol>:
          .onFail(setState, .error)
 
       events.reactionPressed
-         .doNext(work: works.pressLike)
+         .doNext(works.pressLike)
          .onFail(setState) { .failedToReact }
-         .doNext(work: works.getTransactStat)
+         .doNext(works.getTransactStat)
          .onSuccess(setState) { .updateReactions($0) }
 
       events.saveInput
-         .doNext(work: works.saveInput)
+         .doNext(works.saveInput)
          .onSuccess(setState) { .presentDetails($0) }
 
       events.presentDetails
@@ -57,8 +57,8 @@ final class FeedDetailScenario<Asset: AssetProtocol>:
       
       events.presentReactions
          .onSuccess(setState, .presntActivityIndicator)
-         .doNext(work: works.getLikesByTransaction)
-         .doNext(work: works.getSelectedReactions)
+         .doNext(works.getLikesByTransaction)
+         .doNext(works.getSelectedReactions)
          .onSuccess(setState) { .presentReactions($0) }
          .onFail {
             print("failed to present reactions")
@@ -66,7 +66,7 @@ final class FeedDetailScenario<Asset: AssetProtocol>:
       
       events.presentAllReactions
          .onSuccess(setState, .presntActivityIndicator)
-         .doNext(work: works.getAllReactions)
+         .doNext(works.getAllReactions)
          .onSuccess(setState) { .presentReactions($0) }
          .onFail {
             print("failed to present reactions")
@@ -74,7 +74,7 @@ final class FeedDetailScenario<Asset: AssetProtocol>:
       
       events.presentLikeReactions
          .onSuccess(setState, .presntActivityIndicator)
-         .doNext(work: works.getLikeReactions)
+         .doNext(works.getLikeReactions)
          .onSuccess(setState) { .presentReactions($0) }
          .onFail {
             print("failed to present reactions")
@@ -82,7 +82,7 @@ final class FeedDetailScenario<Asset: AssetProtocol>:
       
       events.presentDislikeReactions
          .onSuccess(setState, .presntActivityIndicator)
-         .doNext(work: works.getDislikeReactions)
+         .doNext(works.getDislikeReactions)
          .onSuccess(setState) { .presentReactions($0) }
          .onFail {
             print("failed to present reactions")

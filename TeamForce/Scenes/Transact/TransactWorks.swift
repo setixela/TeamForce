@@ -34,37 +34,36 @@ protocol TransactWorksProtocol: TempStorage {
    var getSelectedTags: Work<Void, Set<Tag>> { get }
    var removeTag: Work<Tag, Void> { get }
 }
+// storage
+class TransacrtTempStorage: InitProtocol, ImageStorage {
+   required init() {}
+
+   var tokens: (token: String, csrf: String) = ("", "")
+   var foundUsers: [FoundUser] = []
+   var recipientID = 0
+   var recipientUsername = ""
+   var isAnonymous = false
+
+   var inputAmountText = ""
+   var inputReasonText = ""
+
+   var isCorrectCoinInput = false
+   var isCorrectReasonInput = false
+
+   var isTagsEnabled = false
+   var tags: Set<Tag> = []
+
+   var images: [UIImage] = []
+}
 
 // Transact Works - (если нужно хранилище временное, то наследуемся от BaseSceneWorks)
-final class TransactWorks<Asset: AssetProtocol>: BaseSceneWorks<TransactWorks.Temp, Asset>, TransactWorksProtocol {
+final class TransactWorks<Asset: AssetProtocol>: BaseSceneWorks<TransacrtTempStorage, Asset>, TransactWorksProtocol {
    // api works
    private lazy var apiUseCase = Asset.apiUseCase
    private lazy var storageUseCase = Asset.storageUseCase
    // parsing input
    private lazy var coinInputParser = CoinInputCheckerModel()
    private lazy var reasonInputParser = ReasonCheckerModel()
-
-   // storage
-   class Temp: InitProtocol {
-      required init() {}
-
-      var tokens: (token: String, csrf: String) = ("", "")
-      var foundUsers: [FoundUser] = []
-      var recipientID = 0
-      var recipientUsername = ""
-      var isAnonymous = false
-
-      var inputAmountText = ""
-      var inputReasonText = ""
-
-      var isCorrectCoinInput = false
-      var isCorrectReasonInput = false
-
-      var isTagsEnabled = false
-      var tags: Set<Tag> = []
-
-      var images: [UIImage] = []
-   }
 
    // MARK: - Works
 
@@ -275,7 +274,7 @@ final class TransactWorks<Asset: AssetProtocol>: BaseSceneWorks<TransactWorks.Te
    }.retainBy(retainer) }
 
    var isCorrectBothInputs: Work<Void, Void> { .init { work in
-      if Self.store.isCorrectReasonInput, Self.store.isCorrectCoinInput {
+      if /*Self.store.isCorrectReasonInput,*/ Self.store.isCorrectCoinInput {
          work.success()
       } else {
          work.fail()
@@ -283,13 +282,4 @@ final class TransactWorks<Asset: AssetProtocol>: BaseSceneWorks<TransactWorks.Te
    }.retainBy(retainer) }
 }
 
-extension TransactWorks {
-   var addImage: Work<UIImage, UIImage> { .init { work in
-      Self.store.images.append(work.unsafeInput)
-      work.success(result: work.unsafeInput)
-   } }
-   var removeImage: Work<UIImage, Void> { .init { work in
-      Self.store.images = Self.store.images.filter { $0 !== work.unsafeInput }
-      work.success()
-   } }
-}
+extension TransactWorks: ImageWorks {}

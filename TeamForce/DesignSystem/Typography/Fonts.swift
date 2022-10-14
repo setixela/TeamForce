@@ -36,6 +36,8 @@ struct FontBuilder: FontProtocol {
    var body2: UIFont { .systemFont(ofSize: 14, weight: .semibold) }
    var body3: UIFont { .systemFont(ofSize: 16, weight: .semibold) }
 
+   var body2Secondary: UIFont { .systemFont(ofSize: 14, weight: .regular) }
+
    var subtitle: UIFont { .systemFont(ofSize: 16, weight: .regular) }
    var subtitleSecondary: UIFont { .systemFont(ofSize: 16, weight: .regular) }
 

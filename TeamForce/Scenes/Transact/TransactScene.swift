@@ -15,6 +15,12 @@ struct TransactEvents: InitProtocol {
    var finishWithError: Void?
 }
 
+enum ImagePickingState {
+   case presentImagePicker
+   case presentPickedImage(UIImage)
+   case setHideAddPhotoButton(Bool)
+}
+
 enum TransactState {
    case initial
    case error
@@ -39,10 +45,6 @@ enum TransactState {
    case resetCoinInput
    case coinInputSuccess(String, Bool)
    case reasonInputSuccess(String, Bool)
-
-   case presentImagePicker
-   case presentPickedImage(UIImage)
-   case setHideAddPhotoButton(Bool)
 
    case presentTagsSelector(Set<Tag>)
    case updateSelectedTags(Set<Tag>)
@@ -80,9 +82,9 @@ final class TransactScene<Asset: AssetProtocol>: ModalDoubleStackModel<Asset>, S
       )
    )
 
-   lazy var scenario2: Scenario = ImagePickingScenario(
+   lazy var scenario2: Scenario = ImagePickingScenario<Asset>(
       works: works,
-      stateDelegate: stateDelegate,
+      stateDelegate: stateDelegate2,
       events: ImagePickingScenarioEvents(
          startImagePicking: viewModels.addPhotoButton.on(\.didTap),
          addImageToBasket: imagePicker.onEvent(\.didImagePicked),
@@ -170,16 +172,32 @@ final class TransactScene<Asset: AssetProtocol>: ModalDoubleStackModel<Asset>, S
    }
 }
 
-extension TransactScene: StateMachine {
-   func setState(_ state: TransactState) {
-      debug(state)
+extension TransactScene: StateMachine2 {
+   func setState2(_ state: ImagePickingState) {
+      switch state {
+      //
+      case .presentPickedImage(let image):
+         viewModels.pickedImages.addButton(image: image)
+      //
+      case .presentImagePicker:
+         guard let baseVC = vcModel else { return }
+         imagePicker.sendEvent(\.presentOn, baseVC)
+      //
+      case .setHideAddPhotoButton(let value):
+         viewModels.addPhotoButton.hidden(value)
+         //
+      }
+   }
+}
 
+extension TransactScene {
+   func setState(_ state: TransactState) {
       switch state {
       case .initial:
          activityIndicator.hidden(false)
       //
       case .error:
-        // viewModels.userSearchTextField.hidden(true)
+         // viewModels.userSearchTextField.hidden(true)
          activityIndicator.hidden(true)
          presentFoundUsers(users: [])
 
@@ -271,23 +289,14 @@ extension TransactScene: StateMachine {
             viewModels.reasonTextView.set(.text(text))
             viewModels.sendButton.set(Design.state.button.inactive)
          }
-      //
-      case .presentPickedImage(let image):
-         viewModels.pickedImages.addButton(image: image)
-      //
-      case .setHideAddPhotoButton(let value):
-         viewModels.addPhotoButton.hidden(value)
-      //
+
       case .sendButtonPressed:
          send(\.sendButtonPressed)
       //
       case .cancelButtonPressed:
          send(\.cancelled)
       //
-      case .presentImagePicker:
-         guard let baseVC = vcModel else { return }
-         imagePicker.sendEvent(\.presentOn, baseVC)
-      //
+
       case .presentTagsSelector(let tags):
 
          bottomPopupPresenter.send(\.present, (model: tagList, onView: vcModel?.view.rootSuperview))

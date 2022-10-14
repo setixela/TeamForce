@@ -14,7 +14,7 @@ enum ProductionAsset: AssetProtocol {
    typealias Service = ProductionService
    typealias Scene = Scenes
 
-   static weak var router: MainRouter<ProductionAsset>?
+   weak static var router: MainRouter<ProductionAsset>?
 }
 
 protocol ScenesProtocol: InitProtocol {
@@ -32,20 +32,20 @@ protocol ScenesProtocol: InitProtocol {
    var feedDetail: SceneModelProtocol { get }
 }
 
-
 struct Scenes: ScenesProtocol {
-   var challengeCreate: SceneModelProtocol { fatalError() }
-   var challengeSendResult: SceneModelProtocol { ChallengeResultScene<ProductionAsset>() }
-
-   var playground: SceneModelProtocol { PlaygroundScene<ProductionAsset>()}
+   var playground: SceneModelProtocol { PlaygroundScene<ProductionAsset>() }
    //
    var digitalThanks: SceneModelProtocol { DigitalThanksScene<ProductionAsset>() }
    var login: SceneModelProtocol { LoginScene<ProductionAsset>() }
    var main: SceneModelProtocol { MainScene<ProductionAsset>() }
    var profile: SceneModelProtocol { ProfileScene<ProductionAsset>() }
    var transactionDetail: SceneModelProtocol { TransactDeatilViewModel<ProductionAsset>() }
-   //var profileEdit: SceneModelProtocol { ProfileEditScene<ProductionAsset>() }
+   // var profileEdit: SceneModelProtocol { ProfileEditScene<ProductionAsset>() }
+
    var feedDetail: SceneModelProtocol { FeedDetailScene<ProductionAsset>() }
+
+   var challengeCreate: SceneModelProtocol { ChallengeCreateScene<ProductionAsset>() }
+   var challengeSendResult: SceneModelProtocol { ChallengeResultScene<ProductionAsset>() }
    var challengeDetails: SceneModelProtocol { ChallengeDetailsScene<ProductionAsset>() }
 }
 
@@ -66,6 +66,5 @@ enum MockAsset: AssetProtocol {
    typealias Service = MockService
    typealias Scene = Scenes
 
-   static weak var router: MainRouter<MockAsset>?
+   weak static var router: MainRouter<MockAsset>?
 }
-

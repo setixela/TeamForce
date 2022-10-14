@@ -312,7 +312,7 @@ final class ApiUseCase<Asset: AssetProtocol>: InitProtocol, Assetable, WorkBaske
       .retainedWork(retainer)
    }
 
-   var CreateChallenge: CreateChallengeUseCase.WRK {
+   var createChallenge: CreateChallengeUseCase.WRK {
       CreateChallengeUseCase(
          safeStringStorage: safeStringStorage,
          createChallengeApiWorker: createChallengeApiWorker

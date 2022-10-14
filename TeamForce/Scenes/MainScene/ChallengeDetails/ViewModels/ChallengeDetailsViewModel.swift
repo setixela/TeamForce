@@ -13,18 +13,6 @@ final class ChallengeDetailsViewModel<Design: DSP>:
    Designable
 {
    var buttonsPanel: SendChallengePanel<Design> { models.down }
-   //
-//   private lazy var filterButtons = SlidedIndexButtons<Button3Event>(buttons:
-//      SecondaryButtonDT<Design>()
-//         .title("Детали")
-//         .font(Design.font.default),
-//      SecondaryButtonDT<Design>()
-//         .title("Комментарии")
-//         .font(Design.font.default),
-//      SecondaryButtonDT<Design>()
-//         .title("Участники")
-//         .font(Design.font.default))
-//      .height(16 + 38)
 
    private lazy var challengeInfo = ChallengeInfoVM<Design>()
 
@@ -67,7 +55,6 @@ final class ChallengeDetailsViewModel<Design: DSP>:
          .set(.spacing(8))
          .set(.bounce(true))
          .set(.arrangedModels([
-//            filterButtons,
             challengeInfo,
             prizeSizeCell,
             finishDateCell,
@@ -202,12 +189,14 @@ final class SendChallengePanel<Design: DSP>: StackModel, Designable {
             .width(68)
             .backColor(Design.color.backgroundInfoSecondary)
             .title("13")
+            .hidden(true)
          likeButton
             .set(Design.state.button.secondary)
             .image(Design.icon.like)
             .width(68)
             .backColor(Design.color.backgroundInfoSecondary)
             .title("25")
+            .hidden(true)
       }
       .spacing(8)
 

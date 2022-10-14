@@ -209,6 +209,11 @@ extension ViewModelProtocol where Self: Stateable {
       view.insetsLayoutMarginsFromSafeArea = false
       return self
    }
+
+   @discardableResult func  clipsToBound(_ value: Bool) -> Self {
+      view.clipsToBounds = value
+      return self
+   }
 }
 
 extension ViewModelProtocol where Self: Stateable, View: StackViewExtended {
