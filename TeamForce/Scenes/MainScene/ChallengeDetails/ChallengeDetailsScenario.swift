@@ -15,6 +15,8 @@ struct ChallengeDetailsInputEvents {
 //   let didSelectContenderIndex: VoidWork<Int>
    let ChallengeResult: VoidWorkVoid
    let filterButtonTapped: VoidWork<Button6Event>
+   let acceptPressed: VoidWork<Int>
+   let rejectPressed: VoidWork<Int>
 }
 
 final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<ChallengeDetailsInputEvents,
@@ -89,5 +91,21 @@ final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<Challen
          .onFail {
             print("fail button works")
          }
+      
+      events.rejectPressed
+         .doMap { (CheckReportRequestBody.State.D, $0) }
+         .doNext(works.checkChallengeReport)
+         .doNext(works.getChallengeContenders)
+         .onSuccess(setState) { .presentContenders($0) }
+         .onFail {
+            print("fail")
+         }
+      
+      events.acceptPressed
+         .doMap { (CheckReportRequestBody.State.W, $0) }
+         .doNext(works.checkChallengeReport)
+         .doNext(works.getChallengeContenders)
+         .onSuccess(setState) { .presentContenders($0) }
+         .onFail { print("fail") }
    }
 }
