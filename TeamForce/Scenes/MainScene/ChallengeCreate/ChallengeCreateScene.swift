@@ -21,14 +21,16 @@ final class ChallengeCreateScene<Asset: AssetProtocol>: BaseSceneModel<
    Asset,
    Void
 >, Scenarible2 {
-   typealias State = StackState
-
    private lazy var works = ChallengeCreateWorks<Asset>()
 
-   lazy var scenario: Scenario = ChallengeCreateScenario(
+   lazy var scenario: Scenario = ChallengeCreateScenario<Asset>(
       works: works,
       stateDelegate: setState,
-      events: ChallengeCreateScenarioEvents()
+      events: ChallengeCreateScenarioEvents(
+         didTitleInputChanged: titleInput.on(\.didEditingChanged),
+         didDescriptionInputChanged: descriptionInput.on(\.didEditingChanged),
+         didPrizeFundChanged: prizeFundInput.models.main.on(\.didEditingChanged)
+      )
    )
 
    lazy var scenario2: Scenario = ImagePickingScenario<Asset>(
@@ -41,7 +43,6 @@ final class ChallengeCreateScene<Asset: AssetProtocol>: BaseSceneModel<
          didMaximumReach: photosPanel.on(\.didMaximumReached)
       )
    )
-
 
    private lazy var infoBlock = TitleBodyY()
       .setAll { title, body in
@@ -98,6 +99,12 @@ final class ChallengeCreateScene<Asset: AssetProtocol>: BaseSceneModel<
    private lazy var addPhotoButton = Design.model.transact.addPhotoButton
       .title("Обложка челленджа")
 
+   private lazy var sendButton = Design.model.transact.sendButton
+      .set(Design.state.button.inactive)
+      .title("Создать")
+   private lazy var cancelButton = Design.button.transparent
+      .title("Отменить")
+
    private lazy var activityIndicator = Design.model.common.activityIndicator
    private lazy var imagePicker = Design.model.common.imagePicker
 
@@ -119,17 +126,23 @@ final class ChallengeCreateScene<Asset: AssetProtocol>: BaseSceneModel<
                   finishDateButton,
                   prizeFundInput,
                   prizePlacesInput,
-                  photosPanel,
-                  addPhotoButton
-               ])),
+                  photosPanel.lefted(),
+                  addPhotoButton,
+                  Grid.x64.spacer
+               ]))
          ])
 
       mainVM.footerStack
          .arrangedModels([
-            Grid.x1.spacer
+            sendButton,
+            cancelButton
          ])
 
       mainVM.closeButton.on(\.didTap, self) {
+         $0.vcModel?.dismiss(animated: true)
+      }
+
+      cancelButton.on(\.didTap, self) {
          $0.vcModel?.dismiss(animated: true)
       }
 
@@ -147,23 +160,46 @@ enum ChallengeCreateSceneState {
 
    case continueButtonPressed
    case cancelButtonPressed
+
+   case setReady(Bool)
 }
 
 extension ChallengeCreateScene {
-   func setState(_ state: ChallengeCreateSceneState) {}
+   func setState(_ state: ChallengeCreateSceneState) {
+      switch state {
+      case .initial:
+         break
+      case .presentImagePicker:
+         break
+      case .presentPickedImage:
+         break
+      case .setHideAddPhotoButton:
+         break
+      case .continueButtonPressed:
+         break
+      case .cancelButtonPressed:
+         break
+      case .setReady(let isReady):
+         if isReady {
+            sendButton.set(Design.state.button.default)
+         } else {
+            sendButton.set(Design.state.button.inactive)
+         }
+      }
+   }
 }
 
 extension ChallengeCreateScene: StateMachine2 {
    func setState2(_ state: ImagePickingState) {
       switch state {
-         //
+      //
       case .presentPickedImage(let image):
          photosPanel.addButton(image: image)
-         //
+      //
       case .presentImagePicker:
          guard let baseVC = vcModel else { return }
          imagePicker.sendEvent(\.presentOn, baseVC)
-         //
+      //
       case .setHideAddPhotoButton(let value):
          photosPanel.hiddenAnimated(!value, duration: 0.2)
          addPhotoButton.hiddenAnimated(value, duration: 0.2)

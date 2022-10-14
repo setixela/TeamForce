@@ -10,10 +10,27 @@ import UIKit
 
 protocol ChallengeCreateWorksProtocol {
    var createChallenge: Work<ChallengeRequestBody, Void> { get }
+
+   var setTitle: Work<String, Void> { get }
+   var setDesription: Work<String, Void> { get }
+   var setPrizeFund: Work<String, Void> { get }
+
+   var checkAllReady: Work<Void, Bool> { get }
 }
 
 final class ChallengeCreateWorksStore: InitProtocol, ImageStorage {
    var images: [UIImage] = []
+
+   var title: String = ""
+   var desription: String = ""
+   var prizeFund: String = ""
+
+   func clear() {
+      title = ""
+      desription = ""
+      prizeFund = ""
+      images = []
+   }
 }
 
 final class ChallengeCreateWorks<Asset: AssetProtocol>: BaseSceneWorks<ChallengeCreateWorksStore, Asset> {
@@ -21,6 +38,28 @@ final class ChallengeCreateWorks<Asset: AssetProtocol>: BaseSceneWorks<Challenge
 }
 
 extension ChallengeCreateWorks: ChallengeCreateWorksProtocol {
+   var checkAllReady: Work<Void, Bool> { .init { work in
+      let ready =
+         Self.store.title.isEmpty == false &&
+         Self.store.prizeFund.isEmpty == false
+      work.success(ready)
+   }.retainBy(retainer) }
+
+   var setTitle: Work<String, Void> { .init { work in
+      Self.store.title = work.unsafeInput
+      work.success()
+   }.retainBy(retainer) }
+
+   var setDesription: Work<String, Void> { .init { work in
+      Self.store.desription = work.unsafeInput
+      work.success()
+   }.retainBy(retainer) }
+
+   var setPrizeFund: Work<String, Void> { .init { work in
+      Self.store.prizeFund = work.unsafeInput
+      work.success()
+   }.retainBy(retainer) }
+
    var createChallenge: Work<ChallengeRequestBody, Void> { .init { [weak self] work in
       guard let input = work.input else { return }
       self?.apiUseCase.CreateChallenge
