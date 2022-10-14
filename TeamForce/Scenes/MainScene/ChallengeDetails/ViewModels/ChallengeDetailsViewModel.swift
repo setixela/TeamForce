@@ -189,12 +189,14 @@ final class SendChallengePanel<Design: DSP>: StackModel, Designable {
             .width(68)
             .backColor(Design.color.backgroundInfoSecondary)
             .title("13")
+            .hidden(true)
          likeButton
             .set(Design.state.button.secondary)
             .image(Design.icon.like)
             .width(68)
             .backColor(Design.color.backgroundInfoSecondary)
             .title("25")
+            .hidden(true)
       }
       .spacing(8)
 
