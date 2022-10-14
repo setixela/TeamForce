@@ -69,9 +69,16 @@ final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<Challen
       
       events.filterButtonTapped
          .doNext(works.filterButtonWork)
-         .onSuccess {
-            print("success button")
-            print($0)
+         .onSuccess { [weak self] in
+            // можно сет стейт достать из селфа:
+            guard let stateFunc = self?.setState else { return }
+
+            switch $0 {
+            case is [Challenge]:
+               stateFunc(.enableContenders)
+            default:
+               break
+            }
          }
          .onFail {
             print("fail button works")

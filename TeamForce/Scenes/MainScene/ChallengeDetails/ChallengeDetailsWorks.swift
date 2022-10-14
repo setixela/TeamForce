@@ -27,7 +27,7 @@ final class ChallengeDetailsWorksStore: InitProtocol {
 final class ChallengeDetailsWorks<Asset: AssetProtocol>: BaseSceneWorks<ChallengeDetailsWorksStore, Asset> {
    private lazy var apiUseCase = Asset.apiUseCase
 
-   var filterButtonWork: Work<Button6Event, Any?> { .init { work in
+   var filterButtonWork: Work<Button6Event, Any> { .init { work in
       guard let button = work.input else { return }
       print(button)
       switch button {
