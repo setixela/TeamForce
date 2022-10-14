@@ -11,6 +11,7 @@ enum DateFormat: String {
    case full = "d MMM y HH:mm"
    case medium = "d MMM y"
    case digits = "dd.MM.yyyy"
+   case yearMonthDayDigits = "yyyy-MM-dd"
 }
 
 enum BackEndDateFormat: String, CaseIterable {

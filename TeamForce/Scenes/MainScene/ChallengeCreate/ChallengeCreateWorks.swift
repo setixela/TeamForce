@@ -70,13 +70,15 @@ extension ChallengeCreateWorks: ChallengeCreateWorksProtocol {
    // MARK: - Create chall
 
    var createChallenge: Work<Void, Void> { .init { [weak self] work in
-      let body = ChallengeRequestBody(name: Self.store.title,
-                                      description: Self.store.desription,
-                                      endAt: nil,
-                                      startBalance: Int(Self.store.prizeFund).int,
-                                      photo: Self.store.images.first?.resized(to: 1280),
-                                      parameterId: nil,
-                                      parameterValue: nil)
+      let body = ChallengeRequestBody(
+         name: Self.store.title,
+         description: Self.store.desription,
+         endAt: Self.store.finishDate.convertToString(.yearMonthDayDigits),
+         startBalance: Int(Self.store.prizeFund).int,
+         photo: Self.store.images.first?.resized(to: 1280),
+         parameterId: nil,
+         parameterValue: nil
+      )
       self?.apiUseCase.createChallenge
          .doAsync(body)
          .onSuccess {

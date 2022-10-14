@@ -82,6 +82,7 @@ protocol IconElements: InitProtocol, DesignElementable where DesignElement == UI
    var tablerBrandTelegram: UIImage { get }
    var tablerClock: UIImage { get }
    var tablerGift: UIImage { get }
+   var tablerAward: UIImage { get }
 
    // illusttrates
    var challengeWinnerIllustrate: DesignElement { get }
@@ -168,6 +169,7 @@ struct IconBuilder: IconElements {
    var tablerBrandTelegram: UIImage { make("tabler_brand-telegram") }
    var tablerClock: UIImage { make("tabler_clock") }
    var tablerGift: UIImage { make("tabler_gift") }
+   var tablerAward: UIImage { make("tabler_award") }
 
    // illusttrates
    var challengeWinnerIllustrate: UIImage { make("challenge_winner_illustrate") }

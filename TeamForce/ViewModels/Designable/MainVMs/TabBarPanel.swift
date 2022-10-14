@@ -25,7 +25,7 @@ final class TabBarPanel<Design: DesignProtocol>: BaseViewModel<StackViewExtended
    let button3: ButtonSelfModable = BottomPanelVMBuilder<Design>.button
       .image(Design.icon.tabBarButton3)
    let button4: ButtonSelfModable = BottomPanelVMBuilder<Design>.button
-      .image(Design.icon.tabBarButton4)
+      .image(Design.icon.tablerAward)
 
    // MARK: - Private
 

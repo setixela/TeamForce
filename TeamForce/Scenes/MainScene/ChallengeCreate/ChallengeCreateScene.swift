@@ -155,7 +155,7 @@ final class ChallengeCreateScene<Asset: AssetProtocol>: BaseSceneModel<
       mainVM.footerStack
          .arrangedModels([
             sendButton,
-            cancelButton
+           // cancelButton
          ])
 
       mainVM.closeButton.on(\.didTap, self) {
