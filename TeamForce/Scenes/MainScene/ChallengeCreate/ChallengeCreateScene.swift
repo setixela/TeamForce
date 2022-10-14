@@ -94,6 +94,7 @@ final class ChallengeCreateScene<Asset: AssetProtocol>: BaseSceneModel<
          input
             .set(Design.state.textField.invisible)
             .set(.placeholder("Укажите призовой фонд"))
+            .placeholderColor(Design.color.textFieldPlaceholder)
             .clearButtonMode(.never)
             .onlyDigitsMode()
          icon
@@ -233,6 +234,7 @@ class DatePickerModel: BaseViewModel<UIDatePicker> {
    override func start() {
       if #available(iOS 13.4, *) {
          view.preferredDatePickerStyle = .wheels
+         view.overrideUserInterfaceStyle = .light
       } else {
          // Fallback on earlier versions
       }

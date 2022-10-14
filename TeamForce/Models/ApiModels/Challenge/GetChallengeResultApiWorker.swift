@@ -13,10 +13,10 @@ struct ChallengeResult: Codable {
    let text: String?
    let photo: String?
    let status: String
-   let recieved: Int?
+   let received: Int?
 
    enum CodingKeys: String, CodingKey {
-      case text, photo, status, recieved
+      case text, photo, status, received
       case updatedAt = "updated_at"
    }
 }

@@ -62,6 +62,18 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
    private lazy var challDetails = ChallengeDetailsViewModel<Design>()
       .set(.padding(.horizontalOffset(Design.params.commonSideOffset)))
       .backColor(Design.color.background)
+   
+   private lazy var myResultBlock = ChallResultViewModel<Design>()
+      .set(.padding(.horizontalOffset(Design.params.commonSideOffset)))
+      .backColor(Design.color.background)
+   
+   private lazy var winnersBlock = ChallWinnersViewModel<Design>()
+      .set(.padding(.horizontalOffset(Design.params.commonSideOffset)))
+      .backColor(Design.color.background)
+   
+   private lazy var contendersBlock = ChallContendersViewModel<Design>()
+      .set(.padding(.horizontalOffset(Design.params.commonSideOffset)))
+      .backColor(Design.color.background)
 
    private lazy var challComments = FeedCommentsBlock<Design>()
 
@@ -117,6 +129,10 @@ enum ChallengeDetailsState {
    case presentSendResultScreen(Challenge,Int)
    case enableMyResult([ChallengeResult])
    case enableContenders
+   
+   case presentMyResults([ChallengeResult])
+   case presentWinners([ChallengeWinner])
+   case presentContenders([Contender])
 }
 
 extension ChallengeDetailsScene: StateMachine {
@@ -169,6 +185,28 @@ extension ChallengeDetailsScene: StateMachine {
 
       case .enableContenders:
          filterButtons.buttons[2].hidden(false)
+         challDetails.models.down.hidden(true)
+         
+      case .presentMyResults(let results):
+         myResultBlock.setup(results)
+         mainVM.footerStack
+            .arrangedModels([
+               myResultBlock
+            ])
+         
+      case .presentWinners(let winners):
+         winnersBlock.setup(winners)
+         mainVM.footerStack
+            .arrangedModels([
+               winnersBlock
+            ])
+         
+      case .presentContenders(let contenders):
+         contendersBlock.setup(contenders)
+         mainVM.footerStack
+            .arrangedModels([
+               contendersBlock
+            ])
       }
    }
 }
