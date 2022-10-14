@@ -38,6 +38,7 @@ final class LoginViewModels<Design: DSP>: BaseModel, Designable {
       .set {
          $0.mainModel.icon.image(Design.icon.user)
          $0.mainModel.textField
+            .disableAutocorrection()
             .placeholder(Design.Text.title.userName)
             .placeholderColor(Design.color.textFieldPlaceholder)
       }
@@ -49,6 +50,7 @@ final class LoginViewModels<Design: DSP>: BaseModel, Designable {
       .set {
          $0.mainModel.icon.image(Design.icon.lock)
          $0.mainModel.textField
+            .disableAutocorrection()
             .placeholder(Design.Text.title.enterSmsCode)
             .placeholderColor(Design.color.textFieldPlaceholder)
             .keyboardType(.numberPad)

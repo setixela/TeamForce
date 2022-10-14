@@ -67,6 +67,10 @@ final class MainScene<Asset: AssetProtocol>:
       }
       tabBarPanel.button1.setSelfMode(\.normal)
       selectedModel = 0
+
+      mainVM.header.text("Благодарности")
+      vcModel?.sendEvent(\.setTitle, "Благодарности")
+      hideHeader()
    }
 
    private func unlockTabButtons() {

@@ -29,8 +29,9 @@ final class TransactOptionsVM<Design: DSP>: BaseViewModel<StackViewExtended>, De
 
    override func start() {
       arrangedModels([
+         tagsCloud,
          anonimParamModel,
-         tagsCloud
+         Spacer(200)
       ])
    }
 }
