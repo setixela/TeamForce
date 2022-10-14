@@ -6,12 +6,15 @@
 //
 
 import ReactiveWorks
+import UIKit
 
 protocol ChallengeCreateWorksProtocol {
    var createChallenge: Work<ChallengeRequestBody, Void> { get }
 }
 
-final class ChallengeCreateWorksStore: InitProtocol {}
+final class ChallengeCreateWorksStore: InitProtocol, ImageStorage {
+   var images: [UIImage] = []
+}
 
 final class ChallengeCreateWorks<Asset: AssetProtocol>: BaseSceneWorks<ChallengeCreateWorksStore, Asset> {
    private lazy var apiUseCase = Asset.apiUseCase
@@ -30,3 +33,5 @@ extension ChallengeCreateWorks: ChallengeCreateWorksProtocol {
          }
    }.retainBy(retainer) }
 }
+
+extension ChallengeCreateWorks: ImageWorks {}

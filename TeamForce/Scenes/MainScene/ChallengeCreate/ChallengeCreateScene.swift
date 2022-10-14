@@ -20,7 +20,7 @@ final class ChallengeCreateScene<Asset: AssetProtocol>: BaseSceneModel<
    ModalDoubleStackModel<Asset>,
    Asset,
    Void
->, Scenarible {
+>, Scenarible2 {
    typealias State = StackState
 
    private lazy var works = ChallengeCreateWorks<Asset>()
@@ -30,6 +30,18 @@ final class ChallengeCreateScene<Asset: AssetProtocol>: BaseSceneModel<
       stateDelegate: setState,
       events: ChallengeCreateScenarioEvents()
    )
+
+   lazy var scenario2: Scenario = ImagePickingScenario<Asset>(
+      works: works,
+      stateDelegate: stateDelegate2,
+      events: ImagePickingScenarioEvents(
+         startImagePicking: addPhotoButton.on(\.didTap),
+         addImageToBasket: imagePicker.onEvent(\.didImagePicked),
+         removeImageFromBasket: photosPanel.on(\.didCloseImage),
+         didMaximumReach: photosPanel.on(\.didMaximumReached)
+      )
+   )
+
 
    private lazy var infoBlock = TitleBodyY()
       .setAll { title, body in
@@ -122,6 +134,7 @@ final class ChallengeCreateScene<Asset: AssetProtocol>: BaseSceneModel<
       }
 
       scenario.start()
+      scenario2.start()
    }
 }
 
@@ -136,6 +149,25 @@ enum ChallengeCreateSceneState {
    case cancelButtonPressed
 }
 
-extension ChallengeCreateScene: StateMachine {
+extension ChallengeCreateScene {
    func setState(_ state: ChallengeCreateSceneState) {}
+}
+
+extension ChallengeCreateScene: StateMachine2 {
+   func setState2(_ state: ImagePickingState) {
+      switch state {
+         //
+      case .presentPickedImage(let image):
+         photosPanel.addButton(image: image)
+         //
+      case .presentImagePicker:
+         guard let baseVC = vcModel else { return }
+         imagePicker.sendEvent(\.presentOn, baseVC)
+         //
+      case .setHideAddPhotoButton(let value):
+         photosPanel.hiddenAnimated(!value, duration: 0.2)
+         addPhotoButton.hiddenAnimated(value, duration: 0.2)
+         //
+      }
+   }
 }
