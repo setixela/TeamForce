@@ -77,7 +77,7 @@ extension ChallengeDetailsViewModel: StateMachine {
          challengeInfo.setup(challenge)
 
          prizeSizeCell.models.right3
-            .text(challenge.prizeSize.toString + " " + "форсиков")
+            .text(challenge.prizeSize.toString + " " + "спасибок")
 
          let dateStr = challenge.endAt.string.convertToDate(.full).string
          finishDateCell.models.right3

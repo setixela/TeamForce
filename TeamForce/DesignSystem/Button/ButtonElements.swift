@@ -37,7 +37,7 @@ struct ButtonStateBuilder<Design: DesignProtocol>: ButtonStateProtocol {
    var plain: [ButtonState] { [
       .backColor(Design.color.background),
       .textColor(Design.color.text),
-      .tint(Design.color.iconInvert),
+      .tint(Design.color.text),
       .cornerRadius(Design.params.cornerRadius),
       .height(Design.params.buttonHeight),
       .enabled(true),

@@ -77,7 +77,7 @@ final class TransactScene<Asset: AssetProtocol>: ModalDoubleStackModel<Asset>, S
          enableTags: viewModels.options.tagsPanelSwitcher.on(\.turnedOn),
          disableTags: viewModels.options.tagsPanelSwitcher.on(\.turnedOff),
          removeTag: viewModels.options.tagsPanelSwitcher.optionModel.on(\.didTapTag),
-         setTags: tagList.on(\.saveButtonDidTap),
+         setTags: viewModels.options.tagsCloud.on(\.updateTags),
          cancelButtonDidTap: closeButton.on(\.didTap)
       )
    )
@@ -169,6 +169,40 @@ final class TransactScene<Asset: AssetProtocol>: ModalDoubleStackModel<Asset>, S
             Spacer(16),
             viewModels.sendButton
          ])
+
+      loadTags()
+   }
+
+   // MARK: - refact this
+
+   private lazy var useCase = Asset.apiUseCase
+   private lazy var storageUseCase = Asset.storageUseCase
+
+   private var tags: [SelectWrapper<Tag>] = []
+   private var selctedTags: Set<Tag> = []
+
+   private func loadTags() {
+      storageUseCase.loadToken
+         .doAsync()
+         .doNext(useCase.GetSendCoinSettings)
+         .doMap {
+            $0.tags
+         }
+         .onSuccess(self) {
+            $0.tags = $1.map {
+               SelectWrapper(value: $0)
+            }
+            $0.setTagsToCloud()
+         }
+         .onFail(self) {
+            $0.tags = []
+            $0.setTagsToCloud()
+         }
+   }
+
+   private func setTagsToCloud() {
+      view.layoutIfNeeded()
+      viewModels.options.tagsCloud.setState(.items(tags))
    }
 }
 
@@ -299,23 +333,27 @@ extension TransactScene {
 
       case .presentTagsSelector(let tags):
 
-         bottomPopupPresenter.send(\.present, (model: tagList, onView: vcModel?.view.rootSuperview))
-
-         tagList.setState(.selectTags(tags))
-         tagList.on(\.exit, self) {
-            $0.bottomPopupPresenter.send(\.hide)
-         }
-         tagList.closeButton.on(\.didTap, self) {
-            $0.bottomPopupPresenter.send(\.hide)
-         }
+//         bottomPopupPresenter.send(\.present, (model: tagList, onView: vcModel?.view.rootSuperview))
+//
+//         tagList.setState(.selectTags(tags))
+//         tagList.on(\.exit, self) {
+//            $0.bottomPopupPresenter.send(\.hide)
+//         }
+//         tagList.closeButton.on(\.didTap, self) {
+//            $0.bottomPopupPresenter.send(\.hide)
+//         }
+         break
       //
       case .updateSelectedTags(let tags):
-         if tags.isEmpty {
-            viewModels.options.tagsPanelSwitcher.optionModel.setState(.clear)
-         } else {
-            viewModels.options.tagsPanelSwitcher.optionModel.setState(.selected(tags))
-         }
-         tagList.saveButton.set(Design.state.button.default)
+         break
+
+         // setTagsToCloud()
+//         if tags.isEmpty {
+//            viewModels.options.tagsPanelSwitcher.optionModel.setState(.clear)
+//         } else {
+//            viewModels.options.tagsPanelSwitcher.optionModel.setState(.selected(tags))
+//         }
+//         tagList.saveButton.set(Design.state.button.default)
       }
    }
 }
@@ -369,6 +407,7 @@ private extension TransactScene {
       viewModels.pickedImages.hidden(false, isAnimated: true)
       viewModels.addPhotoButton.hidden(false, isAnimated: true)
       viewModels.options.hidden(false, isAnimated: true)
+      setTagsToCloud()
       footerStack.hidden(false, isAnimated: true)
 
       view.endEditing(true)
