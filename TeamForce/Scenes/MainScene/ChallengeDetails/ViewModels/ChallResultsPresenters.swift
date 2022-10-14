@@ -105,7 +105,7 @@ class ChallResultsPresenters<Design: DesignProtocol>: Designable {
                .cornerRadius(Design.params.cornerRadiusSmall)
                .backColor(Design.color.background)
          )
-         .padding(.verticalOffset(Grid.x8.value))
+         .padding(.verticalOffset(Grid.x6.value))
          //.padding(.outline(Grid.x2.value))
 
          work.success(result: finalCell)
