@@ -286,6 +286,11 @@ extension ViewModelProtocol where Self: Stateable, View: StackViewExtended {
       return self
    }
 
+   @discardableResult func removeLastModel() -> Self {
+      view.arrangedSubviews.last?.removeFromSuperview()
+      return self
+   }
+
    @discardableResult func backView(_ value: UIView, inset: UIEdgeInsets = .zero) -> Self {
       view.insertSubview(value, at: 0)
       view.backView = value
