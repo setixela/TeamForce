@@ -53,6 +53,14 @@ final class ChallengesScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtend
          activity,
          viewModel,
       ])
+
+      viewModel.challengesTable
+         .on(\.didScroll) { [weak self] in
+            self?.send(\.didScroll, $0)
+         }
+         .on(\.willEndDragging) { [weak self] in
+            self?.send(\.willEndDragging, $0)
+         }
    }
 }
 

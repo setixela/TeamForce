@@ -17,7 +17,7 @@ final class ChallengesViewModel<Design: DSP>: StackModel, Designable, Eventable 
 
    //
 
-   private lazy var challengesTable = TableItemsModel<Design>()
+   lazy var challengesTable = TableItemsModel<Design>()
       .set(.presenters([
          ChallengeCellPresenters<Design>.presenter,
          SpacerPresenter.presenter,
