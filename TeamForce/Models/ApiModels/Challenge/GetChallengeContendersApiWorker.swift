@@ -17,7 +17,6 @@ struct Contender: Codable {
    let reportText: String?
    let reportPhoto: String?
    let reportId: Int
-   let awardedAt: String?
    
    enum CodingKeys: String, CodingKey {
       case participantId = "participant_id"
@@ -28,7 +27,6 @@ struct Contender: Codable {
       case reportText = "report_text"
       case reportPhoto = "report_photo"
       case reportId = "report_id"
-      case awardedAt = "awarded_at"
    }
    
 }

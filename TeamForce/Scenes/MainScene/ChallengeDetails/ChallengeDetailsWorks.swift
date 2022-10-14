@@ -11,7 +11,7 @@ protocol ChallengeDetailsWorksProtocol {
    var getChallengeById: Work<Void, Challenge> { get }
    var getChallengeContenders: Work<Void, [Contender]> { get }
    var getChallengeWinners: Work<Void, [ChallengeWinner]> { get }
-   var checkChallengeReport: Work<CheckReportRequestBody.State, Void> { get }
+   var checkChallengeReport: Work<(CheckReportRequestBody.State, Int), Void> { get }
    var getChallenge: Work<Void, Challenge> { get }
 }
 
@@ -159,13 +159,13 @@ extension ChallengeDetailsWorks: ChallengeDetailsWorksProtocol {
          }
    }.retainBy(retainer) }
 
-   var checkChallengeReport: Work<CheckReportRequestBody.State, Void> { .init { [weak self] work in
+   var checkChallengeReport: Work<(CheckReportRequestBody.State, Int), Void> { .init { [weak self] work in
       guard
-         let input = work.input,
-         let id = Self.store.reportId
+         let state = work.input?.0,
+         let id = work.input?.1
       else { return }
 
-      let request = CheckReportRequestBody(id: id, state: input)
+      let request = CheckReportRequestBody(id: id, state: state, text: "text")
       self?.apiUseCase.CheckChallengeReport
          .doAsync(request)
          .onSuccess {

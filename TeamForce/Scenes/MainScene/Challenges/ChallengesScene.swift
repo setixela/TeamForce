@@ -37,8 +37,9 @@ final class ChallengesScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtend
    // MARK: - View Models
 
    private lazy var createChallengeButton = ButtonModel()
-      .set(Design.state.button.default)
+      .set(Design.state.button.plain)
       .title("Создать челлендж")
+      .shadow(Design.params.cellShadow)
 
    private lazy var filterButtons = CreateChallengePanel<Design>()
    private lazy var viewModel = ChallengesViewModel<Design>()

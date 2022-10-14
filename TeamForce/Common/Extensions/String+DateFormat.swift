@@ -11,6 +11,7 @@ enum DateFormat: String {
    case full = "d MMM y HH:mm"
    case medium = "d MMM y"
    case digits = "dd.MM.yyyy"
+   case yearMonthDayDigits = "yyyy-MM-dd"
 }
 
 enum BackEndDateFormat: String, CaseIterable {
@@ -71,5 +72,15 @@ extension String {
       formatter.locale = Locale(identifier: "ru_RU")
       formatter.unitsStyle = .full
       return formatter.localizedString(for: convertedDate, relativeTo: Date())
+   }
+   
+   var dateFullConverted: String {
+      guard let convertedDate = dateConvertedToDate else { return "" }
+
+      let outputFormatter = DateFormatter()
+      outputFormatter.locale = Locale(identifier: "ru_RU")
+      outputFormatter.dateFormat = "d MMM y HH:mm"
+
+      return outputFormatter.string(from: convertedDate)
    }
 }

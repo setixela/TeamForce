@@ -137,7 +137,7 @@ struct TitleTexts: TitleTextsProtocol {
    var chooseRecipient: String { "Выберите получателя" }
    var sendThanks: String { "Перевести спасибок" }
    var availableThanks: String { "Доступно" }
-   var reasonPlaceholder: String { "Обоснование" }
+   var reasonPlaceholder: String { "Причина благодарности" }
    var thanksWereSend: String { "Спасибо отправлено" }
    var recipient: String { "Получатель: @" }
    var userNotFound: String { "По вашему запросу\nникого не нашли" }

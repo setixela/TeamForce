@@ -15,6 +15,8 @@ struct ChallengeDetailsInputEvents {
 //   let didSelectContenderIndex: VoidWork<Int>
    let ChallengeResult: VoidWorkVoid
    let filterButtonTapped: VoidWork<Button6Event>
+   let acceptPressed: VoidWork<Int>
+   let rejectPressed: VoidWork<Int>
 }
 
 final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<ChallengeDetailsInputEvents,
@@ -76,6 +78,12 @@ final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<Challen
             switch $0 {
             case let value as Challenge:
                stateFunc(.presentChallenge(value))
+            case let value as [ChallengeResult]:
+               stateFunc(.presentMyResults(value))
+            case let value as [ChallengeWinner]:
+               stateFunc(.presentWinners(value))
+            case let value as [Contender]:
+               stateFunc(.presentContenders(value))
             default:
                break
             }
@@ -83,5 +91,21 @@ final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<Challen
          .onFail {
             print("fail button works")
          }
+      
+      events.rejectPressed
+         .doMap { (CheckReportRequestBody.State.D, $0) }
+         .doNext(works.checkChallengeReport)
+         .doNext(works.getChallengeContenders)
+         .onSuccess(setState) { .presentContenders($0) }
+         .onFail {
+            print("fail")
+         }
+      
+      events.acceptPressed
+         .doMap { (CheckReportRequestBody.State.W, $0) }
+         .doNext(works.checkChallengeReport)
+         .doNext(works.getChallengeContenders)
+         .onSuccess(setState) { .presentContenders($0) }
+         .onFail { print("fail") }
    }
 }

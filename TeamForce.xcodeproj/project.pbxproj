@@ -220,6 +220,12 @@
 		631995BA28F5A56D00EB2638 /* GetSendCoinSettingsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631995B928F5A56D00EB2638 /* GetSendCoinSettingsUseCase.swift */; };
 		631D8EB528F78D4D005332BD /* GetChallengeResultApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631D8EB428F78D4D005332BD /* GetChallengeResultApiWorker.swift */; };
 		631D8EB728F78F04005332BD /* GetChallengeResultUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631D8EB628F78F04005332BD /* GetChallengeResultUseCase.swift */; };
+		631D8EBD28F91E5E005332BD /* ChallResultsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631D8EBC28F91E5E005332BD /* ChallResultsViewModel.swift */; };
+		631D8EBF28F91ECF005332BD /* ChallResultsPresenters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631D8EBE28F91ECF005332BD /* ChallResultsPresenters.swift */; };
+		631D8EC128F94EC7005332BD /* ChallWinnersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631D8EC028F94EC7005332BD /* ChallWinnersViewModel.swift */; };
+		631D8EC328F94F39005332BD /* ChallWinnersPresenters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631D8EC228F94F39005332BD /* ChallWinnersPresenters.swift */; };
+		631D8EC528F96054005332BD /* ChallContendersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631D8EC428F96054005332BD /* ChallContendersViewModel.swift */; };
+		631D8EC728F960AE005332BD /* ChallContendersPresenters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631D8EC628F960AE005332BD /* ChallContendersPresenters.swift */; };
 		63352DE7289AA69A00489F5F /* SendCoinUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63352DE6289AA69A00489F5F /* SendCoinUseCase.swift */; };
 		633FBC8428E535600071FF8C /* FeedDetailWorks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633FBC8328E535600071FF8C /* FeedDetailWorks.swift */; };
 		633FBC8628E542540071FF8C /* FeedDetailViewModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633FBC8528E542540071FF8C /* FeedDetailViewModels.swift */; };
@@ -537,6 +543,12 @@
 		631995B928F5A56D00EB2638 /* GetSendCoinSettingsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSendCoinSettingsUseCase.swift; sourceTree = "<group>"; };
 		631D8EB428F78D4D005332BD /* GetChallengeResultApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetChallengeResultApiWorker.swift; sourceTree = "<group>"; };
 		631D8EB628F78F04005332BD /* GetChallengeResultUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetChallengeResultUseCase.swift; sourceTree = "<group>"; };
+		631D8EBC28F91E5E005332BD /* ChallResultsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallResultsViewModel.swift; sourceTree = "<group>"; };
+		631D8EBE28F91ECF005332BD /* ChallResultsPresenters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallResultsPresenters.swift; sourceTree = "<group>"; };
+		631D8EC028F94EC7005332BD /* ChallWinnersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallWinnersViewModel.swift; sourceTree = "<group>"; };
+		631D8EC228F94F39005332BD /* ChallWinnersPresenters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallWinnersPresenters.swift; sourceTree = "<group>"; };
+		631D8EC428F96054005332BD /* ChallContendersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallContendersViewModel.swift; sourceTree = "<group>"; };
+		631D8EC628F960AE005332BD /* ChallContendersPresenters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallContendersPresenters.swift; sourceTree = "<group>"; };
 		63352DE6289AA69A00489F5F /* SendCoinUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendCoinUseCase.swift; sourceTree = "<group>"; };
 		633FBC8328E535600071FF8C /* FeedDetailWorks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedDetailWorks.swift; sourceTree = "<group>"; };
 		633FBC8528E542540071FF8C /* FeedDetailViewModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedDetailViewModels.swift; sourceTree = "<group>"; };
@@ -857,6 +869,12 @@
 			children = (
 				194E308128F36661001E2967 /* ChallengeDetailsViewModel.swift */,
 				1955878A28F6EFCD0001F734 /* ChallCommentsBlock.swift */,
+				631D8EBC28F91E5E005332BD /* ChallResultsViewModel.swift */,
+				631D8EBE28F91ECF005332BD /* ChallResultsPresenters.swift */,
+				631D8EC028F94EC7005332BD /* ChallWinnersViewModel.swift */,
+				631D8EC228F94F39005332BD /* ChallWinnersPresenters.swift */,
+				631D8EC428F96054005332BD /* ChallContendersViewModel.swift */,
+				631D8EC628F960AE005332BD /* ChallContendersPresenters.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -1715,6 +1733,7 @@
 				1921A13528EECAC900E41E86 /* ChallengesScene.swift in Sources */,
 				63D419ED28AA56570024E22C /* GetFeedUseCase.swift in Sources */,
 				1977BE5528A7238F00D554EA /* TextFieldStates.swift in Sources */,
+				631D8EC528F96054005332BD /* ChallContendersViewModel.swift in Sources */,
 				63BB2C2928E3E7B600C1E3DB /* FeedDetailScenario.swift in Sources */,
 				1921A13728EECAD500E41E86 /* ChallengesWorks.swift in Sources */,
 				191571D1289F12350061510F /* PlaygroundScene.swift in Sources */,
@@ -1767,6 +1786,7 @@
 				63AB071128BD6B0F00FD650F /* ProfileWorks.swift in Sources */,
 				63E1916D2889519E000FD312 /* BadgeModel.swift in Sources */,
 				19C1E9A328610E4E00E7976D /* MainRouter.swift in Sources */,
+				631D8EC728F960AE005332BD /* ChallContendersPresenters.swift in Sources */,
 				63A37EAE28EF1D6300DBD59F /* CreateChallengeUseCase.swift in Sources */,
 				19A9BE7328C255690099F8EA /* TransactBuilder.swift in Sources */,
 				19221EF528CE1D1B00B7B604 /* EditContactsViewModels.swift in Sources */,
@@ -1811,6 +1831,7 @@
 				196750A6286516F40019A6DE /* LoginScene.swift in Sources */,
 				19017B6728A697DF00B06345 /* AligningModels.swift in Sources */,
 				63A37EB628F05DDD00DBD59F /* CreateChallengeReportUseCase.swift in Sources */,
+				631D8EC128F94EC7005332BD /* ChallWinnersViewModel.swift in Sources */,
 				6368D826289187B50049EEAB /* SendCoinApiModel.swift in Sources */,
 				63AB072128C8048C00FD650F /* CreateFewContactsApiWorker.swift in Sources */,
 				196F642228F32C37002F5187 /* ManyButtons.swift in Sources */,
@@ -1826,6 +1847,7 @@
 				197A361A28BBC9B3006E44C1 /* MainWorks.swift in Sources */,
 				197A771C28AD91E20082CD81 /* HistoryPresenters.swift in Sources */,
 				1953CF0628EAC9FB00C670A6 /* HashTagsScrollModel.swift in Sources */,
+				631D8EBF28F91ECF005332BD /* ChallResultsPresenters.swift in Sources */,
 				631995B228F53F6800EB2638 /* ChallengeCreateScenario.swift in Sources */,
 				63CFA196289C38A9000E4D1E /* GetTransactionsApiWorker.swift in Sources */,
 				631D8EB728F78F04005332BD /* GetChallengeResultUseCase.swift in Sources */,
@@ -1874,6 +1896,7 @@
 				63E7A73D28AF9BC100FB2C80 /* GetCurrentPeriodUseCase.swift in Sources */,
 				19C1E9A128610E2800E7976D /* AssetProtocol.swift in Sources */,
 				1985A12628B2966400B017E0 /* SegmentControlButtons.swift in Sources */,
+				631D8EBD28F91E5E005332BD /* ChallResultsViewModel.swift in Sources */,
 				19171F4D28AD663F000926B1 /* TableItemsModel.swift in Sources */,
 				197A361228BBB221006E44C1 /* FeedFilterButtons.swift in Sources */,
 				19B39E5B28D3433400BB2C77 /* TagsOptionsPanel.swift in Sources */,
@@ -1915,6 +1938,7 @@
 				194E308028F36657001E2967 /* ChallengeDetailsWorks.swift in Sources */,
 				1952EA6928A711F2003F7852 /* Associated.swift in Sources */,
 				19D08353286F403400F75E4A /* SideBarModel.swift in Sources */,
+				631D8EC328F94F39005332BD /* ChallWinnersPresenters.swift in Sources */,
 				196D883628ADB74800F4C09D /* TabBarPanel.swift in Sources */,
 				1955879228F733D30001F734 /* ChallengeResultWorks.swift in Sources */,
 				63A37EBA28F3289900DBD59F /* CheckChallengeReportUseCase.swift in Sources */,
