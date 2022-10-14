@@ -22,7 +22,8 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
          saveInputAndLoadChallenge: on(\.input),
          // getContenders: ,
          // getWinners: ,
-         ChallengeResult: challDetails.buttonsPanel.sendButton.on(\.didTap)
+         ChallengeResult: challDetails.buttonsPanel.sendButton.on(\.didTap),
+         filterButtonTapped: filterButtons.on(\.didTapButtons)
       )
    )
 

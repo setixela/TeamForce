@@ -7,8 +7,27 @@
 
 import Foundation
 import ReactiveWorks
+struct ChallengeWinner: Codable {
+   let nickname: String?
+   let totalReceived: Int?
+   let participantId: Int?
+   let participantPhoto: String?
+   let participantName: String?
+   let participantSurname: String?
+   let awardedAt: String?
+   
+   enum CodingKeys: String, CodingKey {
+      case nickname
+      case totalReceived = "total_received"
+      case participantId = "participant_id"
+      case participantPhoto = "participant_photo"
+      case participantName = "participant_name"
+      case participantSurname = "participant_surname"
+      case awardedAt = "awarded_at"
+   }
+}
 
-final class GetChallengeWinnersApiWorker: BaseApiWorker<RequestWithId, [Contender]> {
+final class GetChallengeWinnersApiWorker: BaseApiWorker<RequestWithId, [ChallengeWinner]> {
    override func doAsync(work: Wrk) {
       let cookieName = "csrftoken"
 
@@ -31,7 +50,7 @@ final class GetChallengeWinnersApiWorker: BaseApiWorker<RequestWithId, [Contende
             let decoder = DataToDecodableParser()
             guard
                let data = result.data,
-               let winners: [Contender] = decoder.parse(data)
+               let winners: [ChallengeWinner] = decoder.parse(data)
             else {
                work.fail()
                return

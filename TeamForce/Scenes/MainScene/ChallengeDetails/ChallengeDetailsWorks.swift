@@ -10,7 +10,7 @@ import ReactiveWorks
 protocol ChallengeDetailsWorksProtocol {
    var getChallengeById: Work<Void, Challenge> { get }
    var getChallengeContenders: Work<Void, [Contender]> { get }
-   var getChallengeWinners: Work<Int, [Contender]> { get }
+   var getChallengeWinners: Work<Void, [ChallengeWinner]> { get }
    var checkChallengeReport: Work<CheckReportRequestBody.State, Void> { get }
    var getChallenge: Work<Void, Challenge> { get }
 }
@@ -26,21 +26,66 @@ final class ChallengeDetailsWorksStore: InitProtocol {
 
 final class ChallengeDetailsWorks<Asset: AssetProtocol>: BaseSceneWorks<ChallengeDetailsWorksStore, Asset> {
    private lazy var apiUseCase = Asset.apiUseCase
-   
-   
+
+   var filterButtonWork: Work<Button6Event, Any?> { .init { work in
+      guard let button = work.input else { return }
+      print(button)
+      switch button {
+      case .didTapButton1:
+         if let challenge = Self.store.challenge {
+            work.success(challenge)
+         } else {
+            work.fail()
+         }
+
+      case .didTapButton2:
+         self.getChallengeResult
+            .doAsync()
+            .onSuccess { work.success($0) }
+            .onFail { work.fail() }
+
+      case .didTapButton3:
+         self.amIOwner
+            .doAsync()
+            .onSuccess {
+               self.getChallengeContenders
+                  .doAsync()
+                  .onSuccess { work.success($0) }
+                  .onFail { work.fail() }
+            }
+            .onFail { work.fail() }
+
+      case .didTapButton4:
+         self.getChallengeWinners
+            .doAsync()
+            .onSuccess {
+               print($0)
+               work.success($0)
+            }
+            .onFail {
+               work.fail()
+            }
+
+      case .didTapButton5:
+         print(5)
+      case .didTapButton6:
+         print(6)
+      }
+   }.retainBy(retainer) }
+
    var amIOwner: Work<Void, Void> { .init { work in
       guard
          let profileId = Self.store.profileId,
          let creatorId = Self.store.challenge?.creatorId
       else { return }
-      
+
       if profileId == creatorId {
          work.success(())
       } else {
          work.fail()
       }
    }.retainBy(retainer) }
-   
+
    var saveInput: Work<(Challenge, Int), Challenge> { .init { work in
       guard let input = work.input else { return }
       Self.store.challenge = input.0
@@ -49,21 +94,21 @@ final class ChallengeDetailsWorks<Asset: AssetProtocol>: BaseSceneWorks<Challeng
 
       work.success(result: input.0)
    }.retainBy(retainer) }
-   
+
    var saveCurrentContender: Work<Contender, Contender> { .init { work in
       guard let input = work.input else { return }
       Self.store.currentContender = input
       Self.store.reportId = input.reportId
-      
+
       work.success(result: input)
    }.retainBy(retainer) }
-   
-   var getPresentedContenderByIndex: Work<Int, Contender> { .init {  work in
+
+   var getPresentedContenderByIndex: Work<Int, Contender> { .init { work in
       guard let contender = Self.store.contenders?[work.unsafeInput] else { return }
       Self.store.currentContender = contender
       work.success(contender)
    }.retainBy(retainer) }
-   
+
    var getChallengeId: Work<Void, Int> { .init { work in
       guard let id = Self.store.challengeId else { return }
       work.success(id)
@@ -73,7 +118,6 @@ final class ChallengeDetailsWorks<Asset: AssetProtocol>: BaseSceneWorks<Challeng
       guard let challenge = Self.store.challenge else { return }
       work.success(challenge)
    }.retainBy(retainer) }
-   
 }
 
 extension ChallengeDetailsWorks: ChallengeDetailsWorksProtocol {
@@ -103,8 +147,8 @@ extension ChallengeDetailsWorks: ChallengeDetailsWorksProtocol {
          }
    }.retainBy(retainer) }
 
-   var getChallengeWinners: Work<Int, [Contender]> { .init { [weak self] work in
-      guard let id = work.input else { return }
+   var getChallengeWinners: Work<Void, [ChallengeWinner]> { .init { [weak self] work in
+      guard let id = Self.store.challengeId else { return }
       self?.apiUseCase.GetChallengeWinners
          .doAsync(id)
          .onSuccess {
@@ -115,13 +159,12 @@ extension ChallengeDetailsWorks: ChallengeDetailsWorksProtocol {
          }
    }.retainBy(retainer) }
 
-
    var checkChallengeReport: Work<CheckReportRequestBody.State, Void> { .init { [weak self] work in
       guard
          let input = work.input,
          let id = Self.store.reportId
       else { return }
-      
+
       let request = CheckReportRequestBody(id: id, state: input)
       self?.apiUseCase.CheckChallengeReport
          .doAsync(request)
@@ -132,11 +175,11 @@ extension ChallengeDetailsWorks: ChallengeDetailsWorksProtocol {
             work.fail()
          }
    }.retainBy(retainer) }
-   
-   var getChallengeResult: Work<Int, [ChallengeResult]> { .init { [weak self] work in
-      guard let input = work.input else { return }
+
+   var getChallengeResult: Work<Void, [ChallengeResult]> { .init { [weak self] work in
+      guard let id = Self.store.challengeId else { return }
       self?.apiUseCase.GetChallengeResult
-         .doAsync(input)
+         .doAsync(id)
          .onSuccess {
             work.success($0)
          }
@@ -144,5 +187,4 @@ extension ChallengeDetailsWorks: ChallengeDetailsWorksProtocol {
             work.fail()
          }
    }.retainBy(retainer) }
-   
 }
