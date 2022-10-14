@@ -22,7 +22,8 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
          saveInputAndLoadChallenge: on(\.input),
          // getContenders: ,
          // getWinners: ,
-         ChallengeResult: challDetails.buttonsPanel.sendButton.on(\.didTap)
+         ChallengeResult: challDetails.buttonsPanel.sendButton.on(\.didTap),
+         filterButtonTapped: filterButtons.on(\.didTapButtons)
       )
    )
 
@@ -45,14 +46,16 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
          .hidden(true),
       SecondaryButtonDT<Design>()
          .title("Победители")
+         .font(Design.font.default),
+         //.hidden(true),
+      SecondaryButtonDT<Design>()
+         .title("Комментарии")
          .font(Design.font.default)
          .hidden(true),
       SecondaryButtonDT<Design>()
-         .title("Комментарии")
-         .font(Design.font.default),
-      SecondaryButtonDT<Design>()
          .title("Участники")
-         .font(Design.font.default))
+         .font(Design.font.default)
+         .hidden(true))
       .height(16 + 38)
       .backColor(Design.color.background)
 
@@ -162,7 +165,6 @@ extension ChallengeDetailsScene: StateMachine {
          .retainBy(retainer)
 
       case .enableMyResult(let value):
-         print("value \(value)")
          filterButtons.buttons[1].hidden(false)
 
       case .enableContenders:

@@ -14,6 +14,7 @@ struct ChallengeDetailsInputEvents {
 //   let checkReport: VoidWork<CheckReportRequestBody.State>
 //   let didSelectContenderIndex: VoidWork<Int>
    let ChallengeResult: VoidWorkVoid
+   let filterButtonTapped: VoidWork<Button6Event>
 }
 
 final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<ChallengeDetailsInputEvents,
@@ -27,11 +28,10 @@ final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<Challen
          .doVoidNext(works.getChallengeById)
          .onSuccess(setState) { .updateDetails($0) }
          // .doNext(works.saveInput)
-         .doMap { _ in }
-         .doNext(works.amIOwner)
+         .doVoidNext(works.amIOwner)
          .onSuccess(setState, .enableContenders)
-         .doMap { _ in }
-         .doNext(works.getChallengeId)
+         .onFail { print("you are not owner") }
+         .doRecover()
          .doNext(works.getChallengeResult)
          .onSuccess(setState) { .enableMyResult($0) }
 
@@ -65,6 +65,16 @@ final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<Challen
          .doVoidNext(works.getChallengeId)
          .onSuccessMixSaved(setState) {
             .presentSendResultScreen($1, $0)
+         }
+      
+      events.filterButtonTapped
+         .doNext(works.filterButtonWork)
+         .onSuccess {
+            print("success button")
+            print($0)
+         }
+         .onFail {
+            print("fail button works")
          }
    }
 }
