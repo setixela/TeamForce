@@ -15,6 +15,13 @@ struct ChallengeCreateEvents: InitProtocol {
    var finishWithError: Void?
 }
 
+enum ChallengeCreateSceneState {
+   case initial
+   case continueButtonPressed
+   case setReady(Bool)
+   case updateDateButton(Date)
+}
+
 final class ChallengeCreateScene<Asset: AssetProtocol>: BaseSceneModel<
    DefaultVCModel,
    ModalDoubleStackModel<Asset>,
@@ -30,6 +37,7 @@ final class ChallengeCreateScene<Asset: AssetProtocol>: BaseSceneModel<
          didTitleInputChanged: titleInput.on(\.didEditingChanged),
          didDescriptionInputChanged: descriptionInput.on(\.didEditingChanged),
          didPrizeFundChanged: prizeFundInput.models.main.on(\.didEditingChanged),
+         didDatePicked: datePicker.on(\.didDatePicked),
          didSendPressed: sendButton.on(\.didTap)
       )
    )
@@ -63,6 +71,7 @@ final class ChallengeCreateScene<Asset: AssetProtocol>: BaseSceneModel<
       .placeholder("Название")
    private lazy var descriptionInput = Design.model.transact.reasonInputTextView
       .placeholder("Описание")
+
    private lazy var finishDateButton = LabelIconX<Design>(Design.state.stack.buttonFrame)
       .set {
          $0.label
@@ -72,6 +81,13 @@ final class ChallengeCreateScene<Asset: AssetProtocol>: BaseSceneModel<
             .image(Design.icon.calendarLine)
             .imageTintColor(Design.color.iconSecondary)
       }
+
+   private lazy var datePicker = DatePickerModel()
+   private lazy var datePickWrapper = WrappedX(datePicker)
+      .borderWidth(1)
+      .borderColor(Design.color.iconSecondary)
+      .cornerRadius(Design.params.cornerRadius)
+      .hidden(true)
 
    private lazy var prizeFundInput = M<TextFieldModel>.R<Spacer>.R2<ImageViewModel>.Combo()
       .setAll { input, _, icon in
@@ -95,6 +111,7 @@ final class ChallengeCreateScene<Asset: AssetProtocol>: BaseSceneModel<
       .set(Design.state.textField.default)
       .placeholder("Укажите количество призовых мест")
       .onlyDigitsMode()
+      .hidden(true)
 
    private lazy var photosPanel = Design.model.transact.pickedImagesPanel.hidden(true)
    private lazy var addPhotoButton = Design.model.transact.addPhotoButton
@@ -125,7 +142,7 @@ final class ChallengeCreateScene<Asset: AssetProtocol>: BaseSceneModel<
                   titleInput,
                   descriptionInput,
                   finishDateButton,
-                  DatePickerModel(),
+                  datePickWrapper,
                   prizeFundInput,
                   prizePlacesInput,
                   photosPanel.lefted(),
@@ -148,15 +165,14 @@ final class ChallengeCreateScene<Asset: AssetProtocol>: BaseSceneModel<
          $0.vcModel?.dismiss(animated: true)
       }
 
+      datePicker.view.minimumDate = Date()
+      finishDateButton.on(\.didTap, self) {
+         $0.toggleDatePickerHidden()
+      }
+
       scenario.start()
       scenario2.start()
    }
-}
-
-enum ChallengeCreateSceneState {
-   case initial
-   case continueButtonPressed
-   case setReady(Bool)
 }
 
 extension ChallengeCreateScene {
@@ -166,14 +182,25 @@ extension ChallengeCreateScene {
          break
       case .continueButtonPressed:
          vcModel?.dismiss(animated: true)
-         break
       case .setReady(let isReady):
          if isReady {
             sendButton.set(Design.state.button.default)
+            prizePlacesInput.hiddenAnimated(false, duration: 0.25)
          } else {
             sendButton.set(Design.state.button.inactive)
          }
+      case .updateDateButton(let date):
+         let text = date.convertToString(.medium)
+         finishDateButton.label.text(text)
+         toggleDatePickerHidden()
       }
+   }
+}
+
+extension ChallengeCreateScene {
+   private func toggleDatePickerHidden() {
+      datePickWrapper.hiddenAnimated(!datePickWrapper.view.isHidden,
+                                     duration: 0.25)
    }
 }
 
@@ -196,8 +223,28 @@ extension ChallengeCreateScene: StateMachine2 {
    }
 }
 
+struct DatePickerEvents: InitProtocol {
+   var didDatePicked: Date?
+}
+
 class DatePickerModel: BaseViewModel<UIDatePicker> {
+   var events: EventsStore = .init()
+
    override func start() {
+      if #available(iOS 13.4, *) {
+         view.preferredDatePickerStyle = .wheels
+      } else {
+         // Fallback on earlier versions
+      }
       view.datePickerMode = .date
+      view.addTarget(self, action: #selector(didDatePicked), for: .valueChanged)
    }
+
+   @objc private func didDatePicked() {
+      send(\.didDatePicked, view.date)
+   }
+}
+
+extension DatePickerModel: Eventable {
+   typealias Events = DatePickerEvents
 }

@@ -49,11 +49,7 @@ final class LabelIconX<Design: DesignProtocol>: BaseViewModel<StackViewExtended>
          iconModel
       ]))
 
-      on(\.startTapRecognizer) { [weak self] in
-         guard let self = self else { return }
-
-         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.didTap)))
-      }
+      view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTap)))
    }
 
    @objc func didTap() {

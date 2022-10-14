@@ -74,8 +74,8 @@ final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<Challen
             guard let stateFunc = self?.setState else { return }
 
             switch $0 {
-            case is [Challenge]:
-               stateFunc(.enableContenders)
+            case let value as Challenge:
+               stateFunc(.presentChallenge(value))
             default:
                break
             }

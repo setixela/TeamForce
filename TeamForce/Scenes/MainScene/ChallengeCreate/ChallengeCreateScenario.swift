@@ -6,12 +6,13 @@
 //
 
 import ReactiveWorks
+import Foundation
 
 struct ChallengeCreateScenarioEvents {
    let didTitleInputChanged: VoidWork<String>
    let didDescriptionInputChanged: VoidWork<String>
-
    let didPrizeFundChanged: VoidWork<String>
+   let didDatePicked: VoidWork<Date>
 
    let didSendPressed: VoidWorkVoid
 }
@@ -37,5 +38,9 @@ final class ChallengeCreateScenario<Asset: AssetProtocol>: BaseScenario<Challeng
          .onFail {
             print("Error createChallenge")
          }
+
+      events.didDatePicked
+         .doNext(works.setFinishDate)
+         .onSuccess(setState) { .updateDateButton($0) }
    }
 }

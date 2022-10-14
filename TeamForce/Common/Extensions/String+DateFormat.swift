@@ -9,6 +9,7 @@ import Foundation
 
 enum DateFormat: String {
    case full = "d MMM y HH:mm"
+   case medium = "d MMM y"
    case digits = "dd.MM.yyyy"
 }
 
@@ -17,8 +18,16 @@ enum BackEndDateFormat: String, CaseIterable {
    case dateFormatFull = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
 }
 
-extension String {
+extension Date {
+   func convertToString(_ format: DateFormat = .full) -> String {
+      let formatter = DateFormatter()
+      formatter.dateFormat = format.rawValue
+      let result = formatter.string(from: self)
+      return result
+   }
+}
 
+extension String {
    func convertToDate(_ format: DateFormat = .full) -> String? {
       let inputFormatter = DateFormatter()
       return BackEndDateFormat.allCases.compactMap {

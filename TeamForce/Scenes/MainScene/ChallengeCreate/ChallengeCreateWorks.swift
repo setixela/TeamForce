@@ -14,6 +14,7 @@ protocol ChallengeCreateWorksProtocol {
    var setTitle: Work<String, Void> { get }
    var setDesription: Work<String, Void> { get }
    var setPrizeFund: Work<String, Void> { get }
+   var setFinishDate: Work<Date, Date> { get }
 
    var checkAllReady: Work<Void, Bool> { get }
 }
@@ -24,13 +25,14 @@ final class ChallengeCreateWorksStore: InitProtocol, ImageStorage {
    var title: String = ""
    var desription: String = ""
    var prizeFund: String = ""
+   var finishDate: Date = .distantFuture
 
-   func clear() {
-      title = ""
-      desription = ""
-      prizeFund = ""
-      images = []
-   }
+//   func clear() {
+//      title = ""
+//      desription = ""
+//      prizeFund = ""
+//      images = []
+//   }
 }
 
 final class ChallengeCreateWorks<Asset: AssetProtocol>: BaseSceneWorks<ChallengeCreateWorksStore, Asset> {
@@ -59,6 +61,13 @@ extension ChallengeCreateWorks: ChallengeCreateWorksProtocol {
       Self.store.prizeFund = work.unsafeInput
       work.success()
    }.retainBy(retainer) }
+
+   var setFinishDate: Work<Date, Date> { .init { work in
+      Self.store.finishDate = work.unsafeInput
+      work.success(work.unsafeInput)
+   }.retainBy(retainer) }
+
+   // MARK: - Create chall
 
    var createChallenge: Work<Void, Void> { .init { [weak self] work in
       let body = ChallengeRequestBody(name: Self.store.title,
