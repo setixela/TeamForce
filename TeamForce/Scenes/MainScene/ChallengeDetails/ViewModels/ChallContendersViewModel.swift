@@ -9,11 +9,12 @@ import ReactiveWorks
 import UIKit
 
 final class ChallContendersViewModel<Design: DSP>: StackModel, Designable {
+   lazy var presenter = ChallContendersPresenters<Design>()
    
    lazy var contendersTableModel = TableItemsModel<Design>()
       .backColor(Design.color.background)
       .set(.presenters([
-         ChallContendersPresenters<Design>().contendersCellPresenter,
+         presenter.contendersCellPresenter,
          SpacerPresenter.presenter
       ]))
 

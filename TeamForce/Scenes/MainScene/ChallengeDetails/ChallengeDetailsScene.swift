@@ -23,7 +23,9 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
          // getContenders: ,
          // getWinners: ,
          ChallengeResult: challDetails.buttonsPanel.sendButton.on(\.didTap),
-         filterButtonTapped: filterButtons.on(\.didTapButtons)
+         filterButtonTapped: filterButtons.on(\.didTapButtons),
+         acceptPressed: contendersBlock.presenter.on(\.acceptPressed),
+         rejectPressed: contendersBlock.presenter.on(\.rejectPressed)
       )
    )
 
