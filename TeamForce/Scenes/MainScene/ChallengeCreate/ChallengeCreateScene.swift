@@ -97,6 +97,7 @@ final class ChallengeCreateScene<Asset: AssetProtocol>: BaseSceneModel<
             .placeholderColor(Design.color.textFieldPlaceholder)
             .clearButtonMode(.never)
             .onlyDigitsMode()
+            .keyboardType(.numberPad)
          icon
             .size(.square(24))
             .image(Design.icon.strangeLogo)

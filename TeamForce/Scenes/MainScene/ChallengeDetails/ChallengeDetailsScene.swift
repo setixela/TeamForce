@@ -163,7 +163,7 @@ extension ChallengeDetailsScene: StateMachine {
             ])
       case .presentSendResultScreen(let challenge, let challengeId):
 
-         vcModel?.dismiss(animated: false)
+         vcModel?.dismiss(animated: true)
 
          Asset.router?.route(
             \.challengeSendResult,

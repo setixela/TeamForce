@@ -26,6 +26,7 @@ final class ImagePickerViewModel: BaseModel, Communicable {
       onEvent(\.presentOn) { [weak self] in
          guard let picker = self?.picker else { return }
 
+         $0?.view.endEditing(true)
          $0?.present(picker, animated: true)
       }
    }

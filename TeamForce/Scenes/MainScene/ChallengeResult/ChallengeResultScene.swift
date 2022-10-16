@@ -113,8 +113,7 @@ extension ChallengeResultScene: StateMachine2 {
          photosPanel.addButton(image: image)
          //
       case .presentImagePicker:
-         guard let baseVC = vcModel else { return }
-         imagePicker.sendEvent(\.presentOn, baseVC)
+         imagePicker.sendEvent(\.presentOn, vcModel)
          //
       case .setHideAddPhotoButton(let value):
          photosPanel.hiddenAnimated(!value, duration: 0.2)
