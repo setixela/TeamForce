@@ -8,45 +8,58 @@
 import ReactiveWorks
 
 final class HistoryCellModel<Design: DSP>:
-   Combos<SComboMRR<ImageViewModel, TitleSubtitleY<Design>, TitleIconY>>,
+   Main<ImageViewModel>.Right<TitleSubtitleY<Design>>.Right2<TitleIconY>.Combo,
    Designable
 {
+   var events: EventsStore = .init()
+
    required init() {
       super.init(isAutoreleaseView: true)
 
-      set_alignment(.center)
-      set_padding(.init(top: 23, left: 16, bottom: 23, right: 16))
       setAll { icon, nameStatus, summa in
          icon
-            .set_image(Design.icon.avatarPlaceholder)
-            .set_contentMode(.scaleAspectFill)
-            //.set_url("https://picsum.photos/200")
-            .set_cornerRadius(52.aspected/2)
-            .set_size(.square(52.aspected))
+            .image(Design.icon.avatarPlaceholder)
+            .contentMode(.scaleAspectFill)
+            .cornerRadius(48 / 2)
+            .size(.square(48))
          nameStatus
-            .set_padLeft(18)
-            .set_alignment(.leading)
+            .padLeft(18)
+            .alignment(.leading)
             .setAll { username, status in
                username
-                  .set_padBottom(10)
+                  .padBottom(10)
                   .set(Design.state.label.body1)
-                  .set_alignment(.left)
+                  .alignment(.left)
                status
-                  .set_textColor(Design.color.textInvert)
-                  .set_alignment(.left)
-                  .set_height(Design.params.cornerRadiusSmall * 2)
-                  .set_cornerRadius(Design.params.cornerRadiusSmall)
+                  .set(Design.state.label.caption)
+                  .textColor(Design.color.textInvert)
+                  .alignment(.left)
+                  .height(Design.params.cornerRadiusSmall * 2)
+                  .cornerRadius(Design.params.cornerRadiusSmall)
             }
          summa
-            .set_alignment(.trailing)
+            .alignment(.trailing)
             .setAll { sumText, cancelButton in
                sumText
                   .set(Design.state.label.body3)
-                  .set_alignment(.right)
+                  .alignment(.right)
                cancelButton
-                  .set_size(.square(1)) // TODO: - change to SVG
-                  .set_hidden(true) // TODO: - change to SVG
+                  .set(.tapGesturing)
+                  .size(.square(25))
+                  .hidden(false)
+                  .padding(.init(top: 7, left: 6, bottom: -7, right: -6))
+               cancelButton.view.on(\.didTap) { [self] in
+                  send(\.cancelButtonPressed)
+               }
             }
       }
+      alignment(.center)
+      padding(.init(top: 23, left: 16, bottom: 23, right: 16))
+   }
+}
+
+extension HistoryCellModel: Eventable {
+   struct Events: InitProtocol {
+      var cancelButtonPressed: Void?
    }
 }

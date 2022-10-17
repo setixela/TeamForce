@@ -11,47 +11,72 @@ import ReactiveWorks
 
 enum NavType {
    case push
-   case present
+   case presentInitial
    case pop
    case popToRoot
    case presentModally(UIModalPresentationStyle)
 }
 
-protocol RouterProtocol: InitProtocol {}
+final class MainRouter<Asset: AssetProtocol>: RouterProtocol, Assetable {
+   let nc: UINavigationController
 
-final class MainRouter<Scene: InitProtocol>: RouterProtocol, Communicable {
-   var events: Events = .init()
-
-   func start() {}
-
-   struct Events: InitProtocol {
-      var push: Event<UIViewController>?
-      var pop: Event<Void>?
-      var popToRoot: Event<Void>?
-      var present: Event<UIViewController>?
-      var presentModally: Event<(UIViewController, UIModalPresentationStyle)>?
+   init(nc: UINavigationController) {
+      self.nc = nc
    }
 
-   func route(_ keypath: KeyPath<Scene, SceneModelProtocol>, navType: NavType, payload: Any? = nil) {
+   func start() {
+      if Config.isDebug {
+         route(\.login, navType: .push, payload: ())
+      } else {
+         if UserDefaults.standard.isLoggedIn() {
+            route(\.main, navType: .push, payload: ())
+         } else {
+            route(\.digitalThanks, navType: .push, payload: ())
+         }
+      }
+   }
+
+   @discardableResult
+   func route(_ keypath: KeyPath<Scene, SceneModelProtocol>,
+              navType: NavType,
+              payload: Any? = nil) -> Work<Bool, Bool> {
+
+      let work = Work<Bool, Bool> { work in
+         work.success(work.unsafeInput)
+      }
+
       switch navType {
       case .push:
-         sendEvent(\.push, payload: makeVC())
+         nc.pushViewController(makeVC(work), animated: true)
       case .pop:
-         sendEvent(\.pop)
+         nc.popViewController(animated: true)
       case .popToRoot:
-         sendEvent(\.popToRoot)
-      case .present:
-         sendEvent(\.present, payload: makeVC())
+         nc.popToRootViewController(animated: true)
+      case .presentInitial:
+         nc.viewControllers = [makeVC(work)]
       case .presentModally(let value):
-         sendEvent(\.presentModally, payload: (makeVC(), value))
+         let vc = makeVC(work)
+         vc.modalPresentationStyle = value
+         nc.present(vc, animated: true)
       }
 
       // local func
-      func makeVC() -> UIViewController {
+      func makeVC(_ work: Work<Bool, Bool>) -> UIViewController {
          let sceneModel = Scene()[keyPath: keypath]
          sceneModel.setInput(payload)
          let vc = sceneModel.makeVC()
+
+         sceneModel.finisher = work
+
          return vc
       }
+
+      return work
    }
+}
+
+protocol Alert {}
+
+protocol AlertPresenter {
+   func presentAlert(_ alert: Alert, on model: UIViewModel)
 }

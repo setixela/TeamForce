@@ -10,8 +10,10 @@ import UIKit
 
 protocol ButtonElements: InitProtocol, DesignElementable {
    var `default`: DesignElement { get }
+   var plain: DesignElement { get }
    var transparent: DesignElement { get }
    var inactive: DesignElement { get }
+   var secondary: DesignElement { get }
 
    var tabBar: DesignElement { get }
    var brandTransparent: DesignElement { get }
@@ -25,6 +27,26 @@ struct ButtonStateBuilder<Design: DesignProtocol>: ButtonStateProtocol {
    var `default`: [ButtonState] { [
       .backColor(Design.color.activeButtonBack),
       .textColor(Design.color.textInvert),
+      .tint(Design.color.iconInvert),
+      .cornerRadius(Design.params.cornerRadius),
+      .height(Design.params.buttonHeight),
+      .enabled(true),
+   ] }
+
+
+   var plain: [ButtonState] { [
+      .backColor(Design.color.background),
+      .textColor(Design.color.text),
+      .tint(Design.color.text),
+      .cornerRadius(Design.params.cornerRadius),
+      .height(Design.params.buttonHeight),
+      .enabled(true),
+   ] }
+
+   var secondary: [ButtonState] { [
+      .backColor(Design.color.backgroundInfoSecondary),
+      .textColor(Design.color.textInvert),
+      .tint(Design.color.iconInvert),
       .cornerRadius(Design.params.cornerRadius),
       .height(Design.params.buttonHeight),
       .enabled(true),
@@ -43,6 +65,7 @@ struct ButtonStateBuilder<Design: DesignProtocol>: ButtonStateProtocol {
       .cornerRadius(Design.params.cornerRadius),
       .height(Design.params.buttonHeight),
       .textColor(Design.color.textInvert),
+      .tint(Design.color.iconInvert),
       .enabled(false),
    ] }
 
@@ -75,8 +98,16 @@ protocol ButtonBuilderProtocol: ButtonElements, Designable where DesignElement =
 // MARK: - Buttons
 
 final class ButtonBuilder<Design: DesignProtocol>: ButtonBuilderProtocol {
+   var plain: ButtonModel {
+      .init(Design.state.button.plain)
+   }
+
    var `default`: ButtonModel {
       .init(Design.state.button.default)
+   }
+
+   var secondary: ButtonModel {
+      .init(Design.state.button.secondary)
    }
 
    var transparent: ButtonModel {

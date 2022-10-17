@@ -6,7 +6,6 @@
 //
 
 import ReactiveWorks
-import UIKit
 
 /*
 
@@ -32,13 +31,35 @@ protocol DesignProtocol: DesignRoot where
    Text: TextsProtocol,
    Color: ColorsProtocol,
    Icon: IconElements,
-//   Font: FontProtocol,
+   Font: FontProtocol,
    Label: LabelProtocol,
    Button: ButtonBuilderProtocol,
 
    State: StateProtocol,
 
-   Params: ParamsProtocol
-{}
+   Params: ParamsProtocol,
 
+   Model: ModelBuilderProtocol
+{
+   static var text: Text { get }
+   static var model: Model { get }
+}
 
+extension DesignProtocol {
+   static var text: Text { .init() }
+   static var model: Model { .init() }
+}
+
+protocol ModelBuilderProtocol: InitProtocol, Designable {
+   associatedtype Transact: TransactModelBuilder
+   associatedtype Profile: ProfileModelBuilder
+
+   associatedtype Common: CommonModelBuilder
+}
+
+extension ModelBuilderProtocol {
+   var transact: Transact { .init() }
+   var profile: Profile { .init() }
+
+   var common: Common { .init() }
+}

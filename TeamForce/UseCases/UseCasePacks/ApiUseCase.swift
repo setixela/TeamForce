@@ -185,7 +185,179 @@ final class ApiUseCase<Asset: AssetProtocol>: InitProtocol, Assetable, WorkBaske
       )
       .retainedWork(retainer)
    }
+   
+   var createContact: CreateContactUseCase.WRK {
+      CreateContactUseCase(
+         safeStringStorage: safeStringStorage,
+         createContactApiWorker: createContactApiWorker
+      )
+      .retainedWork(retainer)
+   }
+   
+   var updateProfile: UpdateProfileUseCase.WRK {
+      UpdateProfileUseCase(
+         safeStringStorage: safeStringStorage,
+         updateProfileApiWorker: updateProfileApiWorker
+      )
+      .retainedWork(retainer)
+   }
+   
+   var createFewContacts: CreateFewContactsUseCase.WRK {
+      CreateFewContactsUseCase(
+         safeStringStorage: safeStringStorage,
+         createFewContactsApiWorker: createFewContactsApiWorker
+      )
+      .retainedWork(retainer)
+   }
+   
+   var getTags: GetTagsUseCase.WRK {
+      GetTagsUseCase(
+         getTagsApiWorker: getTagsApiWorker
+      )
+      .retainedWork(retainer)
+   }
+   
+   var getTagById: GetTagByIdUseCase.WRK {
+      GetTagByIdUseCase(
+         getTagByIdApiWorker: getTagByIdApiWorker
+      )
+      .retainedWork(retainer)
+   }
+   
+   var getProfileById: GetProfileByIdUseCase.WRK {
+      GetProfileByIdUseCase(
+         safeStringStorage: safeStringStorage,
+         getProfileByIdApiWorker: getProfileByIdApiWorker
+      )
+      .retainedWork(retainer)
+   }
+   
+   var pressLike: PressLikeUseCase.WRK {
+      PressLikeUseCase(
+         safeStringStorage: safeStringStorage,
+         pressLikeApiWorker: pressLikeApiWorker
+      )
+      .retainedWork(retainer)
+   }
+   
+   var getTransactStatistics: GetTransactionStatisticsUseCase.WRK {
+      GetTransactionStatisticsUseCase(
+         safeStringStorage: safeStringStorage,
+         getTransactionStatisticsApiWorker: getTransactionStatisticsApiWorker
+      )
+      .retainedWork(retainer)
+   }
+   
+   var getComments: GetCommentsUseCase.WRK {
+      GetCommentsUseCase(
+         safeStringStorage: safeStringStorage,
+         getCommentsApiWorker: getCommentsApiWorker
+      )
+      .retainedWork(retainer)
+   }
+   
+   var createComment: CreateCommentUseCase.WRK {
+      CreateCommentUseCase(
+         safeStringStorage: safeStringStorage,
+         createCommentApiWorker: createCommentApiWorker
+      )
+      .retainedWork(retainer)
+   }
+   
+   var updateComment: UpdateCommentUseCase.WRK {
+      UpdateCommentUseCase(
+         safeStringStorage: safeStringStorage,
+         updateCommentApiWorker: updateCommentApiWorker
+      )
+      .retainedWork(retainer)
+   }
+   
+   var deleteComment: DeleteCommentUseCase.WRK {
+      DeleteCommentUseCase(
+         safeStringStorage: safeStringStorage,
+         deleteCommentApiWorker: deleteCommentApiWorker
+      )
+      .retainedWork(retainer)
+   }
+   
+   var getLikesByTransaction: GetLikesByTransactionUseCase.WRK {
+      GetLikesByTransactionUseCase(
+         safeStringStorage: safeStringStorage,
+         getLikesByTransactionApiWorker: getLikesByTransactionApiWorker
+      )
+      .retainedWork(retainer)
+   }
+   
+   var getChanllenges: GetChallengesUseCase.WRK {
+      GetChallengesUseCase(
+         safeStringStorage: safeStringStorage,
+         getChallengesApiWorker: getChallengesApiWorker
+      )
+      .retainedWork(retainer)
+   }
+   
+   var GetChallengeById: GetChallengeByIdUseCase.WRK {
+      GetChallengeByIdUseCase(
+         safeStringStorage: safeStringStorage,
+         getChallengeByIdApiWorker: getChallengeByIdApiWorker
+      )
+      .retainedWork(retainer)
+   }
+   
+   var GetChallengeContenders: GetChallengeContendersUseCase.WRK {
+      GetChallengeContendersUseCase(
+         safeStringStorage: safeStringStorage,
+         getChallengeContendersApiWorker: getChallengeContendersApiWorker
+      )
+      .retainedWork(retainer)
+   }
 
+   var createChallenge: CreateChallengeUseCase.WRK {
+      CreateChallengeUseCase(
+         safeStringStorage: safeStringStorage,
+         createChallengeApiWorker: createChallengeApiWorker
+      )
+      .retainedWork(retainer)
+   }
+   
+   var GetChallengeWinners: GetChallengeWinnersUseCase.WRK {
+      GetChallengeWinnersUseCase(
+         safeStringStorage: safeStringStorage,
+         getChallengeWinnersApiWorker: getChallengeWinnersApiWorker
+      )
+      .retainedWork(retainer)
+   }
+   
+   var CreateChallengeReport: CreateChallengeReportUseCase.WRK {
+      CreateChallengeReportUseCase(
+         safeStringStorage: safeStringStorage,
+         createChallengeReportApiWorker: createChallengeReportApiWorker
+      )
+      .retainedWork(retainer)
+   }
+   
+   var CheckChallengeReport: CheckChallengeReportUseCase.WRK {
+      CheckChallengeReportUseCase(
+         safeStringStorage: safeStringStorage,
+         checkChallengeReportApiWorker: checkChallengeReportApiWorker
+      )
+      .retainedWork(retainer)
+   }
+   
+   var GetSendCoinSettings: GetSendCoinSettingsUseCase.WRK {
+      GetSendCoinSettingsUseCase(
+         getSendCoinSettingsApiWorker: getSendCoinSettingsApiWorker
+      )
+      .retainedWork(retainer)
+   }
+   
+   var GetChallengeResult: GetChallengeResultUseCase.WRK {
+      GetChallengeResultUseCase(
+         safeStringStorage: safeStringStorage,
+         getChallengeResultApiWorker: getChallengeResultApiWorker
+      )
+      .retainedWork(retainer)
+   }
    // MARK: - Dependencies
 
    private var userProfileApiModel: ProfileApiWorker { .init(apiEngine: Asset.service.apiEngine) }
@@ -209,4 +381,42 @@ final class ApiUseCase<Asset: AssetProtocol>: InitProtocol, Assetable, WorkBaske
    private var updateProfileImageApiWorker: UpdateProfileImageApiWorker { .init(apiEngine: Asset.service.apiEngine) }
    private var updateContactApiWorker: UpdateContactApiWorker { .init(apiEngine:
        Asset.service.apiEngine) }
+   private var createContactApiWorker: CreateContactApiWorker { .init(apiEngine:
+       Asset.service.apiEngine) }
+   private var updateProfileApiWorker: UpdateProfileApiWorker { .init(apiEngine:
+       Asset.service.apiEngine) }
+   private var createFewContactsApiWorker: CreateFewContactsApiWorker { .init(apiEngine: Asset.service.apiEngine) }
+   private var getTagsApiWorker: GetTagsApiWorker { .init(apiEngine:
+       Asset.service.apiEngine) }
+   private var getTagByIdApiWorker: GetTagByIdApiWorker { .init(apiEngine:
+       Asset.service.apiEngine) }
+   private var getProfileByIdApiWorker: GetProfileByIdApiWorker { .init(apiEngine:
+       Asset.service.apiEngine) }
+   private var pressLikeApiWorker: PressLikeApiWorker { .init(apiEngine:
+       Asset.service.apiEngine) }
+   private var getTransactionStatisticsApiWorker: GetTransactionStatisticsApiWorker { .init(apiEngine: Asset.service.apiEngine) }
+   private var getCommentsApiWorker: GetCommentsApiWorker { .init(apiEngine:
+       Asset.service.apiEngine) }
+   private var createCommentApiWorker: CreateCommentApiWorker { .init(apiEngine:
+       Asset.service.apiEngine) }
+   private var updateCommentApiWorker: UpdateCommentApiWorker { .init(apiEngine:
+       Asset.service.apiEngine) }
+   private var deleteCommentApiWorker: DeleteCommentApiWorker { .init(apiEngine:
+       Asset.service.apiEngine) }
+   private var getLikesByTransactionApiWorker: GetLikesByTransactionApiWorker { .init(apiEngine: Asset.service.apiEngine) }
+   private var getChallengesApiWorker: GetChallengesApiWorker { .init(apiEngine:
+       Asset.service.apiEngine) }
+   private var getChallengeByIdApiWorker: GetChallengeByIdApiWorker{ .init(apiEngine:
+       Asset.service.apiEngine) }
+   private var getChallengeContendersApiWorker: GetChallengeContendersApiWorker { .init(apiEngine: Asset.service.apiEngine) }
+   private var createChallengeApiWorker: CreateChallengeApiWorker { .init(apiEngine:
+       Asset.service.apiEngine) }
+   private var getChallengeWinnersApiWorker: GetChallengeWinnersApiWorker { .init(apiEngine: Asset.service.apiEngine) }
+   private var createChallengeReportApiWorker: CreateChallengeReportApiWorker { .init(apiEngine: Asset.service.apiEngine) }
+   private var checkChallengeReportApiWorker: CheckChallengeReportApiWorker {
+       .init(apiEngine: Asset.service.apiEngine) }
+   private var getSendCoinSettingsApiWorker: GetSendCoinSettingsApiWorker {
+       .init(apiEngine: Asset.service.apiEngine) }
+   private var getChallengeResultApiWorker: GetChallengeResultApiWorker {
+       .init(apiEngine: Asset.service.apiEngine) }
 }

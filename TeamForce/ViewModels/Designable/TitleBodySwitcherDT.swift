@@ -11,12 +11,12 @@ final class TitleBodySwitcherDT<Design: DSP>: TitleBodySwitcherY {
    override func start() {
       super.start()
 
-      set_padding(Design.params.contentPadding)
+      padding(Design.params.contentPadding)
 
       setAll { title, _ in
          title
             .set(Design.state.label.caption)
-            .set_textColor(Design.color.textSecondary)
+            .textColor(Design.color.textSecondary)
 
       }
    }

@@ -15,7 +15,7 @@ struct LoadCsrfTokenUseCase: UseCaseProtocol {
          safeStringStorage
             .doAsync("csrftoken")
             .onFail {
-               work.fail(())
+               work.fail()
             }
             .onSuccess {
                work.success(result: $0)

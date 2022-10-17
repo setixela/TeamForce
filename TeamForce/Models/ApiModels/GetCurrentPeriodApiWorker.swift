@@ -20,14 +20,14 @@ final class GetCurrentPeriodApiWorker: BaseApiWorker<String, Period> {
                     let data = result.data,
                     let period: Period = decoder.parse(data)
                 else {
-                    work.fail(())
+                    work.fail()
                     return
                 }
 
                 work.success(result: period)
             }
             .catch { _ in
-                work.fail(())
+                work.fail()
             }
     }
 }

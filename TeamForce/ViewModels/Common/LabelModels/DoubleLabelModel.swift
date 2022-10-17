@@ -20,7 +20,7 @@ final class DoubleLabelModel<Design: DesignProtocol>: BaseViewModel<StackViewExt
          .set(.distribution(.fill))
          .set(.alignment(.fill))
          .set(.padding(.init(top: 12, left: 16, bottom: 12, right: 16)))
-         .set(.models([
+         .set(.arrangedModels([
             labelLeft,
             Spacer(),
             labelRight

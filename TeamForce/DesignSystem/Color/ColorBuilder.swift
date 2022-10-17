@@ -86,6 +86,8 @@ protocol ColorsProtocol: InitProtocol {
     // Images
     var iconContrast: UIColor { get }
     var iconSecondary: UIColor { get }
+    var iconMidpoint: UIColor { get }
+    var iconMidpointSecondary: UIColor { get }
     var iconInvert: UIColor { get }
     var iconBrand: UIColor { get }
     var iconError: UIColor { get }
@@ -146,6 +148,8 @@ struct ColorBuilder: ColorsProtocol {
     // icons
     var iconContrast: UIColor { Token.contrast.color }
     var iconSecondary: UIColor { Token.contrastSecondary.color }
+    var iconMidpoint: UIColor { Token.midpoint.color }
+    var iconMidpointSecondary: UIColor { Token.midpointSecondary.color }
     var iconInvert: UIColor { Token.negative.color }
     var iconBrand: UIColor { Token.brand.color }
     var iconError: UIColor { Token.error.color }

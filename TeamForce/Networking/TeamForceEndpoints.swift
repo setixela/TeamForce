@@ -10,8 +10,8 @@ import Foundation
 // Api Endpoints
 enum TeamForceEndpoints {
 
-   static var urlBase: String { "http://176.99.6.251:8889" }
-   static var urlMediaBase: String { "http://176.99.6.251:8889/media/" }
+   static var urlBase: String { Config.urlBase }
+   static var urlMediaBase: String { urlBase + "/media/" }
 
    //
     struct AuthEndpoint: EndpointProtocol {
@@ -170,7 +170,7 @@ enum TeamForceEndpoints {
       
       var headers: [String : String]
       
-      var body: [String : Any] //= ["status": "D"]
+      var body: [String : Any]
       
       init(id: String, headers: [String : String], body: [String : Any]) {
          endPoint = endPoint + id + "/"
@@ -214,21 +214,18 @@ enum TeamForceEndpoints {
       
       var endPoint: String = urlBase + "/update-profile-image/"
       
-      var body: [String : Any]
-      
       var headers: [String : String]
       
-      init(id: String, headers: [String : String], body: [String : Any]) {
+      init(id: String, headers: [String : String]) {
          endPoint = endPoint + id + "/"
          self.headers = headers
-         self.body = body
       }
    }
    
    struct UpdateProfile: EndpointProtocol {
       let method = HTTPMethod.put
       
-      var endPoint: String = urlBase + "/update-profile-by-user" 
+      var endPoint: String = urlBase + "/update-profile-by-user/"
       
       var body: [String : Any]
       
@@ -265,5 +262,232 @@ enum TeamForceEndpoints {
       let body: [String : Any]
       
       let headers: [String : String]
+   }
+   
+   struct CreateFewContacts: EndpointProtocol {
+      let method = HTTPMethod.post
+      
+      var endPoint: String { urlBase + "/create-few-contacts/" }
+      
+      let jsonData: Data?
+      
+      let headers: [String : String]
+   }
+   
+   struct Tags: EndpointProtocol {
+      let method = HTTPMethod.get
+      
+      var endPoint: String { urlBase + "/tags/" }
+      
+      let headers: [String : String]
+   }
+   
+   struct TagById: EndpointProtocol {
+      let method = HTTPMethod.get
+      
+      var endPoint: String = urlBase + "/tags/"
+      
+      var headers: [String : String]
+      
+      init(id: String, headers: [String : String]) {
+         endPoint = endPoint + id + "/"
+         self.headers = headers
+      }
+   }
+   
+   struct ProfileById: EndpointProtocol {
+      let method = HTTPMethod.get
+      
+      var endPoint: String = urlBase + "/profile/"
+      
+      var headers: [String : String]
+      
+      init(id: String, headers: [String : String]) {
+         endPoint = endPoint + id + "/"
+         self.headers = headers
+      }
+   }
+   
+   struct PressLike: EndpointProtocol {
+      let method = HTTPMethod.post
+      
+      var endPoint: String { urlBase + "/press-like/" }
+      
+      var headers: [String : String]
+      
+      var body: [String : Any]
+   }
+   
+   struct GetTransactionStatistics: EndpointProtocol {
+      let method = HTTPMethod.post
+      
+      var endPoint: String { urlBase + "/get-transaction-statistics/" }
+      
+      var headers: [String : String]
+      
+      var body: [String : Any]
+   }
+   
+   struct GetComments: EndpointProtocol {
+      let method = HTTPMethod.post
+      
+      var endPoint: String { urlBase + "/get-comments/" }
+      
+      var headers: [String : String]
+      
+      let jsonData: Data?
+   }
+   
+   struct CreateComment: EndpointProtocol {
+      let method = HTTPMethod.post
+      
+      var endPoint: String { urlBase + "/create-comment/" }
+      
+      var headers: [String : String]
+      
+      var body: [String : Any]
+   }
+   
+   struct UpdateComment: EndpointProtocol {
+      let method = HTTPMethod.put
+      
+      var endPoint: String = urlBase + "/update-comment/"
+      
+      var body: [String : Any]
+      
+      var headers: [String : String]
+      
+      init(id: String, headers: [String : String], body: [String : Any]) {
+         endPoint = endPoint + id + "/"
+         self.headers = headers
+         self.body = body
+      }
+   }
+   
+   struct DeleteComment: EndpointProtocol {
+      let method = HTTPMethod.delete
+      
+      var endPoint: String = urlBase + "/delete-comment/"
+      
+      var headers: [String : String]
+      
+      init(id: String, headers: [String : String]) {
+         self.endPoint = endPoint + id + "/"
+         self.headers = headers
+      }
+   }
+   
+   struct GetLikesByTransaction: EndpointProtocol {
+      let method = HTTPMethod.post
+
+      var endPoint: String { urlBase + "/get-likes-by-transaction/" }
+
+      var headers: [String: String]
+
+      let jsonData: Data?
+   }
+   
+   struct GetChallenges: EndpointProtocol {
+      let method = HTTPMethod.get
+      
+      var endPoint: String { urlBase + "/challenges/" }
+      
+      var headers: [String : String]
+   }
+   
+   struct GetChallengeById: EndpointProtocol {
+      let method = HTTPMethod.get
+      
+      var endPoint: String = urlBase + "/challenges/"
+      
+      var headers: [String : String]
+      
+      init(id: String, headers: [String : String]) {
+         endPoint = endPoint + id + "/"
+         self.headers = headers
+      }
+   }
+   
+   struct GetChallengeContenders: EndpointProtocol {
+      let method = HTTPMethod.get
+      
+      var endPoint: String = urlBase + "/challenge-contenders/"
+      
+      let headers: [String : String]
+      
+      init(id: String, headers: [String : String]) {
+         endPoint = endPoint + id + "/"
+         self.headers = headers
+      }
+   }
+   
+   struct CreateChallenge: EndpointProtocol {
+      let method = HTTPMethod.post
+      
+      var endPoint: String { urlBase + "/create-challenge/" }
+      
+      let headers: [String : String]
+      
+      var body: [String : Any]
+   }
+   
+   struct ChallengeWinners: EndpointProtocol {
+      let method = HTTPMethod.get
+      
+      var endPoint: String = urlBase + "/challenge-winners/"
+      
+      let headers: [String : String]
+      
+      init(id: String, headers: [String : String]) {
+         endPoint = endPoint + id + "/"
+         self.headers = headers
+      }
+   }
+   
+   struct CreateChallengeReport: EndpointProtocol {
+      let method = HTTPMethod.post
+      
+      var endPoint: String { urlBase + "/create-challenge-report/" }
+      
+      let headers: [String : String]
+      
+      let body: [String : Any]
+   }
+   
+   struct CheckChallengeReport: EndpointProtocol {
+      let method = HTTPMethod.put
+      
+      var endPoint: String = urlBase + "/check-challenge-report/"
+      
+      let headers: [String : String]
+      
+      let jsonData: Data?
+      
+      init(id: String, headers: [String : String], jsonData: Data?) {
+         endPoint = endPoint + id + "/"
+         self.headers = headers
+         self.jsonData = jsonData
+      }
+   }
+   
+   struct SendCoinSettings: EndpointProtocol {
+      let method = HTTPMethod.get
+      
+      var endPoint: String { urlBase + "/send-coins-settings/" }
+      
+      let headers: [String : String]
+   }
+   
+   struct ChallengeResult: EndpointProtocol {
+      let method = HTTPMethod.get
+      
+      var endPoint: String = urlBase + "/challenge-result/"
+      
+      let headers: [String : String]
+      
+      init(id: String, headers: [String : String]) {
+         self.endPoint = endPoint + id + "/"
+         self.headers = headers
+      }
    }
 }

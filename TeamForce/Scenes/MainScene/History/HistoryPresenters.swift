@@ -8,68 +8,79 @@
 import ReactiveWorks
 import UIKit
 
-struct HistoryPresenters<Design: DesignProtocol>: Designable {
-   static var transactToHistoryCell: Presenter<TransactionItem, HistoryCellModel<Design>> {
-      Presenter { work in
+class HistoryPresenters<Design: DesignProtocol>: Designable {
+   var events: EventsStore = .init()
+
+   private lazy var retainer = Retainer()
+
+   var transactToHistoryCell: Presenter<TransactionItem, HistoryCellModel<Design>> {
+      Presenter { [weak self] work in
+         guard let self = self else { return }
+         
          let item = work.unsafeInput
-         //print(work.input)
+         // print(work.input)
          var userNameText: String
          var userIconText: String = ""
          var statusHidden: Bool
          var statusText: String
          var statusColor: UIColor
          var sumText: String
-         //var image = ImageViewModel()
-         
+         var textColor: UIColor = Design.color.text
+         // var image = ImageViewModel()
+
          if let nameFirstLetter = item.recipient.recipientFirstName?.first,
-            let surnameFirstLetter = item.recipient.recipientSurname?.first {
+            let surnameFirstLetter = item.recipient.recipientSurname?.first
+         {
             userIconText = String(nameFirstLetter) + String(surnameFirstLetter)
          }
 
+         sumText = item.amount
          switch item.state {
          case .recieved:
             userNameText = item.sender.senderTgName.string
             statusText = ""
-            sumText = "+" + item.amount
+            textColor = Design.color.success
+            //sumText = "+" + item.amount
             statusColor = .clear
             statusHidden = true
             if let nameFirstLetter = item.sender.senderFirstName?.first,
-               let surnameFirstLetter = item.sender.senderSurname?.first {
+               let surnameFirstLetter = item.sender.senderSurname?.first
+            {
                userIconText = String(nameFirstLetter) + String(surnameFirstLetter)
             }
 //            image = Design.icon.recieveCoinIcon
          case .waiting:
             userNameText = item.recipient.recipientTgName.string
             statusText = "   Выполняется   "
-            sumText = "-" + item.amount
+            //sumText = "-" + item.amount
             statusColor = Design.color.iconBrand
             statusHidden = false
 //            image = Design.icon.sendCoinIcon
          case .approved:
             userNameText = item.recipient.recipientTgName.string
             statusText = "   Выполнен   "
-            sumText = "-" + item.amount
+            //sumText = "-" + item.amount
             statusColor = Design.color.success
             statusHidden = false
 //            image = Design.icon.sendCoinIcon
          case .cancelled:
             userNameText = item.recipient.recipientTgName.string
             statusText = "   Отменен   "
-            sumText = "-" + item.amount
+            //sumText = "-" + item.amount
             statusColor = Design.color.textSecondary
             statusHidden = false
 //            image = Design.icon.sendCoinIcon
          case .declined:
             userNameText = item.recipient.recipientTgName.string
             statusText = "   Отклонен   "
-            sumText = "-" + item.amount
+            //sumText = "-" + item.amount
             statusColor = Design.color.textError
             statusHidden = false
 //            image = Design.icon.sendCoinIcon
          default:
             userNameText = item.recipient.recipientTgName.string
             statusText = "   Выполнен   "
-            sumText = "-" + item.amount
+            //sumText = "-" + item.amount
             statusColor = Design.color.success
             statusHidden = false
 //            image = Design.icon.sendCoinIcon
@@ -79,53 +90,63 @@ struct HistoryPresenters<Design: DesignProtocol>: Designable {
             .setAll { icon, userAndStatus, sumLabelAndCancelButton in
                if !item.isAnonymous || (item.isAnonymous && item.state != .recieved) {
                   if let urlSuffix = item.photo {
-                     icon.set_url(TeamForceEndpoints.urlBase + urlSuffix)
+                     icon.url(TeamForceEndpoints.urlBase + urlSuffix)
                   } else {
                      let image = userIconText.drawImage(backColor: Design.color.backgroundBrand)
                      icon
-                        .set_backColor(Design.color.backgroundBrand)
-                        .set_image(image)
+                        .backColor(Design.color.backgroundBrand)
+                        .image(image)
                   }
                }
 
                userAndStatus
-                  .set_padLeft(18)
-                  .set_alignment(.leading)
                   .setAll { userLabel, statusLabel in
                      userLabel
-                        .set_text(userNameText)
+                        .text(userNameText)
 
                      guard statusHidden == false else {
-                        statusLabel.set_hidden(true)
+                        statusLabel.hidden(true)
                         return
                      }
 
                      statusLabel
-                        .set_text(statusText)
-                        .set_backColor(statusColor)
-                        .set_hidden(false)
+                        .text(statusText)
+                        .backColor(statusColor)
+                        .hidden(false)
                   }
 
                sumLabelAndCancelButton
-                  .set_alignment(.trailing)
                   .setAll { sumLabel, cancelButton in
                      sumLabel
-                        .set_text(sumText)
+                        .text(sumText)
+                        .textColor(textColor)
 
-                     guard item.state != .recieved else {
-                        cancelButton.set_hidden(true)
+                     guard item.state == .waiting else {
+                        cancelButton.hidden(true)
                         return
                      }
 
                      cancelButton
-                        .set_image(Design.icon.cross)
-                        .set_imageTintColor(Design.color.textError)
-                        .set_hidden(false)
+                        .image(Design.icon.cross)
+                        .imageTintColor(Design.color.textError)
+                        .hidden(false)
                   }
+               
             }
 
+         cell.on(\.cancelButtonPressed, self) {
+            $0.send(\.cancelButtonPressed, item.id ?? 0)
+         }
+
+         self.retainer.retain(work)
          work.success(result: cell)
       }
+   }
+}
+
+extension HistoryPresenters: Eventable {
+   struct Events: InitProtocol {
+      var cancelButtonPressed: Int?
    }
 }
 
@@ -137,7 +158,7 @@ struct TransactionItem {
       case ingrace
       case ready
       case cancelled
-      
+
 //      case sendSuccess
 //      case sendDeclined
 //      case sendInProgress
@@ -153,4 +174,5 @@ struct TransactionItem {
    let createdAt: String
    let photo: String?
    let isAnonymous: Bool
+   let id: Int?
 }

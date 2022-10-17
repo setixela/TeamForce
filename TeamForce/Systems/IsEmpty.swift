@@ -8,6 +8,32 @@
 import Foundation
 import ReactiveWorks
 
+final class IsEmptyToBool<T: Collection>: WorkerProtocol {
+   typealias In = T
+   typealias Out = Bool
+
+   func doAsync(work: Wrk) {
+      if work.unsafeInput.isEmpty {
+         work.success(result: true)
+      } else {
+         work.success(result: false)
+      }
+   }
+}
+
+final class IsNotEmptyToBool<T: Collection>: WorkerProtocol {
+   typealias In = T
+   typealias Out = Bool
+
+   func doAsync(work: Wrk) {
+      if !work.unsafeInput.isEmpty {
+         work.success(result: true)
+      } else {
+         work.success(result: false)
+      }
+   }
+}
+
 final class IsEmpty<T: Collection>: UseCaseProtocol {
    typealias In = T
    typealias Out = T
@@ -37,4 +63,3 @@ final class IsNotEmpty<T: Collection>: UseCaseProtocol {
       }
    }
 }
-

@@ -57,7 +57,7 @@ class WorksTests2: XCTestCase {
          .doAsync("Hello")
          .doSaveResult()
          .doInput("Again")
-         .doNext(work: stringWork2)
+         .doNext(stringWork2)
          .onSuccess {
             result = .inputagain
             resultString = $0
@@ -100,8 +100,8 @@ class WorksTests2: XCTestCase {
             result = .mapped
             return ($0, true)
          }
-         .doNext(work: works.updateAmount)
-         .doNext(work: works.isCorrect)
+         .doNext(works.updateAmount)
+         .doNext(works.isCorrectBothInputs)
          .onSuccess {
             log("success")
          }

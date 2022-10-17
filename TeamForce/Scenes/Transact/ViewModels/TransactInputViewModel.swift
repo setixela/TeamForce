@@ -20,30 +20,30 @@ final class TransactInputViewModel<Design: DesignProtocol>: BaseViewModel<StackV
    typealias State = StackState
 
    lazy var textField = TextFieldModel()
-      .set_keyboardType(.numberPad)
-      .set_onlyDigitsMode()
+      .keyboardType(.numberPad)
+      .onlyDigitsMode()
       .set(.clearButtonMode(.never))
       .set(Design.state.label.headline2)
       .set(.height(72))
       .set(.placeholder("0"))
-      .set_placeholderColor(Design.color.textSecondary)
+      .placeholderColor(Design.color.textSecondary)
       .set(.padding(.init(top: 0, left: 0, bottom: 0, right: 0)))
       .set(.backColor(Design.color.backgroundSecondary))
 
    // MARK: - Private
 
    private lazy var wrapper = StackModel()
-      .set_axis(.horizontal)
-      .set_alignment(.center)
-      .set_arrangedModels([
+      .axis(.horizontal)
+      .alignment(.center)
+      .arrangedModels([
          textField,
          currencyIcon
       ])
 
    private lazy var currencyIcon = ImageViewModel()
-      .set_image(Design.icon.logoCurrencyBig)
-      .set_size(.init(width: 36, height: 36))
-      .set_contentMode(.scaleAspectFit)
+      .image(Design.icon.logoCurrencyBig)
+      .size(.init(width: 36, height: 36))
+      .contentMode(.scaleAspectFit)
 
    private lazy var currencyButtons = [
       CurrencyButtonDT<Design>.makeWithValue(1),
@@ -53,33 +53,34 @@ final class TransactInputViewModel<Design: DesignProtocol>: BaseViewModel<StackV
    ]
 
    private lazy var currencyButtonsStack = StackModel()
-      .set_axis(.horizontal)
-      .set_spacing(Grid.x16.value)
-      .set_arrangedModels(currencyButtons)
-      .set_padding(.verticalOffset(Grid.x24.value))
+      .axis(.horizontal)
+      .spacing(Grid.x16.value)
+      .arrangedModels(currencyButtons)
+      .padding(.verticalOffset(Grid.x24.value))
 
    private var defaultValues: [String] = []
 
    // MARK: - Implements
 
    override func start() {
-      set_padding(.top(Grid.x8.value))
-      set_alignment(.fill)
-      set_distribution(.fill)
-      set_axis(.vertical)
-      set_spacing(0)
-      set_arrangedModels([
+
+      padding(.top(Grid.x8.value))
+      distribution(.fill)
+      axis(.vertical)
+      spacing(0)
+      arrangedModels([
          StackModel(
             wrapper,
             ViewModel()
-               .set_height(Design.params.borderWidth)
-               .set_backColor(Design.color.iconSecondary)
+               .height(Design.params.borderWidth)
+               .backColor(Design.color.iconSecondary)
          ),
          currencyButtonsStack
       ])
-      set_backColor(Design.color.backgroundSecondary)
+      backColor(Design.color.backgroundSecondary)
 
       setState(.noInput)
+      alignment(.center)
 
       setupButtons()
    }
@@ -92,8 +93,8 @@ extension TransactInputViewModel: StateMachine {
       deselectAllButtons()
       switch state {
       case .noInput:
-         textField.set_textColor(Design.color.textSecondary)
-         currencyIcon.set_imageTintColor(Design.color.textSecondary)
+         textField.textColor(Design.color.textSecondary)
+         currencyIcon.imageTintColor(Design.color.textSecondary)
       case .normal(let text):
          defaultValues.enumerated().forEach {
             if $0.element == text {
@@ -102,11 +103,11 @@ extension TransactInputViewModel: StateMachine {
                currencyButtons[$0.offset].setMode(\.normal)
             }
          }
-         textField.set_textColor(Design.color.text)
-         currencyIcon.set_imageTintColor(Design.color.text)
+         textField.textColor(Design.color.text)
+         currencyIcon.imageTintColor(Design.color.text)
       case .error:
-         currencyIcon.set_imageTintColor(Design.color.textError)
-         textField.set_textColor(Design.color.textError)
+         currencyIcon.imageTintColor(Design.color.textError)
+         textField.textColor(Design.color.textError)
       }
 
    }
@@ -120,11 +121,11 @@ private extension TransactInputViewModel {
          defaultValues.append((button.currencyValue.toString))
 
          button
-            .onEvent(\.didTap) {
-           //    self?.textField.set_text("\(button.currencyValue)")
+            .on(\.didTap) {
+           //    self?.textField.text("\(button.currencyValue)")
              // self?.setState(.normal())
                button.setMode(\.selected)
-               self?.textField.sendEvent(\.didEditingChanged, "\(button.currencyValue)")
+               self?.textField.send(\.didEditingChanged, "\(button.currencyValue)")
             }
       }
    }

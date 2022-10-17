@@ -23,7 +23,7 @@ final class UpdateProfileApiWorker: BaseApiWorker<UpdateProfileRequest, Void> {
          let cookie = HTTPCookieStorage.shared.cookies?.first(where: { $0.name == cookieName })
       else {
          print("No csrf cookie")
-         work.fail(())
+         work.fail()
          return
       }
       let endpoint = TeamForceEndpoints.UpdateProfile(
@@ -34,15 +34,15 @@ final class UpdateProfileApiWorker: BaseApiWorker<UpdateProfileRequest, Void> {
       )
       print("endpoint is \(endpoint)")
       apiEngine?
-         .process(endpoint: endpoint)
+         .processPUT(endpoint: endpoint)
          .done { result in
-            let str = String(decoding: result.data!, as: UTF8.self)
-            print(str)
-            print("response status \(result.response)")
-            work.success(result: ())
+//            let str = String(decoding: result.data!, as: UTF8.self)
+//            print(str)
+//            print("response status \(result.response)")
+            work.success()
          }
          .catch { _ in
-            work.fail(())
+            work.fail()
          }
    }
 }

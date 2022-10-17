@@ -10,7 +10,6 @@ import ReactiveWorks
 
 struct CreateContactRequest {
    let token: String
-   let id: Int
    let contactId: String
    let contactType: String
    let profile: Int
@@ -25,28 +24,27 @@ final class CreateContactApiWorker: BaseApiWorker<CreateContactRequest, Void> {
          let cookie = HTTPCookieStorage.shared.cookies?.first(where: { $0.name == cookieName })
       else {
          print("No csrf cookie")
-         work.fail(())
+         work.fail()
          return
       }
-      let endpoint = TeamForceEndpoints.UpdateProfile(
-         id: String(CreateContactRequest.id),
-         headers: ["Authorization": CreateContactRequest.token,
-                   "X-CSRFToken": cookie.value],
+      let endpoint = TeamForceEndpoints.CreateContact(
          body: ["contact_id": CreateContactRequest.contactId,
                 "contact_type": CreateContactRequest.contactType,
-                "profile": CreateContactRequest.profile]
+                "profile": CreateContactRequest.profile],
+         headers: ["Authorization": CreateContactRequest.token,
+                  "X-CSRFToken": cookie.value]
       )
       print("endpoint is \(endpoint)")
       apiEngine?
          .process(endpoint: endpoint)
          .done { result in
-            let str = String(decoding: result.data!, as: UTF8.self)
-            print(str)
-            print("response status \(result.response)")
-            work.success(result: ())
+//            let str = String(decoding: result.data!, as: UTF8.self)
+//            print(str)
+//            print("response status \(result.response)")
+            work.success()
          }
          .catch { _ in
-            work.fail(())
+            work.fail()
          }
    }
 }

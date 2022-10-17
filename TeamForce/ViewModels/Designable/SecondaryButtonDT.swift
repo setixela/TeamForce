@@ -7,23 +7,23 @@
 
 import ReactiveWorks
 
-final class SecondaryButtonDT<Design: DSP>: ButtonModel, Designable, Modable {
-   var modes = ButtonMode()
+
+final class SecondaryButtonDT<Design: DSP>: ModableButton, Designable {
 
    override func start() {
       super.start()
 
-      set_padding(.sideOffset(Grid.x14.value))
-      set_height(Design.params.buttonSecondaryHeight)
-      set_cornerRadius(Design.params.cornerRadiusMini)
-      set_shadow(Design.params.cellShadow)
+      padding(.sideOffset(Grid.x14.value))
+      height(Design.params.buttonHeightSmall)
+      cornerRadius(Design.params.cornerRadiusSmall)
+      shadow(Design.params.cellShadow)
       onModeChanged(\.normal) { [weak self] in
-         self?.set_backColor(Design.color.background)
-         self?.set_textColor(Design.color.text)
+         self?.backColor(Design.color.background)
+         self?.textColor(Design.color.text)
       }
       onModeChanged(\.selected) { [weak self] in
-         self?.set_backColor(Design.color.backgroundBrand)
-         self?.set_textColor(Design.color.textInvert)
+         self?.backColor(Design.color.backgroundBrand)
+         self?.textColor(Design.color.textInvert)
       }
       setMode(\.normal)
    }

@@ -13,11 +13,11 @@ final class LogoutApiWorker: BaseApiWorker<TokenRequest, Void> {
          .process(endpoint: TeamForceEndpoints.Logout())
          .done { _ in // result in
             print("Logout happened1")
-            work.success(result: ())
+            work.success()
          }
          .catch { _ in
             print("Logout failed")
-            work.fail(())
+            work.fail()
          }
    }
 }

@@ -17,7 +17,7 @@ struct LoadProfileUseCase: UseCaseProtocol {
          loadToken
             .doAsync()
             .onFail {
-               work.fail(())
+               work.fail()
             }.doMap {
                TokenRequest(token: $0)
             }
@@ -26,7 +26,7 @@ struct LoadProfileUseCase: UseCaseProtocol {
                work.success(result: userData)
             }
             .onFail {
-               work.fail(())
+               work.fail()
             }
       }
    }

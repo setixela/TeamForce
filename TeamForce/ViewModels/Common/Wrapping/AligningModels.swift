@@ -36,7 +36,7 @@ final class CenteredX<VM: VMP>: BaseViewModel<StackViewExtended>, Stateable, VMW
       set(.axis(.vertical))
       set(.alignment(.center))
       set(.distribution(.equalSpacing))
-      set(.models([
+      set(.arrangedModels([
          subModel
       ]))
    }
@@ -52,7 +52,7 @@ final class CenteredY<VM: VMP>: BaseViewModel<StackViewExtended>, Stateable, VMW
       set(.axis(.horizontal))
       set(.alignment(.center))
       set(.distribution(.equalSpacing))
-      set(.models([
+      set(.arrangedModels([
          subModel
       ]))
    }
@@ -67,7 +67,7 @@ final class Lefted<VM: VMP>: BaseViewModel<StackViewExtended>, Stateable, VMWrap
    override func start() {
       set(.axis(.horizontal))
       set(.distribution(.fill))
-      set(.models([
+      set(.arrangedModels([
          subModel,
          Spacer()
       ]))
@@ -83,7 +83,7 @@ final class Righted<VM: VMP>: BaseViewModel<StackViewExtended>, Stateable, VMWra
    override func start() {
       set(.axis(.horizontal))
       set(.distribution(.fill))
-      set(.models([
+      set(.arrangedModels([
          Spacer(),
          subModel
       ]))

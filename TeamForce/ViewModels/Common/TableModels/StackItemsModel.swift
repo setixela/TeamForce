@@ -34,7 +34,7 @@ extension StackItemsModel {
       switch state {
       case .items(let items):
          self.items = items
-         set_arrangedModels(items.enumerated().map {
+         arrangedModels(items.enumerated().map {
             let model = makeModelForData($0.1)
             if isSelectEnabled {
                let rec = UITapGestureRecognizer(target: self, action: #selector(didTap(_:)))

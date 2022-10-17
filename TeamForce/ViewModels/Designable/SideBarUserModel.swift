@@ -9,18 +9,19 @@ import ReactiveWorks
 import UIKit
 
 struct SideBarUserModelEvent: InitProtocol {
-   var didTap: Event<Void>?
+   var didTap: Void?
 }
 
 final class SideBarUserModel<Design: DesignProtocol>: BaseViewModel<StackViewExtended>,
-   Communicable,
+   Eventable,
    Stateable2,
    Designable
 {
    typealias State = StackState
    typealias State2 = ViewState
 
-   var events: SideBarUserModelEvent = .init()
+   typealias Events = SideBarUserModelEvent
+   var events = [Int: LambdaProtocol?]()
 
    lazy var avatar = ImageViewModel()
       .set(.size(.init(width: 64, height: 64)))
@@ -33,7 +34,7 @@ final class SideBarUserModel<Design: DesignProtocol>: BaseViewModel<StackViewExt
          .set(.distribution(.equalSpacing))
          .set(.alignment(.leading))
          .set(.padding(.init(top: 12, left: 16, bottom: 12, right: 16)))
-         .set(.models([
+         .set(.arrangedModels([
             self.avatar,
             Spacer(30),
             self.userName,
@@ -46,6 +47,6 @@ final class SideBarUserModel<Design: DesignProtocol>: BaseViewModel<StackViewExt
    }
 
    @objc func clickAction(sender: UITapGestureRecognizer) {
-      sendEvent(\.didTap)
+      send(\.didTap)
    }
 }

@@ -8,6 +8,7 @@
 import ReactiveWorks
 
 typealias VoidWork<T> = Work<Void, T>
+typealias VoidWorkVoid = Work<Void, Void>
 
 struct LoginScenarioEvents {
    let userNameStringEvent: VoidWork<String>
@@ -26,21 +27,21 @@ final class LoginScenario<Asset: AssetProtocol>:
    override func start() {
       // setup input field reactions
       events.userNameStringEvent
-         .doNext(work: works.loginNameInputParse)
+         .doNext(works.loginNameInputParse)
          .onSuccess(setState) { .nameInputParseSuccess($0) }
          .onFail(setState) { .nameInputParseError($0) }
 
       // setup get code button reaction
       events.getCodeButtonEvent
          .onSuccess(setState, .startActivityIndicator)
-         .doNext(work: works.authByName)
+         .doNext(works.authByName)
          .onSuccess(setState, .inputSmsCode)
          .onFail(setState, .invalidUserName)
 
       // setup input field reactions
       events.smsCodeStringEvent
          //
-         .doNext(work: works.smsCodeInputParse)
+         .doNext(works.smsCodeInputParse)
          .onSuccess(setState) { .smsInputParseSuccess($0) }
          .onFail(setState) { .smsInputParseError($0) }
 
@@ -48,11 +49,11 @@ final class LoginScenario<Asset: AssetProtocol>:
       events.loginButtonEvent
          .onSuccess(setState, .startActivityIndicator)
          //
-         .doNext(work: works.verifyCode)
+         .doNext(works.verifyCode)
          .onFail(setState, .invalidSmsCode)
-         .doNext(work: works.saveLoginResults)
+         .doNext(works.saveLoginResults)
          .onSuccess {
-            Asset.router?.route(\.main, navType: .present, payload: ())
+            Asset.router?.route(\.main, navType: .presentInitial, payload: ())
          }
    }
 }

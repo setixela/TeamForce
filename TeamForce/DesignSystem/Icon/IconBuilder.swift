@@ -43,6 +43,7 @@ protocol IconElements: InitProtocol, DesignElementable where DesignElement == UI
 
    var arrowDropDownLine: DesignElement { get }
    var arrowDropUpLine: DesignElement { get }
+   var arrowDropRightLine: DesignElement { get }
 
    var clapHands: DesignElement { get }
 
@@ -50,6 +51,8 @@ protocol IconElements: InitProtocol, DesignElementable where DesignElement == UI
 
    var sendCoinIcon: DesignElement { get }
    var recieveCoinIcon: DesignElement { get }
+
+   var burn: DesignElement { get }
 
    // bottom panel
    var bottomPanel: DesignElement { get }
@@ -62,6 +65,30 @@ protocol IconElements: InitProtocol, DesignElementable where DesignElement == UI
    // transact
    var transactSuccess: UIImage { get }
    var userNotFound: UIImage { get }
+
+   // profile
+   var editCircle: UIImage { get }
+   var camera: UIImage { get }
+
+   // errors
+   var errorIllustrate: UIImage { get }
+
+   // tabler
+   var tablerCircleCheck: UIImage { get }
+   var tablerDiamond: UIImage { get }
+   var tablerChevronRight: UIImage { get }
+   var tablerCamera: UIImage { get }
+   var tablerMark: UIImage { get }
+   var tablerBrandTelegram: UIImage { get }
+   var tablerClock: UIImage { get }
+   var tablerGift: UIImage { get }
+   var tablerAward: UIImage { get }
+
+   // illusttrates
+   var challengeWinnerIllustrate: DesignElement { get }
+
+   // challenges
+   var strangeLogo: DesignElement { get }
 }
 
 struct IconBuilder: IconElements {
@@ -70,7 +97,7 @@ struct IconBuilder: IconElements {
    var attach: UIImage { make("akar-icons_attach") }
    var bell: UIImage { make("bell") }
    var calendar: UIImage { make("calendar") }
-   var cross: UIImage { make("cross") }
+   var cross: UIImage { make("tabler_mark") }
    var inProgress: UIImage { make("in_progress") }
    var lock: UIImage { make("lock") }
    var mail: UIImage { make("mail") }
@@ -105,23 +132,50 @@ struct IconBuilder: IconElements {
 
    var arrowDropDownLine: UIImage { make("arrow-drop-down-line") }
    var arrowDropUpLine: UIImage { make("arrow-drop-up-line") }
+   var arrowDropRightLine: UIImage { make("arrow-drop-right-line") }
 
    var clapHands: UIImage { make("bloom_woman_and_man_clapped_their_hands_1") }
 
    var recieveCoinIcon: UIImage { make("recieve_coin_icon") }
    var sendCoinIcon: UIImage { make("send_coin_icon") }
 
+   var burn: UIImage { make("burn") }
+
    var bottomPanel: UIImage { make("bottom_panel") }
 
    var tabBarMainButton: UIImage { make("dt_tabbar_main_button") }
-   var tabBarButton1: UIImage { make("dt_bttm_bttn_1") }
-   var tabBarButton2: UIImage { make("dt_bttm_bttn_2") }
-   var tabBarButton3: UIImage { make("dt_bttm_bttn_3") }
-   var tabBarButton4: UIImage { make("dt_bttm_bttn_4") }
+   var tabBarButton1: UIImage { make("tabler_smart-home") }
+   var tabBarButton2: UIImage { make("tabler_credit-card") }
+   var tabBarButton3: UIImage { make("tabler_history") }
+   var tabBarButton4: UIImage { make("tabler_settings") }
 
    // transact
    var transactSuccess: UIImage { make("dt_transact_success") }
    var userNotFound: UIImage { make("dt_not_found") }
+
+   // profile
+   var editCircle: UIImage { make("edit_circle") }
+   var camera: UIImage { make("tabler_camera") }
+
+   // errors
+   var errorIllustrate: UIImage { make("dt_error_illustrate") }
+
+   // tabler
+   var tablerCircleCheck: UIImage { make("tabler_circle-check") }
+   var tablerDiamond: UIImage { make("tabler_diamond") }
+   var tablerChevronRight: UIImage { make("tabler_chevron-right") }
+   var tablerCamera: UIImage { make("tabler_camera") }
+   var tablerMark: UIImage { make("tabler_mark") }
+   var tablerBrandTelegram: UIImage { make("tabler_brand-telegram") }
+   var tablerClock: UIImage { make("tabler_clock") }
+   var tablerGift: UIImage { make("tabler_gift") }
+   var tablerAward: UIImage { make("tabler_award") }
+
+   // illusttrates
+   var challengeWinnerIllustrate: UIImage { make("challenge_winner_illustrate") }
+
+   // challenges
+   var strangeLogo: UIImage { make("strange_icon") }
 }
 
 private extension IconBuilder {

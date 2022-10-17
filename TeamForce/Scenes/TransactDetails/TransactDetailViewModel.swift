@@ -24,55 +24,77 @@ final class TransactDeatilViewModel<Asset: AssetProtocol>: BaseSceneModel<
       .set(.textColor(UIColor.gray))
    private lazy var amountLabel = LabelModel()
 //      .set(Design.state.label.headline3)
-  
 
    private lazy var firstStack = StackModel()
       .set(.distribution(.equalCentering))
       .set(.alignment(.center))
       .set(.spacing(8))
-      .set(.models([
+      .set(.arrangedModels([
          dateLabel,
          transactionOwnerLabel,
          amountLabel,
-         //statusLabel,
-         currencyLabel
+         // statusLabel,
+         currencyLabel,
       ]))
-   
+
    lazy var reasonLabel = SettingsTitleBodyDT<Design>()
       .setAll {
-         $0.set_text("Cообщение")
-         $1.set_text("-")
+         $0
+            .text("Cообщение")
+            .set(Design.state.label.body4)
+         $1
+            .text("-")
+            .set(Design.state.label.caption)
       }
-   
+
    lazy var statusLabel = SettingsTitleBodyDT<Design>()
       .setAll {
-         $0.set_text("Статус перевода")
-         $1.set_text("-")
+         $0
+            .text("Статус благодарности")
+            .set(Design.state.label.body4)
+         $1
+            .text("-")
+            .set(Design.state.label.caption)
       }
-   
+
+   lazy var transactPhoto = Combos<SComboMD<LabelModel, ImageViewModel>>()
+      .setAll {
+         $0
+            .padBottom(10)
+            .set(Design.state.label.body4)
+            .text("Фотография")
+         $1
+            .image(Design.icon.transactSuccess)
+            .height(130)
+            .width(130)
+            .contentMode(.scaleAspectFill)
+            .cornerRadius(Design.params.cornerRadiusSmall)
+      }
+      .hidden(true)
+
    lazy var infoStack = UserProfileStack<Design>()
-      .set_arrangedModels([
+      .arrangedModels([
          LabelModel()
-            .set_text("ИНФОРМАЦИЯ")
-            .set(Design.state.label.caption2),
+            .text("ИНФОРМАЦИЯ")
+            .set(Design.state.label.captionSecondary),
          reasonLabel,
          statusLabel,
+         transactPhoto,
+         Grid.xxx.spacer
       ])
-      .set_distribution(.fill)
-      .set_alignment(.fill)
+      .distribution(.fill)
+      .alignment(.leading)
 
-
-   
    private lazy var currencyLabel = CurrencyLabelDT<Design>()
       .setAll {
          $0
-            .set_height(Grid.x32.value)
+            .height(Grid.x32.value)
             .set(Design.state.label.headline4)
-            .set_textColor(Design.color.success)
+            .textColor(Design.color.success)
          $1
-            .set_width(Grid.x26.value)
-            .set_height(Grid.x26.value)
-            .set_imageTintColor(Design.color.success)
+            .width(Grid.x26.value)
+            .height(Grid.x26.value)
+            .imageTintColor(Design.color.success)
       }
 
    private lazy var fourthStack = StackModel()
@@ -82,7 +104,7 @@ final class TransactDeatilViewModel<Asset: AssetProtocol>: BaseSceneModel<
       .set(.axis(.vertical))
       .set(.distribution(.fill))
       .set(.alignment(.center))
-      .set(.models([
+      .set(.arrangedModels([
          firstStack,
       ]))
 
@@ -106,34 +128,32 @@ final class TransactDeatilViewModel<Asset: AssetProtocol>: BaseSceneModel<
    }
 
    private lazy var image = WrappedY(ImageViewModel()
-      .set_image(Design.icon.avatarPlaceholder)
-      .set_contentMode(.scaleAspectFill)
-      .set_cornerRadius(70 / 2)
-      .set_size(.square(70))
-      .set_shadow(Design.params.cellShadow)
+      .image(Design.icon.avatarPlaceholder)
+      .contentMode(.scaleAspectFill)
+      .cornerRadius(70 / 2)
+      .size(.square(70))
+      .shadow(Design.params.cellShadow)
    )
-   
 
    private func configure() {
-     
-      mainVM.topStackModel
+      mainVM.bodyStack
          .set(Design.state.stack.default)
-         .set_alignment(.center)
+         .alignment(.center)
          .set(.backColor(Design.color.backgroundSecondary))
-         .set_arrangedModels([
+         .arrangedModels([
             //
-            Grid.x64.spacer,
+            Spacer(32),
+            Spacer(maxSize: 32),
             image,
-            Grid.x32.spacer,
+            Spacer(maxSize: 32),
             fourthStack,
-            Grid.x64.spacer,
+            Spacer(maxSize: 64),
          ])
 
-      mainVM.bottomStackModel
+      mainVM.footerStack
          .set(Design.state.stack.bottomPanel)
-         .set_arrangedModels([
+         .arrangedModels([
             infoStack,
-            Grid.xxx.spacer,
          ])
    }
 
@@ -142,49 +162,56 @@ final class TransactDeatilViewModel<Asset: AssetProtocol>: BaseSceneModel<
       wS?.input = input
 
       print("detail input \(input)")
+      currencyLabel.label
+         .text(input.amount ?? "")
       switch input.sender?.senderTgName == currentUser {
       case true:
+         currencyLabel.models.main.textColor(Design.color.textError)
+         currencyLabel.models.right.imageTintColor(Design.color.textError)
          transactionOwnerLabel
             .set(.text("Вы отправили @" + (input.recipient?.recipientTgName ?? "")))
          amountLabel
             .set(.text((input.amount ?? "") + " спасибок"))
-         currencyLabel.label
-            .set_text("-" + (input.amount ?? ""))
+         
          if let urlSuffix = input.recipient?.recipientPhoto {
             let urlString = TeamForceEndpoints.urlBase + urlSuffix
-            image.subModel.set_url(urlString)
+            image.subModel.url(urlString)
          } else {
             var userIconText = ""
             if let nameFirstLetter = input.recipient?.recipientFirstName?.first,
-               let surnameFirstLetter = input.recipient?.recipientSurname?.first {
+               let surnameFirstLetter = input.recipient?.recipientSurname?.first
+            {
                userIconText = String(nameFirstLetter) + String(surnameFirstLetter)
             }
             let tempImage = userIconText.drawImage(backColor: Design.color.backgroundBrand)
             image.subModel
-               .set_image(tempImage)
-               .set_backColor(Design.color.backgroundBrand)
+               .image(tempImage)
+               .backColor(Design.color.backgroundBrand)
          }
       case false:
          transactionOwnerLabel
             .set(.text("Вы получили от @" + (input.sender?.senderTgName ?? "")))
          amountLabel
             .set(.text((input.amount ?? "") + " спасибок"))
-         currencyLabel.label
-            .set_text("+" + (input.amount ?? ""))
          if let urlSuffix = input.sender?.senderPhoto {
             let urlString = TeamForceEndpoints.urlBase + urlSuffix
-            image.subModel.set_url(urlString)
+            image.subModel.url(urlString)
          } else {
             var userIconText = ""
             if let nameFirstLetter = input.sender?.senderFirstName?.first,
-               let surnameFirstLetter = input.sender?.senderSurname?.first {
+               let surnameFirstLetter = input.sender?.senderSurname?.first
+            {
                userIconText = String(nameFirstLetter) + String(surnameFirstLetter)
             }
             let tempImage = userIconText.drawImage(backColor: Design.color.backgroundBrand)
             image.subModel
-               .set_image(tempImage)
-               .set_backColor(Design.color.backgroundBrand)
+               .image(tempImage)
+               .backColor(Design.color.backgroundBrand)
          }
+         statusLabel
+            .models.main.text("Тип благодарности")
+         statusLabel
+            .models.down.text("Входящая благодарность")
       }
 
       var textColor = UIColor.black
@@ -193,7 +220,8 @@ final class TransactDeatilViewModel<Asset: AssetProtocol>: BaseSceneModel<
          textColor = UIColor.systemGreen
       case "D":
          textColor = Design.color.boundaryError
-         statusLabel.models.main.set_text("Причина отказа")
+         statusLabel.models.main.text("Причина отказа")
+         transactionOwnerLabel.text("Вы хотели отправили @" + (input.recipient?.recipientTgName ?? ""))
       case "W":
          textColor = UIColor.orange
       default:
@@ -202,24 +230,15 @@ final class TransactDeatilViewModel<Asset: AssetProtocol>: BaseSceneModel<
       statusLabel.models.down.set(.textColor(textColor))
       amountLabel.set(.textColor(textColor))
 
-      statusLabel.models.down.set_text(input.transactionStatus?.name ?? "")
-      reasonLabel.models.down.set_text(input.reason ?? "")
+      statusLabel.models.down.text(input.transactionStatus?.name ?? "")
+      reasonLabel.models.down.text(input.reason ?? "")
 
+      if let photoLink = input.photo {
+         transactPhoto.models.down.url(TeamForceEndpoints.urlBase + photoLink)
+         transactPhoto.hidden(false)
+      }
       guard let convertedDate = (input.createdAt ?? "").convertToDate() else { return }
       dateLabel
          .set(.text(convertedDate))
-   }
-}
-
-extension String {
-   func convertToDate() -> String? {
-      let inputFormatter = DateFormatter()
-      inputFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
-      guard let convertedDate = inputFormatter.date(from: self) else { return nil }
-
-      let outputFormatter = DateFormatter()
-      outputFormatter.dateFormat = "d MMM y HH:mm"
-
-      return outputFormatter.string(from: convertedDate)
    }
 }

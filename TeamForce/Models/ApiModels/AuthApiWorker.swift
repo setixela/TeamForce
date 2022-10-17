@@ -34,17 +34,17 @@ struct UserData: Codable {
 
    struct Profile: Codable {
       let id: Int
-      let contacts: [Contact]
+      let contacts: [Contact]?
       let organization: String
       let department: String
       let tgId: String
       let tgName: String
       let photo: String?
       let hiredAt: String?
-      let surName: String
-      let firstName: String
+      let surName: String?
+      let firstName: String?
       let middleName: String?
-      let nickName: String
+      let nickName: String?
 
       enum CodingKeys: String, CodingKey {
          case id
@@ -140,7 +140,7 @@ final class AuthApiWorker: BaseApiWorker<String, AuthResult> {
             guard
                let xCode = result.response?.headerValueFor("X-Code")
             else {
-               work.fail(())
+               work.fail()
                return
             }
             let account: Account?
@@ -160,7 +160,7 @@ final class AuthApiWorker: BaseApiWorker<String, AuthResult> {
             work.success(result: AuthResult(xId: xId, xCode: xCode, account: account))
          }
          .catch { _ in
-            work.fail(())
+            work.fail()
          }
    }
 }

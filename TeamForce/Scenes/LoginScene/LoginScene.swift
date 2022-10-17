@@ -19,14 +19,14 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
 
    private lazy var viewModels = LoginViewModels<Design>()
 
-   lazy var scenario = LoginScenario(
+   lazy var scenario: Scenario = LoginScenario(
       works: LoginWorks<Asset>(),
       stateDelegate: viewModels.setState,
       events: LoginScenarioEvents(
-         userNameStringEvent: viewModels.userNameInputModel.mainModel.textField.onEvent(\.didEditingChanged),
-         smsCodeStringEvent: viewModels.smsCodeInputModel.mainModel.textField.onEvent(\.didEditingChanged),
-         getCodeButtonEvent: viewModels.getCodeButton.onEvent(\.didTap),
-         loginButtonEvent: viewModels.loginButton.onEvent(\.didTap)
+         userNameStringEvent: viewModels.userNameInputModel.mainModel.textField.on(\.didEditingChanged),
+         smsCodeStringEvent: viewModels.smsCodeInputModel.mainModel.textField.on(\.didEditingChanged),
+         getCodeButtonEvent: viewModels.getCodeButton.on(\.didTap),
+         loginButtonEvent: viewModels.loginButton.on(\.didTap)
       )
    )
 
@@ -45,9 +45,9 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
 private extension LoginScene {
    func configure() {
       mainVM.header
-         .set_text(Design.Text.title.autorisation)
-      mainVM.bottomSubStack
-         .set_arrangedModels([
+         .text(Design.Text.title.autorisation)
+      mainVM.bodyStack
+         .arrangedModels([
             viewModels.userNameInputModel,
             viewModels.smsCodeInputModel,
             Spacer(Design.params.buttonsSpacingY),
@@ -58,3 +58,5 @@ private extension LoginScene {
          ])
    }
 }
+
+

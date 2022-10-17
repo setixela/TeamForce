@@ -14,8 +14,8 @@ struct LabelIconEvent: InitProtocol {
 }
 
 struct TappableEvent: InitProtocol {
-   var startTapRecognizer: Event<Void>?
-   var didTap: Event<Void>?
+   var startTapRecognizer: Void?
+   var didTap: Void?
 }
 
 enum LabelIconState {
@@ -25,11 +25,12 @@ enum LabelIconState {
 
 final class LabelIconX<Design: DesignProtocol>: BaseViewModel<StackViewExtended>,
    Designable,
-   Communicable
+   Eventable
 {
    typealias State = StackState
 
-   var events: TappableEvent = .init()
+   typealias Events = TappableEvent
+   var events = [Int: LambdaProtocol?]()
 
    let label = Design.label.body1
    let iconModel = ImageViewModel()
@@ -42,21 +43,17 @@ final class LabelIconX<Design: DesignProtocol>: BaseViewModel<StackViewExtended>
       set(.axis(.horizontal))
       set(.distribution(.fill))
       set(.alignment(.fill))
-      set(.models([
+      set(.arrangedModels([
          label,
          Spacer(),
          iconModel
       ]))
 
-      onEvent(\.startTapRecognizer) { [weak self] in
-         guard let self = self else { return }
-
-         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.didTap)))
-      }
+      view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTap)))
    }
 
    @objc func didTap() {
-      sendEvent(\.didTap)
+      send(\.didTap)
    }
 }
 

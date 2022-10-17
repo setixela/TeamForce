@@ -26,7 +26,7 @@ extension StringStorageWorker: WorkerProtocol {
       else {
          print("\nNo value for key: \(String(describing: work.input))\n")
 
-         work.fail(())
+         work.fail()
          return
       }
 

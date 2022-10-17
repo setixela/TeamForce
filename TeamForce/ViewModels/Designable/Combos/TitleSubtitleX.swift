@@ -17,12 +17,12 @@ class TitleSubtitleX<Design: DesignProtocol>:
       setMain {
          $0
             .set(Design.state.label.title)
-            .set_alignment(.center)
+            .alignment(.center)
       } setRight: {
          $0
             .set(Design.state.label.subtitle)
-            .set_alignment(.center)
-            .set_textColor(Design.color.textSecondary)
+            .alignment(.center)
+            .textColor(Design.color.textSecondary)
       }
    }
 }

@@ -10,35 +10,43 @@ import ReactiveWorks
 import UIKit
 
 struct TextFieldEvents: InitProtocol {
-   var didEditingChanged: Event<String>?
-   var didTap: Event<String>?
-   var didBeginEditing: Event<String>?
+   var didEditingChanged: String?
+   var didTap: String?
+   var didBeginEditing: String?
+   var didEndEditing: String?
 }
 
-final class TextFieldModel: BaseViewModel<PaddingTextField>,
+class TextFieldModel: BaseViewModel<PaddingTextField>,
    Stateable3,
+   Eventable,
    UITextFieldDelegate
 {
-   var events: TextFieldEvents = .init()
+   typealias Events = TextFieldEvents
+
+   var events = [Int: LambdaProtocol?]()
 
    override func start() {
-      set(.backColor(.lightGray.withAlphaComponent(0.3)))
       set(.clearButtonMode(.whileEditing))
       view.delegate = self
       view.addTarget(self, action: #selector(changValue), for: .editingChanged)
       view.addTarget(self, action: #selector(didEditingBegin), for: .editingDidBegin)
+      view.addTarget(self, action: #selector(didEndEditing), for: .editingDidEnd)
    }
 
    @objc func changValue() {
       guard let text = view.text else { return }
 
-      sendEvent(\.didEditingChanged, text)
+      send(\.didEditingChanged, text)
    }
 
    @objc func didEditingBegin() {
       guard let text = view.text else { return }
-      sendEvent(\.didBeginEditing, text)
+      send(\.didBeginEditing, text)
       print("Did tap textfield")
+   }
+
+   @objc func didEndEditing() {
+      send(\.didEndEditing, view.text.string)
    }
 
    func textFieldDidBeginEditing(_ textField: UITextField) {
@@ -60,4 +68,3 @@ extension TextFieldModel {
    typealias State3 = LabelState
 }
 
-extension TextFieldModel: Communicable {}

@@ -12,6 +12,8 @@ import UIKit
 
 protocol ParamsProtocol: InitProtocol, Designable {
    //
+   var commonSideOffset: CGFloat { get }
+   //
    var cornerRadiusMini: CGFloat { get }
    var cornerRadiusSmall: CGFloat { get }
    var cornerRadius: CGFloat { get }
@@ -23,9 +25,12 @@ protocol ParamsProtocol: InitProtocol, Designable {
    var globalTopOffset: CGFloat { get }
    //
    var buttonHeight: CGFloat { get }
+   var buttonHeightSmall: CGFloat { get }
+   var buttonHeightMini: CGFloat { get }
+
    var buttonsSpacingX: CGFloat { get }
    var buttonsSpacingY: CGFloat { get }
-   var buttonSecondaryHeight: CGFloat { get }
+
    //
    var infoFrameHeight: CGFloat { get }
    //
@@ -33,9 +38,10 @@ protocol ParamsProtocol: InitProtocol, Designable {
    var panelButtonShadow: Shadow { get }
    var panelMainButtonShadow: Shadow { get }
    var cellShadow: Shadow { get }
+   var profileUserPanelShadow: Shadow { get }
    // paddings
    var contentPadding: UIEdgeInsets { get }
-   var contentVerticalPadding: UIEdgeInsets  { get }
+   var contentVerticalPadding: UIEdgeInsets { get }
    var cellContentPadding: UIEdgeInsets { get }
    var userInfoHeaderPadding: UIEdgeInsets { get }
    var infoFramePadding: UIEdgeInsets { get }
@@ -43,8 +49,10 @@ protocol ParamsProtocol: InitProtocol, Designable {
 
 struct ParamBuilder<Design: DSP>: ParamsProtocol {
    //
+   var commonSideOffset: CGFloat { 16 }
+   //
    var cornerRadiusMini: CGFloat { 8 }
-   var cornerRadiusSmall: CGFloat { 11 }
+   var cornerRadiusSmall: CGFloat { 12 }
    var cornerRadius: CGFloat { 14 }
    var cornerRadiusMedium: CGFloat { 20 }
    //
@@ -54,9 +62,11 @@ struct ParamBuilder<Design: DSP>: ParamsProtocol {
    var globalTopOffset: CGFloat { 24 }
    //
    var buttonHeight: CGFloat { 52 }
+   var buttonHeightSmall: CGFloat { 38 }
+   var buttonHeightMini: CGFloat { 24 }
+   //
    var buttonsSpacingX: CGFloat { 8 }
    var buttonsSpacingY: CGFloat { 16 }
-   var buttonSecondaryHeight: CGFloat { 33 }
    //
    var infoFrameHeight: CGFloat { 70 }
    //
@@ -83,10 +93,16 @@ struct ParamBuilder<Design: DSP>: ParamsProtocol {
       color: Design.color.iconContrast,
       opacity: 0.12
    ) }
+   var profileUserPanelShadow: Shadow { .init(
+      radius: 12,
+      offset: .init(x: 0, y: 12),
+      color: UIColor(red: 0.794, green: 0.816, blue: 0.858, alpha: 0.25), // Design.color.iconContrast,
+      opacity: 1.0
+   ) }
    // paddings
-   var contentPadding: UIEdgeInsets { .init(top: 12, left: 16, bottom: 12, right: 16) }
+   var contentPadding: UIEdgeInsets { .init(top: 12, left: commonSideOffset, bottom: 12, right: commonSideOffset) }
    var contentVerticalPadding: UIEdgeInsets { .init(top: 12, left: 0, bottom: 12, right: 0) }
-   var cellContentPadding: UIEdgeInsets { .init(top: 12, left: 16, bottom: 12, right: 16) }
+   var cellContentPadding: UIEdgeInsets { .init(top: 12, left: commonSideOffset, bottom: 12, right: commonSideOffset) }
    var userInfoHeaderPadding: UIEdgeInsets { .init(top: 12, left: 12, bottom: 12, right: 12) }
    var infoFramePadding: UIEdgeInsets { .init(top: 16, left: 24, bottom: 24, right: 24) }
 }

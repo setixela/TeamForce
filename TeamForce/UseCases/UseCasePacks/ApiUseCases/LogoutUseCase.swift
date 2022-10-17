@@ -17,17 +17,17 @@ struct LogoutUseCase: UseCaseProtocol {
          loadToken
             .doAsync()
             .onFail {
-               work.fail(())
+               work.fail()
             }
             .doMap {
                TokenRequest(token: $0)
             }
             .doNext(worker: logoutApiModel)
             .onSuccess {
-               work.success(result: ())
+               work.success()
             }
             .onFail {
-               work.fail(())
+               work.fail()
             }
       }
    }

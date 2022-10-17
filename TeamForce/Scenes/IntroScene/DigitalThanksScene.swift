@@ -16,7 +16,7 @@ final class DigitalThanksScene<Asset: AssetProtocol>: BaseSceneModel<
    Void
 > {
    private lazy var enterButton = Design.button.default
-      .set_title(Text.button.enterButton)
+      .title(Text.button.enterButton)
 
    // MARK: - Start
 
@@ -25,38 +25,38 @@ final class DigitalThanksScene<Asset: AssetProtocol>: BaseSceneModel<
       configure()
 
       enterButton
-         .onEvent(\.didTap) {
+         .on(\.didTap) {
             Asset.router?.route(\.login, navType: .push)
          }
    }
 
    private func configure() {
       mainVM
-         .set_backColor(Design.color.background)
+         .backColor(Design.color.background)
 
-      mainVM.topStackModel
+      mainVM.bodyStack
          .set(Design.state.stack.default)
          .set(.alignment(.center))
-         .set_arrangedModels([
+         .arrangedModels([
             DTLogoTitleX<Design>(),
             Grid.xxx.spacer,
             ImageViewModel()
-               .set_image(Design.icon.introlIllustrate)
-               .set_size(.square(280))
+               .image(Design.icon.introlIllustrate)
+               .size(.square(280))
          ])
 
-      mainVM.bottomStackModel
+      mainVM.footerStack
          .set(Design.state.stack.bottomPanel)
-         .set_arrangedModels([
+         .arrangedModels([
             Grid.x1.spacer,
             TitleSubtitleY<Design>()
-               .set_padding(.top(Design.params.titleSubtitleOffset))
+               .padding(.top(Design.params.titleSubtitleOffset))
                .setMain {
                   $0
-                     .set_text(Text.title.digitalThanks)
-                     .set_padBottom(Grid.x8.value)
+                     .text(Text.title.digitalThanks)
+                     .padBottom(Grid.x8.value)
                } setDown: {
-                  $0.set_text(Text.title.digitalThanksAbout)
+                  $0.text(Text.title.digitalThanksAbout)
                },
             Grid.x1.spacer,
             enterButton

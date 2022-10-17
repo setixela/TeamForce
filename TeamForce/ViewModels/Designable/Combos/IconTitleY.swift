@@ -8,6 +8,23 @@
 import ReactiveWorks
 import UIKit
 
-class IconTitleY: Combos<SComboMD<ImageViewModel, LabelModel>> {}
+class IconTitleX: Combos<SComboMR<ImageViewModel, LabelModel>> {
+   var icon: ImageViewModel { models.main }
+   var label: LabelModel { models.right }
+}
 
-class TitleIconY: Combos<SComboMD<LabelModel, ImageViewModel>> {}
+class TitleIconX: Combos<SComboMR<LabelModel, ImageViewModel>> {
+   var label: LabelModel { models.main }
+   var icon: ImageViewModel { models.right }
+}
+
+
+class IconTitleY: Combos<SComboMD<ImageViewModel, LabelModel>> {
+   var icon: ImageViewModel { models.main }
+   var label: LabelModel { models.down }
+}
+
+class TitleIconY: Combos<SComboMD<LabelModel, ImageViewModel>> {
+   var label: LabelModel { models.main }
+   var icon: ImageViewModel { models.down }
+}

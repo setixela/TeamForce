@@ -17,7 +17,7 @@ struct GetTransactionsByPeriodUseCase: UseCaseProtocol {
          safeStringStorage
             .doAsync("token")
             .onFail {
-               work.fail(())
+               work.fail()
             }
             .doMap {
                guard let id = work.input else { return nil }
@@ -28,7 +28,7 @@ struct GetTransactionsByPeriodUseCase: UseCaseProtocol {
                work.success(result: $0)
             }
             .onFail {
-               work.fail(())
+               work.fail()
             }
       }
    }

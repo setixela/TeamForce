@@ -14,7 +14,7 @@ final class GetTransactionsByPeriodApiWorker: BaseApiWorker<RequestWithId, [Tran
       guard
          let transactionRequest = work.input
       else {
-         work.fail(())
+         work.fail()
          return
       }
       
@@ -31,13 +31,13 @@ final class GetTransactionsByPeriodApiWorker: BaseApiWorker<RequestWithId, [Tran
                let data = result.data,
                let transactions: [Transaction] = decoder.parse(data)
             else {
-               work.fail(())
+               work.fail()
                return
             }
             work.success(result: transactions)
          }
          .catch { _ in
-            work.fail(())
+            work.fail()
          }
    }
 }

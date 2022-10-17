@@ -27,12 +27,13 @@ protocol ButtonTextsProtocol: InitProtocol {
    var sendButton: String { get }
    var toTheBeginingButton: String { get }
    var logoutButton: String { get }
+
+   var closeButton: String { get }
 }
 
 // MARK: - Title texts
 
 protocol TitleTextsProtocol: InitProtocol {
-
    // new
    var autorisation: String { get }
 
@@ -66,21 +67,33 @@ protocol TitleTextsProtocol: InitProtocol {
    var availableThanks: String { get }
    var thanksWereSend: String { get }
    var userNotFound: String { get }
+   var reasonPlaceholder: String { get }
+
+   // profile
+   var myProfile: String { get }
 
    // errors
    var wrongUsername: String { get }
    var wrongCode: String { get }
+   var loadPageError: String { get }
+   var connectionError: String { get }
 
    // verifyScene
    var noCode: String { get }
    var messageEmail: String { get }
    var messageTelegram: String { get }
+   
+   // historyScene
+   var today: String { get }
+   var yesterday: String { get }
+
+   // feed deatail
+   var comment: String { get }
 }
 
 // MARK: - Button texts implements
 
 struct ButtonTexts: ButtonTextsProtocol {
-
    var enterButton: String { "ВОЙТИ" }
    var nextButton: String { "ДАЛЕЕ" }
    var registerButton: String { "РЕГИСТРАЦИЯ" }
@@ -89,6 +102,8 @@ struct ButtonTexts: ButtonTextsProtocol {
    var sendButton: String { "ОТПРАВИТЬ" }
    var toTheBeginingButton: String { "В НАЧАЛО" }
    var logoutButton: String { "ВЫЙТИ" }
+
+   var closeButton: String { "ЗАКРЫТЬ" }
 }
 
 struct TitleTexts: TitleTextsProtocol {
@@ -117,24 +132,36 @@ struct TitleTexts: TitleTextsProtocol {
    var sended: String { "Распределено" }
 
    // transact
-   var newTransact: String { "Новый перевод" }
+   var newTransact: String { "Новая благодарность" }
    var close: String { "Закрыть" }
    var chooseRecipient: String { "Выберите получателя" }
    var sendThanks: String { "Перевести спасибок" }
    var availableThanks: String { "Доступно" }
-   var reasonPlaceholder: String { "Обоснование" }
+   var reasonPlaceholder: String { "Причина благодарности" }
    var thanksWereSend: String { "Спасибо отправлено" }
    var recipient: String { "Получатель: @" }
    var userNotFound: String { "По вашему запросу\nникого не нашли" }
 
+   // profile
+   var myProfile: String { "Мои данные" }
+
    // errors
    var wrongUsername: String { "Ошибка. Пользователь не найден" }
    var wrongCode: String { "Ошибка. Неверный код" }
+   var loadPageError: String { "Не удалось загрузить страницу" }
+   var connectionError: String { "Ошибка соединения" }
 
    // verifyScene
    var noCode: String { "Не приходит код?" }
    var messageEmail: String { "Проверьте корректность введенной почты" }
    var messageTelegram: String { "Перейдите в диалог с ботом (ссылка), напишите ему что-нибудь после чего повторите процедуру аутентификации." }
+   
+   // historyScene
+   var today: String { "Сегодня" }
+   var yesterday: String { "Вчера" }
+
+   // feed deatail
+   var comment: String { "Комментарий" }
 }
 
 struct TextBuilder: TextsProtocol {

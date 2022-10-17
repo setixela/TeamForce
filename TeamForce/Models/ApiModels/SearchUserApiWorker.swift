@@ -71,7 +71,7 @@ final class SearchUserApiWorker: BaseApiWorker<SearchUserRequest, [FoundUser]> {
           let data = result.data,
           let resultBody: [FoundUser] = decoder.parse(data)
         else {
-          work.fail(())
+          work.fail()
           return
         }
 
@@ -79,7 +79,7 @@ final class SearchUserApiWorker: BaseApiWorker<SearchUserRequest, [FoundUser]> {
         work.success(result: resultBody)
       }
       .catch { _ in
-        work.fail(())
+        work.fail()
       }
   }
 }

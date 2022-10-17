@@ -145,6 +145,17 @@ import ReactiveWorks
       self.setMain(setMain, setDown: setDown, setRight: setRight, setDown2: setDown2)
    }
 
+    convenience init<M, D, R, D2, D3>(
+      _ setMain: GenericClosure<M>,
+      setDown: GenericClosure<D>,
+      setRight: GenericClosure<R>,
+      setDown2: GenericClosure<D2>,
+      setDown3: GenericClosure<D3>) where S == SComboMDRDD<M, D, R, D2, D3>
+    {
+       self.init()
+       self.setMain(setMain, setDown: setDown, setRight: setRight, setDown2: setDown2, setDown3: setDown3)
+    }
+
    convenience init<M, D, R, R2>(
       _ setMain: GenericClosure<M>,
       setDown: GenericClosure<D>,

@@ -32,7 +32,7 @@ final class SideBarModel<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>
 
    internal lazy var item2 = IconLabelX<Asset>()
       .set(.padding(Design.params.contentPadding))
-      .set(.text("Новый перевод"))
+      .set(.text("Новая благодарность"))
       .set(.icon(Design.icon.upload2Fill))
 
    internal lazy var item3 = IconLabelX<Asset>()
@@ -53,10 +53,10 @@ final class SideBarModel<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>
 
       userModel.avatar.set(.image(Design.icon.avatarPlaceholder))
 
-      set_axis(.vertical)
-         .set_distribution(.fill)
-         .set_alignment(.leading)
-         .set_arrangedModels([
+      axis(.vertical)
+         .distribution(.fill)
+         .alignment(.leading)
+         .arrangedModels([
 //            userModel,
 //            item1,
 //            item2,
@@ -76,7 +76,7 @@ final class SideBarModel<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>
       configureLogoutUseCase()
 
       userModel
-         .onEvent(\.didTap) {
+         .on(\.didTap) {
             print("User model did tap")
 //            ProductionAsset.router?.route(\.profile, navType: .push, payload: ())
          }
@@ -99,11 +99,11 @@ extension SideBarModel {
 
    private func configureLogoutUseCase() {
       item4
-         .onEvent(\.didTap)
-         .doNext(work: useCase.logout)
+         .on(\.didTap)
+         .doNext(useCase.logout)
          .onSuccess {
             UserDefaults.standard.setIsLoggedIn(value: false)
-            Asset.router?.route(\.digitalThanks, navType: .present, payload: ())
+            Asset.router?.route(\.digitalThanks, navType: .presentInitial, payload: ())
          }.onFail {
             print("logout api failed")
          }

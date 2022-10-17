@@ -14,47 +14,53 @@ final class HistoryScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>
    Assetable,
    Stateable,
    Scenarible,
-   Communicable
+   Eventable
 {
    //
+   typealias Events = MainSceneEvents
    typealias State = StackState
 
-   var events = MainSceneEvents()
+   var events: EventsStore = .init()
 
    private lazy var viewModels = HistoryViewModels<Design>()
 
-   lazy var scenario = HistoryScenario(
+   lazy var scenario: Scenario = HistoryScenario(
       works: HistoryWorks<Asset>(),
       stateDelegate: stateDelegate,
       events: HistoryScenarioEvents(
          presentAllTransactions: viewModels.segmentedControl.onEvent(\.selected0),
          presentSentTransactions: viewModels.segmentedControl.onEvent(\.selected2),
          presentRecievedTransaction: viewModels.segmentedControl.onEvent(\.selected1),
-         presentDetailView: viewModels.tableModel.onEvent(\.didSelectRow)
+         presentDetailView: viewModels.tableModel.on(\.didSelectRow),
+         cancelTransaction: viewModels.presenter.on(\.cancelButtonPressed)
       )
    )
 
    private lazy var activityIndicator = ActivityIndicator<Design>()
+   private lazy var errorBlock = CommonErrorBlock<Design>()
 
    // MARK: - Start
 
    override func start() {
       configure()
-
-      scenario.start()
-
+      
       viewModels.tableModel
          .set(.presenters([
-            HistoryPresenters<Design>.transactToHistoryCell,
+            viewModels.presenter.transactToHistoryCell,
             SpacerPresenter.presenter,
          ]))
 
-      viewModels.tableModel.onEvent(\.didScroll) { [weak self] in
-         self?.sendEvent(\.didScroll, $0)
+      viewModels.tableModel.on(\.didScroll) { [weak self] in
+         self?.send(\.didScroll, $0)
       }
-      viewModels.tableModel.onEvent(\.willEndDragging) { [weak self] in
-         self?.sendEvent(\.willEndDragging, $0)
+      viewModels.tableModel.on(\.willEndDragging) { [weak self] in
+         self?.send(\.willEndDragging, $0)
       }
+      
+      
+//      var historycells = viewModels.tableModel.items as? [HistoryCellModel<Design>]
+
+      setState(.initial)
    }
 }
 
@@ -62,11 +68,12 @@ final class HistoryScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>
 
 private extension HistoryScene {
    func configure() {
-      set_axis(.vertical)
-      set_arrangedModels([
+      axis(.vertical)
+      arrangedModels([
          viewModels.segmentedControl,
          Grid.x16.spacer,
          activityIndicator,
+         errorBlock,
          viewModels.tableModel,
          // Spacer(88),
       ])
@@ -74,6 +81,8 @@ private extension HistoryScene {
 }
 
 enum HistoryState {
+   case initial
+
    case loadProfilError
    case loadTransactionsError
 
@@ -82,30 +91,39 @@ enum HistoryState {
    case presentRecievedTransaction([TableItemsSection])
 
    case presentDetailView(Transaction)
+   
+   case cancelTransaction
 }
 
 extension HistoryScene: StateMachine {
    func setState(_ state: HistoryState) {
       switch state {
+      case .initial:
+         activityIndicator.hidden(false)
+         errorBlock.hidden(true)
       case .loadProfilError:
-
-         log("loadProfilError")
+         errorBlock.hidden(false)
+         scenario.start()
       //
       case .loadTransactionsError:
-         log("loadTransactionsError")
+         errorBlock.hidden(false)
+         scenario.start()
       //
       case .presentAllTransactions(let value):
-         activityIndicator.set_hidden(true)
+         errorBlock.hidden(true)
+         activityIndicator.hidden(true)
          viewModels.tableModel
             .set(.itemSections(value.addedSpacer(size: Grid.x80.value)))
       //
       case .presentSentTransactions(let value):
-         activityIndicator.set_hidden(true)
+         errorBlock.hidden(true)
+         activityIndicator.hidden(true)
          viewModels.tableModel
             .set(.itemSections(value.addedSpacer(size: Grid.x80.value)))
       //
       case .presentRecievedTransaction(let value):
-         activityIndicator.set_hidden(true)
+         errorBlock.hidden(true)
+         activityIndicator.hidden(true)
          viewModels.tableModel
             .set(.itemSections(value.addedSpacer(size: Grid.x80.value)))
       //
@@ -113,6 +131,9 @@ extension HistoryScene: StateMachine {
          ProductionAsset.router?.route(\.transactionDetail,
                                        navType: .presentModally(.automatic),
                                        payload: value)
+      case .cancelTransaction:
+         scenario.start()
+         print("transaction cancelled")
       }
    }
 }

@@ -23,78 +23,78 @@ final class SettingsViewModel<Asset: AssetProtocol>: BaseViewModel<StackViewExte
    lazy var general = Combos<SComboMDD<LabelModel, DoubleLabelHorizontal, DoubleLabelHorizontal>>()
       .setMain { header in
          header
-            .set_text("Общие")
-            .set_textColor(Design.color.textContrastSecondary)
+            .text("Общие")
+            .textColor(Design.color.textContrastSecondary)
       } setDown: {
          $0
             .setMain {
                $0
-                  .set_text("Язык")
-                  .set_textColor(Design.color.text)
+                  .text("Язык")
+                  .textColor(Design.color.text)
             } setRight: {
                $0
-                  .set_text("Русский")
-                  .set_textColor(Design.color.textContrastSecondary)
+                  .text("Русский")
+                  .textColor(Design.color.textContrastSecondary)
             }
-            .set_height(Grid.x60.value)
+            .height(Grid.x60.value)
 
       } setDown2: {
          $0
             .setMain {
                $0
-                  .set_text("Тема")
-                  .set_textColor(Design.color.text)
+                  .text("Тема")
+                  .textColor(Design.color.text)
             } setRight: {
                $0
-                  .set_text("Как в системе")
-                  .set_textColor(Design.color.textContrastSecondary)
+                  .text("Как в системе")
+                  .textColor(Design.color.textContrastSecondary)
             }
-            .set_distribution(.equalCentering)
-            .set_height(Grid.x60.value)
+            .distribution(.equalCentering)
+            .height(Grid.x60.value)
       }
-      .set_backColor(Design.color.infoSecondary)
-      .set_padding(Asset.Design.params.contentPadding)
-      .set_cornerRadius(Design.params.cornerRadiusSmall)
+      .backColor(Design.color.infoSecondary)
+      .padding(Asset.Design.params.contentPadding)
+      .cornerRadius(Design.params.cornerRadiusSmall)
 
    lazy var help = Combos<SComboMDD<LabelModel, DoubleLabelHorizontal, DoubleLabelHorizontal>>()
       .setMain { header in
          header
-            .set_text("Помощь")
-            .set_textColor(Design.color.textContrastSecondary)
+            .text("Помощь")
+            .textColor(Design.color.textContrastSecondary)
       } setDown: {
          $0
             .setMain {
                $0
-                  .set_text("Обратная связь")
-                  .set_textColor(Design.color.text)
+                  .text("Обратная связь")
+                  .textColor(Design.color.text)
             } setRight: {
                $0
-                  .set_text(">")
-                  .set_textColor(Design.color.textContrastSecondary)
+                  .text(">")
+                  .textColor(Design.color.textContrastSecondary)
             }
-            .set_height(Grid.x60.value)
+            .height(Grid.x60.value)
 
       } setDown2: {
          $0
             .setMain {
                $0
-                  .set_text("О приложении")
-                  .set_textColor(Design.color.text)
+                  .text("О приложении")
+                  .textColor(Design.color.text)
             } setRight: {
                $0
-                  .set_text(">")
-                  .set_textColor(Design.color.textContrastSecondary)
+                  .text(">")
+                  .textColor(Design.color.textContrastSecondary)
             }
-            .set_distribution(.equalCentering)
-            .set_height(Grid.x60.value)
+            .distribution(.equalCentering)
+            .height(Grid.x60.value)
       }
-      .set_backColor(Design.color.infoSecondary)
-      .set_padding(Asset.Design.params.contentPadding)
-      .set_cornerRadius(Design.params.cornerRadiusSmall)
+      .backColor(Design.color.infoSecondary)
+      .padding(Asset.Design.params.contentPadding)
+      .cornerRadius(Design.params.cornerRadiusSmall)
 
    lazy var logoutButton = Design.button.default
       .set(Design.state.button.default)
-      .set_title(Design.Text.button.logoutButton)
+      .title(Design.Text.button.logoutButton)
 
    private lazy var useCase = Asset.apiUseCase
 
@@ -102,7 +102,7 @@ final class SettingsViewModel<Asset: AssetProtocol>: BaseViewModel<StackViewExte
       set(.axis(.vertical))
       set(.distribution(.fill))
       set(.alignment(.fill))
-      set(.models([
+      set(.arrangedModels([
          general,
          Spacer(8),
          help,
@@ -112,11 +112,11 @@ final class SettingsViewModel<Asset: AssetProtocol>: BaseViewModel<StackViewExte
       ]))
 
       logoutButton
-         .onEvent(\.didTap)
-         .doNext(work: useCase.logout)
+         .on(\.didTap)
+         .doNext(useCase.logout)
          .onSuccess {
             UserDefaults.standard.setIsLoggedIn(value: false)
-            Asset.router?.route(\.digitalThanks, navType: .present, payload: ())
+            Asset.router?.route(\.digitalThanks, navType: .presentInitial, payload: ())
          }.onFail {
             print("logout api failed")
          }

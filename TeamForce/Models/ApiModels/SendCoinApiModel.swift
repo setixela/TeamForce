@@ -17,6 +17,7 @@ struct SendCoinRequest {
    let reason: String
    let isAnonymous: Bool
    let photo: UIImage?
+   let tags: String?
 }
 
 protocol Failuring {
@@ -32,7 +33,7 @@ final class SendCoinApiWorker: BaseApiWorker<SendCoinRequest, Void> {
          let cookie = HTTPCookieStorage.shared.cookies?.first(where: { $0.name == cookieName })
       else {
          print("No csrf cookie")
-         work.fail(())
+         work.fail()
          return
       }
 
@@ -41,6 +42,7 @@ final class SendCoinApiWorker: BaseApiWorker<SendCoinRequest, Void> {
          "amount": sendCoinRequest.amount,
          "reason": sendCoinRequest.reason,
          "is_anonymous": sendCoinRequest.isAnonymous,
+         "tags": sendCoinRequest.tags.string
       ]
 
       if let photo = sendCoinRequest.photo {
@@ -58,22 +60,16 @@ final class SendCoinApiWorker: BaseApiWorker<SendCoinRequest, Void> {
                if let response = result.response as? HTTPURLResponse {
                   if response.statusCode == 400 {
                      print("400 happened")
-                     guard let data = result.data else {
-                        work.fail(())
-                        return
-                     }
 
-                     let errorArray = try JSONSerialization.jsonObject(with: data) as? [String]
-
-                     work.fail(errorArray?.first)
+                     work.fail()
                      return
                   }
                }
-               work.success(result: ())
+               work.success()
             }
             .catch { error in
                print("error coin sending: \(error)")
-               work.fail(error)
+               work.fail()
             }
       } else {
          apiEngine?
@@ -88,7 +84,7 @@ final class SendCoinApiWorker: BaseApiWorker<SendCoinRequest, Void> {
                   if response.statusCode == 400 {
                      print("400 happened")
                      guard let data = result.data else {
-                        work.fail(())
+                        work.fail()
                         return
                      }
 
@@ -98,11 +94,11 @@ final class SendCoinApiWorker: BaseApiWorker<SendCoinRequest, Void> {
                      return
                   }
                }
-               work.success(result: ())
+               work.success()
             }
             .catch { error in
                print("error coin sending: \(error)")
-               work.fail(error)
+               work.fail()
             }
       }
    }

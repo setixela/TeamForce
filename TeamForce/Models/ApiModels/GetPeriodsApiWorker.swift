@@ -34,13 +34,13 @@ final class GetPeriodsApiWorker: BaseApiWorker<String, [Period]> {
                let data = result.data,
                let periods: [Period] = decoder.parse(data)
             else {
-               work.fail(())
+               work.fail()
                return
             }
             work.success(result: periods)
          }
          .catch { _ in
-            work.fail(())
+            work.fail()
          }
    }
 }

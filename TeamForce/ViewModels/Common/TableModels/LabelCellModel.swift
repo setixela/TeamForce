@@ -21,7 +21,7 @@ final class LabelCellModel: BaseViewModel<StackViewExtended> {
 
     override func start() {
         view.backgroundColor = .init(hue: .random(in: 0.0 ... 1.0), saturation: 0.5, brightness: 0.85, alpha: 1)
-        set(.models([label]))
+        set(.arrangedModels([label]))
         set(.height(44))
     }
 }

@@ -20,50 +20,50 @@ final class PlaygroundScene<Asset: AssetProtocol>: BaseSceneModel<
 
    override func start() {
       let viewModel = VizitkaDemo()
-         .set_backColor(.random)
-         .set_size(.init(width: 100, height: 66))
+         .backColor(.random)
+         .size(.init(width: 100, height: 66))
 
       let titleSubtitle = TitleSubtitleModel()
-         .set_text("Hello")
-         .set_backColor(.random)
+         .text("Hello")
+         .backColor(.random)
          .setDown {
             $0
-               .set_text("World")
-               .set_backColor(.random)
+               .text("World")
+               .backColor(.random)
          }
 
       let logoTitleSubtitle = IconTitleSubtitleModel()
-         .set_image(Design.icon.logo)
-         .set_backColor(.random)
+         .image(Design.icon.logo)
+         .backColor(.random)
          .setRight {
             $0
-               .set_text("Hello")
-               .set_backColor(.random)
+               .text("Hello")
+               .backColor(.random)
                .setDown {
                   $0
-                     .set_text("World")
-                     .set_backColor(.random)
+                     .text("World")
+                     .backColor(.random)
                }
          }
 
       let comboC = Combos { (model: ViewModel) in
          model
-            .set_size(.square(60))
-            .set_backColor(.random)
+            .size(.square(60))
+            .backColor(.random)
       } setRight: { (model: ViewModel) in
          model
-            .set_size(.square(30))
-            .set_backColor(.random)
+            .size(.square(30))
+            .backColor(.random)
       } setDown: { (model: ViewModel) in
          model
-            .set_size(.square(30))
-            .set_backColor(.random)
+            .size(.square(30))
+            .backColor(.random)
       }
 
       mainVM
-         .set_alignment(.leading)
-         .set_axis(.vertical)
-         .set_arrangedModels([
+         .alignment(.leading)
+         .axis(.vertical)
+         .arrangedModels([
             Spacer(32),
             viewModel,
             Spacer(32),

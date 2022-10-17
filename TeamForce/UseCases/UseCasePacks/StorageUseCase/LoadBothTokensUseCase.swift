@@ -14,7 +14,7 @@ struct LoadBothTokensUseCase: UseCaseProtocol {
       safeStringStorage
          .doAsync("token")
          .onFail {
-            work.fail(())
+            work.fail()
          }
          .onSuccess {
             log($0)
@@ -25,7 +25,7 @@ struct LoadBothTokensUseCase: UseCaseProtocol {
          .onSuccessMixSaved { token, csrf in
             work.success(result: (token, csrf))
          }.onFail {
-            work.fail(())
+            work.fail()
          }
    } }
 }

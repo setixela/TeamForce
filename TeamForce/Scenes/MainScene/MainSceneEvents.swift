@@ -9,7 +9,7 @@ import CoreGraphics
 import ReactiveWorks
 
 struct MainSceneEvents: InitProtocol {
-   var didScroll: Event<CGFloat>?
-   var willEndDragging: Event<CGFloat>?
-   var userDidLoad: Event<UserData?>?
+   var didScroll: CGFloat?
+   var willEndDragging: CGFloat?
+   var userDidLoad: UserData??
 }

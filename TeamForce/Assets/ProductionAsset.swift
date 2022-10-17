@@ -8,29 +8,45 @@
 import ReactiveWorks
 
 enum ProductionAsset: AssetProtocol {
-   typealias Router = MainRouter<Scene>
+   typealias Router = MainRouter<ProductionAsset>
    typealias Text = TextBuilder
    typealias Design = DesignSystem
    typealias Service = ProductionService
    typealias Scene = Scenes
 
-   static var router: MainRouter<Scene>? = MainRouter<Scene>()
+   weak static var router: MainRouter<ProductionAsset>?
+}
+
+protocol ScenesProtocol: InitProtocol {
+   var digitalThanks: SceneModelProtocol { get }
+   var login: SceneModelProtocol { get }
+   var main: SceneModelProtocol { get }
+   var profile: SceneModelProtocol { get }
+   var transactionDetail: SceneModelProtocol { get }
+   var challengeDetails: SceneModelProtocol { get }
+   var challengeCreate: SceneModelProtocol { get }
+   var challengeSendResult: SceneModelProtocol { get }
+
+   // plays
+   var playground: SceneModelProtocol { get }
+   var feedDetail: SceneModelProtocol { get }
 }
 
 struct Scenes: ScenesProtocol {
-   var playground: SceneModelProtocol { PlaygroundScene<ProductionAsset>()}
+   var playground: SceneModelProtocol { PlaygroundScene<ProductionAsset>() }
    //
    var digitalThanks: SceneModelProtocol { DigitalThanksScene<ProductionAsset>() }
    var login: SceneModelProtocol { LoginScene<ProductionAsset>() }
-   //
    var main: SceneModelProtocol { MainScene<ProductionAsset>() }
-   //
    var profile: SceneModelProtocol { ProfileScene<ProductionAsset>() }
    var transactionDetail: SceneModelProtocol { TransactDeatilViewModel<ProductionAsset>() }
-   var profileEdit: SceneModelProtocol { ProfileEditScene<ProductionAsset>() }
+   // var profileEdit: SceneModelProtocol { ProfileEditScene<ProductionAsset>() }
 
-   // camera
-   var imagePicker: SceneModelProtocol { ImagePickerScene<ProductionAsset>() }
+   var feedDetail: SceneModelProtocol { FeedDetailScene<ProductionAsset>() }
+
+   var challengeCreate: SceneModelProtocol { ChallengeCreateScene<ProductionAsset>() }
+   var challengeSendResult: SceneModelProtocol { ChallengeResultScene<ProductionAsset>() }
+   var challengeDetails: SceneModelProtocol { ChallengeDetailsScene<ProductionAsset>() }
 }
 
 struct ProductionService: ServiceProtocol {
@@ -44,12 +60,11 @@ struct MockService: ServiceProtocol {
 }
 
 enum MockAsset: AssetProtocol {
-   typealias Router = MainRouter<Scene>
+   typealias Router = MainRouter<MockAsset>
    typealias Text = TextBuilder
    typealias Design = DesignSystem
    typealias Service = MockService
    typealias Scene = Scenes
 
-   static var router: MainRouter<Scene>? = MainRouter<Scene>()
-   static var globalRetainer: Retainer? = Retainer()
+   weak static var router: MainRouter<MockAsset>?
 }

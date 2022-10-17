@@ -11,9 +11,10 @@ final class DoubleStacksBrandedVM<Design: DesignProtocol>: Combos<SComboMD<Stack
    Designable
 {
    lazy var header = Design.label.headline5
-      .set_textColor(Design.color.textInvert)
+      .textColor(Design.color.textInvert)
 
-   var bottomSubStack: StackModel { models.down.subModel }
+   var headerStack: StackModel { models.main }
+   var bodyStack: StackModel { models.down.subModel }
 
    required init() {
       super.init()
@@ -21,9 +22,9 @@ final class DoubleStacksBrandedVM<Design: DesignProtocol>: Combos<SComboMD<Stack
       setMain {
          $0
             .set(Design.state.stack.default)
-            .set_backColor(Design.color.backgroundBrand)
-            .set_alignment(.leading)
-            .set_arrangedModels([
+            .backColor(Design.color.backgroundBrand)
+            .alignment(.leading)
+            .arrangedModels([
                Grid.x16.spacer,
                BrandLogoIcon<Design>(),
                Grid.x16.spacer,
@@ -32,11 +33,53 @@ final class DoubleStacksBrandedVM<Design: DesignProtocol>: Combos<SComboMD<Stack
             ])
       } setDown: {
          $0
-            .set_backColor(Design.color.background)
-            .set_padding(.top(-Grid.x16.value))
-            .set_padBottom(-Grid.x32.value)
+            .backColor(Design.color.background)
+            .padding(.top(-Grid.x16.value))
+            .padBottom(-Grid.x32.value)
             .subModel
             .set(Design.state.stack.bottomShadowedPanel)
+      }
+   }
+}
+
+final class TripleStacksBrandedVM<Design: DesignProtocol>: Combos<SComboMDD<StackModel, WrappedY<StackModel>, StackModel>>,
+   Designable
+{
+   lazy var header = Design.label.headline5
+      .textColor(Design.color.textInvert)
+
+   var headerStack: StackModel { models.main }
+   var bodyStack: StackModel { models.down.subModel }
+   var footerStack: StackModel { models.down2 }
+
+   required init() {
+      super.init()
+
+      setMain {
+         $0
+            .set(Design.state.stack.default)
+            .backColor(Design.color.backgroundBrand)
+            .alignment(.leading)
+            .arrangedModels([
+               Grid.x16.spacer,
+               BrandLogoIcon<Design>(),
+               Grid.x16.spacer,
+               header,
+               Grid.x36.spacer
+            ])
+      } setDown: {
+         $0
+            .backColor(Design.color.background)
+            .padding(.top(-Grid.x16.value))
+            .padBottom(-Grid.x32.value)
+            .subModel
+            .set(Design.state.stack.bottomShadowedPanel)
+      } setDown2: {
+         $0
+            .backColor(Design.color.background)
+            .padding(.top(-Grid.x16.value))
+            .padBottom(-Grid.x32.value)
+            .set(Design.state.stack.bottomPanel)
       }
    }
 }

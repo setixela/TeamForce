@@ -23,12 +23,20 @@ enum TableItemsState {
    case presenters([PresenterProtocol])
 }
 
-struct TableItemsEvents: InitProtocol {
-   var didSelectRow: Event<(IndexPath, Int)>?
+protocol ScrollEventsProtocol: InitProtocol {
+   // TODO: - Обьединять ивенты как Стейты
+   var didScroll: CGFloat? { get set }
+   var willEndDragging: CGFloat? { get set }
+}
+
+
+struct TableItemsEvents: ScrollEventsProtocol {
+   var didSelectRow: (IndexPath, Int)?
+   var didSelectRowInt: Int?
 
    // TODO: - Обьединять ивенты как Стейты
-   var didScroll: Event<CGFloat>?
-   var willEndDragging: Event<CGFloat>?
+   var didScroll: CGFloat?
+   var willEndDragging: CGFloat?
 }
 
 final class TableItemsModel<Design: DSP>: BaseViewModel<UITableView>,
@@ -37,7 +45,8 @@ final class TableItemsModel<Design: DSP>: BaseViewModel<UITableView>,
    UITableViewDelegate,
    UITableViewDataSource
 {
-   var events: TableItemsEvents = .init()
+   typealias Events = TableItemsEvents
+   var events: EventsStore = .init()
 
    private var isMultiSection: Bool = false
 
@@ -47,7 +56,7 @@ final class TableItemsModel<Design: DSP>: BaseViewModel<UITableView>,
    private var itemSections: [TableItemsSection] = []
 
    private var prevScrollOffset: CGFloat = 0
-  // private var velocity: CGFloat = 0
+   // private var velocity: CGFloat = 0
 
    // MARK: - Start
 
@@ -55,8 +64,10 @@ final class TableItemsModel<Design: DSP>: BaseViewModel<UITableView>,
       view.delegate = self
       view.dataSource = self
       view.separatorColor = .clear
-      view.clipsToBounds = false
+      view.clipsToBounds = true
       view.layer.masksToBounds = true
+
+      backColor(Design.color.background)
 
       if #available(iOS 15.0, *) {
          view.sectionHeaderTopPadding = 0
@@ -72,7 +83,8 @@ final class TableItemsModel<Design: DSP>: BaseViewModel<UITableView>,
          rowNumber += view.numberOfRows(inSection: i)
       }
 
-      sendEvent(\.didSelectRow, payload: (indexPath, rowNumber))
+      send(\.didSelectRow, (indexPath, rowNumber))
+      send(\.didSelectRowInt, rowNumber)
       tableView.deselectRow(at: indexPath, animated: true)
    }
 
@@ -89,18 +101,19 @@ final class TableItemsModel<Design: DSP>: BaseViewModel<UITableView>,
 
       let cellName = String(describing: type(of: item))
 
-      view.register(UITableViewCell.self, forCellReuseIdentifier: cellName)
+      view.register(TableCell.self, forCellReuseIdentifier: cellName)
 
-      let cell = tableView.dequeueReusableCell(withIdentifier: cellName) ?? UITableViewCell()
+      let cell = tableView.dequeueReusableCell(withIdentifier: cellName) ?? TableCell()
 
       let presenter = presenters[cellName]
-      let modelView = presenter?.viewModel(for: item).uiView ?? UIView()
+      let model = presenter?.viewModel(for: item)
+      let modelView = model?.uiView ?? UIView()
 
-      cell.backgroundColor = .clear
+      cell.contentView.backgroundColor = Design.color.background
       cell.contentView.subviews.forEach { $0.removeFromSuperview() }
       cell.contentView.addSubview(modelView)
       modelView.addAnchors.fitToView(cell.contentView)
-      cell.selectionStyle = .none
+      cell.contentView.setNeedsLayout()
 
       return cell
    }
@@ -119,9 +132,9 @@ final class TableItemsModel<Design: DSP>: BaseViewModel<UITableView>,
       let text = itemSections[section].title
       let view = LabelModel()
          .set(Design.state.label.title)
-         .set_padding(.init(top: 4, left: 16, bottom: 4, right: 16))
-         .set_text(text)
-         .set_backColor(Design.color.background)
+         .padding(.init(top: 4, left: 16, bottom: 4, right: 16))
+         .text(text)
+         .backColor(Design.color.background)
          .uiView
 
       return view
@@ -136,17 +149,15 @@ final class TableItemsModel<Design: DSP>: BaseViewModel<UITableView>,
    func scrollViewDidScroll(_ scrollView: UIScrollView) {
       let velocity = scrollView.contentOffset.y - prevScrollOffset
       prevScrollOffset = scrollView.contentOffset.y
-      sendEvent(\.didScroll, velocity)
+      send(\.didScroll, velocity)
    }
 
    func scrollViewWillEndDragging(_ scrollView: UIScrollView,
                                   withVelocity velocity: CGPoint,
-                                  targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-      sendEvent(\.willEndDragging, velocity.y)
+                                  targetContentOffset: UnsafeMutablePointer<CGPoint>)
+   {
+      send(\.willEndDragging, velocity.y)
    }
-//   {
-//      sendEvent(\.didEndDragging, velocity)
-//   }
 }
 
 extension TableItemsModel: Stateable2 {
@@ -172,4 +183,10 @@ extension TableItemsModel: Stateable2 {
    }
 }
 
-extension TableItemsModel: Communicable {}
+extension TableItemsModel: Eventable {}
+
+final class TableCell: UITableViewCell {
+   override func prepareForReuse() {
+      super.prepareForReuse()
+   }
+}

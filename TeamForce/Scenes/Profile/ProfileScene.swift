@@ -8,55 +8,34 @@
 import ReactiveWorks
 import UIKit
 
-struct ProfileViewEvent: InitProtocol {}
+struct ProfileEvents: InitProtocol {
+   var saveSuccess: Void?
+}
 
 final class ProfileScene<Asset: AssetProtocol>: BaseSceneModel<
    DefaultVCModel,
-   TripleStacksBrandedVM<Asset.Design>,
+   DoubleStacksBrandedVM<Asset.Design>,
    Asset,
-   Void
+   Int
 > {
-   lazy var userModel = Combos<SComboMRD<ImageViewModel, LabelModel, LabelModel>>()
-      .setMain { image in
-         image
-            .set_image(Design.icon.avatarPlaceholder)
-            .set_cornerRadius(52 / 2)
-            .set(.size(.square(52)))
-      } setRight: { fullName in
-         fullName
-            .set_textColor(Design.color.text)
-            .set_padTop(-8)
-            .set_padLeft(12)
-      } setDown: { telegram in
-         telegram
-            .set_textColor(Design.color.textBrand)
-            .set_padLeft(12)
-            .set(Design.state.label.body2)
-      }
-      .set_alignment(.center)
-      .set_distribution(.fill)
-      .set_backColor(Design.color.backgroundInfoSecondary)
-      .set_cornerRadius(Design.params.cornerRadius)
-      .set_padding(Design.params.cellContentPadding)
-      .set_shadow(Design.params.panelMainButtonShadow)
-      .set_height(76)
+   lazy var userModel = Design.model.profile.userEditPanel
 
    lazy var email = SettingsTitleBodyDT<Design>()
       .setAll {
-         $0.set_text("Корпоративная почта")
-         $1.set_text("-")
+         $0.text("Корпоративная почта")
+         $1.text("-")
       }
-   
+
    lazy var phone = SettingsTitleBodyDT<Design>()
       .setAll {
-         $0.set_text("Мобильный номер")
-         $1.set_text("-")
+         $0.text("Мобильный номер")
+         $1.text("-")
       }
-   
+
    lazy var infoStack = UserProfileStack<Design>()
-      .set_arrangedModels([
+      .arrangedModels([
          LabelModel()
-            .set_text("ИНФОРМАЦИЯ")
+            .text("ИНФОРМАЦИЯ")
             .set(Design.state.label.caption2),
          email,
          phone,
@@ -64,40 +43,41 @@ final class ProfileScene<Asset: AssetProtocol>: BaseSceneModel<
 
    lazy var organization = SettingsTitleBodyDT<Design>()
       .setAll {
-         $0.set_text("Компания")
-         $1.set_text("-")
+         $0.text("Компания")
+         $1.text("-")
       }
-   
+
    lazy var department = SettingsTitleBodyDT<Design>()
       .setAll {
-         $0.set_text("Подразделение")
-         $1.set_text("-")
+         $0.text("Подразделение")
+         $1.text("-")
       }
-   
+
    lazy var hiredAt = SettingsTitleBodyDT<Design>()
       .setAll {
-         $0.set_text("Дата начала работы")
-         $1.set_text("-")
+         $0.text("Дата начала работы")
+         $1.text("-")
       }
-   
+
    lazy var infoStackSecondary = UserProfileStack<Design>()
-      .set_arrangedModels([
+      .arrangedModels([
          LabelModel()
-            .set_text("МЕСТО РАБОТЫ")
+            .text("МЕСТО РАБОТЫ")
             .set(Design.state.label.caption2),
          organization,
          department,
          hiredAt,
       ])
-   
-   lazy var editButton = Design.button.default
-      .set_title("Edit")
+
+   lazy var bottomPopupPresenter = Design.model.common.bottomPopupPresenter
+
+   private lazy var editProfileModel = ProfileEditScene<Asset>(vcModel: vcModel)
 
    // MARK: - Services
 
    private lazy var userProfileApiModel = ProfileApiWorker(apiEngine: Asset.service.apiEngine)
    private lazy var safeStringStorageModel = StringStorageWorker(engine: Asset.service.safeStringStorage)
-
+   private lazy var useCase = Asset.apiUseCase
    private var balance: Balance?
 
    override func start() {
@@ -107,85 +87,117 @@ final class ProfileScene<Asset: AssetProtocol>: BaseSceneModel<
    }
 
    private func configure() {
-      mainVM.footerStack.view.removeFromSuperview()
-      mainVM.headerStack.set_arrangedModels([Grid.x128.spacer])
+      mainVM.headerStack.arrangedModels([Grid.x64.spacer])
       mainVM.bodyStack
          .set(.backColor(Design.color.backgroundSecondary))
          .set(.axis(.vertical))
          .set(.distribution(.fill))
          .set(.alignment(.fill))
-         .set_padTop(-32)
-         .set(.models([
+         .padTop(-32)
+         .set(.arrangedModels([
             userModel,
             Spacer(32),
             infoStack,
             Spacer(8),
             infoStackSecondary,
-            Spacer(8),
-            editButton,
             Grid.xxx.spacer,
          ]))
-      
-      editButton.onEvent(\.didTap) {
-         Asset.router?.route(\.profileEdit, navType: .presentModally(.formSheet))
+
+      userModel.models.right2.on(\.didTap, self) { slf in
+         slf.bottomPopupPresenter.send(\.present, (slf.editProfileModel, slf.vcModel?.view.rootSuperview))
+         slf.editProfileModel.closeButton.on(\.didTap) {
+            slf.bottomPopupPresenter.send(\.hide)
+         }
+         
+         slf.editProfileModel.on(\.saveSuccess) {
+            slf.editProfileModel.clearcontactModelsStock()
+            slf.editProfileModel.scenario.start()
+            slf.configureProfile()
+            slf.bottomPopupPresenter.send(\.hide)
+         }
       }
    }
 
    private func configureProfile() {
-      safeStringStorageModel
-         .doAsync("token")
-         .onFail {
-            print("token not found")
-         }
-         .doMap {
-            TokenRequest(token: $0)
-         }
-         .doNext(worker: userProfileApiModel)
-         .onSuccess { [weak self] userData in
-            self?.setLabels(userData: userData)
-         }.onFail {
-            print("load profile error")
-         }
+      if let input = inputValue {
+         print("input is \(input)")
+         useCase.getProfileById
+            .doAsync(input)
+            .onSuccess { [weak self] userData in
+               self?.setLabels(userData: userData)
+            }
+            .onFail {
+               print("failed to load profile")
+            }
+         userModel.models.right2.hidden(true)
+         
+      } else {
+         safeStringStorageModel
+            .doAsync("token")
+            .onFail {
+               print("token not found")
+            }
+            .doMap {
+               TokenRequest(token: $0)
+            }
+            .doNext(worker: userProfileApiModel)
+            .onSuccess { [weak self] userData in
+               self?.setLabels(userData: userData)
+            }.onFail {
+               print("load profile error")
+            }
+      }
+      
    }
-
+   
+   private func clearLabels() {
+      email.setAll {
+         $1.text("-")
+      }
+      phone.setAll {
+         $1.text("-")
+      }
+   }
+   
    private func setLabels(userData: UserData) {
+      clearLabels()
       let profile = userData.profile
-      let fullName = profile.surName + " " +
-         profile.firstName + " " + profile.middleName.string
-      userModel.models.right.set_text(fullName)
-      userModel.models.down.set_text("@" + profile.tgName)
+      let fullName = profile.surName.string + " " +
+         profile.firstName.string + " " + profile.middleName.string
+      userModel.models.right.fullName.text(fullName)
+      userModel.models.right.nickName.text("@" + profile.tgName)
       if let urlSuffix = profile.photo {
-         userModel.models.main.set_url(TeamForceEndpoints.urlBase + urlSuffix)
+         userModel.models.main.url(TeamForceEndpoints.urlBase + urlSuffix)
       }
 
       // infoStackSecondary
       organization.setAll {
-         $1.set_text(profile.organization)
+         $1.text(profile.organization)
       }
       department.setAll {
-         $1.set_text(profile.department)
+         $1.text(profile.department)
       }
       hiredAt.setAll {
-         $1.set_text(profile.hiredAt.string)
+         $1.text(profile.hiredAt.string)
       }
-      print("contacts \(profile.contacts)")
-      
-      //infoStack
-      
-      for contact in profile.contacts {
-         switch contact.contactType {
-         case "@":
-            email.setAll {
-               $1.set_text(contact.contactId)
+
+      // infoStack
+      if let contacts = profile.contacts {
+         for contact in contacts {
+            switch contact.contactType {
+            case "@":
+               email.setAll {
+                  $1.text(contact.contactId)
+               }
+            case "P":
+               phone.setAll {
+                  $1.text(contact.contactId)
+               }
+            case "T":
+               userModel.models.right.nickName.text("@" + contact.contactId)
+            default:
+               print("Contact error")
             }
-         case "P":
-            phone.setAll {
-               $1.set_text(contact.contactId)
-            }
-         case "T":
-            userModel.models.down.set_text("@" + contact.contactId)
-         default:
-            print("Contact error")
          }
       }
    }
@@ -194,16 +206,16 @@ final class ProfileScene<Asset: AssetProtocol>: BaseSceneModel<
 final class SettingsTitleBodyDT<Design: DSP>: TitleSubtitleY<Design> {
    required init() {
       super.init()
-      set_spacing(4)
+      spacing(4)
       setAll { main, down in
          main
-            .set_alignment(.left)
+            .alignment(.left)
             .set(Design.state.label.caption)
-            .set_textColor(Design.color.textSecondary)
+            .textColor(Design.color.textSecondary)
          down
-            .set_alignment(.left)
+            .alignment(.left)
             .set(Design.state.label.default)
-            .set_textColor(Design.color.text)
+            .textColor(Design.color.text)
       }
    }
 }
@@ -212,11 +224,11 @@ final class UserProfileStack<Design: DSP>: StackModel, Designable {
    override func start() {
       super.start()
 
-      set_backColor(Design.color.backgroundInfoSecondary)
-      set_padding(.init(top: 16, left: 16, bottom: 16, right: 16))
-      set_cornerRadius(Design.params.cornerRadiusSmall)
-      set_spacing(12)
-      set_distribution(.equalSpacing)
-      set_alignment(.leading)
+      backColor(Design.color.backgroundInfoSecondary)
+      padding(.init(top: 16, left: 16, bottom: 16, right: 16))
+      cornerRadius(Design.params.cornerRadiusSmall)
+      spacing(12)
+      distribution(.equalSpacing)
+      alignment(.leading)
    }
 }

@@ -6,6 +6,7 @@
 //
 
 import ReactiveWorks
+import UIKit
 
 struct FeedScenarioInputEvents {
    let loadFeedForCurrentUser: VoidWork<UserData?>
@@ -13,6 +14,9 @@ struct FeedScenarioInputEvents {
    let presentAllFeed: VoidWork<Void>
    let presentMyFeed: VoidWork<Void>
    let presentPublicFeed: VoidWork<Void>
+   let presentProfile: VoidWork<Int>
+   let reactionPressed: VoidWork<PressLikeRequest>
+   let presentDetail: VoidWork<(IndexPath, Int)>
 }
 
 final class FeedScenario<Asset: AssetProtocol>:
@@ -21,25 +25,54 @@ final class FeedScenario<Asset: AssetProtocol>:
    private var userName: String = ""
 
    override func start() {
+      
       events.loadFeedForCurrentUser
-         .doNext(work: works.loadFeedForCurrentUser)
-         .doNext(work: works.getAllFeed)
+         .doNext(works.loadFeedForCurrentUser)
+         .onFail(setState, .loadFeedError)
+         .doNext(works.getAllFeed)
          .onSuccess(setState) { .presentFeed($0) }
          .onFail(setState, .loadFeedError)
 
       events.presentAllFeed
-         .doNext(work: works.getAllFeed)
+         .doNext(works.getAllFeed)
          .onSuccess(setState) { .presentFeed($0) }
          .onFail(setState, .loadFeedError)
 
       events.presentMyFeed
-         .doNext(work: works.getMyFeed)
+         .doNext(works.getMyFeed)
          .onSuccess(setState) { .presentFeed($0) }
          .onFail(setState, .loadFeedError)
 
       events.presentPublicFeed
-         .doNext(work: works.getPublicFeed)
+         .doNext(works.getPublicFeed)
          .onSuccess(setState) { .presentFeed($0) }
          .onFail(setState, .loadFeedError)
+      
+      events.presentProfile
+         .onSuccess(setState) { .presentProfile($0) }
+      
+      events.reactionPressed
+         .doNext(works.pressLike)
+         .onFail {
+            print("failed to like")
+         }
+         .doMap() {
+            self.events.loadFeedForCurrentUser.result
+         }
+         .doNext(works.loadFeedForCurrentUser)
+         .onFail(setState, .loadFeedError)
+         .doNext(works.getAllFeed)
+         .onSuccess(setState) { .presentFeed($0) }
+         .onFail(setState, .loadFeedError)
+      
+      events.presentDetail
+         .doNext(works.getFeedByRowNumber)
+         .onSuccess(setState) {
+            .presentDetailView($0)}
+         .onFail {
+            print("fail ")
+         }
+      
+         
    }
 }

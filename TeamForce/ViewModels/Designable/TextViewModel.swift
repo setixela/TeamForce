@@ -10,28 +10,29 @@ import ReactiveWorks
 import UIKit
 
 struct TextViewEvents: InitProtocol {
-   var didEditingChanged: Event<String>?
+   var didEditingChanged: String?
 }
 
-final class TextViewModel: BaseViewModel<UITextView>, UITextViewDelegate {
-   var events: TextViewEvents = .init()
+class TextViewModel: BaseViewModel<UITextView>, UITextViewDelegate {
+
+   var events: EventsStore = .init()
 
    private var placeholder: String = ""
-   private var isPlaceholded = false
+   private var isPlaceholded = true
 
    override func start() {
       view.delegate = self
-      
+      view.textColor = UIColor.lightGray
    }
 
    @objc func changValue() {
       guard let text = view.text else { return }
 
-      sendEvent(\.didEditingChanged, text)
+      send(\.didEditingChanged, text)
    }
 
    func textViewDidChange(_ textView: UITextView) {
-      sendEvent(\.didEditingChanged, textView.text)
+      send(\.didEditingChanged, textView.text)
    }
 
    func textViewDidBeginEditing(_ textView: UITextView) {
@@ -44,11 +45,17 @@ final class TextViewModel: BaseViewModel<UITextView>, UITextViewDelegate {
    }
 
    func textViewDidEndEditing(_ textView: UITextView) {
-      if textView.text.isEmpty {
+      if textView.text == nil || textView.text.isEmpty {
          textView.text = self.placeholder
          textView.textColor = UIColor.lightGray
          isPlaceholded = true
       }
+   }
+
+   @discardableResult func placeholder(_ value: String) -> Self {
+      set(.placeholder(value))
+      textViewDidEndEditing(view)
+      return self
    }
 }
 
@@ -69,20 +76,22 @@ extension TextViewModel: Stateable3 {
    func applyState(_ state: TextViewState) {
       switch state {
       case .text(let string):
-         set_text(string)
+         text(string)
       case .placeholder(let string):
          self.placeholder = string
-         set_text(string)
-      case .font(let font):
-         set_font(font)
+         text(string)
+      case .font(let value):
+         font(value)
       case .padding(let value):
-         set_padding(value)
+         padding(value)
       case .height(let value):
-         set_height(value)
+         height(value)
       case .width(let value):
-         set_width(value)
+         width(value)
       }
    }
 }
 
-extension TextViewModel: Communicable {}
+extension TextViewModel: Eventable {
+   typealias Events = TextViewEvents
+}

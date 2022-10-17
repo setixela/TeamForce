@@ -66,7 +66,7 @@ final class GetStatByPeriodIdApiWorker: BaseApiWorker<RequestWithId, PeriodStat>
       guard
          let RequestWithId = work.input
       else {
-         work.fail(())
+         work.fail()
          return
       }
       
@@ -83,13 +83,13 @@ final class GetStatByPeriodIdApiWorker: BaseApiWorker<RequestWithId, PeriodStat>
                let data = result.data,
                let periodStat: PeriodStat = decoder.parse(data)
             else {
-               work.fail(())
+               work.fail()
                return
             }
             work.success(result: periodStat)
          }
          .catch { _ in
-            work.fail(())
+            work.fail()
          }
    }
 }

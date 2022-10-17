@@ -12,6 +12,7 @@ enum FrameCellState {
    case text(String)
    case header(String)
    case caption(String)
+   case burn(String)
 }
 
 final class FrameCellModelDT<Design: DesignProtocol>: BaseViewModel<StackViewExtended>,
@@ -20,27 +21,36 @@ final class FrameCellModelDT<Design: DesignProtocol>: BaseViewModel<StackViewExt
    typealias State = StackState
 
    private lazy var headerLabel = Design.label.body2
-      .set_textColor(Design.color.textInvert)
+      .textColor(Design.color.textInvert)
    private lazy var textLabel = Design.label.headline4
-      .set_textColor(Design.color.textInvert)
+      .textColor(Design.color.textInvert)
    private lazy var captionLabel = Design.label.default
-      .set_textColor(Design.color.textInvert)
-
+      .textColor(Design.color.textInvert)
+   private lazy var burnLabel = IconLabelModel<Design>()
+      .backColor(Design.color.background.withAlphaComponent(0.5))
+      .cornerRadius(7)
+      .padding(.outline(3))
+      .padLeft(6)
+      .width(92)
+      .hidden(true)
+  
    override func start() {
       set(.axis(.vertical))
-      set(.padding(.init(top: 28, left: 20, bottom: 22, right: 16)))
+      set(.padding(.init(top: 36, left: 18, bottom: 14, right: 18)))
       set(.cornerRadius(Design.params.cornerRadiusMedium))
-      set_width(193)
-      set(.models([
+      height(184)
+      set(.arrangedModels([
          headerLabel,
          Spacer(10),
          textLabel,
-         Spacer(54),
+         Spacer(8),
+         burnLabel.lefted().height(30),
+         Spacer(),
          captionLabel
       ]))
-      set_backViewModel(ImageViewModel()
-         .set_image(Design.icon.coinBackground)
-         .set_padding(.horizontalShift(40))
+      backViewModel(ImageViewModel()
+         .image(Design.icon.coinBackground)
+         .padding(.horizontalShift(40))
       )
    }
 }
@@ -54,6 +64,11 @@ extension FrameCellModelDT: Stateable2 {
          headerLabel.set(.text(string))
       case .caption(let string):
          captionLabel.set(.text(string))
+      case .burn(let string):
+         burnLabel.icon.image(Design.icon.burn)
+         burnLabel.label.text(string)
+         burnLabel.label.textColor(Design.color.textBrand)
+         burnLabel.hidden(false)
       }
    }
 }
@@ -64,23 +79,23 @@ final class BalanceStatusFrameDT<Design: DSP>:
    required init() {
       super.init()
 
-      set_alignment(.center)
-      set_cornerRadius(Design.params.cornerRadius)
-      set_height(Design.params.infoFrameHeight)
-      set_padding(.init(top: 8, left: 14, bottom: 8, right: 14))
+      alignment(.center)
+      cornerRadius(Design.params.cornerRadius)
+      height(Design.params.infoFrameHeight)
+      padding(.init(top: 8, left: 14, bottom: 8, right: 14))
       setMain {
-         $0.set_size(.square(24))
+         $0.size(.square(24))
       } setRight: {
          $0
             .set(Design.state.label.default)
-            .set_padLeft(15)
+            .padLeft(15)
       } setDown: {
          $0
             .set(Design.state.label.default)
-            .set_padLeft(15)
+            .padLeft(15)
       } setDown2: {
          $0
-            .set_height(10)
+            .height(10)
       }
    }
 }

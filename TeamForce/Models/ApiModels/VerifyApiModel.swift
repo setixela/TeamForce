@@ -50,14 +50,14 @@ final class VerifyApiModel: BaseApiWorker<VerifyRequest, VerifyResultBody> {
                     let data = result.data,
                     let resultBody: VerifyResultBody = decoder.parse(data)
                 else {
-                    work.fail(())
+                    work.fail()
                     return
                 }
 
                 work.success(result: resultBody)
             }
             .catch { _ in
-                work.fail(())
+                work.fail()
             }
     }
 }

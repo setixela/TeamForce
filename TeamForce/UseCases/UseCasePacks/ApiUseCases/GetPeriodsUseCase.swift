@@ -17,14 +17,14 @@ struct GetPeriodsUseCase: UseCaseProtocol {
          safeStringStorage
             .doAsync("token")
             .onFail {
-               work.fail(())
+               work.fail()
             }
             .doNext(worker: getPeriodsApiWorker)
             .onSuccess {
                work.success(result: $0)
             }
             .onFail {
-               work.fail(())
+               work.fail()
             }
       }
    }

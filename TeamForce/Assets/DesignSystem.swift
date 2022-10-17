@@ -12,12 +12,14 @@ struct DesignSystem: DesignProtocol {
    typealias Text = TextBuilder
    typealias Icon = IconBuilder
    typealias Color = ColorBuilder
-//   typealias Font = FontBuilder
+   typealias Font = FontBuilder
    typealias Label = LabelBuilder<Self>
    typealias Button = ButtonBuilder<Self>
 
    typealias Params = ParamBuilder<Self>
    typealias State = StateBuilders<Self>
+
+   typealias Model = ModelBuilder<Self>
 }
 
 struct StateBuilders<Design: DesignProtocol>: StateProtocol {

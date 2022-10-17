@@ -20,13 +20,13 @@ class CurrencyLabelDT<Design: DSP>: Combos<SComboMR<LabelModel, ImageViewModel>>
       setAll {
          $0
             .set(Design.state.label.title2)
-            .set_text("0")
-            .set_textColor(Design.color.iconInvert)
+            .text("0")
+            .textColor(Design.color.iconInvert)
          $1
-            .set_image(Design.icon.logoCurrency)
-            .set_imageTintColor(Design.color.iconInvert)
+            .image(Design.icon.logoCurrency)
+            .imageTintColor(Design.color.iconInvert)
       }
-      set_axis(.horizontal)
+      axis(.horizontal)
    }
 }
 

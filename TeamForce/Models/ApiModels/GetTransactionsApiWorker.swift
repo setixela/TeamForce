@@ -108,11 +108,6 @@ struct Transaction: Codable {
    }
 }
 
-struct GetTransactionsApiEvent: NetworkEventProtocol {
-   var request: Event<TokenRequest>?
-   var success: Event<[Transaction]>?
-   var error: Event<ApiEngineError>?
-}
 
 final class GetTransactionsApiWorker: BaseApiWorker<String, [Transaction]> {
    override func doAsync(work: Wrk) {
@@ -126,13 +121,13 @@ final class GetTransactionsApiWorker: BaseApiWorker<String, [Transaction]> {
                let data = result.data,
                let transactions: [Transaction] = decoder.parse(data)
             else {
-               work.fail(())
+               work.fail()
                return
             }
             work.success(result: transactions)
          }
          .catch { _ in
-            work.fail(())
+            work.fail()
          }
    }
 }

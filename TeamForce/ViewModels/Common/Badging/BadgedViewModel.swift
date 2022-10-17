@@ -26,10 +26,10 @@ final class TopBadger<VM: VMPS>: Combos<SComboMD<WrappedY<LabelModel>, VM>> {
 
       setAll { topBadge, model in
          topBadge
-            .set_padding(.verticalShift(-7.5))
-            .set_padLeft(Grid.x16.value)
-            .set_zPosition(1000)
-            .set_alignment(.leading)
+            .padding(.verticalShift(-7.5))
+            .padLeft(Grid.x16.value)
+            .zPosition(1000)
+            .alignment(.leading)
       }
    }
 }
@@ -42,9 +42,9 @@ extension TopBadger: Stateable2 {
       case .badgeLabelStates(let value):
          models.main.subModel.set(value)
       case .presentBadge(let value):
-         models.main.subModel.set_text(value)
+         models.main.subModel.text(value)
       case .hideBadge:
-         models.main.subModel.set_text("")
+         models.main.subModel.text("")
       }
    }
 }

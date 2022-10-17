@@ -11,7 +11,7 @@ import ReactiveWorks
 final class NilBlocker<T>: WorkerProtocol {
    func doAsync(work: Work<T,T>) {
       guard let input = work.input else {
-         work.fail(())
+         work.fail()
          return
       }
 

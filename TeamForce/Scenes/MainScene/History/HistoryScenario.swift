@@ -13,6 +13,7 @@ struct HistoryScenarioEvents {
    let presentSentTransactions: VoidWork<Void>
    let presentRecievedTransaction: VoidWork<Void>
    let presentDetailView: VoidWork<(IndexPath, Int)>
+   let cancelTransaction: VoidWork<Int>
 }
 
 final class HistoryScenario<Asset: AssetProtocol>:
@@ -23,25 +24,32 @@ final class HistoryScenario<Asset: AssetProtocol>:
       works.loadProfile
          .doAsync()
          .onFail(setState, .loadProfilError)
-         .doNext(work: works.getTransactions)
+         .doNext(works.getTransactions)
          .onFail(setState, .loadTransactionsError)
          .doVoidNext(works.getAllTransactItems)
          .onSuccess(setState) { .presentAllTransactions($0) }
 
       events.presentAllTransactions
-         .doNext(work: works.getAllTransactItems)
+         .doNext(works.getAllTransactItems)
          .onSuccess(setState) { .presentAllTransactions($0) }
 
       events.presentSentTransactions
-         .doNext(work: works.getSentTransactItems)
+         .doNext(works.getSentTransactItems)
          .onSuccess(setState) { .presentSentTransactions($0) }
 
       events.presentRecievedTransaction
-         .doNext(work: works.getRecievedTransactItems)
+         .doNext(works.getRecievedTransactItems)
          .onSuccess(setState) { .presentRecievedTransaction($0) }
       
       events.presentDetailView
-         .doNext(work: works.getTransactionByRowNumber)
+         .doNext(works.getTransactionByRowNumber)
          .onSuccess(setState) { .presentDetailView($0)}
+      
+      events.cancelTransaction
+         .doNext(works.cancelTransactionById)
+         .onSuccess(setState) { .cancelTransaction }
+         .onFail {
+            print("can not cancel transaction")
+         }
    }
 }

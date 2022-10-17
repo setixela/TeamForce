@@ -8,28 +8,33 @@
 import ReactiveWorks
 import UIKit
 
-// 177
+typealias EventableUIViewModel = UIViewModel & Eventable
+typealias ScenaribleEventableUIViewModel = Scenarible & Eventable & UIViewModel
 
-typealias CommunicableUIViewModel = UIViewModel & Communicable
+enum MainSceneState {
+   case initial
+   case profileDidLoad(UserData)
+   case loadProfileError
+}
 
 final class MainScene<Asset: AssetProtocol>:
    BaseSceneModel<
       DefaultVCModel,
-      TripleStacksBrandedVM<Asset.Design>,
+      MainScreenVM<Asset.Design>,
       Asset,
       Void
    >, Scenarible
 {
-   lazy var scenario = MainScenario(
+   lazy var scenario: Scenario = MainScenario(
       works: MainWorks<Asset>(),
       stateDelegate: stateDelegate,
       events: MainScenarioInputEvents()
    )
 
-   private lazy var balanceViewModel = BalanceViewModel<Asset>()
+   private lazy var balanceViewModel = BalanceScene<Asset>()
    private lazy var historyViewModel = HistoryScene<Asset>()
-   private lazy var settingsViewModel = SettingsViewModel<Asset>()
    private lazy var feedViewModel = FeedScene<Asset>()
+   private lazy var challengesViewModel = ChallengesScene<Asset>()
 
    private lazy var transactModel: TransactScene = TransactScene<Asset>(vcModel: vcModel)
 
@@ -37,32 +42,142 @@ final class MainScene<Asset: AssetProtocol>:
 
    private var currentUser: UserData?
 
-   private weak var activeScreen: ModelProtocol?
+   private lazy var errorBlock = Design.model.common.connectionErrorBlock
+
+   private weak var activeScreen: Scenarible?
+
+   private var currentState = MainSceneState.initial
+
+   private lazy var bottomPopupPresenter = BottomPopupPresenter()
+   
+   private lazy var selectedModel: Int = 0
 
    // MARK: - Start
 
    override func start() {
-      mainVM.header.set_text("Баланс")
-      mainVM.bodyStack.set_arrangedModels([
+      vcModel?.sendEvent(\.setNavBarTintColor, Design.color.backgroundBrand)
+
+      mainVM.bodyStack.arrangedModels([
          ActivityIndicator<Design>(),
          Spacer()
       ])
 
-      scenario.start()
+      vcModel?.onEvent(\.viewWillAppear) { [weak self] in
+         self?.scenario.start()
+      }
+      tabBarPanel.button1.setSelfMode(\.normal)
+      selectedModel = 0
+
+      mainVM.header.text("Благодарности")
+      vcModel?.sendEvent(\.setTitle, "Благодарности")
+      presentHeader()
    }
 
    private func unlockTabButtons() {
-      tabBarPanel.button1.setMode(\.inactive)
-      tabBarPanel.button2.setMode(\.inactive)
-      tabBarPanel.button3.setMode(\.inactive)
-      tabBarPanel.button4.setMode(\.inactive)
+      tabBarPanel.button1.setSelfMode(\.inactive)
+      tabBarPanel.button2.setSelfMode(\.inactive)
+      tabBarPanel.button3.setSelfMode(\.inactive)
+      tabBarPanel.button4.setSelfMode(\.inactive)
    }
 }
 
+private extension MainScene {
+   func configButtons() {
+      tabBarPanel.button1
+         .on(\.didTap, self) {
+            $0.unlockTabButtons()
+            $0.mainVM.header.text("Благодарности")
+            $0.vcModel?.sendEvent(\.setTitle, "Благодарности")
+            $0.presentModel($0.feedViewModel)
+            $0.tabBarPanel.button1.setSelfMode(\.normal)
+            $0.selectedModel = 0
+         }
+
+      tabBarPanel.button2
+         .on(\.didTap) { [weak self] in
+            self?.unlockTabButtons()
+            self?.mainVM.header.text("Баланс")
+            self?.vcModel?.sendEvent(\.setTitle, "Баланс")
+            self?.presentModel(self?.balanceViewModel)
+            self?.tabBarPanel.button2.setSelfMode(\.normal)
+            self?.selectedModel = 1
+         }
+
+      tabBarPanel.buttonMain
+         .on(\.didTap) { [weak self] in
+            self?.presentTransactModel(self?.transactModel)
+         }
+
+      tabBarPanel.button3
+         .on(\.didTap) { [weak self] in
+            self?.unlockTabButtons()
+            self?.mainVM.header.text("История")
+            self?.vcModel?.sendEvent(\.setTitle, "История")
+            self?.presentModel(self?.historyViewModel)
+            self?.tabBarPanel.button3.setSelfMode(\.normal)
+            self?.selectedModel = 2
+         }
+
+      tabBarPanel.button4
+         .on(\.didTap) { [weak self] in
+            self?.unlockTabButtons()
+            self?.mainVM.header.text("Челленджи")
+            self?.vcModel?.sendEvent(\.setTitle, "Челленджи")
+            self?.presentModel(self?.challengesViewModel)
+            self?.tabBarPanel.button4.setSelfMode(\.normal)
+            self?.selectedModel = 3
+         }
+   }
+}
+
+// MARK: - State machine
+
+extension MainScene: StateMachine {
+   func setState(_ state: MainSceneState) {
+      currentState = state
+
+      switch state {
+      case .initial:
+         break
+      case .profileDidLoad(let userData):
+         currentUser = userData
+         switch selectedModel {
+         case 0:
+            presentModel(feedViewModel)
+         case 1:
+            presentModel(balanceViewModel)
+         case 2:
+            presentModel(historyViewModel)
+         case 3:
+            presentModel(challengesViewModel)
+         default:
+            print("selected model error")
+         }
+
+         configButtons()
+
+         mainVM.profileButton.on(\.didTap) {
+            Asset.router?.route(\.profile, navType: .push)
+         }
+
+         if let photoUrl = currentUser?.profile.photo {
+            mainVM.profileButton.url(TeamForceEndpoints.urlBase + photoUrl)
+         }
+      case .loadProfileError:
+         presentModel(errorBlock)
+         scenario.start()
+      }
+   }
+}
+
+// MARK: - Presenting sub scenes
+
 extension MainScene {
-   private func presentModel<M: UIViewModel & Communicable>(_ model: M?) where M.Events == MainSceneEvents {
+   // Presenting Balance, Feed, History
+   private func presentModel<M: ScenaribleEventableUIViewModel>(_ model: M?) where M.Events == MainSceneEvents {
       guard let model = model else { return }
-      model.onEvent(\.willEndDragging) { [weak self] velocity in
+
+      model.on(\.willEndDragging) { [weak self] velocity in
          if velocity > 0 {
             self?.presentHeader()
          } else if velocity < 0 {
@@ -70,10 +185,13 @@ extension MainScene {
          }
       }
       mainVM.bodyStack
-         .set_arrangedModels([
+         .arrangedModels([
             model
          ])
-      model.sendEvent(\.userDidLoad, currentUser)
+
+      model.scenario.start()
+      model.send(\.userDidLoad, currentUser)
+
       activeScreen = model
    }
 
@@ -81,141 +199,85 @@ extension MainScene {
       guard let model = model else { return }
 
       mainVM.bodyStack
-         .set_arrangedModels([
+         .arrangedModels([
             model
          ])
-      activeScreen = model
    }
 
-   private func presentBottomPopupModel<M: UIViewModel & Communicable>(_ model: M?) where M.Events == TransactEvents {
+   // Presenting Transact
+   private func presentTransactModel(_ model: TransactScene<Asset>?) {
       guard
          let model = model,
          let baseView = vcModel?.view
       else { return }
 
-      let offset: CGFloat = 40
-      let view = model.uiView
-
       model
-         .onEvent(\.finishWithSuccess) { [weak self] in
-            self?.presentTransactSuccessView($0)
-            self?.activeScreen?.start()
+         .on(\.sendButtonPressed, self) {
+            $0.bottomPopupPresenter.send(\.hide)
+            $0.activeScreen?.scenario.start()
          }
-         .onEvent(\.cancelled) { [weak self] in
-            self?.activeScreen?.start()
+         .on(\.finishWithSuccess, self) {
+            $0.presentTransactSuccessView($1)
+            $0.activeScreen?.scenario.start()
+         }
+         .on(\.finishWithError, self) {
+            $0.presentErrorPopup()
+            $0.activeScreen?.scenario.start()
+         }
+         .on(\.cancelled, self) {
+            $0.bottomPopupPresenter.send(\.hide)
+            $0.activeScreen?.scenario.start()
          }
 
-      baseView.addSubview(view)
-      view.addAnchors.fitToViewInsetted(baseView, .init(top: offset, left: 0, bottom: 0, right: 0))
-      // activeScreen = model
+      bottomPopupPresenter.send(\.present, (model: model, onView: baseView.rootSuperview))
    }
 
    private func presentTransactSuccessView(_ data: StatusViewInput) {
-      let model = TransactionStatusViewModel<Design>()
-      model.onEvent(\.didHide) {
-         print()
+      let model = Design.model.transact.transactSuccessViewModel
+
+      model.onEvent(\.finished) { [weak self] in
+         self?.bottomPopupPresenter.send(\.hide)
       }
 
       guard
          let baseView = vcModel?.view
       else { return }
-      let offset: CGFloat = 40
-      let view = model.uiView
 
       model.setup(info: data.sendCoinInfo, username: data.username, foundUser: data.foundUser)
 
-      baseView.addSubview(view)
-      view.addAnchors.fitToViewInsetted(baseView, .init(top: offset, left: 0, bottom: 0, right: 0))
+      bottomPopupPresenter.send(\.present, (model: model, onView: baseView.rootSuperview))
    }
 
+   private func presentErrorPopup() {
+      let model = Design.model.common.systemErrorBlock
+
+      model.on(\.didClosed, self) {
+         $0.bottomPopupPresenter.send(\.hide)
+      }
+
+      guard
+         let baseView = vcModel?.view
+      else { return }
+
+      bottomPopupPresenter.send(\.presentAuto, (model: model, onView: baseView.rootSuperview))
+   }
+}
+
+// MARK: - Header animation
+
+extension MainScene {
    private func presentHeader() {
       UIView.animate(withDuration: 0.36) {
          self.mainVM.setState(.hideHeaderTitle)
-         self.vcModel?.sendEvent(\.setTitle, "История")
+      } completion: { _ in
+         self.vcModel?.sendEvent(\.setNavBarTintColor, Design.color.textInvert)
       }
    }
 
    private func hideHeader() {
+      vcModel?.sendEvent(\.setNavBarTintColor, Design.color.transparent)
       UIView.animate(withDuration: 0.36) {
-         self.vcModel?.sendEvent(\.setTitle, "")
          self.mainVM.setState(.presentHeaderTitle)
       }
-   }
-}
-
-enum MainSceneState {
-   case profileDidLoad(UserData)
-   case loadProfileError
-}
-
-extension MainScene: StateMachine {
-   func setState(_ state: MainSceneState) {
-      switch state {
-      case .profileDidLoad(let userData):
-         currentUser = userData
-
-         presentModel(balanceViewModel)
-
-         tabBarPanel.button1
-            .onEvent(\.didTap) { [weak self] in
-               self?.unlockTabButtons()
-               self?.mainVM.header.set_text("Лента событий")
-               self?.presentModel(self?.feedViewModel)
-               self?.tabBarPanel.button1.setMode(\.normal)
-            }
-
-         tabBarPanel.button2
-            .onEvent(\.didTap) { [weak self] in
-               self?.unlockTabButtons()
-               self?.mainVM.header.set_text("Баланс")
-               self?.presentModel(self?.balanceViewModel)
-               self?.tabBarPanel.button2.setMode(\.normal)
-            }
-
-         tabBarPanel.buttonMain
-            .onEvent(\.didTap) { [weak self] in
-
-               self?.transactModel.start()
-               self?.presentBottomPopupModel(self?.transactModel)
-               // Asset.router?.route(\.transaction, navType: .presentModally(.formSheet))
-            }
-
-         tabBarPanel.button3
-            .onEvent(\.didTap) { [weak self] in
-               self?.unlockTabButtons()
-               self?.mainVM.header.set_text("История")
-               self?.presentModel(self?.historyViewModel)
-               self?.tabBarPanel.button3.setMode(\.normal)
-            }
-
-         tabBarPanel.button4
-            .onEvent(\.didTap) { [weak self] in
-               self?.unlockTabButtons()
-               self?.mainVM.header.set_text("Настройки")
-               self?.presentModel(self?.settingsViewModel)
-               self?.tabBarPanel.button4.setMode(\.normal)
-            }
-
-         mainVM.profileButton.onEvent(\.didTap) {
-            Asset.router?.route(\.profile, navType: .push)
-         }
-
-         if let photoUrl = currentUser?.profile.photo {
-            mainVM.profileButton.set_url(TeamForceEndpoints.urlBase + photoUrl)
-         }
-      case .loadProfileError:
-         break
-      }
-   }
-}
-
-final class ActivityIndicator<Design: DSP>: BaseViewModel<UIActivityIndicatorView>, Stateable {
-   typealias State = ViewState
-
-   override func start() {
-      set_size(.square(100))
-      view.startAnimating()
-      view.color = Design.color.iconBrand
-      view.contentScaleFactor = 1.33
    }
 }

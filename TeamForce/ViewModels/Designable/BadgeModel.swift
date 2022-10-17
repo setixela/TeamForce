@@ -29,14 +29,14 @@ class BadgeModel<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>, Asseta
         set(.distribution(.fill))
         set(.alignment(.fill))
         set(.axis(.vertical))
-        set(.models([
+        set(.arrangedModels([
            titleLabel,
            textFieldModel,
            errorLabel
         ]))
 
         textFieldModel
-          .onEvent(\.didTap) {_ in 
+          .on(\.didTap) {_ in 
                self.titleLabel.set(.hidden(false))
            }
     }

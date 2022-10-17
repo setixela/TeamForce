@@ -17,7 +17,7 @@ final class GetUsersListApiWorker: BaseApiWorker<String, [FoundUser]> {
          let cookie = HTTPCookieStorage.shared.cookies?.first(where: { $0.name == cookieName })
       else {
          print("No csrf cookie")
-         work.fail(())
+         work.fail()
          return
       }
       
@@ -33,13 +33,13 @@ final class GetUsersListApiWorker: BaseApiWorker<String, [FoundUser]> {
                let data = result.data,
                let usersList: [FoundUser] = decoder.parse(data)
             else {
-               work.fail(())
+               work.fail()
                return
             }
             work.success(result: usersList)
          }
          .catch { _ in
-            work.fail(())
+            work.fail()
          }
    }
 }

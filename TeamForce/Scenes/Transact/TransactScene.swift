@@ -9,23 +9,27 @@ import ReactiveWorks
 import UIKit
 
 struct TransactEvents: InitProtocol {
-   var cancelled: Event<Void>?
-   var finishWithSuccess: Event<StatusViewInput>?
+   var cancelled: Void?
+   var sendButtonPressed: Void?
+   var finishWithSuccess: StatusViewInput?
+   var finishWithError: Void?
+}
+
+enum ImagePickingState {
+   case presentImagePicker
+   case presentPickedImage(UIImage)
+   case setHideAddPhotoButton(Bool)
 }
 
 enum TransactState {
    case initial
-   case loadProfilError
-   case loadTransactionsError
+   case error
 
    case loadTokensSuccess
-   case loadTokensError
 
    case loadBalanceSuccess(Int)
-   case loadBalanceError
 
    case loadUsersListSuccess([FoundUser])
-   case loadUsersListError
 
    case presentFoundUser([FoundUser])
    case presentUsers([FoundUser])
@@ -38,81 +42,79 @@ enum TransactState {
    case sendCoinSuccess((String, SendCoinRequest))
    case sendCoinError
 
+   case resetCoinInput
    case coinInputSuccess(String, Bool)
    case reasonInputSuccess(String, Bool)
 
-   case presentPickedImage(UIImage)
-   case setHideAddPhotoButton(Bool)
+   case presentTagsSelector(Set<Tag>)
+   case updateSelectedTags(Set<Tag>)
 
-   case startActivityIndicator
+   case sendButtonPressed
+   case cancelButtonPressed
 }
 
-final class TransactScene<Asset: AssetProtocol>: DoubleStacksModel, Assetable, Scenarible2, Communicable {
+final class TransactScene<Asset: AssetProtocol>: ModalDoubleStackModel<Asset>, Scenarible2, Eventable {
+   typealias Events = TransactEvents
    typealias State = StackState
 
-   var events = TransactEvents()
+   var events: [Int: LambdaProtocol?] = [:]
 
    private lazy var works = TransactWorks<Asset>()
 
-   lazy var scenario = TransactScenario(
+   lazy var scenario: Scenario = TransactScenario(
       works: works,
       stateDelegate: stateDelegate,
       events: TransactScenarioEvents(
-         userSearchTXTFLDBeginEditing: viewModels.userSearchTextField.onEvent(\.didBeginEditing),
-         userSearchTFDidEditingChanged: viewModels.userSearchTextField.onEvent(\.didEditingChanged),
+         userSearchTXTFLDBeginEditing: viewModels.userSearchTextField.on(\.didBeginEditing),
+         userSearchTFDidEditingChanged: viewModels.userSearchTextField.on(\.didEditingChanged),
          userSelected: viewModels.foundUsersList.onEvent(\.didSelectRow),
-         sendButtonEvent: viewModels.sendButton.onEvent(\.didTap),
-         transactInputChanged: viewModels.transactInputViewModel.textField.onEvent(\.didEditingChanged),
-         reasonInputChanged: viewModels.reasonTextView.onEvent(\.didEditingChanged),
-         anonymousSetOff: options.anonimParamModel.switcher.onEvent(\.turnedOff),
-         anonymousSetOn: options.anonimParamModel.switcher.onEvent(\.turnedOn)
+         sendButtonEvent: viewModels.sendButton.on(\.didTap),
+         amountInputChanged: viewModels.amountInputModel.textField.on(\.didEditingChanged),
+         reasonInputChanged: viewModels.reasonTextView.on(\.didEditingChanged),
+         anonymousSetOff: viewModels.options.anonimParamModel.switcher.on(\.turnedOff),
+         anonymousSetOn: viewModels.options.anonimParamModel.switcher.on(\.turnedOn),
+         presentTagsSelectorDidTap: viewModels.options.tagsPanelSwitcher.optionModel.on(\.didTap),
+         enableTags: viewModels.options.tagsPanelSwitcher.on(\.turnedOn),
+         disableTags: viewModels.options.tagsPanelSwitcher.on(\.turnedOff),
+         removeTag: viewModels.options.tagsPanelSwitcher.optionModel.on(\.didTapTag),
+         setTags: viewModels.options.tagsCloud.on(\.updateTags),
+         cancelButtonDidTap: closeButton.on(\.didTap)
       )
    )
 
-   lazy var scenario2 = ImagePickingScenario(
+   lazy var scenario2: Scenario = ImagePickingScenario<Asset>(
       works: works,
-      stateDelegate: stateDelegate,
+      stateDelegate: stateDelegate2,
       events: ImagePickingScenarioEvents(
+         startImagePicking: viewModels.addPhotoButton.on(\.didTap),
          addImageToBasket: imagePicker.onEvent(\.didImagePicked),
-         removeImageFromBasket: pickedImages.onEvent(\.didCloseImage),
-         didMaximumReach: pickedImages.onEvent(\.didMaximumReached)
+         removeImageFromBasket: viewModels.pickedImages.on(\.didCloseImage),
+         didMaximumReach: viewModels.pickedImages.on(\.didMaximumReached)
       )
    )
 
    private lazy var viewModels = TransactViewModels<Design>()
 
-   private lazy var pickedImages = PickedImagePanel<Design>()
-
-   private lazy var closeButton = ButtonModel()
-      .set_title(Design.Text.title.close)
-      .set_textColor(Design.color.textBrand)
-
-   private lazy var options = TransactOptionsVM<Design>()
    private lazy var viewModelsWrapper = ScrollViewModelY()
       .set(.spacing(Grid.x16.value))
-      .set(.models([
+      .set(.arrangedModels([
          viewModels.balanceInfo,
          viewModels.foundUsersList,
-         viewModels.transactInputViewModel,
+         viewModels.amountInputModel,
          viewModels.reasonTextView,
-         pickedImages.lefted(),
+         viewModels.pickedImages.lefted(),
          viewModels.addPhotoButton,
-         options
+         viewModels.options,
+         Grid.x48.spacer
       ]))
 
-   private lazy var notFoundBlock = Wrapped2Y(
-      ImageViewModel()
-         .set_image(Design.icon.userNotFound)
-         .set_size(.square(275)),
-      Design.label.body1
-         .set_numberOfLines(0)
-         .set_alignment(.center)
-         .set_text(Design.Text.title.userNotFound)
-   )
+   private lazy var activityIndicator = Design.model.common.activityIndicator
+   private lazy var errorInfoBlock = Design.model.common.connectionErrorBlock
+   private lazy var imagePicker = Design.model.common.imagePicker
 
-   private lazy var activityIndicator = ActivityIndicator<Design>()
+   private lazy var tagList = TagList<Asset>()
 
-   private lazy var imagePicker = ImagePickerViewModel()
+   private lazy var bottomPopupPresenter = BottomPopupPresenter()
 
    private var currentState = TransactState.initial
 
@@ -128,152 +130,149 @@ final class TransactScene<Asset: AssetProtocol>: DoubleStacksModel, Assetable, S
 
    override func start() {
       super.start()
-//
-//      view.alpha = 1
-      activityIndicator.uiView.removeFromSuperview()
-      view.isUserInteractionEnabled = true
+
       configure()
 
-      closeButton.onEvent(\.didTap) { [weak self] in
-         self?.sendEvent(\.cancelled)
+      view.on(\.willAppear) { [weak self] in
          self?.viewModels.foundUsersList.set(.items([]))
-         self?.view.removeFromSuperview()
-      }
-
-      view.onEvent(\.willAppear) { [weak self] in
-
          self?.scenario.start()
          self?.scenario2.start()
+         self?.setToInitialCondition()
       }
-
-      viewModels.addPhotoButton
-         .onEvent(\.didTap) { [weak self] in
-            guard let baseVC = self?.vcModel else { return }
-
-            self?.imagePicker.sendEvent(\.presentOn, baseVC)
-         }
-
-      setToInitialCondition()
    }
 
    func configure() {
-      topStackModel
-         .set_safeAreaOffsetDisabled()
-         .set_axis(.vertical)
-         .set_distribution(.fill)
-         .set_alignment(.fill)
-         .set_backColor(Design.color.background)
-         .set_padding(UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16))
-         .set_cornerRadius(Design.params.cornerRadiusMedium)
-         .set_arrangedModels([
-            //
-            Wrapped3X(
-               Spacer(50),
-               LabelModel()
-                  .set_alignment(.center)
-                  .set(Design.state.label.body3)
-                  .set_text(Design.Text.title.newTransact),
-               closeButton
-            )
-            .set_height(64)
-            .set_alignment(.center)
-            .set_distribution(.equalCentering),
+      //
+      title
+         .set(Design.state.label.body3)
+         .text(Design.Text.title.newTransact)
+      //
+      bodyStack
+         .safeAreaOffsetDisabled()
+         .axis(.vertical)
+         .distribution(.fill)
+         .alignment(.fill)
+         .arrangedModels([
             //
             viewModels.userSearchTextField,
             Grid.x8.spacer,
 
-            notFoundBlock.set_hidden(true),
-            activityIndicator.set_hidden(false),
+            viewModels.notFoundBlock.hidden(true),
+            errorInfoBlock.hidden(true),
+            activityIndicator.hidden(false),
 
             viewModelsWrapper
          ])
-
-      bottomStackModel
-         .set(Design.state.stack.bottomPanel)
-         .set_arrangedModels([
+      //
+      footerStack
+         .arrangedModels([
+            Spacer(16),
             viewModels.sendButton
          ])
+
+      loadTags()
    }
 
-   private func setToInitialCondition() {
-      clearFields()
-      scenario.works.reset.doSync()
+   // MARK: - refact this
 
-      viewModels.sendButton.set(Design.state.button.inactive)
-      viewModels.transactInputViewModel.setState(.noInput)
+   private lazy var useCase = Asset.apiUseCase
+   private lazy var storageUseCase = Asset.storageUseCase
 
-      currentState = .initial
-      setState(.initial)
-      applySelectUserMode()
+   private var tags: [SelectWrapper<Tag>] = []
+   private var selctedTags: Set<Tag> = []
+
+   private func loadTags() {
+      storageUseCase.loadToken
+         .doAsync()
+         .doNext(useCase.GetSendCoinSettings)
+         .doMap {
+            $0.tags
+         }
+         .onSuccess(self) {
+            $0.tags = $1.map {
+               SelectWrapper(value: $0)
+            }
+            $0.setTagsToCloud()
+         }
+         .onFail(self) {
+            $0.tags = []
+            $0.setTagsToCloud()
+         }
    }
 
-   private func clearFields() {
-      viewModels.userSearchTextField.set_text("")
-      viewModels.transactInputViewModel.textField.set_text("")
-      viewModels.reasonTextView.set_text("")
+   private func setTagsToCloud() {
+      view.layoutIfNeeded()
+      viewModels.options.tagsCloud.setState(.items(tags))
    }
 }
 
-extension TransactScene: StateMachine {
-   func setState(_ state: TransactState) {
-      debug(state)
+extension TransactScene: StateMachine2 {
+   func setState2(_ state: ImagePickingState) {
+      switch state {
+      //
+      case .presentPickedImage(let image):
+         viewModels.pickedImages.addButton(image: image)
+      //
+      case .presentImagePicker:
+         guard let baseVC = vcModel else { return }
+         imagePicker.sendEvent(\.presentOn, baseVC)
+      //
+      case .setHideAddPhotoButton(let value):
+         viewModels.addPhotoButton.hidden(value)
+         //
+      }
+   }
+}
 
+extension TransactScene {
+   func setState(_ state: TransactState) {
       switch state {
       case .initial:
-         activityIndicator.set_hidden(false)
+         activityIndicator.hidden(false)
       //
-      case .loadProfilError:
-         activityIndicator.set_hidden(true)
-      //
-      case .loadTransactionsError:
-        activityIndicator.set_hidden(true)
+      case .error:
+         // viewModels.userSearchTextField.hidden(true)
+         activityIndicator.hidden(true)
+         presentFoundUsers(users: [])
+
       //
       case .loadTokensSuccess:
-         activityIndicator.set_hidden(false)
+         activityIndicator.hidden(false)
 
-         break
-      case .loadTokensError:
-         viewModels.userSearchTextField.set_hidden(true)
-         activityIndicator.set_hidden(true)
       //
       case .loadBalanceSuccess(let balance):
-         viewModels.balanceInfo.models.down.label.set_text(String(balance))
-      //
-      case .loadBalanceError:
-         activityIndicator.set_hidden(true)
+         viewModels.balanceInfo.models.down.label.text(String(balance))
       //
       case .loadUsersListSuccess(let users):
          presentFoundUsers(users: users)
-         activityIndicator.set_hidden(true)
+         activityIndicator.hidden(true)
       //
-      case .loadUsersListError:
-         viewModels.foundUsersList.set_hidden(true)
-         activityIndicator.set_hidden(true)
-         presentFoundUsers(users: [])
       //
       case .presentFoundUser(let users):
-         viewModels.foundUsersList.set_hidden(true)
-         activityIndicator.set_hidden(true)
+         viewModels.foundUsersList.hidden(true)
+         activityIndicator.hidden(true)
          presentFoundUsers(users: users)
 
       //
       case .presentUsers(let users):
-         viewModels.foundUsersList.set_hidden(true)
-         activityIndicator.set_hidden(true)
+         viewModels.foundUsersList.hidden(true)
+         activityIndicator.hidden(true)
          presentFoundUsers(users: users)
       //
       case .listOfFoundUsers(let users):
-         activityIndicator.set_hidden(true)
+         activityIndicator.hidden(true)
          presentFoundUsers(users: users)
       //
       case .userSelectedSuccess(_, let index):
-         viewModels.userSearchTextField.set_hidden(true)
+         viewModels.userSearchTextField.hidden(true)
 
          if case .userSelectedSuccess = currentState {
-            viewModels.userSearchTextField.set_hidden(false)
-            viewModels.foundUsersList.set_hidden(true)
-            currentState = .initial
-            applySelectUserMode()
+            UIView.animate(withDuration: 0.3) {
+               self.viewModels.userSearchTextField.hidden(false)
+               self.viewModels.foundUsersList.hidden(true)
+               self.currentState = .initial
+            }
+            self.applySelectUserMode()
             return
          }
 
@@ -288,10 +287,9 @@ extension TransactScene: StateMachine {
          } completion: { _ in
             self.applyReadyToSendMode()
          }
-
       //
       case .userSearchTFDidEditingChangedSuccess:
-         activityIndicator.set_hidden(false)
+         activityIndicator.hidden(false)
          viewModels.foundUsersList.set(.items([]))
          applySelectUserMode()
       //
@@ -300,21 +298,20 @@ extension TransactScene: StateMachine {
          let sended = StatusViewInput(sendCoinInfo: tuple.1,
                                       username: tuple.0,
                                       foundUser: viewModels.foundUsersList.items.first as! FoundUser)
-         sendEvent(\.finishWithSuccess, sended)
+         send(\.finishWithSuccess, sended)
          setToInitialCondition()
-         view.removeFromSuperview()
       //
       case .sendCoinError:
-         presentAlert(text: "Не могу послать деньгу")
-      //
+         send(\.finishWithError)
+      case .resetCoinInput:
+         viewModels.amountInputModel.setState(.noInput)
       case .coinInputSuccess(let text, let isCorrect):
-         viewModels.transactInputViewModel.textField.set(.text(text))
+         viewModels.amountInputModel.textField.set(.text(text))
          if isCorrect {
-            viewModels.transactInputViewModel.setState(.normal(text))
+            viewModels.amountInputModel.setState(.normal(text))
             viewModels.sendButton.set(Design.state.button.default)
          } else {
-            viewModels.transactInputViewModel.setState(.noInput)
-            viewModels.transactInputViewModel.textField.set(.text(text))
+            viewModels.amountInputModel.textField.set(.text(text))
             viewModels.sendButton.set(Design.state.button.inactive)
          }
       //
@@ -326,140 +323,102 @@ extension TransactScene: StateMachine {
             viewModels.reasonTextView.set(.text(text))
             viewModels.sendButton.set(Design.state.button.inactive)
          }
-      case .presentPickedImage(let image):
-         pickedImages.addButton(image: image)
-      case .setHideAddPhotoButton(let value):
-         viewModels.addPhotoButton.set_hidden(value)
-      case .startActivityIndicator:
-         view.isUserInteractionEnabled = false
-         activityIndicator.uiView.removeFromSuperview()
-         view.addSubview(activityIndicator.uiView)
-         activityIndicator.uiView.addAnchors.fitToView(view)
+
+      case .sendButtonPressed:
+         send(\.sendButtonPressed)
+      //
+      case .cancelButtonPressed:
+         send(\.cancelled)
+      //
+
+      case .presentTagsSelector(let tags):
+
+//         bottomPopupPresenter.send(\.present, (model: tagList, onView: vcModel?.view.rootSuperview))
+//
+//         tagList.setState(.selectTags(tags))
+//         tagList.on(\.exit, self) {
+//            $0.bottomPopupPresenter.send(\.hide)
+//         }
+//         tagList.closeButton.on(\.didTap, self) {
+//            $0.bottomPopupPresenter.send(\.hide)
+//         }
+         break
+      //
+      case .updateSelectedTags(let tags):
+         break
+
+         // setTagsToCloud()
+//         if tags.isEmpty {
+//            viewModels.options.tagsPanelSwitcher.optionModel.setState(.clear)
+//         } else {
+//            viewModels.options.tagsPanelSwitcher.optionModel.setState(.selected(tags))
+//         }
+//         tagList.saveButton.set(Design.state.button.default)
       }
    }
 }
 
 private extension TransactScene {
+   private func setToInitialCondition() {
+      clearFields()
+
+      viewModels.sendButton.set(Design.state.button.inactive)
+      viewModels.amountInputModel.setState(.noInput)
+
+      currentState = .initial
+      setState(.initial)
+      applySelectUserMode()
+   }
+
+   private func clearFields() {
+      viewModels.userSearchTextField.text("")
+      viewModels.amountInputModel.textField.text("")
+      viewModels.reasonTextView
+         .text("")
+         .placeholder(Design.Text.title.reasonPlaceholder)
+      viewModels.options.tagsPanelSwitcher.labelSwitcher.switcher.applyState(.turnOff)
+      viewModels.options.tagsPanelSwitcher.optionModel.setState(.clear)
+      viewModels.options.tagsPanelSwitcher.optionModel.hidden(true)
+      tagList.setState(.clear)
+      viewModels.pickedImages.clear()
+   }
+
    func applySelectUserMode() {
-      pickedImages.set_hidden(true)
-      viewModels.balanceInfo.set(.hidden(true))
-      viewModels.transactInputViewModel.set(.hidden(true))
-      viewModels.reasonTextView.set(.hidden(true))
-      options.set_hidden(true)
-      viewModels.addPhotoButton.set_hidden(true)
-      bottomStackModel.set_hidden(true)
-      notFoundBlock.set_hidden(true)
-      viewModels.userSearchTextField.set_hidden(false)
+      footerStack.hidden(true, isAnimated: true)
+      viewModels.options.hidden(true, isAnimated: true)
+      viewModels.addPhotoButton.hidden(true, isAnimated: true)
+      viewModels.pickedImages.hidden(true, isAnimated: true)
+      viewModels.reasonTextView.hidden(true, isAnimated: true)
+      viewModels.amountInputModel.set(.hidden(true, isAnimated: true))
+      viewModels.userSearchTextField.hidden(false, isAnimated: true)
+      viewModels.balanceInfo.set(.hidden(true, isAnimated: true))
+
+      viewModels.notFoundBlock.hidden(true)
    }
 
    func presentBalanceInfo() {
-      notFoundBlock.set_hidden(true)
-      viewModels.balanceInfo.set(.hidden(false))
+      viewModels.notFoundBlock.hidden(true, isAnimated: true)
+      viewModels.balanceInfo.set(.hidden(false, isAnimated: true))
    }
 
    func applyReadyToSendMode() {
-      pickedImages.set_hidden(false)
-      viewModels.transactInputViewModel.set(.hidden(false))
-      viewModels.reasonTextView.set(.hidden(false))
-      options.set_hidden(false)
-      viewModels.addPhotoButton.set_hidden(false)
-      bottomStackModel.set_hidden(false)
+      viewModels.amountInputModel.hidden(false, isAnimated: true)
+      viewModels.reasonTextView.hidden(false, isAnimated: true)
+      viewModels.pickedImages.hidden(false, isAnimated: true)
+      viewModels.addPhotoButton.hidden(false, isAnimated: true)
+      viewModels.options.hidden(false, isAnimated: true)
+      setTagsToCloud()
+      footerStack.hidden(false, isAnimated: true)
+
+      view.endEditing(true)
    }
 }
 
 private extension TransactScene {
    func presentFoundUsers(users: [FoundUser]) {
       viewModels.foundUsersList.set(.items(users))
-      viewModels.foundUsersList.set(.hidden(users.isEmpty ? true : false))
+      viewModels.foundUsersList.hiddenAnimated(users.isEmpty ? true : false, duration: 0.5)
 
-      if users.isEmpty {
-         notFoundBlock.set_alpha(0)
-         notFoundBlock.set_hidden(false)
-         UIView.animate(withDuration: 0.3) {
-            self.notFoundBlock.set_alpha(1)
-         }
-      } else {
-         notFoundBlock.set_hidden(true)
-      }
-   }
-
-   func presentAlert(text: String) {}
-}
-
-extension UIView {
-   func clearConstraints() {
-      for subview in subviews {
-         subview.clearConstraints()
-      }
-      removeConstraints(constraints)
-   }
-}
-
-class ImageLabelLabelMRD: Combos<SComboMRD<ImageViewModel, LabelModel, LabelModel>> {}
-
-struct PickedImagePanelEvents: InitProtocol {
-   var didCloseImage: Event<UIImage>?
-   var didMaximumReached: Event<Void>?
-}
-
-final class PickedImagePanel<Design: DSP>: StackModel, Designable, Communicable {
-   var events = PickedImagePanelEvents()
-
-   private var picked = [UIImage: UIViewModel]()
-
-   private let maxCount = 1
-
-   override func start() {
-      set_axis(.horizontal)
-      set_alignment(.leading)
-      set_distribution(.equalSpacing)
-      set_spacing(8)
-   }
-
-   func addButton(image: UIImage) {
-      guard picked.count < maxCount else { return }
-
-      let pickedImage = PickedImage<Design>()
-      picked[image] = pickedImage
-      pickedImage.image.set_image(image)
-
-      set_arrangedModels(Array(picked.values))
-
-      pickedImage.closeButton.onEvent(\.didTap) { [weak self] in
-         guard let self = self else { return }
-
-         self.sendEvent(\.didCloseImage, image)
-         let model = self.picked[image]
-         model?.uiView.removeFromSuperview()
-         self.picked[image] = nil
-      }
-
-      if picked.count >= maxCount {
-         sendEvent(\.didMaximumReached)
-      }
-   }
-}
-
-final class PickedImage<Design: DSP>: StackModel, Designable {
-   let closeButton = ButtonModel()
-      .set_image(Design.icon.cross.withTintColor(.white))
-      .set_size(.square(23))
-
-   let image = ImageViewModel()
-      .set_size(.square(Grid.x80.value))
-      .set_cornerRadius(Design.params.cornerRadius)
-
-   override func start() {
-      super.start()
-      set_backColor(Design.color.background)
-      set_axis(.horizontal)
-      set_alignment(.top)
-      set_size(.square(Grid.x80.value))
-      set_cornerRadius(Design.params.cornerRadius)
-      set_arrangedModels([
-         Grid.xxx.spacer,
-         closeButton
-      ])
-      set_backViewModel(image)
+      viewModels.notFoundBlock.hiddenAnimated(!users.isEmpty, duration: 0.5)
    }
 }

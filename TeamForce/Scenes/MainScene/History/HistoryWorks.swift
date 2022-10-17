@@ -41,7 +41,7 @@ final class HistoryWorks<Asset: AssetProtocol>: BaseSceneWorks<HistoryWorks.Temp
                work.success(result: $0)
             }
             .onFail {
-               work.fail(())
+               work.fail()
             }
       }
       .retainBy(retainer)
@@ -56,7 +56,21 @@ final class HistoryWorks<Asset: AssetProtocol>: BaseSceneWorks<HistoryWorks.Temp
                work.success(result: $0)
             }
             .onFail {
-               work.fail(())
+               work.fail()
+            }
+      }
+      .retainBy(retainer)
+   }
+   //
+   var getProfileById: Work<Int, UserData> {
+      .init { [weak self] work in
+         self?.useCase.getProfileById
+            .doAsync(work.input)
+            .onSuccess {
+               work.success(result: $0)
+            }
+            .onFail {
+               work.fail()
             }
       }
       .retainBy(retainer)
@@ -75,7 +89,7 @@ final class HistoryWorks<Asset: AssetProtocol>: BaseSceneWorks<HistoryWorks.Temp
             let transaction = filtered[index]
             work.success(result: transaction)
          } else {
-            work.fail(())
+            work.fail()
          }
       }
       .retainBy(retainer)
@@ -87,10 +101,10 @@ final class HistoryWorks<Asset: AssetProtocol>: BaseSceneWorks<HistoryWorks.Temp
             .doAsync()
             .onSuccess {
                Self.store.currentUser = $0.profile.tgName
-               work.success(result: ())
+               work.success()
             }
             .onFail {
-               work.fail(())
+               work.fail()
             }
       }
       .retainBy(retainer)
@@ -127,6 +141,21 @@ final class HistoryWorks<Asset: AssetProtocol>: BaseSceneWorks<HistoryWorks.Temp
          $0.success(result: items)
       }
       .retainBy(retainer)
+   }
+   
+   var cancelTransactionById: Work<Int, Void> {
+      .init { [weak self] work in
+         self?.useCase.cancelTransactionById
+            .doAsync(work.input)
+            .onSuccess {
+               print("cancelled transaction successfully")
+               work.success()
+            }
+            .onFail {
+               work.fail()
+            }
+         
+      }.retainBy(retainer)
    }
 }
 
@@ -207,11 +236,20 @@ private extension HistoryWorks {
                amount: transact.amount.string,
                createdAt: transact.createdAt.string,
                photo: authorPhoto,
-               isAnonymous: transact.isAnonymous ?? false
+               isAnonymous: transact.isAnonymous ?? false,
+               id: transact.id
             )
 
             var result = result
-            let currentDay = item.createdAt.dateConverted
+            
+            var currentDay = item.createdAt.dateConverted
+            if let date = item.createdAt.dateConvertedToDate {
+               if Calendar.current.isDateInToday(date) {
+                  currentDay = Design.Text.title.today
+               } else if Calendar.current.isDateInYesterday(date) {
+                  currentDay = Design.Text.title.yesterday
+               }
+            }
 
             if prevDay != currentDay {
                result.append(TableItemsSection(title: currentDay))

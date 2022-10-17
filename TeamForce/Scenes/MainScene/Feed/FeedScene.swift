@@ -11,65 +11,88 @@ import UIKit
 final class FeedScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>,
    Assetable,
    Stateable2,
-   Communicable,
+   Eventable,
    Scenarible
 {
+   typealias Events = MainSceneEvents
    typealias State = ViewState
    typealias State2 = StackState
 
-   var events = MainSceneEvents()
+   var events: EventsStore = .init()
 
-   lazy var scenario = FeedScenario<Asset>(
+   lazy var scenario: Scenario = FeedScenario<Asset>(
       works: FeedWorks<Asset>(),
       stateDelegate: stateDelegate,
       events: FeedScenarioInputEvents(
-         loadFeedForCurrentUser: onEvent(\.userDidLoad),
-         presentAllFeed: viewModels.filterButtons.onEvent(\.didTapAll),
-         presentMyFeed: viewModels.filterButtons.onEvent(\.didTapMy),
-         presentPublicFeed: viewModels.filterButtons.onEvent(\.didTapPublic)
+         loadFeedForCurrentUser: on(\.userDidLoad),
+         presentAllFeed: viewModels.filterButtons.on(\.didTapAll),
+         presentMyFeed: viewModels.filterButtons.on(\.didTapMy),
+         presentPublicFeed: viewModels.filterButtons.on(\.didTapPublic),
+         presentProfile: viewModels.presenter.on(\.didSelect),
+         reactionPressed: viewModels.presenter.on(\.reactionPressed),
+         presentDetail: viewModels.feedTableModel.on(\.didSelectRow)
       )
    )
 
    private lazy var viewModels = FeedViewModels<Design>()
 
    private lazy var activityIndicator = ActivityIndicator<Design>()
+   private lazy var errorBlock = CommonErrorBlock<Design>()
+
+   private var state = FeedSceneState.initial
 
    override func start() {
-      set_axis(.vertical)
-      set_arrangedModels([
+      axis(.vertical)
+      arrangedModels([
          viewModels.filterButtons,
          activityIndicator,
+         errorBlock,
          viewModels.feedTableModel,
       ])
 
       viewModels.feedTableModel
-         .onEvent(\.didScroll) { [weak self] in
-            self?.sendEvent(\.didScroll, $0)
+         .on(\.didScroll) { [weak self] in
+            self?.send(\.didScroll, $0)
          }
-         .onEvent(\.willEndDragging) { [weak self] in
-            self?.sendEvent(\.willEndDragging, $0)
+         .on(\.willEndDragging) { [weak self] in
+            self?.send(\.willEndDragging, $0)
          }
 
-      scenario.start()
-
-      let asdff = NSNumber(value: false)
+      setState(.initial)
    }
 }
 
 enum FeedSceneState {
+   case initial
    case presentFeed(([Feed], String))
    case loadFeedError
+   case presentProfile(Int)
+   case reactionChanged
+   case presentDetailView(Feed)
 }
 
 extension FeedScene: StateMachine {
    func setState(_ state: FeedSceneState) {
+      self.state = state
       switch state {
+      case .initial:
+         activityIndicator.hidden(false)
+         errorBlock.hidden(true)
       case .presentFeed(let tuple):
-         activityIndicator.set_hidden(true)
+         activityIndicator.hidden(true)
+         errorBlock.hidden(true)
          viewModels.set(.userName(tuple.1))
          viewModels.feedTableModel.set(.items(tuple.0 + [SpacerItem(size: Grid.x64.value)]))
       case .loadFeedError:
          log("Feed Error!")
+         activityIndicator.hidden(true)
+         errorBlock.hidden(false)
+      case .presentProfile(let id):
+         Asset.router?.route(\.profile, navType: .push, payload: id)
+      case .reactionChanged:
+         print("Hello")
+      case .presentDetailView(let feed):
+         Asset.router?.route(\.feedDetail, navType: .push, payload: (feed, viewModels.userName))
       }
    }
 }

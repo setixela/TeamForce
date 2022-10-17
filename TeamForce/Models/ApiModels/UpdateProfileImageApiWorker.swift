@@ -24,27 +24,23 @@ final class UpdateProfileImageApiWorker: BaseApiWorker<UpdateImageRequest, Void>
          let cookie = HTTPCookieStorage.shared.cookies?.first(where: { $0.name == cookieName })
       else {
          print("No csrf cookie")
-         work.fail(())
+         work.fail()
          return
       }
       let endpoint = TeamForceEndpoints.UpdateProfileImage(
          id: String(updateImageRequest.id),
          headers: ["Authorization": updateImageRequest.token,
-                   "X-CSRFToken": cookie.value],
-         body: ["photo" : updateImageRequest.photo]
+                   "X-CSRFToken": cookie.value]
       )
       print("endpoint is \(endpoint)")
       apiEngine?
-         .process(endpoint: endpoint)
+         .processWithImage(endpoint: endpoint,
+                           image: updateImageRequest.photo)
          .done { result in
-            //415 need to fix
-            let str = String(decoding: result.data!, as: UTF8.self)
-            print(str)
-            print("response status \(result.response)")
-            work.success(result: ())
+            work.success()
          }
          .catch { _ in
-            work.fail(())
+            work.fail()
          }
    }
 }

@@ -12,18 +12,19 @@ enum TapGestureState {
    case tapGesturing
 }
 
-final class ImageViewModel: BaseViewModel<PaddingImageView>, Communicable {
-   var events = ButtonEvents()
+final class ImageViewModel: BaseViewModel<PaddingImageView>, Eventable {
+   typealias Events = ButtonEvents
+   var events = [Int: LambdaProtocol?]()
 
    override func start() {
-      set_contentMode(.scaleAspectFit)
+      contentMode(.scaleAspectFit)
    }
 
    @objc func didTap() {
-      sendEvent(\.didTap)
+      send(\.didTap)
       print("Did tap")
 
-      animateTap()
+      animateTap(uiView: uiView)
    }
 }
 
@@ -34,8 +35,9 @@ extension ImageViewModel: Stateable3, ButtonTapAnimator {
    func applyState(_ state: TapGestureState) {
       switch state {
       case .tapGesturing:
-         view.isUserInteractionEnabled = true
-         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTap)))
+         view.on(\.didTap, self) {
+            $0.send(\.didTap)
+         }
       }
    }
 }

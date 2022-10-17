@@ -5,32 +5,8 @@
 //  Created by Aleksandr Solovyev on 18.08.2022.
 //
 
-import Foundation
 import ReactiveWorks
 import UIKit
-
-struct ImagePickingScenarioEvents {
-   let addImageToBasket: VoidWork<UIImage>
-   let removeImageFromBasket: VoidWork<UIImage>
-   let didMaximumReach: VoidWork<Void>
-}
-
-final class ImagePickingScenario<Asset: AssetProtocol>:
-   BaseScenario<ImagePickingScenarioEvents, TransactState, TransactWorks<Asset>>
-{
-   override func start() {
-      events.addImageToBasket
-         .doNext(work: works.addImage)
-         .onSuccess(setState) { .presentPickedImage($0) }
-
-      events.removeImageFromBasket
-         .doNext(work: works.removeImage)
-         .onSuccess(setState, .setHideAddPhotoButton(false))
-
-      events.didMaximumReach
-         .onSuccess(setState, .setHideAddPhotoButton(true))
-   }
-}
 
 struct TransactScenarioEvents {
    let userSearchTXTFLDBeginEditing: VoidWork<String>
@@ -38,30 +14,41 @@ struct TransactScenarioEvents {
    let userSelected: VoidWork<Int>
    let sendButtonEvent: VoidWork<Void>
 
-   let transactInputChanged: VoidWork<String>
+   let amountInputChanged: VoidWork<String>
    let reasonInputChanged: VoidWork<String>
 
    let anonymousSetOff: VoidWork<Void>
    let anonymousSetOn: VoidWork<Void>
+
+   let presentTagsSelectorDidTap: VoidWorkVoid
+   let enableTags: VoidWorkVoid
+   let disableTags: VoidWorkVoid
+   let removeTag: VoidWork<Tag>
+
+   let setTags: VoidWork<Set<Tag>>
+
+   let cancelButtonDidTap: VoidWorkVoid
 }
 
 final class TransactScenario<Asset: AssetProtocol>:
    BaseScenario<TransactScenarioEvents, TransactState, TransactWorks<Asset>>
 {
    override func start() {
+      works.reset.doSync()
+
       // load token, balance, userList
       works.loadTokens
          .doAsync()
          .onSuccess(setState, .loadTokensSuccess)
-         .onFail(setState, .loadTokensError)
+         .onFail(setState, .error)
          // then load balance
-         .doNext(work: works.loadBalance)
+         .doNext(works.loadBalance)
          .onSuccess(setState) { .loadBalanceSuccess($0.distr.amount) }
-         .onFail(setState, .loadBalanceError)
+         .onFail(setState, .error)
          // then break to void and load 10 user list
          .doVoidNext(works.getUserList)
          .onSuccess(setState) { .loadUsersListSuccess($0) }
-         .onFail(setState, .loadUsersListError)
+         .onFail(setState, .error)
 
       events.userSearchTXTFLDBeginEditing
          .doNext(usecase: IsEmpty())
@@ -79,38 +66,43 @@ final class TransactScenario<Asset: AssetProtocol>:
          }
          .doRecover(works.searchUser)
          .onSuccess(setState) { .listOfFoundUsers($0) }
-         .onFail(setState) { .loadUsersListError }
+         .onFail(setState) { .error }
 
       events.userSelected
          .doSaveResult()
-         .doNext(work: works.mapIndexToUser)
+         .doNext(works.mapIndexToUser)
          .onSuccessMixSaved(setState) { .userSelectedSuccess($0, $1) }
 
       events.sendButtonEvent
-         .onSuccess(setState, .startActivityIndicator)
-         .doNext(work: works.sendCoins)
+         .onSuccess(setState, .sendButtonPressed)
+         .doNext(works.sendCoins)
          .onSuccess(setState) { .sendCoinSuccess($0) }
          .onFail(setState, .sendCoinError)
          .doVoidNext(works.reset)
 
-      events.transactInputChanged
-         .doNext(work: works.coinInputParsing)
+      events.amountInputChanged
+         .doNext(works.coinInputParsing)
          .onSuccess(setState) { .coinInputSuccess($0, true) }
          .onFail { [weak self] (text: String) in
+            self?.setState(.resetCoinInput)
             self?.works.updateAmount
                .doAsync((text, false))
                .onSuccess(self?.setState) { .coinInputSuccess(text, false) }
          }
          .doRecover()
-         .doSaveResult() // save inputString
+         .doSaveResult() // save text
          .doMap { ($0, true) }
-         .doNext(work: works.updateAmount)
-         .doNext(work: works.isCorrect)
-         .onSuccessMixSaved(setState) { .coinInputSuccess($1, true) }
-         .onFailMixSaved(setState) { .coinInputSuccess($1, false) }
+         .doNext(works.updateAmount)
+         .doNext(works.isCorrectBothInputs)
+         .onSuccessMixSaved(setState) { _, savedText in
+            .coinInputSuccess(savedText, true)
+         }
+         .onFailMixSaved(setState) { _, savedText in
+            .coinInputSuccess(savedText, false)
+         }
 
       events.reasonInputChanged
-         .doNext(work: works.reasonInputParsing)
+         .doNext(works.reasonInputParsing)
          .onFail { [weak self] (text: String) in
             self?.works.updateReason
                .doAsync((text, false))
@@ -119,15 +111,44 @@ final class TransactScenario<Asset: AssetProtocol>:
          .doRecover()
          .doSaveResult()
          .doMap { ($0, true) }
-         .doNext(work: works.updateReason)
-         .doNext(work: works.isCorrect)
+         .doNext(works.updateReason)
+         .doNext(works.isCorrectBothInputs)
          .onSuccessMixSaved(setState) { .reasonInputSuccess($1, true) }
          .onFailMixSaved(setState) { .reasonInputSuccess($1, false) }
 
       events.anonymousSetOff
-         .doNext(work: works.anonymousOff)
+         .doNext(works.anonymousOff)
 
       events.anonymousSetOn
-         .doNext(work: works.anonymousOn)
+         .doNext(works.anonymousOn)
+
+      events.cancelButtonDidTap
+         .onSuccess(setState, .cancelButtonPressed)
+
+      events.enableTags
+         .doInput(true)
+         .doNext(works.enableTags)
+
+      events.disableTags
+         .doInput(false)
+         .doNext(works.enableTags)
+
+      events.setTags
+         .doNext(works.setTags)
+         .doNext(works.getSelectedTags)
+         .onSuccess(setState) {
+            .updateSelectedTags($0)
+         }
+
+      events.removeTag
+         .doNext(works.removeTag)
+         .doNext(works.getSelectedTags)
+         .onSuccess(setState) {
+            .updateSelectedTags($0)
+         }
+
+      events.presentTagsSelectorDidTap
+         .doNext(works.getSelectedTags)
+         .onSuccess(setState) { .presentTagsSelector($0) }
    }
 }

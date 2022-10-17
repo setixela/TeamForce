@@ -30,22 +30,39 @@ struct Feed: Codable {
          case hasScope = "has_scope"
       }
    }
+   
+   struct Reaction: Codable {
+      let id: Int
+      let code: String?
+      let counter: Int?
+   }
 
    struct Transaction: Codable {
       let id: Int
+      let senderId: Int?
       let sender: String
+      let recipientId: Int?
       let recipient: String
       let status: String
       let isAnonymous: Bool
-      let reason: String
+      let reason: String?
       let amount: Float
       let recipientPhoto: String?
       let recipientFirstName: String?
       let recipientSurname: String?
+      let tags: [FeedTag]?
+      let commentsAmount: Int?
+      let lastLikeCommentTime: String?
+      let userLiked: Bool?
+      let userDisliked: Bool?
+      let reactions: [Reaction]?
+      let photo: String?
 
       enum CodingKeys: String, CodingKey {
          case id
+         case senderId = "sender_id"
          case sender
+         case recipientId = "recipient_id"
          case recipient
          case status
          case isAnonymous = "is_anonymous"
@@ -54,6 +71,13 @@ struct Feed: Codable {
          case recipientPhoto = "recipient_photo"
          case recipientFirstName = "recipient_first_name"
          case recipientSurname = "recipient_surname"
+         case tags
+         case commentsAmount = "comments_amount"
+         case lastLikeCommentTime = "last_like_comment_tim"
+         case userLiked = "user_liked"
+         case userDisliked = "user_disliked"
+         case reactions
+         case photo
       }
 
       var photoUrl: String? {
@@ -78,20 +102,28 @@ final class GetFeedsApiWorker: BaseApiWorker<String, [Feed]> {
             "Authorization": work.input.string,
          ]))
          .done { result in
-//            let str = String(decoding: result.data!, as: UTF8.self)
-//            print("feed \(str)")
             let decoder = DataToDecodableParser()
             guard
                let data = result.data,
                let feeds: [Feed] = decoder.parse(data)
             else {
-               work.fail(())
+               work.fail()
                return
             }
             work.success(result: feeds)
          }
          .catch { _ in
-            work.fail(())
+            work.fail()
          }
+   }
+}
+
+struct FeedTag: Codable {
+   let id: Int
+   let name: String
+
+   enum CodingKeys: String, CodingKey {
+      case id = "tag_id"
+      case name
    }
 }

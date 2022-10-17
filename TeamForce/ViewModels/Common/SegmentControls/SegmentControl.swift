@@ -11,6 +11,20 @@ protocol SegmentControlEventsProtocol: InitProtocol {
    func sendEventBy(index: Int)
 }
 
+struct SegmentControl2Events: SegmentControlEventsProtocol {
+   var selected0: Event<Void>?
+   var selected1: Event<Void>?
+
+   func sendEventBy(index: Int) {
+      switch index {
+      case 0:
+         selected0?(())
+      default:
+         selected1?(())
+      }
+   }
+}
+
 struct SegmentControl3Events: SegmentControlEventsProtocol {
    var selected0: Event<Void>?
    var selected1: Event<Void>?
@@ -44,8 +58,8 @@ final class SegmentControl<Button: SegmentButtonModelProtocol,
    private lazy var _buttons: [UIViewModel] = []
 
    override func start() {
-      set_axis(.horizontal)
-      set_distribution(.fillEqually)
+      axis(.horizontal)
+      distribution(.fillEqually)
    }
 }
 
@@ -54,9 +68,9 @@ extension SegmentControl {
       switch state {
       case .items(let array):
          _buttons = array
-         set_arrangedModels(array)
+         arrangedModels(array)
          buttons.enumerated().forEach { index, model in
-            model.onEvent(\.didTap) { [weak self] in
+            model.on(\.didTap) { [weak self] in
                self?.unselectAll()
                self?.events.sendEventBy(index: index)
                model.setMode(\.selected)
