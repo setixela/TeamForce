@@ -25,12 +25,17 @@ final class ChallengeResultScenario<Asset: AssetProtocol>: BaseScenario<Challeng
          .doNext(works.saveId)
       
       events.sendResult
-         .onSuccess(setState, .popScene)
          .doNext(works.createChallengeReport)
-         .onSuccess(setState, .resultSent)
+         .onSuccess(setState) { .finish }
          .onFail {
             print("Обработать ошибку")
          }
+//         .onSuccess(setState, .popScene)
+//         .doNext(works.createChallengeReport)
+//         .onSuccess(setState, .resultSent)
+//         .onFail {
+//            print("Обработать ошибку")
+//         }
    }
 }
 

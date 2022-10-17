@@ -135,6 +135,7 @@ enum ChallengeDetailsState {
    case presentMyResults([ChallengeResult])
    case presentWinners([ChallengeWinner])
    case presentContenders([Contender])
+   case presentCancelView(Challenge, Int, Int)
 }
 
 extension ChallengeDetailsScene: StateMachine {
@@ -161,20 +162,19 @@ extension ChallengeDetailsScene: StateMachine {
             .arrangedModels([
                challComments
             ])
-      case .presentSendResultScreen(let challenge, let challengeId):
-
+      case .presentSendResultScreen(let challenge, let profileId):
          vcModel?.dismiss(animated: true)
 
          Asset.router?.route(
             \.challengeSendResult,
             navType: .presentModally(.automatic),
-            payload: challengeId
+            payload: challenge.id
          )
          .onSuccess {
             Asset.router?.route(
                \.challengeDetails,
                navType: .presentModally(.automatic),
-               payload: (challenge, challengeId)
+               payload: (challenge, profileId)
             )
          }
          .onFail {
@@ -209,6 +209,25 @@ extension ChallengeDetailsScene: StateMachine {
             .arrangedModels([
                contendersBlock
             ])
+      case .presentCancelView(let challenge, let profileId, let resultId):
+         vcModel?.dismiss(animated: true)
+
+         Asset.router?.route(
+            \.challengeResCancel,
+            navType: .presentModally(.automatic),
+            payload: resultId
+         )
+         .onSuccess {
+            Asset.router?.route(
+               \.challengeDetails,
+               navType: .presentModally(.automatic),
+               payload: (challenge, profileId)
+            )
+         }
+         .onFail {
+            print("failure")
+         }
+         .retainBy(retainer)
       }
    }
 }

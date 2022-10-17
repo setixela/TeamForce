@@ -11,7 +11,7 @@ import ReactiveWorks
 struct CheckReportRequestBody: Codable {
    let id: Int
    let state: State
-   let text: String
+   let text: String?
    
    enum State: String, Codable {
       case W = "W"
