@@ -45,7 +45,7 @@ final class ChallengeDetailsWorks<Asset: AssetProtocol>: BaseSceneWorks<Challeng
             .onFail { work.fail() }
 
       case .didTapButton3:
-         self.amIOwner
+         self.amIOwnerCheck
             .doAsync()
             .onSuccess {
                self.getChallengeContenders
@@ -73,7 +73,7 @@ final class ChallengeDetailsWorks<Asset: AssetProtocol>: BaseSceneWorks<Challeng
       }
    }.retainBy(retainer) }
 
-   var amIOwner: Work<Void, Void> { .init { work in
+   var amIOwnerCheck: Work<Void, Void> { .init { work in
       guard
          let profileId = Self.store.profileId,
          let creatorId = Self.store.challenge?.creatorId

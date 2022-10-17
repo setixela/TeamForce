@@ -22,7 +22,7 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
          saveInputAndLoadChallenge: on(\.input),
          // getContenders: ,
          // getWinners: ,
-         ChallengeResult: challDetails.buttonsPanel.sendButton.on(\.didTap),
+         challengeResult: challDetails.buttonsPanel.sendButton.on(\.didTap),
          filterButtonTapped: filterButtons.on(\.didTapButtons),
          acceptPressed: contendersBlock.presenter.on(\.acceptPressed),
          rejectPressed: contendersBlock.presenter.on(\.rejectPressed)

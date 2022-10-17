@@ -13,7 +13,7 @@ struct ChallengeDetailsInputEvents {
 //   let getWinners: VoidWork<Void>
 //   let checkReport: VoidWork<CheckReportRequestBody.State>
 //   let didSelectContenderIndex: VoidWork<Int>
-   let ChallengeResult: VoidWorkVoid
+   let challengeResult: VoidWorkVoid
    let filterButtonTapped: VoidWork<Button6Event>
    let acceptPressed: VoidWork<Int>
    let rejectPressed: VoidWork<Int>
@@ -30,7 +30,7 @@ final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<Challen
          .doVoidNext(works.getChallengeById)
          .onSuccess(setState) { .updateDetails($0) }
          // .doNext(works.saveInput)
-         .doVoidNext(works.amIOwner)
+         .doVoidNext(works.amIOwnerCheck)
          .onSuccess(setState, .enableContenders)
          .onFail { print("you are not owner") }
          .doRecover()
@@ -61,7 +61,7 @@ final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<Challen
 //            print("succesffy took contender by index")
 //         }
 
-      events.ChallengeResult
+      events.challengeResult
          .doNext(works.getChallenge)
          .doSaveResult()
          .doVoidNext(works.getChallengeId)
