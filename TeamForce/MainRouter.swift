@@ -37,10 +37,58 @@ final class MainRouter<Asset: AssetProtocol>: RouterProtocol, Assetable {
    }
 
    @discardableResult
-   func route(_ keypath: KeyPath<Scene, SceneModelProtocol>,
-              navType: NavType,
+   func route(_ navType: NavType,
+              scene: KeyPath<Scene, SceneModelProtocol>? = nil,
               payload: Any? = nil) -> Work<Bool, Bool> {
 
+      let work = Work<Bool, Bool> { work in
+         work.success(work.unsafeInput)
+      }
+
+      switch navType {
+      case .push:
+         nc.pushViewController(makeVC(work), animated: true)
+      case .pop:
+         nc.popViewController(animated: true)
+      case .popToRoot:
+         nc.popToRootViewController(animated: true)
+      case .presentInitial:
+         nc.viewControllers = [makeVC(work)]
+      case .presentModally(let value):
+         let vc = makeVC(work)
+         vc.modalPresentationStyle = value
+         nc.present(vc, animated: true)
+      }
+
+      // local func
+      func makeVC(_ work: Work<Bool, Bool>) -> UIViewController {
+         guard let scene else {
+            assert(false)
+            return .init()
+         }
+
+         let sceneModel = Scene()[keyPath: scene]
+         sceneModel.setInput(payload)
+         let vc = sceneModel.makeVC()
+
+         sceneModel.finisher = work
+
+         return vc
+      }
+
+      return work
+   }
+
+   @available(*, deprecated, message: """
+   USE: func route(_ navType: NavType,
+                  scene: KeyPath<Scene, SceneModelProtocol>,
+                  payload: Any? = nil) -> Work<Bool, Bool>
+   """)
+   @discardableResult
+   func route(_ keypath: KeyPath<Scene, SceneModelProtocol>,
+              navType: NavType,
+              payload: Any? = nil) -> Work<Bool, Bool>
+   {
       let work = Work<Bool, Bool> { work in
          work.success(work.unsafeInput)
       }
