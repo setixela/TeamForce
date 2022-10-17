@@ -15,6 +15,8 @@ enum ChallengeResultSceneState {
 
    case popScene
    case resultSent
+   
+   case finish
 }
 
 final class ChallengeResultScene<Asset: AssetProtocol>: BaseSceneModel<
@@ -81,6 +83,7 @@ final class ChallengeResultScene<Asset: AssetProtocol>: BaseSceneModel<
       mainVM.closeButton
          .on(\.didTap, self) {
             $0.vcModel?.dismiss(animated: true)
+            $0.finisher?.doAsync(true)
          }
 
       scenario.start()
@@ -100,6 +103,9 @@ extension ChallengeResultScene {
       case .popScene:
          vcModel?.dismiss(animated: true)
       case .resultSent:
+         finisher?.doAsync(true)
+      case .finish:
+         vcModel?.dismiss(animated: true)
          finisher?.doAsync(true)
       }
    }

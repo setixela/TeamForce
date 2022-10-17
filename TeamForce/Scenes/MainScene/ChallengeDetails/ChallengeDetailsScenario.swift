@@ -37,34 +37,11 @@ final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<Challen
          .doNext(works.getChallengeResult)
          .onSuccess(setState) { .enableMyResult($0) }
 
-//      events.getContenders
-//         .doNext(works.getChallengeContenders)
-//         .onSuccess {
-//            print("contenders => \($0)")
-//         }
-//
-//      events.getWinners
-//         .doNext(works.getChallengeWinners)
-//         .onSuccess {
-//            print("winners => \($0)")
-//         }
-
-//      events.checkReport
-//         .doNext(works.checkChallengeReport)
-//         .onSuccess {
-//            print("succesfully checked")
-//         }
-
-//      events.didSelectContenderIndex
-//         .doNext(works.getPresentedContenderByIndex)
-//         .onSuccess {
-//            print("succesffy took contender by index")
-//         }
 
       events.ChallengeResult
          .doNext(works.getChallenge)
          .doSaveResult()
-         .doVoidNext(works.getChallengeId)
+         .doVoidNext(works.getProfileId)
          .onSuccessMixSaved(setState) {
             .presentSendResultScreen($1, $0)
          }
@@ -92,14 +69,10 @@ final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<Challen
             print("fail button works")
          }
       
+      
       events.rejectPressed
-         .doMap { (CheckReportRequestBody.State.D, $0) }
-         .doNext(works.checkChallengeReport)
-         .doNext(works.getChallengeContenders)
-         .onSuccess(setState) { .presentContenders($0) }
-         .onFail {
-            print("fail")
-         }
+         .doNext(works.getInputForCancel)
+         .onSuccess(setState) { .presentCancelView($0.0, $0.1, $0.2) }
       
       events.acceptPressed
          .doMap { (CheckReportRequestBody.State.W, $0) }
