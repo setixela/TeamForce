@@ -41,11 +41,11 @@ final class FeedDetailUserInfoBlock<Design: DSP>: StackModel, Designable {
          $1.text("0")
       }
 
-   lazy var dislikeButton = ReactionButton<Design>(height: 40)
-      .setAll {
-         $0.image(Design.icon.dislike)
-         $1.text("0")
-      }
+//   lazy var dislikeButton = ReactionButton<Design>(height: 40)
+//      .setAll {
+//         $0.image(Design.icon.dislike)
+//         $1.text("0")
+//      }
 
    lazy var reactionsBlock = StackModel()
       .axis(.horizontal)
@@ -54,7 +54,7 @@ final class FeedDetailUserInfoBlock<Design: DSP>: StackModel, Designable {
       .spacing(8)
       .arrangedModels([
          likeButton,
-         dislikeButton,
+//         dislikeButton,
          Grid.xxx.spacer
       ])
 
@@ -100,14 +100,14 @@ extension FeedDetailUserInfoBlock: SetupProtocol {
       }
 
       likeButton.models.right.text(likeAmount)
-      dislikeButton.models.right.text(dislikeAmount)
+//      dislikeButton.models.right.text(dislikeAmount)
 
       if feed.transaction.userLiked == true {
          likeButton.models.main.imageTintColor(Design.color.activeButtonBack)
       }
-      if feed.transaction.userDisliked == true {
-         dislikeButton.models.main.imageTintColor(Design.color.activeButtonBack)
-      }
+//      if feed.transaction.userDisliked == true {
+//         dislikeButton.models.main.imageTintColor(Design.color.activeButtonBack)
+//      }
    }
 }
 
@@ -136,7 +136,7 @@ private extension FeedDetailUserInfoBlock {
       let transactionId = feed.transaction.id
       
       likeButton.view.startTapGestureRecognize()
-      dislikeButton.view.startTapGestureRecognize()
+//      dislikeButton.view.startTapGestureRecognize()
 
       likeButton.view.on(\.didTap, self) {
          let request = PressLikeRequest(token: "",
@@ -145,11 +145,11 @@ private extension FeedDetailUserInfoBlock {
          $0.send(\.reactionPressed, request)
       }
 
-      dislikeButton.view.on(\.didTap, self) {
-         let request = PressLikeRequest(token: "",
-                                        likeKind: 2,
-                                        transactionId: transactionId)
-         $0.send(\.reactionPressed, request)
-      }
+//      dislikeButton.view.on(\.didTap, self) {
+//         let request = PressLikeRequest(token: "",
+//                                        likeKind: 2,
+//                                        transactionId: transactionId)
+//         $0.send(\.reactionPressed, request)
+//      }
    }
 }

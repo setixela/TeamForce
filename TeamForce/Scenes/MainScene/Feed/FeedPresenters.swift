@@ -66,7 +66,7 @@ class FeedPresenters<Design: DesignProtocol>: Designable {
                if reaction.code == "like" {
                   likeAmount = String(reaction.counter ?? 0)
                } else if reaction.code == "dislike" {
-                  dislikeAmount = String(reaction.counter ?? 0)
+               //   dislikeAmount = String(reaction.counter ?? 0)
                }
             }
          }
@@ -77,21 +77,21 @@ class FeedPresenters<Design: DesignProtocol>: Designable {
                $1.text(likeAmount)
             }
 
-         let dislikeButton = ReactionButton<Design>()
-            .setAll {
-               $0.image(Design.icon.dislike)
-               $1.text(dislikeAmount)
-            }
+//         let dislikeButton = ReactionButton<Design>()
+//            .setAll {
+//               $0.image(Design.icon.dislike)
+//               $1.text(dislikeAmount)
+//            }
 
          if feed.transaction.userLiked == true {
             likeButton.setState(.selected)
          }
-         if feed.transaction.userDisliked == true {
-            dislikeButton.setState(.selected)
-         }
+//         if feed.transaction.userDisliked == true {
+//            dislikeButton.setState(.selected)
+//         }
 
          likeButton.view.startTapGestureRecognize(cancelTouch: true)
-         dislikeButton.view.startTapGestureRecognize(cancelTouch: true)
+//         dislikeButton.view.startTapGestureRecognize(cancelTouch: true)
 
          likeButton.view.on(\.didTap, self) {
             let request = PressLikeRequest(token: "",
@@ -100,17 +100,17 @@ class FeedPresenters<Design: DesignProtocol>: Designable {
             $0.send(\.reactionPressed, request)
 
             likeButton.setState(.selected)
-            dislikeButton.setState(.none)
+//            dislikeButton.setState(.none)
          }
 
-         dislikeButton.view.on(\.didTap, self) {
-            let request = PressLikeRequest(token: "",
-                                           likeKind: 2,
-                                           transactionId: transactionId)
-            $0.send(\.reactionPressed, request)
-            dislikeButton.setState(.selected)
-            likeButton.setState(.none)
-         }
+//         dislikeButton.view.on(\.didTap, self) {
+//            let request = PressLikeRequest(token: "",
+//                                           likeKind: 2,
+//                                           transactionId: transactionId)
+//            $0.send(\.reactionPressed, request)
+//            dislikeButton.setState(.selected)
+//            likeButton.setState(.none)
+//         }
 
          let reactionsBlock = StackModel()
             .axis(.horizontal)
@@ -120,7 +120,7 @@ class FeedPresenters<Design: DesignProtocol>: Designable {
             .arrangedModels([
                messageButton,
                likeButton,
-               dislikeButton,
+//               dislikeButton,
                Grid.xxx.spacer
             ])
 

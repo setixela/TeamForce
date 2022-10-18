@@ -33,8 +33,8 @@ final class FeedDetailScene<Asset: AssetProtocol>:
          didEditingComment: feedDetailVM.commentsBlock.commentField.on(\.didEditingChanged),
          didSendCommentPressed: feedDetailVM.commentsBlock.sendButton.on(\.didTap),
          presentAllReactions: feedDetailVM.reactionsBlock.filterButtons.on(\.didTapAll),
-         presentLikeReactions: feedDetailVM.reactionsBlock.filterButtons.on(\.didTapLikes),
-         presentDislikeReactions: feedDetailVM.reactionsBlock.filterButtons.on(\.didTapDislikes)
+         presentLikeReactions: feedDetailVM.reactionsBlock.filterButtons.on(\.didTapLikes)
+//         presentDislikeReactions: feedDetailVM.reactionsBlock.filterButtons.on(\.didTapDislikes)
       )
    )
 
@@ -70,7 +70,7 @@ enum FeedDetailSceneState {
    case presentComments([Comment])
    case presentReactions([ReactItem])
    case failedToReact
-   case updateReactions((TransactStatistics, (Bool, Bool)))
+   case updateReactions((TransactStatistics, (Bool)))
    case presntActivityIndicator
    case sendButtonDisabled
    case sendButtonEnabled
@@ -93,22 +93,22 @@ extension FeedDetailScene: StateMachine {
          print("failed to like")
       case .updateReactions(let value):
          var likeColor = Design.color.activeButtonBack
-         var dislikeColor = Design.color.activeButtonBack
-         if value.1.0 == false {
+       //  var dislikeColor = Design.color.activeButtonBack
+         if value.1 == false {
             likeColor = Design.color.text
          }
-         if value.1.1 == false {
-            dislikeColor = Design.color.text
-         }
+//         if value.1.1 == false {
+//            dislikeColor = Design.color.text
+//         }
          feedDetailVM.topBlock.likeButton.models.main.imageTintColor(likeColor)
-         feedDetailVM.topBlock.dislikeButton.models.main.imageTintColor(dislikeColor)
+//         feedDetailVM.topBlock.dislikeButton.models.main.imageTintColor(dislikeColor)
 
          if let reactions = value.0.likes {
             for reaction in reactions {
                if reaction.likeKind?.code == "like" {
                   feedDetailVM.topBlock.likeButton.models.right.text(String(reaction.counter ?? 0))
                } else if reaction.likeKind?.code == "dislike" {
-                  feedDetailVM.topBlock.dislikeButton.models.right.text(String(reaction.counter ?? 0))
+//                  feedDetailVM.topBlock.dislikeButton.models.right.text(String(reaction.counter ?? 0))
                }
             }
          }

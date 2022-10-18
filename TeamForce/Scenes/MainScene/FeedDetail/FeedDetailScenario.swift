@@ -23,7 +23,7 @@ struct FeedDetailEvents {
    
    let presentAllReactions: VoidWork<Void>
    let presentLikeReactions: VoidWork<Void>
-   let presentDislikeReactions: VoidWork<Void>
+ //  let presentDislikeReactions: VoidWork<Void>
 }
 
 final class FeedDetailScenario<Asset: AssetProtocol>:
@@ -80,15 +80,14 @@ final class FeedDetailScenario<Asset: AssetProtocol>:
             print("failed to present reactions")
          }
       
-      events.presentDislikeReactions
-         .onSuccess(setState, .presntActivityIndicator)
-         .doNext(works.getDislikeReactions)
-         .onSuccess(setState) { .presentReactions($0) }
-         .onFail {
-            print("failed to present reactions")
-         }
+//      events.presentDislikeReactions
+//         .onSuccess(setState, .presntActivityIndicator)
+//         .doNext(works.getDislikeReactions)
+//         .onSuccess(setState) { .presentReactions($0) }
+//         .onFail {
+//            print("failed to present reactions")
+//         }
          
-
       events.didEditingComment
          .doNext(works.updateInputComment)
          .doNext(usecase: IsEmpty())

@@ -37,7 +37,7 @@ class CommentPresenters<Design: DesignProtocol>: Designable {
             .textColor(Design.color.textSecondary)
 
          var likeAmount = "0"
-         var dislikeAmount = "0"
+//         var dislikeAmount = "0"
 
          let likeButton = ReactionButton<Design>()
             .setAll {
@@ -45,11 +45,11 @@ class CommentPresenters<Design: DesignProtocol>: Designable {
                $1.text(likeAmount)
             }
 
-         let dislikeButton = ReactionButton<Design>()
-            .setAll {
-               $0.image(Design.icon.dislike)
-               $1.text(dislikeAmount)
-            }
+//         let dislikeButton = ReactionButton<Design>()
+//            .setAll {
+//               $0.image(Design.icon.dislike)
+//               $1.text(dislikeAmount)
+//            }
 
          let reactionsBlock = StackModel()
             .axis(.horizontal)
@@ -58,7 +58,7 @@ class CommentPresenters<Design: DesignProtocol>: Designable {
             .spacing(4)
             .arrangedModels([
                likeButton,
-               dislikeButton,
+//               dislikeButton,
                Grid.xxx.spacer
             ])
 
