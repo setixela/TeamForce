@@ -175,48 +175,6 @@ final class ChallengeCreateScene<Asset: AssetProtocol>: BaseSceneModel<
          $0.scenario.start()
          $0.scenario2.start()
       }
-
-      /*
-      mainVM.bodyStack
-         .arrangedModels([
-            ScrollViewModelY()
-               .set(.spacing(16))
-               .set(.arrangedModels([
-                  infoBlock,
-                  titleInput,
-                  descriptionInput,
-                  finishDateButton,
-                  datePickWrapper,
-                  prizeFundInput,
-                  prizePlacesInput,
-                  photosPanel.lefted(),
-                  addPhotoButton,
-                  Grid.x64.spacer
-               ]))
-         ])
-
-      mainVM.footerStack
-         .arrangedModels([
-            sendButton
-            // cancelButton
-         ])
-
-      mainVM.closeButton.on(\.didTap, self) {
-         $0.setState(.cancelButtonPressed)
-      }
-
-      datePicker.view.minimumDate = Date()
-      finishDateButton.on(\.didTap, self) {
-         $0.toggleDatePickerHidden()
-      }
-
-      scenario.start()
-      scenario2.start()
-      */
-
-      //      cancelButton.on(\.didTap, self) {
-      //         $0.vcModel?.dismiss(animated: true)
-      //      }
    }
 }
 
