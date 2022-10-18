@@ -35,11 +35,12 @@ final class FeedDetailUserInfoBlock<Design: DSP>: StackModel, Designable {
       .set(Design.state.label.caption)
       .textColor(Design.color.iconBrand)
 
-   lazy var likeButton = ReactionButton<Design>(height: 40)
+   lazy var likeButton = ReactionButton<Design>()
       .setAll {
          $0.image(Design.icon.like)
          $1.text("0")
       }
+      .height(48)
 
 //   lazy var dislikeButton = ReactionButton<Design>(height: 40)
 //      .setAll {

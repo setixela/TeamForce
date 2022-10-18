@@ -10,7 +10,7 @@ import UIKit
 
 class ChallContendersPresenters<Design: DesignProtocol>: Designable {
    var events: EventsStore = .init()
-   
+
    var contendersCellPresenter: Presenter<Contender, WrappedX<StackModel>> {
       Presenter { work in
          let contender = work.unsafeInput
@@ -19,22 +19,22 @@ class ChallContendersPresenters<Design: DesignProtocol>: Designable {
          let surname = contender.participantSurname.string
          let reportText = contender.reportText.string
          let reportId = contender.reportId
-         
+
          let senderLabel = LabelModel()
             .text(name + " " + surname)
             .set(Design.state.label.body1)
-         
+
          let createdAtLabel = LabelModel()
             .text(createdAt.dateFullConverted)
             .set(Design.state.label.caption)
             .textColor(Design.color.textSecondary)
-         
+
          let icon = ImageViewModel()
             .contentMode(.scaleAspectFill)
             .image(Design.icon.avatarPlaceholder)
             .size(.square(Grid.x36.value))
             .cornerRadius(Grid.x36.value / 2)
-         
+
          let infoBlock = StackModel()
             .spacing(Grid.x6.value)
             .axis(.vertical)
@@ -61,9 +61,7 @@ class ChallContendersPresenters<Design: DesignProtocol>: Designable {
                }
             }
          }
-         
-         
-         
+
          let userInfo = StackModel()
             .padding(.outline(Grid.x8.value))
             .spacing(Grid.x12.value)
@@ -75,12 +73,12 @@ class ChallContendersPresenters<Design: DesignProtocol>: Designable {
             ])
             .cornerRadius(Design.params.cornerRadiusSmall)
             .backColor(Design.color.background)
-         
+
          let textLabel = LabelModel()
             .set(Design.state.label.caption)
             .text(reportText)
             .padding(Design.params.cellContentPadding)
-         
+
          let photo = ImageViewModel()
             .image(Design.icon.transactSuccess)
             .height(130)
@@ -88,12 +86,12 @@ class ChallContendersPresenters<Design: DesignProtocol>: Designable {
             .contentMode(.scaleAspectFill)
             .cornerRadius(Design.params.cornerRadiusSmall)
             .hidden(true)
-         
+
          if let photoLink = contender.reportPhoto, photoLink.count > 1 {
             photo.url(TeamForceEndpoints.urlBase + photoLink)
             photo.hidden(false)
          }
-         
+
 //         let rejectButton = ButtonModel()
 //            .set(Design.state.button.default)
 //            .backColor(Design.color.backgroundBrand)
@@ -102,18 +100,20 @@ class ChallContendersPresenters<Design: DesignProtocol>: Designable {
 //            .padding(.sideOffset(Grid.x14.value))
 //            .height(Design.params.buttonHeightSmall)
 //            .cornerRadius(Design.params.cornerRadiusSmall)
-         
-         let rejectButton1 = ReactionButton<Design>(height: Int(Design.params.buttonHeightSmall))
+
+         let rejectButton1 = ReactionButton<Design>()
             .setAll {
                $0.hidden(true)
                $1.text("Отклонить")
             }
-         
-         let acceptButton1 = ReactionButton<Design>(height: Int(Design.params.buttonHeightSmall))
+            .height(Design.params.buttonHeightSmall)
+
+         let acceptButton1 = ReactionButton<Design>()
             .setAll {
                $0.hidden(true)
                $1.text("Подтвердить")
             }
+            .height(Design.params.buttonHeightSmall)
 //         let acceptButton = ButtonModel()
 //            .set(Design.state.button.default)
 //            .title("Подтвердить")
@@ -121,19 +121,19 @@ class ChallContendersPresenters<Design: DesignProtocol>: Designable {
 //            .padding(.sideOffset(Grid.x14.value))
 //            .height(Design.params.buttonHeightSmall)
 //            .cornerRadius(Design.params.cornerRadiusSmall)
-         
+
          acceptButton1.view.startTapGestureRecognize()
          rejectButton1.view.startTapGestureRecognize()
-         
+
          rejectButton1.view.on(\.didTap, self) {
             $0.send(\.rejectPressed, reportId)
          }
-         
+
          acceptButton1.view.on(\.didTap, self) {
             $0.send(\.acceptPressed, reportId)
          }
 
-        // rejectButton.on(\.didSelect)
+         // rejectButton.on(\.didSelect)
          var buttonsStack = StackModel()
             .padding(.outline(Grid.x8.value))
             .spacing(Grid.x12.value)
@@ -144,7 +144,7 @@ class ChallContendersPresenters<Design: DesignProtocol>: Designable {
                rejectButton1,
                acceptButton1
             ])
-         
+
          let cellStack = WrappedX(
             StackModel()
                .padding(Design.params.cellContentPadding)
@@ -162,7 +162,7 @@ class ChallContendersPresenters<Design: DesignProtocol>: Designable {
          .padding(.verticalOffset(Grid.x6.value))
          .cornerRadius(Design.params.cornerRadiusSmall)
          .shadow(Design.params.cellShadow)
-         
+
          work.success(result: cellStack)
       }
    }

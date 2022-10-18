@@ -59,7 +59,7 @@ class FeedPresenters<Design: DesignProtocol>: Designable {
                $1.text(commentsAmount)
             }
          var likeAmount = "0"
-         var dislikeAmount = "0"
+        // var dislikeAmount = "0"
 
          if let reactions = feed.transaction.reactions {
             for reaction in reactions {
