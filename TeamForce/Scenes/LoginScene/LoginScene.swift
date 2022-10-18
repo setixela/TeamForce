@@ -21,7 +21,7 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
 
    lazy var scenario: Scenario = LoginScenario(
       works: LoginWorks<Asset>(),
-      stateDelegate: viewModels.setState,
+      stateDelegate: viewModels.stateDelegate,
       events: LoginScenarioEvents(
          userNameStringEvent: viewModels.userNameInputModel.mainModel.textField.on(\.didEditingChanged),
          smsCodeStringEvent: viewModels.smsCodeInputModel.mainModel.textField.on(\.didEditingChanged),

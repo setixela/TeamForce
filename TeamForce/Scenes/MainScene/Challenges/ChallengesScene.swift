@@ -84,7 +84,6 @@ extension ChallengesScene: StateMachine {
          setState(.hideActivityIndicator)
          viewModel.setState(.presentChallenges(challenges))
       case .presentChallengeDetails(let value):
-
          Asset.router?.route(
             .presentModally(.automatic),
             scene: \.challengeDetails,
@@ -103,18 +102,18 @@ extension ChallengesScene: StateMachine {
             .presentModally(.automatic),
             scene: \.challengeCreate,
             payload: ()
-         )
-//         .onSuccess(self) { slf, _ in
-//            slf.scenario.start()
-//         }
-//         .onFail(setState(_:), .hideActivityIndicator)
-//         .retainBy(retainer)
+         ) { [weak self] result in
+            switch result {
+            case true:
+               self?.scenario.start()
+            case false:
+               self?.setState(.hideActivityIndicator)
+            }
+         }
       case .presentActivityIndicator:
          activity.hidden(false)
-        // viewModel.hidden(true)
       case .hideActivityIndicator:
          activity.hidden(true)
-        // viewModel.hidden(false)
       }
    }
 }

@@ -157,7 +157,7 @@ extension MainScene: StateMachine {
          configButtons()
 
          mainVM.profileButton.on(\.didTap) {
-            Asset.router?.route(\.profile, navType: .push)
+            Asset.router?.route(.push, scene: \.profile)
          }
 
          if let photoUrl = currentUser?.profile.photo {

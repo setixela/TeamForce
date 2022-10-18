@@ -103,7 +103,7 @@ extension SideBarModel {
          .doNext(useCase.logout)
          .onSuccess {
             UserDefaults.standard.setIsLoggedIn(value: false)
-            Asset.router?.route(\.digitalThanks, navType: .presentInitial, payload: ())
+            Asset.router?.route(.presentInitial, scene: \.digitalThanks, payload: ())
          }.onFail {
             print("logout api failed")
          }

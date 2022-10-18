@@ -128,8 +128,8 @@ extension HistoryScene: StateMachine {
             .set(.itemSections(value.addedSpacer(size: Grid.x80.value)))
       //
       case .presentDetailView(let value):
-         ProductionAsset.router?.route(\.transactionDetail,
-                                       navType: .presentModally(.automatic),
+         ProductionAsset.router?.route(.presentModally(.automatic),
+                                       scene: \.transactionDetail,
                                        payload: value)
       case .cancelTransaction:
          scenario.start()

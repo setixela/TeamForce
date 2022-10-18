@@ -21,6 +21,8 @@ enum ChallengeCreateSceneState {
    case cancelButtonPressed
    case setReady(Bool)
    case updateDateButton(Date)
+
+   case challengeCreated
 }
 
 final class ChallengeCreateScene<Asset: AssetProtocol>: BaseSceneModel<
@@ -33,7 +35,7 @@ final class ChallengeCreateScene<Asset: AssetProtocol>: BaseSceneModel<
 
    lazy var scenario: Scenario = ChallengeCreateScenario<Asset>(
       works: works,
-      stateDelegate: setState,
+      stateDelegate: stateDelegate,
       events: ChallengeCreateScenarioEvents(
          didTitleInputChanged: titleInput.on(\.didEditingChanged),
          didDescriptionInputChanged: descriptionInput.on(\.didEditingChanged),
@@ -137,7 +139,6 @@ final class ChallengeCreateScene<Asset: AssetProtocol>: BaseSceneModel<
       super.start()
 
       vcModel?.on(\.viewDidLoad, self) {
-
          $0.mainVM.bodyStack
             .arrangedModels([
                ScrollViewModelY()
@@ -175,16 +176,47 @@ final class ChallengeCreateScene<Asset: AssetProtocol>: BaseSceneModel<
          $0.scenario2.start()
       }
 
+      /*
+      mainVM.bodyStack
+         .arrangedModels([
+            ScrollViewModelY()
+               .set(.spacing(16))
+               .set(.arrangedModels([
+                  infoBlock,
+                  titleInput,
+                  descriptionInput,
+                  finishDateButton,
+                  datePickWrapper,
+                  prizeFundInput,
+                  prizePlacesInput,
+                  photosPanel.lefted(),
+                  addPhotoButton,
+                  Grid.x64.spacer
+               ]))
+         ])
 
+      mainVM.footerStack
+         .arrangedModels([
+            sendButton
+            // cancelButton
+         ])
+
+      mainVM.closeButton.on(\.didTap, self) {
+         $0.setState(.cancelButtonPressed)
+      }
+
+      datePicker.view.minimumDate = Date()
+      finishDateButton.on(\.didTap, self) {
+         $0.toggleDatePickerHidden()
+      }
+
+      scenario.start()
+      scenario2.start()
+      */
 
       //      cancelButton.on(\.didTap, self) {
       //         $0.vcModel?.dismiss(animated: true)
       //      }
-
-   }
-
-   deinit {
-      print()
    }
 }
 
@@ -194,7 +226,7 @@ extension ChallengeCreateScene {
       case .initial:
          break
       case .continueButtonPressed:
-         Asset.router?.route(.pop)
+         dismiss()
       case .setReady(let isReady):
          if isReady {
             sendButton.set(Design.state.button.default)
@@ -208,7 +240,9 @@ extension ChallengeCreateScene {
          toggleDatePickerHidden()
       case .cancelButtonPressed:
          dismiss()
-         finishWork()
+         finishCanceled()
+      case .challengeCreated:
+         finishSucces()
       }
    }
 }

@@ -57,7 +57,7 @@ final class ChallengeResCancelScene<Asset: AssetProtocol>: BaseSceneModel<
       mainVM.closeButton
          .on(\.didTap, self) {
             $0.vcModel?.dismiss(animated: true)
-            $0.finisher?.fail()
+            $0.finisher?(false)
          }
 
       scenario.start()
@@ -87,10 +87,10 @@ extension ChallengeResCancelScene: StateMachine {
       case .popScene:
          vcModel?.dismiss(animated: true)
       case .resultSent:
-         finisher?.success()
+         finisher?(true)
       case .finish:
          vcModel?.dismiss(animated: true)
-         finisher?.fail()
+         finisher?(false)
       }
    }
 }

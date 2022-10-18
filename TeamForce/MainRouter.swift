@@ -36,32 +36,28 @@ final class MainRouter<Asset: AssetProtocol>: RouterProtocol, Assetable {
       }
    }
 
-   @discardableResult
    func route(_ navType: NavType,
               scene: KeyPath<Scene, SceneModelProtocol>? = nil,
-              payload: Any? = nil) -> Work<Void, Void>
+              payload: Any? = nil,
+              finisher: GenericClosure<Bool>? = nil)
    {
-      let work = Work<Void, Void> { work in
-         work.success(work.unsafeInput)
-      }
-
       switch navType {
       case .push:
-         nc.pushViewController(makeVC(work), animated: true)
+         nc.pushViewController(makeVC(), animated: true)
       case .pop:
          nc.popViewController(animated: true)
       case .popToRoot:
          nc.popToRootViewController(animated: true)
       case .presentInitial:
-         nc.viewControllers = [makeVC(work)]
+         nc.viewControllers = [makeVC()]
       case .presentModally(let value):
-         let vc = makeVC(work)
+         let vc = makeVC()
          vc.modalPresentationStyle = value
          nc.present(vc, animated: true)
       }
 
       // local func
-      func makeVC(_ work: Work<Void, Void>) -> UIViewController {
+      func makeVC() -> UIViewController {
          guard let scene else {
             assertionFailure()
             return .init()
@@ -71,53 +67,54 @@ final class MainRouter<Asset: AssetProtocol>: RouterProtocol, Assetable {
          sceneModel.setInput(payload)
          let vc = sceneModel.makeVC()
 
-         sceneModel.finisher = work
+         if let finisher {
+            let wrapped = { (result: Bool) in
+               finisher(result)
+               sceneModel.finisher = nil
+            }
+
+            sceneModel.finisher = wrapped
+         }
 
          return vc
       }
-
-      return work
    }
 
-   @available(*, deprecated, message: """
-   USE: func route(_ navType: NavType,
-                  scene: KeyPath<Scene, SceneModelProtocol>,
-                  payload: Any? = nil) -> Work<Bool, Bool>
-   """)
-   @discardableResult
-   func route(_ keypath: KeyPath<Scene, SceneModelProtocol>,
-              navType: NavType,
-              payload: Any? = nil) -> VoidWorkVoid {
-      let work = VoidWorkVoid()
-
-      switch navType {
-      case .push:
-         nc.pushViewController(makeVC(work), animated: true)
-      case .pop:
-         nc.popViewController(animated: true)
-      case .popToRoot:
-         nc.popToRootViewController(animated: true)
-      case .presentInitial:
-         nc.viewControllers = [makeVC(work)]
-      case .presentModally(let value):
-         let vc = makeVC(work)
-         vc.modalPresentationStyle = value
-         nc.present(vc, animated: true)
-      }
-
-      // local func
-      func makeVC(_ work: VoidWorkVoid) -> UIViewController {
-         let sceneModel = Scene()[keyPath: keypath]
-         sceneModel.setInput(payload)
-         let vc = sceneModel.makeVC()
-
-         sceneModel.finisher = work
-
-         return vc
-      }
-
-      return work
-   }
+//   @available(*, deprecated, message: """
+//   USE: func route(_ navType: NavType,
+//                  scene: KeyPath<Scene, SceneModelProtocol>,
+//                  payload: Any? = nil) -> Work<Bool, Bool>
+//   """)
+//   func route(_ keypath: KeyPath<Scene, SceneModelProtocol>,
+//              navType: NavType,
+//              payload: Any? = nil)
+//   {
+//      let work = VoidWorkVoid()
+//
+//      switch navType {
+//      case .push:
+//         nc.pushViewController(makeVC(work), animated: true)
+//      case .pop:
+//         nc.popViewController(animated: true)
+//      case .popToRoot:
+//         nc.popToRootViewController(animated: true)
+//      case .presentInitial:
+//         nc.viewControllers = [makeVC(work)]
+//      case .presentModally(let value):
+//         let vc = makeVC(work)
+//         vc.modalPresentationStyle = value
+//         nc.present(vc, animated: true)
+//      }
+//
+//      // local func
+//      func makeVC(_ work: VoidWorkVoid) -> UIViewController {
+//         let sceneModel = Scene()[keyPath: keypath]
+//         sceneModel.setInput(payload)
+//         let vc = sceneModel.makeVC()
+//
+//         return vc
+//      }
+//   }
 }
 
 protocol Alert {}

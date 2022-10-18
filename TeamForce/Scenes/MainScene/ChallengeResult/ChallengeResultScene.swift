@@ -83,7 +83,7 @@ final class ChallengeResultScene<Asset: AssetProtocol>: BaseSceneModel<
       mainVM.closeButton
          .on(\.didTap, self) {
             $0.vcModel?.dismiss(animated: true)
-            $0.finisher?.success()
+            $0.finisher?(true)
          }
 
       scenario.start()
@@ -103,10 +103,10 @@ extension ChallengeResultScene {
       case .popScene:
          vcModel?.dismiss(animated: true)
       case .resultSent:
-         finisher?.success()
+         finisher?(true)
       case .finish:
          vcModel?.dismiss(animated: true)
-         finisher?.fail()
+         finisher?(true)
       }
    }
 }

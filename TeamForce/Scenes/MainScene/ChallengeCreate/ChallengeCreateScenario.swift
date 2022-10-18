@@ -34,7 +34,8 @@ final class ChallengeCreateScenario<Asset: AssetProtocol>: BaseScenario<Challeng
 
       events.didSendPressed
          .onSuccess(setState, .continueButtonPressed)
-//         .doNext(works.createChallenge)
+         .doNext(works.createChallenge)
+         .onSuccess(setState, .challengeCreated)
 //         .onSuccess(setState, .continueButtonPressed)
 //         .onFail {
 //            print("Error createChallenge")
