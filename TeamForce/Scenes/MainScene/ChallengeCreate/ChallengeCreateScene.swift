@@ -17,7 +17,7 @@ struct ChallengeCreateEvents: InitProtocol {
 
 enum ChallengeCreateSceneState {
    case initial
-   case continueButtonPressed
+   case dismissScene
    case cancelButtonPressed
    case setReady(Bool)
    case updateDateButton(Date)
@@ -225,7 +225,7 @@ extension ChallengeCreateScene {
       switch state {
       case .initial:
          break
-      case .continueButtonPressed:
+      case .dismissScene:
          dismiss()
       case .setReady(let isReady):
          if isReady {

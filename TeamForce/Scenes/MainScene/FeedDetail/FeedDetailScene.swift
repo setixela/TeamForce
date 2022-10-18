@@ -93,16 +93,10 @@ extension FeedDetailScene: StateMachine {
          print("failed to like")
       case .updateReactions(let value):
          var likeColor = Design.color.activeButtonBack
-       //  var dislikeColor = Design.color.activeButtonBack
          if value.1 == false {
             likeColor = Design.color.text
          }
-//         if value.1.1 == false {
-//            dislikeColor = Design.color.text
-//         }
          feedDetailVM.topBlock.likeButton.models.main.imageTintColor(likeColor)
-//         feedDetailVM.topBlock.dislikeButton.models.main.imageTintColor(dislikeColor)
-
          if let reactions = value.0.likes {
             for reaction in reactions {
                if reaction.likeKind?.code == "like" {
