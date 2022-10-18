@@ -87,7 +87,7 @@ final class TransactScene<Asset: AssetProtocol>: ModalDoubleStackModel<Asset>, S
       stateDelegate: stateDelegate2,
       events: ImagePickingScenarioEvents(
          startImagePicking: viewModels.addPhotoButton.on(\.didTap),
-         addImageToBasket: imagePicker.onEvent(\.didImagePicked),
+         addImageToBasket: imagePicker.on(\.didImagePicked),
          removeImageFromBasket: viewModels.pickedImages.on(\.didCloseImage),
          didMaximumReach: viewModels.pickedImages.on(\.didMaximumReached)
       )
@@ -215,7 +215,7 @@ extension TransactScene: StateMachine2 {
       //
       case .presentImagePicker:
          guard let baseVC = vcModel else { return }
-         imagePicker.sendEvent(\.presentOn, baseVC)
+         imagePicker.send(\.presentOn, baseVC)
       //
       case .setHideAddPhotoButton(let value):
          viewModels.addPhotoButton.hidden(value)

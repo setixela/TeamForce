@@ -70,35 +70,51 @@ enum ChallengesState {
    case presentChallenges([Challenge])
    case presentChallengeDetails((Challenge, Int)) // challenge and profileId
    case presentCreateChallenge
+
+   case presentActivityIndicator
+   case hideActivityIndicator
 }
 
 extension ChallengesScene: StateMachine {
    func setState(_ state: ChallengesState) {
       switch state {
       case .initial:
-         break
+         setState(.presentActivityIndicator)
       case .presentChallenges(let challenges):
-         activity.hidden(true)
+         setState(.hideActivityIndicator)
          viewModel.setState(.presentChallenges(challenges))
       case .presentChallengeDetails(let value):
+
          Asset.router?.route(
-            \.challengeDetails,
-            navType: .presentModally(.automatic),
+            .presentModally(.automatic),
+            scene: \.challengeDetails,
             payload: value
          )
-         .onSuccess {
-            print("reload table")
-         }
-         .onFail {
-            print("doNothing")
-         }
-         .retainBy(retainer)
+//         .onSuccess(self) { slf, _ in
+//            slf.scenario.start()
+//         }
+//         .onFail(self) {
+//            $0.activity.hidden(true)
+//         }
+//         .retainBy(retainer)
       case .presentCreateChallenge:
+         setState(.presentActivityIndicator)
          Asset.router?.route(
-            \.challengeCreate,
-            navType: .presentModally(.automatic),
+            .presentModally(.automatic),
+            scene: \.challengeCreate,
             payload: ()
          )
+//         .onSuccess(self) { slf, _ in
+//            slf.scenario.start()
+//         }
+//         .onFail(setState(_:), .hideActivityIndicator)
+//         .retainBy(retainer)
+      case .presentActivityIndicator:
+         activity.hidden(false)
+        // viewModel.hidden(true)
+      case .hideActivityIndicator:
+         activity.hidden(true)
+        // viewModel.hidden(false)
       }
    }
 }

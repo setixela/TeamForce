@@ -55,21 +55,21 @@ final class MainScene<Asset: AssetProtocol>:
    // MARK: - Start
 
    override func start() {
-      vcModel?.sendEvent(\.setNavBarTintColor, Design.color.backgroundBrand)
+      vcModel?.send(\.setNavBarTintColor, Design.color.backgroundBrand)
 
       mainVM.bodyStack.arrangedModels([
          ActivityIndicator<Design>(),
          Spacer()
       ])
 
-      vcModel?.onEvent(\.viewWillAppear) { [weak self] in
+      vcModel?.on(\.viewWillAppear) { [weak self] in
          self?.scenario.start()
       }
       tabBarPanel.button1.setSelfMode(\.normal)
       selectedModel = 0
 
       mainVM.header.text("Благодарности")
-      vcModel?.sendEvent(\.setTitle, "Благодарности")
+      vcModel?.send(\.setTitle, "Благодарности")
       presentHeader()
    }
 
@@ -87,7 +87,7 @@ private extension MainScene {
          .on(\.didTap, self) {
             $0.unlockTabButtons()
             $0.mainVM.header.text("Благодарности")
-            $0.vcModel?.sendEvent(\.setTitle, "Благодарности")
+            $0.vcModel?.send(\.setTitle, "Благодарности")
             $0.presentModel($0.feedViewModel)
             $0.tabBarPanel.button1.setSelfMode(\.normal)
             $0.selectedModel = 0
@@ -97,7 +97,7 @@ private extension MainScene {
          .on(\.didTap) { [weak self] in
             self?.unlockTabButtons()
             self?.mainVM.header.text("Баланс")
-            self?.vcModel?.sendEvent(\.setTitle, "Баланс")
+            self?.vcModel?.send(\.setTitle, "Баланс")
             self?.presentModel(self?.balanceViewModel)
             self?.tabBarPanel.button2.setSelfMode(\.normal)
             self?.selectedModel = 1
@@ -112,7 +112,7 @@ private extension MainScene {
          .on(\.didTap) { [weak self] in
             self?.unlockTabButtons()
             self?.mainVM.header.text("История")
-            self?.vcModel?.sendEvent(\.setTitle, "История")
+            self?.vcModel?.send(\.setTitle, "История")
             self?.presentModel(self?.historyViewModel)
             self?.tabBarPanel.button3.setSelfMode(\.normal)
             self?.selectedModel = 2
@@ -122,7 +122,7 @@ private extension MainScene {
          .on(\.didTap) { [weak self] in
             self?.unlockTabButtons()
             self?.mainVM.header.text("Челленджи")
-            self?.vcModel?.sendEvent(\.setTitle, "Челленджи")
+            self?.vcModel?.send(\.setTitle, "Челленджи")
             self?.presentModel(self?.challengesViewModel)
             self?.tabBarPanel.button4.setSelfMode(\.normal)
             self?.selectedModel = 3
@@ -270,12 +270,12 @@ extension MainScene {
       UIView.animate(withDuration: 0.36) {
          self.mainVM.setState(.hideHeaderTitle)
       } completion: { _ in
-         self.vcModel?.sendEvent(\.setNavBarTintColor, Design.color.textInvert)
+         self.vcModel?.send(\.setNavBarTintColor, Design.color.textInvert)
       }
    }
 
    private func hideHeader() {
-      vcModel?.sendEvent(\.setNavBarTintColor, Design.color.transparent)
+      vcModel?.send(\.setNavBarTintColor, Design.color.transparent)
       UIView.animate(withDuration: 0.36) {
          self.mainVM.setState(.presentHeaderTitle)
       }

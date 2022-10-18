@@ -224,9 +224,6 @@ extension ChallengeDetailsScene: StateMachine {
                payload: (challenge, profileId)
             )
          }
-         .onFail {
-            print("failure")
-         }
          .retainBy(retainer)
       }
    }

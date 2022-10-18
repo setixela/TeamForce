@@ -18,6 +18,7 @@ struct ChallengeCreateEvents: InitProtocol {
 enum ChallengeCreateSceneState {
    case initial
    case continueButtonPressed
+   case cancelButtonPressed
    case setReady(Bool)
    case updateDateButton(Date)
 }
@@ -47,7 +48,7 @@ final class ChallengeCreateScene<Asset: AssetProtocol>: BaseSceneModel<
       stateDelegate: stateDelegate2,
       events: ImagePickingScenarioEvents(
          startImagePicking: addPhotoButton.on(\.didTap),
-         addImageToBasket: imagePicker.onEvent(\.didImagePicked),
+         addImageToBasket: imagePicker.on(\.didImagePicked),
          removeImageFromBasket: photosPanel.on(\.didCloseImage),
          didMaximumReach: photosPanel.on(\.didMaximumReached)
       )
@@ -135,45 +136,55 @@ final class ChallengeCreateScene<Asset: AssetProtocol>: BaseSceneModel<
    override func start() {
       super.start()
 
-      mainVM.bodyStack
-         .arrangedModels([
-            ScrollViewModelY()
-               .set(.spacing(16))
-               .set(.arrangedModels([
-                  infoBlock,
-                  titleInput,
-                  descriptionInput,
-                  finishDateButton,
-                  datePickWrapper,
-                  prizeFundInput,
-                  prizePlacesInput,
-                  photosPanel.lefted(),
-                  addPhotoButton,
-                  Grid.x64.spacer
-               ]))
-         ])
+      vcModel?.on(\.viewDidLoad, self) {
 
-      mainVM.footerStack
-         .arrangedModels([
-            sendButton,
-           // cancelButton
-         ])
+         $0.mainVM.bodyStack
+            .arrangedModels([
+               ScrollViewModelY()
+                  .set(.spacing(16))
+                  .set(.arrangedModels([
+                     $0.infoBlock,
+                     $0.titleInput,
+                     $0.descriptionInput,
+                     $0.finishDateButton,
+                     $0.datePickWrapper,
+                     $0.prizeFundInput,
+                     $0.prizePlacesInput,
+                     $0.photosPanel.lefted(),
+                     $0.addPhotoButton,
+                     Grid.x64.spacer
+                  ]))
+            ])
 
-      mainVM.closeButton.on(\.didTap, self) {
-         $0.vcModel?.dismiss(animated: true)
+         $0.mainVM.footerStack
+            .arrangedModels([
+               $0.sendButton,
+               // cancelButton
+            ])
+
+         $0.mainVM.closeButton.on(\.didTap, $0) {
+            $0.setState(.cancelButtonPressed)
+         }
+
+         $0.datePicker.view.minimumDate = Date()
+         $0.finishDateButton.on(\.didTap, $0) {
+            $0.toggleDatePickerHidden()
+         }
+
+         $0.scenario.start()
+         $0.scenario2.start()
       }
 
-      cancelButton.on(\.didTap, self) {
-         $0.vcModel?.dismiss(animated: true)
-      }
 
-      datePicker.view.minimumDate = Date()
-      finishDateButton.on(\.didTap, self) {
-         $0.toggleDatePickerHidden()
-      }
 
-      scenario.start()
-      scenario2.start()
+      //      cancelButton.on(\.didTap, self) {
+      //         $0.vcModel?.dismiss(animated: true)
+      //      }
+
+   }
+
+   deinit {
+      print()
    }
 }
 
@@ -183,7 +194,7 @@ extension ChallengeCreateScene {
       case .initial:
          break
       case .continueButtonPressed:
-         vcModel?.dismiss(animated: true)
+         Asset.router?.route(.pop)
       case .setReady(let isReady):
          if isReady {
             sendButton.set(Design.state.button.default)
@@ -195,6 +206,9 @@ extension ChallengeCreateScene {
          let text = date.convertToString(.medium)
          finishDateButton.label.text(text)
          toggleDatePickerHidden()
+      case .cancelButtonPressed:
+         dismiss()
+         finishWork()
       }
    }
 }
@@ -215,7 +229,7 @@ extension ChallengeCreateScene: StateMachine2 {
       //
       case .presentImagePicker:
          guard let baseVC = vcModel else { return }
-         imagePicker.sendEvent(\.presentOn, baseVC)
+         imagePicker.send(\.presentOn, baseVC)
       //
       case .setHideAddPhotoButton(let value):
          photosPanel.hiddenAnimated(!value, duration: 0.2)

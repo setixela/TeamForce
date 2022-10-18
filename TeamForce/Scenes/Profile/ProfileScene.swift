@@ -81,7 +81,7 @@ final class ProfileScene<Asset: AssetProtocol>: BaseSceneModel<
    private var balance: Balance?
 
    override func start() {
-      vcModel?.sendEvent(\.setTitle, "Профиль")
+      vcModel?.send(\.setTitle, "Профиль")
       configure()
       configureProfile()
    }

@@ -26,12 +26,12 @@ final class MainRouter<Asset: AssetProtocol>: RouterProtocol, Assetable {
 
    func start() {
       if Config.isDebug {
-         route(\.login, navType: .push, payload: ())
+         route(.push, scene: \.login, payload: ())
       } else {
          if UserDefaults.standard.isLoggedIn() {
-            route(\.main, navType: .push, payload: ())
+            route(.push, scene: \.main, payload: ())
          } else {
-            route(\.digitalThanks, navType: .push, payload: ())
+            route(.push, scene: \.digitalThanks, payload: ())
          }
       }
    }
@@ -39,9 +39,9 @@ final class MainRouter<Asset: AssetProtocol>: RouterProtocol, Assetable {
    @discardableResult
    func route(_ navType: NavType,
               scene: KeyPath<Scene, SceneModelProtocol>? = nil,
-              payload: Any? = nil) -> Work<Bool, Bool> {
-
-      let work = Work<Bool, Bool> { work in
+              payload: Any? = nil) -> Work<Void, Void>
+   {
+      let work = Work<Void, Void> { work in
          work.success(work.unsafeInput)
       }
 
@@ -61,9 +61,9 @@ final class MainRouter<Asset: AssetProtocol>: RouterProtocol, Assetable {
       }
 
       // local func
-      func makeVC(_ work: Work<Bool, Bool>) -> UIViewController {
+      func makeVC(_ work: Work<Void, Void>) -> UIViewController {
          guard let scene else {
-            assert(false)
+            assertionFailure()
             return .init()
          }
 
@@ -87,11 +87,8 @@ final class MainRouter<Asset: AssetProtocol>: RouterProtocol, Assetable {
    @discardableResult
    func route(_ keypath: KeyPath<Scene, SceneModelProtocol>,
               navType: NavType,
-              payload: Any? = nil) -> Work<Bool, Bool>
-   {
-      let work = Work<Bool, Bool> { work in
-         work.success(work.unsafeInput)
-      }
+              payload: Any? = nil) -> VoidWorkVoid {
+      let work = VoidWorkVoid()
 
       switch navType {
       case .push:
@@ -109,7 +106,7 @@ final class MainRouter<Asset: AssetProtocol>: RouterProtocol, Assetable {
       }
 
       // local func
-      func makeVC(_ work: Work<Bool, Bool>) -> UIViewController {
+      func makeVC(_ work: VoidWorkVoid) -> UIViewController {
          let sceneModel = Scene()[keyPath: keypath]
          sceneModel.setInput(payload)
          let vc = sceneModel.makeVC()
