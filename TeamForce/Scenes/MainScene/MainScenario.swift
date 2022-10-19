@@ -26,7 +26,7 @@ final class MainScenario<Asset: AssetProtocol>:
             }
 
             UserDefaults.standard.setIsLoggedIn(value: false)
-            Asset.router?.route(\.digitalThanks, navType: .presentInitial, payload: ())
+            Asset.router?.route( .presentInitial, scene: \.digitalThanks, payload: ())
          }
    }
 }

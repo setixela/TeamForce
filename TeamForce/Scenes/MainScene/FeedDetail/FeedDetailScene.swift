@@ -28,39 +28,39 @@ final class FeedDetailScene<Asset: AssetProtocol>:
          presentDetails: feedDetailVM.filterButtons.on(\.didTapDetails),
          presentComment: feedDetailVM.filterButtons.on(\.didTapComments),
          presentReactions: feedDetailVM.filterButtons.on(\.didTapReactions),
-         reactionPressed: feedDetailVM.topBlock.on(\.reactionPressed),
+         reactionPressed: feedDetailVM.infoBlock.on(\.reactionPressed),
          saveInput: on(\.input),
          didEditingComment: feedDetailVM.commentsBlock.commentField.on(\.didEditingChanged),
          didSendCommentPressed: feedDetailVM.commentsBlock.sendButton.on(\.didTap),
          presentAllReactions: feedDetailVM.reactionsBlock.filterButtons.on(\.didTapAll),
-         presentLikeReactions: feedDetailVM.reactionsBlock.filterButtons.on(\.didTapLikes),
-         presentDislikeReactions: feedDetailVM.reactionsBlock.filterButtons.on(\.didTapDislikes)
+         presentLikeReactions: feedDetailVM.reactionsBlock.filterButtons.on(\.didTapLikes)
       )
    )
 
    override func start() {
       configure()
-
-      guard let inputValue else { return }
-
-      feedDetailVM.setState(.initial(inputValue))
-
-      scenario.start()
    }
 
    private var state = FeedDetailSceneState.initial
 
    private func configure() {
-      mainVM.headerStack.arrangedModels([Spacer(8)])
-      mainVM.bodyStack
-         .set(Design.state.stack.default)
-         .alignment(.fill)
-         .distribution(.fill)
-         .set(.backColor(Design.color.backgroundSecondary))
-         .arrangedModels([
-            Spacer(32),
-            feedDetailVM
-         ])
+      vcModel?.on(\.viewDidLoad, self) {
+         $0.mainVM.headerStack.arrangedModels([Spacer(8)])
+         $0.mainVM.bodyStack
+            .set(Design.state.stack.default)
+            .alignment(.fill)
+            .distribution(.fill)
+            .set(.backColor(Design.color.backgroundSecondary))
+            .arrangedModels([
+               Spacer(32),
+               $0.feedDetailVM
+            ])
+
+         guard let inputValue = $0.inputValue else { assertionFailure(); return }
+
+         $0.feedDetailVM.setState(.initial(inputValue))
+         $0.scenario.start()
+      }
    }
 }
 
@@ -69,8 +69,9 @@ enum FeedDetailSceneState {
    case presentDetails(Feed)
    case presentComments([Comment])
    case presentReactions([ReactItem])
+   case buttonLikePressed(alreadySelected: Bool)
    case failedToReact
-   case updateReactions((TransactStatistics, (Bool, Bool)))
+   case updateReactions((TransactStatistics, Bool))
    case presntActivityIndicator
    case sendButtonDisabled
    case sendButtonEnabled
@@ -93,26 +94,19 @@ extension FeedDetailScene: StateMachine {
          print("failed to like")
       case .updateReactions(let value):
          var likeColor = Design.color.activeButtonBack
-         var dislikeColor = Design.color.activeButtonBack
-         if value.1.0 == false {
+         if value.1 == false {
             likeColor = Design.color.text
          }
-         if value.1.1 == false {
-            dislikeColor = Design.color.text
-         }
-         feedDetailVM.topBlock.likeButton.models.main.imageTintColor(likeColor)
-         feedDetailVM.topBlock.dislikeButton.models.main.imageTintColor(dislikeColor)
-
+         feedDetailVM.infoBlock.likeButton.models.main.imageTintColor(likeColor)
          if let reactions = value.0.likes {
             for reaction in reactions {
                if reaction.likeKind?.code == "like" {
-                  feedDetailVM.topBlock.likeButton.models.right.text(String(reaction.counter ?? 0))
+                  feedDetailVM.infoBlock.likeButton.models.right.text(String(value.0.likes?.count ?? 0))
                } else if reaction.likeKind?.code == "dislike" {
-                  feedDetailVM.topBlock.dislikeButton.models.right.text(String(reaction.counter ?? 0))
+//                  feedDetailVM.topBlock.dislikeButton.models.right.text(String(reaction.counter ?? 0))
                }
             }
          }
-         break
       case .presentDetails(let feed):
          feedDetailVM.setState(.details(feed))
       case .presntActivityIndicator:
@@ -126,6 +120,12 @@ extension FeedDetailScene: StateMachine {
          feedDetailVM.setState(.commentDidSend)
       case .error:
          print("Load token error")
+      case .buttonLikePressed(let selected):
+         if selected {
+            feedDetailVM.infoBlock.likeButton.setState(.none)
+         } else {
+            feedDetailVM.infoBlock.likeButton.setState(.selected)
+         }
       }
    }
 }

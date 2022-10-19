@@ -10,7 +10,7 @@ import ReactiveWorks
 
 extension FeedDetailUserInfoBlock: Eventable {
    struct Events: InitProtocol {
-      var reactionPressed: PressLikeRequest?
+      var reactionPressed: Void?
    }
 }
 
@@ -35,17 +35,23 @@ final class FeedDetailUserInfoBlock<Design: DSP>: StackModel, Designable {
       .set(Design.state.label.caption)
       .textColor(Design.color.iconBrand)
 
-   lazy var likeButton = ReactionButton<Design>(height: 40)
+   lazy var likeButton = ReactionButton<Design>()
       .setAll {
          $0.image(Design.icon.like)
-         $1.text("0")
+         $1
+            .font(Design.font.caption)
+            .text("0")
       }
+      .removeAllConstraints()
+      .padding(.horizontalOffset(44))
+      .width(121)
+      .height(42)
 
-   lazy var dislikeButton = ReactionButton<Design>(height: 40)
-      .setAll {
-         $0.image(Design.icon.dislike)
-         $1.text("0")
-      }
+//   lazy var dislikeButton = ReactionButton<Design>(height: 40)
+//      .setAll {
+//         $0.image(Design.icon.dislike)
+//         $1.text("0")
+//      }
 
    lazy var reactionsBlock = StackModel()
       .axis(.horizontal)
@@ -54,7 +60,7 @@ final class FeedDetailUserInfoBlock<Design: DSP>: StackModel, Designable {
       .spacing(8)
       .arrangedModels([
          likeButton,
-         dislikeButton,
+//         dislikeButton,
          Grid.xxx.spacer
       ])
 
@@ -88,26 +94,26 @@ extension FeedDetailUserInfoBlock: SetupProtocol {
 
       infoLabel.attributedText(infoText!)
       var likeAmount = "0"
-      var dislikeAmount = "0"
+//      var dislikeAmount = "0"
       if let reactions = feed.transaction.reactions {
          for reaction in reactions {
             if reaction.code == "like" {
                likeAmount = String(reaction.counter ?? 0)
             } else if reaction.code == "dislike" {
-               dislikeAmount = String(reaction.counter ?? 0)
+//               dislikeAmount = String(reaction.counter ?? 0)
             }
          }
       }
 
       likeButton.models.right.text(likeAmount)
-      dislikeButton.models.right.text(dislikeAmount)
+//      dislikeButton.models.right.text(dislikeAmount)
 
       if feed.transaction.userLiked == true {
-         likeButton.models.main.imageTintColor(Design.color.activeButtonBack)
+         likeButton.setState(.selected)
       }
-      if feed.transaction.userDisliked == true {
-         dislikeButton.models.main.imageTintColor(Design.color.activeButtonBack)
-      }
+//      if feed.transaction.userDisliked == true {
+//         dislikeButton.models.main.imageTintColor(Design.color.activeButtonBack)
+//      }
    }
 }
 
@@ -136,20 +142,20 @@ private extension FeedDetailUserInfoBlock {
       let transactionId = feed.transaction.id
       
       likeButton.view.startTapGestureRecognize()
-      dislikeButton.view.startTapGestureRecognize()
+//      dislikeButton.view.startTapGestureRecognize()
 
       likeButton.view.on(\.didTap, self) {
-         let request = PressLikeRequest(token: "",
-                                        likeKind: 1,
-                                        transactionId: transactionId)
-         $0.send(\.reactionPressed, request)
+//         let request = PressLikeRequest(token: "",
+//                                        likeKind: 1,
+//                                        transactionId: transactionId)
+         $0.send(\.reactionPressed)
       }
 
-      dislikeButton.view.on(\.didTap, self) {
-         let request = PressLikeRequest(token: "",
-                                        likeKind: 2,
-                                        transactionId: transactionId)
-         $0.send(\.reactionPressed, request)
-      }
+//      dislikeButton.view.on(\.didTap, self) {
+//         let request = PressLikeRequest(token: "",
+//                                        likeKind: 2,
+//                                        transactionId: transactionId)
+//         $0.send(\.reactionPressed, request)
+//      }
    }
 }

@@ -54,7 +54,7 @@ final class ProfileEditScene<Asset: AssetProtocol>: ModalDoubleStackModel<Asset>
       stateDelegate: stateDelegate,
       events: AvatarPickingScenarioEvents(
          startImagePicking: userNamePanel.editPhotoBlock.models.main.on(\.didTap),
-         addImageToBasket: imagePicker.onEvent(\.didImagePicked)
+         addImageToBasket: imagePicker.on(\.didImagePicked)
       )
    )
 
@@ -136,7 +136,7 @@ extension ProfileEditScene: StateMachine {
          userNamePanel.setup(userData)
          workPlaceModels.setup(userData)
       case .presentImagePicker:
-         imagePicker.sendEvent(\.presentOn, vcModel)
+         imagePicker.send(\.presentOn, vcModel)
       case .presentPickedImage(let image):
          userNamePanel.editPhotoBlock.photoButton.backImage(image)
       case .finishSaveSuccess:

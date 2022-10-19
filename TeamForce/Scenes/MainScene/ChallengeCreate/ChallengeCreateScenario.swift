@@ -33,10 +33,11 @@ final class ChallengeCreateScenario<Asset: AssetProtocol>: BaseScenario<Challeng
          .onSuccess(setState) { .setReady($0) }
 
       events.didSendPressed
+         .onSuccess(setState, .dismissScene)
          .doNext(works.createChallenge)
-         .onSuccess(setState, .continueButtonPressed)
+         .onSuccess(setState, .challengeCreated)
          .onFail {
-            print("Error createChallenge")
+            print("Показать ошибку")
          }
 
       events.didDatePicked
