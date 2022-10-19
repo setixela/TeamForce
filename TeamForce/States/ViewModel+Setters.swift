@@ -333,7 +333,14 @@ extension ViewModelProtocol where Self: Stateable, View: StackViewExtended {
 
 extension ViewModelProtocol where Self: Stateable, View: PaddingLabel {
    @discardableResult func text(_ value: String) -> Self {
-      view.text = value
+      let current = NSMutableAttributedString(attributedString: view.attributedText ?? NSMutableAttributedString())
+      current.mutableString.setString(value)
+      current.addAttribute(.paragraphStyle,
+                           value: view.paragraphStyle,
+                           range: .init(location: 0, length: current.length))
+
+      view.attributedText = current
+      view.sizeToFit()
       return self
    }
 
@@ -353,7 +360,8 @@ extension ViewModelProtocol where Self: Stateable, View: PaddingLabel {
    }
 
    @discardableResult func alignment(_ value: NSTextAlignment) -> Self {
-      view.textAlignment = value
+      view.paragraphStyle.alignment = value
+//      view.textAlignment = value
       return self
    }
 
@@ -394,7 +402,18 @@ extension ViewModelProtocol where Self: Stateable, View: PaddingLabel {
    }
 
    @discardableResult func lineBreakMode(_ value: NSLineBreakMode) -> Self {
-      view.lineBreakMode = value
+      view.paragraphStyle.lineBreakMode = value
+      return self
+   }
+
+   @discardableResult func lineSpacing(_ value: CGFloat) -> Self {
+      let style = view.paragraphStyle
+      style.lineSpacing = value
+      let string = view.attributedText ?? NSAttributedString()
+      let attrStr = NSMutableAttributedString(attributedString: string)
+      attrStr.addAttribute(.paragraphStyle, value: style, range: .init())
+      view.attributedText = attrStr
+      view.paragraphStyle = style
       return self
    }
 }
@@ -648,7 +667,7 @@ extension ViewModelProtocol where Self: Stateable, View: UITextView {
    }
 }
 
-fileprivate extension UIView {
+private extension UIView {
    func removeAllConstraints() {
       var _superview = superview
 
