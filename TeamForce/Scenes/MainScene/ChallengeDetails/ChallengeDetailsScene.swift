@@ -87,7 +87,6 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
          // .height(200)
          .arrangedModels([
             headerImage
-
          ])
 
       mainVM.bodyStack

@@ -105,6 +105,7 @@ final class ChallengeInfoVM<Design: DSP>: StackModel, Designable {
    lazy var title = Design.label.headline6
    lazy var body = Design.label.caption
       .numberOfLines(0)
+      .lineSpacing(8)
    lazy var tags = StackModel()
       .spacing(8)
 
