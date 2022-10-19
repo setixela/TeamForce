@@ -42,6 +42,8 @@ final class PaddingLabel: UILabel, Marginable, Tappable {
 
    var padding: UIEdgeInsets = .init()
 
+   lazy var paragraphStyle: NSMutableParagraphStyle = .init()
+
    override public func draw(_ rect: CGRect) {
       drawText(in: rect.inset(by: padding))
    }
@@ -61,7 +63,8 @@ final class PaddingLabel: UILabel, Marginable, Tappable {
 
       let newSize = text.boundingRect(with: CGSize(width: textWidth, height: .greatestFiniteMagnitude),
                                       options: [.usesLineFragmentOrigin],
-                                      attributes: [NSAttributedString.Key.font: font!],
+                                      attributes: [NSAttributedString.Key.font: font!,
+                                                   .paragraphStyle: paragraphStyle],
                                       context: nil)
 
       contentSize.height = ceil(newSize.size.height) + insetsHeight

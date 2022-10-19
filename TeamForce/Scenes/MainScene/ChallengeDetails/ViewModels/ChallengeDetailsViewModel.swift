@@ -105,6 +105,7 @@ final class ChallengeInfoVM<Design: DSP>: StackModel, Designable {
    lazy var title = Design.label.headline6
    lazy var body = Design.label.caption
       .numberOfLines(0)
+      .lineSpacing(8)
    lazy var tags = StackModel()
       .spacing(8)
 
@@ -131,7 +132,8 @@ extension ChallengeInfoVM: SetupProtocol {
    func setup(_ data: Challenge) {
       title.text(data.name.string)
       body.text(data.description.string)
-      let states = data.states?.map { ChallengeStatusBlock<Design>().text($0.rawValue) }
+      let arrayOfStates = data.status?.components(separatedBy: ", ")
+      let states = arrayOfStates?.map { ChallengeStatusBlock<Design>().text($0) }
       tags.arrangedModels(states ?? [])
    }
 }

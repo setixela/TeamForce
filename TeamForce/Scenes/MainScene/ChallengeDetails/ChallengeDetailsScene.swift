@@ -87,7 +87,6 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
          // .height(200)
          .arrangedModels([
             headerImage
-
          ])
 
       mainVM.bodyStack
@@ -136,6 +135,8 @@ enum ChallengeDetailsState {
    case presentWinners([ChallengeWinner])
    case presentContenders([Contender])
    case presentCancelView(Challenge, Int, Int)
+   
+   case disableSendResult
 }
 
 extension ChallengeDetailsScene: StateMachine {
@@ -187,7 +188,8 @@ extension ChallengeDetailsScene: StateMachine {
 
       case .enableContenders:
          filterButtons.buttons[2].hidden(false)
-         challDetails.models.down.hidden(true)
+         challDetails.models.down.sendButton.hidden(true)
+         //challDetails.models.down.hidden(true)
 
       case .presentMyResults(let results):
          myResultBlock.setup(results)
@@ -228,6 +230,8 @@ extension ChallengeDetailsScene: StateMachine {
                break
             }
          }
+      case .disableSendResult:
+         challDetails.models.down.sendButton.hidden(true)
       }
    }
 }

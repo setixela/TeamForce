@@ -120,6 +120,16 @@ final class ChallengeDetailsWorks<Asset: AssetProtocol>: BaseSceneWorks<Challeng
       
       work.success((challenge, profileId, resultId))
    }.retainBy(retainer) }
+   
+   var isSendResultActive: Work<Void, Void> { .init { work in
+      guard let challenge = Self.store.challenge else { return }
+      if challenge.active == true &&
+            challenge.approvedReportsAmount < challenge.awardees {
+         work.success(())
+      } else {
+         work.fail()
+      }
+   }.retainBy(retainer) }
 }
 
 extension ChallengeDetailsWorks: ChallengeDetailsWorksProtocol {
