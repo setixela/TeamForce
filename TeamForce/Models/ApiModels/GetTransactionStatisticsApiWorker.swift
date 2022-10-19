@@ -38,12 +38,16 @@ struct Like: Codable {
 }
 
 struct TransactStatistics: Codable {
-   let transactionId: Int
+   let transactionId: String
+   let contentType: String
+   let objectId: String
    let comments: Int?
    let likes: [Like]?
    
    enum CodingKeys: String, CodingKey {
       case transactionId = "transaction_id"
+      case contentType = "content_type"
+      case objectId = "object_id"
       case comments
       case likes
    }

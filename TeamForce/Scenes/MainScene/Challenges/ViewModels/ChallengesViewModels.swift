@@ -191,7 +191,7 @@ struct ChallengeCellPresenters<Design: DSP>: Designable {
                prizeFund.title.text(data.fund.toString)
                prizeFund.body.text("Призовой фонд")
 
-               prizes.title.text(data.prizeSize.toString)
+               prizes.title.text(data.awardees.toString)
                prizes.body.text("Призовых мест")
             }
 
