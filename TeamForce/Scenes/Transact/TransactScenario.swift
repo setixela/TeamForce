@@ -136,16 +136,17 @@ final class TransactScenario<Asset: AssetProtocol>:
       events.setTags
          .doNext(works.setTags)
          .doNext(works.getSelectedTags)
-         .onSuccess(setState) {
-            .updateSelectedTags($0)
-         }
+         .doSaveResult()
+         .doVoidNext(works.isCorrectBothInputs)
+         .onSuccessMixSaved(setState) { .updateSelectedTags($1, true) }
+         .onFailMixSaved(setState) { .updateSelectedTags($1, false) }
 
-      events.removeTag
-         .doNext(works.removeTag)
-         .doNext(works.getSelectedTags)
-         .onSuccess(setState) {
-            .updateSelectedTags($0)
-         }
+//      events.removeTag
+//         .doNext(works.removeTag)
+//         .doNext(works.getSelectedTags)
+//         .onSuccess(setState) {
+//            .updateSelectedTags($0)
+//         }
 
       events.presentTagsSelectorDidTap
          .doNext(works.getSelectedTags)

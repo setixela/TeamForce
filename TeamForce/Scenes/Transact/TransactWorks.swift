@@ -170,7 +170,7 @@ final class TransactWorks<Asset: AssetProtocol>: BaseSceneWorks<TransacrtTempSto
          reason: Self.store.inputReasonText,
          isAnonymous: Self.store.isAnonymous,
          photo: sendImage,
-         tags: Self.store.isTagsEnabled ? Self.store.tags.map { String($0.id) }.joined(separator: " ") : nil
+         tags: /*Self.store.isTagsEnabled ?*/ Self.store.tags.map { String($0.id) }.joined(separator: " ") //: nil
       )
 
       self?.apiUseCase.sendCoin
@@ -274,7 +274,7 @@ final class TransactWorks<Asset: AssetProtocol>: BaseSceneWorks<TransacrtTempSto
    }.retainBy(retainer) }
 
    var isCorrectBothInputs: Work<Void, Void> { .init { work in
-      if /*Self.store.isCorrectReasonInput,*/ Self.store.isCorrectCoinInput {
+      if Self.store.isCorrectCoinInput && (Self.store.isCorrectReasonInput || Self.store.tags.count > 0) {
          work.success()
       } else {
          work.fail()
