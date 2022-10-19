@@ -101,6 +101,7 @@ final class TransactScene<Asset: AssetProtocol>: ModalDoubleStackModel<Asset>, S
          viewModels.balanceInfo,
          viewModels.foundUsersList,
          viewModels.amountInputModel,
+         viewModels.options.tagsCloud,
          viewModels.reasonTextView,
          viewModels.pickedImages.lefted(),
          viewModels.addPhotoButton,
