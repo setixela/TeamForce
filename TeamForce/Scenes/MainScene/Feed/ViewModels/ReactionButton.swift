@@ -16,24 +16,13 @@ final class ReactionButton<Design: DSP>: M<ImageViewModel>.R<LabelModel>.Combo, 
          $0.size(.square(Grid.x16.value))
          $1.set(Design.state.label.caption2)
       }
-      spacing(8)
-      backColor(Design.color.backgroundInfoSecondary)
+      distribution(.equalCentering)
       cornerRadius(Design.params.cornerRadiusMini)
-      height(26)
-      padding(.sideOffset(8))
-   }
-   
-   init(height: Int) {
-      super.init()
-      setAll {
-         $0.size(.square(Grid.x20.value))
-         $1.set(Design.state.label.caption)
-      }
-      spacing(8)
-      backColor(Design.color.backgroundInfoSecondary)
-      cornerRadius(Design.params.cornerRadiusMini)
-      padding(.sideOffset(32))
-      self.height(CGFloat(height))
+      width(55)
+      height(34)
+      padding(.sideOffset(12))
+
+      setState(.none)
    }
 }
 
@@ -42,8 +31,12 @@ extension ReactionButton: StateMachine {
       switch state {
       case .none:
          models.main.imageTintColor(Design.color.iconContrast)
+         models.right.textColor(Design.color.iconContrast)
+         backColor(Design.color.backgroundInfoSecondary)
       case .selected:
-         models.main.imageTintColor(Design.color.activeButtonBack)
+         models.main.imageTintColor(Design.color.success)
+         models.right.textColor(Design.color.success)
+         backColor(Design.color.successSecondary)
       }
    }
 }

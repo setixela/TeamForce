@@ -210,8 +210,13 @@ extension ViewModelProtocol where Self: Stateable {
       return self
    }
 
-   @discardableResult func  clipsToBound(_ value: Bool) -> Self {
+   @discardableResult func clipsToBound(_ value: Bool) -> Self {
       view.clipsToBounds = value
+      return self
+   }
+
+   @discardableResult func removeAllConstraints() -> Self {
+      view.removeAllConstraints()
       return self
    }
 }
@@ -640,5 +645,28 @@ extension ViewModelProtocol where Self: Stateable, View: UITextView {
    @discardableResult func disableAutocorrection() -> Self {
       view.autocorrectionType = .no
       return self
+   }
+}
+
+fileprivate extension UIView {
+   func removeAllConstraints() {
+      var _superview = superview
+
+      while let superview = _superview {
+         for constraint in superview.constraints {
+            if let first = constraint.firstItem as? UIView, first == self {
+               superview.removeConstraint(constraint)
+            }
+
+            if let second = constraint.secondItem as? UIView, second == self {
+               superview.removeConstraint(constraint)
+            }
+         }
+
+         _superview = superview.superview
+      }
+
+      removeConstraints(constraints)
+      translatesAutoresizingMaskIntoConstraints = true
    }
 }

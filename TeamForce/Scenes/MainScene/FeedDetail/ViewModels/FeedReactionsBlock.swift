@@ -19,7 +19,7 @@ final class FeedReactionsBlock<Design: DSP>: StackModel, Designable {
 
    override func start() {
       super.start()
-      filterButtons.buttonAll.setMode(\.selected)
+      filterButtons.buttonAll.setMode(\.normal)
       
       arrangedModels([
          Spacer(8),

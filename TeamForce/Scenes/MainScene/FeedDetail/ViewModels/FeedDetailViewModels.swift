@@ -23,19 +23,20 @@ enum FeedDetailsState {
 final class FeedDetailViewModels<Design: DSP>: DoubleStacksModel, Designable {
    var events: EventsStore = .init()
 
-   lazy var topBlock = FeedDetailUserInfoBlock<Design>()
+   lazy var infoBlock = FeedDetailUserInfoBlock<Design>()
 
    lazy var filterButtons = FeedDetailFilterButtons<Design>()
 
-   private lazy var detailsBlock = FeedDetailsBlock<Design>()
    lazy var commentsBlock = FeedCommentsBlock<Design>()
    lazy var reactionsBlock = FeedReactionsBlock<Design>()
+
+   private lazy var detailsBlock = FeedDetailsBlock<Design>()
 
    override func start() {
       super.start()
 
       bodyStack.arrangedModels([
-         topBlock,
+         infoBlock,
          filterButtons
       ])
 
@@ -55,7 +56,7 @@ extension FeedDetailViewModels: StateMachine {
       switch state {
       case .initial(let tuple):
          send(\.saveInput, tuple.0)
-         topBlock.setup(tuple)
+         infoBlock.setup(tuple)
          setState(.details(tuple.0))
       case .details(let feed):
          detailsBlock.setup(feed)

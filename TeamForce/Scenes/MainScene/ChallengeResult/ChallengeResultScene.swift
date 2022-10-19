@@ -15,6 +15,8 @@ enum ChallengeResultSceneState {
 
    case popScene
    case resultSent
+   
+   case finish
 }
 
 final class ChallengeResultScene<Asset: AssetProtocol>: BaseSceneModel<
@@ -41,7 +43,7 @@ final class ChallengeResultScene<Asset: AssetProtocol>: BaseSceneModel<
       stateDelegate: stateDelegate2,
       events: ImagePickingScenarioEvents(
          startImagePicking: addPhotoButton.on(\.didTap),
-         addImageToBasket: imagePicker.onEvent(\.didImagePicked),
+         addImageToBasket: imagePicker.on(\.didImagePicked),
          removeImageFromBasket: photosPanel.on(\.didCloseImage),
          didMaximumReach: photosPanel.on(\.didMaximumReached)
       )
@@ -81,6 +83,7 @@ final class ChallengeResultScene<Asset: AssetProtocol>: BaseSceneModel<
       mainVM.closeButton
          .on(\.didTap, self) {
             $0.vcModel?.dismiss(animated: true)
+            $0.finisher?(true)
          }
 
       scenario.start()
@@ -100,7 +103,10 @@ extension ChallengeResultScene {
       case .popScene:
          vcModel?.dismiss(animated: true)
       case .resultSent:
-         finisher?.doAsync(true)
+         finisher?(true)
+      case .finish:
+         vcModel?.dismiss(animated: true)
+         finisher?(true)
       }
    }
 }
@@ -113,7 +119,7 @@ extension ChallengeResultScene: StateMachine2 {
          photosPanel.addButton(image: image)
          //
       case .presentImagePicker:
-         imagePicker.sendEvent(\.presentOn, vcModel)
+         imagePicker.send(\.presentOn, vcModel)
          //
       case .setHideAddPhotoButton(let value):
          photosPanel.hiddenAnimated(!value, duration: 0.2)

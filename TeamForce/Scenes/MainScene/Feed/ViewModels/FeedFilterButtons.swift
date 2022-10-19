@@ -148,7 +148,7 @@ final class FeedReactionsFilterButtons<Design: DSP>: StackModel, Designable, Eve
    struct Events: InitProtocol {
       var didTapAll: Void?
       var didTapLikes: Void?
-      var didTapDislikes: Void?
+//      var didTapDislikes: Void?
    }
 
    var events = [Int: LambdaProtocol?]()
@@ -168,13 +168,13 @@ final class FeedReactionsFilterButtons<Design: DSP>: StackModel, Designable, Eve
          self?.send(\.didTapLikes)
       }
 
-   lazy var buttonDislikes = SecondaryButtonDT<Design>()
-      .title("Дизлайк")
-      .font(Design.font.default)
-      .on(\.didTap) { [weak self] in
-         self?.select(2)
-         self?.send(\.didTapDislikes)
-      }
+//   lazy var buttonDislikes = SecondaryButtonDT<Design>()
+//      .title("Дизлайк")
+//      .font(Design.font.default)
+//      .on(\.didTap) { [weak self] in
+//         self?.select(2)
+//         self?.send(\.didTapDislikes)
+//      }
 
    override func start() {
       axis(.horizontal)
@@ -183,7 +183,7 @@ final class FeedReactionsFilterButtons<Design: DSP>: StackModel, Designable, Eve
       arrangedModels([
          buttonAll,
          buttonLikes,
-         buttonDislikes,
+      //   buttonDislikes,
          Grid.xxx.spacer
       ])
    }
@@ -191,7 +191,7 @@ final class FeedReactionsFilterButtons<Design: DSP>: StackModel, Designable, Eve
    private func deselectAll() {
       buttonAll.setMode(\.normal)
       buttonLikes.setMode(\.normal)
-      buttonDislikes.setMode(\.normal)
+//      buttonDislikes.setMode(\.normal)
    }
 
    private func select(_ index: Int) {
@@ -199,8 +199,8 @@ final class FeedReactionsFilterButtons<Design: DSP>: StackModel, Designable, Eve
       switch index {
       case 1:
          buttonLikes.setMode(\.selected)
-      case 2:
-         buttonDislikes.setMode(\.selected)
+//      case 2:
+//         buttonDislikes.setMode(\.selected)
       default:
          buttonAll.setMode(\.selected)
       }

@@ -17,12 +17,12 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
    //
    lazy var scenario: Scenario = ChallengeDetailsScenario(
       works: ChallengeDetailsWorks<Asset>(),
-      stateDelegate: setState,
+      stateDelegate: stateDelegate,
       events: ChallengeDetailsInputEvents(
          saveInputAndLoadChallenge: on(\.input),
          // getContenders: ,
          // getWinners: ,
-         ChallengeResult: challDetails.buttonsPanel.sendButton.on(\.didTap),
+         challengeResult: challDetails.buttonsPanel.sendButton.on(\.didTap),
          filterButtonTapped: filterButtons.on(\.didTapButtons),
          acceptPressed: contendersBlock.presenter.on(\.acceptPressed),
          rejectPressed: contendersBlock.presenter.on(\.rejectPressed)
@@ -49,7 +49,7 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
       SecondaryButtonDT<Design>()
          .title("Победители")
          .font(Design.font.default),
-         //.hidden(true),
+      // .hidden(true),
       SecondaryButtonDT<Design>()
          .title("Комментарии")
          .font(Design.font.default)
@@ -64,15 +64,15 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
    private lazy var challDetails = ChallengeDetailsViewModel<Design>()
       .set(.padding(.horizontalOffset(Design.params.commonSideOffset)))
       .backColor(Design.color.background)
-   
+
    private lazy var myResultBlock = ChallResultViewModel<Design>()
       .set(.padding(.horizontalOffset(Design.params.commonSideOffset)))
       .backColor(Design.color.background)
-   
+
    private lazy var winnersBlock = ChallWinnersViewModel<Design>()
       .set(.padding(.horizontalOffset(Design.params.commonSideOffset)))
       .backColor(Design.color.background)
-   
+
    private lazy var contendersBlock = ChallContendersViewModel<Design>()
       .set(.padding(.horizontalOffset(Design.params.commonSideOffset)))
       .backColor(Design.color.background)
@@ -128,13 +128,14 @@ enum ChallengeDetailsState {
 
    case presentComments(Challenge)
 
-   case presentSendResultScreen(Challenge,Int)
+   case presentSendResultScreen(Challenge, Int)
    case enableMyResult([ChallengeResult])
    case enableContenders
-   
+
    case presentMyResults([ChallengeResult])
    case presentWinners([ChallengeWinner])
    case presentContenders([Contender])
+   case presentCancelView(Challenge, Int, Int)
 }
 
 extension ChallengeDetailsScene: StateMachine {
@@ -161,54 +162,72 @@ extension ChallengeDetailsScene: StateMachine {
             .arrangedModels([
                challComments
             ])
-      case .presentSendResultScreen(let challenge, let challengeId):
-
+      case .presentSendResultScreen(let challenge, let profileId):
          vcModel?.dismiss(animated: true)
 
          Asset.router?.route(
-            \.challengeSendResult,
-            navType: .presentModally(.automatic),
-            payload: challengeId
-         )
-         .onSuccess {
-            Asset.router?.route(
-               \.challengeDetails,
-               navType: .presentModally(.automatic),
-               payload: (challenge, challengeId)
-            )
-         }
-         .onFail {
-            print("failure")
-         }
-         .retainBy(retainer)
+            .presentModally(.automatic),
+            scene: \.challengeSendResult,
+            payload: challenge.id
+         ) { success in
 
+            switch success {
+            case true:
+               Asset.router?.route(
+                  .presentModally(.automatic),
+                  scene: \.challengeDetails,
+                  payload: (challenge, profileId)
+               )
+            case false:
+               print("failure")
+            }
+         }
       case .enableMyResult(let value):
          filterButtons.buttons[1].hidden(false)
 
       case .enableContenders:
          filterButtons.buttons[2].hidden(false)
          challDetails.models.down.hidden(true)
-         
+
       case .presentMyResults(let results):
          myResultBlock.setup(results)
          mainVM.footerStack
             .arrangedModels([
                myResultBlock
             ])
-         
+
       case .presentWinners(let winners):
          winnersBlock.setup(winners)
          mainVM.footerStack
             .arrangedModels([
                winnersBlock
             ])
-         
+
       case .presentContenders(let contenders):
          contendersBlock.setup(contenders)
          mainVM.footerStack
             .arrangedModels([
                contendersBlock
             ])
+      case .presentCancelView(let challenge, let profileId, let resultId):
+         vcModel?.dismiss(animated: true)
+
+         Asset.router?.route(
+            .presentModally(.automatic),
+            scene: \.challengeResCancel,
+            payload: resultId
+         ) { success in
+            switch success {
+            case true:
+               Asset.router?.route(
+                  .presentModally(.automatic),
+                  scene: \.challengeDetails,
+                  payload: (challenge, profileId)
+               )
+            case false:
+               break
+            }
+         }
       }
    }
 }

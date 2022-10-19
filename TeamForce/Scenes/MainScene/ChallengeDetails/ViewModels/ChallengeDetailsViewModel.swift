@@ -177,19 +177,19 @@ final class SendChallengePanel<Design: DSP>: StackModel, Designable {
 
    private lazy var userPanel = Design.model.profile.userPanel
 
-   private lazy var buttons = M<ButtonModel>.R<ButtonModel>.R2<ButtonModel>.Combo()
-      .setAll { sendButton, dislikeButton, likeButton in
+   private lazy var buttons = M<ButtonModel>.R<ButtonModel>.Combo()
+      .setAll { sendButton, likeButton in
          sendButton
             .set(Design.state.button.default)
             .font(Design.font.body1)
             .title("Отправить результат")
-         dislikeButton
-            .set(Design.state.button.secondary)
-            .image(Design.icon.dislike)
-            .width(68)
-            .backColor(Design.color.backgroundInfoSecondary)
-            .title("13")
-            .hidden(true)
+//         dislikeButton
+//            .set(Design.state.button.secondary)
+//            .image(Design.icon.dislike)
+//            .width(68)
+//            .backColor(Design.color.backgroundInfoSecondary)
+//            .title("13")
+//            .hidden(true)
          likeButton
             .set(Design.state.button.secondary)
             .image(Design.icon.like)

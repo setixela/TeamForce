@@ -13,7 +13,7 @@ final class FeedDetailWorksTempStorage: InitProtocol {
    var currentTransactId: Int?
    var currentFeed: Feed?
    var userLiked: Bool = false
-   var userDisliked: Bool = false
+//   var userDisliked: Bool = false
    var token: String?
    
    var likes: [Like]?
@@ -44,7 +44,7 @@ final class FeedDetailWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedDetailWork
       Self.store.currentFeed = input.0
       Self.store.currentTransactId = input.0.transaction.id
       Self.store.userLiked = input.0.transaction.userLiked ?? false
-      Self.store.userDisliked = input.0.transaction.userDisliked ?? false
+//      Self.store.userDisliked = input.0.transaction.userDisliked ?? false
       work.success(result: input.0)
    }.retainBy(retainer) }
 
@@ -56,16 +56,21 @@ final class FeedDetailWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedDetailWork
       work.success(result: curFeed)
    }}
 
-   var pressLike: Work<PressLikeRequest, Void> { .init { [weak self] work in
-      guard let input = work.input else { return }
+   var pressLike: Work<Void, Void> { .init { [weak self] work in
+      guard let tId = Self.store.currentTransactId else { work.fail(); return }
+
+      let request = PressLikeRequest(token: "",
+                                     likeKind: 1,
+                                     transactionId: tId)
+
       self?.apiUseCase.pressLike
-         .doAsync(input)
+         .doAsync(request)
          .onSuccess {
-            if input.likeKind == 1 {
+            if request.likeKind == 1 {
                Self.store.userLiked = !Self.store.userLiked
-               Self.store.userDisliked = false
-            } else if input.likeKind == 2 {
-               Self.store.userDisliked = !Self.store.userDisliked
+//               Self.store.userDisliked = false
+            } else if request.likeKind == 2 {
+//               Self.store.userDisliked = !Self.store.userDisliked
                Self.store.userLiked = false
             }
             work.success(result: $0)
@@ -75,13 +80,13 @@ final class FeedDetailWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedDetailWork
          }
    }.retainBy(retainer) }
 
-   var getTransactStat: Work<Void, (TransactStatistics, (Bool, Bool))> { .init { [weak self] work in
+   var getTransactStat: Work<Void, (TransactStatistics, (Bool/*, Bool*/))> { .init { [weak self] work in
       guard let transactId = Self.store.currentTransactId else { return }
       let request = TransactStatRequest(token: "", transactionId: transactId)
       self?.apiUseCase.getTransactStatistics
          .doAsync(request)
          .onSuccess {
-            let likes = (Self.store.userLiked, Self.store.userDisliked)
+            let likes = (Self.store.userLiked /*, Self.store.userDisliked*/)
             work.success(result: ($0, likes))
          }
          .onFail {
@@ -188,12 +193,17 @@ final class FeedDetailWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedDetailWork
       Self.store.reactionSegment = 1
       work.success(result: filtered)
    }}
-   
-   var getDislikeReactions: VoidWork<[ReactItem]> { .init { work in
-      let filtered = Self.filteredDislikes()
-      Self.store.reactionSegment = 2
-      work.success(result: filtered)
-   }}
+
+   var isLikedByMe: VoidWork<Bool> { .init { work in
+      let isMyLike = Self.store.userLiked
+      work.success(isMyLike)
+   }.retainBy(retainer)}
+
+//   var getDislikeReactions: VoidWork<[ReactItem]> { .init { work in
+//      let filtered = Self.filteredDislikes()
+//      Self.store.reactionSegment = 2
+//      work.success(result: filtered)
+//   }}
    
    var getSelectedReactions: VoidWork<[ReactItem]> { .init { work in
       var filtered: [ReactItem] = []
@@ -202,8 +212,8 @@ final class FeedDetailWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedDetailWork
          filtered = Self.filteredAll()
       case 1:
          filtered = Self.filteredLikes()
-      case 2:
-         filtered = Self.filteredDislikes()
+//      case 2:
+//         filtered = Self.filteredDislikes()
       default:
          filtered = Self.filteredAll()
       }
@@ -238,17 +248,17 @@ private extension FeedDetailWorks {
       return items
    }
 
-   static func filteredDislikes() -> [ReactItem] {
-      guard let likes = store.likes else {
-         return []
-      }
-
-      var items: [ReactItem] = []
-      for like in likes {
-         if like.likeKind?.code == "dislike" {
-            items += like.items ?? []
-         }
-      }
-      return items
-   }
+//   static func filteredDislikes() -> [ReactItem] {
+//      guard let likes = store.likes else {
+//         return []
+//      }
+//
+//      var items: [ReactItem] = []
+//      for like in likes {
+//         if like.likeKind?.code == "dislike" {
+//            items += like.items ?? []
+//         }
+//      }
+//      return items
+//   }
 }

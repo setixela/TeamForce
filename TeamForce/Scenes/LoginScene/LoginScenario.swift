@@ -53,7 +53,7 @@ final class LoginScenario<Asset: AssetProtocol>:
          .onFail(setState, .invalidSmsCode)
          .doNext(works.saveLoginResults)
          .onSuccess {
-            Asset.router?.route(\.main, navType: .presentInitial, payload: ())
+            Asset.router?.route(.presentInitial, scene: \.main, payload: ())
          }
    }
 }

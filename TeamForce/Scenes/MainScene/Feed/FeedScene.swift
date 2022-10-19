@@ -88,11 +88,11 @@ extension FeedScene: StateMachine {
          activityIndicator.hidden(true)
          errorBlock.hidden(false)
       case .presentProfile(let id):
-         Asset.router?.route(\.profile, navType: .push, payload: id)
+         Asset.router?.route(.push, scene: \.profile, payload: id)
       case .reactionChanged:
          print("Hello")
       case .presentDetailView(let feed):
-         Asset.router?.route(\.feedDetail, navType: .push, payload: (feed, viewModels.userName))
+         Asset.router?.route(.push, scene: \.feedDetail, payload: (feed, viewModels.userName))
       }
    }
 }

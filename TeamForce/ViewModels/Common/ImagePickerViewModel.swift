@@ -9,21 +9,22 @@ import ReactiveWorks
 import UIKit
 
 struct ImagePickerEvents: InitProtocol {
-   var presentOn: Event<UIViewController?>?
-   var didCancel: Event<Void>?
-   var didImagePicked: Event<UIImage>?
-   var didImagePickingError: Event<Void>?
+   var presentOn: UIViewController??
+   var didCancel: Void?
+   var didImagePicked: UIImage?
+   var didImagePickingError: Void?
 }
 
-final class ImagePickerViewModel: BaseModel, Communicable {
-   var events = ImagePickerEvents()
+final class ImagePickerViewModel: BaseModel, Eventable {
+   typealias Events = ImagePickerEvents
+   var events = EventsStore()
 
    private lazy var picker = UIImagePickerController()
 
    override func start() {
       picker.delegate = self
 
-      onEvent(\.presentOn) { [weak self] in
+      on(\.presentOn) { [weak self] in
          guard let picker = self?.picker else { return }
 
          $0?.view.endEditing(true)
@@ -35,18 +36,18 @@ final class ImagePickerViewModel: BaseModel, Communicable {
 extension ImagePickerViewModel: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
       picker.dismiss(animated: true)
-      sendEvent(\.didCancel)
+      send(\.didCancel)
    }
 
    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
       picker.dismiss(animated: true)
 
       guard let image = info[.originalImage] as? UIImage else {
-         sendEvent(\.didImagePickingError)
+         send(\.didImagePickingError)
          return
       }
 
-      sendEvent(\.didImagePicked, image)
+      send(\.didImagePicked, image)
    }
 }
 
@@ -81,8 +82,8 @@ final class ImagePickerScene<Asset: AssetProtocol>: BaseSceneModel<
 }
 
 //
-final class ImagePickerVCModel: UIImagePickerController, VCModelProtocol, Communicable {
-   var events = VCEvent()
+final class ImagePickerVCModel: UIImagePickerController, VCModelProtocol, Eventable {
+   var events = EventsStore()
 
    public let sceneModel: SceneModelProtocol
 
