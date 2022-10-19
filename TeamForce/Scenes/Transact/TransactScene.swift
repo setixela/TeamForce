@@ -47,7 +47,7 @@ enum TransactState {
    case reasonInputSuccess(String, Bool)
 
    case presentTagsSelector(Set<Tag>)
-   case updateSelectedTags(Set<Tag>)
+   case updateSelectedTags(Set<Tag>, Bool)
 
    case sendButtonPressed
    case cancelButtonPressed
@@ -345,7 +345,13 @@ extension TransactScene {
 //         }
          break
       //
-      case .updateSelectedTags(let tags):
+      case .updateSelectedTags(let tags, let isCorrect):
+         if isCorrect {
+            viewModels.sendButton.set(Design.state.button.default)
+         } else {
+            viewModels.sendButton.set(Design.state.button.inactive)
+         }
+         
          break
 
          // setTagsToCloud()
@@ -393,6 +399,7 @@ private extension TransactScene {
       viewModels.amountInputModel.set(.hidden(true, isAnimated: true))
       viewModels.userSearchTextField.hidden(false, isAnimated: true)
       viewModels.balanceInfo.set(.hidden(true, isAnimated: true))
+      viewModels.options.tagsCloud.set(.hidden(true, isAnimated: true))
 
       viewModels.notFoundBlock.hidden(true)
    }
@@ -408,6 +415,7 @@ private extension TransactScene {
       viewModels.pickedImages.hidden(false, isAnimated: true)
       viewModels.addPhotoButton.hidden(false, isAnimated: true)
       viewModels.options.hidden(false, isAnimated: true)
+      viewModels.options.tagsCloud.hidden(false, isAnimated: true)
       setTagsToCloud()
       footerStack.hidden(false, isAnimated: true)
 
