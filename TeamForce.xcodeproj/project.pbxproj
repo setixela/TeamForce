@@ -249,6 +249,8 @@
 		6368D8282891E7C40049EEAB /* UserDefault+helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6368D8272891E7C30049EEAB /* UserDefault+helpers.swift */; };
 		6368D82A2894091B0049EEAB /* TransactInputViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6368D8292894091B0049EEAB /* TransactInputViewModel.swift */; };
 		6368D82C289415EC0049EEAB /* TextViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6368D82B289415EC0049EEAB /* TextViewModel.swift */; };
+		636A458B2900A20A003E412D /* GetChallengeWinnersReportsApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636A458A2900A20A003E412D /* GetChallengeWinnersReportsApiWorker.swift */; };
+		636A458D2900A429003E412D /* GetChallengeWinnersReportsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636A458C2900A429003E412D /* GetChallengeWinnersReportsUseCase.swift */; };
 		63A2233D28CD503B00D92615 /* AvatarPickingScenario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A2233C28CD503B00D92615 /* AvatarPickingScenario.swift */; };
 		63A2233F28CF772900D92615 /* GetTagsApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A2233E28CF772900D92615 /* GetTagsApiWorker.swift */; };
 		63A2234128CF797600D92615 /* GetTagsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A2234028CF797600D92615 /* GetTagsUseCase.swift */; };
@@ -576,6 +578,8 @@
 		6368D8272891E7C30049EEAB /* UserDefault+helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefault+helpers.swift"; sourceTree = "<group>"; };
 		6368D8292894091B0049EEAB /* TransactInputViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactInputViewModel.swift; sourceTree = "<group>"; };
 		6368D82B289415EC0049EEAB /* TextViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextViewModel.swift; sourceTree = "<group>"; };
+		636A458A2900A20A003E412D /* GetChallengeWinnersReportsApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetChallengeWinnersReportsApiWorker.swift; sourceTree = "<group>"; };
+		636A458C2900A429003E412D /* GetChallengeWinnersReportsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetChallengeWinnersReportsUseCase.swift; sourceTree = "<group>"; };
 		63A2233C28CD503B00D92615 /* AvatarPickingScenario.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarPickingScenario.swift; sourceTree = "<group>"; };
 		63A2233E28CF772900D92615 /* GetTagsApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTagsApiWorker.swift; sourceTree = "<group>"; };
 		63A2234028CF797600D92615 /* GetTagsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTagsUseCase.swift; sourceTree = "<group>"; };
@@ -1547,6 +1551,7 @@
 				63A37EB328F059D800DBD59F /* CreateChallengeReportApiWorker.swift */,
 				63A37EB728F3199C00DBD59F /* CheckChallengeReportApiWorker.swift */,
 				631D8EB428F78D4D005332BD /* GetChallengeResultApiWorker.swift */,
+				636A458A2900A20A003E412D /* GetChallengeWinnersReportsApiWorker.swift */,
 			);
 			path = Challenge;
 			sourceTree = "<group>";
@@ -1562,6 +1567,7 @@
 				63A37EB528F05DDD00DBD59F /* CreateChallengeReportUseCase.swift */,
 				63A37EB928F3289900DBD59F /* CheckChallengeReportUseCase.swift */,
 				631D8EB628F78F04005332BD /* GetChallengeResultUseCase.swift */,
+				636A458C2900A429003E412D /* GetChallengeWinnersReportsUseCase.swift */,
 			);
 			path = Challenge;
 			sourceTree = "<group>";
@@ -1828,6 +1834,7 @@
 				19D0835F286F42C000F75E4A /* FrameCellModelDT.swift in Sources */,
 				19466E01289FE28C0052F0AB /* TitleSubtitleModel.swift in Sources */,
 				633FBC8428E535600071FF8C /* FeedDetailWorks.swift in Sources */,
+				636A458B2900A20A003E412D /* GetChallengeWinnersReportsApiWorker.swift in Sources */,
 				197A360F28BBB1D2006E44C1 /* SecondaryButtonDT.swift in Sources */,
 				197A2DA528A9BF4B00190656 /* SCombo.swift in Sources */,
 				63A2233F28CF772900D92615 /* GetTagsApiWorker.swift in Sources */,
@@ -1924,6 +1931,7 @@
 				197A361228BBB221006E44C1 /* FeedFilterButtons.swift in Sources */,
 				19B39E5B28D3433400BB2C77 /* TagsOptionsPanel.swift in Sources */,
 				190C1D16285D15FF00FB3518 /* ViewController.swift in Sources */,
+				636A458D2900A429003E412D /* GetChallengeWinnersReportsUseCase.swift in Sources */,
 				1955878E28F733AA0001F734 /* ChallengeResultScene.swift in Sources */,
 				632DADD128FD6B3300998DCD /* ChallengeResCancelWorks.swift in Sources */,
 				19ECD54128623D1F001765F6 /* LabelModel.swift in Sources */,

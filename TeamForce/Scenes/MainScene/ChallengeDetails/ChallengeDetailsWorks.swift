@@ -22,6 +22,8 @@ final class ChallengeDetailsWorksStore: InitProtocol {
    var contenders: [Contender]?
    var reportId: Int?
    var profileId: Int?
+   
+   var winnersReports: [ChallengeWinnerReport]?
 }
 
 final class ChallengeDetailsWorks<Asset: AssetProtocol>: BaseSceneWorks<ChallengeDetailsWorksStore, Asset> {
@@ -56,7 +58,7 @@ final class ChallengeDetailsWorks<Asset: AssetProtocol>: BaseSceneWorks<Challeng
             .onFail { work.fail() }
 
       case .didTapButton4:
-         self.getChallengeWinners
+         self.getChallengeWinnersReports
             .doAsync()
             .onSuccess {
                print($0)
@@ -164,6 +166,19 @@ extension ChallengeDetailsWorks: ChallengeDetailsWorksProtocol {
       self?.apiUseCase.GetChallengeWinners
          .doAsync(id)
          .onSuccess {
+            work.success(result: $0)
+         }
+         .onFail {
+            work.fail()
+         }
+   }.retainBy(retainer) }
+   
+   var getChallengeWinnersReports: Work<Void, [ChallengeWinnerReport]> { .init { [weak self] work in
+      guard let id = Self.store.challengeId else { return }
+      self?.apiUseCase.GetChallengeWinnersReports
+         .doAsync(id)
+         .onSuccess {
+            Self.store.winnersReports = $0
             work.success(result: $0)
          }
          .onFail {

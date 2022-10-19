@@ -17,6 +17,8 @@ struct ChallengeDetailsInputEvents {
    let filterButtonTapped: VoidWork<Button6Event>
    let acceptPressed: VoidWork<Int>
    let rejectPressed: VoidWork<Int>
+   
+   let didSelectWinnerIndex: VoidWork<Int>
 }
 
 final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<ChallengeDetailsInputEvents,
@@ -61,7 +63,7 @@ final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<Challen
                stateFunc(.presentChallenge(value))
             case let value as [ChallengeResult]:
                stateFunc(.presentMyResults(value))
-            case let value as [ChallengeWinner]:
+            case let value as [ChallengeWinnerReport]:
                stateFunc(.presentWinners(value))
             case let value as [Contender]:
                stateFunc(.presentContenders(value))
