@@ -189,7 +189,8 @@ extension ChallengeDetailsScene: StateMachine {
 
       case .enableContenders:
          filterButtons.buttons[2].hidden(false)
-         challDetails.models.down.hidden(true)
+         challDetails.models.down.sendButton.hidden(true)
+         //challDetails.models.down.hidden(true)
 
       case .presentMyResults(let results):
          myResultBlock.setup(results)
@@ -231,7 +232,7 @@ extension ChallengeDetailsScene: StateMachine {
             }
          }
       case .disableSendResult:
-         challDetails.models.down.hidden(true)
+         challDetails.models.down.sendButton.hidden(true)
       }
    }
 }
