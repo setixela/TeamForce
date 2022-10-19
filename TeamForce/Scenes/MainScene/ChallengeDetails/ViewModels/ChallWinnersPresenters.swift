@@ -77,7 +77,7 @@ class ChallWinnersPresenters<Design: DesignProtocol>: Designable {
                   icon,
                   infoBlock,
                   Grid.x32.spacer,
-                  receivedLabel
+                  receivedLabel.righted()
                ])
                .cornerRadius(Design.params.cornerRadiusSmall)
                .backColor(Design.color.background)
