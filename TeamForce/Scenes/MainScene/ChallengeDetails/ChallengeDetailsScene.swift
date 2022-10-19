@@ -136,6 +136,8 @@ enum ChallengeDetailsState {
    case presentWinners([ChallengeWinner])
    case presentContenders([Contender])
    case presentCancelView(Challenge, Int, Int)
+   
+   case disableSendResult
 }
 
 extension ChallengeDetailsScene: StateMachine {
@@ -228,6 +230,8 @@ extension ChallengeDetailsScene: StateMachine {
                break
             }
          }
+      case .disableSendResult:
+         challDetails.models.down.hidden(true)
       }
    }
 }

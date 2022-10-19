@@ -30,12 +30,16 @@ final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<Challen
          .doVoidNext(works.getChallengeById)
          .onSuccess(setState) { .updateDetails($0) }
          // .doNext(works.saveInput)
+         .doVoidNext(works.isSendResultActive)
+         .onFail(setState) { .disableSendResult }
+         .onSuccess { print("success") }
          .doVoidNext(works.amIOwnerCheck)
          .onSuccess(setState, .enableContenders)
          .onFail { print("you are not owner") }
          .doRecover()
          .doNext(works.getChallengeResult)
          .onSuccess(setState) { .enableMyResult($0) }
+         .onFail{ print("failed to get results") }
 
 
       events.challengeResult
