@@ -912,6 +912,7 @@
 				1953CEFD28E8A15C00C670A6 /* FeedCommentsBlock.swift */,
 				1953CEFF28E8A19A00C670A6 /* FeedReactionsBlock.swift */,
 				635FC6BF28EC17B500826B67 /* ReactionsPresenters.swift */,
+				63BB2C2528E3DD8D00C1E3DB /* CommentPresenters.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -1569,7 +1570,6 @@
 			isa = PBXGroup;
 			children = (
 				63BB2C1328E10D1600C1E3DB /* FeedDetailScene.swift */,
-				63BB2C2528E3DD8D00C1E3DB /* CommentPresenters.swift */,
 				63BB2C2828E3E7B600C1E3DB /* FeedDetailScenario.swift */,
 				633FBC8328E535600071FF8C /* FeedDetailWorks.swift */,
 				1953CEFA28E89FC200C670A6 /* ViewModels */,

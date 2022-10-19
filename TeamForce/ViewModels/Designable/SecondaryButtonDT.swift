@@ -7,9 +7,7 @@
 
 import ReactiveWorks
 
-
 final class SecondaryButtonDT<Design: DSP>: ModableButton, Designable {
-
    override func start() {
       super.start()
 

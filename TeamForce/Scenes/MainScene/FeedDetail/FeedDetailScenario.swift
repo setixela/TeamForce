@@ -15,15 +15,15 @@ struct FeedDetailEvents {
    let presentDetails: VoidWork<Void>
    let presentComment: VoidWork<Void>
    let presentReactions: VoidWork<Void>
-   let reactionPressed: VoidWork<PressLikeRequest>
+   let reactionPressed: VoidWork<Void>
    let saveInput: VoidWork<(Feed, String)>
 
    let didEditingComment: VoidWork<String>
    let didSendCommentPressed: VoidWorkVoid
-   
+
    let presentAllReactions: VoidWork<Void>
    let presentLikeReactions: VoidWork<Void>
- //  let presentDislikeReactions: VoidWork<Void>
+   //  let presentDislikeReactions: VoidWork<Void>
 }
 
 final class FeedDetailScenario<Asset: AssetProtocol>:
@@ -35,7 +35,9 @@ final class FeedDetailScenario<Asset: AssetProtocol>:
          .onFail(setState, .error)
 
       events.reactionPressed
-         .doNext(works.pressLike)
+         .doNext(works.isLikedByMe)
+         .onSuccess(setState) { .buttonLikePressed(alreadySelected: $0) }
+         .doVoidNext(works.pressLike)
          .onFail(setState) { .failedToReact }
          .doNext(works.getTransactStat)
          .onSuccess(setState) { .updateReactions($0) }
@@ -54,7 +56,7 @@ final class FeedDetailScenario<Asset: AssetProtocol>:
          .doNext(works.getComments)
          .onSuccess(setState) { .presentComments($0) }
          .onFail(setState) { .presentComments([]) }
-      
+
       events.presentReactions
          .onSuccess(setState, .presntActivityIndicator)
          .doNext(works.getLikesByTransaction)
@@ -63,7 +65,7 @@ final class FeedDetailScenario<Asset: AssetProtocol>:
          .onFail {
             print("failed to present reactions")
          }
-      
+
       events.presentAllReactions
          .onSuccess(setState, .presntActivityIndicator)
          .doNext(works.getAllReactions)
@@ -71,7 +73,7 @@ final class FeedDetailScenario<Asset: AssetProtocol>:
          .onFail {
             print("failed to present reactions")
          }
-      
+
       events.presentLikeReactions
          .onSuccess(setState, .presntActivityIndicator)
          .doNext(works.getLikeReactions)
@@ -79,7 +81,7 @@ final class FeedDetailScenario<Asset: AssetProtocol>:
          .onFail {
             print("failed to present reactions")
          }
-      
+
 //      events.presentDislikeReactions
 //         .onSuccess(setState, .presntActivityIndicator)
 //         .doNext(works.getDislikeReactions)
@@ -87,13 +89,12 @@ final class FeedDetailScenario<Asset: AssetProtocol>:
 //         .onFail {
 //            print("failed to present reactions")
 //         }
-         
+
       events.didEditingComment
          .doNext(works.updateInputComment)
          .doNext(usecase: IsEmpty())
          .onSuccess(setState, .sendButtonDisabled)
          .onFail(setState, .sendButtonEnabled)
-
 
       events.didSendCommentPressed
          .onSuccess(setState, .sendButtonDisabled)

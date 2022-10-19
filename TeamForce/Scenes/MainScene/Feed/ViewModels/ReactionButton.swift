@@ -17,11 +17,12 @@ final class ReactionButton<Design: DSP>: M<ImageViewModel>.R<LabelModel>.Combo, 
          $1.set(Design.state.label.caption2)
       }
       distribution(.equalCentering)
-      backColor(Design.color.backgroundInfoSecondary)
       cornerRadius(Design.params.cornerRadiusMini)
       width(55)
       height(34)
       padding(.sideOffset(12))
+
+      setState(.none)
    }
 }
 

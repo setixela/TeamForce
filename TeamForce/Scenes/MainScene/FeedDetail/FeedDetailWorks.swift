@@ -56,15 +56,20 @@ final class FeedDetailWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedDetailWork
       work.success(result: curFeed)
    }}
 
-   var pressLike: Work<PressLikeRequest, Void> { .init { [weak self] work in
-      guard let input = work.input else { return }
+   var pressLike: Work<Void, Void> { .init { [weak self] work in
+      guard let tId = Self.store.currentTransactId else { work.fail(); return }
+
+      let request = PressLikeRequest(token: "",
+                                     likeKind: 1,
+                                     transactionId: tId)
+
       self?.apiUseCase.pressLike
-         .doAsync(input)
+         .doAsync(request)
          .onSuccess {
-            if input.likeKind == 1 {
+            if request.likeKind == 1 {
                Self.store.userLiked = !Self.store.userLiked
 //               Self.store.userDisliked = false
-            } else if input.likeKind == 2 {
+            } else if request.likeKind == 2 {
 //               Self.store.userDisliked = !Self.store.userDisliked
                Self.store.userLiked = false
             }
@@ -188,7 +193,12 @@ final class FeedDetailWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedDetailWork
       Self.store.reactionSegment = 1
       work.success(result: filtered)
    }}
-   
+
+   var isLikedByMe: VoidWork<Bool> { .init { work in
+      let isMyLike = Self.store.userLiked
+      work.success(isMyLike)
+   }.retainBy(retainer)}
+
 //   var getDislikeReactions: VoidWork<[ReactItem]> { .init { work in
 //      let filtered = Self.filteredDislikes()
 //      Self.store.reactionSegment = 2
