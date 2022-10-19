@@ -131,7 +131,8 @@ extension ChallengeInfoVM: SetupProtocol {
    func setup(_ data: Challenge) {
       title.text(data.name.string)
       body.text(data.description.string)
-      let states = data.states?.map { ChallengeStatusBlock<Design>().text($0.rawValue) }
+      let arrayOfStates = data.status?.components(separatedBy: ", ")
+      let states = arrayOfStates?.map { ChallengeStatusBlock<Design>().text($0) }
       tags.arrangedModels(states ?? [])
    }
 }
