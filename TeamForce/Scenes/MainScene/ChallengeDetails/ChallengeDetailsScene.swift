@@ -25,7 +25,8 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
          challengeResult: challDetails.buttonsPanel.sendButton.on(\.didTap),
          filterButtonTapped: filterButtons.on(\.didTapButtons),
          acceptPressed: contendersBlock.presenter.on(\.acceptPressed),
-         rejectPressed: contendersBlock.presenter.on(\.rejectPressed)
+         rejectPressed: contendersBlock.presenter.on(\.rejectPressed),
+         didSelectWinnerIndex: winnersBlock.on(\.didSelectWinner)
       )
    )
 
@@ -132,7 +133,7 @@ enum ChallengeDetailsState {
    case enableContenders
 
    case presentMyResults([ChallengeResult])
-   case presentWinners([ChallengeWinner])
+   case presentWinners([ChallengeWinnerReport])
    case presentContenders([Contender])
    case presentCancelView(Challenge, Int, Int)
    
