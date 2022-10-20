@@ -69,7 +69,7 @@ final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<Challen
                stateFunc(.presentWinners(value))
             case .result5(let value):
                stateFunc(.presentComments(value))
-            case .result6(let _):
+            case .result6(_):
                break
             }
          }
