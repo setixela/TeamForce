@@ -27,6 +27,7 @@ protocol ScenesProtocol: InitProtocol {
    var challengeCreate: SceneModelProtocol { get }
    var challengeSendResult: SceneModelProtocol { get }
    var challengeResCancel: SceneModelProtocol { get }
+   var challengeReportDetail: SceneModelProtocol { get }
 
    // plays
    var playground: SceneModelProtocol { get }
@@ -49,6 +50,7 @@ struct Scenes: ScenesProtocol {
    var challengeSendResult: SceneModelProtocol { ChallengeResultScene<ProductionAsset>() }
    var challengeDetails: SceneModelProtocol { ChallengeDetailsScene<ProductionAsset>() }
    var challengeResCancel: SceneModelProtocol { ChallengeResCancelScene<ProductionAsset>() }
+   var challengeReportDetail: SceneModelProtocol { ChallReportDetailsScene<ProductionAsset>() }
 }
 
 struct ProductionService: ServiceProtocol {

@@ -123,6 +123,15 @@ final class ChallengeDetailsWorks<Asset: AssetProtocol>: BaseSceneWorks<Challeng
       work.success((challenge, profileId, resultId))
    }.retainBy(retainer) }
    
+   var getInputForReportDetail: Work<Int, (Challenge, Int, Int)> { .init { work in
+      guard
+         let challenge = Self.store.challenge,
+         let profileId = Self.store.profileId,
+         let reportId = work.input
+      else { return }
+      work.success((challenge, profileId, reportId))
+   }.retainBy(retainer) }
+   
    var isSendResultActive: Work<Void, Void> { .init { work in
       guard let challenge = Self.store.challenge else { return }
       if challenge.active == true &&
@@ -131,6 +140,11 @@ final class ChallengeDetailsWorks<Asset: AssetProtocol>: BaseSceneWorks<Challeng
       } else {
          work.fail()
       }
+   }.retainBy(retainer) }
+   
+   var getWinnerReportIdByIndex: Work<Int, Int> { .init {  work in
+      guard let id = Self.store.winnersReports?[work.unsafeInput].id else { return }
+      work.success(id)
    }.retainBy(retainer) }
 }
 

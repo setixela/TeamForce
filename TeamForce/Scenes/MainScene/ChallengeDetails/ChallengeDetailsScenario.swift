@@ -86,5 +86,11 @@ final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<Challen
          .doNext(works.getChallengeContenders)
          .onSuccess(setState) { .presentContenders($0) }
          .onFail { print("fail") }
+      
+      events.didSelectWinnerIndex
+         .doNext(works.getWinnerReportIdByIndex)
+         .doNext(works.getInputForReportDetail)
+         .onSuccess(setState) { .presentReportDetailView($0.0, $0.1, $0.2) }
+         .onFail { print("fail") }
    }
 }

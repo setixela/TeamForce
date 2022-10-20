@@ -47,6 +47,12 @@ struct User: Codable {
    let name: String?
    let surname: String?
    let avatar: String?
+   let tgName: String?
+   
+   enum CodingKeys: String, CodingKey {
+      case id, name, surname, avatar
+      case tgName = "tg_name"
+   }
 }
 
 struct Comment: Codable {

@@ -136,6 +136,7 @@ enum ChallengeDetailsState {
    case presentWinners([ChallengeWinnerReport])
    case presentContenders([Contender])
    case presentCancelView(Challenge, Int, Int)
+   case presentReportDetailView(Challenge, Int, Int)
    
    case disableSendResult
 }
@@ -231,6 +232,27 @@ extension ChallengeDetailsScene: StateMachine {
                break
             }
          }
+      
+      case .presentReportDetailView(let challenge, let profileId, let reportId):
+         vcModel?.dismiss(animated: true)
+
+         Asset.router?.route(
+            .presentModally(.automatic),
+            scene: \.challengeReportDetail,
+            payload: reportId
+         ) { success in
+            switch success {
+            case true:
+               Asset.router?.route(
+                  .presentModally(.automatic),
+                  scene: \.challengeDetails,
+                  payload: (challenge, profileId)
+               )
+            case false:
+               break
+            }
+         }
+      
       case .disableSendResult:
          challDetails.models.down.sendButton.hidden(true)
       }
