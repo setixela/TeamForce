@@ -10,6 +10,7 @@ import UIKit
 
 final class FeedReactionsBlock<Design: DSP>: StackModel, Designable {
    lazy var filterButtons = FeedReactionsFilterButtons<Design>()
+      .hidden(true)
    lazy var reactedUsersTableModel = TableItemsModel<Design>()
       .backColor(Design.color.background)
       .set(.presenters([
