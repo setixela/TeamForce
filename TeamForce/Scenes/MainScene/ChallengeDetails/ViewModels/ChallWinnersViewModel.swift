@@ -10,6 +10,8 @@ import UIKit
 
 final class ChallWinnersViewModel<Design: DSP>: StackModel, Designable {
    
+   var events: EventsStore = .init()
+   
    lazy var winnersTableModel = TableItemsModel<Design>()
       .backColor(Design.color.background)
       .set(.presenters([
@@ -24,11 +26,21 @@ final class ChallWinnersViewModel<Design: DSP>: StackModel, Designable {
          Spacer(8),
          winnersTableModel
       ])
+      
+      winnersTableModel.on(\.didSelectRowInt, self) {
+         $0.send(\.didSelectWinner, $1)
+      }
    }
 }
 
 extension ChallWinnersViewModel: SetupProtocol {
-   func setup(_ data: [ChallengeWinner]) {
+   func setup(_ data: [ChallengeWinnerReport]) {
       winnersTableModel.set(.items(data + [SpacerItem(size: Grid.x64.value)]))
+   }
+}
+
+extension ChallWinnersViewModel: Eventable {
+   struct Events: InitProtocol {
+      var didSelectWinner: Int?
    }
 }

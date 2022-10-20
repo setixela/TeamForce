@@ -11,14 +11,14 @@ import UIKit
 class ChallWinnersPresenters<Design: DesignProtocol>: Designable {
    // var events: EventsStore = .init()
    
-   var winnersCellPresenter: Presenter<ChallengeWinner, WrappedX<StackModel>> {
+   var winnersCellPresenter: Presenter<ChallengeWinnerReport, WrappedX<StackModel>> {
       Presenter { work in
-         let winner = work.unsafeInput
-         let awardedAt = winner.awardedAt.string
-         let nickname = winner.nickname.string
-         let name = winner.participantName.string
-         let surname = winner.participantSurname.string
-         let totalReceived = winner.totalReceived
+         let winnerReport = work.unsafeInput
+         let awardedAt = winnerReport.awardedAt
+         let nickname = winnerReport.nickname.string
+         let name = winnerReport.participantName.string
+         let surname = winnerReport.participantSurname.string
+         let award = winnerReport.award
 
          let icon = ImageViewModel()
             .contentMode(.scaleAspectFill)
@@ -36,11 +36,11 @@ class ChallWinnersPresenters<Design: DesignProtocol>: Designable {
          
          let receivedLabel = LabelModel()
             .set(Design.state.label.body2)
-            .text(String(totalReceived ?? 0) + " спасибок")
+            .text(String(award ?? 0) + " спасибок")
             .textColor(Design.color.success)
             
          
-         if let avatar = winner.participantPhoto {
+         if let avatar = winnerReport.participantPhoto {
             icon.url(TeamForceEndpoints.urlBase + avatar)
          } else {
             if let nameFirstLetter = name.first,
@@ -77,7 +77,7 @@ class ChallWinnersPresenters<Design: DesignProtocol>: Designable {
                   icon,
                   infoBlock,
                   Grid.x32.spacer,
-                  receivedLabel
+                  receivedLabel.righted()
                ])
                .cornerRadius(Design.params.cornerRadiusSmall)
                .backColor(Design.color.background)

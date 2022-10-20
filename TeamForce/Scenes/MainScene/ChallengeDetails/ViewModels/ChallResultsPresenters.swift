@@ -53,7 +53,7 @@ class ChallResultsPresenters<Design: DesignProtocol>: Designable {
             .spacing(20)
             .arrangedModels([
                statusLabel,
-               updateAtLabel
+               updateAtLabel.righted()
             ])
          
          let awardLabel = LabelModel()
