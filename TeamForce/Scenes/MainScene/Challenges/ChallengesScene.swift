@@ -89,24 +89,16 @@ extension ChallengesScene: StateMachine {
             scene: \.challengeDetails,
             payload: value
          )
-//         .onSuccess(self) { slf, _ in
-//            slf.scenario.start()
-//         }
-//         .onFail(self) {
-//            $0.activity.hidden(true)
-//         }
-//         .retainBy(retainer)
       case .presentCreateChallenge:
          setState(.presentActivityIndicator)
          Asset.router?.route(
             .presentModally(.automatic),
             scene: \.challengeCreate,
             payload: ()
-         ) { [weak self] result in
-            switch result {
-            case true:
+         ) { [weak self] in
+            if $0 {
                self?.scenario.start()
-            case false:
+            } else {
                self?.setState(.hideActivityIndicator)
             }
          }

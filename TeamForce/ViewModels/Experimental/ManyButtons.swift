@@ -111,6 +111,15 @@ enum Button6Event: Int, ManyButtonEvent {
    case didTapButton6 = 5
 }
 
+enum Result6<Load1, Load2, Load3, Load4, Load5, Load6> {
+   case result1(Load1)
+   case result2(Load2)
+   case result3(Load3)
+   case result4(Load4)
+   case result5(Load5)
+   case result6(Load6)
+}
+
 protocol IndexedButtonsProtocol: Eventable where Events == TapIndexEvents<ButtEvents> {
    associatedtype Button: ModableButton
    associatedtype ButtEvents: ManyButtonEvent

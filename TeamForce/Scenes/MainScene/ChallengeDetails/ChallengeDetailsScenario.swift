@@ -14,9 +14,9 @@ struct ChallengeDetailsInputEvents {
    let filterButtonTapped: VoidWork<Button6Event>
    let acceptPressed: VoidWork<Int>
    let rejectPressed: VoidWork<Int>
-   
+
    let didSelectWinnerIndex: VoidWork<Int>
-   
+
    let didEditingComment: VoidWork<String>
    let didSendCommentPressed: VoidWorkVoid
 }
@@ -41,8 +41,7 @@ final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<Challen
          .doRecover()
          .doNext(works.getChallengeResult)
          .onSuccess(setState) { .enableMyResult($0) }
-         .onFail{ print("failed to get results") }
-
+         .onFail { print("failed to get results") }
 
       events.challengeResult
          .doNext(works.getChallenge)
@@ -51,50 +50,50 @@ final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<Challen
          .onSuccessMixSaved(setState) {
             .presentSendResultScreen($1, $0)
          }
-      
+
       events.filterButtonTapped
+         .onSuccess(setState, .presentActivityIndicator)
          .doNext(works.filterButtonWork)
          .onSuccess { [weak self] in
             // можно сет стейт достать из селфа:
             guard let stateFunc = self?.setState else { return }
 
             switch $0 {
-            case let value as Challenge:
+            case .result1(let value):
                stateFunc(.presentChallenge(value))
-            case let value as [ChallengeResult]:
+            case .result2(let value):
                stateFunc(.presentMyResults(value))
-            case let value as [ChallengeWinnerReport]:
-               stateFunc(.presentWinners(value))
-            case let value as [Contender]:
+            case .result3(let value):
                stateFunc(.presentContenders(value))
-            case let value as [Comment]:
+            case .result4(let value):
+               stateFunc(.presentWinners(value))
+            case .result5(let value):
                stateFunc(.presentComments(value))
-            default:
+            case .result6(let _):
                break
             }
          }
          .onFail {
             print("fail button works")
          }
-      
-      
+
       events.rejectPressed
          .doNext(works.getInputForCancel)
          .onSuccess(setState) { .presentCancelView($0.0, $0.1, $0.2) }
-      
+
       events.acceptPressed
          .doMap { (CheckReportRequestBody.State.W, $0) }
          .doNext(works.checkChallengeReport)
          .doNext(works.getChallengeContenders)
          .onSuccess(setState) { .presentContenders($0) }
          .onFail { print("fail") }
-      
+
       events.didSelectWinnerIndex
          .doNext(works.getWinnerReportIdByIndex)
          .doNext(works.getInputForReportDetail)
          .onSuccess(setState) { .presentReportDetailView($0.0, $0.1, $0.2) }
          .onFail { print("fail") }
-      
+
       events.didEditingComment
          .doNext(works.updateInputComment)
          .doNext(usecase: IsEmpty())
@@ -105,6 +104,6 @@ final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<Challen
          .onSuccess(setState, .sendButtonDisabled)
          .doNext(works.createComment)
          .onSuccess(setState, .commentDidSend)
-         .onFail{ print("error sending comment") }
+         .onFail { print("error sending comment") }
    }
 }

@@ -87,9 +87,16 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
    override func start() {
       super.start()
 
+      setState(.presentActivityIndicator)
+      vcModel?.on(\.viewDidLoad, self) {
+         $0.configure()
+      }
+   }
+
+   private func configure() {
       mainVM.headerStack
          .backColor(Design.color.backgroundBrandSecondary)
-         // .height(200)
+      // .height(200)
          .arrangedModels([
             headerImage
          ])
@@ -127,6 +134,9 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
 
 enum ChallengeDetailsState {
    case initial
+
+   case presentActivityIndicator
+
    case presentChallenge(Challenge)
    case updateDetails(Challenge)
 
@@ -154,6 +164,12 @@ extension ChallengeDetailsScene: StateMachine {
       switch state {
       case .initial:
          break
+      case .presentActivityIndicator:
+         mainVM.footerStack
+            .arrangedModels([
+               ActivityIndicator<Design>(),
+               Spacer()
+            ])
       case .presentChallenge(let challenge):
          mainVM.footerStack
             .arrangedModels([
