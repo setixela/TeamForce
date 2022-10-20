@@ -40,16 +40,15 @@ final class ChallengeDetailsWorks<Asset: AssetProtocol>: BaseSceneWorks<Challeng
       Void
    >
 
-   var filterButtonWork: Work<Button6Event, Button6Result> { .init { work in
-      guard let button = work.input else { return }
-      print(button)
+   var filterButtonWork: Work<Button6Event, Button6Result> { .init { [weak self] work in
+      guard let self, let button = work.input else { return }
+
       switch button {
       case .didTapButton1:
-         if let challenge = Self.store.challenge {
-            work.success(.result1(challenge))
-         } else {
-            work.fail()
-         }
+         self.getChallenge
+            .doAsync()
+            .onSuccess { work.success(.result1($0)) }
+            .onFail { work.fail() }
 
       case .didTapButton2:
          self.getChallengeResult
@@ -80,7 +79,7 @@ final class ChallengeDetailsWorks<Asset: AssetProtocol>: BaseSceneWorks<Challeng
             .onSuccess { work.success(.result5($0)) }
             .onFail { work.fail() }
       case .didTapButton6:
-         print(6)
+         break
       }
    }.retainBy(retainer) }
 
@@ -137,11 +136,13 @@ final class ChallengeDetailsWorks<Asset: AssetProtocol>: BaseSceneWorks<Challeng
          let profileId = Self.store.profileId,
          let reportId = work.input
       else { return }
+
       work.success((challenge, profileId, reportId))
    }.retainBy(retainer) }
 
    var isSendResultActive: Work<Void, Void> { .init { work in
       guard let challenge = Self.store.challenge else { return }
+
       if challenge.active == true,
          challenge.approvedReportsAmount < challenge.awardees
       {

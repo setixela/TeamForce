@@ -884,8 +884,8 @@
 			children = (
 				194E307B28F35DBF001E2967 /* ChallengeDetailsScene.swift */,
 				194E307D28F36650001E2967 /* ChallengeDetailsScenario.swift */,
-				194E308328F3666B001E2967 /* ViewModels */,
 				194E307F28F36657001E2967 /* ChallengeDetailsWorks.swift */,
+				194E308328F3666B001E2967 /* ViewModels */,
 			);
 			path = ChallengeDetails;
 			sourceTree = "<group>";

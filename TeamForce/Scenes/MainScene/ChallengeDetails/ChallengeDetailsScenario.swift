@@ -52,7 +52,9 @@ final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<Challen
          }
 
       events.filterButtonTapped
-         .onSuccess(setState, .presentActivityIndicator)
+         .onSuccess(setState) { _ in
+            .presentActivityIndicator
+         }
          .doNext(works.filterButtonWork)
          .onSuccess { [weak self] in
             // можно сет стейт достать из селфа:
@@ -69,7 +71,7 @@ final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<Challen
                stateFunc(.presentWinners(value))
             case .result5(let value):
                stateFunc(.presentComments(value))
-            case .result6(_):
+            case .result6:
                break
             }
          }
