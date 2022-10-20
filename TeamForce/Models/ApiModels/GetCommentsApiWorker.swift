@@ -14,13 +14,15 @@ struct CommentsRequest {
 }
 
 struct CommentsRequestBody: Codable {
-   let transactionId: Int
+   let challengeId: Int?
+   let transactionId: Int?
    let offset: Int?
    let limit: Int?
    let includeName: Bool?
    let isReverseOrder: Bool?
 
    enum CodingKeys: String, CodingKey {
+      case challengeId = "challenge_id"
       case transactionId = "transaction_id"
       case offset
       case limit
@@ -28,13 +30,15 @@ struct CommentsRequestBody: Codable {
       case isReverseOrder = "is_reverse_order"
    }
 
-   init(transactionId: Int,
+   init(transactionId: Int? = nil,
+        challengeId: Int? = nil,
         offset: Int? = nil,
         limit: Int? = nil,
         includeName: Bool? = nil,
         isReverseOrder: Bool? = nil)
    {
       self.transactionId = transactionId
+      self.challengeId = challengeId
       self.offset = offset
       self.limit = limit
       self.includeName = includeName
@@ -47,6 +51,12 @@ struct User: Codable {
    let name: String?
    let surname: String?
    let avatar: String?
+   let tgName: String?
+   
+   enum CodingKeys: String, CodingKey {
+      case id, name, surname, avatar
+      case tgName = "tg_name"
+   }
 }
 
 struct Comment: Codable {
