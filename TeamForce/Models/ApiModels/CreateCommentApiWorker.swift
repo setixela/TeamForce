@@ -15,8 +15,23 @@ struct CreateCommentRequest {
 }
 
 struct CreateCommentBody: Codable {
-   let transaction: Int
+   let transaction: Int?
+   let challengeId: Int?
    let text: String?
+   
+   enum CodingKeys: String, CodingKey {
+      case transaction, text
+      case challengeId = "challenge_id"
+   }
+   init(
+      transaction: Int? = nil,
+      challengeId: Int? = nil,
+      text: String? = nil
+   ) {
+      self.transaction = transaction
+      self.challengeId = challengeId
+      self.text = text
+   }
 }
 
 final class CreateCommentApiWorker: BaseApiWorker<CreateCommentRequest, Void> {

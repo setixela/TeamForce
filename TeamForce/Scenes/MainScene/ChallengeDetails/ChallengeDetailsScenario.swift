@@ -9,16 +9,16 @@ import ReactiveWorks
 
 struct ChallengeDetailsInputEvents {
    let saveInputAndLoadChallenge: VoidWork<(Challenge, Int)>
-//   let getContenders: VoidWork<Void>
-//   let getWinners: VoidWork<Void>
-//   let checkReport: VoidWork<CheckReportRequestBody.State>
-//   let didSelectContenderIndex: VoidWork<Int>
+
    let challengeResult: VoidWorkVoid
    let filterButtonTapped: VoidWork<Button6Event>
    let acceptPressed: VoidWork<Int>
    let rejectPressed: VoidWork<Int>
    
    let didSelectWinnerIndex: VoidWork<Int>
+   
+   let didEditingComment: VoidWork<String>
+   let didSendCommentPressed: VoidWorkVoid
 }
 
 final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<ChallengeDetailsInputEvents,
@@ -67,6 +67,8 @@ final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<Challen
                stateFunc(.presentWinners(value))
             case let value as [Contender]:
                stateFunc(.presentContenders(value))
+            case let value as [Comment]:
+               stateFunc(.presentComments(value))
             default:
                break
             }
@@ -92,5 +94,17 @@ final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<Challen
          .doNext(works.getInputForReportDetail)
          .onSuccess(setState) { .presentReportDetailView($0.0, $0.1, $0.2) }
          .onFail { print("fail") }
+      
+      events.didEditingComment
+         .doNext(works.updateInputComment)
+         .doNext(usecase: IsEmpty())
+         .onSuccess(setState, .sendButtonDisabled)
+         .onFail(setState, .sendButtonEnabled)
+
+      events.didSendCommentPressed
+         .onSuccess(setState, .sendButtonDisabled)
+         .doNext(works.createComment)
+         .onSuccess(setState, .commentDidSend)
+         .onFail{ print("error sending comment") }
    }
 }

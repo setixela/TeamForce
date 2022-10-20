@@ -26,7 +26,9 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
          filterButtonTapped: filterButtons.on(\.didTapButtons),
          acceptPressed: contendersBlock.presenter.on(\.acceptPressed),
          rejectPressed: contendersBlock.presenter.on(\.rejectPressed),
-         didSelectWinnerIndex: winnersBlock.on(\.didSelectWinner)
+         didSelectWinnerIndex: winnersBlock.on(\.didSelectWinner),
+         didEditingComment: challComments.commentField.on(\.didEditingChanged),
+         didSendCommentPressed: challComments.sendButton.on(\.didTap)
       )
    )
 
@@ -53,8 +55,8 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
       // .hidden(true),
       SecondaryButtonDT<Design>()
          .title("Комментарии")
-         .font(Design.font.default)
-         .hidden(true),
+         .font(Design.font.default),
+         //.hidden(true),
       SecondaryButtonDT<Design>()
          .title("Участники")
          .font(Design.font.default)
@@ -79,6 +81,8 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
       .backColor(Design.color.background)
 
    private lazy var challComments = FeedCommentsBlock<Design>()
+      .set(.padding(.horizontalOffset(Design.params.commonSideOffset)))
+      .backColor(Design.color.background)
 
    override func start() {
       super.start()
@@ -126,7 +130,7 @@ enum ChallengeDetailsState {
    case presentChallenge(Challenge)
    case updateDetails(Challenge)
 
-   case presentComments(Challenge)
+   case presentComments([Comment])
 
    case presentSendResultScreen(Challenge, Int)
    case enableMyResult([ChallengeResult])
@@ -139,6 +143,10 @@ enum ChallengeDetailsState {
    case presentReportDetailView(Challenge, Int, Int)
    
    case disableSendResult
+   
+   case sendButtonDisabled
+   case sendButtonEnabled
+   case commentDidSend
 }
 
 extension ChallengeDetailsScene: StateMachine {
@@ -160,7 +168,8 @@ extension ChallengeDetailsScene: StateMachine {
          challDetails.setState(.presentChallenge(challenge))
       case .updateDetails(let challenge):
          challDetails.setState(.updateDetails(challenge))
-      case .presentComments(let challenge):
+      case .presentComments(let comments):
+         challComments.setup(comments)
          mainVM.footerStack
             .arrangedModels([
                challComments
@@ -252,6 +261,15 @@ extension ChallengeDetailsScene: StateMachine {
                break
             }
          }
+         
+      case .sendButtonDisabled:
+         challComments.setState(.sendButtonDisabled)
+      case .sendButtonEnabled:
+         challComments.setState(.sendButtonEnabled)
+      case .commentDidSend:
+         filterButtons.buttons[4].send(\.didTap)
+         challComments.commentField.text("")
+         challComments.setState(.sendButtonDisabled)
       
       case .disableSendResult:
          challDetails.models.down.sendButton.hidden(true)
