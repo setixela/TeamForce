@@ -18,6 +18,7 @@ enum FeedDetailsState {
    case sendButtonDisabled
    case sendButtonEnabled
    case commentDidSend
+   case hereIsEmpty
 }
 
 final class FeedDetailViewModels<Design: DSP>: DoubleStacksModel, Designable {
@@ -86,6 +87,10 @@ extension FeedDetailViewModels: StateMachine {
       case .commentDidSend:
          commentsBlock.commentField.text("")
          commentsBlock.setState(.sendButtonDisabled)
+      case .hereIsEmpty:
+         footerStack.arrangedModels([
+            HereIsEmptySpacedBlock<Design>()
+         ])
       }
    }
 }
