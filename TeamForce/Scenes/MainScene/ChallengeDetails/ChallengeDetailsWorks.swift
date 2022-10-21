@@ -50,7 +50,7 @@ final class ChallengeDetailsWorks<Asset: AssetProtocol>: BaseSceneWorks<Challeng
       // TODO: - В документации не забыть написать про возможную ошибку в очереди асинк синк
       switch button {
       case .didTapButton1:
-         self.getChallenge
+         self.getChallengeById
             .doAsync()
             .onSuccess { work.success(.result1($0)) }
             .onFail { work.fail() }
