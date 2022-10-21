@@ -36,6 +36,7 @@ final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<Challen
          .doVoidNext(works.isSendResultActive)
          .onFail(setState) { .disableSendResult }
          .onSuccess { print("success") }
+         .doRecover()
          .doVoidNext(works.amIOwnerCheck)
          .onSuccess(setState, .enableContenders)
          .onFail { print("you are not owner") }
