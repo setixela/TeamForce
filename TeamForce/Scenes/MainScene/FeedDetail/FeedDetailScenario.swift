@@ -61,7 +61,12 @@ final class FeedDetailScenario<Asset: AssetProtocol>:
          .onSuccess(setState, .presntActivityIndicator)
          .doNext(works.getLikesByTransaction)
          .doNext(works.getSelectedReactions)
-         .onSuccess(setState) { .presentReactions($0) }
+         .onSuccess(setState) {
+            if $0.isEmpty {
+               return .hereIsEmpty
+            }
+            return .presentReactions($0)
+         }
          .onFail {
             print("failed to present reactions")
          }

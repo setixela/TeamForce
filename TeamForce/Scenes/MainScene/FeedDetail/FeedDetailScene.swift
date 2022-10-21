@@ -76,6 +76,7 @@ enum FeedDetailSceneState {
    case sendButtonDisabled
    case sendButtonEnabled
    case commentDidSend
+   case hereIsEmpty
 
    case error
 }
@@ -126,6 +127,8 @@ extension FeedDetailScene: StateMachine {
          } else {
             feedDetailVM.infoBlock.likeButton.setState(.selected)
          }
+      case .hereIsEmpty:
+         feedDetailVM.setState(.hereIsEmpty)
       }
    }
 }
