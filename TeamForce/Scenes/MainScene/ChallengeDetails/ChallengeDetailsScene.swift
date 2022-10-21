@@ -12,7 +12,6 @@ struct ChallengeDetailsSceneInput {
    let challenge: Challenge
    let profileId: Int
    let currentButton: Int
-   let headerImage: UIImage?
 }
 
 final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
@@ -189,7 +188,9 @@ extension ChallengeDetailsScene: StateMachine {
 
          if let url = challenge.photo {
             headerImage
-               .url(TeamForceEndpoints.urlBase + url.replacingOccurrences(of: "_thumb", with: ""))
+               .url(TeamForceEndpoints.urlBase + url) {
+                  $0.url(TeamForceEndpoints.urlBase + url.replacingOccurrences(of: "_thumb", with: ""))
+               }
                .contentMode(.scaleAspectFill)
          }
          challDetails.setState(.presentChallenge(challenge))
@@ -262,7 +263,11 @@ extension ChallengeDetailsScene: StateMachine {
                Asset.router?.route(
                   .presentModally(.automatic),
                   scene: \.challengeDetails,
-                  payload: (challenge, profileId, 2)
+                  payload: ChallengeDetailsSceneInput(
+                     challenge: challenge,
+                     profileId: profileId,
+                     currentButton: 2
+                  )
                )
             case false:
                break

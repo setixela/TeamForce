@@ -6,7 +6,7 @@
 //
 
 import ReactiveWorks
-import UIKit
+import Foundation
 
 protocol ChallengeDetailsWorksProtocol {
    var getChallengeById: Work<Void, Challenge> { get }
@@ -29,7 +29,6 @@ final class ChallengeDetailsWorksStore: InitProtocol {
    var inputComment = ""
    
    var filterButton = 0
-   var image: UIImage?
 }
 
 
@@ -108,7 +107,7 @@ final class ChallengeDetailsWorks<Asset: AssetProtocol>: BaseSceneWorks<Challeng
       Self.store.challengeId = input.challenge.id
       Self.store.profileId = input.profileId
       Self.store.filterButton = input.currentButton
-      Self.store.image = input.headerImage
+
       work.success(result: input)
    }.retainBy(retainer) }
 

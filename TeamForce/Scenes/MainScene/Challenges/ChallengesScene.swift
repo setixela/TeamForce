@@ -87,7 +87,11 @@ extension ChallengesScene: StateMachine {
          Asset.router?.route(
             .presentModally(.automatic),
             scene: \.challengeDetails,
-            payload: (value.0, value.1, 0)
+            payload: ChallengeDetailsSceneInput(
+               challenge: value.0,
+               profileId: value.1,
+               currentButton: 0
+            )
          )
       case .presentCreateChallenge:
          setState(.presentActivityIndicator)

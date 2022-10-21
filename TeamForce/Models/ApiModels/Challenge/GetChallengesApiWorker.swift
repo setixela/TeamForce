@@ -5,8 +5,9 @@
 //  Created by Yerzhan Gapurinov on 06.10.2022.
 //
 
-import Foundation
+import UIKit
 import ReactiveWorks
+
 enum ChallengeState: String, Codable {
    case O = "От имени организации"
    case U = "От имени пользователя"
@@ -99,6 +100,9 @@ struct Challenge: Codable {
       case active, completed
       case remainingTopPlaces = "remaining_top_places"
    }
+
+   // not codable extensions
+   var photoCache: UIImage?
 }
 
 final class GetChallengesApiWorker: BaseApiWorker<String, [Challenge]> {
