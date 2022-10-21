@@ -451,7 +451,7 @@ extension ViewModelProtocol where Self: Stateable, View: PaddingImageView {
       return self
    }
 
-   @discardableResult func url(_ value: String?, completion: ((Self) -> Void)? = nil) -> Self {
+   @discardableResult func url(_ value: String?, fade: CGFloat = 0, completion: ((Self) -> Void)? = nil) -> Self {
 //      guard
 //         let str = value
 //         let url = URL(string: str)

@@ -34,7 +34,7 @@ extension ChallReportDetailsVM: SetupProtocol {
       
       
       if let photoLink = report.photo {
-         photo.url(TeamForceEndpoints.urlBase + photoLink)
+         photo.url(TeamForceEndpoints.urlBase + photoLink, )
          photo.hidden(false)
       }
    }
