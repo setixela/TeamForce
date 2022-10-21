@@ -10,9 +10,10 @@ import UIKit
 
 class ChallContendersPresenters<Design: DesignProtocol>: Designable {
    var events: EventsStore = .init()
+   private let retainer = Retainer()
 
    var contendersCellPresenter: Presenter<Contender, WrappedX<StackModel>> {
-      Presenter { work in
+      Presenter(retainedBy: retainer) { work in
          let contender = work.unsafeInput
          let createdAt = contender.reportCreatedAt
          let name = contender.participantName.string

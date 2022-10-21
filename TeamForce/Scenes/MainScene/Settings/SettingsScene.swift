@@ -12,7 +12,7 @@ struct SettingsViewEvent: InitProtocol {}
 
 final class SettingsScene<Asset: AssetProtocol>: BaseSceneModel<
    DefaultVCModel,
-   StackModel,
+   ModalDoubleStackModel<Asset>,
    Asset,
    Void
 > {
@@ -97,14 +97,12 @@ final class SettingsScene<Asset: AssetProtocol>: BaseSceneModel<
    private lazy var useCase = Asset.apiUseCase
 
    override func start() {
+      mainVM.closeButton.on(\.didTap, self) { $0.dismiss() }
       vcModel?.on(\.viewDidLoad, self) { $0.configure() }
    }
 
    func configure() {
-      mainVM
-         .axis(.vertical)
-         .distribution(.fill)
-         .alignment(.fill)
+      mainVM.bodyStack
          .arrangedModels([
             general,
             Spacer(8),
@@ -117,7 +115,8 @@ final class SettingsScene<Asset: AssetProtocol>: BaseSceneModel<
       logoutButton
          .on(\.didTap)
          .doNext(useCase.logout)
-         .onSuccess {
+         .onSuccess(self) { slf,_ in
+            slf.dismiss()
             UserDefaults.standard.setIsLoggedIn(value: false)
             Asset.router?.route(.presentInitial, scene: \.digitalThanks, payload: ())
          }.onFail {

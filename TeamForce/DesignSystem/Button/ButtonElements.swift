@@ -45,8 +45,8 @@ struct ButtonStateBuilder<Design: DesignProtocol>: ButtonStateProtocol {
 
    var secondary: [ButtonState] { [
       .backColor(Design.color.backgroundInfoSecondary),
-      .textColor(Design.color.textInvert),
-      .tint(Design.color.iconInvert),
+      .textColor(Design.color.text),
+      .tint(Design.color.iconContrast),
       .cornerRadius(Design.params.cornerRadius),
       .height(Design.params.buttonHeight),
       .enabled(true),
