@@ -28,6 +28,25 @@ final class ChallengeDetailsWorksStore: InitProtocol {
    var inputComment = ""
 }
 
+final class HereIsEmpty<Design: DSP>: LabelModel, Designable {
+   override func start() {
+      super.start()
+
+      alignment(.center)
+      set(Design.state.label.body2Secondary)
+      padding(.init(top: 24, left: 24, bottom: 24, right: 24))
+      text("Здесь пока ничего нет")
+   }
+}
+
+final class HereIsEmptySpacedBlock<Design: DSP>: M<HereIsEmpty<Design>>.D<Spacer>.Combo, Designable {
+   required init() {
+      super.init()
+      
+      setAll { _, _ in }
+   }
+}
+
 final class ChallengeDetailsWorks<Asset: AssetProtocol>: BaseSceneWorks<ChallengeDetailsWorksStore, Asset> {
    private lazy var apiUseCase = Asset.apiUseCase
 
@@ -43,6 +62,7 @@ final class ChallengeDetailsWorks<Asset: AssetProtocol>: BaseSceneWorks<Challeng
    var filterButtonWork: Work<Button6Event, Button6Result> { .init { [weak self] work in
       guard let self, let button = work.input else { return }
 
+      // TODO: - В документации не забыть написать про возможную ошибку в очереди асинк синк
       switch button {
       case .didTapButton1:
          self.getChallenge

@@ -52,25 +52,36 @@ final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<Challen
          }
 
       events.filterButtonTapped
-         .onSuccess(setState) { _ in
-            .presentActivityIndicator
-         }
+         .onSuccess(setState, .presentActivityIndicator)
          .doNext(works.filterButtonWork)
-         .onSuccess { [weak self] in
+         .onSuccess { [weak self] (result: ChallengeDetailsWorks.Button6Result) in
             // можно сет стейт достать из селфа:
             guard let stateFunc = self?.setState else { return }
 
-            switch $0 {
+            switch result {
             case .result1(let value):
                stateFunc(.presentChallenge(value))
+
             case .result2(let value):
+               guard !value.isEmpty else { stateFunc(.hereIsEmpty); return }
+
                stateFunc(.presentMyResults(value))
+
             case .result3(let value):
+               guard !value.isEmpty else { stateFunc(.hereIsEmpty); return }
+
                stateFunc(.presentContenders(value))
+
             case .result4(let value):
+               guard !value.isEmpty else { stateFunc(.hereIsEmpty); return }
+
                stateFunc(.presentWinners(value))
+
             case .result5(let value):
+               guard !value.isEmpty else { stateFunc(.hereIsEmpty); return }
+
                stateFunc(.presentComments(value))
+
             case .result6:
                break
             }

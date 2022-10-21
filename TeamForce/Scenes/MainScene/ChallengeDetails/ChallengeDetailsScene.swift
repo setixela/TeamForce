@@ -136,6 +136,7 @@ enum ChallengeDetailsState {
    case initial
 
    case presentActivityIndicator
+   case hereIsEmpty
 
    case presentChallenge(Challenge)
    case updateDetails(Challenge)
@@ -157,6 +158,7 @@ enum ChallengeDetailsState {
    case sendButtonDisabled
    case sendButtonEnabled
    case commentDidSend
+   
 }
 
 extension ChallengeDetailsScene: StateMachine {
@@ -289,6 +291,11 @@ extension ChallengeDetailsScene: StateMachine {
       
       case .disableSendResult:
          challDetails.models.down.sendButton.hidden(true)
+      case .hereIsEmpty:
+         mainVM.footerStack
+            .arrangedModels([
+               HereIsEmptySpacedBlock<Design>()
+            ])
       }
    }
 }

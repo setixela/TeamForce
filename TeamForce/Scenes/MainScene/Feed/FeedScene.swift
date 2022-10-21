@@ -8,9 +8,8 @@
 import ReactiveWorks
 import UIKit
 
-final class FeedScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>,
+final class FeedScene<Asset: AssetProtocol>: DoubleStacksModel,
    Assetable,
-   Stateable2,
    Eventable,
    Scenarible
 {
@@ -38,15 +37,21 @@ final class FeedScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>,
 
    private lazy var activityIndicator = ActivityIndicator<Design>()
    private lazy var errorBlock = CommonErrorBlock<Design>()
+   private lazy var hereIsEmptyBlock = HereIsEmptySpacedBlock<Design>()
 
    private var state = FeedSceneState.initial
 
    override func start() {
-      axis(.vertical)
-      arrangedModels([
-         viewModels.filterButtons,
+      super.start()
+
+      bodyStack.arrangedModels([
+         viewModels.filterButtons
+      ])
+
+      footerStack.arrangedModels([
          activityIndicator,
          errorBlock,
+         hereIsEmptyBlock,
          viewModels.feedTableModel,
       ])
 
@@ -78,10 +83,20 @@ extension FeedScene: StateMachine {
       case .initial:
          activityIndicator.hidden(false)
          errorBlock.hidden(true)
+         hereIsEmptyBlock.hidden(true)
       case .presentFeed(let tuple):
          activityIndicator.hidden(true)
          errorBlock.hidden(true)
          viewModels.set(.userName(tuple.1))
+
+         guard !tuple.0.isEmpty else {
+            viewModels.feedTableModel.hidden(true)
+            hereIsEmptyBlock.hidden(false)
+            return
+         }
+
+         viewModels.feedTableModel.hidden(false)
+         hereIsEmptyBlock.hidden(true)
          viewModels.feedTableModel.set(.items(tuple.0 + [SpacerItem(size: Grid.x64.value)]))
       case .loadFeedError:
          log("Feed Error!")
