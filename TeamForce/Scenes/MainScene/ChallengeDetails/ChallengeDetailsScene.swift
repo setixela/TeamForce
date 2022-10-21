@@ -185,17 +185,11 @@ extension ChallengeDetailsScene: StateMachine {
             .arrangedModels([
                challDetails
             ])
-
-         if let url = challenge.photo {
-            headerImage
-               .url(TeamForceEndpoints.urlBase + url) {
-                  $0.url(TeamForceEndpoints.urlBase + url.replacingOccurrences(of: "_thumb", with: ""))
-               }
-               .contentMode(.scaleAspectFill)
-         }
+         updateHeaderImage(url: challenge.photo)
          challDetails.setState(.presentChallenge(challenge))
       case .updateDetails(let challenge):
          challDetails.setState(.updateDetails(challenge))
+         updateHeaderImage(url: challenge.photo)
       case .presentComments(let comments):
          challComments.setup(comments)
          mainVM.footerStack
@@ -345,5 +339,14 @@ extension ChallengeDetailsScene {
             .alpha(0)
             .hidden(true)
       }
+   }
+   
+   private func updateHeaderImage(url: String?) {
+      guard let url = url else { return }
+      headerImage
+         .url(TeamForceEndpoints.urlBase + url) {
+            $0.url(TeamForceEndpoints.urlBase + url.replacingOccurrences(of: "_thumb", with: ""))
+         }
+         .contentMode(.scaleAspectFill)
    }
 }
