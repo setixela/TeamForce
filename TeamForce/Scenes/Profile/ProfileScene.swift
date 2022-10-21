@@ -59,6 +59,12 @@ final class ProfileScene<Asset: AssetProtocol>: BaseSceneModel<
          $1.text("-")
       }
 
+   lazy var settingsButton = Design.button.secondary
+      .title("Настройки")
+      .on(\.didTap) {
+         Asset.router?.route(.presentModally(.automatic), scene: \.settings)
+      }
+
    lazy var infoStackSecondary = UserProfileStack<Design>()
       .arrangedModels([
          LabelModel()
@@ -100,6 +106,8 @@ final class ProfileScene<Asset: AssetProtocol>: BaseSceneModel<
             infoStack,
             Spacer(8),
             infoStackSecondary,
+            Spacer(8),
+            settingsButton,
             Grid.xxx.spacer,
          ]))
 

@@ -281,7 +281,11 @@ final class StackViewExtended: UIStackView, Eventable {
 
 // MARK: - ButtonExtended(UIButton) -------------------------
 
-final class ButtonExtended: UIButton, AlamoLoader, Shimmering {
+final class ButtonExtended: UIButton, AlamoLoader, Shimmering, Tappable {
+   typealias Events = ButtonEvents
+
+   var events: EventsStore = .init()
+
    var isVertical = false
 
    override init(frame: CGRect) {
@@ -301,6 +305,14 @@ final class ButtonExtended: UIButton, AlamoLoader, Shimmering {
    @available(*, unavailable)
    required init?(coder: NSCoder) {
       fatalError("init(coder:) has not been implemented")
+   }
+
+   override func startTapGestureRecognize(cancelTouch: Bool = false) {
+      self.addTarget(self, action: #selector(didTap), for: .touchUpInside)
+   }
+
+   @objc override func didTap() {
+      send(\.didTap)
    }
 
    override func setBackgroundImage(_ image: UIImage?, for state: UIControl.State) {

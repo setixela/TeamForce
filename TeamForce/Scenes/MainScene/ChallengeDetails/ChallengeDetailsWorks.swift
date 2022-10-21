@@ -6,6 +6,7 @@
 //
 
 import ReactiveWorks
+import Foundation
 
 protocol ChallengeDetailsWorksProtocol {
    var getChallengeById: Work<Void, Challenge> { get }
@@ -19,31 +20,45 @@ final class ChallengeDetailsWorksStore: InitProtocol {
    var challenge: Challenge?
    var challengeId: Int?
    var currentContender: Contender?
-   var contenders: [Contender]?
+   var contenders: [Contender] = []
    var reportId: Int?
    var profileId: Int?
+
+   var winnersReports: [ChallengeWinnerReport] = []
+
+   var inputComment = ""
    
-   var winnersReports: [ChallengeWinnerReport]?
+   var filterButton = 0
 }
+
 
 final class ChallengeDetailsWorks<Asset: AssetProtocol>: BaseSceneWorks<ChallengeDetailsWorksStore, Asset> {
    private lazy var apiUseCase = Asset.apiUseCase
 
-   var filterButtonWork: Work<Button6Event, Any> { .init { work in
-      guard let button = work.input else { return }
-      print(button)
+   typealias Button6Result = Result6<
+      Challenge,
+      [ChallengeResult],
+      [Contender],
+      [ChallengeWinnerReport],
+      [Comment],
+      Void
+   >
+
+   var filterButtonWork: Work<Button6Event, Button6Result> { .init { [weak self] work in
+      guard let self, let button = work.input else { return }
+
+      // TODO: - В документации не забыть написать про возможную ошибку в очереди асинк синк
       switch button {
       case .didTapButton1:
-         if let challenge = Self.store.challenge {
-            work.success(challenge)
-         } else {
-            work.fail()
-         }
+         self.getChallenge
+            .doAsync()
+            .onSuccess { work.success(.result1($0)) }
+            .onFail { work.fail() }
 
       case .didTapButton2:
          self.getChallengeResult
             .doAsync()
-            .onSuccess { work.success($0) }
+            .onSuccess { work.success(.result2($0)) }
             .onFail { work.fail() }
 
       case .didTapButton3:
@@ -52,7 +67,7 @@ final class ChallengeDetailsWorks<Asset: AssetProtocol>: BaseSceneWorks<Challeng
             .onSuccess {
                self.getChallengeContenders
                   .doAsync()
-                  .onSuccess { work.success($0) }
+                  .onSuccess { work.success(.result3($0)) }
                   .onFail { work.fail() }
             }
             .onFail { work.fail() }
@@ -60,18 +75,16 @@ final class ChallengeDetailsWorks<Asset: AssetProtocol>: BaseSceneWorks<Challeng
       case .didTapButton4:
          self.getChallengeWinnersReports
             .doAsync()
-            .onSuccess {
-               print($0)
-               work.success($0)
-            }
-            .onFail {
-               work.fail()
-            }
+            .onSuccess { work.success(.result4($0)) }
+            .onFail { work.fail() }
 
       case .didTapButton5:
-         print(5)
+         self.getComments
+            .doAsync()
+            .onSuccess { work.success(.result5($0)) }
+            .onFail { work.fail() }
       case .didTapButton6:
-         print(6)
+         break
       }
    }.retainBy(retainer) }
 
@@ -88,15 +101,15 @@ final class ChallengeDetailsWorks<Asset: AssetProtocol>: BaseSceneWorks<Challeng
       }
    }.retainBy(retainer) }
 
-   var saveInput: Work<(Challenge, Int), Challenge> { .init { work in
+   var saveInput: Work<ChallengeDetailsSceneInput, ChallengeDetailsSceneInput> { .init { work in
       guard let input = work.input else { return }
-      Self.store.challenge = input.0
-      Self.store.challengeId = input.0.id
-      Self.store.profileId = input.1
+      Self.store.challenge = input.challenge
+      Self.store.challengeId = input.challenge.id
+      Self.store.profileId = input.profileId
+      Self.store.filterButton = input.currentButton
 
-      work.success(result: input.0)
+      work.success(result: input)
    }.retainBy(retainer) }
-
 
    var getChallengeId: Work<Void, Int> { .init { work in
       guard let id = Self.store.challengeId else { return }
@@ -107,30 +120,47 @@ final class ChallengeDetailsWorks<Asset: AssetProtocol>: BaseSceneWorks<Challeng
       guard let challenge = Self.store.challenge else { return }
       work.success(challenge)
    }.retainBy(retainer) }
-   
+
    var getProfileId: Work<Void, Int> { .init { work in
       guard let id = Self.store.profileId else { return }
       work.success(id)
    }.retainBy(retainer) }
-   
+
    var getInputForCancel: Work<Int, (Challenge, Int, Int)> { .init { work in
       guard
          let resultId = work.input,
          let challenge = Self.store.challenge,
          let profileId = Self.store.profileId
       else { return }
-      
+
       work.success((challenge, profileId, resultId))
    }.retainBy(retainer) }
-   
+
+   var getInputForReportDetail: Work<Int, (Challenge, Int, Int)> { .init { work in
+      guard
+         let challenge = Self.store.challenge,
+         let profileId = Self.store.profileId,
+         let reportId = work.input
+      else { return }
+
+      work.success((challenge, profileId, reportId))
+   }.retainBy(retainer) }
+
    var isSendResultActive: Work<Void, Void> { .init { work in
       guard let challenge = Self.store.challenge else { return }
-      if challenge.active == true &&
-            challenge.approvedReportsAmount < challenge.awardees {
+
+      if challenge.active == true,
+         challenge.approvedReportsAmount < challenge.awardees
+      {
          work.success(())
       } else {
          work.fail()
       }
+   }.retainBy(retainer) }
+
+   var getWinnerReportIdByIndex: Work<Int, Int> { .init { work in
+      let id = Self.store.winnersReports[work.unsafeInput].id
+      work.success(id)
    }.retainBy(retainer) }
 }
 
@@ -172,14 +202,14 @@ extension ChallengeDetailsWorks: ChallengeDetailsWorksProtocol {
             work.fail()
          }
    }.retainBy(retainer) }
-   
+
    var getChallengeWinnersReports: Work<Void, [ChallengeWinnerReport]> { .init { [weak self] work in
       guard let id = Self.store.challengeId else { return }
       self?.apiUseCase.GetChallengeWinnersReports
          .doAsync(id)
          .onSuccess {
             Self.store.winnersReports = $0
-            work.success(result: $0)
+            work.success(result: Self.store.winnersReports)
          }
          .onFail {
             work.fail()
@@ -209,6 +239,48 @@ extension ChallengeDetailsWorks: ChallengeDetailsWorksProtocol {
          .doAsync(id)
          .onSuccess {
             work.success($0)
+         }
+         .onFail {
+            work.fail()
+         }
+   }.retainBy(retainer) }
+
+   var getComments: Work<Void, [Comment]> { .init { [weak self] work in
+      guard let challengeId = Self.store.challengeId else { return }
+      let request = CommentsRequest(token: "",
+                                    body: CommentsRequestBody(
+                                       challengeId: challengeId,
+                                       includeName: true,
+                                       isReverseOrder: true
+                                    ))
+      self?.apiUseCase.getComments
+         .doAsync(request)
+         .onSuccess {
+            work.success(result: $0)
+         }
+         .onFail {
+            work.fail()
+         }
+   }.retainBy(retainer) }
+
+   var updateInputComment: Work<String, String> { .init { work in
+      Self.store.inputComment = work.unsafeInput
+      work.success(result: work.unsafeInput)
+   }.retainBy(retainer) }
+
+   var createComment: Work<Void, Void> { .init { [weak self] work in
+      guard
+         let id = Self.store.challengeId
+      else { return }
+
+      let body = CreateCommentBody(challengeId: id, text: Self.store.inputComment)
+      let request = CreateCommentRequest(token: "", body: body)
+
+      self?.apiUseCase.createComment
+         .doAsync(request)
+         .onSuccess {
+            work.success()
+            Self.store.inputComment = ""
          }
          .onFail {
             work.fail()

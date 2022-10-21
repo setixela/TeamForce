@@ -17,38 +17,50 @@ enum ProductionAsset: AssetProtocol {
    weak static var router: MainRouter<ProductionAsset>?
 }
 
+fileprivate typealias PA = ProductionAsset
+
 protocol ScenesProtocol: InitProtocol {
-   var digitalThanks: SceneModelProtocol { get }
-   var login: SceneModelProtocol { get }
-   var main: SceneModelProtocol { get }
-   var profile: SceneModelProtocol { get }
-   var transactionDetail: SceneModelProtocol { get }
-   var challengeDetails: SceneModelProtocol { get }
-   var challengeCreate: SceneModelProtocol { get }
-   var challengeSendResult: SceneModelProtocol { get }
-   var challengeResCancel: SceneModelProtocol { get }
+   var digitalThanks: SMP { get }
+   var login: SMP { get }
+   var main: SMP { get }
+
+   var feedDetail: SMP { get }
+
+   var profile: SMP { get }
+
+   var transactionDetail: SMP { get }
+
+   var challengeDetails: SMP { get }
+   var challengeCreate: SMP { get }
+   var challengeSendResult: SMP { get }
+   var challengeResCancel: SMP { get }
+   var challengeReportDetail: SMP { get }
+
+   var settings: SMP { get }
 
    // plays
-   var playground: SceneModelProtocol { get }
-   var feedDetail: SceneModelProtocol { get }
+   var playground: SMP { get }
 }
 
 struct Scenes: ScenesProtocol {
-   var playground: SceneModelProtocol { PlaygroundScene<ProductionAsset>() }
+   var settings: ReactiveWorks.SMP { SettingsScene<PA>() }
    //
-   var digitalThanks: SceneModelProtocol { DigitalThanksScene<ProductionAsset>() }
-   var login: SceneModelProtocol { LoginScene<ProductionAsset>() }
-   var main: SceneModelProtocol { MainScene<ProductionAsset>() }
-   var profile: SceneModelProtocol { ProfileScene<ProductionAsset>() }
-   var transactionDetail: SceneModelProtocol { TransactDeatilViewModel<ProductionAsset>() }
-   // var profileEdit: SceneModelProtocol { ProfileEditScene<ProductionAsset>() }
+   var playground: SMP { PlaygroundScene<PA>() }
+   //
+   var digitalThanks: SMP { DigitalThanksScene<PA>() }
+   var login: SMP { LoginScene<PA>() }
+   var main: SMP { MainScene<PA>() }
+   var profile: SMP { ProfileScene<PA>() }
+   var transactionDetail: SMP { TransactDeatilViewModel<PA>() }
+   // var profileEdit: SMP { ProfileEditScene<PA>() }
 
-   var feedDetail: SceneModelProtocol { FeedDetailScene<ProductionAsset>() }
+   var feedDetail: SMP { FeedDetailScene<PA>() }
 
-   var challengeCreate: SceneModelProtocol { ChallengeCreateScene<ProductionAsset>() }
-   var challengeSendResult: SceneModelProtocol { ChallengeResultScene<ProductionAsset>() }
-   var challengeDetails: SceneModelProtocol { ChallengeDetailsScene<ProductionAsset>() }
-   var challengeResCancel: SceneModelProtocol { ChallengeResCancelScene<ProductionAsset>() }
+   var challengeCreate: SMP { ChallengeCreateScene<PA>() }
+   var challengeSendResult: SMP { ChallengeResultScene<PA>() }
+   var challengeDetails: SMP { ChallengeDetailsScene<PA>() }
+   var challengeResCancel: SMP { ChallengeResCancelScene<PA>() }
+   var challengeReportDetail: SMP { ChallReportDetailsScene<PA>() }
 }
 
 struct ProductionService: ServiceProtocol {

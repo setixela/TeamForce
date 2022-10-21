@@ -14,7 +14,7 @@ class FeedPresenters<Design: DesignProtocol>: Designable {
    private lazy var retainer = Retainer()
 
    var feedCellPresenter: Presenter<Feed, WrappedX<StackModel>> {
-      Presenter { [weak self] work in
+      Presenter(retainedBy: retainer) { [weak self] work in
 
          guard let self = self else { return }
 
@@ -158,7 +158,6 @@ class FeedPresenters<Design: DesignProtocol>: Designable {
          )
          .padding(.verticalOffset(Grid.x16.value))
 
-         self.retainer.retain(work)
          work.success(result: cellStack)
       }
    }

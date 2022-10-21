@@ -36,7 +36,7 @@ final class ChallengeDetailsViewModel<Design: DSP>:
       }
       .hidden(true)
 
-   private lazy var activity = ActivityIndicator<Design>()
+//   private lazy var activity = ActivityIndicator<Design>()
 
    required init() {
       super.init()
@@ -59,7 +59,7 @@ final class ChallengeDetailsViewModel<Design: DSP>:
             prizeSizeCell,
             finishDateCell,
             prizePlacesCell,
-            activity
+//            activity
          ]))
       models.main.view.layer.masksToBounds = false
    }
@@ -89,7 +89,7 @@ extension ChallengeDetailsViewModel: StateMachine {
          prizePlacesCell.hidden(challenge.winnersCount == nil)
          models.down.setup(challenge)
       case .updateDetails(let challenge):
-         activity.hidden(true)
+//         activity.hidden(true)
          setState(.presentChallenge(challenge))
       }
    }

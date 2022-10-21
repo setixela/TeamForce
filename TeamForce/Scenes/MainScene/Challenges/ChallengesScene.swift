@@ -87,26 +87,22 @@ extension ChallengesScene: StateMachine {
          Asset.router?.route(
             .presentModally(.automatic),
             scene: \.challengeDetails,
-            payload: value
+            payload: ChallengeDetailsSceneInput(
+               challenge: value.0,
+               profileId: value.1,
+               currentButton: 0
+            )
          )
-//         .onSuccess(self) { slf, _ in
-//            slf.scenario.start()
-//         }
-//         .onFail(self) {
-//            $0.activity.hidden(true)
-//         }
-//         .retainBy(retainer)
       case .presentCreateChallenge:
          setState(.presentActivityIndicator)
          Asset.router?.route(
             .presentModally(.automatic),
             scene: \.challengeCreate,
             payload: ()
-         ) { [weak self] result in
-            switch result {
-            case true:
+         ) { [weak self] in
+            if $0 {
                self?.scenario.start()
-            case false:
+            } else {
                self?.setState(.hideActivityIndicator)
             }
          }

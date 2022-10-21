@@ -451,15 +451,18 @@ extension ViewModelProtocol where Self: Stateable, View: PaddingImageView {
       return self
    }
 
-   @discardableResult func url(_ value: String?) -> Self {
+   @discardableResult func url(_ value: String?, completion: ((Self) -> Void)? = nil) -> Self {
 //      guard
 //         let str = value
 //         let url = URL(string: str)
 //      else { return self }
 
       view.layer.masksToBounds = true
-      view.loadImage(value) { [weak view] image in
+      view.loadImage(value) { [weak view, weak self] image in
          view?.image = image
+         guard let self else { return }
+
+         completion?(self)
       }
 //      view.af.setImage(withURL: url, imageTransition: .crossDissolve(0.4), completion: {
 //         switch $0.result {

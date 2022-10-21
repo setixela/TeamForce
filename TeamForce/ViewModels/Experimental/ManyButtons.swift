@@ -30,7 +30,7 @@ final class SlidedIndexButtons<ButtEvents: ManyButtonEvent>: BaseViewModel<UIScr
       self.buttons = buttons
       configure()
    }
-   
+
    private func configure() {
       buttons.first?.setMode(\.selected)
       buttons.enumerated().forEach { tuple in
@@ -69,6 +69,8 @@ final class SlidedIndexButtons<ButtEvents: ManyButtonEvent>: BaseViewModel<UIScr
 struct TapIndexEvents<M: ManyButtonEvent>: InitProtocol {
    var didTapButtons: M?
 }
+
+// MARK: - Many Button events
 
 protocol ManyButtonEvent: RawRepresentable where RawValue == Int {}
 
@@ -155,7 +157,7 @@ extension IndexedButtonsProtocol {
    {
       self.init(buttons: but1, but2, but3, but4, but5)
    }
-   
+
    init(_ but1: Button,
         _ but2: Button,
         _ but3: Button,

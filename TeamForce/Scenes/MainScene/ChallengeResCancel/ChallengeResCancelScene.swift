@@ -90,7 +90,7 @@ extension ChallengeResCancelScene: StateMachine {
          finisher?(true)
       case .finish:
          vcModel?.dismiss(animated: true)
-         finisher?(false)
+         finisher?(true)
       }
    }
 }

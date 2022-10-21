@@ -8,11 +8,17 @@
 import ReactiveWorks
 import UIKit
 
+struct ChallengeDetailsSceneInput {
+   let challenge: Challenge
+   let profileId: Int
+   let currentButton: Int
+}
+
 final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
    DefaultVCModel,
    TripleStacksModel,
    Asset,
-   (Challenge, Int)
+   ChallengeDetailsSceneInput
 >, Scenarible {
    //
    lazy var scenario: Scenario = ChallengeDetailsScenario(
@@ -26,7 +32,9 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
          filterButtonTapped: filterButtons.on(\.didTapButtons),
          acceptPressed: contendersBlock.presenter.on(\.acceptPressed),
          rejectPressed: contendersBlock.presenter.on(\.rejectPressed),
-         didSelectWinnerIndex: winnersBlock.on(\.didSelectWinner)
+         didSelectWinnerIndex: winnersBlock.on(\.didSelectWinner),
+         didEditingComment: challComments.commentField.on(\.didEditingChanged),
+         didSendCommentPressed: challComments.sendButton.on(\.didTap)
       )
    )
 
@@ -53,8 +61,8 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
       // .hidden(true),
       SecondaryButtonDT<Design>()
          .title("Комментарии")
-         .font(Design.font.default)
-         .hidden(true),
+         .font(Design.font.default),
+      // .hidden(true),
       SecondaryButtonDT<Design>()
          .title("Участники")
          .font(Design.font.default)
@@ -79,10 +87,19 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
       .backColor(Design.color.background)
 
    private lazy var challComments = FeedCommentsBlock<Design>()
+      .set(.padding(.horizontalOffset(Design.params.commonSideOffset)))
+      .backColor(Design.color.background)
 
    override func start() {
       super.start()
 
+      setState(.presentActivityIndicator)
+      vcModel?.on(\.viewDidLoad, self) {
+         $0.configure()
+      }
+   }
+
+   private func configure() {
       mainVM.headerStack
          .backColor(Design.color.backgroundBrandSecondary)
          // .height(200)
@@ -123,21 +140,33 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
 
 enum ChallengeDetailsState {
    case initial
+
+   case presentActivityIndicator
+   case hereIsEmpty
+
+   case setHeaderImage(UIImage?)
+
    case presentChallenge(Challenge)
    case updateDetails(Challenge)
 
-   case presentComments(Challenge)
+   case presentComments([Comment])
 
    case presentSendResultScreen(Challenge, Int)
    case enableMyResult([ChallengeResult])
    case enableContenders
 
+   case sendFilterButtonEvent(Int)
    case presentMyResults([ChallengeResult])
    case presentWinners([ChallengeWinnerReport])
    case presentContenders([Contender])
    case presentCancelView(Challenge, Int, Int)
-   
+   case presentReportDetailView(Challenge, Int, Int)
+
    case disableSendResult
+
+   case sendButtonDisabled
+   case sendButtonEnabled
+   case commentDidSend
 }
 
 extension ChallengeDetailsScene: StateMachine {
@@ -145,6 +174,12 @@ extension ChallengeDetailsScene: StateMachine {
       switch state {
       case .initial:
          break
+      case .presentActivityIndicator:
+         mainVM.footerStack
+            .arrangedModels([
+               ActivityIndicator<Design>(),
+               Spacer()
+            ])
       case .presentChallenge(let challenge):
          mainVM.footerStack
             .arrangedModels([
@@ -153,13 +188,16 @@ extension ChallengeDetailsScene: StateMachine {
 
          if let url = challenge.photo {
             headerImage
-               .url(TeamForceEndpoints.urlBase + url)
+               .url(TeamForceEndpoints.urlBase + url) {
+                  $0.url(TeamForceEndpoints.urlBase + url.replacingOccurrences(of: "_thumb", with: ""))
+               }
                .contentMode(.scaleAspectFill)
          }
          challDetails.setState(.presentChallenge(challenge))
       case .updateDetails(let challenge):
          challDetails.setState(.updateDetails(challenge))
-      case .presentComments(let challenge):
+      case .presentComments(let comments):
+         challComments.setup(comments)
          mainVM.footerStack
             .arrangedModels([
                challComments
@@ -178,7 +216,7 @@ extension ChallengeDetailsScene: StateMachine {
                Asset.router?.route(
                   .presentModally(.automatic),
                   scene: \.challengeDetails,
-                  payload: (challenge, profileId)
+                  payload: (challenge, profileId, 1)
                )
             case false:
                print("failure")
@@ -190,7 +228,7 @@ extension ChallengeDetailsScene: StateMachine {
       case .enableContenders:
          filterButtons.buttons[2].hidden(false)
          challDetails.models.down.sendButton.hidden(true)
-         //challDetails.models.down.hidden(true)
+         // challDetails.models.down.hidden(true)
 
       case .presentMyResults(let results):
          myResultBlock.setup(results)
@@ -225,14 +263,59 @@ extension ChallengeDetailsScene: StateMachine {
                Asset.router?.route(
                   .presentModally(.automatic),
                   scene: \.challengeDetails,
-                  payload: (challenge, profileId)
+                  payload: ChallengeDetailsSceneInput(
+                     challenge: challenge,
+                     profileId: profileId,
+                     currentButton: 2
+                  )
                )
             case false:
                break
             }
          }
+
+      case .presentReportDetailView(let challenge, let profileId, let reportId):
+         vcModel?.dismiss(animated: true)
+
+         Asset.router?.route(
+            .presentModally(.automatic),
+            scene: \.challengeReportDetail,
+            payload: reportId
+         ) { success in
+            switch success {
+            case true:
+               Asset.router?.route(
+                  .presentModally(.automatic),
+                  scene: \.challengeDetails,
+                  payload: (challenge, profileId, 3)
+               )
+            case false:
+               break
+            }
+         }
+
+      case .sendButtonDisabled:
+         challComments.setState(.sendButtonDisabled)
+      case .sendButtonEnabled:
+         challComments.setState(.sendButtonEnabled)
+      case .commentDidSend:
+         filterButtons.buttons[4].send(\.didTap)
+         challComments.commentField.text("")
+         challComments.setState(.sendButtonDisabled)
+
       case .disableSendResult:
          challDetails.models.down.sendButton.hidden(true)
+      case .hereIsEmpty:
+         mainVM.footerStack
+            .arrangedModels([
+               HereIsEmptySpacedBlock<Design>()
+            ])
+      case .sendFilterButtonEvent(let value):
+         filterButtons.buttons[value].send(\.didTap)
+      case .setHeaderImage(let image):
+         if let image {
+            headerImage.image(image)
+         }
       }
    }
 }

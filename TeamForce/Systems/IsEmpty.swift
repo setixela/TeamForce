@@ -34,6 +34,19 @@ final class IsNotEmptyToBool<T: Collection>: WorkerProtocol {
    }
 }
 
+final class ArrayFilter<T>: WorkerProtocol {
+   typealias In = T
+   typealias Out = [Any]
+
+   func doAsync(work: Wrk) {
+      if work.unsafeInput is Out {
+         work.success(result: work.unsafeInput as! Out)
+      } else {
+         work.fail()
+      }
+   }
+}
+
 final class IsEmpty<T: Collection>: UseCaseProtocol {
    typealias In = T
    typealias Out = T
