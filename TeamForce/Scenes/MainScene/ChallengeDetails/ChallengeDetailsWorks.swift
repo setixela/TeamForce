@@ -150,7 +150,9 @@ final class ChallengeDetailsWorks<Asset: AssetProtocol>: BaseSceneWorks<Challeng
       guard let challenge = Self.store.challenge else { return }
 
       if challenge.active == true,
-         challenge.approvedReportsAmount < challenge.awardees
+         challenge.approvedReportsAmount < challenge.awardees,
+         challenge.status == "Можно отправить отчёт" ||
+         challenge.status == "Отчёт отклонён"
       {
          work.success(())
       } else {
