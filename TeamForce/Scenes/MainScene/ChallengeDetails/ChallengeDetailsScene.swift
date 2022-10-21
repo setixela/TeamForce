@@ -216,7 +216,11 @@ extension ChallengeDetailsScene: StateMachine {
                Asset.router?.route(
                   .presentModally(.automatic),
                   scene: \.challengeDetails,
-                  payload: (challenge, profileId, 1)
+                  payload: ChallengeDetailsSceneInput(
+                     challenge: challenge,
+                     profileId: profileId,
+                     currentButton: 1
+                  )
                )
             case false:
                print("failure")
@@ -287,7 +291,11 @@ extension ChallengeDetailsScene: StateMachine {
                Asset.router?.route(
                   .presentModally(.automatic),
                   scene: \.challengeDetails,
-                  payload: (challenge, profileId, 3)
+                  payload: ChallengeDetailsSceneInput(
+                     challenge: challenge,
+                     profileId: profileId,
+                     currentButton: 3
+                  )
                )
             case false:
                break

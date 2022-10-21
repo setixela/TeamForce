@@ -45,10 +45,13 @@ final class FeedCommentsBlock<Design: DSP>: DoubleStacksModel, Designable {
       .axis(.horizontal)
       .spacing(8)
 
+   private lazy var hereIsEmptySpacedBlock = HereIsEmptySpacedBlock<Design>()
+      .hidden(true)
    override func start() {
       super.start()
 
       bodyStack.arrangedModels([
+         hereIsEmptySpacedBlock,
          commentTableModel,
          Spacer()
       ])
@@ -62,7 +65,12 @@ final class FeedCommentsBlock<Design: DSP>: DoubleStacksModel, Designable {
 
 extension FeedCommentsBlock: SetupProtocol {
    func setup(_ data: [Comment]) {
-      commentTableModel.set(.items(data + [SpacerItem(size: Grid.x64.value)]))
+      if data.count != 0 {
+         hereIsEmptySpacedBlock.hidden(true)
+         commentTableModel.set(.items(data + [SpacerItem(size: Grid.x64.value)]))
+      } else {
+         hereIsEmptySpacedBlock.hidden(false)
+      }
    }
 }
 

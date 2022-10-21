@@ -79,7 +79,7 @@ final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<Challen
                stateFunc(.presentWinners(value))
 
             case .result5(let value):
-               guard !value.isEmpty else { stateFunc(.hereIsEmpty); return }
+               //guard !value.isEmpty else { stateFunc(.hereIsEmpty); return }
 
                stateFunc(.presentComments(value))
 
