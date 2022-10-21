@@ -10,16 +10,14 @@ import UIKit
 
 struct SettingsViewEvent: InitProtocol {}
 
-
-final class SettingsViewModel<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>,
-   Communicable,
-   Stateable,
-   Assetable
-{
-   typealias State = StackState
-   var events: SettingsViewEvent = .init()
-
+final class SettingsScene<Asset: AssetProtocol>: BaseSceneModel<
+   DefaultVCModel,
+   StackModel,
+   Asset,
+   Void
+> {
    // MARK: - Frame Cells
+
    lazy var general = Combos<SComboMDD<LabelModel, DoubleLabelHorizontal, DoubleLabelHorizontal>>()
       .setMain { header in
          header
@@ -99,17 +97,22 @@ final class SettingsViewModel<Asset: AssetProtocol>: BaseViewModel<StackViewExte
    private lazy var useCase = Asset.apiUseCase
 
    override func start() {
-      set(.axis(.vertical))
-      set(.distribution(.fill))
-      set(.alignment(.fill))
-      set(.arrangedModels([
-         general,
-         Spacer(8),
-         help,
-         Spacer(16),
-         logoutButton,
-         Grid.xxx.spacer,
-      ]))
+      vcModel?.on(\.viewDidLoad, self) { $0.configure() }
+   }
+
+   func configure() {
+      mainVM
+         .axis(.vertical)
+         .distribution(.fill)
+         .alignment(.fill)
+         .arrangedModels([
+            general,
+            Spacer(8),
+            help,
+            Spacer(16),
+            logoutButton,
+            Grid.xxx.spacer,
+         ])
 
       logoutButton
          .on(\.didTap)
