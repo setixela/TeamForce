@@ -12,7 +12,7 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
    DefaultVCModel,
    TripleStacksModel,
    Asset,
-   (Challenge, Int)
+   (Challenge, Int, Int)
 >, Scenarible {
    //
    lazy var scenario: Scenario = ChallengeDetailsScenario(
@@ -146,6 +146,7 @@ enum ChallengeDetailsState {
    case enableMyResult([ChallengeResult])
    case enableContenders
 
+   case sendFilterButtonEvent(Int)
    case presentMyResults([ChallengeResult])
    case presentWinners([ChallengeWinnerReport])
    case presentContenders([Contender])
@@ -204,7 +205,7 @@ extension ChallengeDetailsScene: StateMachine {
                Asset.router?.route(
                   .presentModally(.automatic),
                   scene: \.challengeDetails,
-                  payload: (challenge, profileId)
+                  payload: (challenge, profileId, 1)
                )
             case false:
                print("failure")
@@ -251,7 +252,7 @@ extension ChallengeDetailsScene: StateMachine {
                Asset.router?.route(
                   .presentModally(.automatic),
                   scene: \.challengeDetails,
-                  payload: (challenge, profileId)
+                  payload: (challenge, profileId, 2)
                )
             case false:
                break
@@ -271,7 +272,7 @@ extension ChallengeDetailsScene: StateMachine {
                Asset.router?.route(
                   .presentModally(.automatic),
                   scene: \.challengeDetails,
-                  payload: (challenge, profileId)
+                  payload: (challenge, profileId, 3)
                )
             case false:
                break
@@ -289,6 +290,8 @@ extension ChallengeDetailsScene: StateMachine {
       
       case .disableSendResult:
          challDetails.models.down.sendButton.hidden(true)
+      case .sendFilterButtonEvent(let value):
+         filterButtons.buttons[value].send(\.didTap)
       }
    }
 }

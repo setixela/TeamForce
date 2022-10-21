@@ -26,6 +26,8 @@ final class ChallengeDetailsWorksStore: InitProtocol {
    var winnersReports: [ChallengeWinnerReport] = []
 
    var inputComment = ""
+   
+   var filterButton = 0
 }
 
 final class ChallengeDetailsWorks<Asset: AssetProtocol>: BaseSceneWorks<ChallengeDetailsWorksStore, Asset> {
@@ -96,13 +98,14 @@ final class ChallengeDetailsWorks<Asset: AssetProtocol>: BaseSceneWorks<Challeng
       }
    }.retainBy(retainer) }
 
-   var saveInput: Work<(Challenge, Int), Challenge> { .init { work in
+   var saveInput: Work<(Challenge, Int, Int), Int> { .init { work in
       guard let input = work.input else { return }
       Self.store.challenge = input.0
       Self.store.challengeId = input.0.id
       Self.store.profileId = input.1
+      Self.store.filterButton = input.2
 
-      work.success(result: input.0)
+      work.success(result: input.2)
    }.retainBy(retainer) }
 
    var getChallengeId: Work<Void, Int> { .init { work in
