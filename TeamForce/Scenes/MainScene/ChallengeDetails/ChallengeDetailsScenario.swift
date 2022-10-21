@@ -8,7 +8,7 @@
 import ReactiveWorks
 
 struct ChallengeDetailsInputEvents {
-   let saveInputAndLoadChallenge: VoidWork<(Challenge, Int, Int)>
+   let saveInputAndLoadChallenge: VoidWork<ChallengeDetailsSceneInput>
 
    let challengeResult: VoidWorkVoid
    let filterButtonTapped: VoidWork<Button6Event>
@@ -28,7 +28,11 @@ final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<Challen
    override func start() {
       events.saveInputAndLoadChallenge
          .doNext(works.saveInput)
-         .onSuccess(setState) { .sendFilterButtonEvent($0) }
+         .doMap { [weak self]  in
+            self?.setState(.setHeaderImage($0.headerImage))
+            return $0
+         }
+         .onSuccess(setState) { .sendFilterButtonEvent($0.currentButton) }
          //.onSuccess(setState) { .presentChallenge($0) }
          .doVoidNext(works.getChallengeById)
          .onSuccess(setState) { .updateDetails($0) }

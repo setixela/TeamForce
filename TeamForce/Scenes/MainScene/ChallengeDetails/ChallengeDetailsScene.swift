@@ -8,11 +8,18 @@
 import ReactiveWorks
 import UIKit
 
+struct ChallengeDetailsSceneInput {
+   let challenge: Challenge
+   let profileId: Int
+   let currentButton: Int
+   let headerImage: UIImage?
+}
+
 final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
    DefaultVCModel,
    TripleStacksModel,
    Asset,
-   (Challenge, Int, Int)
+   ChallengeDetailsSceneInput
 >, Scenarible {
    //
    lazy var scenario: Scenario = ChallengeDetailsScenario(
@@ -56,7 +63,7 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
       SecondaryButtonDT<Design>()
          .title("Комментарии")
          .font(Design.font.default),
-         //.hidden(true),
+      // .hidden(true),
       SecondaryButtonDT<Design>()
          .title("Участники")
          .font(Design.font.default)
@@ -96,7 +103,7 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
    private func configure() {
       mainVM.headerStack
          .backColor(Design.color.backgroundBrandSecondary)
-      // .height(200)
+         // .height(200)
          .arrangedModels([
             headerImage
          ])
@@ -138,6 +145,8 @@ enum ChallengeDetailsState {
    case presentActivityIndicator
    case hereIsEmpty
 
+   case setHeaderImage(UIImage?)
+
    case presentChallenge(Challenge)
    case updateDetails(Challenge)
 
@@ -153,13 +162,12 @@ enum ChallengeDetailsState {
    case presentContenders([Contender])
    case presentCancelView(Challenge, Int, Int)
    case presentReportDetailView(Challenge, Int, Int)
-   
+
    case disableSendResult
-   
+
    case sendButtonDisabled
    case sendButtonEnabled
    case commentDidSend
-   
 }
 
 extension ChallengeDetailsScene: StateMachine {
@@ -181,7 +189,7 @@ extension ChallengeDetailsScene: StateMachine {
 
          if let url = challenge.photo {
             headerImage
-               .url(TeamForceEndpoints.urlBase + url)
+               .url(TeamForceEndpoints.urlBase + url.replacingOccurrences(of: "_thumb", with: ""))
                .contentMode(.scaleAspectFill)
          }
          challDetails.setState(.presentChallenge(challenge))
@@ -219,7 +227,7 @@ extension ChallengeDetailsScene: StateMachine {
       case .enableContenders:
          filterButtons.buttons[2].hidden(false)
          challDetails.models.down.sendButton.hidden(true)
-         //challDetails.models.down.hidden(true)
+         // challDetails.models.down.hidden(true)
 
       case .presentMyResults(let results):
          myResultBlock.setup(results)
@@ -260,7 +268,7 @@ extension ChallengeDetailsScene: StateMachine {
                break
             }
          }
-      
+
       case .presentReportDetailView(let challenge, let profileId, let reportId):
          vcModel?.dismiss(animated: true)
 
@@ -280,7 +288,7 @@ extension ChallengeDetailsScene: StateMachine {
                break
             }
          }
-         
+
       case .sendButtonDisabled:
          challComments.setState(.sendButtonDisabled)
       case .sendButtonEnabled:
@@ -289,7 +297,7 @@ extension ChallengeDetailsScene: StateMachine {
          filterButtons.buttons[4].send(\.didTap)
          challComments.commentField.text("")
          challComments.setState(.sendButtonDisabled)
-      
+
       case .disableSendResult:
          challDetails.models.down.sendButton.hidden(true)
       case .hereIsEmpty:
@@ -299,6 +307,10 @@ extension ChallengeDetailsScene: StateMachine {
             ])
       case .sendFilterButtonEvent(let value):
          filterButtons.buttons[value].send(\.didTap)
+      case .setHeaderImage(let image):
+         if let image {
+            headerImage.image(image)
+         }
       }
    }
 }

@@ -6,6 +6,7 @@
 //
 
 import ReactiveWorks
+import UIKit
 
 protocol ChallengeDetailsWorksProtocol {
    var getChallengeById: Work<Void, Challenge> { get }
@@ -28,26 +29,9 @@ final class ChallengeDetailsWorksStore: InitProtocol {
    var inputComment = ""
    
    var filterButton = 0
+   var image: UIImage?
 }
 
-final class HereIsEmpty<Design: DSP>: LabelModel, Designable {
-   override func start() {
-      super.start()
-
-      alignment(.center)
-      set(Design.state.label.body2Secondary)
-      padding(.init(top: 24, left: 24, bottom: 24, right: 24))
-      text("Здесь пока ничего нет")
-   }
-}
-
-final class HereIsEmptySpacedBlock<Design: DSP>: M<HereIsEmpty<Design>>.D<Spacer>.Combo, Designable {
-   required init() {
-      super.init()
-      
-      setAll { _, _ in }
-   }
-}
 
 final class ChallengeDetailsWorks<Asset: AssetProtocol>: BaseSceneWorks<ChallengeDetailsWorksStore, Asset> {
    private lazy var apiUseCase = Asset.apiUseCase
@@ -118,14 +102,14 @@ final class ChallengeDetailsWorks<Asset: AssetProtocol>: BaseSceneWorks<Challeng
       }
    }.retainBy(retainer) }
 
-   var saveInput: Work<(Challenge, Int, Int), Int> { .init { work in
+   var saveInput: Work<ChallengeDetailsSceneInput, ChallengeDetailsSceneInput> { .init { work in
       guard let input = work.input else { return }
-      Self.store.challenge = input.0
-      Self.store.challengeId = input.0.id
-      Self.store.profileId = input.1
-      Self.store.filterButton = input.2
-
-      work.success(result: input.2)
+      Self.store.challenge = input.challenge
+      Self.store.challengeId = input.challenge.id
+      Self.store.profileId = input.profileId
+      Self.store.filterButton = input.currentButton
+      Self.store.image = input.headerImage
+      work.success(result: input)
    }.retainBy(retainer) }
 
    var getChallengeId: Work<Void, Int> { .init { work in

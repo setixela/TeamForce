@@ -79,42 +79,6 @@ final class MainRouter<Asset: AssetProtocol>: RouterProtocol, Assetable {
          return vc
       }
    }
-
-//   @available(*, deprecated, message: """
-//   USE: func route(_ navType: NavType,
-//                  scene: KeyPath<Scene, SceneModelProtocol>,
-//                  payload: Any? = nil) -> Work<Bool, Bool>
-//   """)
-//   func route(_ keypath: KeyPath<Scene, SceneModelProtocol>,
-//              navType: NavType,
-//              payload: Any? = nil)
-//   {
-//      let work = VoidWorkVoid()
-//
-//      switch navType {
-//      case .push:
-//         nc.pushViewController(makeVC(work), animated: true)
-//      case .pop:
-//         nc.popViewController(animated: true)
-//      case .popToRoot:
-//         nc.popToRootViewController(animated: true)
-//      case .presentInitial:
-//         nc.viewControllers = [makeVC(work)]
-//      case .presentModally(let value):
-//         let vc = makeVC(work)
-//         vc.modalPresentationStyle = value
-//         nc.present(vc, animated: true)
-//      }
-//
-//      // local func
-//      func makeVC(_ work: VoidWorkVoid) -> UIViewController {
-//         let sceneModel = Scene()[keyPath: keypath]
-//         sceneModel.setInput(payload)
-//         let vc = sceneModel.makeVC()
-//
-//         return vc
-//      }
-//   }
 }
 
 protocol Alert {}
