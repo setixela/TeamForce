@@ -288,4 +288,25 @@ private extension FeedWorks {
             work.fail()
          }
    }.retainBy(retainer) }
+   
+   var getEventsChallenge: Work<Bool, Void> { .init { [weak self] work in
+      guard let paginating = work.input else { return }
+      //create isPagination var for challenge
+      if Self.store.isPaginating {
+         print(Self.store.isPaginating)
+         return
+      }
+      if paginating {
+         Self.store.isPaginating = true
+      }
+      let pagination = Pagination(offset: Self.store.offset, limit: Self.store.limit)
+      self?.apiUseCase.getEventsChall
+         .doAsync(pagination)
+         .onSuccess {
+            work.success()
+         }
+         .onFail {
+            work.fail()
+         }
+   }.retainBy(retainer) }
 }
