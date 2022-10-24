@@ -67,6 +67,26 @@ final class FeedWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedWorksTempStorage
             work.fail()
          }
    }.retainBy(retainer) }
+   
+   var getEvents: Work<Bool, Void> { .init { [weak self] work in
+      guard let paginating = work.input else { return }
+      if Self.store.isPaginating {
+         print(Self.store.isPaginating)
+         return
+      }
+      if paginating {
+         Self.store.isPaginating = true
+      }
+      let pagination = Pagination(offset: Self.store.offset, limit: Self.store.limit)
+      self?.apiUseCase.getEvents
+         .doAsync(pagination)
+         .onSuccess {
+            work.success()
+         }
+         .onFail {
+            work.fail()
+         }
+   }.retainBy(retainer) }
 
    var getAllFeed: VoidWork<([Feed], String)> { .init { work in
       Self.store.segmentId = 0

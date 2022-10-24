@@ -521,4 +521,17 @@ enum TeamForceEndpoints {
          self.headers = headers
       }
    }
+   
+   struct Events: EndpointProtocol {
+      let method = HTTPMethod.get
+      
+      var endPoint: String = urlBase + "/events/"
+      
+      let headers: [String : String]
+      
+      init(offset: Int, limit: Int, headers: [String : String]) {
+         endPoint = endPoint + "?offset=" + String(offset) + "&limit=" + String(limit)
+         self.headers = headers
+      }
+   }
 }
