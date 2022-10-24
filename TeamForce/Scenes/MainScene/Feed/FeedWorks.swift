@@ -17,10 +17,13 @@ protocol FeedWorksProtocol {
 }
 
 final class FeedWorksTempStorage: InitProtocol {
-   var feed: [Feed]?
+   var feed: [Feed] = []
    lazy var currentUserName = ""
    var segmentId: Int?
    var currentTransactId: Int?
+   var limit = 20
+   var offset = 1
+   var isPaginating = false
 }
 
 final class FeedWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedWorksTempStorage, Asset>, FeedWorksProtocol {
@@ -35,17 +38,35 @@ final class FeedWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedWorksTempStorage
          return
       }
       Self.store.currentUserName = userName
-
+      let pagination = Pagination(offset: Self.store.offset, limit: Self.store.limit)
+      self?.getFeed
+         .doAsync(true)
+         .onSuccess { work.success() }
+         .onFail { work.fail() }
+   }}
+   
+   var getFeed: Work<Bool, Void> { .init { [weak self] work in
+      guard let paginating = work.input else { return }
+      if Self.store.isPaginating {
+         print(Self.store.isPaginating)
+         return
+      }
+      if paginating {
+         Self.store.isPaginating = true
+      }
+      let pagination = Pagination(offset: Self.store.offset, limit: Self.store.limit)
       self?.apiUseCase.getFeed
-         .doAsync()
+         .doAsync(pagination)
          .onSuccess {
-            Self.store.feed = $0
+            Self.store.feed.append(contentsOf: $0)
+            Self.store.offset += 1
+            Self.store.isPaginating = false
             work.success()
          }
          .onFail {
             work.fail()
          }
-   }}
+   }.retainBy(retainer) }
 
    var getAllFeed: VoidWork<([Feed], String)> { .init { work in
       Self.store.segmentId = 0
@@ -164,18 +185,18 @@ final class FeedWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedWorksTempStorage
 
 private extension FeedWorks {
    static func filteredAll() -> [Feed] {
-      guard let feed = store.feed else {
-         return []
-      }
+//      guard let feed = store.feed else {
+//         return []
+//      }
       
-      return feed
+      return store.feed
    }
    
    static func filteredMy() -> [Feed] {
-      guard let feed = store.feed else {
-         return []
-      }
-      
+//      guard let feed = store.feed else {
+//         return []
+//      }
+      let feed = store.feed
       return feed.filter {
          let senderName = $0.transaction.sender
          let recipientName = $0.transaction.recipient
@@ -185,10 +206,10 @@ private extension FeedWorks {
    }
    
    static func filteredPublic() -> [Feed] {
-      guard let feed = store.feed else {
-         return []
-      }
-      
+//      guard let feed = store.feed else {
+//         return []
+//      }
+      let feed = store.feed
       return feed.filter {
          $0.transaction.isAnonymous == false
       }

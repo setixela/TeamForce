@@ -17,6 +17,8 @@ struct FeedScenarioInputEvents {
    let presentProfile: VoidWork<Int>
    let reactionPressed: VoidWork<PressLikeRequest>
    let presentDetail: VoidWork<(IndexPath, Int)>
+   
+   let pagination: VoidWork<Bool>
 }
 
 final class FeedScenario<Asset: AssetProtocol>:
@@ -73,6 +75,10 @@ final class FeedScenario<Asset: AssetProtocol>:
             print("fail ")
          }
       
-         
+      events.pagination
+         .doNext(works.getFeed)
+         .onFail{ print("fail") }
+         .doVoidNext(works.getAllFeed)
+         .onSuccess(setState) { .updateFeed($0.0) }
    }
 }

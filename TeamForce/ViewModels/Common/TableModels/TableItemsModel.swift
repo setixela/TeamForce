@@ -37,6 +37,7 @@ struct TableItemsEvents: ScrollEventsProtocol {
    // TODO: - Обьединять ивенты как Стейты
    var didScroll: CGFloat?
    var willEndDragging: CGFloat?
+   var pagination: Bool?
 }
 
 final class TableItemsModel<Design: DSP>: BaseViewModel<UITableView>,
@@ -150,6 +151,11 @@ final class TableItemsModel<Design: DSP>: BaseViewModel<UITableView>,
       let velocity = scrollView.contentOffset.y - prevScrollOffset
       prevScrollOffset = scrollView.contentOffset.y
       send(\.didScroll, velocity)
+      
+      let pos = scrollView.contentOffset.y
+      if pos > self.view.contentSize.height - 50  - scrollView.frame.size.height {
+         send(\.pagination, true)
+      }
    }
 
    func scrollViewWillEndDragging(_ scrollView: UIScrollView,

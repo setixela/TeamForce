@@ -12,12 +12,16 @@ struct GetFeedUseCase: UseCaseProtocol {
    let safeStringStorage: StringStorageWorker
    let getFeedsApiWorker: GetFeedsApiWorker
 
-   var work: Work<Void, [Feed]> {
-      Work<Void, [Feed]>() { work in
+   var work: Work<Pagination, [Feed]> {
+      Work<Pagination, [Feed]>() { work in
          safeStringStorage
             .doAsync("token")
             .onFail {
                work.fail()
+            }
+            .doMap {
+               guard let input = work.input else { return nil }
+               return ($0, input)
             }
             .doNext(worker: getFeedsApiWorker)
             .onSuccess {
