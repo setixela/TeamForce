@@ -39,6 +39,16 @@ final class FeedWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedWorksTempStorage
       }
       Self.store.currentUserName = userName
       let pagination = Pagination(offset: Self.store.offset, limit: Self.store.limit)
+//      
+//      self?.getEventsWinners
+//         .doAsync(true)
+//         .onSuccess {
+//            print("success")
+//         }
+//         .onFail {
+//            print("fail")
+//         }
+      
       self?.getFeed
          .doAsync(true)
          .onSuccess { work.success() }
@@ -249,6 +259,27 @@ private extension FeedWorks {
       }
       let pagination = Pagination(offset: Self.store.offset, limit: Self.store.limit)
       self?.apiUseCase.getEventsTransact
+         .doAsync(pagination)
+         .onSuccess {
+            work.success()
+         }
+         .onFail {
+            work.fail()
+         }
+   }.retainBy(retainer) }
+   
+   var getEventsWinners: Work<Bool, Void> { .init { [weak self] work in
+      guard let paginating = work.input else { return }
+      //create isPagination var for winners
+      if Self.store.isPaginating {
+         print(Self.store.isPaginating)
+         return
+      }
+      if paginating {
+         Self.store.isPaginating = true
+      }
+      let pagination = Pagination(offset: Self.store.offset, limit: Self.store.limit)
+      self?.apiUseCase.getEventsWinners
          .doAsync(pagination)
          .onSuccess {
             work.success()

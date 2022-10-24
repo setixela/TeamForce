@@ -1,5 +1,5 @@
 //
-//  GetEventsTransactionsApiWorker.swift
+//  GetEventsWinnersApiWorker.swift
 //  TeamForce
 //
 //  Created by Yerzhan Gapurinov on 25.10.2022.
@@ -7,7 +7,7 @@
 
 import ReactiveWorks
 
-final class GetEventsTransactApiWorker: BaseApiWorker<(String, Pagination), [NewFeed]> {
+final class GetEventsWinnersApiWorker: BaseApiWorker<(String, Pagination), [NewFeed]> {
    override func doAsync(work: Wrk) {
       guard let request = work.input
       else {
@@ -15,7 +15,7 @@ final class GetEventsTransactApiWorker: BaseApiWorker<(String, Pagination), [New
          return
       }
 
-      let endpoint = TeamForceEndpoints.EventsTransactions(
+      let endpoint = TeamForceEndpoints.EventsWinners(
          offset: request.1.offset,
          limit: request.1.limit,
          headers: [ "Authorization": request.0 ]
