@@ -22,6 +22,29 @@ class FeedPresenters<Design: DesignProtocol>: Designable {
          
          let dateLabel = FeedPresenters.makeInfoDateLabel(feed: feed)
          
+         let messageButton = ReactionButton<Design>()
+            .setAll {
+               $0.image(Design.icon.messageCloud)
+               $1.text(String(feed.commentsAmount))
+            }
+
+         let likeButton = ReactionButton<Design>()
+            .setAll {
+               $0.image(Design.icon.like)
+               $1.text(String(feed.likesAmount))
+            }
+         
+         let reactionsBlock = StackModel()
+            .axis(.horizontal)
+            .alignment(.leading)
+            .distribution(.fill)
+            .spacing(4)
+            .arrangedModels([
+               messageButton,
+               likeButton,
+               Grid.xxx.spacer
+            ])
+         
          if feed.transaction != nil {
             guard let transaction = feed.transaction else { return }
             let senderId = transaction.senderId
@@ -48,23 +71,23 @@ class FeedPresenters<Design: DesignProtocol>: Designable {
                }
             }
 
-            var commentsAmount = "0"
-            commentsAmount = String(feed.commentsAmount ?? 0)
-
-            let messageButton = ReactionButton<Design>()
-               .setAll {
-                  $0.image(Design.icon.messageCloud)
-                  $1.text(commentsAmount)
-               }
-            var likeAmount = "0"
-            
-            likeAmount = String(feed.likesAmount)
-
-            let likeButton = ReactionButton<Design>()
-               .setAll {
-                  $0.image(Design.icon.like)
-                  $1.text(likeAmount)
-               }
+//            var commentsAmount = "0"
+//            commentsAmount = String(feed.commentsAmount ?? 0)
+//
+//            let messageButton = ReactionButton<Design>()
+//               .setAll {
+//                  $0.image(Design.icon.messageCloud)
+//                  $1.text(commentsAmount)
+//               }
+//            var likeAmount = "0"
+//
+//            likeAmount = String(feed.likesAmount)
+//
+//            let likeButton = ReactionButton<Design>()
+//               .setAll {
+//                  $0.image(Design.icon.like)
+//                  $1.text(likeAmount)
+//               }
 
             if feed.transaction?.userLiked == true {
                likeButton.setState(.selected)
@@ -81,16 +104,16 @@ class FeedPresenters<Design: DesignProtocol>: Designable {
                likeButton.setState(.selected)
             }
 
-            let reactionsBlock = StackModel()
-               .axis(.horizontal)
-               .alignment(.leading)
-               .distribution(.fill)
-               .spacing(4)
-               .arrangedModels([
-                  messageButton,
-                  likeButton,
-                  Grid.xxx.spacer
-               ])
+//            let reactionsBlock = StackModel()
+//               .axis(.horizontal)
+//               .alignment(.leading)
+//               .distribution(.fill)
+//               .spacing(4)
+//               .arrangedModels([
+//                  messageButton,
+//                  likeButton,
+//                  Grid.xxx.spacer
+//               ])
 
             let hashTagBlock = HashTagsScrollModel<Design>()
             hashTagBlock.setup(transaction)
@@ -165,7 +188,8 @@ class FeedPresenters<Design: DesignProtocol>: Designable {
                .alignment(.fill)
                .arrangedModels([
                   dateLabel,
-                  infoLabel
+                  infoLabel,
+                  reactionsBlock
                ])
             let cellStack = WrappedX(
                StackModel()
