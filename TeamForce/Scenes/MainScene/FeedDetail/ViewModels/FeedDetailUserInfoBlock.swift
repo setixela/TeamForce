@@ -90,7 +90,7 @@ extension FeedDetailUserInfoBlock: SetupProtocol {
       let dateText = FeedPresenters<Design>.makeInfoDateLabel(feed: feed).view.text
       dateLabel.text(dateText ?? "")
       let type = FeedTransactType.make(feed: feed, currentUserName: userName)
-      let infoText = FeedPresenters<Design>.makeInfoLabel(feed: feed, type: type).view.attributedText
+      let infoText = FeedPresenters<Design>.makeInfoLabel(feed: feed, type: type, eventType: EventType.transaction ).view.attributedText
 
       infoLabel.attributedText(infoText!)
       var likeAmount = "0"

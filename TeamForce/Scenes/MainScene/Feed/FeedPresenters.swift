@@ -19,6 +19,9 @@ class FeedPresenters<Design: DesignProtocol>: Designable {
          guard let self = self else { return }
 
          let feed = work.unsafeInput
+         
+         let dateLabel = FeedPresenters.makeInfoDateLabel(feed: feed)
+         
          if feed.transaction != nil {
             guard let transaction = feed.transaction else { return }
             let senderId = transaction.senderId
@@ -27,15 +30,12 @@ class FeedPresenters<Design: DesignProtocol>: Designable {
             let recipient = "@" + transaction.recipientTgName.string
             let transactionId = transaction.id
 
-            //         let isPersonal = feed.eventType.isPersonal
-            //         let hasScope = feed.eventType.hasScope
-            //         let isAnonTransact = feed.transaction.isAnonymous
 
             let type = FeedTransactType.make(feed: feed, currentUserName: self.userName)
 
-            let dateLabel = FeedPresenters.makeInfoDateLabel(feed: feed)
-            let infoLabel = FeedPresenters.makeInfoLabel(feed: feed, type: type)
-            let icon = self.makeIcon(feed: feed)
+            let infoLabel = FeedPresenters.makeInfoLabel(feed: feed, type: type, eventType: EventType.transaction)
+            
+            let icon = self.makeIcon(feed: feed, type: EventType.transaction)
 
             infoLabel.view.on(\.didSelect) {
                switch $0 {
@@ -48,9 +48,6 @@ class FeedPresenters<Design: DesignProtocol>: Designable {
                }
             }
 
-            //         let tagBlock = StackModel()
-            //            .axis(.horizontal)
-            //            .spacing(4)
             var commentsAmount = "0"
             commentsAmount = String(feed.commentsAmount ?? 0)
 
@@ -60,17 +57,8 @@ class FeedPresenters<Design: DesignProtocol>: Designable {
                   $1.text(commentsAmount)
                }
             var likeAmount = "0"
-            // var dislikeAmount = "0"
+            
             likeAmount = String(feed.likesAmount)
-//            if let reactions = feed.transaction.reactions {
-//               for reaction in reactions {
-//                  if reaction.code == "like" {
-//                     likeAmount = String(reaction.counter ?? 0)
-//                  } else if reaction.code == "dislike" {
-//                     //   dislikeAmount = String(reaction.counter ?? 0)
-//                  }
-//               }
-//            }
 
             let likeButton = ReactionButton<Design>()
                .setAll {
@@ -78,21 +66,11 @@ class FeedPresenters<Design: DesignProtocol>: Designable {
                   $1.text(likeAmount)
                }
 
-            //         let dislikeButton = ReactionButton<Design>()
-            //            .setAll {
-            //               $0.image(Design.icon.dislike)
-            //               $1.text(dislikeAmount)
-            //            }
-
             if feed.transaction?.userLiked == true {
                likeButton.setState(.selected)
             }
-            //         if feed.transaction.userDisliked == true {
-            //            dislikeButton.setState(.selected)
-            //         }
 
             likeButton.view.startTapGestureRecognize(cancelTouch: true)
-            //         dislikeButton.view.startTapGestureRecognize(cancelTouch: true)
 
             likeButton.view.on(\.didTap, self) {
                let request = PressLikeRequest(token: "",
@@ -101,17 +79,7 @@ class FeedPresenters<Design: DesignProtocol>: Designable {
                $0.send(\.reactionPressed, request)
 
                likeButton.setState(.selected)
-               //            dislikeButton.setState(.none)
             }
-
-            //         dislikeButton.view.on(\.didTap, self) {
-            //            let request = PressLikeRequest(token: "",
-            //                                           likeKind: 2,
-            //                                           transactionId: transactionId)
-            //            $0.send(\.reactionPressed, request)
-            //            dislikeButton.setState(.selected)
-            //            likeButton.setState(.none)
-            //         }
 
             let reactionsBlock = StackModel()
                .axis(.horizontal)
@@ -121,7 +89,6 @@ class FeedPresenters<Design: DesignProtocol>: Designable {
                .arrangedModels([
                   messageButton,
                   likeButton,
-                  //               dislikeButton,
                   Grid.xxx.spacer
                ])
 
@@ -160,7 +127,19 @@ class FeedPresenters<Design: DesignProtocol>: Designable {
             .padding(.verticalOffset(Grid.x16.value))
 
             work.success(result: cellStack)
-         } else {
+         } else if feed.winner != nil {
+            let icon = self.makeIcon(feed: feed, type: EventType.winner)
+            let infoLabel = FeedPresenters.makeInfoLabel(feed: feed, eventType: EventType.winner)
+            
+            let infoBlock = StackModel()
+               .spacing(Grid.x10.value)
+               .axis(.vertical)
+               .alignment(.fill)
+               .arrangedModels([
+                  dateLabel,
+                  infoLabel
+               ])
+            
             let cellStack = WrappedX(
                StackModel()
                   .padding(.outline(Grid.x8.value))
@@ -168,6 +147,35 @@ class FeedPresenters<Design: DesignProtocol>: Designable {
                   .axis(.horizontal)
                   .alignment(.top)
                   .arrangedModels([
+                     icon,
+                     infoBlock
+                  ])
+                  .cornerRadius(Design.params.cornerRadiusSmall)
+            )
+            .padding(.verticalOffset(Grid.x16.value))
+
+            work.success(result: cellStack)
+         } else if feed.challenge != nil {
+            let icon = self.makeIcon(feed: feed, type: EventType.challenge)
+            let infoLabel = FeedPresenters.makeInfoLabel(feed: feed, eventType: EventType.challenge)
+            
+            let infoBlock = StackModel()
+               .spacing(Grid.x10.value)
+               .axis(.vertical)
+               .alignment(.fill)
+               .arrangedModels([
+                  dateLabel,
+                  infoLabel
+               ])
+            let cellStack = WrappedX(
+               StackModel()
+                  .padding(.outline(Grid.x8.value))
+                  .spacing(Grid.x12.value)
+                  .axis(.horizontal)
+                  .alignment(.top)
+                  .arrangedModels([
+                     icon,
+                     infoBlock
                   ])
                   .cornerRadius(Design.params.cornerRadiusSmall)
             )
@@ -182,7 +190,11 @@ class FeedPresenters<Design: DesignProtocol>: Designable {
 extension FeedPresenters {
    static func makeInfoDateLabel(feed: NewFeed) -> LabelModel {
       let dateAgoText = feed.time?.timeAgoConverted
-      let eventText = feed.transaction?.isAnonymous ?? false ? "" : " • " + "Публичная благодарность"
+      var eventText = ""
+      if let anon = feed.transaction?.isAnonymous {
+         eventText = anon ? "" : " • " + "Публичная благодарность"
+      }
+
       let titleText = dateAgoText.string + eventText
 
       let dateLabel = LabelModel()
@@ -194,69 +206,98 @@ extension FeedPresenters {
       return dateLabel
    }
 
-   static func makeInfoLabel(feed: NewFeed, type: FeedTransactType) -> LabelModel {
-      let recipientName = "@" + (feed.transaction?.recipientTgName ?? "")
-      let senderName = "@" + (feed.transaction?.senderTgName ?? "")
-      let amountText = "\(Int(feed.transaction?.amount ?? 0))" + " " + "спасибок"
-      let infoText: NSMutableAttributedString = .init(string: "")
-
-      switch type {
-      case .youGotAmountFromSome:
-         infoText.append("Вы получили ".colored(Design.color.text))
-         infoText.append(amountText.colored(Design.color.textSuccess))
-         infoText.append(" от ".colored(Design.color.text))
-         infoText.append(senderName.colored(Design.color.textBrand))
-      case .youGotAmountFromAnonym:
-         infoText.append("Вы получили ".colored(Design.color.text))
-         infoText.append(amountText.colored(Design.color.textSuccess))
-         infoText.append(" от аноним".colored(Design.color.text))
-      case .someGotAmountFromSome:
-         infoText.append(recipientName.colored(Design.color.textBrand))
-         infoText.append(" получил ".colored(Design.color.text))
-         infoText.append(amountText.colored(Design.color.textSuccess))
-         infoText.append(" от ".colored(Design.color.text))
-         infoText.append(senderName.colored(Design.color.textBrand))
-      case .someGotAmountFromAnonym:
-         infoText.append(recipientName.colored(Design.color.textBrand))
-         infoText.append(" получил ".colored(Design.color.text))
-         infoText.append(amountText.colored(Design.color.textSuccess))
-         infoText.append(" от аноним".colored(Design.color.text))
-      }
-
-      let infoLabel = LabelModel()
+   static func makeInfoLabel(feed: NewFeed, type: FeedTransactType? = nil, eventType: EventType) -> LabelModel {
+      
+      var infoLabel = LabelModel()
          .numberOfLines(0)
          .set(Design.state.label.caption)
          .textColor(Design.color.iconBrand)
-         .attributedText(infoText)
+      
+      let infoText: NSMutableAttributedString = .init(string: "")
+      
+      switch eventType {
+      case .transaction:
+         let recipientName = "@" + (feed.transaction?.recipientTgName ?? "")
+         let senderName = "@" + (feed.transaction?.senderTgName ?? "")
+         let amountText = "\(Int(feed.transaction?.amount ?? 0))" + " " + "спасибок"
+         guard let type = type else { return infoLabel }
+         switch type {
+         case .youGotAmountFromSome:
+            infoText.append("Вы получили ".colored(Design.color.text))
+            infoText.append(amountText.colored(Design.color.textSuccess))
+            infoText.append(" от ".colored(Design.color.text))
+            infoText.append(senderName.colored(Design.color.textBrand))
+         case .youGotAmountFromAnonym:
+            infoText.append("Вы получили ".colored(Design.color.text))
+            infoText.append(amountText.colored(Design.color.textSuccess))
+            infoText.append(" от аноним".colored(Design.color.text))
+         case .someGotAmountFromSome:
+            infoText.append(recipientName.colored(Design.color.textBrand))
+            infoText.append(" получил ".colored(Design.color.text))
+            infoText.append(amountText.colored(Design.color.textSuccess))
+            infoText.append(" от ".colored(Design.color.text))
+            infoText.append(senderName.colored(Design.color.textBrand))
+         case .someGotAmountFromAnonym:
+            infoText.append(recipientName.colored(Design.color.textBrand))
+            infoText.append(" получил ".colored(Design.color.text))
+            infoText.append(amountText.colored(Design.color.textSuccess))
+            infoText.append(" от аноним".colored(Design.color.text))
+         }
+         
+         infoLabel.attributedText(infoText)
 
-      infoLabel.view.makePartsClickable(user1: recipientName, user2: senderName)
-
+         infoLabel.view.makePartsClickable(user1: recipientName, user2: senderName)
+      case .winner:
+         let winnerName = "@" + (feed.winner?.winnerTgName ?? "")
+         let challengeName = "«" + (feed.winner?.challengeName ?? "") + "»"
+         infoText.append(winnerName.colored(Design.color.textBrand))
+         infoText.append(" победил в челлендже ".colored(Design.color.text))
+         infoText.append(challengeName.colored(Design.color.textBrand))
+         
+         infoLabel.attributedText(infoText)
+      case .challenge:
+         let challengeName = "«" + (feed.challenge?.name ?? "") + "»"
+         let creatorName = "@" + (feed.challenge?.creatorTgName ?? "")
+         infoText.append("Создан челлендж ".colored(Design.color.text))
+         infoText.append(challengeName.colored(Design.color.textBrand))
+         infoText.append(" пользователем ".colored(Design.color.text))
+         infoText.append(creatorName.colored(Design.color.textBrand))
+         
+         infoLabel.attributedText(infoText)
+      }
       return infoLabel
+      
+      
+
+      
    }
 
-   func makeIcon(feed: NewFeed) -> ImageViewModel {
+   func makeIcon(feed: NewFeed, type: EventType) -> ImageViewModel {
       let icon = ImageViewModel()
          .contentMode(.scaleAspectFill)
          .image(Design.icon.avatarPlaceholder)
          .size(.square(Grid.x36.value))
          .cornerRadius(Grid.x36.value / 2)
-      if let recipientPhoto = feed.transaction?.recipientPhoto {
-         icon.url(TeamForceEndpoints.urlBase + recipientPhoto)
-      } else {
-         if let nameFirstLetter = feed.transaction?.recipientFirstName?.first,
-            let surnameFirstLetter = feed.transaction?.recipientSurname?.first
-         {
-            let text = String(nameFirstLetter) + String(surnameFirstLetter)
-            DispatchQueue.global(qos: .background).async {
-               let image = text.drawImage(backColor: Design.color.backgroundBrand)
-               DispatchQueue.main.async {
-                  icon
-                     .backColor(Design.color.backgroundBrand)
-                     .image(image)
-               }
-            }
+      switch type {
+      case .transaction:
+         if let recipientPhoto = feed.transaction?.recipientPhoto {
+            icon.url(TeamForceEndpoints.urlBase + recipientPhoto)
+         } else {
+            icon.image(Design.icon.avatarPlaceholder)
          }
+         break
+      case .winner:
+         if let winnerPhoto = feed.winner?.winnerPhoto {
+            icon.url(TeamForceEndpoints.urlBase + winnerPhoto)
+         } else {
+            icon.image(Design.icon.avatarPlaceholder)
+         }
+         break
+      case .challenge:
+         icon.image(Design.icon.avatarPlaceholder)
+         break
       }
+      
 
       return icon
    }
@@ -290,4 +331,10 @@ extension FeedPresenters: Eventable {
       var reactionPressed: PressLikeRequest?
       // var dislikePressed: Int?
    }
+}
+
+enum EventType {
+   case transaction
+   case winner
+   case challenge
 }
