@@ -27,6 +27,7 @@ final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<Challen
 {
    override func start() {
       events.saveInputAndLoadChallenge
+         .onSuccess(setState) { .setHeaderImage($0.challenge.photoCache) }
          .doNext(works.saveInput)
          .onSuccess(setState) { .sendFilterButtonEvent($0.currentButton) }
          //.onSuccess(setState) { .presentChallenge($0) }

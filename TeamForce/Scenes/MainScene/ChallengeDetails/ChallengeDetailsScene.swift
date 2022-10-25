@@ -181,11 +181,11 @@ extension ChallengeDetailsScene: StateMachine {
                Spacer()
             ])
       case .presentChallenge(let challenge):
+         updateHeaderImage(url: challenge.photo)
          mainVM.footerStack
             .arrangedModels([
                challDetails
             ])
-         updateHeaderImage(url: challenge.photo)
          challDetails.setState(.presentChallenge(challenge))
       case .updateDetails(let challenge):
          challDetails.setState(.updateDetails(challenge))
@@ -340,12 +340,18 @@ extension ChallengeDetailsScene {
             .hidden(true)
       }
    }
-   
+
    private func updateHeaderImage(url: String?) {
       guard let url = url else { return }
       headerImage
-         .url(TeamForceEndpoints.urlBase + url) {
-            $0.url(TeamForceEndpoints.urlBase + url.replacingOccurrences(of: "_thumb", with: ""))
+         .url(
+            TeamForceEndpoints.urlBase + url,
+            transition: .crossDissolve(0.5)
+         ) { header, _ in
+            header?.url(
+               TeamForceEndpoints.urlBase + url.replacingOccurrences(of: "_thumb", with: ""),
+               transition: .crossDissolve(0.5)
+            )
          }
          .contentMode(.scaleAspectFill)
    }

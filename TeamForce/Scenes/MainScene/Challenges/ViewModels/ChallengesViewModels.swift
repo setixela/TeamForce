@@ -8,12 +8,26 @@
 import Foundation
 import ReactiveWorks
 
+struct TableScenarioInput {
+
+}
+
+//final class TableScenarioWorks: BaseSceneWorks<<#Temp: InitProtocol & AnyObject#>, <#Asset: AssetRoot#>> {
+//
+//}
+
+//final class TableScenario: BaseScenario<Any, Any, Any> {
+//
+//}
+
 final class ChallengesViewModel<Design: DSP>: StackModel, Designable, Eventable {
    struct Events: InitProtocol {
       var didSelectChallenge: Int?
    }
 
    var events: EventsStore = .init()
+
+//   lazy var scenario: Scenario =
 
    //
 
@@ -30,9 +44,10 @@ final class ChallengesViewModel<Design: DSP>: StackModel, Designable, Eventable 
          challengesTable,
       ])
 
-      challengesTable.on(\.didSelectRowInt, self) {
-         $0.send(\.didSelectChallenge, $1)
-      }
+      challengesTable
+         .on(\.didSelectRowInt, self) {
+            $0.send(\.didSelectChallenge, $1)
+         }
    }
 }
 
@@ -172,9 +187,14 @@ final class ChallengeCellStatusBlock<Design: DSP>: StackModel, Designable {
    }
 }
 
+protocol TableInputProtocol {
+   var items: [Any] { get set }
+   var presenters: [PresenterProtocol] { get }
+}
+
 struct ChallengeCellPresenters<Design: DSP>: Designable {
    static var presenter: Presenter<Challenge, ChallengeCell<Design>> { .init { work in
-      let data = work.unsafeInput
+      var data = work.unsafeInput
 
       let model = ChallengeCell<Design>()
          .setAll { infoBlock, statusBlock in
@@ -207,13 +227,15 @@ struct ChallengeCellPresenters<Design: DSP>: Designable {
          model.setState(.inverted)
          model.back
             .backColor(Design.color.iconContrast)
-            .url(TeamForceEndpoints.urlBase + suffix)
             .addModel(
                ViewModel()
                   .backColor(Design.color.iconContrast)
                   .alpha(0.6)
             ) { anchors, view in
                anchors.fitToView(view)
+            }
+            .url(TeamForceEndpoints.urlBase + suffix) {
+               data.photoCache = $1
             }
       }
 
@@ -225,12 +247,12 @@ final class CreateChallengePanel<Design: DSP>: StackModel, Designable {
    var events: EventsStore = .init()
 
    private lazy var filterButtons = SlidedIndexButtons<Button2Event>(buttons:
-                                                                        SecondaryButtonDT<Design>()
-      .title("Все")
-      .font(Design.font.default),
-                                                                     SecondaryButtonDT<Design>()
-      .title("Активные")
-      .font(Design.font.default))
+      SecondaryButtonDT<Design>()
+         .title("Все")
+         .font(Design.font.default),
+      SecondaryButtonDT<Design>()
+         .title("Активные")
+         .font(Design.font.default))
 
    override func start() {
       super.start()

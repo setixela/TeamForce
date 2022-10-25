@@ -34,6 +34,8 @@ struct TableItemsEvents: ScrollEventsProtocol {
    var didSelectRow: (IndexPath, Int)?
    var didSelectRowInt: Int?
 
+   var presentedIndex: Int?
+
    // TODO: - Обьединять ивенты как Стейты
    var didScroll: CGFloat?
    var willEndDragging: CGFloat?
@@ -114,6 +116,8 @@ final class TableItemsModel<Design: DSP>: BaseViewModel<UITableView>,
       cell.contentView.addSubview(modelView)
       modelView.addAnchors.fitToView(cell.contentView)
       cell.contentView.setNeedsLayout()
+
+      send(\.presentedIndex, indexPath.row)
 
       return cell
    }
