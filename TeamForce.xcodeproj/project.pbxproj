@@ -343,6 +343,8 @@
 		63FCC9B1290750BA009D0001 /* GetEventsWinnersUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FCC9B0290750BA009D0001 /* GetEventsWinnersUseCase.swift */; };
 		63FCC9B32907535C009D0001 /* GetEventsChallApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FCC9B22907535C009D0001 /* GetEventsChallApiWorker.swift */; };
 		63FCC9B529075383009D0001 /* GetEventsChallUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FCC9B429075383009D0001 /* GetEventsChallUseCase.swift */; };
+		63FCC9B729075748009D0001 /* GetEventsTransactByIdApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FCC9B629075748009D0001 /* GetEventsTransactByIdApiWorker.swift */; };
+		63FCC9B929075A70009D0001 /* GetEventsTransactByIdUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FCC9B829075A70009D0001 /* GetEventsTransactByIdUseCase.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -689,6 +691,8 @@
 		63FCC9B0290750BA009D0001 /* GetEventsWinnersUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetEventsWinnersUseCase.swift; sourceTree = "<group>"; };
 		63FCC9B22907535C009D0001 /* GetEventsChallApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetEventsChallApiWorker.swift; sourceTree = "<group>"; };
 		63FCC9B429075383009D0001 /* GetEventsChallUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetEventsChallUseCase.swift; sourceTree = "<group>"; };
+		63FCC9B629075748009D0001 /* GetEventsTransactByIdApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetEventsTransactByIdApiWorker.swift; sourceTree = "<group>"; };
+		63FCC9B829075A70009D0001 /* GetEventsTransactByIdUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetEventsTransactByIdUseCase.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1648,6 +1652,7 @@
 				63FCC9AA29074A61009D0001 /* GetEventsTransactApiWorker.swift */,
 				63FCC9AE29075036009D0001 /* GetEventsWinnersApiWorker.swift */,
 				63FCC9B22907535C009D0001 /* GetEventsChallApiWorker.swift */,
+				63FCC9B629075748009D0001 /* GetEventsTransactByIdApiWorker.swift */,
 			);
 			path = Events;
 			sourceTree = "<group>";
@@ -1659,6 +1664,7 @@
 				63FCC9AC29074AEC009D0001 /* GetEventsTransactUseCase.swift */,
 				63FCC9B0290750BA009D0001 /* GetEventsWinnersUseCase.swift */,
 				63FCC9B429075383009D0001 /* GetEventsChallUseCase.swift */,
+				63FCC9B829075A70009D0001 /* GetEventsTransactByIdUseCase.swift */,
 			);
 			path = Events;
 			sourceTree = "<group>";
@@ -1949,6 +1955,7 @@
 				1952EA6328A7102B003F7852 /* StateProtocol.swift in Sources */,
 				19A9BE8028C307000099F8EA /* Queue.swift in Sources */,
 				19D08357286F41B200F75E4A /* DoubleLabelPairModel.swift in Sources */,
+				63FCC9B929075A70009D0001 /* GetEventsTransactByIdUseCase.swift in Sources */,
 				19B39E5928D341B900BB2C77 /* TagList.swift in Sources */,
 				1952EA6D28A71537003F7852 /* ButtonElements.swift in Sources */,
 				635FC6C628EE7F3800826B67 /* GetChallengesUseCase.swift in Sources */,
@@ -2083,6 +2090,7 @@
 				63A37EB028F0528800DBD59F /* GetChallengeWinnersApiWorker.swift in Sources */,
 				19A8229828A9305D0081D385 /* UIEdgeInsets+Padding.swift in Sources */,
 				19466E03289FFC040052F0AB /* IconTitleSubtitleModel.swift in Sources */,
+				63FCC9B729075748009D0001 /* GetEventsTransactByIdApiWorker.swift in Sources */,
 				19EE849028AB20CE00D862EE /* DoubleStacksBrandedVM.swift in Sources */,
 				198BBEF028B69C810006CD30 /* LoadBothTokensUseCase.swift in Sources */,
 				19D0835D286F428600F75E4A /* BarButtonModel.swift in Sources */,

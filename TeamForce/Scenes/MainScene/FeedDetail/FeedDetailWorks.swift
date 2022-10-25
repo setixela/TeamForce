@@ -219,6 +219,19 @@ final class FeedDetailWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedDetailWork
       }
       work.success(result: filtered)
    }}
+   
+   var getEventsTransactById: Work<Int, EventTransaction> { .init { [weak self] work in
+      guard let id = work.input else { return }
+      self?.apiUseCase.getEventsTransactById
+         .doAsync(id)
+         .onSuccess {
+            print($0)
+            work.success(result: $0)
+         }
+         .onFail {
+            work.fail()
+         }
+   }.retainBy(retainer) }
 }
 
 private extension FeedDetailWorks {

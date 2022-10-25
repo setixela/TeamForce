@@ -407,6 +407,14 @@ final class ApiUseCase<Asset: AssetProtocol>: InitProtocol, Assetable, WorkBaske
       .retainedWork(retainer)
    }
    
+   var getEventsTransactById: GetEventsTransactByIdUseCase.WRK {
+      GetEventsTransactByIdUseCase(
+         safeStringStorage: safeStringStorage,
+         getEventsTransactByIdApiModel: getEventsTransactByIdApiWorker
+      )
+      .retainedWork(retainer)
+   }
+   
    
    // MARK: - Dependencies
 
@@ -477,4 +485,5 @@ final class ApiUseCase<Asset: AssetProtocol>: InitProtocol, Assetable, WorkBaske
    private var getEventsTransactApiWorker: GetEventsTransactApiWorker { .init(apiEngine: Asset.service.apiEngine) }
    private var getEventsWinnersApiWorker: GetEventsWinnersApiWorker { .init(apiEngine: Asset.service.apiEngine) }
    private var getEventsChallApiWorker: GetEventsChallApiWorker { .init(apiEngine: Asset.service.apiEngine) }
+   private var getEventsTransactByIdApiWorker: GetEventsTransactByIdApiWorker { .init(apiEngine: Asset.service.apiEngine) }
 }
