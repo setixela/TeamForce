@@ -58,14 +58,11 @@ final class FeedScenario<Asset: AssetProtocol>:
          .onFail {
             print("failed to like")
          }
-         .doMap() {
-            self.events.loadFeedForCurrentUser.result
-         }
-         .doNext(works.loadFeedForCurrentUser)
-         .onFail(setState, .loadFeedError)
-         .doNext(works.getAllFeed)
-         .onSuccess(setState) { .presentFeed($0) }
-         .onFail(setState, .loadFeedError)
+//         .doNext(works.getLikesCommentsStat)
+//         .onFail(setState, .loadFeedError)
+//         .doNext(works.getAllFeed)
+//         .onSuccess(setState) { .presentFeed($0) }
+//         .onFail(setState, .loadFeedError)
       
       events.presentDetail
          .doNext(works.getFeedByRowNumber)

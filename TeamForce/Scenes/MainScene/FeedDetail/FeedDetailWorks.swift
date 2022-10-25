@@ -71,17 +71,16 @@ final class FeedDetailWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedDetailWork
    var pressLike: Work<Void, Void> { .init { [weak self] work in
       guard let tId = Self.store.currentTransactId else { work.fail(); return }
 
-      let request = PressLikeRequest(token: "",
-                                     likeKind: 1,
-                                     transactionId: tId)
+      let body = PressLikeRequest.Body(likeKind: 1, transactionId: tId)
+      let request = PressLikeRequest(token: "", body: body)
 
       self?.apiUseCase.pressLike
          .doAsync(request)
          .onSuccess {
-            if request.likeKind == 1 {
+            if body.likeKind == 1 {
                Self.store.userLiked = !Self.store.userLiked
 //               Self.store.userDisliked = false
-            } else if request.likeKind == 2 {
+            } else if body.likeKind == 2 {
 //               Self.store.userDisliked = !Self.store.userDisliked
                Self.store.userLiked = false
             }

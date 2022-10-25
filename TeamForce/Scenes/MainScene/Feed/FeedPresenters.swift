@@ -34,6 +34,20 @@ class FeedPresenters<Design: DesignProtocol>: Designable {
                $1.text(String(feed.likesAmount))
             }
          
+         likeButton.view.startTapGestureRecognize(cancelTouch: true)
+
+         likeButton.view.on(\.didTap, self) {
+            let body = PressLikeRequest.Body(likeKind: 1,
+                                             transactionId: feed.transaction?.id,
+                                             challengeId: feed.challenge?.id,
+                                             challengeReportId: feed.winner?.id)
+            let request = PressLikeRequest(token: "",
+                                           body: body)
+            $0.send(\.reactionPressed, request)
+
+            likeButton.setState(.selected)
+         }
+         
          let reactionsBlock = StackModel()
             .axis(.horizontal)
             .alignment(.leading)
@@ -71,49 +85,21 @@ class FeedPresenters<Design: DesignProtocol>: Designable {
                }
             }
 
-//            var commentsAmount = "0"
-//            commentsAmount = String(feed.commentsAmount ?? 0)
-//
-//            let messageButton = ReactionButton<Design>()
-//               .setAll {
-//                  $0.image(Design.icon.messageCloud)
-//                  $1.text(commentsAmount)
-//               }
-//            var likeAmount = "0"
-//
-//            likeAmount = String(feed.likesAmount)
-//
-//            let likeButton = ReactionButton<Design>()
-//               .setAll {
-//                  $0.image(Design.icon.like)
-//                  $1.text(likeAmount)
-//               }
 
             if feed.transaction?.userLiked == true {
                likeButton.setState(.selected)
             }
 
-            likeButton.view.startTapGestureRecognize(cancelTouch: true)
-
-            likeButton.view.on(\.didTap, self) {
-               let request = PressLikeRequest(token: "",
-                                              likeKind: 1,
-                                              transactionId: transactionId)
-               $0.send(\.reactionPressed, request)
-
-               likeButton.setState(.selected)
-            }
-
-//            let reactionsBlock = StackModel()
-//               .axis(.horizontal)
-//               .alignment(.leading)
-//               .distribution(.fill)
-//               .spacing(4)
-//               .arrangedModels([
-//                  messageButton,
-//                  likeButton,
-//                  Grid.xxx.spacer
-//               ])
+//            likeButton.view.startTapGestureRecognize(cancelTouch: true)
+//
+//            likeButton.view.on(\.didTap, self) {
+//               let request = PressLikeRequest(token: "",
+//                                              likeKind: 1,
+//                                              transactionId: transactionId)
+//               $0.send(\.reactionPressed, request)
+//
+//               likeButton.setState(.selected)
+//            }
 
             let hashTagBlock = HashTagsScrollModel<Design>()
             hashTagBlock.setup(transaction)

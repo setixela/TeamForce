@@ -20,9 +20,7 @@ struct PressLikeUseCase: UseCaseProtocol {
             }
             .doMap {
                guard let input = work.input else { return nil }
-               let request = PressLikeRequest(token: $0,
-                                              likeKind: input.likeKind,
-                                              transactionId: input.transactionId)
+               let request = PressLikeRequest(token: $0, body: input.body)
                return request
             }
             .doNext(worker: pressLikeApiWorker)
