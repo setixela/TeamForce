@@ -13,7 +13,7 @@ final class FeedDetailScene<Asset: AssetProtocol>:
       DefaultVCModel,
       DoubleStacksBrandedVM<Asset.Design>,
       Asset,
-      (Feed, String)
+      (NewFeed, String)
    >, Scenarible
 {
    typealias State = ViewState
@@ -66,7 +66,7 @@ final class FeedDetailScene<Asset: AssetProtocol>:
 
 enum FeedDetailSceneState {
    case initial
-   case presentDetails(Feed)
+   case presentDetails(EventTransaction)
    case presentComments([Comment])
    case presentReactions([ReactItem])
    case buttonLikePressed(alreadySelected: Bool)

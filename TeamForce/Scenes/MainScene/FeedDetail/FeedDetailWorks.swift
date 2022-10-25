@@ -11,7 +11,7 @@ import ReactiveWorks
 final class FeedDetailWorksTempStorage: InitProtocol {
    lazy var currentUserName = ""
    var currentTransactId: Int?
-   var currentFeed: Feed?
+   var currentFeed: NewFeed?
    var userLiked: Bool = false
 //   var userDisliked: Bool = false
    var token: String?
@@ -20,6 +20,7 @@ final class FeedDetailWorksTempStorage: InitProtocol {
 
    var inputComment = ""
    var reactionSegment = 0
+   var transaction: EventTransaction?
 }
 
 final class FeedDetailWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedDetailWorksTempStorage, Asset> {
@@ -38,22 +39,33 @@ final class FeedDetailWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedDetailWork
          }
    }.retainBy(retainer) }
 
-   var saveInput: Work<(Feed, String), Feed> { .init { work in
+   var saveInput: Work<(NewFeed, String), EventTransaction> { .init { [weak self] work in
       guard let input = work.input else { return }
 
       Self.store.currentFeed = input.0
-      Self.store.currentTransactId = input.0.transaction.id
-      Self.store.userLiked = input.0.transaction.userLiked ?? false
+      Self.store.currentTransactId = input.0.transaction?.id
+      Self.store.userLiked = input.0.transaction?.userLiked ?? false
 //      Self.store.userDisliked = input.0.transaction.userDisliked ?? false
-      work.success(result: input.0)
+      if let transactionId = input.0.transaction?.id {
+         self?.getEventsTransactById
+            .doAsync(transactionId)
+            .onSuccess {
+               Self.store.transaction = $0
+               
+               work.success(result: $0)
+            }
+      } else {
+         work.fail()
+      }
+      
    }.retainBy(retainer) }
 
-   var getFeed: VoidWork<Feed> { .init { work in
-      guard let curFeed = Self.store.currentFeed else {
+   var getTransaction: VoidWork<EventTransaction> { .init { work in
+      guard let transaction = Self.store.transaction else {
          work.fail()
          return
       }
-      work.success(result: curFeed)
+      work.success(result: transaction)
    }}
 
    var pressLike: Work<Void, Void> { .init { [weak self] work in

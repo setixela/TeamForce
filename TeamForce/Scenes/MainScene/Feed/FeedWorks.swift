@@ -11,13 +11,13 @@ import ReactiveWorks
 protocol FeedWorksProtocol {
    var loadFeedForCurrentUser: Work<UserData?, Void> { get }
 
-   var getAllFeed: VoidWork<([Feed], String)> { get }
-   var getMyFeed: VoidWork<([Feed], String)> { get }
-   var getPublicFeed: VoidWork<([Feed], String)> { get }
+   var getAllFeed: VoidWork<([NewFeed], String)> { get }
+//   var getMyFeed: VoidWork<([Feed], String)> { get }
+//   var getPublicFeed: VoidWork<([Feed], String)> { get }
 }
 
 final class FeedWorksTempStorage: InitProtocol {
-   var feed: [Feed] = []
+   var feed: [NewFeed] = []
    lazy var currentUserName = ""
    var segmentId: Int?
    var currentTransactId: Int?
@@ -38,7 +38,6 @@ final class FeedWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedWorksTempStorage
          return
       }
       Self.store.currentUserName = userName
-      let pagination = Pagination(offset: Self.store.offset, limit: Self.store.limit)
 //      
 //      self?.getEventsWinners
 //         .doAsync(true)
@@ -49,59 +48,63 @@ final class FeedWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedWorksTempStorage
 //            print("fail")
 //         }
       
-      self?.getFeed
+      self?.getEvents
          .doAsync(true)
-         .onSuccess { work.success() }
-         .onFail { work.fail() }
-   }}
-   
-   var getFeed: Work<Bool, Void> { .init { [weak self] work in
-      guard let paginating = work.input else { return }
-      if Self.store.isPaginating {
-         print(Self.store.isPaginating)
-         return
-      }
-      if paginating {
-         Self.store.isPaginating = true
-      }
-      let pagination = Pagination(offset: Self.store.offset, limit: Self.store.limit)
-      self?.apiUseCase.getFeed
-         .doAsync(pagination)
          .onSuccess {
-            Self.store.feed.append(contentsOf: $0)
-            Self.store.offset += 1
-            Self.store.isPaginating = false
             work.success()
          }
          .onFail {
             work.fail()
          }
-   }.retainBy(retainer) }
+   }}
+   
+//   var getFeed: Work<Bool, Void> { .init { [weak self] work in
+//      guard let paginating = work.input else { return }
+//      if Self.store.isPaginating {
+//         print(Self.store.isPaginating)
+//         return
+//      }
+//      if paginating {
+//         Self.store.isPaginating = true
+//      }
+//      let pagination = Pagination(offset: Self.store.offset, limit: Self.store.limit)
+//      self?.apiUseCase.getFeed
+//         .doAsync(pagination)
+//         .onSuccess {
+//            Self.store.feed.append(contentsOf: $0)
+//            Self.store.offset += 1
+//            Self.store.isPaginating = false
+//            work.success()
+//         }
+//         .onFail {
+//            work.fail()
+//         }
+//   }.retainBy(retainer) }
 
-   var getAllFeed: VoidWork<([Feed], String)> { .init { work in
+   var getAllFeed: VoidWork<([NewFeed], String)> { .init { work in
       Self.store.segmentId = 0
       let filtered = Self.filteredAll()
       work.success(result: (filtered, Self.store.currentUserName))
    }}
 
-   var getMyFeed: VoidWork<([Feed], String)> { .init { work in
-      let filtered = Self.filteredMy()
-      Self.store.segmentId = 1
-      work.success(result: (filtered, Self.store.currentUserName))
-   }}
+//   var getMyFeed: VoidWork<([Feed], String)> { .init { work in
+//      let filtered = Self.filteredMy()
+//      Self.store.segmentId = 1
+//      work.success(result: (filtered, Self.store.currentUserName))
+//   }}
+//
+//   var getPublicFeed: VoidWork<([Feed], String)> { .init { work in
+//      let filtered = Self.filteredPublic()
+//      Self.store.segmentId = 2
+//      work.success(result: (filtered, Self.store.currentUserName))
+//   }}
 
-   var getPublicFeed: VoidWork<([Feed], String)> { .init { work in
-      let filtered = Self.filteredPublic()
-      Self.store.segmentId = 2
-      work.success(result: (filtered, Self.store.currentUserName))
-   }}
-
-   var getFeedByRowNumber: Work<(IndexPath, Int), Feed> { .init { work in
+   var getFeedByRowNumber: Work<(IndexPath, Int), NewFeed> { .init { work in
       let segmentId = Self.store.segmentId
-      var filtered: [Feed] = []
-      if segmentId == 0 { filtered = Self.filteredAll() }
-      else if segmentId == 1 { filtered = Self.filteredMy() }
-      else if segmentId == 2 { filtered = Self.filteredPublic() }
+      var filtered: [NewFeed] = []
+      if segmentId == 0 { filtered = Self.store.feed }
+//      else if segmentId == 1 { filtered = Self.filteredMy() }
+//      else if segmentId == 2 { filtered = Self.filteredPublic() }
       
       if let index = work.input?.1 {
          let feed = filtered[index]
@@ -194,39 +197,39 @@ final class FeedWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedWorksTempStorage
 }
 
 private extension FeedWorks {
-   static func filteredAll() -> [Feed] {
+   static func filteredAll() -> [NewFeed] {
 //      guard let feed = store.feed else {
 //         return []
 //      }
       
       return store.feed
    }
-   
-   static func filteredMy() -> [Feed] {
-//      guard let feed = store.feed else {
-//         return []
+//
+//   static func filteredMy() -> [Feed] {
+////      guard let feed = store.feed else {
+////         return []
+////      }
+//      let feed = store.feed
+//      return feed.filter {
+//         let senderName = $0.transaction.sender
+//         let recipientName = $0.transaction.recipient
+//         let myName = Self.store.currentUserName
+//         return myName == senderName || myName == recipientName
 //      }
-      let feed = store.feed
-      return feed.filter {
-         let senderName = $0.transaction.sender
-         let recipientName = $0.transaction.recipient
-         let myName = Self.store.currentUserName
-         return myName == senderName || myName == recipientName
-      }
-   }
+//   }
    
-   static func filteredPublic() -> [Feed] {
-//      guard let feed = store.feed else {
-//         return []
+//   static func filteredPublic() -> [Feed] {
+////      guard let feed = store.feed else {
+////         return []
+////      }
+//      let feed = store.feed
+//      return feed.filter {
+//         $0.transaction.isAnonymous == false
 //      }
-      let feed = store.feed
-      return feed.filter {
-         $0.transaction.isAnonymous == false
-      }
-   }
+//   }
 }
 //for events works
-private extension FeedWorks {
+extension FeedWorks {
    var getEvents: Work<Bool, Void> { .init { [weak self] work in
       guard let paginating = work.input else { return }
       if Self.store.isPaginating {
@@ -240,6 +243,9 @@ private extension FeedWorks {
       self?.apiUseCase.getEvents
          .doAsync(pagination)
          .onSuccess {
+            Self.store.feed.append(contentsOf: $0)
+            Self.store.offset += 1
+            Self.store.isPaginating = false
             work.success()
          }
          .onFail {

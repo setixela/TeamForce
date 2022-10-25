@@ -9,8 +9,8 @@ import ReactiveWorks
 import UIKit
 
 enum FeedDetailsState {
-   case initial((Feed, String))
-   case details(Feed)
+   case initial((NewFeed, String))
+   case details(EventTransaction)
    case comments([Comment])
    case reactions([ReactItem])
    case loadingActivity
@@ -48,7 +48,7 @@ final class FeedDetailViewModels<Design: DSP>: DoubleStacksModel, Designable {
 extension FeedDetailViewModels: Eventable {
    struct Events: InitProtocol {
       // var reactionPressed: PressLikeRequest?
-      var saveInput: Feed?
+      var saveInput: NewFeed?
    }
 }
 
@@ -58,7 +58,9 @@ extension FeedDetailViewModels: StateMachine {
       case .initial(let tuple):
          send(\.saveInput, tuple.0)
          infoBlock.setup(tuple)
-         setState(.details(tuple.0))
+         if let transaction = tuple.0.transaction {
+            setState(.details(transaction))
+         }
       case .details(let feed):
          detailsBlock.setup(feed)
          footerStack.arrangedModels([

@@ -13,161 +13,177 @@ class FeedPresenters<Design: DesignProtocol>: Designable {
    var userName: String = ""
    private lazy var retainer = Retainer()
 
-   var feedCellPresenter: Presenter<Feed, WrappedX<StackModel>> {
+   var feedCellPresenter: Presenter<NewFeed, WrappedX<StackModel>> {
       Presenter(retainedBy: retainer) { [weak self] work in
 
          guard let self = self else { return }
 
          let feed = work.unsafeInput
+         if feed.transaction != nil {
+            guard let transaction = feed.transaction else { return }
+            let senderId = transaction.senderId
+            let recipientId = transaction.recipientId
+            let sender = "@" + transaction.senderTgName.string
+            let recipient = "@" + transaction.recipientTgName.string
+            let transactionId = transaction.id
 
-         let senderId = feed.transaction.senderId
-         let recipientId = feed.transaction.recipientId
-         let sender = "@" + feed.transaction.sender
-         let recipient = "@" + feed.transaction.recipient
-         let transactionId = feed.transaction.id
+            //         let isPersonal = feed.eventType.isPersonal
+            //         let hasScope = feed.eventType.hasScope
+            //         let isAnonTransact = feed.transaction.isAnonymous
 
-//         let isPersonal = feed.eventType.isPersonal
-//         let hasScope = feed.eventType.hasScope
-//         let isAnonTransact = feed.transaction.isAnonymous
+            let type = FeedTransactType.make(feed: feed, currentUserName: self.userName)
 
-         let type = FeedTransactType.make(feed: feed, currentUserName: self.userName)
+            let dateLabel = FeedPresenters.makeInfoDateLabel(feed: feed)
+            let infoLabel = FeedPresenters.makeInfoLabel(feed: feed, type: type)
+            let icon = self.makeIcon(feed: feed)
 
-         let dateLabel = FeedPresenters.makeInfoDateLabel(feed: feed)
-         let infoLabel = FeedPresenters.makeInfoLabel(feed: feed, type: type)
-         let icon = self.makeIcon(feed: feed)
-
-         infoLabel.view.on(\.didSelect) {
-            switch $0 {
-            case sender:
-               self.send(\.didSelect, senderId ?? -1)
-            case recipient:
-               self.send(\.didSelect, recipientId ?? -1)
-            default:
-               print("selected error")
-            }
-         }
-
-//         let tagBlock = StackModel()
-//            .axis(.horizontal)
-//            .spacing(4)
-         var commentsAmount = "0"
-         commentsAmount = String(feed.transaction.commentsAmount ?? 0)
-
-         let messageButton = ReactionButton<Design>()
-            .setAll {
-               $0.image(Design.icon.messageCloud)
-               $1.text(commentsAmount)
-            }
-         var likeAmount = "0"
-        // var dislikeAmount = "0"
-
-         if let reactions = feed.transaction.reactions {
-            for reaction in reactions {
-               if reaction.code == "like" {
-                  likeAmount = String(reaction.counter ?? 0)
-               } else if reaction.code == "dislike" {
-               //   dislikeAmount = String(reaction.counter ?? 0)
+            infoLabel.view.on(\.didSelect) {
+               switch $0 {
+               case sender:
+                  self.send(\.didSelect, senderId ?? -1)
+               case recipient:
+                  self.send(\.didSelect, recipientId ?? -1)
+               default:
+                  print("selected error")
                }
             }
-         }
 
-         let likeButton = ReactionButton<Design>()
-            .setAll {
-               $0.image(Design.icon.like)
-               $1.text(likeAmount)
-            }
+            //         let tagBlock = StackModel()
+            //            .axis(.horizontal)
+            //            .spacing(4)
+            var commentsAmount = "0"
+            commentsAmount = String(feed.commentsAmount ?? 0)
 
-//         let dislikeButton = ReactionButton<Design>()
-//            .setAll {
-//               $0.image(Design.icon.dislike)
-//               $1.text(dislikeAmount)
+            let messageButton = ReactionButton<Design>()
+               .setAll {
+                  $0.image(Design.icon.messageCloud)
+                  $1.text(commentsAmount)
+               }
+            var likeAmount = "0"
+            // var dislikeAmount = "0"
+            likeAmount = String(feed.likesAmount)
+//            if let reactions = feed.transaction.reactions {
+//               for reaction in reactions {
+//                  if reaction.code == "like" {
+//                     likeAmount = String(reaction.counter ?? 0)
+//                  } else if reaction.code == "dislike" {
+//                     //   dislikeAmount = String(reaction.counter ?? 0)
+//                  }
+//               }
 //            }
 
-         if feed.transaction.userLiked == true {
-            likeButton.setState(.selected)
-         }
-//         if feed.transaction.userDisliked == true {
-//            dislikeButton.setState(.selected)
-//         }
+            let likeButton = ReactionButton<Design>()
+               .setAll {
+                  $0.image(Design.icon.like)
+                  $1.text(likeAmount)
+               }
 
-         likeButton.view.startTapGestureRecognize(cancelTouch: true)
-//         dislikeButton.view.startTapGestureRecognize(cancelTouch: true)
+            //         let dislikeButton = ReactionButton<Design>()
+            //            .setAll {
+            //               $0.image(Design.icon.dislike)
+            //               $1.text(dislikeAmount)
+            //            }
 
-         likeButton.view.on(\.didTap, self) {
-            let request = PressLikeRequest(token: "",
-                                           likeKind: 1,
-                                           transactionId: transactionId)
-            $0.send(\.reactionPressed, request)
+            if feed.transaction?.userLiked == true {
+               likeButton.setState(.selected)
+            }
+            //         if feed.transaction.userDisliked == true {
+            //            dislikeButton.setState(.selected)
+            //         }
 
-            likeButton.setState(.selected)
-//            dislikeButton.setState(.none)
-         }
+            likeButton.view.startTapGestureRecognize(cancelTouch: true)
+            //         dislikeButton.view.startTapGestureRecognize(cancelTouch: true)
 
-//         dislikeButton.view.on(\.didTap, self) {
-//            let request = PressLikeRequest(token: "",
-//                                           likeKind: 2,
-//                                           transactionId: transactionId)
-//            $0.send(\.reactionPressed, request)
-//            dislikeButton.setState(.selected)
-//            likeButton.setState(.none)
-//         }
+            likeButton.view.on(\.didTap, self) {
+               let request = PressLikeRequest(token: "",
+                                              likeKind: 1,
+                                              transactionId: transactionId)
+               $0.send(\.reactionPressed, request)
 
-         let reactionsBlock = StackModel()
-            .axis(.horizontal)
-            .alignment(.leading)
-            .distribution(.fill)
-            .spacing(4)
-            .arrangedModels([
-               messageButton,
-               likeButton,
-//               dislikeButton,
-               Grid.xxx.spacer
-            ])
+               likeButton.setState(.selected)
+               //            dislikeButton.setState(.none)
+            }
 
-         let hashTagBlock = HashTagsScrollModel<Design>()
-         hashTagBlock.setup(feed)
+            //         dislikeButton.view.on(\.didTap, self) {
+            //            let request = PressLikeRequest(token: "",
+            //                                           likeKind: 2,
+            //                                           transactionId: transactionId)
+            //            $0.send(\.reactionPressed, request)
+            //            dislikeButton.setState(.selected)
+            //            likeButton.setState(.none)
+            //         }
 
-         let infoBlock = StackModel()
-            .spacing(Grid.x10.value)
-            .axis(.vertical)
-            .alignment(.fill)
-            .arrangedModels([
-               dateLabel,
-               infoLabel,
-               reactionsBlock,
-               hashTagBlock
-            ])
-
-         var backColor = Design.color.background
-         if type == .youGotAmountFromSome || type == .youGotAmountFromAnonym {
-            backColor = Design.color.successSecondary
-         }
-
-         let cellStack = WrappedX(
-            StackModel()
-               .padding(.outline(Grid.x8.value))
-               .spacing(Grid.x12.value)
+            let reactionsBlock = StackModel()
                .axis(.horizontal)
-               .alignment(.top)
+               .alignment(.leading)
+               .distribution(.fill)
+               .spacing(4)
                .arrangedModels([
-                  icon,
-                  infoBlock
+                  messageButton,
+                  likeButton,
+                  //               dislikeButton,
+                  Grid.xxx.spacer
                ])
-               .backColor(backColor)
-               .cornerRadius(Design.params.cornerRadiusSmall)
-         )
-         .padding(.verticalOffset(Grid.x16.value))
 
-         work.success(result: cellStack)
+            let hashTagBlock = HashTagsScrollModel<Design>()
+            hashTagBlock.setup(transaction)
+
+            let infoBlock = StackModel()
+               .spacing(Grid.x10.value)
+               .axis(.vertical)
+               .alignment(.fill)
+               .arrangedModels([
+                  dateLabel,
+                  infoLabel,
+                  reactionsBlock,
+                  hashTagBlock
+               ])
+
+            var backColor = Design.color.background
+            if type == .youGotAmountFromSome || type == .youGotAmountFromAnonym {
+               backColor = Design.color.successSecondary
+            }
+
+            let cellStack = WrappedX(
+               StackModel()
+                  .padding(.outline(Grid.x8.value))
+                  .spacing(Grid.x12.value)
+                  .axis(.horizontal)
+                  .alignment(.top)
+                  .arrangedModels([
+                     icon,
+                     infoBlock
+                  ])
+                  .backColor(backColor)
+                  .cornerRadius(Design.params.cornerRadiusSmall)
+            )
+            .padding(.verticalOffset(Grid.x16.value))
+
+            work.success(result: cellStack)
+         } else {
+            let cellStack = WrappedX(
+               StackModel()
+                  .padding(.outline(Grid.x8.value))
+                  .spacing(Grid.x12.value)
+                  .axis(.horizontal)
+                  .alignment(.top)
+                  .arrangedModels([
+                  ])
+                  .cornerRadius(Design.params.cornerRadiusSmall)
+            )
+            .padding(.verticalOffset(Grid.x16.value))
+
+            work.success(result: cellStack)
+         }
       }
    }
 }
 
 extension FeedPresenters {
-   static func makeInfoDateLabel(feed: Feed) -> LabelModel {
-      let dateAgoText = feed.time.timeAgoConverted
-      let eventText = feed.transaction.isAnonymous ? "" : " • " + "Публичная благодарность"
-      let titleText = dateAgoText + eventText
+   static func makeInfoDateLabel(feed: NewFeed) -> LabelModel {
+      let dateAgoText = feed.time?.timeAgoConverted
+      let eventText = feed.transaction?.isAnonymous ?? false ? "" : " • " + "Публичная благодарность"
+      let titleText = dateAgoText.string + eventText
 
       let dateLabel = LabelModel()
          .numberOfLines(0)
@@ -178,10 +194,10 @@ extension FeedPresenters {
       return dateLabel
    }
 
-   static func makeInfoLabel(feed: Feed, type: FeedTransactType) -> LabelModel {
-      let recipientName = "@" + feed.transaction.recipient
-      let senderName = "@" + feed.transaction.sender
-      let amountText = "\(Int(feed.transaction.amount))" + " " + "спасибок"
+   static func makeInfoLabel(feed: NewFeed, type: FeedTransactType) -> LabelModel {
+      let recipientName = "@" + (feed.transaction?.recipientTgName ?? "")
+      let senderName = "@" + (feed.transaction?.senderTgName ?? "")
+      let amountText = "\(Int(feed.transaction?.amount ?? 0))" + " " + "спасибок"
       let infoText: NSMutableAttributedString = .init(string: "")
 
       switch type {
@@ -218,17 +234,17 @@ extension FeedPresenters {
       return infoLabel
    }
 
-   func makeIcon(feed: Feed) -> ImageViewModel {
+   func makeIcon(feed: NewFeed) -> ImageViewModel {
       let icon = ImageViewModel()
          .contentMode(.scaleAspectFill)
          .image(Design.icon.avatarPlaceholder)
          .size(.square(Grid.x36.value))
          .cornerRadius(Grid.x36.value / 2)
-      if let recipientPhoto = feed.transaction.photoUrl {
-         icon.url(recipientPhoto)
+      if let recipientPhoto = feed.transaction?.recipientPhoto {
+         icon.url(TeamForceEndpoints.urlBase + recipientPhoto)
       } else {
-         if let nameFirstLetter = feed.transaction.recipientFirstName?.first,
-            let surnameFirstLetter = feed.transaction.recipientSurname?.first
+         if let nameFirstLetter = feed.transaction?.recipientFirstName?.first,
+            let surnameFirstLetter = feed.transaction?.recipientSurname?.first
          {
             let text = String(nameFirstLetter) + String(surnameFirstLetter)
             DispatchQueue.global(qos: .background).async {
@@ -247,15 +263,15 @@ extension FeedPresenters {
 }
 
 enum FeedTransactType {
-   static func make(feed: Feed, currentUserName: String) -> Self {
-      if feed.transaction.recipient == currentUserName {
-         if feed.transaction.isAnonymous {
+   static func make(feed: NewFeed, currentUserName: String) -> Self {
+      if feed.transaction?.recipientTgName == currentUserName {
+         if feed.transaction?.isAnonymous ?? false {
             return .youGotAmountFromAnonym
          } else {
             return .youGotAmountFromSome
          }
       }
-      if feed.transaction.isAnonymous {
+      if feed.transaction?.isAnonymous ?? false {
          return .someGotAmountFromAnonym
       }
       return .someGotAmountFromSome
@@ -275,4 +291,3 @@ extension FeedPresenters: Eventable {
       // var dislikePressed: Int?
    }
 }
-

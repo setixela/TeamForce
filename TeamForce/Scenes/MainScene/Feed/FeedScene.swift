@@ -25,8 +25,8 @@ final class FeedScene<Asset: AssetProtocol>: DoubleStacksModel,
       events: FeedScenarioInputEvents(
          loadFeedForCurrentUser: on(\.userDidLoad),
          presentAllFeed: viewModels.filterButtons.on(\.didTapAll),
-         presentMyFeed: viewModels.filterButtons.on(\.didTapMy),
-         presentPublicFeed: viewModels.filterButtons.on(\.didTapPublic),
+//         presentMyFeed: viewModels.filterButtons.on(\.didTapMy),
+//         presentPublicFeed: viewModels.filterButtons.on(\.didTapPublic),
          presentProfile: viewModels.presenter.on(\.didSelect),
          reactionPressed: viewModels.presenter.on(\.reactionPressed),
          presentDetail: viewModels.feedTableModel.on(\.didSelectRow),
@@ -70,12 +70,12 @@ final class FeedScene<Asset: AssetProtocol>: DoubleStacksModel,
 
 enum FeedSceneState {
    case initial
-   case presentFeed(([Feed], String))
+   case presentFeed(([NewFeed], String))
    case loadFeedError
    case presentProfile(Int)
    case reactionChanged
-   case presentDetailView(Feed)
-   case updateFeed([Feed])
+   case presentDetailView(NewFeed)
+   case updateFeed([NewFeed])
 }
 
 extension FeedScene: StateMachine {
@@ -110,6 +110,7 @@ extension FeedScene: StateMachine {
          print("Hello")
       case .presentDetailView(let feed):
          Asset.router?.route(.push, scene: \.feedDetail, payload: (feed, viewModels.userName))
+         break
       case .updateFeed(let value):
          viewModels.feedTableModel.set(.items(value + [SpacerItem(size: Grid.x64.value)]))
       }

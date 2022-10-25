@@ -14,6 +14,7 @@ struct EventTransaction: Codable {
    let reason: String?
    let amount: Int
    let updatedAt: String?
+   let userLiked: Bool
    
    let senderId: Int?
    let senderFirstName: String?
@@ -28,6 +29,7 @@ struct EventTransaction: Codable {
    let recipientTgName: String?
    
    let isAnonymous: Bool?
+   let tags: [FeedTag]?
    
    enum CodingKeys: String, CodingKey {
       case id
@@ -35,6 +37,7 @@ struct EventTransaction: Codable {
       case reason
       case amount
       case updatedAt = "updated_at"
+      case userLiked = "user_liked"
       
       case senderId = "sender_id"
       case senderFirstName = "sender_first_name"
@@ -49,6 +52,7 @@ struct EventTransaction: Codable {
       case recipientTgName = "recipient_tg_name"
       
       case isAnonymous = "is_anonymous"
+      case tags
    }
 }
 

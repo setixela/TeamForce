@@ -82,7 +82,7 @@ final class FeedDetailUserInfoBlock<Design: DSP>: StackModel, Designable {
 }
 
 extension FeedDetailUserInfoBlock: SetupProtocol {
-   func setup(_ data: (Feed, String)) {
+   func setup(_ data: (NewFeed, String)) {
       let feed = data.0
       let userName = data.1
       configureImage(feed: feed)
@@ -95,20 +95,21 @@ extension FeedDetailUserInfoBlock: SetupProtocol {
       infoLabel.attributedText(infoText!)
       var likeAmount = "0"
 //      var dislikeAmount = "0"
-      if let reactions = feed.transaction.reactions {
-         for reaction in reactions {
-            if reaction.code == "like" {
-               likeAmount = String(reaction.counter ?? 0)
-            } else if reaction.code == "dislike" {
-//               dislikeAmount = String(reaction.counter ?? 0)
-            }
-         }
-      }
+      likeAmount  = String(feed.likesAmount)
+//      if let reactions = feed.transaction.reactions {
+//         for reaction in reactions {
+//            if reaction.code == "like" {
+//               likeAmount = String(reaction.counter ?? 0)
+//            } else if reaction.code == "dislike" {
+////               dislikeAmount = String(reaction.counter ?? 0)
+//            }
+//         }
+//      }
 
       likeButton.models.right.text(likeAmount)
 //      dislikeButton.models.right.text(dislikeAmount)
 
-      if feed.transaction.userLiked == true {
+      if feed.transaction?.userLiked == true {
          likeButton.setState(.selected)
       }
 //      if feed.transaction.userDisliked == true {
@@ -118,12 +119,12 @@ extension FeedDetailUserInfoBlock: SetupProtocol {
 }
 
 private extension FeedDetailUserInfoBlock {
-   func configureImage(feed: Feed) {
-      if let recipientPhoto = feed.transaction.photoUrl {
-         image.subModel.url(recipientPhoto)
+   func configureImage(feed: NewFeed) {
+      if let recipientPhoto = feed.transaction?.recipientPhoto {
+         image.subModel.url(TeamForceEndpoints.urlBase + recipientPhoto)
       } else {
-         if let nameFirstLetter = feed.transaction.recipientFirstName?.first,
-            let surnameFirstLetter = feed.transaction.recipientSurname?.first
+         if let nameFirstLetter = feed.transaction?.recipientFirstName?.first,
+            let surnameFirstLetter = feed.transaction?.recipientSurname?.first
          {
             let text = String(nameFirstLetter) + String(surnameFirstLetter)
             DispatchQueue.global(qos: .background).async {
@@ -138,8 +139,8 @@ private extension FeedDetailUserInfoBlock {
       }
    }
 
-   func configureEvents(feed: Feed) {
-      let transactionId = feed.transaction.id
+   func configureEvents(feed: NewFeed) {
+      let transactionId = feed.transaction?.id
       
       likeButton.view.startTapGestureRecognize()
 //      dislikeButton.view.startTapGestureRecognize()
