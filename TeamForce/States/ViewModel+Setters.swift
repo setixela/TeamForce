@@ -219,6 +219,11 @@ extension ViewModelProtocol where Self: Stateable {
       view.removeAllConstraints()
       return self
    }
+
+   @discardableResult func userInterractionEnabled(_ value: Bool) -> Self {
+      view.isUserInteractionEnabled = value
+      return self
+   }
 }
 
 extension ViewModelProtocol where Self: Stateable, View: StackViewExtended {
@@ -451,27 +456,32 @@ extension ViewModelProtocol where Self: Stateable, View: PaddingImageView {
       return self
    }
 
-   @discardableResult func url(_ value: String?, completion: ((Self) -> Void)? = nil) -> Self {
-//      guard
-//         let str = value
-//         let url = URL(string: str)
-//      else { return self }
-
+   @discardableResult func url(_ value: String?,
+                               placeHolder: UIImage? = nil,
+                               transition: UIImageView.ImageTransition = .noTransition,
+                               closure: ((Self?, UIImage?) -> Void)? = nil) -> Self
+   {
       view.layer.masksToBounds = true
-      view.loadImage(value) { [weak view, weak self] image in
-         view?.image = image
-         guard let self else { return }
 
-         completion?(self)
+      guard let url = URL(string: value ?? "") else {
+         view.image = placeHolder ?? view.image
+         return self
       }
-//      view.af.setImage(withURL: url, imageTransition: .crossDissolve(0.4), completion: {
-//         switch $0.result {
-//         case .success(let image):
-//            print(image)
-//         case .failure(let error):
-//            print(error)
-//         }
-//      })
+
+      view.af.setImage(
+         withURL: url,
+         placeholderImage: placeHolder,
+         imageTransition: transition
+      ) {
+         weak var slf = self
+
+         switch $0.result {
+         case .success(let image):
+            closure?(slf, image)
+         case .failure:
+            closure?(slf, nil)
+         }
+      }
 
       return self
    }

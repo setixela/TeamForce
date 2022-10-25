@@ -28,7 +28,7 @@ struct ScrollEvents: ScrollEventsProtocol {
 
 protocol ScrollWrapper: UIScrollViewDelegate, Eventable where Events == ScrollEvents {}
 
-class ScrollViewModelY: BaseViewModel<UIScrollView>, ScrollWrapper, Stateable {
+class ScrollViewModelY: BaseViewModel<ScrollViewExtended>, ScrollWrapper, Stateable {
    var events: ReactiveWorks.EventsStore = .init()
 
    typealias State = ViewState
@@ -113,7 +113,7 @@ extension ScrollViewModelY: Stateable2 {
    }
 }
 
-class ScrollViewModelX: BaseViewModel<UIScrollView>, ScrollWrapper {
+class ScrollViewModelX: BaseViewModel<ScrollViewExtended>, ScrollWrapper {
    var events: ReactiveWorks.EventsStore = .init()
 
    private lazy var stack = StackModel()
@@ -129,6 +129,7 @@ class ScrollViewModelX: BaseViewModel<UIScrollView>, ScrollWrapper {
          .leading(view.leadingAnchor)
          .trailing(view.trailingAnchor)
          .height(view.heightAnchor)
+
    }
 }
 

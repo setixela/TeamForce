@@ -13,6 +13,9 @@ final class HashTagsScrollModel<Design: DSP>: ScrollViewModelX, Designable {
       
       set(.spacing(4))
       set(.hideHorizontalScrollIndicator)
+
+      // TODO: - Временно
+      userInterractionEnabled(false)
    }
 }
 

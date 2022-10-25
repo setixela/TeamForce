@@ -25,6 +25,10 @@ protocol Scenario {
    func start()
 }
 
+//protocol ScenarioInput {}
+//protocol ScenarioState {}
+//protocol ScenarioWorks {}
+
 class BaseScenario<Events, State, Works>: Scenario {
    var works: Works
    var events: Events
