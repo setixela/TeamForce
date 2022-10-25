@@ -7,12 +7,12 @@
 
 import ReactiveWorks
 
-struct GetTransactionStatisticsUseCase: UseCaseProtocol {
+struct GetLikesCommentsStatUseCase: UseCaseProtocol {
    let safeStringStorage: StringStorageWorker
-   let getTransactionStatisticsApiWorker: GetTransactionStatisticsApiWorker
+   let getLikesCommentsStatApiWorker: GetLikesCommentsStatApiWorker
 
-   var work: Work<TransactStatRequest, TransactStatistics> {
-      Work<TransactStatRequest, TransactStatistics>() { work in
+   var work: Work<LikesCommentsStatRequest, LikesCommentsStatistics> {
+      Work<LikesCommentsStatRequest, LikesCommentsStatistics>() { work in
          safeStringStorage
             .doAsync("token")
             .onFail {
@@ -20,11 +20,11 @@ struct GetTransactionStatisticsUseCase: UseCaseProtocol {
             }
             .doMap {
                guard let input = work.input else { return nil }
-               let request = TransactStatRequest(token: $0,
-                                                 transactionId: input.transactionId)
+               let request = LikesCommentsStatRequest(token: $0,
+                                                      body: input.body)
                return request
             }
-            .doNext(worker: getTransactionStatisticsApiWorker)
+            .doNext(worker: getLikesCommentsStatApiWorker)
             .onSuccess {
                work.success(result: $0)
             }

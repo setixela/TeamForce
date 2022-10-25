@@ -95,12 +95,27 @@ struct Feed: Codable {
    }
 }
 
-final class GetFeedsApiWorker: BaseApiWorker<String, [Feed]> {
+struct Pagination {
+   let offset: Int
+   let limit: Int
+}
+
+final class GetFeedsApiWorker: BaseApiWorker<(String, Pagination), [Feed]> {
    override func doAsync(work: Wrk) {
+      guard let request = work.input
+      else {
+         work.fail()
+         return
+      }
+
+      let endpoint = TeamForceEndpoints.Feed(
+         offset: request.1.offset,
+         limit: request.1.limit,
+         headers: [ "Authorization": request.0 ]
+      )
+      
       apiEngine?
-         .process(endpoint: TeamForceEndpoints.Feed(headers: [
-            "Authorization": work.input.string,
-         ]))
+         .process(endpoint: endpoint)
          .done { result in
             let decoder = DataToDecodableParser()
             guard

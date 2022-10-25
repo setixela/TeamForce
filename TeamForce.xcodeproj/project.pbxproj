@@ -335,6 +335,16 @@
 		63EB469528AC35720070A271 /* HistoryScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EB469428AC35720070A271 /* HistoryScene.swift */; };
 		63EB469728AC35920070A271 /* HistoryScenario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EB469628AC35920070A271 /* HistoryScenario.swift */; };
 		63EB469928AC35A30070A271 /* HistoryWorks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EB469828AC35A30070A271 /* HistoryWorks.swift */; };
+		63FCC9A629073981009D0001 /* GetEventsApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FCC9A529073981009D0001 /* GetEventsApiWorker.swift */; };
+		63FCC9A929073DE6009D0001 /* GetEventsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FCC9A829073DE6009D0001 /* GetEventsUseCase.swift */; };
+		63FCC9AB29074A61009D0001 /* GetEventsTransactApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FCC9AA29074A61009D0001 /* GetEventsTransactApiWorker.swift */; };
+		63FCC9AD29074AEC009D0001 /* GetEventsTransactUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FCC9AC29074AEC009D0001 /* GetEventsTransactUseCase.swift */; };
+		63FCC9AF29075036009D0001 /* GetEventsWinnersApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FCC9AE29075036009D0001 /* GetEventsWinnersApiWorker.swift */; };
+		63FCC9B1290750BA009D0001 /* GetEventsWinnersUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FCC9B0290750BA009D0001 /* GetEventsWinnersUseCase.swift */; };
+		63FCC9B32907535C009D0001 /* GetEventsChallApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FCC9B22907535C009D0001 /* GetEventsChallApiWorker.swift */; };
+		63FCC9B529075383009D0001 /* GetEventsChallUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FCC9B429075383009D0001 /* GetEventsChallUseCase.swift */; };
+		63FCC9B729075748009D0001 /* GetEventsTransactByIdApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FCC9B629075748009D0001 /* GetEventsTransactByIdApiWorker.swift */; };
+		63FCC9B929075A70009D0001 /* GetEventsTransactByIdUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FCC9B829075A70009D0001 /* GetEventsTransactByIdUseCase.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -673,6 +683,16 @@
 		63EB469428AC35720070A271 /* HistoryScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryScene.swift; sourceTree = "<group>"; };
 		63EB469628AC35920070A271 /* HistoryScenario.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryScenario.swift; sourceTree = "<group>"; };
 		63EB469828AC35A30070A271 /* HistoryWorks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryWorks.swift; sourceTree = "<group>"; };
+		63FCC9A529073981009D0001 /* GetEventsApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetEventsApiWorker.swift; sourceTree = "<group>"; };
+		63FCC9A829073DE6009D0001 /* GetEventsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetEventsUseCase.swift; sourceTree = "<group>"; };
+		63FCC9AA29074A61009D0001 /* GetEventsTransactApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetEventsTransactApiWorker.swift; sourceTree = "<group>"; };
+		63FCC9AC29074AEC009D0001 /* GetEventsTransactUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetEventsTransactUseCase.swift; sourceTree = "<group>"; };
+		63FCC9AE29075036009D0001 /* GetEventsWinnersApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetEventsWinnersApiWorker.swift; sourceTree = "<group>"; };
+		63FCC9B0290750BA009D0001 /* GetEventsWinnersUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetEventsWinnersUseCase.swift; sourceTree = "<group>"; };
+		63FCC9B22907535C009D0001 /* GetEventsChallApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetEventsChallApiWorker.swift; sourceTree = "<group>"; };
+		63FCC9B429075383009D0001 /* GetEventsChallUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetEventsChallUseCase.swift; sourceTree = "<group>"; };
+		63FCC9B629075748009D0001 /* GetEventsTransactByIdApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetEventsTransactByIdApiWorker.swift; sourceTree = "<group>"; };
+		63FCC9B829075A70009D0001 /* GetEventsTransactByIdUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetEventsTransactByIdUseCase.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1437,6 +1457,7 @@
 		19EF32AC287CE8140078F53D /* ApiModels */ = {
 			isa = PBXGroup;
 			children = (
+				63FCC9A429073966009D0001 /* Events */,
 				635FC6C128EE7A8F00826B67 /* Challenge */,
 				19AE3AF12869230C00A0C6E4 /* AuthApiWorker.swift */,
 				1918CC7C286F6CAC004373F3 /* GetBalanceApiWorker.swift */,
@@ -1487,6 +1508,7 @@
 		19F153822899647100ECF000 /* ApiUseCases */ = {
 			isa = PBXGroup;
 			children = (
+				63FCC9A729073DD2009D0001 /* Events */,
 				635FC6C428EE7F1E00826B67 /* Challenge */,
 				19F153832899649900ECF000 /* LoadProfileUseCase.swift */,
 				19F15385289964AA00ECF000 /* LogoutUseCase.swift */,
@@ -1621,6 +1643,30 @@
 				63C6D11328B2E1F200887AD1 /* SettingsScene.swift */,
 			);
 			path = Settings;
+			sourceTree = "<group>";
+		};
+		63FCC9A429073966009D0001 /* Events */ = {
+			isa = PBXGroup;
+			children = (
+				63FCC9A529073981009D0001 /* GetEventsApiWorker.swift */,
+				63FCC9AA29074A61009D0001 /* GetEventsTransactApiWorker.swift */,
+				63FCC9AE29075036009D0001 /* GetEventsWinnersApiWorker.swift */,
+				63FCC9B22907535C009D0001 /* GetEventsChallApiWorker.swift */,
+				63FCC9B629075748009D0001 /* GetEventsTransactByIdApiWorker.swift */,
+			);
+			path = Events;
+			sourceTree = "<group>";
+		};
+		63FCC9A729073DD2009D0001 /* Events */ = {
+			isa = PBXGroup;
+			children = (
+				63FCC9A829073DE6009D0001 /* GetEventsUseCase.swift */,
+				63FCC9AC29074AEC009D0001 /* GetEventsTransactUseCase.swift */,
+				63FCC9B0290750BA009D0001 /* GetEventsWinnersUseCase.swift */,
+				63FCC9B429075383009D0001 /* GetEventsChallUseCase.swift */,
+				63FCC9B829075A70009D0001 /* GetEventsTransactByIdUseCase.swift */,
+			);
+			path = Events;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1770,10 +1816,12 @@
 				636A45982900D71D003E412D /* ChallReportDetailsScenario.swift in Sources */,
 				63AB071928BD8FA400FD650F /* UpdateContactUseCase.swift in Sources */,
 				198BBEF228B6CE9B0006CD30 /* StringStorageUseCase.swift in Sources */,
+				63FCC9B1290750BA009D0001 /* GetEventsWinnersUseCase.swift in Sources */,
 				19CAB9CA28B41C8200A0A3B1 /* TitleBodySwitcher.swift in Sources */,
 				19CAB9CE28B4261E00A0A3B1 /* LabelSwitchXDT.swift in Sources */,
 				63A529F528A1F8AB004A858D /* SegmentedControlModel.swift in Sources */,
 				63D419F128AA825F0024E22C /* GetPeriodsUseCase.swift in Sources */,
+				63FCC9AF29075036009D0001 /* GetEventsWinnersApiWorker.swift in Sources */,
 				63E7A73F28AF9E8000FB2C80 /* ReadyWorks.swift in Sources */,
 				190D052328C7C1DC00466893 /* ProfileBuilder.swift in Sources */,
 				635FC6C328EE7ACC00826B67 /* GetChallengesApiWorker.swift in Sources */,
@@ -1785,6 +1833,7 @@
 				19A9BE7128C1B34E0099F8EA /* ImageLabelLabelMRD.swift in Sources */,
 				1985A12828B296FB00B017E0 /* SegmentControl.swift in Sources */,
 				198FE1CE2899BB8E00BAF1A5 /* LoadBalanceUseCase.swift in Sources */,
+				63FCC9A929073DE6009D0001 /* GetEventsUseCase.swift in Sources */,
 				1959F27428AA8E9700DEEE5C /* LoginWorks.swift in Sources */,
 				196750B22865190D0019A6DE /* ImageViewModel.swift in Sources */,
 				633FBC8628E542540071FF8C /* FeedDetailViewModels.swift in Sources */,
@@ -1807,6 +1856,7 @@
 				196750A22865169C0019A6DE /* DigitalThanksScene.swift in Sources */,
 				19CF792C28A587B9001531B8 /* TransactWorks.swift in Sources */,
 				19C1E991285F426B00E7976D /* ApiEngine.swift in Sources */,
+				63FCC9B529075383009D0001 /* GetEventsChallUseCase.swift in Sources */,
 				19017B7128A69CB100B06345 /* IconTitleY.swift in Sources */,
 				63E7A74528AFBC5300FB2C80 /* GetPeriodsFromDateApiWorker.swift in Sources */,
 				19EF32B02884B6C80078F53D /* TableViewModel.swift in Sources */,
@@ -1880,6 +1930,7 @@
 				63BB2C0C28DA160B00C1E3DB /* PressLikeApiWorker.swift in Sources */,
 				63CFA198289C3FB6000E4D1E /* GetTransactionsUseCase.swift in Sources */,
 				1977BE5828A7343400D554EA /* InputCheckers.swift in Sources */,
+				63FCC9B32907535C009D0001 /* GetEventsChallApiWorker.swift in Sources */,
 				63AB070F28BD552A00FD650F /* CreateContactApiWorker.swift in Sources */,
 				631D8EB528F78D4D005332BD /* GetChallengeResultApiWorker.swift in Sources */,
 				19017B7328A69CD400B06345 /* DTLogoTitleX.swift in Sources */,
@@ -1904,6 +1955,7 @@
 				1952EA6328A7102B003F7852 /* StateProtocol.swift in Sources */,
 				19A9BE8028C307000099F8EA /* Queue.swift in Sources */,
 				19D08357286F41B200F75E4A /* DoubleLabelPairModel.swift in Sources */,
+				63FCC9B929075A70009D0001 /* GetEventsTransactByIdUseCase.swift in Sources */,
 				19B39E5928D341B900BB2C77 /* TagList.swift in Sources */,
 				1952EA6D28A71537003F7852 /* ButtonElements.swift in Sources */,
 				635FC6C628EE7F3800826B67 /* GetChallengesUseCase.swift in Sources */,
@@ -1915,6 +1967,7 @@
 				631995B228F53F6800EB2638 /* ChallengeCreateScenario.swift in Sources */,
 				63CFA196289C38A9000E4D1E /* GetTransactionsApiWorker.swift in Sources */,
 				631D8EB728F78F04005332BD /* GetChallengeResultUseCase.swift in Sources */,
+				63FCC9A629073981009D0001 /* GetEventsApiWorker.swift in Sources */,
 				19221EEC28C9B04700B7B604 /* TitledTextFieldY.swift in Sources */,
 				197A2DA328A9BF4B00190656 /* Combos+Init.swift in Sources */,
 				1967509F286492780019A6DE /* Labels.swift in Sources */,
@@ -1935,6 +1988,7 @@
 				63A37EA428EE881600DBD59F /* GetChallengeByIdUseCase.swift in Sources */,
 				63A37EB228F054F300DBD59F /* GetChallengeWinnersUseCase.swift in Sources */,
 				63E7A74B28AFCB1800FB2C80 /* UpdateProfileImageApiWorker.swift in Sources */,
+				63FCC9AB29074A61009D0001 /* GetEventsTransactApiWorker.swift in Sources */,
 				1918CC79286F6C69004373F3 /* VerifyApiModel.swift in Sources */,
 				63EB469928AC35A30070A271 /* HistoryWorks.swift in Sources */,
 				197A360D28BBB18D006E44C1 /* String+DrawImage.swift in Sources */,
@@ -2036,12 +2090,14 @@
 				63A37EB028F0528800DBD59F /* GetChallengeWinnersApiWorker.swift in Sources */,
 				19A8229828A9305D0081D385 /* UIEdgeInsets+Padding.swift in Sources */,
 				19466E03289FFC040052F0AB /* IconTitleSubtitleModel.swift in Sources */,
+				63FCC9B729075748009D0001 /* GetEventsTransactByIdApiWorker.swift in Sources */,
 				19EE849028AB20CE00D862EE /* DoubleStacksBrandedVM.swift in Sources */,
 				198BBEF028B69C810006CD30 /* LoadBothTokensUseCase.swift in Sources */,
 				19D0835D286F428600F75E4A /* BarButtonModel.swift in Sources */,
 				63BB2C2228E150CA00C1E3DB /* DeleteCommentApiWorker.swift in Sources */,
 				63A37EB828F3199D00DBD59F /* CheckChallengeReportApiWorker.swift in Sources */,
 				63AB070928BD4C1B00FD650F /* UpdateProfileApiWorker.swift in Sources */,
+				63FCC9AD29074AEC009D0001 /* GetEventsTransactUseCase.swift in Sources */,
 				196750AC2865189C0019A6DE /* TextFieldModel.swift in Sources */,
 				1921A13328EECABE00E41E86 /* ChallengesScenario.swift in Sources */,
 				63BB2C0E28DA179D00C1E3DB /* PressLikeUseCase.swift in Sources */,

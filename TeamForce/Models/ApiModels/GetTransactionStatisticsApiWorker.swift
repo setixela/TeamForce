@@ -37,15 +37,19 @@ struct Like: Codable {
    }
 }
 
-struct TransactStatistics: Codable {
-   let transactionId: String
+struct LikesCommentsStatistics: Codable {
+   let transactionId: Int?
+   let challengeId: Int?
+   let challengeReportId: Int?
    let contentType: String
-   let objectId: String
+   let objectId: Int?
    let comments: Int?
    let likes: [Like]?
    
    enum CodingKeys: String, CodingKey {
       case transactionId = "transaction_id"
+      case challengeId = "challenge_id"
+      case challengeReportId = "challenge_report_id"
       case contentType = "content_type"
       case objectId = "object_id"
       case comments
@@ -53,12 +57,32 @@ struct TransactStatistics: Codable {
    }
 }
 
-struct TransactStatRequest {
+struct LikesCommentsStatRequest {
    let token: String?
-   let transactionId: Int
+   let body: Body?
+   struct Body: Codable {
+      let transactionId: Int?
+      let challengeId: Int?
+      let challengeReportId: Int?
+      
+      init(transactionId: Int? = nil,
+           challengeId: Int? = nil,
+           challengeReportId: Int? = nil) {
+         self.transactionId = transactionId
+         self.challengeId = challengeId
+         self.challengeReportId = challengeReportId
+      }
+      
+      enum CodingKeys: String, CodingKey {
+         case transactionId = "transaction_id"
+         case challengeId = "challenge_id"
+         case challengeReportId = "challenge_report_id"
+      }
+   }
 }
 
-final class GetTransactionStatisticsApiWorker: BaseApiWorker<TransactStatRequest, TransactStatistics> {
+
+final class GetLikesCommentsStatApiWorker: BaseApiWorker<LikesCommentsStatRequest, LikesCommentsStatistics> {
    override func doAsync(work: Wrk) {
       let cookieName = "csrftoken"
 
@@ -69,19 +93,22 @@ final class GetTransactionStatisticsApiWorker: BaseApiWorker<TransactStatRequest
          print("No csrf cookie")
          return
       }
+      
+      let jsonData = try? JSONEncoder().encode(request.body)
+      let endpoint = TeamForceEndpoints.GetLikesCommentsStat(
+         headers: ["Authorization": request.token.string,
+                   "X-CSRFToken": cookie.value,
+                   "Content-Type": "application/json"],
+         jsonData: jsonData
+      )
    
       apiEngine?
-         .process(endpoint: TeamForceEndpoints.GetTransactionStatistics(headers: [
-            "Authorization": request.token.string,
-            "X-CSRFToken": cookie.value
-         ], body: [
-            "transaction_id": request.transactionId
-         ]))
+         .process(endpoint: endpoint)
          .done { result in
             let decoder = DataToDecodableParser()
             guard
                let data = result.data,
-               let stat: TransactStatistics = decoder.parse(data)
+               let stat: LikesCommentsStatistics = decoder.parse(data)
             else {
                work.fail()
                return

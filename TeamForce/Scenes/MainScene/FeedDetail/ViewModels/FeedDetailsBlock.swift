@@ -55,18 +55,18 @@ final class FeedDetailsBlock<Design: DSP>: StackModel, Designable {
 }
 
 extension FeedDetailsBlock: SetupProtocol {
-   func setup(_ data: Feed) {
-      if let reason = data.transaction.reason, reason != "" {
+   func setup(_ data: EventTransaction) {
+      if let reason = data.reason, reason != "" {
          reasonLabel.text(reason)
          reasonStack.hidden(false)
       }
 
-      if data.transaction.tags?.isEmpty == false {
+      if data.tags?.isEmpty == false {
          hashTagBlock.setup(data)
          hashTagBlock.hidden(false)
       }
 
-      if let photoLink = data.transaction.photo {
+      if let photoLink = data.photo {
          transactPhoto.models.down.url(TeamForceEndpoints.urlBase + photoLink)
          transactPhoto.hidden(false)
       }

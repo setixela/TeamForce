@@ -11,16 +11,19 @@ import ReactiveWorks
 protocol FeedWorksProtocol {
    var loadFeedForCurrentUser: Work<UserData?, Void> { get }
 
-   var getAllFeed: VoidWork<([Feed], String)> { get }
-   var getMyFeed: VoidWork<([Feed], String)> { get }
-   var getPublicFeed: VoidWork<([Feed], String)> { get }
+   var getAllFeed: VoidWork<([NewFeed], String)> { get }
+//   var getMyFeed: VoidWork<([Feed], String)> { get }
+//   var getPublicFeed: VoidWork<([Feed], String)> { get }
 }
 
 final class FeedWorksTempStorage: InitProtocol {
-   var feed: [Feed]?
+   var feed: [NewFeed] = []
    lazy var currentUserName = ""
    var segmentId: Int?
    var currentTransactId: Int?
+   var limit = 20
+   var offset = 1
+   var isPaginating = false
 }
 
 final class FeedWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedWorksTempStorage, Asset>, FeedWorksProtocol {
@@ -35,11 +38,10 @@ final class FeedWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedWorksTempStorage
          return
       }
       Self.store.currentUserName = userName
-
-      self?.apiUseCase.getFeed
-         .doAsync()
+      
+      self?.getEvents
+         .doAsync(true)
          .onSuccess {
-            Self.store.feed = $0
             work.success()
          }
          .onFail {
@@ -47,30 +49,30 @@ final class FeedWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedWorksTempStorage
          }
    }}
 
-   var getAllFeed: VoidWork<([Feed], String)> { .init { work in
+   var getAllFeed: VoidWork<([NewFeed], String)> { .init { work in
       Self.store.segmentId = 0
       let filtered = Self.filteredAll()
       work.success(result: (filtered, Self.store.currentUserName))
    }}
 
-   var getMyFeed: VoidWork<([Feed], String)> { .init { work in
-      let filtered = Self.filteredMy()
-      Self.store.segmentId = 1
-      work.success(result: (filtered, Self.store.currentUserName))
-   }}
+//   var getMyFeed: VoidWork<([Feed], String)> { .init { work in
+//      let filtered = Self.filteredMy()
+//      Self.store.segmentId = 1
+//      work.success(result: (filtered, Self.store.currentUserName))
+//   }}
+//
+//   var getPublicFeed: VoidWork<([Feed], String)> { .init { work in
+//      let filtered = Self.filteredPublic()
+//      Self.store.segmentId = 2
+//      work.success(result: (filtered, Self.store.currentUserName))
+//   }}
 
-   var getPublicFeed: VoidWork<([Feed], String)> { .init { work in
-      let filtered = Self.filteredPublic()
-      Self.store.segmentId = 2
-      work.success(result: (filtered, Self.store.currentUserName))
-   }}
-
-   var getFeedByRowNumber: Work<(IndexPath, Int), Feed> { .init { work in
+   var getFeedByRowNumber: Work<(IndexPath, Int), NewFeed> { .init { work in
       let segmentId = Self.store.segmentId
-      var filtered: [Feed] = []
-      if segmentId == 0 { filtered = Self.filteredAll() }
-      else if segmentId == 1 { filtered = Self.filteredMy() }
-      else if segmentId == 2 { filtered = Self.filteredPublic() }
+      var filtered: [NewFeed] = []
+      if segmentId == 0 { filtered = Self.store.feed }
+//      else if segmentId == 1 { filtered = Self.filteredMy() }
+//      else if segmentId == 2 { filtered = Self.filteredPublic() }
       
       if let index = work.input?.1 {
          let feed = filtered[index]
@@ -94,10 +96,11 @@ final class FeedWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedWorksTempStorage
             work.fail()
          }
    }.retainBy(retainer) }
+   
 
-   var getTransactStat: Work<TransactStatRequest, TransactStatistics> { .init { [weak self] work in
+   var getLikesCommentsStat: Work<LikesCommentsStatRequest, LikesCommentsStatistics> { .init { [weak self] work in
       guard let input = work.input else { return }
-      self?.apiUseCase.getTransactStatistics
+      self?.apiUseCase.getLikesCommentsStat
          .doAsync(input)
          .onSuccess {
             work.success(result: $0)
@@ -163,34 +166,97 @@ final class FeedWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedWorksTempStorage
 }
 
 private extension FeedWorks {
-   static func filteredAll() -> [Feed] {
-      guard let feed = store.feed else {
-         return []
-      }
+   static func filteredAll() -> [NewFeed] {
       
-      return feed
+      return store.feed
    }
+
+}
+//for events works
+extension FeedWorks {
+   var getEvents: Work<Bool, Void> { .init { [weak self] work in
+      guard let paginating = work.input else { return }
+      if Self.store.isPaginating {
+         print(Self.store.isPaginating)
+         return
+      }
+      if paginating {
+         Self.store.isPaginating = true
+      }
+      let pagination = Pagination(offset: Self.store.offset, limit: Self.store.limit)
+      self?.apiUseCase.getEvents
+         .doAsync(pagination)
+         .onSuccess {
+            Self.store.feed.append(contentsOf: $0)
+            Self.store.offset += 1
+            Self.store.isPaginating = false
+            work.success()
+         }
+         .onFail {
+            work.fail()
+         }
+   }.retainBy(retainer) }
    
-   static func filteredMy() -> [Feed] {
-      guard let feed = store.feed else {
-         return []
+   var getEventsTransact: Work<Bool, Void> { .init { [weak self] work in
+      guard let paginating = work.input else { return }
+      //create isPagination var for transact
+      if Self.store.isPaginating {
+         print(Self.store.isPaginating)
+         return
       }
-      
-      return feed.filter {
-         let senderName = $0.transaction.sender
-         let recipientName = $0.transaction.recipient
-         let myName = Self.store.currentUserName
-         return myName == senderName || myName == recipientName
+      if paginating {
+         Self.store.isPaginating = true
       }
-   }
+      let pagination = Pagination(offset: Self.store.offset, limit: Self.store.limit)
+      self?.apiUseCase.getEventsTransact
+         .doAsync(pagination)
+         .onSuccess {
+            work.success()
+         }
+         .onFail {
+            work.fail()
+         }
+   }.retainBy(retainer) }
    
-   static func filteredPublic() -> [Feed] {
-      guard let feed = store.feed else {
-         return []
+   var getEventsWinners: Work<Bool, Void> { .init { [weak self] work in
+      guard let paginating = work.input else { return }
+      //create isPagination var for winners
+      if Self.store.isPaginating {
+         print(Self.store.isPaginating)
+         return
       }
-      
-      return feed.filter {
-         $0.transaction.isAnonymous == false
+      if paginating {
+         Self.store.isPaginating = true
       }
-   }
+      let pagination = Pagination(offset: Self.store.offset, limit: Self.store.limit)
+      self?.apiUseCase.getEventsWinners
+         .doAsync(pagination)
+         .onSuccess {
+            work.success()
+         }
+         .onFail {
+            work.fail()
+         }
+   }.retainBy(retainer) }
+   
+   var getEventsChallenge: Work<Bool, Void> { .init { [weak self] work in
+      guard let paginating = work.input else { return }
+      //create isPagination var for challenge
+      if Self.store.isPaginating {
+         print(Self.store.isPaginating)
+         return
+      }
+      if paginating {
+         Self.store.isPaginating = true
+      }
+      let pagination = Pagination(offset: Self.store.offset, limit: Self.store.limit)
+      self?.apiUseCase.getEventsChall
+         .doAsync(pagination)
+         .onSuccess {
+            work.success()
+         }
+         .onFail {
+            work.fail()
+         }
+   }.retainBy(retainer) }
 }
