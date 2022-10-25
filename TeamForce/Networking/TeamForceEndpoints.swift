@@ -323,14 +323,14 @@ enum TeamForceEndpoints {
       var body: [String : Any]
    }
    
-   struct GetTransactionStatistics: EndpointProtocol {
+   struct GetLikesCommentsStat: EndpointProtocol {
       let method = HTTPMethod.post
       
-      var endPoint: String { urlBase + "/get-transaction-statistics/" }
+      var endPoint: String { urlBase + "/get-likes-comments-statistics/" }
       
       var headers: [String : String]
       
-      var body: [String : Any]
+      let jsonData: Data?
    }
    
    struct GetComments: EndpointProtocol {

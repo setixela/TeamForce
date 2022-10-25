@@ -51,7 +51,7 @@ final class FeedDetailWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedDetailWork
             .doAsync(transactionId)
             .onSuccess {
                Self.store.transaction = $0
-               
+               Self.store.userLiked = $0.userLiked
                work.success(result: $0)
             }
       } else {
@@ -92,10 +92,11 @@ final class FeedDetailWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedDetailWork
          }
    }.retainBy(retainer) }
 
-   var getTransactStat: Work<Void, (TransactStatistics, (Bool/*, Bool*/))> { .init { [weak self] work in
+   var getTransactStat: Work<Void, (LikesCommentsStatistics, (Bool/*, Bool*/))> { .init { [weak self] work in
       guard let transactId = Self.store.currentTransactId else { return }
-      let request = TransactStatRequest(token: "", transactionId: transactId)
-      self?.apiUseCase.getTransactStatistics
+      let body = LikesCommentsStatRequest.Body(transactionId: transactId)
+      let request = LikesCommentsStatRequest(token: "", body: body)
+      self?.apiUseCase.getLikesCommentsStat
          .doAsync(request)
          .onSuccess {
             let likes = (Self.store.userLiked /*, Self.store.userDisliked*/)

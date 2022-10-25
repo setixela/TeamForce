@@ -240,10 +240,10 @@ final class ApiUseCase<Asset: AssetProtocol>: InitProtocol, Assetable, WorkBaske
       .retainedWork(retainer)
    }
    
-   var getTransactStatistics: GetTransactionStatisticsUseCase.WRK {
-      GetTransactionStatisticsUseCase(
+   var getLikesCommentsStat: GetLikesCommentsStatUseCase.WRK {
+      GetLikesCommentsStatUseCase(
          safeStringStorage: safeStringStorage,
-         getTransactionStatisticsApiWorker: getTransactionStatisticsApiWorker
+         getLikesCommentsStatApiWorker: getLikesCommentsStatApiWorker
       )
       .retainedWork(retainer)
    }
@@ -452,7 +452,7 @@ final class ApiUseCase<Asset: AssetProtocol>: InitProtocol, Assetable, WorkBaske
        Asset.service.apiEngine) }
    private var pressLikeApiWorker: PressLikeApiWorker { .init(apiEngine:
        Asset.service.apiEngine) }
-   private var getTransactionStatisticsApiWorker: GetTransactionStatisticsApiWorker { .init(apiEngine: Asset.service.apiEngine) }
+   private var getLikesCommentsStatApiWorker: GetLikesCommentsStatApiWorker { .init(apiEngine: Asset.service.apiEngine) }
    private var getCommentsApiWorker: GetCommentsApiWorker { .init(apiEngine:
        Asset.service.apiEngine) }
    private var createCommentApiWorker: CreateCommentApiWorker { .init(apiEngine:

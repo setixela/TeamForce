@@ -71,7 +71,7 @@ enum FeedDetailSceneState {
    case presentReactions([ReactItem])
    case buttonLikePressed(alreadySelected: Bool)
    case failedToReact
-   case updateReactions((TransactStatistics, Bool))
+   case updateReactions((LikesCommentsStatistics, Bool))
    case presntActivityIndicator
    case sendButtonDisabled
    case sendButtonEnabled
@@ -101,10 +101,6 @@ extension FeedDetailScene: StateMachine {
             for reaction in reactions {
                if reaction.likeKind?.code == "like" {
                   feedDetailVM.infoBlock.likeButton.models.right.text(String(reaction.counter ?? 0))
-                  print(value.0)
-                  print("like count \(reaction.counter)")
-               } else if reaction.likeKind?.code == "dislike" {
-//                  feedDetailVM.topBlock.dislikeButton.models.right.text(String(reaction.counter ?? 0))
                }
             }
          }

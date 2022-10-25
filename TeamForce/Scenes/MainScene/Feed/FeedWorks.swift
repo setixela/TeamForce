@@ -38,15 +38,6 @@ final class FeedWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedWorksTempStorage
          return
       }
       Self.store.currentUserName = userName
-//      
-//      self?.getEventsWinners
-//         .doAsync(true)
-//         .onSuccess {
-//            print("success")
-//         }
-//         .onFail {
-//            print("fail")
-//         }
       
       self?.getEvents
          .doAsync(true)
@@ -57,29 +48,6 @@ final class FeedWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedWorksTempStorage
             work.fail()
          }
    }}
-   
-//   var getFeed: Work<Bool, Void> { .init { [weak self] work in
-//      guard let paginating = work.input else { return }
-//      if Self.store.isPaginating {
-//         print(Self.store.isPaginating)
-//         return
-//      }
-//      if paginating {
-//         Self.store.isPaginating = true
-//      }
-//      let pagination = Pagination(offset: Self.store.offset, limit: Self.store.limit)
-//      self?.apiUseCase.getFeed
-//         .doAsync(pagination)
-//         .onSuccess {
-//            Self.store.feed.append(contentsOf: $0)
-//            Self.store.offset += 1
-//            Self.store.isPaginating = false
-//            work.success()
-//         }
-//         .onFail {
-//            work.fail()
-//         }
-//   }.retainBy(retainer) }
 
    var getAllFeed: VoidWork<([NewFeed], String)> { .init { work in
       Self.store.segmentId = 0
@@ -128,10 +96,11 @@ final class FeedWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedWorksTempStorage
             work.fail()
          }
    }.retainBy(retainer) }
+   
 
-   var getTransactStat: Work<TransactStatRequest, TransactStatistics> { .init { [weak self] work in
+   var getLikesCommentsStat: Work<LikesCommentsStatRequest, LikesCommentsStatistics> { .init { [weak self] work in
       guard let input = work.input else { return }
-      self?.apiUseCase.getTransactStatistics
+      self?.apiUseCase.getLikesCommentsStat
          .doAsync(input)
          .onSuccess {
             work.success(result: $0)
@@ -198,35 +167,10 @@ final class FeedWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedWorksTempStorage
 
 private extension FeedWorks {
    static func filteredAll() -> [NewFeed] {
-//      guard let feed = store.feed else {
-//         return []
-//      }
       
       return store.feed
    }
-//
-//   static func filteredMy() -> [Feed] {
-////      guard let feed = store.feed else {
-////         return []
-////      }
-//      let feed = store.feed
-//      return feed.filter {
-//         let senderName = $0.transaction.sender
-//         let recipientName = $0.transaction.recipient
-//         let myName = Self.store.currentUserName
-//         return myName == senderName || myName == recipientName
-//      }
-//   }
-   
-//   static func filteredPublic() -> [Feed] {
-////      guard let feed = store.feed else {
-////         return []
-////      }
-//      let feed = store.feed
-//      return feed.filter {
-//         $0.transaction.isAnonymous == false
-//      }
-//   }
+
 }
 //for events works
 extension FeedWorks {
