@@ -24,8 +24,9 @@ final class FeedScene<Asset: AssetProtocol>: DoubleStacksModel,
       stateDelegate: stateDelegate,
       events: FeedScenarioInputEvents(
          loadFeedForCurrentUser: on(\.userDidLoad),
-         presentAllFeed: viewModels.filterButtons.on(\.didTapAll),
-//         presentMyFeed: viewModels.filterButtons.on(\.didTapMy),
+         filterTapped: viewModels.filterButtons.on(\.didTapButtons),
+         //presentAllFeed: viewModels.filterButtons.on(\.didTapButtons),
+         //presentTransactions: viewModels.filterButtons.on(\.didTapMy),
 //         presentPublicFeed: viewModels.filterButtons.on(\.didTapPublic),
          presentProfile: viewModels.presenter.on(\.didSelect),
          reactionPressed: viewModels.presenter.on(\.reactionPressed),
@@ -48,6 +49,8 @@ final class FeedScene<Asset: AssetProtocol>: DoubleStacksModel,
       bodyStack.arrangedModels([
          viewModels.filterButtons
       ])
+      .padding(.horizontalOffset(8))
+      .padBottom(8)
 
       footerStack.arrangedModels([
          activityIndicator,

@@ -11,8 +11,9 @@ import UIKit
 struct FeedScenarioInputEvents {
    let loadFeedForCurrentUser: VoidWork<UserData?>
 
-   let presentAllFeed: VoidWork<Void>
-//   let presentMyFeed: VoidWork<Void>
+   let filterTapped: VoidWork<Button4Event>
+   //let presentAllFeed: VoidWork<Void>
+   //let presentTransactions: VoidWork<Void>
 //   let presentPublicFeed: VoidWork<Void>
    let presentProfile: VoidWork<Int>
    let reactionPressed: VoidWork<PressLikeRequest>
@@ -32,16 +33,27 @@ final class FeedScenario<Asset: AssetProtocol>:
          .doNext(works.loadFeedForCurrentUser)
          .onFail(setState, .loadFeedError)
          .doNext(works.getAllFeed)
-         .onSuccess(setState) { .presentFeed($0) }
+         .onSuccess(setState) {
+            .presentFeed($0)
+         }
          .onFail(setState, .loadFeedError)
 
-      events.presentAllFeed
-         .doNext(works.getAllFeed)
-         .onSuccess(setState) { .presentFeed($0) }
-         .onFail(setState, .loadFeedError)
-
-//      events.presentMyFeed
-//         .doNext(works.getMyFeed)
+      
+      events.filterTapped
+         .doNext(works.filterWork)
+         .onSuccess(setState) {
+            .presentFeed($0)
+         }
+         .onFail(setState) {
+            .loadFeedError
+         }
+//      events.presentAllFeed
+//         .doNext(works.getAllFeed)
+//         .onSuccess(setState) { .presentFeed($0) }
+//         .onFail(setState, .loadFeedError)
+//
+//      events.presentTransactions
+//         .doNext(works.getTransactionFeed)
 //         .onSuccess(setState) { .presentFeed($0) }
 //         .onFail(setState, .loadFeedError)
 //
