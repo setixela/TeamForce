@@ -85,6 +85,7 @@ protocol IconElements: InitProtocol, DesignElementable where DesignElement == UI
    var tablerAward: UIImage { get }
 
    // illusttrates
+   var challengeWinnerIllustrateFull: DesignElement { get }
    var challengeWinnerIllustrate: DesignElement { get }
 
    // challenges
@@ -172,6 +173,7 @@ struct IconBuilder: IconElements {
    var tablerAward: UIImage { make("tabler_award") }
 
    // illusttrates
+   var challengeWinnerIllustrateFull: UIImage { make("challenge_winner_illustrate_full") }
    var challengeWinnerIllustrate: UIImage { make("challenge_winner_illustrate") }
 
    // challenges

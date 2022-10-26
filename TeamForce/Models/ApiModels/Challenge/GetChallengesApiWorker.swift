@@ -38,7 +38,7 @@ enum ChallengeStatus: String, Codable {
    case rewarded = "Получено вознаграждение"
 }
 
-struct Challenge: Codable {
+final class Challenge: Codable {
    let id: Int
    let name: String?
    let photo: String?

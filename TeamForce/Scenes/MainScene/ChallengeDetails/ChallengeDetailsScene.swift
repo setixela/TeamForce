@@ -39,8 +39,8 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
    )
 
    private lazy var headerImage = ImageViewModel()
-      .image(Design.icon.challengeWinnerIllustrate)
-      .contentMode(.scaleAspectFit)
+      .image(Design.icon.challengeWinnerIllustrateFull)
+      .contentMode(.scaleAspectFill)
       .height(200)
 
    private lazy var filterButtons = SlidedIndexButtons<Button6Event>(buttons:
