@@ -13,7 +13,7 @@ class ReactionsPresenters<Design: DesignProtocol>: Designable {
    
    var reactionsCellPresenter: Presenter<ReactItem, WrappedX<StackModel>> {
       Presenter { work in
-         let item = work.unsafeInput
+         let item = work.unsafeInput.item
          let user = item.user
 
          let icon = ImageViewModel()

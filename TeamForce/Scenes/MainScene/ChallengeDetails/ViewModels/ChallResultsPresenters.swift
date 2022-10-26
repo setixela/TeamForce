@@ -13,7 +13,7 @@ class ChallResultsPresenters<Design: DesignProtocol>: Designable {
    
    var resultsCellPresenter: Presenter<ChallengeResult, WrappedX<StackModel>> {
       Presenter { work in
-         let result = work.unsafeInput
+         let result = work.unsafeInput.item
          let updatedAt = result.updatedAt
          let text = result.text.string
          let status = result.status

@@ -20,7 +20,7 @@ struct PressLikeUseCase: UseCaseProtocol {
             }
             .doMap {
                guard let input = work.input else { return nil }
-               let request = PressLikeRequest(token: $0, body: input.body)
+               let request = PressLikeRequest(token: $0, body: input.body, index: input.index)
                return request
             }
             .doNext(worker: pressLikeApiWorker)
@@ -31,7 +31,5 @@ struct PressLikeUseCase: UseCaseProtocol {
                work.fail()
             }
       }
-      
-      
    }
 }

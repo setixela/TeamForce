@@ -30,7 +30,7 @@ final class FeedScene<Asset: AssetProtocol>: DoubleStacksModel,
 //         presentPublicFeed: viewModels.filterButtons.on(\.didTapPublic),
          presentProfile: viewModels.presenter.on(\.didSelect),
          reactionPressed: viewModels.presenter.on(\.reactionPressed),
-         presentDetail: viewModels.feedTableModel.on(\.didSelectRow),
+         presentDetail: viewModels.feedTableModel.on(\.didSelectRowInt),
          pagination: viewModels.feedTableModel.on(\.pagination)
       )
    )
@@ -79,6 +79,7 @@ enum FeedSceneState {
    case reactionChanged
    case presentDetailView(NewFeed)
    case updateFeed([NewFeed])
+   case updateFeedAtIndex(NewFeed, Int)
 }
 
 extension FeedScene: StateMachine {
@@ -116,6 +117,8 @@ extension FeedScene: StateMachine {
          break
       case .updateFeed(let value):
          viewModels.feedTableModel.set(.items(value + [SpacerItem(size: Grid.x64.value)]))
+      case .updateFeedAtIndex(let feed, let index):
+         viewModels.feedTableModel.set(.updateItemAtIndex(feed, index))
       }
    }
 }

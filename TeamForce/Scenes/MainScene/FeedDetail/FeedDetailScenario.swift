@@ -38,8 +38,8 @@ final class FeedDetailScenario<Asset: AssetProtocol>:
          .doNext(works.isLikedByMe)
          .onSuccess(setState) { .buttonLikePressed(alreadySelected: $0) }
          .doVoidNext(works.pressLike)
-         .onFail(setState) { .failedToReact }
-         .doNext(works.getTransactStat)
+         .onFail(setState) { .failedToReact(alreadySelected: $0) }
+         .doVoidNext(works.getTransactStat)
          .onSuccess(setState) { .updateReactions($0) }
 
       events.saveInput

@@ -17,10 +17,11 @@ class FeedPresenters<Design: DesignProtocol>: Designable {
 
          guard let self = self else { return }
 
-         let feed = work.unsafeInput
-         
+         let feed = work.unsafeInput.item
+         let index = work.unsafeInput.index
+
          let dateLabel = FeedPresenters.makeInfoDateLabel(feed: feed)
-         
+
          let messageButton = ReactionButton<Design>()
             .setAll {
                $0.image(Design.icon.messageCloud)
@@ -32,21 +33,26 @@ class FeedPresenters<Design: DesignProtocol>: Designable {
                $0.image(Design.icon.like)
                $1.text(String(feed.likesAmount))
             }
-         
+
          likeButton.view.startTapGestureRecognize(cancelTouch: true)
 
          likeButton.view.on(\.didTap, self) {
-            let body = PressLikeRequest.Body(likeKind: 1,
-                                             transactionId: feed.transaction?.id,
-                                             challengeId: feed.challenge?.id,
-                                             challengeReportId: feed.winner?.id)
-            let request = PressLikeRequest(token: "",
-                                           body: body)
+            let body = PressLikeRequest.Body(
+               likeKind: 1,
+               transactionId: feed.transaction?.id,
+               challengeId: feed.challenge?.id,
+               challengeReportId: feed.winner?.id
+            )
+            let request = PressLikeRequest(
+               token: "",
+               body: body,
+               index: index
+            )
             $0.send(\.reactionPressed, request)
 
             likeButton.setState(.selected)
          }
-         
+
          let reactionsBlock = StackModel()
             .axis(.horizontal)
             .alignment(.leading)
@@ -57,7 +63,7 @@ class FeedPresenters<Design: DesignProtocol>: Designable {
                likeButton,
                Grid.xxx.spacer
             ])
-         
+
          if feed.transaction != nil {
             guard let transaction = feed.transaction else { return }
             let senderId = transaction.senderId
@@ -66,11 +72,10 @@ class FeedPresenters<Design: DesignProtocol>: Designable {
             let recipient = "@" + transaction.recipientTgName.string
             let transactionId = transaction.id
 
-
             let type = FeedTransactType.make(feed: feed, currentUserName: self.userName)
 
             let infoLabel = FeedPresenters.makeInfoLabel(feed: feed, type: type, eventType: EventType.transaction)
-            
+
             let icon = self.makeIcon(feed: feed, type: EventType.transaction)
 
             infoLabel.view.on(\.didSelect) {
@@ -83,7 +88,6 @@ class FeedPresenters<Design: DesignProtocol>: Designable {
                   print("selected error")
                }
             }
-
 
             if feed.transaction?.userLiked == true {
                likeButton.setState(.selected)
@@ -138,7 +142,7 @@ class FeedPresenters<Design: DesignProtocol>: Designable {
          } else if feed.winner != nil {
             let icon = self.makeIcon(feed: feed, type: EventType.winner)
             let infoLabel = FeedPresenters.makeInfoLabel(feed: feed, eventType: EventType.winner)
-            
+
             let infoBlock = StackModel()
                .spacing(Grid.x10.value)
                .axis(.vertical)
@@ -147,7 +151,7 @@ class FeedPresenters<Design: DesignProtocol>: Designable {
                   dateLabel,
                   infoLabel
                ])
-            
+
             let cellStack = WrappedX(
                StackModel()
                   .padding(.outline(Grid.x8.value))
@@ -166,7 +170,7 @@ class FeedPresenters<Design: DesignProtocol>: Designable {
          } else if feed.challenge != nil {
             let icon = self.makeIcon(feed: feed, type: EventType.challenge)
             let infoLabel = FeedPresenters.makeInfoLabel(feed: feed, eventType: EventType.challenge)
-            
+
             let infoBlock = StackModel()
                .spacing(Grid.x10.value)
                .axis(.vertical)
@@ -216,14 +220,13 @@ extension FeedPresenters {
    }
 
    static func makeInfoLabel(feed: NewFeed, type: FeedTransactType? = nil, eventType: EventType) -> LabelModel {
-      
       var infoLabel = LabelModel()
          .numberOfLines(0)
          .set(Design.state.label.caption)
          .textColor(Design.color.iconBrand)
-      
+
       let infoText: NSMutableAttributedString = .init(string: "")
-      
+
       switch eventType {
       case .transaction:
          let recipientName = "@" + (feed.transaction?.recipientTgName ?? "")
@@ -252,7 +255,7 @@ extension FeedPresenters {
             infoText.append(amountText.colored(Design.color.textSuccess))
             infoText.append(" от аноним".colored(Design.color.text))
          }
-         
+
          infoLabel.attributedText(infoText)
 
          infoLabel.view.makePartsClickable(user1: recipientName, user2: senderName)
@@ -262,7 +265,7 @@ extension FeedPresenters {
          infoText.append(winnerName.colored(Design.color.textBrand))
          infoText.append(" победил в челлендже ".colored(Design.color.text))
          infoText.append(challengeName.colored(Design.color.textBrand))
-         
+
          infoLabel.attributedText(infoText)
       case .challenge:
          let challengeName = "«" + (feed.challenge?.name ?? "") + "»"
@@ -271,14 +274,10 @@ extension FeedPresenters {
          infoText.append(challengeName.colored(Design.color.textBrand))
          infoText.append(" пользователем ".colored(Design.color.text))
          infoText.append(creatorName.colored(Design.color.textBrand))
-         
+
          infoLabel.attributedText(infoText)
       }
       return infoLabel
-      
-      
-
-      
    }
 
    func makeIcon(feed: NewFeed, type: EventType) -> ImageViewModel {
@@ -294,19 +293,15 @@ extension FeedPresenters {
          } else {
             icon.image(Design.icon.avatarPlaceholder)
          }
-         break
       case .winner:
          if let winnerPhoto = feed.winner?.winnerPhoto {
             icon.url(TeamForceEndpoints.urlBase + winnerPhoto)
          } else {
             icon.image(Design.icon.avatarPlaceholder)
          }
-         break
       case .challenge:
          icon.image(Design.icon.avatarPlaceholder)
-         break
       }
-      
 
       return icon
    }

@@ -108,7 +108,7 @@ struct TransactBuilder<Design: DSP>: TransactModelBuilder {
 
    private var foundUserPresenter: Presenter<FoundUser, WrappedY<ImageLabelLabelMRD>> {
       Presenter<FoundUser, WrappedY<ImageLabelLabelMRD>>() { work in
-         let user = work.unsafeInput
+         let user = work.unsafeInput.item
 
          let name = user.name
          let surname = user.surname

@@ -22,18 +22,18 @@ final class FeedWorksTempStorage: InitProtocol {
    var transactions: [NewFeed] = []
    var challenges: [NewFeed] = []
    var winners: [NewFeed] = []
-   
+
    lazy var currentUserName = ""
    var segmentId: Int?
    var currentTransactId: Int?
    var limit = 20
    // var offset = 1
-   
+
    var feedOffset = 1
    var transactOffset = 1
    var winnerOffset = 1
    var challengeOffset = 1
-   
+
    var isFeedPaginating = false
    var isTransactsPaginating = false
    var isChallengesPaginating = false
@@ -52,7 +52,7 @@ final class FeedWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedWorksTempStorage
          return
       }
       Self.store.currentUserName = userName
-      
+
       self?.getEvents
          .doAsync(false)
          .onSuccess {
@@ -61,7 +61,7 @@ final class FeedWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedWorksTempStorage
          .onFail {
             work.fail()
          }
-      
+
       self?.getEventsTransact
          .doAsync(false)
       self?.getEventsWinners
@@ -69,24 +69,23 @@ final class FeedWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedWorksTempStorage
       self?.getEventsChallenge
          .doAsync(false)
    }}
-   
+
    var filterWork: Work<Button4Event, ([NewFeed], String)> { .init { [weak self] work in
-      print(work.input)
       guard let self, let button = work.input else { return }
-      print(self)
+
       switch button {
       case .didTapButton1:
          self.getAllFeed
             .doAsync()
             .onSuccess { work.success($0) }
             .onFail { work.fail() }
-         
+
       case .didTapButton2:
          self.getTransactionFeed
             .doAsync()
             .onSuccess { work.success($0) }
             .onFail { work.fail() }
-         
+
       case .didTapButton3:
          self.getChallengesFeed
             .doAsync()
@@ -96,7 +95,7 @@ final class FeedWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedWorksTempStorage
             .onFail {
                work.fail()
             }
-         
+
       case .didTapButton4:
          self.getWinnersFeed
             .doAsync()
@@ -114,7 +113,7 @@ final class FeedWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedWorksTempStorage
       Self.store.segmentId = 0
       work.success(result: (filtered, Self.store.currentUserName))
    }.retainBy(retainer) }
-   
+
    var getTransactionFeed: VoidWork<([NewFeed], String)> { .init { work in
       let filtered = Self.filteredTransactions()
       Self.store.segmentId = 1
@@ -126,21 +125,21 @@ final class FeedWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedWorksTempStorage
       Self.store.segmentId = 2
       work.success(result: (filtered, Self.store.currentUserName))
    }.retainBy(retainer) }
-   
+
    var getWinnersFeed: VoidWork<([NewFeed], String)> { .init { work in
       let filtered = Self.filteredWinners()
       Self.store.segmentId = 3
       work.success(result: (filtered, Self.store.currentUserName))
    }.retainBy(retainer) }
-   
-   var getFeedByRowNumber: Work<(IndexPath, Int), NewFeed> { .init { work in
+
+   var getFeedByRowNumber: Work<Int, NewFeed> { .init { work in
       let segmentId = Self.store.segmentId
       var filtered: [NewFeed] = []
       if segmentId == 0 { filtered = Self.store.feed }
 //      else if segmentId == 1 { filtered = Self.filteredMy() }
 //      else if segmentId == 2 { filtered = Self.filteredPublic() }
-      
-      if let index = work.input?.1 {
+
+      if let index = work.input {
          let feed = filtered[index]
          Self.store.currentTransactId = feed.id
          work.success(result: feed)
@@ -162,7 +161,7 @@ final class FeedWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedWorksTempStorage
             work.fail()
          }
    }.retainBy(retainer) }
-   
+
    var getLikesCommentsStat: Work<LikesCommentsStatRequest, LikesCommentsStatistics> { .init { [weak self] work in
       guard let input = work.input else { return }
       self?.apiUseCase.getLikesCommentsStat
@@ -174,7 +173,7 @@ final class FeedWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedWorksTempStorage
             work.fail()
          }
    }.retainBy(retainer) }
-   
+
    var pagination: Work<Bool, ([NewFeed], String)> { .init { [weak self] work in
       guard let input = work.input else { return }
       print(input)
@@ -216,19 +215,19 @@ final class FeedWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedWorksTempStorage
 
 private extension FeedWorks {
    static func filteredAll() -> [NewFeed] {
-      return store.feed
+      store.feed
    }
-   
+
    static func filteredTransactions() -> [NewFeed] {
-      return store.transactions
+      store.transactions
    }
-   
+
    static func filteredChallenges() -> [NewFeed] {
-      return store.challenges
+      store.challenges
    }
-   
+
    static func filteredWinners() -> [NewFeed] {
-      return store.winners
+      store.winners
    }
 }
 
@@ -244,11 +243,11 @@ extension FeedWorks {
          Self.store.isFeedPaginating = true
          Self.store.feedOffset += 1
       }
-      
+
       let pagination = Pagination(
          offset: Self.store.feedOffset,
          limit: Self.store.limit)
-      
+
       self?.apiUseCase.getEvents
          .doAsync(pagination)
          .onSuccess {
@@ -265,10 +264,10 @@ extension FeedWorks {
             work.fail()
          }
    }.retainBy(retainer) }
-   
+
    var getEventsTransact: Work<Bool, Void> { .init { [weak self] work in
       guard let paginating = work.input else { return }
-      
+
       if Self.store.isTransactsPaginating {
          print(Self.store.isTransactsPaginating)
          return
@@ -296,7 +295,7 @@ extension FeedWorks {
             work.fail()
          }
    }.retainBy(retainer) }
-   
+
    var getEventsWinners: Work<Bool, Void> { .init { [weak self] work in
       guard let paginating = work.input else { return }
       // create isPagination var for winners
@@ -327,7 +326,7 @@ extension FeedWorks {
             work.fail()
          }
    }.retainBy(retainer) }
-   
+
    var getEventsChallenge: Work<Bool, Void> { .init { [weak self] work in
       guard let paginating = work.input else { return }
       // create isPagination var for challenge

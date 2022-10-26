@@ -13,7 +13,7 @@ class CommentPresenters<Design: DesignProtocol>: Designable {
 
    var commentCellPresenter: Presenter<Comment, WrappedX<StackModel>> {
       Presenter { work in
-         let comment = work.unsafeInput
+         let comment = work.unsafeInput.item
 
          let text = comment.text
          let picture = comment.picture

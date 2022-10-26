@@ -9,9 +9,11 @@ import Foundation
 import ReactiveWorks
 
 
-struct PressLikeRequest {
+struct PressLikeRequest: Indexable {
    let token: String
    let body: Body
+
+   let index: Int
 
    struct Body: Codable {
       let likeKind: Int

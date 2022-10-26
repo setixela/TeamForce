@@ -12,13 +12,13 @@ struct FeedScenarioInputEvents {
    let loadFeedForCurrentUser: VoidWork<UserData?>
 
    let filterTapped: VoidWork<Button4Event>
-   //let presentAllFeed: VoidWork<Void>
-   //let presentTransactions: VoidWork<Void>
+   // let presentAllFeed: VoidWork<Void>
+   // let presentTransactions: VoidWork<Void>
 //   let presentPublicFeed: VoidWork<Void>
    let presentProfile: VoidWork<Int>
    let reactionPressed: VoidWork<PressLikeRequest>
-   let presentDetail: VoidWork<(IndexPath, Int)>
-   
+   let presentDetail: VoidWork<Int>
+
    let pagination: VoidWork<Bool>
 }
 
@@ -28,7 +28,6 @@ final class FeedScenario<Asset: AssetProtocol>:
    private var userName: String = ""
 
    override func start() {
-      
       events.loadFeedForCurrentUser
          .doNext(works.loadFeedForCurrentUser)
          .onFail(setState, .loadFeedError)
@@ -38,7 +37,6 @@ final class FeedScenario<Asset: AssetProtocol>:
          }
          .onFail(setState, .loadFeedError)
 
-      
       events.filterTapped
          .doNext(works.filterWork)
          .onSuccess(setState) {
@@ -47,28 +45,30 @@ final class FeedScenario<Asset: AssetProtocol>:
          .onFail(setState) {
             .loadFeedError
          }
-      
+
       events.presentProfile
          .onSuccess(setState) { .presentProfile($0) }
-      
+
       events.reactionPressed
+         // .doSaveResult()
          .doNext(works.pressLike)
          .onFail {
             print("failed to like")
          }
+
 //         .doNext(works.getLikesCommentsStat)
 //         .onFail(setState, .loadFeedError)
 //         .doNext(works.getAllFeed)
 //         .onSuccess(setState) { .presentFeed($0) }
 //         .onFail(setState, .loadFeedError)
-      
+
       events.presentDetail
          .doNext(works.getFeedByRowNumber)
          .onSuccess(setState) { .presentDetailView($0) }
          .onFail {
             print("fail ")
          }
-      
+
       events.pagination
          .doNext(works.pagination)
          .onSuccess(setState) {

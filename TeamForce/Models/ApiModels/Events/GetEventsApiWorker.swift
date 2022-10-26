@@ -5,6 +5,10 @@
 //  Created by Yerzhan Gapurinov on 25.10.2022.
 //
 
+protocol Indexable {
+   var index: Int { get }
+}
+
 struct NewFeed: Codable {
    let id: Int
    let time: String?
@@ -12,13 +16,12 @@ struct NewFeed: Codable {
    let eventObjectId: Int?
    let eventRecordId: Int?
    let objectSelector: String?
-   let likesAmount: Int
+   var likesAmount: Int
    let commentsAmount: Int
    let transaction: EventTransaction?
    let challenge: Challenge?
    let winner: Winner?
-   
-   
+
    enum CodingKeys: String, CodingKey {
       case id, time
       case eventTypeId = "event_type_id"
@@ -65,7 +68,7 @@ struct NewFeed: Codable {
 //         return TeamForceEndpoints.urlBase + photo
 //      }
 //   }
-   
+
    struct Challenge: Codable {
       let id: Int
       let userLiked: Bool
@@ -76,7 +79,7 @@ struct NewFeed: Codable {
       let creatorFirstName: String?
       let creatorSurname: String?
       let creatorTgName: String?
-      
+
       enum CodingKeys: String, CodingKey {
          case id, photo, name
          case userLiked = "user_liked"
@@ -87,7 +90,7 @@ struct NewFeed: Codable {
          case creatorTgName = "creator_tg_name"
       }
    }
-   
+
    struct Winner: Codable {
       let id: Int
       let userLiked: Bool
@@ -98,7 +101,7 @@ struct NewFeed: Codable {
       let winnerSurname: String?
       let winnerTgName: String?
       let winnerPhoto: String?
-      
+
       enum CodingKeys: String, CodingKey {
          case id
          case userLiked = "user_liked"
@@ -113,7 +116,6 @@ struct NewFeed: Codable {
    }
 }
 
-
 final class GetEventsApiWorker: BaseApiWorker<(String, Pagination), [NewFeed]> {
    override func doAsync(work: Wrk) {
       guard let request = work.input
@@ -125,9 +127,9 @@ final class GetEventsApiWorker: BaseApiWorker<(String, Pagination), [NewFeed]> {
       let endpoint = TeamForceEndpoints.Events(
          offset: request.1.offset,
          limit: request.1.limit,
-         headers: [ "Authorization": request.0 ]
+         headers: ["Authorization": request.0]
       )
-      
+
       apiEngine?
          .process(endpoint: endpoint)
          .done { result in

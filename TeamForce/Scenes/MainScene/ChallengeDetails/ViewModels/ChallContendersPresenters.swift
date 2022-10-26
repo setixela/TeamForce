@@ -13,7 +13,7 @@ class ChallContendersPresenters<Design: DesignProtocol>: Designable {
 
    var contendersCellPresenter: Presenter<Contender, WrappedX<StackModel>> {
       Presenter { work in
-         let contender = work.unsafeInput
+         let contender = work.unsafeInput.item
          let createdAt = contender.reportCreatedAt
          let name = contender.participantName.string
          let surname = contender.participantSurname.string

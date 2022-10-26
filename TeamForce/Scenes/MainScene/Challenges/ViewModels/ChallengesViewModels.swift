@@ -194,7 +194,7 @@ protocol TableInputProtocol {
 
 struct ChallengeCellPresenters<Design: DSP>: Designable {
    static var presenter: Presenter<Challenge, ChallengeCell<Design>> { .init { work in
-      var data = work.unsafeInput
+      var data = work.unsafeInput.item
 
       let model = ChallengeCell<Design>()
          .setAll { infoBlock, statusBlock in

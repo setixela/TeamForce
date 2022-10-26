@@ -70,7 +70,7 @@ enum FeedDetailSceneState {
    case presentComments([Comment])
    case presentReactions([ReactItem])
    case buttonLikePressed(alreadySelected: Bool)
-   case failedToReact
+   case failedToReact(alreadySelected: Bool)
    case updateReactions((LikesCommentsStatistics, Bool))
    case presntActivityIndicator
    case sendButtonDisabled
@@ -91,12 +91,10 @@ extension FeedDetailScene: StateMachine {
          feedDetailVM.setState(.comments(comments))
       case .presentReactions(let items):
          feedDetailVM.setState(.reactions(items))
-      case .failedToReact:
+      case .failedToReact(let selected):
          print("failed to like")
+         setState(.buttonLikePressed(alreadySelected: !selected))
       case .updateReactions(let value):
-//         if value.1 == false {
-//            likeColor = Design.color.text
-//         }
          if let reactions = value.0.likes {
             for reaction in reactions {
                if reaction.likeKind?.code == "like" {

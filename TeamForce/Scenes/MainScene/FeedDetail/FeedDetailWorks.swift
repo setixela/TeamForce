@@ -68,11 +68,11 @@ final class FeedDetailWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedDetailWork
       work.success(result: transaction)
    }}
 
-   var pressLike: Work<Void, Void> { .init { [weak self] work in
-      guard let tId = Self.store.currentTransactId else { work.fail(); return }
+   var pressLike: Work<Void, Bool> { .init { [weak self] work in
+      guard let tId = Self.store.currentTransactId else { work.fail(Self.store.userLiked); return }
 
       let body = PressLikeRequest.Body(likeKind: 1, transactionId: tId)
-      let request = PressLikeRequest(token: "", body: body)
+      let request = PressLikeRequest(token: "", body: body, index: 0)
 
       self?.apiUseCase.pressLike
          .doAsync(request)
@@ -84,10 +84,10 @@ final class FeedDetailWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedDetailWork
 //               Self.store.userDisliked = !Self.store.userDisliked
                Self.store.userLiked = false
             }
-            work.success(result: $0)
+            work.success(result: Self.store.userLiked)
          }
          .onFail {
-            work.fail()
+            work.fail(Self.store.userLiked)
          }
    }.retainBy(retainer) }
 
