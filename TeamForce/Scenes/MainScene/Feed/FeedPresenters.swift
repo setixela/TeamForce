@@ -11,10 +11,9 @@ import UIKit
 class FeedPresenters<Design: DesignProtocol>: Designable {
    var events: EventsStore = .init()
    var userName: String = ""
-   private lazy var retainer = Retainer()
 
    var feedCellPresenter: Presenter<NewFeed, WrappedX<StackModel>> {
-      Presenter(retainedBy: retainer) { [weak self] work in
+      Presenter { [weak self] work in
 
          guard let self = self else { return }
 
