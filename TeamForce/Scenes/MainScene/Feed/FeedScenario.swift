@@ -47,20 +47,6 @@ final class FeedScenario<Asset: AssetProtocol>:
          .onFail(setState) {
             .loadFeedError
          }
-//      events.presentAllFeed
-//         .doNext(works.getAllFeed)
-//         .onSuccess(setState) { .presentFeed($0) }
-//         .onFail(setState, .loadFeedError)
-//
-//      events.presentTransactions
-//         .doNext(works.getTransactionFeed)
-//         .onSuccess(setState) { .presentFeed($0) }
-//         .onFail(setState, .loadFeedError)
-//
-//      events.presentPublicFeed
-//         .doNext(works.getPublicFeed)
-//         .onSuccess(setState) { .presentFeed($0) }
-//         .onFail(setState, .loadFeedError)
       
       events.presentProfile
          .onSuccess(setState) { .presentProfile($0) }
@@ -84,9 +70,12 @@ final class FeedScenario<Asset: AssetProtocol>:
          }
       
       events.pagination
-         .doNext(works.getEvents)
-         .onFail{ print("fail") }
-         .doVoidNext(works.getAllFeed)
-         .onSuccess(setState) { .updateFeed($0.0) }
+         .doNext(works.pagination)
+         .onSuccess(setState) {
+            .presentFeed($0)
+         }
+//         .onFail{ print("fail") }
+//         .doVoidNext(works.getAllFeed)
+//         .onSuccess(setState) { .updateFeed($0.0) }
    }
 }
