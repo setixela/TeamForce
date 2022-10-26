@@ -11,8 +11,9 @@ import UIKit
 struct FeedScenarioInputEvents {
    let loadFeedForCurrentUser: VoidWork<UserData?>
 
-   let presentAllFeed: VoidWork<Void>
-//   let presentMyFeed: VoidWork<Void>
+   let filterTapped: VoidWork<Button4Event>
+   //let presentAllFeed: VoidWork<Void>
+   //let presentTransactions: VoidWork<Void>
 //   let presentPublicFeed: VoidWork<Void>
    let presentProfile: VoidWork<Int>
    let reactionPressed: VoidWork<PressLikeRequest>
@@ -32,23 +33,20 @@ final class FeedScenario<Asset: AssetProtocol>:
          .doNext(works.loadFeedForCurrentUser)
          .onFail(setState, .loadFeedError)
          .doNext(works.getAllFeed)
-         .onSuccess(setState) { .presentFeed($0) }
+         .onSuccess(setState) {
+            .presentFeed($0)
+         }
          .onFail(setState, .loadFeedError)
 
-      events.presentAllFeed
-         .doNext(works.getAllFeed)
-         .onSuccess(setState) { .presentFeed($0) }
-         .onFail(setState, .loadFeedError)
-
-//      events.presentMyFeed
-//         .doNext(works.getMyFeed)
-//         .onSuccess(setState) { .presentFeed($0) }
-//         .onFail(setState, .loadFeedError)
-//
-//      events.presentPublicFeed
-//         .doNext(works.getPublicFeed)
-//         .onSuccess(setState) { .presentFeed($0) }
-//         .onFail(setState, .loadFeedError)
+      
+      events.filterTapped
+         .doNext(works.filterWork)
+         .onSuccess(setState) {
+            .presentFeed($0)
+         }
+         .onFail(setState) {
+            .loadFeedError
+         }
       
       events.presentProfile
          .onSuccess(setState) { .presentProfile($0) }
@@ -72,9 +70,12 @@ final class FeedScenario<Asset: AssetProtocol>:
          }
       
       events.pagination
-         .doNext(works.getEvents)
-         .onFail{ print("fail") }
-         .doVoidNext(works.getAllFeed)
-         .onSuccess(setState) { .updateFeed($0.0) }
+         .doNext(works.pagination)
+         .onSuccess(setState) {
+            .presentFeed($0)
+         }
+//         .onFail{ print("fail") }
+//         .doVoidNext(works.getAllFeed)
+//         .onSuccess(setState) { .updateFeed($0.0) }
    }
 }

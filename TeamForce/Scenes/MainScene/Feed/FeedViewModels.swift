@@ -13,7 +13,24 @@ final class FeedViewModels<Design: DSP>: BaseModel, Designable, Stateable {
       case userName(String)
    }
 
-   lazy var filterButtons = FeedFilterButtons<Design>()
+   //lazy var filterButtons = FeedFilterButtons<Design>()
+   lazy var filterButtons = SlidedIndexButtons<Button4Event>(buttons:
+      SecondaryButtonDT<Design>()
+         .title("Все")
+         .font(Design.font.default),
+      SecondaryButtonDT<Design>()
+         .title("Благодарности")
+         .font(Design.font.default),
+      SecondaryButtonDT<Design>()
+         .title("Челленджи")
+         .font(Design.font.default),
+      SecondaryButtonDT<Design>()
+         .title("Победители")
+         .font(Design.font.default)
+      .height(16 + 38)
+      .backColor(Design.color.background)
+   )
+                                                                     
    lazy var presenter = FeedPresenters<Design>()
    
    lazy var feedTableModel = TableItemsModel<Design>()
@@ -26,7 +43,7 @@ final class FeedViewModels<Design: DSP>: BaseModel, Designable, Stateable {
    var userName = ""
 
    override func start() {
-      filterButtons.buttonAll.setMode(\.selected)
+      //filterButtons.buttonAll.setMode(\.selected)
    }
 
    func applyState(_ state: State) {
@@ -37,28 +54,6 @@ final class FeedViewModels<Design: DSP>: BaseModel, Designable, Stateable {
       }
    }
 }
-
-//private enum FeedTransactType {
-//   static func make(feed: Feed, currentUserName: String) -> Self {
-//      if feed.transaction.recipient == currentUserName {
-//         if feed.transaction.isAnonymous {
-//            return .youGotAmountFromAnonym
-//         } else {
-//            return .youGotAmountFromSome
-//         }
-//      }
-//      if feed.transaction.isAnonymous {
-//         return .someGotAmountFromAnonym
-//      }
-//      return .someGotAmountFromSome
-//   }
-//
-//   case youGotAmountFromSome
-//   case youGotAmountFromAnonym
-//
-//   case someGotAmountFromSome
-//   case someGotAmountFromAnonym
-//}
 
 extension String {
    func colored(_ color: UIColor) -> NSAttributedString {
