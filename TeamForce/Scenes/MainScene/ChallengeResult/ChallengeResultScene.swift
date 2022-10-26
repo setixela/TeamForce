@@ -65,6 +65,10 @@ final class ChallengeResultScene<Asset: AssetProtocol>: BaseSceneModel<
       mainVM.title
          .text("Результат")
 
+      vcModel?.on(\.viewDidLoad, self) { $0.configure() }
+   }
+
+   private func configure() {
       mainVM.bodyStack
          .spacing(Grid.x16.value)
          .arrangedModels([
@@ -72,8 +76,9 @@ final class ChallengeResultScene<Asset: AssetProtocol>: BaseSceneModel<
             photosPanel.lefted(),
             addPhotoButton,
             Spacer(),
-            Spacer(),
+            Spacer()
          ])
+
       mainVM.footerStack
          .arrangedModels([
             Grid.x16.spacer,
@@ -82,7 +87,7 @@ final class ChallengeResultScene<Asset: AssetProtocol>: BaseSceneModel<
 
       mainVM.closeButton
          .on(\.didTap, self) {
-            $0.vcModel?.dismiss(animated: true)
+            $0.dismiss()
             $0.finisher?(true)
          }
 
