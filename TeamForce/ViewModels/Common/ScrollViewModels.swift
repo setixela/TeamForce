@@ -29,7 +29,7 @@ struct ScrollEvents: ScrollEventsProtocol {
 protocol ScrollWrapper: UIScrollViewDelegate, Eventable where Events == ScrollEvents {}
 
 class ScrollViewModelY: BaseViewModel<ScrollViewExtended>, ScrollWrapper, Stateable {
-   var events: ReactiveWorks.EventsStore = .init()
+   var events: EventsStore = .init()
 
    typealias State = ViewState
 
@@ -100,13 +100,6 @@ extension ScrollViewModelY: Stateable2 {
          stack.padding(value)
       case .contentInset(let value):
          stack.view.addAnchors.fitToViewInsetted(view, value)
-//         let pos = stack.view.frame.origin
-//         let siz = stack.view.frame.size
-//         let frame = CGRect(x: pos.x + value.left,
-//                                  y: pos.y + value.top,
-//                                  width: siz.width - value.right - value.left,
-//                                  height: siz.height - value.bottom - value.top)
-//         stack.view.frame = frame
       case .bounce(let value):
          view.bounces = value
       }
@@ -114,7 +107,7 @@ extension ScrollViewModelY: Stateable2 {
 }
 
 class ScrollViewModelX: BaseViewModel<ScrollViewExtended>, ScrollWrapper {
-   var events: ReactiveWorks.EventsStore = .init()
+   var events: EventsStore = .init()
 
    private lazy var stack = StackModel()
       .axis(.horizontal)
@@ -157,6 +150,45 @@ extension ScrollViewModelX: Stateable2 {
          view.contentInset = value
       case .bounce(let value):
          view.bounces = value
+      }
+   }
+}
+
+class ScrollViewModel: BaseViewModel<ScrollViewExtended>, UIScrollViewDelegate, Stateable {
+   var events: EventsStore = .init()
+
+   typealias State = ViewState
+
+   override func start() {
+      super.start()
+
+      view.delegate = self
+
+      view.maximumZoomScale = 3
+      view.minimumZoomScale = 1
+      view.isScrollEnabled = true
+   }
+
+   func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+      view.subviews.first
+   }
+}
+
+enum ScrollStateEnum {
+   case viewModel(UIViewModel)
+}
+
+extension ScrollViewModel: StateMachine {
+   func setState(_ state: ScrollStateEnum) {
+      switch state {
+      case .viewModel(let model):
+         let uiView = model.uiView
+         view.subviews.forEach { $0.removeFromSuperview() }
+         view.addSubview(uiView)
+         uiView.addAnchors
+            .fitToView(view)
+            .width(view.widthAnchor)
+            .centerY(view.centerYAnchor)
       }
    }
 }

@@ -38,6 +38,8 @@ protocol ScenesProtocol: InitProtocol {
 
    var settings: SMP { get }
 
+   var imageViewer: SMP { get }
+
    // plays
    var playground: SMP { get }
 }
@@ -61,6 +63,8 @@ struct Scenes: ScenesProtocol {
    var challengeDetails: SMP { ChallengeDetailsScene<PA>() }
    var challengeResCancel: SMP { ChallengeResCancelScene<PA>() }
    var challengeReportDetail: SMP { ChallReportDetailsScene<PA>() }
+
+   var imageViewer: SMP { ImageViewerScene<PA>() }
 }
 
 struct ProductionService: ServiceProtocol {

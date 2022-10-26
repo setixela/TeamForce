@@ -42,6 +42,7 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
       .image(Design.icon.challengeWinnerIllustrateFull)
       .contentMode(.scaleAspectFill)
       .height(200)
+      .set(.tapGesturing)
 
    private lazy var filterButtons = SlidedIndexButtons<Button6Event>(buttons:
       SecondaryButtonDT<Design>()
@@ -341,17 +342,37 @@ extension ChallengeDetailsScene {
    }
 
    private func updateHeaderImage(url: String?) {
-      guard let url = url else { return }
+      guard
+         let url,
+         let inputValue
+      else { return }
+
+      let fullUrl = TeamForceEndpoints.urlBase + url.replacingOccurrences(of: "_thumb", with: "")
+
       headerImage
          .url(
             TeamForceEndpoints.urlBase + url,
             transition: .crossDissolve(0.5)
          ) { header, _ in
             header?.url(
-               TeamForceEndpoints.urlBase + url.replacingOccurrences(of: "_thumb", with: ""),
+               fullUrl,
                transition: .crossDissolve(0.5)
             )
          }
          .contentMode(.scaleAspectFill)
+         .on(\.didTap, self) {
+            $0.dismiss()
+            Asset.router?.route(
+               .presentModally(.automatic),
+               scene: \.imageViewer,
+               payload: fullUrl
+            ) { _ in
+               Asset.router?.route(
+                  .presentModally(.automatic),
+                  scene: \.challengeDetails,
+                  payload: inputValue
+               )
+            }
+         }
    }
 }

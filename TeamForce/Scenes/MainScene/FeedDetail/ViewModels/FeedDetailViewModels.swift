@@ -21,7 +21,7 @@ enum FeedDetailsState {
    case hereIsEmpty
 }
 
-final class FeedDetailViewModels<Design: DSP>: DoubleStacksModel, Designable {
+final class FeedDetailViewModels<Asset: AssetProtocol>: DoubleStacksModel, Assetable {
    var events: EventsStore = .init()
 
    lazy var infoBlock = FeedDetailUserInfoBlock<Design>()
@@ -31,7 +31,7 @@ final class FeedDetailViewModels<Design: DSP>: DoubleStacksModel, Designable {
    lazy var commentsBlock = FeedCommentsBlock<Design>()
    lazy var reactionsBlock = FeedReactionsBlock<Design>()
 
-   private lazy var detailsBlock = FeedDetailsBlock<Design>()
+   private lazy var detailsBlock = FeedDetailsBlock<Asset>()
 
    override func start() {
       super.start()

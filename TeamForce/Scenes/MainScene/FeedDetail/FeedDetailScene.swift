@@ -19,7 +19,7 @@ final class FeedDetailScene<Asset: AssetProtocol>:
    typealias State = ViewState
    typealias State2 = StackState
 
-   private lazy var feedDetailVM = FeedDetailViewModels<Design>()
+   private lazy var feedDetailVM = FeedDetailViewModels<Asset>()
 
    lazy var scenario: Scenario = FeedDetailScenario<Asset>(
       works: FeedDetailWorks<Asset>(),
