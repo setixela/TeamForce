@@ -71,7 +71,6 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
       .backColor(Design.color.background)
 
    private lazy var challDetails = ChallengeDetailsViewModel<Design>()
-      .set(.padding(.horizontalOffset(Design.params.commonSideOffset)))
       .backColor(Design.color.background)
 
    private lazy var myResultBlock = ChallResultViewModel<Design>()

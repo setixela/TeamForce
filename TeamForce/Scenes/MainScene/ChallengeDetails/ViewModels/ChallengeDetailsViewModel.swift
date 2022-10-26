@@ -36,15 +36,16 @@ final class ChallengeDetailsViewModel<Design: DSP>:
       }
       .hidden(true)
 
+   private lazy var userPanel = Design.model.profile.userPanel
+      .shadow(Design.params.cellShadow)
+
 //   private lazy var activity = ActivityIndicator<Design>()
 
    required init() {
       super.init()
-      setAll { scroller, sendPanel in
-
+      setAll { _, sendPanel in
          sendPanel
             .backColor(Design.color.background)
-            .cornerRadius(Design.params.cornerRadius)
       }
    }
 
@@ -59,9 +60,16 @@ final class ChallengeDetailsViewModel<Design: DSP>:
             prizeSizeCell,
             finishDateCell,
             prizePlacesCell,
-//            activity
+            Spacer(16),
+            LabelModel()
+               .set(Design.state.label.captionSecondary)
+               .text("Организатор"),
+            userPanel
          ]))
-      models.main.view.layer.masksToBounds = false
+         .set(.padding(.init(top: 4, left: 16, bottom: 16, right: 16)))
+
+      buttonsPanel
+         .padding(.horizontalOffset(Design.params.commonSideOffset))
    }
 }
 
@@ -87,7 +95,16 @@ extension ChallengeDetailsViewModel: StateMachine {
          prizePlacesCell.models.right3
             .text(challenge.winnersCount.int.toString + " / " + challenge.awardees.toString)
          prizePlacesCell.hidden(challenge.winnersCount == nil)
-         models.down.setup(challenge)
+
+         let creatorName = challenge.creatorName.string
+         let creatorSurname = challenge.creatorSurname.string
+         let creatorTgName = "@" + challenge.creatorTgName.string
+         userPanel.models.right.fullName.text(creatorName + " " + creatorSurname)
+         userPanel.models.right.nickName.text(creatorTgName)
+         if let creatorPhoto = challenge.creatorPhoto {
+            userPanel.models.main.url(TeamForceEndpoints.urlBase + creatorPhoto)
+         }
+
       case .updateDetails(let challenge):
 //         activity.hidden(true)
          setState(.presentChallenge(challenge))
@@ -103,7 +120,7 @@ extension ChallengeDetailsViewModel: SetupProtocol {
 
 final class ChallengeInfoVM<Design: DSP>: StackModel, Designable {
    lazy var title = Design.label.headline6
-      .numberOfLines(2)
+      .numberOfLines(0)
    lazy var body = Design.label.caption
       .numberOfLines(0)
       .lineSpacing(8)
@@ -173,12 +190,11 @@ final class ChallengeDetailsInfoCell<Design: DSP>:
 }
 
 final class SendChallengePanel<Design: DSP>: StackModel, Designable {
-
    var sendButton: ButtonModel { buttons.models.main }
 
    // Private
 
-   private lazy var userPanel = Design.model.profile.userPanel
+//   private lazy var userPanel = Design.model.profile.userPanel
 
    private lazy var buttons = M<ButtonModel>.R<ButtonModel>.Combo()
       .setAll { sendButton, likeButton in
@@ -207,22 +223,8 @@ final class SendChallengePanel<Design: DSP>: StackModel, Designable {
       super.start()
 
       arrangedModels([
-         userPanel,
          Grid.x16.spacer,
          buttons
       ])
-   }
-}
-
-extension SendChallengePanel: SetupProtocol {
-   func setup(_ data: Challenge) {
-      let creatorName = data.creatorName.string
-      let creatorSurname = data.creatorSurname.string
-      let creatorTgName = "@" + data.creatorTgName.string
-      userPanel.models.right.fullName.text(creatorName + " " + creatorSurname)
-      userPanel.models.right.nickName.text(creatorTgName)
-      if let creatorPhoto = data.creatorPhoto {
-         userPanel.models.main.url(TeamForceEndpoints.urlBase + creatorPhoto)
-      }
    }
 }

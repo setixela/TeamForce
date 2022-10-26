@@ -199,6 +199,19 @@ extension Combos
       horz.addArrangedSubview(models.right2.uiView)
       view.addArrangedSubview(horz)
    }
+
+   // M _ _
+   // D _ _
+   // D _ _
+   // D _ _
+   func configure<M, D, D2, D3>() where S == SComboMDDD<M, D, D2, D3>
+   {
+      configureDownStart()
+      view.addArrangedSubview(models.main.uiView)
+      view.addArrangedSubview(models.down.uiView)
+      view.addArrangedSubview(models.down2.uiView)
+      view.addArrangedSubview(models.down3.uiView)
+   }
 }
 
 private extension Combos
