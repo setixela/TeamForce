@@ -405,4 +405,37 @@ extension Combos
       }
       return self
    }
+
+   // MARK: - New setAll
+
+   @discardableResult func setAll<M, D, D2, D3>(
+      _ setAll: VariadicClosure4<M, D, D2, D3>) -> Self where S == SComboMDDD<M, D, D2, D3>
+   {
+      setAll(models.main, models.down, models.down2, models.down3)
+
+      if !isConfigured
+      {
+         configure()
+         isConfigured = true
+      }
+      return self
+   }
+
+   @discardableResult func setMain<M, D, D2, D3>(
+      _ setMain: GenericClosure<M>,
+      setDown: GenericClosure<D>,
+      setDown2: GenericClosure<D2>,
+      setDown3: GenericClosure<D3>) -> Self where S == SComboMDDD<M, D, D2, D3>
+   {
+      setMain(models.main)
+      setDown(models.down)
+      setDown2(models.down2)
+      setDown3(models.down3)
+      if !isConfigured
+      {
+         configure()
+         isConfigured = true
+      }
+      return self
+   }
 }

@@ -11,106 +11,47 @@ import UIKit
 class FeedPresenters<Design: DesignProtocol>: Designable {
    var events: EventsStore = .init()
    var userName: String = ""
-   private lazy var retainer = Retainer()
 
-   var feedCellPresenter: Presenter<Feed, WrappedX<StackModel>> {
-      Presenter(retainedBy: retainer) { [weak self] work in
+   var feedCellPresenter: Presenter<NewFeed, WrappedX<StackModel>> {
+      Presenter { [weak self] work in
 
          guard let self = self else { return }
 
-         let feed = work.unsafeInput
-
-         let senderId = feed.transaction.senderId
-         let recipientId = feed.transaction.recipientId
-         let sender = "@" + feed.transaction.sender
-         let recipient = "@" + feed.transaction.recipient
-         let transactionId = feed.transaction.id
-
-//         let isPersonal = feed.eventType.isPersonal
-//         let hasScope = feed.eventType.hasScope
-//         let isAnonTransact = feed.transaction.isAnonymous
-
-         let type = FeedTransactType.make(feed: feed, currentUserName: self.userName)
+         let feed = work.unsafeInput.item
+         let index = work.unsafeInput.index
 
          let dateLabel = FeedPresenters.makeInfoDateLabel(feed: feed)
-         let infoLabel = FeedPresenters.makeInfoLabel(feed: feed, type: type)
-         let icon = self.makeIcon(feed: feed)
-
-         infoLabel.view.on(\.didSelect) {
-            switch $0 {
-            case sender:
-               self.send(\.didSelect, senderId ?? -1)
-            case recipient:
-               self.send(\.didSelect, recipientId ?? -1)
-            default:
-               print("selected error")
-            }
-         }
-
-//         let tagBlock = StackModel()
-//            .axis(.horizontal)
-//            .spacing(4)
-         var commentsAmount = "0"
-         commentsAmount = String(feed.transaction.commentsAmount ?? 0)
 
          let messageButton = ReactionButton<Design>()
             .setAll {
                $0.image(Design.icon.messageCloud)
-               $1.text(commentsAmount)
+               $1.text(String(feed.commentsAmount))
             }
-         var likeAmount = "0"
-        // var dislikeAmount = "0"
-
-         if let reactions = feed.transaction.reactions {
-            for reaction in reactions {
-               if reaction.code == "like" {
-                  likeAmount = String(reaction.counter ?? 0)
-               } else if reaction.code == "dislike" {
-               //   dislikeAmount = String(reaction.counter ?? 0)
-               }
-            }
-         }
 
          let likeButton = ReactionButton<Design>()
             .setAll {
                $0.image(Design.icon.like)
-               $1.text(likeAmount)
+               $1.text(String(feed.likesAmount))
             }
 
-//         let dislikeButton = ReactionButton<Design>()
-//            .setAll {
-//               $0.image(Design.icon.dislike)
-//               $1.text(dislikeAmount)
-//            }
-
-         if feed.transaction.userLiked == true {
-            likeButton.setState(.selected)
-         }
-//         if feed.transaction.userDisliked == true {
-//            dislikeButton.setState(.selected)
-//         }
-
          likeButton.view.startTapGestureRecognize(cancelTouch: true)
-//         dislikeButton.view.startTapGestureRecognize(cancelTouch: true)
 
          likeButton.view.on(\.didTap, self) {
-            let request = PressLikeRequest(token: "",
-                                           likeKind: 1,
-                                           transactionId: transactionId)
+            let body = PressLikeRequest.Body(
+               likeKind: 1,
+               transactionId: feed.transaction?.id,
+               challengeId: feed.challenge?.id,
+               challengeReportId: feed.winner?.id
+            )
+            let request = PressLikeRequest(
+               token: "",
+               body: body,
+               index: index
+            )
             $0.send(\.reactionPressed, request)
 
             likeButton.setState(.selected)
-//            dislikeButton.setState(.none)
          }
-
-//         dislikeButton.view.on(\.didTap, self) {
-//            let request = PressLikeRequest(token: "",
-//                                           likeKind: 2,
-//                                           transactionId: transactionId)
-//            $0.send(\.reactionPressed, request)
-//            dislikeButton.setState(.selected)
-//            likeButton.setState(.none)
-//         }
 
          let reactionsBlock = StackModel()
             .axis(.horizontal)
@@ -120,54 +61,158 @@ class FeedPresenters<Design: DesignProtocol>: Designable {
             .arrangedModels([
                messageButton,
                likeButton,
-//               dislikeButton,
                Grid.xxx.spacer
             ])
 
-         let hashTagBlock = HashTagsScrollModel<Design>()
-         hashTagBlock.setup(feed)
+         if feed.transaction != nil {
+            guard let transaction = feed.transaction else { return }
+            let senderId = transaction.senderId
+            let recipientId = transaction.recipientId
+            let sender = "@" + transaction.senderTgName.string
+            let recipient = "@" + transaction.recipientTgName.string
+            let transactionId = transaction.id
 
-         let infoBlock = StackModel()
-            .spacing(Grid.x10.value)
-            .axis(.vertical)
-            .alignment(.fill)
-            .arrangedModels([
-               dateLabel,
-               infoLabel,
-               reactionsBlock,
-               hashTagBlock
-            ])
+            let type = FeedTransactType.make(feed: feed, currentUserName: self.userName)
 
-         var backColor = Design.color.background
-         if type == .youGotAmountFromSome || type == .youGotAmountFromAnonym {
-            backColor = Design.color.successSecondary
-         }
+            let infoLabel = FeedPresenters.makeInfoLabel(feed: feed, type: type, eventType: EventType.transaction)
 
-         let cellStack = WrappedX(
-            StackModel()
-               .padding(.outline(Grid.x8.value))
-               .spacing(Grid.x12.value)
-               .axis(.horizontal)
-               .alignment(.top)
+            let icon = self.makeIcon(feed: feed, type: EventType.transaction)
+
+            infoLabel.view.on(\.didSelect) {
+               switch $0 {
+               case sender:
+                  self.send(\.didSelect, senderId ?? -1)
+               case recipient:
+                  self.send(\.didSelect, recipientId ?? -1)
+               default:
+                  print("selected error")
+               }
+            }
+
+            if feed.transaction?.userLiked == true {
+               likeButton.setState(.selected)
+            }
+
+//            likeButton.view.startTapGestureRecognize(cancelTouch: true)
+//
+//            likeButton.view.on(\.didTap, self) {
+//               let request = PressLikeRequest(token: "",
+//                                              likeKind: 1,
+//                                              transactionId: transactionId)
+//               $0.send(\.reactionPressed, request)
+//
+//               likeButton.setState(.selected)
+//            }
+
+            let hashTagBlock = HashTagsScrollModel<Design>()
+            hashTagBlock.setup(transaction)
+
+            let infoBlock = StackModel()
+               .spacing(Grid.x10.value)
+               .axis(.vertical)
+               .alignment(.fill)
                .arrangedModels([
-                  icon,
-                  infoBlock
+                  dateLabel,
+                  infoLabel,
+                  reactionsBlock,
+                  hashTagBlock
                ])
-               .backColor(backColor)
-               .cornerRadius(Design.params.cornerRadiusSmall)
-         )
-         .padding(.verticalOffset(Grid.x16.value))
 
-         work.success(result: cellStack)
+            var backColor = Design.color.background
+            if type == .youGotAmountFromSome || type == .youGotAmountFromAnonym {
+               backColor = Design.color.successSecondary
+            }
+
+            let cellStack = WrappedX(
+               StackModel()
+                  .padding(.outline(Grid.x8.value))
+                  .spacing(Grid.x12.value)
+                  .axis(.horizontal)
+                  .alignment(.top)
+                  .arrangedModels([
+                     icon,
+                     infoBlock
+                  ])
+                  .backColor(backColor)
+                  .cornerRadius(Design.params.cornerRadiusSmall)
+            )
+            .padding(.verticalOffset(Grid.x16.value))
+
+            work.success(result: cellStack)
+         } else if feed.winner != nil {
+            let icon = self.makeIcon(feed: feed, type: EventType.winner)
+            let infoLabel = FeedPresenters.makeInfoLabel(feed: feed, eventType: EventType.winner)
+
+            let infoBlock = StackModel()
+               .spacing(Grid.x10.value)
+               .axis(.vertical)
+               .alignment(.fill)
+               .arrangedModels([
+                  dateLabel,
+                  infoLabel
+               ])
+
+            let cellStack = WrappedX(
+               StackModel()
+                  .padding(.outline(Grid.x8.value))
+                  .spacing(Grid.x12.value)
+                  .axis(.horizontal)
+                  .alignment(.top)
+                  .arrangedModels([
+                     icon,
+                     infoBlock
+                  ])
+                  .cornerRadius(Design.params.cornerRadiusSmall)
+            )
+            .padding(.verticalOffset(Grid.x16.value))
+
+            work.success(result: cellStack)
+         } else if feed.challenge != nil {
+            let icon = self.makeIcon(feed: feed, type: EventType.challenge)
+            let infoLabel = FeedPresenters.makeInfoLabel(feed: feed, eventType: EventType.challenge)
+
+            if feed.challenge?.userLiked == true {
+               likeButton.setState(.selected)
+            }
+            
+            let infoBlock = StackModel()
+               .spacing(Grid.x10.value)
+               .axis(.vertical)
+               .alignment(.fill)
+               .arrangedModels([
+                  dateLabel,
+                  infoLabel,
+                  reactionsBlock
+               ])
+            let cellStack = WrappedX(
+               StackModel()
+                  .padding(.outline(Grid.x8.value))
+                  .spacing(Grid.x12.value)
+                  .axis(.horizontal)
+                  .alignment(.top)
+                  .arrangedModels([
+                     icon,
+                     infoBlock
+                  ])
+                  .cornerRadius(Design.params.cornerRadiusSmall)
+            )
+            .padding(.verticalOffset(Grid.x16.value))
+
+            work.success(result: cellStack)
+         }
       }
    }
 }
 
 extension FeedPresenters {
-   static func makeInfoDateLabel(feed: Feed) -> LabelModel {
-      let dateAgoText = feed.time.timeAgoConverted
-      let eventText = feed.transaction.isAnonymous ? "" : " • " + "Публичная благодарность"
-      let titleText = dateAgoText + eventText
+   static func makeInfoDateLabel(feed: NewFeed) -> LabelModel {
+      let dateAgoText = feed.time?.timeAgoConverted
+      var eventText = ""
+      if let anon = feed.transaction?.isAnonymous {
+         eventText = anon ? "" : " • " + "Публичная благодарность"
+      }
+
+      let titleText = dateAgoText.string + eventText
 
       let dateLabel = LabelModel()
          .numberOfLines(0)
@@ -178,68 +223,88 @@ extension FeedPresenters {
       return dateLabel
    }
 
-   static func makeInfoLabel(feed: Feed, type: FeedTransactType) -> LabelModel {
-      let recipientName = "@" + feed.transaction.recipient
-      let senderName = "@" + feed.transaction.sender
-      let amountText = "\(Int(feed.transaction.amount))" + " " + "спасибок"
-      let infoText: NSMutableAttributedString = .init(string: "")
-
-      switch type {
-      case .youGotAmountFromSome:
-         infoText.append("Вы получили ".colored(Design.color.text))
-         infoText.append(amountText.colored(Design.color.textSuccess))
-         infoText.append(" от ".colored(Design.color.text))
-         infoText.append(senderName.colored(Design.color.textBrand))
-      case .youGotAmountFromAnonym:
-         infoText.append("Вы получили ".colored(Design.color.text))
-         infoText.append(amountText.colored(Design.color.textSuccess))
-         infoText.append(" от аноним".colored(Design.color.text))
-      case .someGotAmountFromSome:
-         infoText.append(recipientName.colored(Design.color.textBrand))
-         infoText.append(" получил ".colored(Design.color.text))
-         infoText.append(amountText.colored(Design.color.textSuccess))
-         infoText.append(" от ".colored(Design.color.text))
-         infoText.append(senderName.colored(Design.color.textBrand))
-      case .someGotAmountFromAnonym:
-         infoText.append(recipientName.colored(Design.color.textBrand))
-         infoText.append(" получил ".colored(Design.color.text))
-         infoText.append(amountText.colored(Design.color.textSuccess))
-         infoText.append(" от аноним".colored(Design.color.text))
-      }
-
-      let infoLabel = LabelModel()
+   static func makeInfoLabel(feed: NewFeed, type: FeedTransactType? = nil, eventType: EventType) -> LabelModel {
+      var infoLabel = LabelModel()
          .numberOfLines(0)
          .set(Design.state.label.caption)
          .textColor(Design.color.iconBrand)
-         .attributedText(infoText)
 
-      infoLabel.view.makePartsClickable(user1: recipientName, user2: senderName)
+      let infoText: NSMutableAttributedString = .init(string: "")
 
+      switch eventType {
+      case .transaction:
+         let recipientName = "@" + (feed.transaction?.recipientTgName ?? "")
+         let senderName = "@" + (feed.transaction?.senderTgName ?? "")
+         let amountText = "\(Int(feed.transaction?.amount ?? 0))" + " " + "спасибок"
+         guard let type = type else { return infoLabel }
+         switch type {
+         case .youGotAmountFromSome:
+            infoText.append("Вы получили ".colored(Design.color.text))
+            infoText.append(amountText.colored(Design.color.textSuccess))
+            infoText.append(" от ".colored(Design.color.text))
+            infoText.append(senderName.colored(Design.color.textBrand))
+         case .youGotAmountFromAnonym:
+            infoText.append("Вы получили ".colored(Design.color.text))
+            infoText.append(amountText.colored(Design.color.textSuccess))
+            infoText.append(" от аноним".colored(Design.color.text))
+         case .someGotAmountFromSome:
+            infoText.append(recipientName.colored(Design.color.textBrand))
+            infoText.append(" получил ".colored(Design.color.text))
+            infoText.append(amountText.colored(Design.color.textSuccess))
+            infoText.append(" от ".colored(Design.color.text))
+            infoText.append(senderName.colored(Design.color.textBrand))
+         case .someGotAmountFromAnonym:
+            infoText.append(recipientName.colored(Design.color.textBrand))
+            infoText.append(" получил ".colored(Design.color.text))
+            infoText.append(amountText.colored(Design.color.textSuccess))
+            infoText.append(" от аноним".colored(Design.color.text))
+         }
+
+         infoLabel.attributedText(infoText)
+
+         infoLabel.view.makePartsClickable(user1: recipientName, user2: senderName)
+      case .winner:
+         let winnerName = "@" + (feed.winner?.winnerTgName ?? "")
+         let challengeName = "«" + (feed.winner?.challengeName ?? "") + "»"
+         infoText.append(winnerName.colored(Design.color.textBrand))
+         infoText.append(" победил в челлендже ".colored(Design.color.text))
+         infoText.append(challengeName.colored(Design.color.textBrand))
+
+         infoLabel.attributedText(infoText)
+      case .challenge:
+         let challengeName = "«" + (feed.challenge?.name ?? "") + "»"
+         let creatorName = "@" + (feed.challenge?.creatorTgName ?? "")
+         infoText.append("Создан челлендж ".colored(Design.color.text))
+         infoText.append(challengeName.colored(Design.color.textBrand))
+         infoText.append(" пользователем ".colored(Design.color.text))
+         infoText.append(creatorName.colored(Design.color.textBrand))
+
+         infoLabel.attributedText(infoText)
+      }
       return infoLabel
    }
 
-   func makeIcon(feed: Feed) -> ImageViewModel {
+   func makeIcon(feed: NewFeed, type: EventType) -> ImageViewModel {
       let icon = ImageViewModel()
          .contentMode(.scaleAspectFill)
          .image(Design.icon.avatarPlaceholder)
          .size(.square(Grid.x36.value))
          .cornerRadius(Grid.x36.value / 2)
-      if let recipientPhoto = feed.transaction.photoUrl {
-         icon.url(recipientPhoto)
-      } else {
-         if let nameFirstLetter = feed.transaction.recipientFirstName?.first,
-            let surnameFirstLetter = feed.transaction.recipientSurname?.first
-         {
-            let text = String(nameFirstLetter) + String(surnameFirstLetter)
-            DispatchQueue.global(qos: .background).async {
-               let image = text.drawImage(backColor: Design.color.backgroundBrand)
-               DispatchQueue.main.async {
-                  icon
-                     .backColor(Design.color.backgroundBrand)
-                     .image(image)
-               }
-            }
+      switch type {
+      case .transaction:
+         if let recipientPhoto = feed.transaction?.recipientPhoto {
+            icon.url(TeamForceEndpoints.urlBase + recipientPhoto)
+         } else {
+            icon.image(Design.icon.avatarPlaceholder)
          }
+      case .winner:
+         if let winnerPhoto = feed.winner?.winnerPhoto {
+            icon.url(TeamForceEndpoints.urlBase + winnerPhoto)
+         } else {
+            icon.image(Design.icon.avatarPlaceholder)
+         }
+      case .challenge:
+         icon.image(Design.icon.avatarPlaceholder)
       }
 
       return icon
@@ -247,15 +312,15 @@ extension FeedPresenters {
 }
 
 enum FeedTransactType {
-   static func make(feed: Feed, currentUserName: String) -> Self {
-      if feed.transaction.recipient == currentUserName {
-         if feed.transaction.isAnonymous {
+   static func make(feed: NewFeed, currentUserName: String) -> Self {
+      if feed.transaction?.recipientTgName == currentUserName {
+         if feed.transaction?.isAnonymous ?? false {
             return .youGotAmountFromAnonym
          } else {
             return .youGotAmountFromSome
          }
       }
-      if feed.transaction.isAnonymous {
+      if feed.transaction?.isAnonymous ?? false {
          return .someGotAmountFromAnonym
       }
       return .someGotAmountFromSome
@@ -276,3 +341,8 @@ extension FeedPresenters: Eventable {
    }
 }
 
+enum EventType {
+   case transaction
+   case winner
+   case challenge
+}

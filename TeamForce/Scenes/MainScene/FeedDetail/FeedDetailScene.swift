@@ -13,13 +13,13 @@ final class FeedDetailScene<Asset: AssetProtocol>:
       DefaultVCModel,
       DoubleStacksBrandedVM<Asset.Design>,
       Asset,
-      (Feed, String)
+      (NewFeed, String)
    >, Scenarible
 {
    typealias State = ViewState
    typealias State2 = StackState
 
-   private lazy var feedDetailVM = FeedDetailViewModels<Design>()
+   private lazy var feedDetailVM = FeedDetailViewModels<Asset>()
 
    lazy var scenario: Scenario = FeedDetailScenario<Asset>(
       works: FeedDetailWorks<Asset>(),
@@ -66,12 +66,12 @@ final class FeedDetailScene<Asset: AssetProtocol>:
 
 enum FeedDetailSceneState {
    case initial
-   case presentDetails(Feed)
+   case presentDetails(EventTransaction)
    case presentComments([Comment])
    case presentReactions([ReactItem])
    case buttonLikePressed(alreadySelected: Bool)
-   case failedToReact
-   case updateReactions((TransactStatistics, Bool))
+   case failedToReact(alreadySelected: Bool)
+   case updateReactions((LikesCommentsStatistics, Bool))
    case presntActivityIndicator
    case sendButtonDisabled
    case sendButtonEnabled
@@ -91,20 +91,14 @@ extension FeedDetailScene: StateMachine {
          feedDetailVM.setState(.comments(comments))
       case .presentReactions(let items):
          feedDetailVM.setState(.reactions(items))
-      case .failedToReact:
+      case .failedToReact(let selected):
          print("failed to like")
+         setState(.buttonLikePressed(alreadySelected: !selected))
       case .updateReactions(let value):
-//         if value.1 == false {
-//            likeColor = Design.color.text
-//         }
          if let reactions = value.0.likes {
             for reaction in reactions {
                if reaction.likeKind?.code == "like" {
                   feedDetailVM.infoBlock.likeButton.models.right.text(String(reaction.counter ?? 0))
-                  print(value.0)
-                  print("like count \(reaction.counter)")
-               } else if reaction.likeKind?.code == "dislike" {
-//                  feedDetailVM.topBlock.dislikeButton.models.right.text(String(reaction.counter ?? 0))
                }
             }
          }

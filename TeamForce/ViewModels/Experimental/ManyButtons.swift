@@ -59,6 +59,7 @@ final class SlidedIndexButtons<ButtEvents: ManyButtonEvent>: BaseViewModel<UIScr
 
       view.layer.masksToBounds = false
       view.clipsToBounds = false
+      view.showsHorizontalScrollIndicator = false
    }
 
    required init() {

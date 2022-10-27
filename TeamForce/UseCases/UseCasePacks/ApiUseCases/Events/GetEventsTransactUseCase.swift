@@ -1,19 +1,19 @@
 //
-//  GetFeedUseCase.swift
+//  GetEventsTransactUseCase.swift
 //  TeamForce
 //
-//  Created by Yerzhan Gapurinov on 15.08.2022.
+//  Created by Yerzhan Gapurinov on 25.10.2022.
 //
 
 import Foundation
 import ReactiveWorks
 
-struct GetFeedUseCase: UseCaseProtocol {
+struct GetEventsTransactUseCase: UseCaseProtocol {
    let safeStringStorage: StringStorageWorker
-   let getFeedsApiWorker: GetFeedsApiWorker
+   let getEventsTransactApiWorker: GetEventsTransactApiWorker
 
-   var work: Work<Pagination, [Feed]> {
-      Work<Pagination, [Feed]>() { work in
+   var work: Work<Pagination, [NewFeed]> {
+      Work<Pagination, [NewFeed]>() { work in
          safeStringStorage
             .doAsync("token")
             .onFail {
@@ -23,7 +23,7 @@ struct GetFeedUseCase: UseCaseProtocol {
                guard let input = work.input else { return nil }
                return ($0, input)
             }
-            .doNext(worker: getFeedsApiWorker)
+            .doNext(worker: getEventsTransactApiWorker)
             .onSuccess {
                work.success(result: $0)
             }

@@ -47,11 +47,6 @@ final class FeedDetailUserInfoBlock<Design: DSP>: StackModel, Designable {
       .width(121)
       .height(42)
 
-//   lazy var dislikeButton = ReactionButton<Design>(height: 40)
-//      .setAll {
-//         $0.image(Design.icon.dislike)
-//         $1.text("0")
-//      }
 
    lazy var reactionsBlock = StackModel()
       .axis(.horizontal)
@@ -60,7 +55,6 @@ final class FeedDetailUserInfoBlock<Design: DSP>: StackModel, Designable {
       .spacing(8)
       .arrangedModels([
          likeButton,
-//         dislikeButton,
          Grid.xxx.spacer
       ])
 
@@ -82,7 +76,7 @@ final class FeedDetailUserInfoBlock<Design: DSP>: StackModel, Designable {
 }
 
 extension FeedDetailUserInfoBlock: SetupProtocol {
-   func setup(_ data: (Feed, String)) {
+   func setup(_ data: (NewFeed, String)) {
       let feed = data.0
       let userName = data.1
       configureImage(feed: feed)
@@ -90,40 +84,27 @@ extension FeedDetailUserInfoBlock: SetupProtocol {
       let dateText = FeedPresenters<Design>.makeInfoDateLabel(feed: feed).view.text
       dateLabel.text(dateText ?? "")
       let type = FeedTransactType.make(feed: feed, currentUserName: userName)
-      let infoText = FeedPresenters<Design>.makeInfoLabel(feed: feed, type: type).view.attributedText
+      let infoText = FeedPresenters<Design>.makeInfoLabel(feed: feed, type: type, eventType: EventType.transaction ).view.attributedText
 
       infoLabel.attributedText(infoText!)
-      var likeAmount = "0"
-//      var dislikeAmount = "0"
-      if let reactions = feed.transaction.reactions {
-         for reaction in reactions {
-            if reaction.code == "like" {
-               likeAmount = String(reaction.counter ?? 0)
-            } else if reaction.code == "dislike" {
-//               dislikeAmount = String(reaction.counter ?? 0)
-            }
-         }
-      }
+      
+      let likeAmount  = String(feed.likesAmount)
 
       likeButton.models.right.text(likeAmount)
-//      dislikeButton.models.right.text(dislikeAmount)
 
-      if feed.transaction.userLiked == true {
+      if feed.transaction?.userLiked == true {
          likeButton.setState(.selected)
       }
-//      if feed.transaction.userDisliked == true {
-//         dislikeButton.models.main.imageTintColor(Design.color.activeButtonBack)
-//      }
    }
 }
 
 private extension FeedDetailUserInfoBlock {
-   func configureImage(feed: Feed) {
-      if let recipientPhoto = feed.transaction.photoUrl {
-         image.subModel.url(recipientPhoto)
+   func configureImage(feed: NewFeed) {
+      if let recipientPhoto = feed.transaction?.recipientPhoto {
+         image.subModel.url(TeamForceEndpoints.urlBase + recipientPhoto)
       } else {
-         if let nameFirstLetter = feed.transaction.recipientFirstName?.first,
-            let surnameFirstLetter = feed.transaction.recipientSurname?.first
+         if let nameFirstLetter = feed.transaction?.recipientFirstName?.first,
+            let surnameFirstLetter = feed.transaction?.recipientSurname?.first
          {
             let text = String(nameFirstLetter) + String(surnameFirstLetter)
             DispatchQueue.global(qos: .background).async {
@@ -138,24 +119,15 @@ private extension FeedDetailUserInfoBlock {
       }
    }
 
-   func configureEvents(feed: Feed) {
-      let transactionId = feed.transaction.id
+   func configureEvents(feed: NewFeed) {
+      let transactionId = feed.transaction?.id
       
       likeButton.view.startTapGestureRecognize()
-//      dislikeButton.view.startTapGestureRecognize()
 
       likeButton.view.on(\.didTap, self) {
-//         let request = PressLikeRequest(token: "",
-//                                        likeKind: 1,
-//                                        transactionId: transactionId)
          $0.send(\.reactionPressed)
       }
 
-//      dislikeButton.view.on(\.didTap, self) {
-//         let request = PressLikeRequest(token: "",
-//                                        likeKind: 2,
-//                                        transactionId: transactionId)
-//         $0.send(\.reactionPressed, request)
-//      }
+
    }
 }

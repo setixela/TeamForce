@@ -93,8 +93,8 @@ final class TagList<Asset: AssetProtocol>: ModalDoubleStackModel<Asset> {
    }
 
    private var tagPresenter: Presenter<SelectWrapper<Tag>, TagCell<Design>> = .init { work in
-      let isSelected = work.unsafeInput.isSelected
-      let tag = work.unsafeInput.value
+      let isSelected = work.unsafeInput.0.isSelected
+      let tag = work.unsafeInput.item.value
       let iconLabel = TagCell<Design>()
          .setAll { icon, label in
             icon

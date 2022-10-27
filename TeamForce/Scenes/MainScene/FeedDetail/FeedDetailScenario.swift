@@ -16,7 +16,7 @@ struct FeedDetailEvents {
    let presentComment: VoidWork<Void>
    let presentReactions: VoidWork<Void>
    let reactionPressed: VoidWork<Void>
-   let saveInput: VoidWork<(Feed, String)>
+   let saveInput: VoidWork<(NewFeed, String)>
 
    let didEditingComment: VoidWork<String>
    let didSendCommentPressed: VoidWorkVoid
@@ -38,8 +38,8 @@ final class FeedDetailScenario<Asset: AssetProtocol>:
          .doNext(works.isLikedByMe)
          .onSuccess(setState) { .buttonLikePressed(alreadySelected: $0) }
          .doVoidNext(works.pressLike)
-         .onFail(setState) { .failedToReact }
-         .doNext(works.getTransactStat)
+         .onFail(setState) { .failedToReact(alreadySelected: $0) }
+         .doVoidNext(works.getTransactStat)
          .onSuccess(setState) { .updateReactions($0) }
 
       events.saveInput
@@ -48,7 +48,7 @@ final class FeedDetailScenario<Asset: AssetProtocol>:
 
       events.presentDetails
          .onSuccess(setState, .presntActivityIndicator)
-         .doNext(works.getFeed)
+         .doNext(works.getTransaction)
          .onSuccess(setState) { .presentDetails($0) }
 
       events.presentComment

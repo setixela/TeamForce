@@ -240,10 +240,10 @@ final class ApiUseCase<Asset: AssetProtocol>: InitProtocol, Assetable, WorkBaske
       .retainedWork(retainer)
    }
    
-   var getTransactStatistics: GetTransactionStatisticsUseCase.WRK {
-      GetTransactionStatisticsUseCase(
+   var getLikesCommentsStat: GetLikesCommentsStatUseCase.WRK {
+      GetLikesCommentsStatUseCase(
          safeStringStorage: safeStringStorage,
-         getTransactionStatisticsApiWorker: getTransactionStatisticsApiWorker
+         getLikesCommentsStatApiWorker: getLikesCommentsStatApiWorker
       )
       .retainedWork(retainer)
    }
@@ -375,6 +375,46 @@ final class ApiUseCase<Asset: AssetProtocol>: InitProtocol, Assetable, WorkBaske
       .retainedWork(retainer)
    }
    
+   var getEvents: GetEventsUseCase.WRK {
+      GetEventsUseCase(
+         safeStringStorage: safeStringStorage,
+         getEventsApiWorker: getEventsApiWorker
+      )
+      .retainedWork(retainer)
+   }
+   
+   var getEventsTransact: GetEventsTransactUseCase.WRK {
+      GetEventsTransactUseCase(
+         safeStringStorage: safeStringStorage,
+         getEventsTransactApiWorker: getEventsTransactApiWorker
+      )
+      .retainedWork(retainer)
+   }
+   
+   var getEventsWinners: GetEventsWinnersUseCase.WRK {
+      GetEventsWinnersUseCase(
+         safeStringStorage: safeStringStorage,
+         getEventsWinnersApiWorker: getEventsWinnersApiWorker
+      )
+      .retainedWork(retainer)
+   }
+   
+   var getEventsChall: GetEventsChallUseCase.WRK {
+      GetEventsChallUseCase(
+         safeStringStorage: safeStringStorage,
+         getEventsChallApiWorker: getEventsChallApiWorker
+      )
+      .retainedWork(retainer)
+   }
+   
+   var getEventsTransactById: GetEventsTransactByIdUseCase.WRK {
+      GetEventsTransactByIdUseCase(
+         safeStringStorage: safeStringStorage,
+         getEventsTransactByIdApiModel: getEventsTransactByIdApiWorker
+      )
+      .retainedWork(retainer)
+   }
+   
    
    // MARK: - Dependencies
 
@@ -412,7 +452,7 @@ final class ApiUseCase<Asset: AssetProtocol>: InitProtocol, Assetable, WorkBaske
        Asset.service.apiEngine) }
    private var pressLikeApiWorker: PressLikeApiWorker { .init(apiEngine:
        Asset.service.apiEngine) }
-   private var getTransactionStatisticsApiWorker: GetTransactionStatisticsApiWorker { .init(apiEngine: Asset.service.apiEngine) }
+   private var getLikesCommentsStatApiWorker: GetLikesCommentsStatApiWorker { .init(apiEngine: Asset.service.apiEngine) }
    private var getCommentsApiWorker: GetCommentsApiWorker { .init(apiEngine:
        Asset.service.apiEngine) }
    private var createCommentApiWorker: CreateCommentApiWorker { .init(apiEngine:
@@ -441,4 +481,9 @@ final class ApiUseCase<Asset: AssetProtocol>: InitProtocol, Assetable, WorkBaske
        .init(apiEngine: Asset.service.apiEngine) }
    private var getChallengeReportApiWorker: GetChallengeReportApiWorker {
        .init(apiEngine: Asset.service.apiEngine) }
+   private var getEventsApiWorker: GetEventsApiWorker { .init(apiEngine: Asset.service.apiEngine) }
+   private var getEventsTransactApiWorker: GetEventsTransactApiWorker { .init(apiEngine: Asset.service.apiEngine) }
+   private var getEventsWinnersApiWorker: GetEventsWinnersApiWorker { .init(apiEngine: Asset.service.apiEngine) }
+   private var getEventsChallApiWorker: GetEventsChallApiWorker { .init(apiEngine: Asset.service.apiEngine) }
+   private var getEventsTransactByIdApiWorker: GetEventsTransactByIdApiWorker { .init(apiEngine: Asset.service.apiEngine) }
 }

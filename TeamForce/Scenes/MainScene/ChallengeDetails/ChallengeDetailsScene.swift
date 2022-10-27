@@ -39,9 +39,10 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
    )
 
    private lazy var headerImage = ImageViewModel()
-      .image(Design.icon.challengeWinnerIllustrate)
-      .contentMode(.scaleAspectFit)
+      .image(Design.icon.challengeWinnerIllustrateFull)
+      .contentMode(.scaleAspectFill)
       .height(200)
+      .set(.tapGesturing)
 
    private lazy var filterButtons = SlidedIndexButtons<Button6Event>(buttons:
       SecondaryButtonDT<Design>()
@@ -71,7 +72,6 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
       .backColor(Design.color.background)
 
    private lazy var challDetails = ChallengeDetailsViewModel<Design>()
-      .set(.padding(.horizontalOffset(Design.params.commonSideOffset)))
       .backColor(Design.color.background)
 
    private lazy var myResultBlock = ChallResultViewModel<Design>()
@@ -213,7 +213,7 @@ extension ChallengeDetailsScene: StateMachine {
                   payload: ChallengeDetailsSceneInput(
                      challenge: challenge,
                      profileId: profileId,
-                     currentButton: 1
+                     currentButton: 0
                   )
                )
             case false:
@@ -342,17 +342,37 @@ extension ChallengeDetailsScene {
    }
 
    private func updateHeaderImage(url: String?) {
-      guard let url = url else { return }
+      guard
+         let url,
+         let inputValue
+      else { return }
+
+      let fullUrl = TeamForceEndpoints.urlBase + url.replacingOccurrences(of: "_thumb", with: "")
+
       headerImage
          .url(
             TeamForceEndpoints.urlBase + url,
             transition: .crossDissolve(0.5)
          ) { header, _ in
             header?.url(
-               TeamForceEndpoints.urlBase + url.replacingOccurrences(of: "_thumb", with: ""),
+               fullUrl,
                transition: .crossDissolve(0.5)
             )
          }
          .contentMode(.scaleAspectFill)
+         .on(\.didTap, self) {
+            $0.dismiss()
+            Asset.router?.route(
+               .presentModally(.automatic),
+               scene: \.imageViewer,
+               payload: fullUrl
+            ) { _ in
+               Asset.router?.route(
+                  .presentModally(.automatic),
+                  scene: \.challengeDetails,
+                  payload: inputValue
+               )
+            }
+         }
    }
 }

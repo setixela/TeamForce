@@ -13,7 +13,7 @@ class ChallWinnersPresenters<Design: DesignProtocol>: Designable {
    
    var winnersCellPresenter: Presenter<ChallengeWinnerReport, WrappedX<StackModel>> {
       Presenter { work in
-         let winnerReport = work.unsafeInput
+         let winnerReport = work.unsafeInput.item
          let awardedAt = winnerReport.awardedAt
          let nickname = winnerReport.nickname.string
          let name = winnerReport.participantName.string

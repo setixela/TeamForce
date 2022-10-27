@@ -17,7 +17,9 @@ class HistoryPresenters<Design: DesignProtocol>: Designable {
       Presenter { [weak self] work in
          guard let self = self else { return }
          
-         let item = work.unsafeInput
+         let item = work.unsafeInput.item
+         let index = work.unsafeInput.index
+         
          // print(work.input)
          var userNameText: String
          var userIconText: String = ""

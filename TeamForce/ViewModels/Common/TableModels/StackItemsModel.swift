@@ -70,7 +70,7 @@ extension StackItemsModel {
 
       guard let presenter = presenters[cellName] else { return ViewModel() }
 
-      let model = presenter.viewModel(for: item)
+      let model = presenter.viewModel(for: item, index: 0)
       return model
    }
 

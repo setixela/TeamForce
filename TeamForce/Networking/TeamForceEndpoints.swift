@@ -120,9 +120,14 @@ enum TeamForceEndpoints {
       //
       let method = HTTPMethod.get
       
-      var endPoint: String { urlBase + "/feed/" }
+      var endPoint: String = urlBase + "/feed/"
       
       let headers: [String : String]
+      
+      init(offset: Int, limit: Int, headers: [String : String]) {
+         endPoint = endPoint + "?offset=" + String(offset) + "&limit=" + String(limit)
+         self.headers = headers
+      }
    }
    
    struct Periods: EndpointProtocol {
@@ -315,17 +320,17 @@ enum TeamForceEndpoints {
       
       var headers: [String : String]
       
-      var body: [String : Any]
+      let jsonData: Data?
    }
    
-   struct GetTransactionStatistics: EndpointProtocol {
+   struct GetLikesCommentsStat: EndpointProtocol {
       let method = HTTPMethod.post
       
-      var endPoint: String { urlBase + "/get-transaction-statistics/" }
+      var endPoint: String { urlBase + "/get-likes-comments-statistics/" }
       
       var headers: [String : String]
       
-      var body: [String : Any]
+      let jsonData: Data?
    }
    
    struct GetComments: EndpointProtocol {
@@ -514,6 +519,71 @@ enum TeamForceEndpoints {
       init(id: String, headers: [String : String]) {
          endPoint = endPoint + id + "/"
          self.headers = headers
+      }
+   }
+   
+   struct Events: EndpointProtocol {
+      let method = HTTPMethod.get
+      
+      var endPoint: String = urlBase + "/events/"
+      
+      let headers: [String : String]
+      
+      init(offset: Int, limit: Int, headers: [String : String]) {
+         endPoint = endPoint + "?offset=" + String(offset) + "&limit=" + String(limit)
+         self.headers = headers
+      }
+   }
+   
+   struct EventsTransactions: EndpointProtocol {
+      let method = HTTPMethod.get
+      
+      var endPoint: String = urlBase + "/events/transactions/"
+      
+      let headers: [String : String]
+      
+      init(offset: Int, limit: Int, headers: [String : String]) {
+         endPoint = endPoint + "?offset=" + String(offset) + "&limit=" + String(limit)
+         self.headers = headers
+      }
+   }
+   
+   struct EventsWinners: EndpointProtocol {
+      let method = HTTPMethod.get
+   
+      var endPoint: String = urlBase + "/events/winners/"
+      
+      let headers: [String : String]
+      
+      init(offset: Int, limit: Int, headers: [String : String]) {
+         endPoint = endPoint + "?offset=" + String(offset) + "&limit=" + String(limit)
+         self.headers = headers
+      }
+   }
+   
+   struct EventsChallenges: EndpointProtocol {
+      let method = HTTPMethod.get
+   
+      var endPoint: String = urlBase + "/events/challenges/"
+      
+      let headers: [String : String]
+      
+      init(offset: Int, limit: Int, headers: [String : String]) {
+         endPoint = endPoint + "?offset=" + String(offset) + "&limit=" + String(limit)
+         self.headers = headers
+      }
+   }
+   
+   struct EventsTransactById: EndpointProtocol {
+      let method = HTTPMethod.get
+      
+      var endPoint: String = urlBase + "/events/transactions/"
+
+      var headers: [String : String]
+      
+      init(id: String, headers: [String : String]) {
+          endPoint = endPoint + id + "/"
+          self.headers = headers
       }
    }
 }

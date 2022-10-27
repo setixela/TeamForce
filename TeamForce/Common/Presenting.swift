@@ -10,12 +10,12 @@ import ReactiveWorks
 protocol PresenterProtocol {
    var cellType: String { get }
 
-   func viewModel(for input: Any) -> UIViewModel
+   func viewModel(for item: Any, index: Int) -> UIViewModel
 }
 
-open class Presenter<In, Out: UIViewModel>: Work<In, Out>, PresenterProtocol {
-   func viewModel(for input: Any) -> UIViewModel {
-      doSync(input as? In)
+open class Presenter<In, Out: UIViewModel>: Work<(item: In, index: Int), Out>, PresenterProtocol {
+   func viewModel(for item: Any, index: Int) -> UIViewModel {
+      doSync((item: item, index: index) as? (In, Int))
    }
 
    var cellType: String {

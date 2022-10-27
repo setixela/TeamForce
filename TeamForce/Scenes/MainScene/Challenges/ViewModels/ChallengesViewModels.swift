@@ -76,15 +76,16 @@ final class ChallengeCell<Design: DSP>:
       super.init(isAutoreleaseView: true)
 
       setAll { infoBlock, _ in
-         infoBlock.setAll { title, participant, winner, prizeFund, prizes in
-            title
+         infoBlock.setAll { title, winner, prizeFund, prizes in
+            title.title
                .set(Design.state.label.body4)
                .numberOfLines(1)
                .lineBreakMode(.byTruncatingTail)
                .height(20)
+            title.body.set(Design.state.label.caption)
 
-            participant.title.set(Design.state.label.body2)
-            participant.body.set(Design.state.label.caption)
+//            participant.title.set(Design.state.label.body2)
+//            participant.body.set(Design.state.label.caption)
 
             winner.title.set(Design.state.label.body2)
             winner.body.set(Design.state.label.caption)
@@ -113,11 +114,11 @@ extension ChallengeCell: StateMachine {
       switch state {
       case .inverted:
          setAll { infoBlock, statusBlock in
-            infoBlock.setAll { title, participant, winner, prizeFund, prizes in
-               title.textColor(Design.color.textInvert)
-
-               participant.title.textColor(Design.color.textInvert)
-               participant.body.textColor(Design.color.textInvert)
+            infoBlock.setAll { title, winner, prizeFund, prizes in
+               title.title.textColor(Design.color.textInvert)
+               title.body.textColor(Design.color.textInvert)
+//               participant.title.textColor(Design.color.textInvert)
+//               participant.body.textColor(Design.color.textInvert)
 
                winner.title.textColor(Design.color.textInvert)
                winner.body.textColor(Design.color.textInvert)
@@ -139,9 +140,24 @@ extension ChallengeCell: StateMachine {
    }
 }
 
+//final class ChallengeCellInfoBlock:
+//   M<LabelModel>
+//   .D<TitleBodyY>.R<TitleBodyY>
+//   .D2<TitleBodyY>
+//   .D3<TitleBodyY>
+//   .Combo
+//{
+//   override func start() {
+//      super.start()
+//
+//      spacing(12)
+//      distribution(.equalSpacing)
+//   }
+//}
+
 final class ChallengeCellInfoBlock:
-   M<LabelModel>
-   .D<TitleBodyY>.R<TitleBodyY>
+   M<TitleBodyY>
+   .D<TitleBodyY>
    .D2<TitleBodyY>
    .D3<TitleBodyY>
    .Combo
@@ -194,16 +210,19 @@ protocol TableInputProtocol {
 
 struct ChallengeCellPresenters<Design: DSP>: Designable {
    static var presenter: Presenter<Challenge, ChallengeCell<Design>> { .init { work in
-      var data = work.unsafeInput
+      let data = work.unsafeInput.item
 
       let model = ChallengeCell<Design>()
          .setAll { infoBlock, statusBlock in
-            infoBlock.setAll { title, participant, winner, prizeFund, prizes in
-               // title.text("Заголовок")
-               title.text(data.name.string)
+            infoBlock.setAll { title, winner, prizeFund, prizes in
 
-               participant.title.text(data.approvedReportsAmount.toString)
-               participant.body.text("Участников")
+               title.title.text(data.name.string)
+
+               let creatorName = data.creatorName.string
+               let creatorSurname = data.creatorSurname.string
+               title.body.text("от " + creatorName + " " + creatorSurname)
+//               participant.title.text(data.approvedReportsAmount.toString)
+//               participant.body.text("Участников")
 
                winner.title.text(data.awardees.toString)
                winner.body.text("Победителей")

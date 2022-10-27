@@ -5,7 +5,9 @@
 //  Created by Aleksandr Solovyev on 01.10.2022.
 //
 
-final class FeedDetailsBlock<Design: DSP>: StackModel, Designable {
+import ReactiveWorks
+
+final class FeedDetailsBlock<Asset: AssetProtocol>: StackModel, Assetable {
    private lazy var reasonLabel = LabelModel()
       .text("Текст")
       .numberOfLines(0)
@@ -24,6 +26,8 @@ final class FeedDetailsBlock<Design: DSP>: StackModel, Designable {
 
    private lazy var hashTagBlock = HashTagsScrollModel<Design>()
       .hidden(true)
+
+   private var imageUrl: String?
 
    private lazy var transactPhoto = Combos<SComboMD<LabelModel, ImageViewModel>>()
       .setAll {
@@ -51,22 +55,29 @@ final class FeedDetailsBlock<Design: DSP>: StackModel, Designable {
          hashTagBlock,
          transactPhoto
       ])
+
+      transactPhoto.models.down
+         .set(.tapGesturing)
+         .on(\.didTap, self) {
+            Asset.router?.route(.presentModally(.automatic), scene: \.imageViewer, payload: $0.imageUrl)
+         }
    }
 }
 
 extension FeedDetailsBlock: SetupProtocol {
-   func setup(_ data: Feed) {
-      if let reason = data.transaction.reason, reason != "" {
+   func setup(_ data: EventTransaction) {
+      if let reason = data.reason, reason != "" {
          reasonLabel.text(reason)
          reasonStack.hidden(false)
       }
 
-      if data.transaction.tags?.isEmpty == false {
+      if data.tags?.isEmpty == false {
          hashTagBlock.setup(data)
          hashTagBlock.hidden(false)
       }
 
-      if let photoLink = data.transaction.photo {
+      if let photoLink = data.photo {
+         imageUrl = TeamForceEndpoints.urlBase + photoLink
          transactPhoto.models.down.url(TeamForceEndpoints.urlBase + photoLink)
          transactPhoto.hidden(false)
       }

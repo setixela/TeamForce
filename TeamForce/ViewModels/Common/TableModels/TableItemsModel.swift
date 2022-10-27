@@ -21,6 +21,7 @@ enum TableItemsState {
    case items([Any])
    case itemSections([TableItemsSection])
    case presenters([PresenterProtocol])
+   case updateItemAtIndex(Any, Int)
 }
 
 protocol ScrollEventsProtocol: InitProtocol {
@@ -39,6 +40,7 @@ struct TableItemsEvents: ScrollEventsProtocol {
    // TODO: - Обьединять ивенты как Стейты
    var didScroll: CGFloat?
    var willEndDragging: CGFloat?
+   var pagination: Bool?
 }
 
 final class TableItemsModel<Design: DSP>: BaseViewModel<UITableView>,
@@ -108,7 +110,7 @@ final class TableItemsModel<Design: DSP>: BaseViewModel<UITableView>,
       let cell = tableView.dequeueReusableCell(withIdentifier: cellName) ?? TableCell()
 
       let presenter = presenters[cellName]
-      let model = presenter?.viewModel(for: item)
+      let model = presenter?.viewModel(for: item, index: indexPath.row)
       let modelView = model?.uiView ?? UIView()
 
       cell.contentView.backgroundColor = Design.color.background
@@ -154,6 +156,11 @@ final class TableItemsModel<Design: DSP>: BaseViewModel<UITableView>,
       let velocity = scrollView.contentOffset.y - prevScrollOffset
       prevScrollOffset = scrollView.contentOffset.y
       send(\.didScroll, velocity)
+      
+      let pos = scrollView.contentOffset.y
+      if pos > self.view.contentSize.height - 50  - scrollView.frame.size.height {
+         send(\.pagination, true)
+      }
    }
 
    func scrollViewWillEndDragging(_ scrollView: UIScrollView,
@@ -183,6 +190,10 @@ extension TableItemsModel: Stateable2 {
             let key = $0.cellType
             self.presenters[key] = $0
          }
+      case .updateItemAtIndex(let item, let index):
+         items[index] = item
+         let indexPath = IndexPath(item: index, section: 0)
+         view.reloadRows(at: [indexPath], with: .automatic)
       }
    }
 }

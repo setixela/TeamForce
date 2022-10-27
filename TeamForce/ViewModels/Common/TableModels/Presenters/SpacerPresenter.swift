@@ -14,7 +14,7 @@ struct SpacerItem {
 struct SpacerPresenter {
    static var presenter: Presenter<SpacerItem, Spacer> {
       Presenter { work in
-         let item = work.unsafeInput
+         let item = work.unsafeInput.item
          work.success(result: Spacer(item.size))
       }
    }
