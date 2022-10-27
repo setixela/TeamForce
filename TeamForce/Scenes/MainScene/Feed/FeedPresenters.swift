@@ -171,6 +171,10 @@ class FeedPresenters<Design: DesignProtocol>: Designable {
             let icon = self.makeIcon(feed: feed, type: EventType.challenge)
             let infoLabel = FeedPresenters.makeInfoLabel(feed: feed, eventType: EventType.challenge)
 
+            if feed.challenge?.userLiked == true {
+               likeButton.setState(.selected)
+            }
+            
             let infoBlock = StackModel()
                .spacing(Grid.x10.value)
                .axis(.vertical)

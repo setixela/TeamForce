@@ -50,11 +50,35 @@ final class FeedScenario<Asset: AssetProtocol>:
          .onSuccess(setState) { .presentProfile($0) }
 
       events.reactionPressed
-         // .doSaveResult()
+         .doSaveResult()
          .doNext(works.pressLike)
          .onFail {
             print("failed to like")
          }
+         .doLoadResult()
+         .onFail {
+            print("fail")
+         }
+         .doNext(works.createStatRequest)
+         .onFail {
+            print("fail")
+         }
+         .doNext(works.getLikesCommentsStat)
+         .onFail {
+            print("fail")
+         }
+         .doMap { [weak self] stat in
+            let index = self?.events.reactionPressed.result?.index ?? 0
+            let res = (stat, index)
+            return res
+         }
+         .doNext(works.updateFeedElement)
+         .onSuccess(setState) {
+            .updateFeedAtIndex($0.0, $0.1)
+         }
+         
+         
+      
 
 //         .doNext(works.getLikesCommentsStat)
 //         .onFail(setState, .loadFeedError)
