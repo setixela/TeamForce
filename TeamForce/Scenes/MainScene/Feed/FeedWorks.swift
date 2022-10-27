@@ -136,8 +136,9 @@ final class FeedWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedWorksTempStorage
       let segmentId = Self.store.segmentId
       var filtered: [NewFeed] = []
       if segmentId == 0 { filtered = Self.store.feed }
-//      else if segmentId == 1 { filtered = Self.filteredMy() }
-//      else if segmentId == 2 { filtered = Self.filteredPublic() }
+      else if segmentId == 1 { filtered = Self.store.transactions }
+      else if segmentId == 2 { filtered = Self.store.challenges }
+      else if segmentId == 3 { filtered = Self.store.winners }
 
       if let index = work.input {
          let feed = filtered[index]
