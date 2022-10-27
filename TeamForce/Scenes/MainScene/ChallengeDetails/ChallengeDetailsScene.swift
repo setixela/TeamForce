@@ -212,7 +212,7 @@ extension ChallengeDetailsScene: StateMachine {
                   payload: ChallengeDetailsSceneInput(
                      challenge: challenge,
                      profileId: profileId,
-                     currentButton: 1
+                     currentButton: 0
                   )
                )
             case false:

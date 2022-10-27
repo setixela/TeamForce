@@ -17,10 +17,10 @@ struct NewFeed: Codable {
    let eventRecordId: Int?
    let objectSelector: String?
    var likesAmount: Int
-   let commentsAmount: Int
-   let transaction: EventTransaction?
-   let challenge: Challenge?
-   let winner: Winner?
+   var commentsAmount: Int
+   var transaction: EventTransaction?
+   var challenge: Challenge?
+   var winner: Winner?
 
    enum CodingKeys: String, CodingKey {
       case id, time
@@ -71,7 +71,7 @@ struct NewFeed: Codable {
 
    struct Challenge: Codable {
       let id: Int
-      let userLiked: Bool
+      var userLiked: Bool
       let photo: String?
       let createdAt: String?
       let name: String
@@ -93,7 +93,7 @@ struct NewFeed: Codable {
 
    struct Winner: Codable {
       let id: Int
-      let userLiked: Bool
+      var userLiked: Bool
       let updatedAt: String?
       let challengeName: String
       let winnerId: Int

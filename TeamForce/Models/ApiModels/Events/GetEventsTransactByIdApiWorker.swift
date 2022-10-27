@@ -14,7 +14,7 @@ struct EventTransaction: Codable {
    let reason: String?
    let amount: Int
    let updatedAt: String?
-   let userLiked: Bool
+   var userLiked: Bool
    
    let senderId: Int?
    let senderFirstName: String?

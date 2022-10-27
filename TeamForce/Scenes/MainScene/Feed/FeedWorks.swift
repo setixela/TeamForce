@@ -150,16 +150,94 @@ final class FeedWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedWorksTempStorage
    .retainBy(retainer)
    }
 
-   var pressLike: Work<PressLikeRequest, Void> { .init { [weak self] work in
+   var pressLike: Work<PressLikeRequest, PressLikeRequest> { .init { [weak self] work in
       guard let input = work.input else { return }
       self?.apiUseCase.pressLike
          .doAsync(input)
          .onSuccess {
-            work.success(result: $0)
+            work.success(result: input)
          }
          .onFail {
             work.fail()
          }
+   }.retainBy(retainer) }
+   
+   var createStatRequest: Work<PressLikeRequest, LikesCommentsStatRequest> { .init { work in
+      guard let input = work.input else { return }
+      let reqBody = LikesCommentsStatRequest.Body(
+         transactionId: input.body.transactionId,
+         challengeId: input.body.challengeId,
+         challengeReportId: input.body.challengeReportId)
+      let request = LikesCommentsStatRequest(token: "", body: reqBody)
+      work.success(request)
+
+   }.retainBy(retainer) }
+   
+   var getIndexFromLikeRequest: Work<PressLikeRequest, Int> { .init { work in
+      guard let input = work.input else { return }
+      work.success(input.index)
+   }.retainBy(retainer) }
+   
+   var updateFeedElement: Work<(LikesCommentsStatistics, Int), (NewFeed, Int)> { .init { [weak self] work in
+      guard
+         let stat = work.input?.0,
+         let index = work.input?.1
+      else { return }
+      //get stats
+      var likesAmount: Int?
+      if let reactions = stat.likes {
+         for reaction in reactions {
+            if reaction.likeKind?.code == "like" {
+               likesAmount = reaction.counter
+            }
+         }
+      }
+      let commentsAmount = stat.comments
+      
+      //get feed from array
+      var tempFeed: NewFeed?
+      switch Self.store.segmentId {
+      case 0:
+         tempFeed = Self.store.feed[index]
+      case 1:
+         tempFeed = Self.store.transactions[index]
+      case 2:
+         tempFeed = Self.store.challenges[index]
+      case 3:
+         tempFeed = Self.store.winners[index]
+      default:
+         break
+      }
+      //update feed
+      tempFeed?.commentsAmount = commentsAmount ?? 0
+      tempFeed?.likesAmount = likesAmount ?? 0
+      
+      if tempFeed?.transaction?.userLiked != nil {
+         tempFeed!.transaction!.userLiked = !tempFeed!.transaction!.userLiked
+      }
+      if tempFeed?.challenge?.userLiked != nil {
+         tempFeed!.challenge!.userLiked = !tempFeed!.challenge!.userLiked
+      }
+
+      guard
+         let feed = tempFeed
+      else { return }
+      
+      //update array
+      switch Self.store.segmentId {
+      case 0:
+          Self.store.feed[index] = feed
+      case 1:
+         Self.store.transactions[index] = feed
+      case 2:
+         Self.store.challenges[index] = feed
+      case 3:
+         Self.store.winners[index] = feed
+      default:
+         break
+      }
+      //send res
+      work.success((feed, index))
    }.retainBy(retainer) }
 
    var getLikesCommentsStat: Work<LikesCommentsStatRequest, LikesCommentsStatistics> { .init { [weak self] work in
