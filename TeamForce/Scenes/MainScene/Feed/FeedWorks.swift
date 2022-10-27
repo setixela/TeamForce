@@ -143,7 +143,12 @@ final class FeedWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedWorksTempStorage
       if let index = work.input {
          let feed = filtered[index]
          Self.store.currentTransactId = feed.id
-         work.success(result: feed)
+         if feed.objectSelector == "T" {
+            work.success(result: feed)
+         } else {
+            work.fail()
+         }
+         
       } else {
          work.fail()
       }
