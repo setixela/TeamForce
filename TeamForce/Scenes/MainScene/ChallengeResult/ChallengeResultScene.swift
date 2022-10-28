@@ -76,7 +76,6 @@ final class ChallengeResultScene<Asset: AssetProtocol>: BaseSceneModel<
             photosPanel.lefted(),
             addPhotoButton,
             Spacer(),
-            Spacer()
          ])
 
       mainVM.footerStack

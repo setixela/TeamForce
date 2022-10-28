@@ -114,7 +114,6 @@ extension FeedScene: StateMachine {
          print("Hello")
       case .presentDetailView(let feed):
          Asset.router?.route(.push, scene: \.feedDetail, payload: (feed, viewModels.userName))
-         break
       case .updateFeed(let value):
          viewModels.feedTableModel.set(.items(value + [SpacerItem(size: Grid.x64.value)]))
       case .updateFeedAtIndex(let feed, let index):

@@ -28,6 +28,8 @@ final class FeedScenario<Asset: AssetProtocol>:
    private var userName: String = ""
 
    override func start() {
+      works.retainer.cleanAll()
+
       events.loadFeedForCurrentUser
          .doNext(works.loadFeedForCurrentUser)
          .onFail(setState, .loadFeedError)

@@ -2285,7 +2285,7 @@
 				DEVELOPMENT_TEAM = B9QL37WADD;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = TeamForce/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = DigThanks;
+				INFOPLIST_KEY_CFBundleDisplayName = TeamForce360;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.business";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Allow Camera Use";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Allow Photo Library Use";
@@ -2323,7 +2323,7 @@
 				DEVELOPMENT_TEAM = B9QL37WADD;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = TeamForce/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = DigThanks;
+				INFOPLIST_KEY_CFBundleDisplayName = TeamForce360;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.business";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Allow Camera Use";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Allow Photo Library Use";

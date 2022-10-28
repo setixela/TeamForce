@@ -130,7 +130,12 @@ class BaseApiWorker<In, Out>: ApiProtocol, WorkerProtocol {
 final class AuthApiWorker: BaseApiWorker<String, AuthResult> {
    override func doAsync(work: Work<String, AuthResult>) {
       guard let loginName = work.input else { return }
-      
+
+      let cookieStore = HTTPCookieStorage.shared
+      for cookie in cookieStore.cookies ?? [] {
+         cookieStore.deleteCookie(cookie)
+      }
+
       apiEngine?
          .process(endpoint: TeamForceEndpoints.AuthEndpoint(
             body: ["type": "authorize",

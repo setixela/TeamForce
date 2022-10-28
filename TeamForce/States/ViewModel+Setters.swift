@@ -285,7 +285,6 @@ extension ViewModelProtocol where Self: Stateable, View: StackViewExtended {
          let subview = $0.uiView
          view.addArrangedSubview(subview)
       }
-      view.layoutIfNeeded()
       return self
    }
 
@@ -294,7 +293,6 @@ extension ViewModelProtocol where Self: Stateable, View: StackViewExtended {
          let subview = $0.uiView
          view.addArrangedSubview(subview)
       }
-      view.layoutIfNeeded()
       return self
    }
 
