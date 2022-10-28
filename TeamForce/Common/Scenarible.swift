@@ -25,13 +25,11 @@ protocol Scenario {
    func start()
 }
 
-//protocol ScenarioInput {}
-//protocol ScenarioState {}
-//protocol ScenarioWorks {}
-
 class BaseScenario<Events, State, Works>: Scenario {
+
    var works: Works
    var events: Events
+
    var setState: (State) -> Void = { _ in
       log("stateDelegate (setState:) did not injected into Scenario")
    }
@@ -48,5 +46,7 @@ class BaseScenario<Events, State, Works>: Scenario {
       fatalError("init() has not been implemented")
    }
 
-   open func start() {}
+   open func start() {
+  //    works.retainer.cleanAll()
+   }
 }

@@ -76,7 +76,7 @@ extension TagsCloud: StateMachine {
          var tagButts: [UIViewModel] = []
          let width = view.frame.width / 1.5
          var currWidth: CGFloat = 0
-         var spacing: CGFloat = 8
+         let spacing: CGFloat = 8
 
          tags.enumerated().forEach { ind, tag in
             let button = TagCloudButton<Design>()
