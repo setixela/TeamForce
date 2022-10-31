@@ -38,10 +38,21 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
       )
    )
 
+   private lazy var statusLabel = LabelModel()
+      .set(Design.state.label.caption)
+      .cornerRadius(Design.params.cornerRadiusMini)
+      .height(Design.params.buttonHeightMini)
+      .textColor(Design.color.textInvert)
+      .padding(.horizontalOffset(8))
+
+   private lazy var closeButton = ButtonModel()
+      .title(Design.Text.title.close)
+      .textColor(Design.color.textBrand)
+      .height(Design.params.buttonHeightMini)
+
    private lazy var headerImage = ImageViewModel()
       .image(Design.icon.challengeWinnerIllustrateFull)
       .contentMode(.scaleAspectFill)
-      .height(200)
       .set(.tapGesturing)
 
    private lazy var filterButtons = SlidedIndexButtons<Button6Event>(buttons:
@@ -58,12 +69,12 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
          .hidden(true),
       SecondaryButtonDT<Design>()
          .title("Победители")
-         .font(Design.font.default),
-      // .hidden(true),
+         .font(Design.font.default)
+         .hidden(true),
       SecondaryButtonDT<Design>()
          .title("Комментарии")
-         .font(Design.font.default),
-      // .hidden(true),
+         .font(Design.font.default)
+         .hidden(true),
       SecondaryButtonDT<Design>()
          .title("Участники")
          .font(Design.font.default)
@@ -97,6 +108,10 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
       vcModel?.on(\.viewDidLoad, self) {
          $0.configure()
       }
+
+      closeButton.on(\.didTap, self) {
+         $0.dismiss()
+      }
    }
 
    private func configure() {
@@ -104,7 +119,11 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
          .backColor(Design.color.backgroundBrandSecondary)
          // .height(200)
          .arrangedModels([
-            headerImage
+            Wrapped3X(statusLabel, Spacer(), closeButton)
+               .backViewModel(headerImage)
+               .height(200)
+               .alignment(.top)
+               .padding(.init(top: 16, left: 16, bottom: 16, right: 16))
          ])
 
       mainVM.bodyStack
@@ -187,6 +206,12 @@ extension ChallengeDetailsScene: StateMachine {
                challDetails
             ])
          challDetails.setState(.presentChallenge(challenge))
+         filterButtons.button4.hidden(false)
+         filterButtons.button5.hidden(false)
+         let isActive = challenge.active.bool
+         statusLabel
+            .text(isActive ? "Активен" : "Завершен")
+            .backColor(isActive ? Design.color.backgroundInfo : Design.color.backgroundSuccess)
       case .updateDetails(let challenge):
          challDetails.setState(.updateDetails(challenge))
          updateHeaderImage(url: challenge.photo)
@@ -220,11 +245,11 @@ extension ChallengeDetailsScene: StateMachine {
                print("failure")
             }
          }
-      case .enableMyResult(let value):
-         filterButtons.buttons[1].hidden(false)
+      case .enableMyResult(_):
+         filterButtons.button2.hidden(false)
 
       case .enableContenders:
-         filterButtons.buttons[2].hidden(false)
+         filterButtons.button3.hidden(false)
          challDetails.models.down.sendButton.hidden(true)
          // challDetails.models.down.hidden(true)
 
@@ -301,7 +326,7 @@ extension ChallengeDetailsScene: StateMachine {
       case .sendButtonEnabled:
          challComments.setState(.sendButtonEnabled)
       case .commentDidSend:
-         filterButtons.buttons[4].send(\.didTap)
+         filterButtons.button5.send(\.didTap)
          challComments.commentField.text("")
          challComments.setState(.sendButtonDisabled)
 

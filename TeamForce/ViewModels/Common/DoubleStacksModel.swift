@@ -8,7 +8,25 @@
 import ReactiveWorks
 import UIKit
 
-class DoubleStacksModel: BaseViewModel<StackViewExtended> {
+protocol DoubleStackProtocol {
+   var bodyStack: StackModel { get }
+   var footerStack: StackModel { get }
+}
+
+protocol TripleStackProtocol {
+   var headerStack: StackModel { get }
+   var bodyStack: StackModel { get }
+   var footerStack: StackModel { get }
+}
+
+protocol QuadroStackProtocol {
+   var headerStack: StackModel { get }
+   var bodyStack: StackModel { get }
+   var captionStack: StackModel { get }
+   var footerStack: StackModel { get }
+}
+
+class DoubleStacksModel: BaseViewModel<StackViewExtended>, DoubleStackProtocol {
    let bodyStack = StackModel(.axis(.vertical),
                               .alignment(.fill),
                               .distribution(.fill))
@@ -32,7 +50,7 @@ extension DoubleStacksModel: Stateable2 {
    typealias State2 = ViewState
 }
 
-class TripleStacksModel: BaseViewModel<StackViewExtended> {
+class TripleStacksModel: BaseViewModel<StackViewExtended>, TripleStackProtocol {
    let headerStack = StackModel(.axis(.vertical),
                                 .alignment(.fill),
                                 .distribution(.fill))
@@ -60,7 +78,7 @@ extension TripleStacksModel: Stateable2 {
    typealias State2 = ViewState
 }
 
-class QuadroStacksModel: BaseViewModel<StackViewExtended> {
+class QuadroStacksModel: BaseViewModel<StackViewExtended>, QuadroStackProtocol {
    let headerStack = StackModel(.axis(.vertical),
                                 .alignment(.fill),
                                 .distribution(.fill))

@@ -19,14 +19,6 @@ final class TransactOptionsVM<Design: DSP>: BaseViewModel<StackViewExtended>, De
 
    lazy var tagsCloud = TagsCloud<Design>()
 
-//   private lazy var showEveryoneParamModel = LabelSwitcherXDT<Design>.switcherWith(text: "Показать всем")
-//   private lazy var awaitOptionsModel = TitleBodySwitcherDT<Design>.switcherWith(
-//      titleText: "Период задержки",
-//      bodyText: "Без задержки"
-//   )
-//   .backColor(Design.color.backgroundInfoSecondary)
-//   .cornerRadius(Design.params.cornerRadius)
-
    override func start() {
       arrangedModels([
          //tagsCloud,
