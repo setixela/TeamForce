@@ -78,7 +78,7 @@ final class ProfileEditScene<Asset: AssetProtocol>: ModalDoubleStackModel<Asset>
       view.on(\.willAppear, self) {
          $0.scenario.start()
          $0.scenario2.start()
-      imagePicker.allowsEditing(true)
+         $0.imagePicker.allowsEditing(true)
       }
    }
 
