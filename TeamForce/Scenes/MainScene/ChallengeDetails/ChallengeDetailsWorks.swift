@@ -29,6 +29,8 @@ final class ChallengeDetailsWorksStore: InitProtocol {
    var inputComment = ""
    
    var filterButton = 0
+   
+   var userLiked = false
 }
 
 
@@ -173,6 +175,7 @@ extension ChallengeDetailsWorks: ChallengeDetailsWorksProtocol {
          .doAsync(id)
          .onSuccess {
             Self.store.challenge = $0
+            Self.store.userLiked = $0.userLiked ?? false
             work.success(result: $0)
          }
          .onFail {
@@ -288,4 +291,50 @@ extension ChallengeDetailsWorks: ChallengeDetailsWorksProtocol {
             work.fail()
          }
    }.retainBy(retainer) }
+   
+   var getLikesAmount: Work<Void, Int> { .init { [weak self] work in
+      guard let id = Self.store.challengeId else { work.fail(); return }
+      let body = LikesCommentsStatRequest.Body(challengeId: id)
+      let request = LikesCommentsStatRequest(token: "", body: body)
+      self?.apiUseCase.getLikesCommentsStat
+         .doAsync(request)
+         .onSuccess {
+            var amount = 0
+            if let reactions = $0.likes {
+               for reaction in reactions {
+                  if reaction.likeKind?.code == "like" {
+                     amount = reaction.counter ?? 0
+                  }
+               }
+            }
+            work.success(result: amount)
+         }
+         .onFail {
+            work.fail()
+         }
+   }.retainBy(retainer) }
+   
+   var pressLike: Work<Void, Bool> { .init { [weak self] work in
+      guard
+         let id = Self.store.challengeId
+      else { work.fail(); return }
+      
+      let body = PressLikeRequest.Body(likeKind: 1, challengeId: id)
+      let request = PressLikeRequest(token: "", body: body, index: 1)
+      self?.apiUseCase.pressLike
+         .doAsync(request)
+         .onSuccess {
+            Self.store.userLiked = !Self.store.userLiked
+            work.success(Self.store.userLiked)
+         }
+         .onFail {
+            work.fail(Self.store.userLiked)
+         }
+   }.retainBy(retainer) }
+   
+   var isLikedByMe: VoidWork<Bool> { .init { work in
+      let isMyLike = Self.store.userLiked
+      work.success(isMyLike)
+   }.retainBy(retainer)}
+   
 }

@@ -11,6 +11,7 @@ import ReactiveWorks
 extension FeedDetailUserInfoBlock: Eventable {
    struct Events: InitProtocol {
       var reactionPressed: Void?
+      var userAvatarPressed: Int?
    }
 }
 
@@ -46,7 +47,6 @@ final class FeedDetailUserInfoBlock<Design: DSP>: StackModel, Designable {
       .padding(.horizontalOffset(44))
       .width(121)
       .height(42)
-
 
    lazy var reactionsBlock = StackModel()
       .axis(.horizontal)
@@ -84,11 +84,11 @@ extension FeedDetailUserInfoBlock: SetupProtocol {
       let dateText = FeedPresenters<Design>.makeInfoDateLabel(feed: feed).view.text
       dateLabel.text(dateText ?? "")
       let type = FeedTransactType.make(feed: feed, currentUserName: userName)
-      let infoText = FeedPresenters<Design>.makeInfoLabel(feed: feed, type: type, eventType: EventType.transaction ).view.attributedText
+      let infoText = FeedPresenters<Design>.makeInfoLabel(feed: feed, type: type, eventType: EventType.transaction).view.attributedText
 
       infoLabel.attributedText(infoText!)
-      
-      let likeAmount  = String(feed.likesAmount)
+
+      let likeAmount = String(feed.likesAmount)
 
       likeButton.models.right.text(likeAmount)
 
@@ -120,14 +120,20 @@ private extension FeedDetailUserInfoBlock {
    }
 
    func configureEvents(feed: NewFeed) {
-      let transactionId = feed.transaction?.id
-      
       likeButton.view.startTapGestureRecognize()
-
       likeButton.view.on(\.didTap, self) {
          $0.send(\.reactionPressed)
       }
 
+      guard
+         let userId = feed.transaction?.recipientId ?? feed.challenge?.creatorId ?? feed.winner?.winnerId
+      else {
+         return
+      }
 
+      image.view.startTapGestureRecognize()
+      image.view.on(\.didTap, self) {
+         $0.send(\.userAvatarPressed, userId)
+      }
    }
 }

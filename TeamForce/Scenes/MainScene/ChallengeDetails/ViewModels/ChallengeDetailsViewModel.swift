@@ -104,6 +104,17 @@ extension ChallengeDetailsViewModel: StateMachine {
          if let creatorPhoto = challenge.creatorPhoto {
             userPanel.models.main.url(TeamForceEndpoints.urlBase + creatorPhoto)
          }
+         
+         if let userLiked = challenge.userLiked {
+            if userLiked == true {
+               buttonsPanel.likeButton.setState(.selected)
+            } else {
+               buttonsPanel.likeButton.setState(.none)
+            }
+            
+            let likesAmount = String(challenge.likesAmount ?? 0)
+            buttonsPanel.likeButton.models.right.text(likesAmount)
+         }
 
       case .updateDetails(let challenge):
 //         activity.hidden(true)
@@ -190,13 +201,16 @@ final class ChallengeDetailsInfoCell<Design: DSP>:
 }
 
 final class SendChallengePanel<Design: DSP>: StackModel, Designable {
+//    var events: EventsStore = .init()
+   
    var sendButton: ButtonModel { buttons.models.main }
+   var likeButton: ReactionButton<Design> { buttons.models.right }
 
    // Private
 
 //   private lazy var userPanel = Design.model.profile.userPanel
 
-   private lazy var buttons = M<ButtonModel>.R<ButtonModel>.Combo()
+   private lazy var buttons = M<ButtonModel>.R<ReactionButton<Design>>.Combo()
       .setAll { sendButton, likeButton in
          sendButton
             .set(Design.state.button.default)
@@ -210,18 +224,21 @@ final class SendChallengePanel<Design: DSP>: StackModel, Designable {
 //            .title("13")
 //            .hidden(true)
          likeButton
-            .set(Design.state.button.secondary)
-            .image(Design.icon.like)
+            .setAll {
+               $0.image(Design.icon.like)
+               $1
+                  .font(Design.font.caption)
+                  .text("0")
+            }
+            .removeAllConstraints()
             .width(68)
-            .backColor(Design.color.backgroundInfoSecondary)
-            .title("25")
-            .hidden(true)
       }
       .spacing(8)
 
    override func start() {
       super.start()
-
+      likeButton.view.startTapGestureRecognize()
+      
       arrangedModels([
          Grid.x16.spacer,
          buttons

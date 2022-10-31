@@ -35,8 +35,13 @@ final class ImageViewerScene<Asset: AssetProtocol>: BaseSceneModel<
       super.start()
 
       on(\.input, self) {
-         print($0, $1)
          $0.image.url($1)
+         $0.mainVM
+            .arrangedModels([
+               Spacer(16),
+               $0.titlePanel
+            ])
+            .backViewModel($0.scrollModel)
       }
 
       closeButton.on(\.didTap, self) {
@@ -51,8 +56,8 @@ final class ImageViewerScene<Asset: AssetProtocol>: BaseSceneModel<
       mainVM
          .arrangedModels([
             Spacer(16),
-            titlePanel
+            titlePanel,
+            ActivityIndicator<Design>()
          ])
-         .backViewModel(scrollModel)
    }
 }

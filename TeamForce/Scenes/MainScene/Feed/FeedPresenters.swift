@@ -8,7 +8,7 @@
 import ReactiveWorks
 import UIKit
 
-class FeedPresenters<Design: DesignProtocol>: Designable {
+final class FeedPresenters<Design: DesignProtocol>: Designable {
    var events: EventsStore = .init()
    var userName: String = ""
 
@@ -70,7 +70,6 @@ class FeedPresenters<Design: DesignProtocol>: Designable {
             let recipientId = transaction.recipientId
             let sender = "@" + transaction.senderTgName.string
             let recipient = "@" + transaction.recipientTgName.string
-            let transactionId = transaction.id
 
             let type = FeedTransactType.make(feed: feed, currentUserName: self.userName)
 
@@ -224,7 +223,7 @@ extension FeedPresenters {
    }
 
    static func makeInfoLabel(feed: NewFeed, type: FeedTransactType? = nil, eventType: EventType) -> LabelModel {
-      var infoLabel = LabelModel()
+      let infoLabel = LabelModel()
          .numberOfLines(0)
          .set(Design.state.label.caption)
          .textColor(Design.color.iconBrand)

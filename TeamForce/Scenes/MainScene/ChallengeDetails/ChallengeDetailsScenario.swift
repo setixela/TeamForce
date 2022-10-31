@@ -19,6 +19,8 @@ struct ChallengeDetailsInputEvents {
 
    let didEditingComment: VoidWork<String>
    let didSendCommentPressed: VoidWorkVoid
+   
+   let reactionPressed: VoidWorkVoid
 }
 
 final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<ChallengeDetailsInputEvents,
@@ -121,5 +123,13 @@ final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<Challen
          .doNext(works.createComment)
          .onSuccess(setState, .commentDidSend)
          .onFail { print("error sending comment") }
+      
+      events.reactionPressed
+         .doNext(works.isLikedByMe)
+         .onSuccess(setState) { .buttonLikePressed(alreadySelected: $0) }
+         .doVoidNext(works.pressLike)
+         .onFail(setState) { .failedToReact(alreadySelected: $0) }
+         .doVoidNext(works.getLikesAmount)
+         .onSuccess(setState) { .updateLikesAmount($0) }
    }
 }

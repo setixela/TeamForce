@@ -24,7 +24,11 @@ struct UpdateProfileImageUseCase: UseCaseProtocol {
                   let id = work.input?.id,
                   let photo = work.input?.photo
                else { return nil }
-               return UpdateImageRequest(token: $0, id: id, photo: photo)
+               let cropped = work.input?.croppedPhoto
+               return UpdateImageRequest(token: $0,
+                                         id: id,
+                                         photo: photo,
+                                         croppedPhoto: cropped)
             }
             .doNext(worker: updateProfileImageApiWorker)
             .onSuccess {

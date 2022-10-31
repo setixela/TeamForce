@@ -118,7 +118,8 @@ protocol IndexedButtonsProtocol: Eventable where Events == TapIndexEvents<ButtEv
    associatedtype Button: ModableButton
    associatedtype ButtEvents: ManyButtonEvent
 
-//   init<B: Button>(buttons: B...)
+   var buttons: [Button] { get }
+
    init(buttons: Button...)
 }
 
@@ -168,4 +169,43 @@ extension IndexedButtonsProtocol {
    {
       self.init(buttons: but1, but2, but3, but4, but5, but6)
    }
+}
+
+extension IndexedButtonsProtocol where ButtEvents == Button1Event {
+   var button1: Button { buttons[0] }
+}
+
+extension IndexedButtonsProtocol where ButtEvents == Button2Event {
+   var button1: Button { buttons[0] }
+   var button2: Button { buttons[1] }
+}
+
+extension IndexedButtonsProtocol where ButtEvents == Button3Event {
+   var button1: Button { buttons[0] }
+   var button2: Button { buttons[1] }
+   var button3: Button { buttons[2] }
+}
+
+extension IndexedButtonsProtocol where ButtEvents == Button4Event {
+   var button1: Button { buttons[0] }
+   var button2: Button { buttons[1] }
+   var button3: Button { buttons[2] }
+   var button4: Button { buttons[3] }
+}
+
+extension IndexedButtonsProtocol where ButtEvents == Button5Event {
+   var button1: Button { buttons[0] }
+   var button2: Button { buttons[1] }
+   var button3: Button { buttons[2] }
+   var button4: Button { buttons[3] }
+   var button5: Button { buttons[4] }
+}
+
+extension IndexedButtonsProtocol where ButtEvents == Button6Event {
+   var button1: Button { buttons[0] }
+   var button2: Button { buttons[1] }
+   var button3: Button { buttons[2] }
+   var button4: Button { buttons[3] }
+   var button5: Button { buttons[4] }
+   var button6: Button { buttons[5] }
 }

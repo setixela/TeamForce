@@ -263,7 +263,7 @@ final class StackViewExtended: UIStackView, Eventable {
             $0.subviews.flatMap(\.subviews)
          }
          .filter {
-            $0 is UIButton
+            $0 is (any Tappable)
          }
          .first(where: {
             let subPoint = $0.convert(point, from: self)
@@ -307,9 +307,10 @@ final class ButtonExtended: UIButton, AlamoLoader, Shimmering, Tappable {
       fatalError("init(coder:) has not been implemented")
    }
 
-   override func startTapGestureRecognize(cancelTouch: Bool = false) {
-      self.addTarget(self, action: #selector(didTap), for: .touchUpInside)
-   }
+//   override func startTapGestureRecognize(cancelTouch: Bool = false) {
+//      fatalError() /// check
+//      self.addTarget(self, action: #selector(didTap), for: .touchUpInside)
+//   }
 
    @objc override func didTap() {
       send(\.didTap)

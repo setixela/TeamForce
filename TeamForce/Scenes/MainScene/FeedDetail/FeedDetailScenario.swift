@@ -16,6 +16,8 @@ struct FeedDetailEvents {
    let presentComment: VoidWork<Void>
    let presentReactions: VoidWork<Void>
    let reactionPressed: VoidWork<Void>
+   let userAvatarPressed: VoidWork<Int>
+
    let saveInput: VoidWork<(NewFeed, String)>
 
    let didEditingComment: VoidWork<String>
@@ -106,5 +108,8 @@ final class FeedDetailScenario<Asset: AssetProtocol>:
          .doNext(works.createComment)
          .onSuccess(setState, .commentDidSend)
          .onFail(setState, .error)
+
+      events.userAvatarPressed
+         .onSuccess(setState) { .presentUserProfile($0) }
    }
 }
