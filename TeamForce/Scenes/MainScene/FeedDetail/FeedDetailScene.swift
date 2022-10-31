@@ -29,6 +29,7 @@ final class FeedDetailScene<Asset: AssetProtocol>:
          presentComment: feedDetailVM.filterButtons.on(\.didTapComments),
          presentReactions: feedDetailVM.filterButtons.on(\.didTapReactions),
          reactionPressed: feedDetailVM.infoBlock.on(\.reactionPressed),
+         userAvatarPressed: feedDetailVM.infoBlock.on(\.userAvatarPressed),
          saveInput: on(\.input),
          didEditingComment: feedDetailVM.commentsBlock.commentField.on(\.didEditingChanged),
          didSendCommentPressed: feedDetailVM.commentsBlock.sendButton.on(\.didTap),
@@ -77,6 +78,7 @@ enum FeedDetailSceneState {
    case sendButtonEnabled
    case commentDidSend
    case hereIsEmpty
+   case presentUserProfile(Int)
 
    case error
 }
@@ -121,6 +123,8 @@ extension FeedDetailScene: StateMachine {
          } else {
             feedDetailVM.infoBlock.likeButton.setState(.selected)
          }
+      case .presentUserProfile(let userId):
+         Asset.router?.route(.push, scene: \.profile, payload: userId)
       case .hereIsEmpty:
          feedDetailVM.setState(.hereIsEmpty)
       }

@@ -118,7 +118,6 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
    private func configure() {
       mainVM.headerStack
          .backColor(Design.color.backgroundBrandSecondary)
-         // .height(200)
          .arrangedModels([
             Wrapped3X(statusLabel, Spacer(), closeButton)
                .backViewModel(headerImage)
@@ -389,7 +388,7 @@ extension ChallengeDetailsScene {
          let inputValue
       else { return }
 
-      let fullUrl = TeamForceEndpoints.urlBase + url.replacingOccurrences(of: "_thumb", with: "")
+      let fullUrl = TeamForceEndpoints.convertToFullImageUrl(url)
 
       headerImage
          .url(

@@ -68,8 +68,6 @@ final class ChallengeCreateScene<Asset: AssetProtocol>: BaseSceneModel<
       .alignment(.center)
       .spacing(4)
 
-//   private lazy var viewModels = ChallengeCreateViewModel<Design>()
-
    private lazy var titleInput = Design.model.transact.userSearchTextField
       .placeholder("Название")
    private lazy var descriptionInput = Design.model.transact.reasonInputTextView
@@ -137,6 +135,10 @@ final class ChallengeCreateScene<Asset: AssetProtocol>: BaseSceneModel<
 
    override func start() {
       super.start()
+      mainVM.bodyStack
+         .arrangedModels([
+            ActivityIndicator<Design>()
+         ])
 
       vcModel?.on(\.viewDidLoad, self) {
          $0.mainVM.bodyStack
@@ -159,7 +161,7 @@ final class ChallengeCreateScene<Asset: AssetProtocol>: BaseSceneModel<
 
          $0.mainVM.footerStack
             .arrangedModels([
-               $0.sendButton,
+               $0.sendButton
                // cancelButton
             ])
 

@@ -8,28 +8,12 @@
 import Foundation
 import ReactiveWorks
 
-struct TableScenarioInput {
-
-}
-
-//final class TableScenarioWorks: BaseSceneWorks<<#Temp: InitProtocol & AnyObject#>, <#Asset: AssetRoot#>> {
-//
-//}
-
-//final class TableScenario: BaseScenario<Any, Any, Any> {
-//
-//}
-
 final class ChallengesViewModel<Design: DSP>: StackModel, Designable, Eventable {
    struct Events: InitProtocol {
       var didSelectChallenge: Int?
    }
 
    var events: EventsStore = .init()
-
-//   lazy var scenario: Scenario =
-
-   //
 
    lazy var challengesTable = TableItemsModel<Design>()
       .set(.presenters([
@@ -79,9 +63,8 @@ final class ChallengeCell<Design: DSP>:
          infoBlock.setAll { title, winner, prizeFund, prizes in
             title.title
                .set(Design.state.label.body4)
-               .numberOfLines(1)
+               .numberOfLines(2)
                .lineBreakMode(.byTruncatingTail)
-               .height(20)
             title.body.set(Design.state.label.caption)
 
 //            participant.title.set(Design.state.label.body2)
@@ -139,21 +122,6 @@ extension ChallengeCell: StateMachine {
       }
    }
 }
-
-//final class ChallengeCellInfoBlock:
-//   M<LabelModel>
-//   .D<TitleBodyY>.R<TitleBodyY>
-//   .D2<TitleBodyY>
-//   .D3<TitleBodyY>
-//   .Combo
-//{
-//   override func start() {
-//      super.start()
-//
-//      spacing(12)
-//      distribution(.equalSpacing)
-//   }
-//}
 
 final class ChallengeCellInfoBlock:
    M<TitleBodyY>

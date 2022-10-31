@@ -13,6 +13,14 @@ enum TeamForceEndpoints {
    static var urlBase: String { Config.urlBase }
    static var urlMediaBase: String { urlBase + "/media/" }
 
+   static func convertToImageUrl(_ urlString: String) -> String {
+      urlBase + urlString
+   }
+
+   static func convertToFullImageUrl(_ urlString: String) -> String {
+      urlBase + urlString.replacingOccurrences(of: "_thumb", with: "")
+   }
+
    //
     struct AuthEndpoint: EndpointProtocol {
         //

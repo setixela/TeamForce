@@ -26,6 +26,7 @@ protocol ScenesProtocol: InitProtocol {
 
    var feedDetail: SMP { get }
 
+   var myProfile: SMP { get }
    var profile: SMP { get }
 
    var transactionDetail: SMP { get }
@@ -52,6 +53,7 @@ struct Scenes: ScenesProtocol {
    var digitalThanks: SMP { DigitalThanksScene<PA>() }
    var login: SMP { LoginScene<PA>() }
    var main: SMP { MainScene<PA>() }
+   var myProfile: SMP { MyProfileScene<PA>() }
    var profile: SMP { ProfileScene<PA>() }
    var transactionDetail: SMP { TransactDeatilViewModel<PA>() }
    // var profileEdit: SMP { ProfileEditScene<PA>() }

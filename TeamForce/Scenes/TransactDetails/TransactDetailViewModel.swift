@@ -10,7 +10,7 @@ import UIKit
 
 final class TransactDeatilViewModel<Asset: AssetProtocol>: BaseSceneModel<
    DefaultVCModel,
-   DoubleStacksModel,
+   ModalDoubleStackModel<Asset>,
    Asset,
    Transaction
 > {
@@ -19,11 +19,11 @@ final class TransactDeatilViewModel<Asset: AssetProtocol>: BaseSceneModel<
 
    private lazy var transactionOwnerLabel = LabelModel()
       .set(.numberOfLines(0))
-//   private lazy var statusLabel = LabelModel()
+   //   private lazy var statusLabel = LabelModel()
    private lazy var dateLabel = LabelModel()
       .set(.textColor(UIColor.gray))
    private lazy var amountLabel = LabelModel()
-//      .set(Design.state.label.headline3)
+   //      .set(Design.state.label.headline3)
 
    private lazy var firstStack = StackModel()
       .set(.distribution(.equalCentering))
@@ -80,7 +80,7 @@ final class TransactDeatilViewModel<Asset: AssetProtocol>: BaseSceneModel<
          reasonLabel,
          statusLabel,
          transactPhoto,
-         Grid.xxx.spacer
+         Grid.xxx.spacer,
       ])
       .distribution(.fill)
       .alignment(.leading)
@@ -108,24 +108,8 @@ final class TransactDeatilViewModel<Asset: AssetProtocol>: BaseSceneModel<
          firstStack,
       ]))
 
-   // MARK: - Services
-
    private lazy var apiUseCase = Asset.apiUseCase
    private lazy var currentUser: String = ""
-
-   override func start() {
-      weak var wS = self
-      configure()
-      apiUseCase.loadProfile
-         .doAsync()
-         .onSuccess { user in
-            wS?.currentUser = user.profile.tgName
-            wS?.configureLabels(wS: wS)
-         }
-         .onFail {
-            print("profile not loaded")
-         }
-   }
 
    private lazy var image = WrappedY(ImageViewModel()
       .image(Design.icon.avatarPlaceholder)
@@ -135,9 +119,32 @@ final class TransactDeatilViewModel<Asset: AssetProtocol>: BaseSceneModel<
       .shadow(Design.params.cellShadow)
    )
 
+   override func start() {
+      weak var wS = self
+
+      configure()
+
+      apiUseCase.loadProfile
+         .doAsync()
+         .onSuccess { user in
+            wS?.currentUser = user.profile.tgName
+            wS?.configureLabels(wS: wS)
+         }
+         .onFail {
+            print("profile not loaded")
+         }
+
+      mainVM.closeButton.on(\.didTap, self) {
+         $0.dismiss()
+      }
+   }
+}
+
+// MARK: - Private funcs
+
+extension TransactDeatilViewModel {
    private func configure() {
       mainVM.bodyStack
-         .set(Design.state.stack.default)
          .alignment(.center)
          .set(.backColor(Design.color.backgroundSecondary))
          .arrangedModels([
@@ -151,7 +158,6 @@ final class TransactDeatilViewModel<Asset: AssetProtocol>: BaseSceneModel<
          ])
 
       mainVM.footerStack
-         .set(Design.state.stack.bottomPanel)
          .arrangedModels([
             infoStack,
          ])
@@ -172,7 +178,7 @@ final class TransactDeatilViewModel<Asset: AssetProtocol>: BaseSceneModel<
             .set(.text("Вы отправили @" + (input.recipient?.recipientTgName ?? "")))
          amountLabel
             .set(.text((input.amount ?? "") + " спасибок"))
-         
+
          if let urlSuffix = input.recipient?.recipientPhoto {
             let urlString = TeamForceEndpoints.urlBase + urlSuffix
             image.subModel.url(urlString)
@@ -234,10 +240,22 @@ final class TransactDeatilViewModel<Asset: AssetProtocol>: BaseSceneModel<
       reasonLabel.models.down.text(input.reason ?? "")
 
       if let photoLink = input.photo {
-         transactPhoto.models.down.url(TeamForceEndpoints.urlBase + photoLink)
+         transactPhoto.models.down.url(TeamForceEndpoints.convertToImageUrl(photoLink))
+         transactPhoto.models.down.view.on(\.didTap, self) {
+            $0.dismiss()
+            Asset.router?.route(
+               .presentModally(.automatic),
+               scene: \.imageViewer,
+               payload: TeamForceEndpoints.convertToFullImageUrl(photoLink)
+            ) { [weak self] _ in
+               Asset.router?.route(.presentModally(.automatic), scene: \.transactionDetail, payload: self?.input)
+            }
+         }
          transactPhoto.hidden(false)
       }
+
       guard let convertedDate = (input.createdAt ?? "").convertToDate() else { return }
+
       dateLabel
          .set(.text(convertedDate))
    }

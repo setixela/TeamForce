@@ -9,7 +9,7 @@ import Foundation
 import ReactiveWorks
 
 final class FeedDetailWorksTempStorage: InitProtocol {
-   lazy var currentUserName = ""
+   var currentUserName = ""
    var currentTransactId: Int?
    var currentFeed: NewFeed?
    var userLiked: Bool = false

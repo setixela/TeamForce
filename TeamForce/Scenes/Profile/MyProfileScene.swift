@@ -12,7 +12,15 @@ struct ProfileEvents: InitProtocol {
    var saveSuccess: Void?
 }
 
-final class ProfileScene<Asset: AssetProtocol>: BaseSceneModel<
+final class ProfileScene<Asset: AssetProtocol>: MyProfileScene<Asset> {
+   override func start() {
+
+      settingsButton.hidden(true)
+      super.start()
+   }
+}
+
+class MyProfileScene<Asset: AssetProtocol>: BaseSceneModel<
    DefaultVCModel,
    DoubleStacksBrandedVM<Asset.Design>,
    Asset,
@@ -86,6 +94,8 @@ final class ProfileScene<Asset: AssetProtocol>: BaseSceneModel<
    private lazy var useCase = Asset.apiUseCase
    private var balance: Balance?
 
+   private var userAvatar: String?
+
    override func start() {
       vcModel?.send(\.setTitle, "Профиль")
       configure()
@@ -124,6 +134,14 @@ final class ProfileScene<Asset: AssetProtocol>: BaseSceneModel<
             slf.bottomPopupPresenter.send(\.hide)
          }
       }
+
+      userModel.models.main.view.on(\.didTap, self) {
+         guard let userAvatarUrl = $0.userAvatar else { return }
+
+         let fullUrl = TeamForceEndpoints.convertToFullImageUrl(userAvatarUrl)
+
+         Asset.router?.route(.presentModally(.automatic), scene: \.imageViewer, payload: fullUrl)
+      }
    }
 
    private func configureProfile() {
@@ -133,6 +151,7 @@ final class ProfileScene<Asset: AssetProtocol>: BaseSceneModel<
             .doAsync(input)
             .onSuccess { [weak self] userData in
                self?.setLabels(userData: userData)
+               self?.userAvatar = userData.profile.photo
             }
             .onFail {
                print("failed to load profile")
@@ -151,11 +170,11 @@ final class ProfileScene<Asset: AssetProtocol>: BaseSceneModel<
             .doNext(worker: userProfileApiModel)
             .onSuccess { [weak self] userData in
                self?.setLabels(userData: userData)
+               self?.userAvatar = userData.profile.photo
             }.onFail {
                print("load profile error")
             }
       }
-      
    }
    
    private func clearLabels() {

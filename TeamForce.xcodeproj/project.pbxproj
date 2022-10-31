@@ -246,7 +246,7 @@
 		635FC6C028EC17B500826B67 /* ReactionsPresenters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635FC6BF28EC17B500826B67 /* ReactionsPresenters.swift */; };
 		635FC6C328EE7ACC00826B67 /* GetChallengesApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635FC6C228EE7ACC00826B67 /* GetChallengesApiWorker.swift */; };
 		635FC6C628EE7F3800826B67 /* GetChallengesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635FC6C528EE7F3800826B67 /* GetChallengesUseCase.swift */; };
-		6368D8222891508C0049EEAB /* ProfileScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6368D8212891508C0049EEAB /* ProfileScene.swift */; };
+		6368D8222891508C0049EEAB /* MyProfileScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6368D8212891508C0049EEAB /* MyProfileScene.swift */; };
 		6368D824289168740049EEAB /* CustomCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6368D823289168740049EEAB /* CustomCellModel.swift */; };
 		6368D826289187B50049EEAB /* SendCoinApiModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6368D825289187B50049EEAB /* SendCoinApiModel.swift */; };
 		6368D8282891E7C40049EEAB /* UserDefault+helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6368D8272891E7C30049EEAB /* UserDefault+helpers.swift */; };
@@ -594,7 +594,7 @@
 		635FC6BF28EC17B500826B67 /* ReactionsPresenters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionsPresenters.swift; sourceTree = "<group>"; };
 		635FC6C228EE7ACC00826B67 /* GetChallengesApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetChallengesApiWorker.swift; sourceTree = "<group>"; };
 		635FC6C528EE7F3800826B67 /* GetChallengesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetChallengesUseCase.swift; sourceTree = "<group>"; };
-		6368D8212891508C0049EEAB /* ProfileScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileScene.swift; sourceTree = "<group>"; };
+		6368D8212891508C0049EEAB /* MyProfileScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileScene.swift; sourceTree = "<group>"; };
 		6368D823289168740049EEAB /* CustomCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCellModel.swift; sourceTree = "<group>"; };
 		6368D825289187B50049EEAB /* SendCoinApiModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendCoinApiModel.swift; sourceTree = "<group>"; };
 		6368D8272891E7C30049EEAB /* UserDefault+helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefault+helpers.swift"; sourceTree = "<group>"; };
@@ -1311,7 +1311,7 @@
 		19ACB3CE28A59A2900B5AD71 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
-				6368D8212891508C0049EEAB /* ProfileScene.swift */,
+				6368D8212891508C0049EEAB /* MyProfileScene.swift */,
 				63AB071028BD6B0F00FD650F /* ProfileWorks.swift */,
 				19221EED28CB17CD00B7B604 /* EditProfile */,
 			);
@@ -2118,7 +2118,7 @@
 				63AB071B28C0E3AF00FD650F /* BalanceScenario.swift in Sources */,
 				63A37EA228EE874100DBD59F /* GetChallengeByIdApiWorker.swift in Sources */,
 				63E7A74728AFBDE500FB2C80 /* GetPeriodsFromDateUseCase.swift in Sources */,
-				6368D8222891508C0049EEAB /* ProfileScene.swift in Sources */,
+				6368D8222891508C0049EEAB /* MyProfileScene.swift in Sources */,
 				198FE1C92899994A00BAF1A5 /* LoginUseCase.swift in Sources */,
 				63BB2C1628E128C000C1E3DB /* GetCommentsApiWorker.swift in Sources */,
 				1955879028F733C50001F734 /* ChallengeResultScenario.swift in Sources */,

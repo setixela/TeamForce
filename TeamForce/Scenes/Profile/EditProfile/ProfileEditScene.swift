@@ -74,8 +74,10 @@ final class ProfileEditScene<Asset: AssetProtocol>: ModalDoubleStackModel<Asset>
          activityIndicator
       ])
 
-      scenario.start()
-      scenario2.start()
+      view.on(\.willAppear, self) {
+         $0.scenario.start()
+         $0.scenario2.start()
+      }
    }
 
    private func configure() {

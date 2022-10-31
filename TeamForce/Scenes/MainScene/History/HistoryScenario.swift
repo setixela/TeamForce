@@ -20,7 +20,8 @@ final class HistoryScenario<Asset: AssetProtocol>:
    BaseScenario<HistoryScenarioEvents, HistoryState, HistoryWorks<Asset>>
 {
    override func start() {
-
+      works.retainer.cleanAll()
+      
       works.loadProfile
          .doAsync()
          .onFail(setState, .loadProfilError)
