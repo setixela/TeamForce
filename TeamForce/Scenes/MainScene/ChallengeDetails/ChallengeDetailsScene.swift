@@ -34,7 +34,8 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
          rejectPressed: contendersBlock.presenter.on(\.rejectPressed),
          didSelectWinnerIndex: winnersBlock.on(\.didSelectWinner),
          didEditingComment: challComments.commentField.on(\.didEditingChanged),
-         didSendCommentPressed: challComments.sendButton.on(\.didTap)
+         didSendCommentPressed: challComments.sendButton.on(\.didTap),
+         reactionPressed: challDetails.buttonsPanel.likeButton.view.on(\.didTap)
       )
    )
 
@@ -186,6 +187,10 @@ enum ChallengeDetailsState {
    case sendButtonDisabled
    case sendButtonEnabled
    case commentDidSend
+   
+   case buttonLikePressed(alreadySelected: Bool)
+   case failedToReact(alreadySelected: Bool)
+   case updateLikesAmount(Int)
 }
 
 extension ChallengeDetailsScene: StateMachine {
@@ -343,6 +348,18 @@ extension ChallengeDetailsScene: StateMachine {
          if let image {
             headerImage.image(image)
          }
+         
+      case .buttonLikePressed(let selected):
+         if selected {
+            challDetails.buttonsPanel.likeButton.setState(.none)
+         } else {
+            challDetails.buttonsPanel.likeButton.setState(.selected)
+         }
+      case .failedToReact(let selected):
+         print("failed to like")
+         setState(.buttonLikePressed(alreadySelected: !selected))
+      case .updateLikesAmount(let amount):
+         challDetails.buttonsPanel.likeButton.models.right.text(String(amount))
       }
    }
 }

@@ -40,6 +40,8 @@ enum ChallengeStatus: String, Codable {
 
 final class Challenge: Codable {
    let id: Int
+   let userLiked: Bool?
+   let likesAmount: Int?
    let name: String?
    let photo: String?
    let updatedAt: String?
@@ -79,6 +81,8 @@ final class Challenge: Codable {
 
    enum CodingKeys: String, CodingKey {
       case id, name, photo
+      case likesAmount = "likes_amount"
+      case userLiked = "user_liked"
       case updatedAt = "updated_at"
       case states
       case description
