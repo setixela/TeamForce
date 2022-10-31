@@ -13,6 +13,7 @@ struct UpdateImageRequest {
    let token: String
    let id: Int
    let photo: UIImage
+   let croppedPhoto: UIImage?
 }
 
 final class UpdateProfileImageApiWorker: BaseApiWorker<UpdateImageRequest, Void> {
@@ -33,14 +34,33 @@ final class UpdateProfileImageApiWorker: BaseApiWorker<UpdateImageRequest, Void>
                    "X-CSRFToken": cookie.value]
       )
       print("endpoint is \(endpoint)")
+      var images: [UIImage] = []
+      
+      images.append(updateImageRequest.photo)
+      
+      if let cropped = updateImageRequest.croppedPhoto {
+         images.append(cropped)
+      }
+      
       apiEngine?
-         .processWithImage(endpoint: endpoint,
-                           image: updateImageRequest.photo)
+         .processWithImages(endpoint: endpoint,
+                            images: images,
+                            names: ["photo", "cropped_photo"])
          .done { result in
             work.success()
          }
          .catch { _ in
             work.fail()
          }
+      
+//      apiEngine?
+//         .processWithImage(endpoint: endpoint,
+//                           image: updateImageRequest.photo)
+//         .done { result in
+//            work.success()
+//         }
+//         .catch { _ in
+//            work.fail()
+//         }
    }
 }

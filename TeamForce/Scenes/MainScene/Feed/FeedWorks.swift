@@ -131,22 +131,14 @@ final class FeedWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedWorksTempStorage
       case .didTapButton3:
          self.getChallengesFeed
             .doAsync()
-            .onSuccess {
-               work.success($0)
-            }
-            .onFail {
-               work.fail()
-            }
+            .onSuccess { work.success($0) }
+            .onFail { work.fail() }
 
       case .didTapButton4:
          self.getWinnersFeed
             .doAsync()
-            .onSuccess {
-               work.success($0)
-            }
-            .onFail {
-               work.fail()
-            }
+            .onSuccess { work.success($0) }
+            .onFail { work.fail() }
       }
    }.retainBy(retainer) }
 

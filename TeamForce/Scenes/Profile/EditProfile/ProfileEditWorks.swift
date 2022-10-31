@@ -28,6 +28,7 @@ final class ProfileEditWorks<Asset: AssetProtocol>: BaseSceneWorks<ProfileEditWo
       var emailId: Int?
       var phoneId: Int?
       var image: UIImage?
+      var croppedImage: UIImage?
    }
 
    // MARK: - Works
@@ -156,6 +157,11 @@ extension ProfileEditWorks {
       Self.store.image = work.unsafeInput
       work.success(result: work.unsafeInput)
    } }
+   
+   var saveCroppedImage: Work<UIImage, UIImage> { .init { work in
+      Self.store.croppedImage = work.unsafeInput
+      work.success(result: work.unsafeInput)
+   }}
 }
 
 // MARK: - Form Requests
@@ -227,7 +233,8 @@ private extension ProfileEditWorks {
       else { return nil }
       let request = UpdateImageRequest(token: "",
                                        id: profileId,
-                                       photo: avatar)
+                                       photo: avatar,
+                                       croppedPhoto: Self.store.croppedImage)
       return request
    }
 }

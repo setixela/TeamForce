@@ -92,48 +92,48 @@ class ChallContendersPresenters<Design: DesignProtocol>: Designable {
             photo.hidden(false)
          }
 
-//         let rejectButton = ButtonModel()
-//            .set(Design.state.button.default)
-//            .backColor(Design.color.backgroundBrand)
-//            .title("Отклонить")
-//            .font(Design.font.default)
-//            .padding(.sideOffset(Grid.x14.value))
-//            .height(Design.params.buttonHeightSmall)
-//            .cornerRadius(Design.params.cornerRadiusSmall)
-
-         let rejectButton1 = ReactionButton<Design>()
-            .setAll {
-               $0.hidden(true)
-               $1.text("Отклонить")
-            }
+         let rejectButton = ButtonModel()
+            .set(Design.state.button.default)
+            .backColor(Design.color.backgroundBrand)
+            .title("Отклонить")
+            .font(Design.font.default)
+            .padding(.sideOffset(Grid.x14.value))
             .height(Design.params.buttonHeightSmall)
+            .cornerRadius(Design.params.cornerRadiusSmall)
 
-         let acceptButton1 = ReactionButton<Design>()
-            .setAll {
-               $0.hidden(true)
-               $1.text("Подтвердить")
-            }
-            .height(Design.params.buttonHeightSmall)
-//         let acceptButton = ButtonModel()
-//            .set(Design.state.button.default)
-//            .title("Подтвердить")
-//            .font(Design.font.default)
-//            .padding(.sideOffset(Grid.x14.value))
+//         let rejectButton1 = ReactionButton<Design>()
+//            .setAll {
+//               $0.hidden(true)
+//               $1.text("Отклонить")
+//            }
 //            .height(Design.params.buttonHeightSmall)
-//            .cornerRadius(Design.params.cornerRadiusSmall)
+//
+//         let acceptButton1 = ReactionButton<Design>()
+//            .setAll {
+//               $0.hidden(true)
+//               $1.text("Подтвердить")
+//            }
+//            .height(Design.params.buttonHeightSmall)
+         
+         let acceptButton = ButtonModel()
+            .set(Design.state.button.default)
+            .title("Подтвердить")
+            .font(Design.font.default)
+            .padding(.sideOffset(Grid.x14.value))
+            .height(Design.params.buttonHeightSmall)
+            .cornerRadius(Design.params.cornerRadiusSmall)
 
-         acceptButton1.view.startTapGestureRecognize()
-         rejectButton1.view.startTapGestureRecognize()
+         acceptButton.view.startTapGestureRecognize()
+         rejectButton.view.startTapGestureRecognize()
 
-         rejectButton1.view.on(\.didTap, self) {
+         rejectButton.view.on(\.didTap, self) {
             $0.send(\.rejectPressed, reportId)
          }
 
-         acceptButton1.view.on(\.didTap, self) {
+         acceptButton.view.on(\.didTap, self) {
             $0.send(\.acceptPressed, reportId)
          }
 
-         // rejectButton.on(\.didSelect)
          var buttonsStack = StackModel()
             .padding(.outline(Grid.x8.value))
             .spacing(Grid.x12.value)
@@ -141,8 +141,8 @@ class ChallContendersPresenters<Design: DesignProtocol>: Designable {
             .alignment(.center)
             .distribution(.fill)
             .arrangedModels([
-               rejectButton1,
-               acceptButton1
+               rejectButton,
+               acceptButton
             ])
 
          let cellStack = WrappedX(

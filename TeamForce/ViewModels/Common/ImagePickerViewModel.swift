@@ -13,6 +13,7 @@ struct ImagePickerEvents: InitProtocol {
    var didCancel: Void?
    var didImagePicked: UIImage?
    var didImagePickingError: Void?
+   var didImageCropped: UIImage?
 }
 
 final class ImagePickerViewModel: BaseModel, Eventable {
@@ -31,7 +32,12 @@ final class ImagePickerViewModel: BaseModel, Eventable {
          $0?.present(picker, animated: true)
       }
    }
+   
+   func allowsEditing(_ value: Bool) {
+      picker.allowsEditing = value
+   }
 }
+
 
 extension ImagePickerViewModel: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
@@ -48,6 +54,14 @@ extension ImagePickerViewModel: UIImagePickerControllerDelegate, UINavigationCon
       }
 
       send(\.didImagePicked, image)
+      
+      if picker.allowsEditing == true {
+         guard let croppedImage = info[.editedImage] as? UIImage else {
+            send(\.didImagePickingError)
+            return
+         }
+         send(\.didImageCropped, croppedImage)
+      }
    }
 }
 
