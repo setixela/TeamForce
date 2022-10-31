@@ -54,7 +54,8 @@ final class ProfileEditScene<Asset: AssetProtocol>: ModalDoubleStackModel<Asset>
       stateDelegate: stateDelegate,
       events: AvatarPickingScenarioEvents(
          startImagePicking: userNamePanel.editPhotoBlock.models.main.on(\.didTap),
-         addImageToBasket: imagePicker.on(\.didImagePicked)
+         addImageToBasket: imagePicker.on(\.didImagePicked),
+         saveCroppedImage: imagePicker.on(\.didImageCropped)
       )
    )
 
@@ -76,6 +77,7 @@ final class ProfileEditScene<Asset: AssetProtocol>: ModalDoubleStackModel<Asset>
 
       scenario.start()
       scenario2.start()
+      imagePicker.allowsEditing(true)
    }
 
    private func configure() {

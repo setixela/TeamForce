@@ -88,6 +88,46 @@ final class ApiEngine: ApiEngineProtocol {
          start(request: request, seal: seal)
       }
    }
+   
+   func processWithImages(endpoint: EndpointProtocol, images: [UIImage], names: [String]) -> Promise<ApiEngineResult> {
+      Promise { seal in
+         guard let url = URL(string: endpoint.endPoint) else {
+            seal.reject(ApiEngineError.unknown)
+            return
+         }
+         var mediaImages: [Media] = []
+         for i in 0..<images.count {
+            let image = images[i]
+            let key = names[i]
+            let size = image.size
+            let imageRes = image.resized(to: .init(width: size.width / 4, height: size.height / 4))
+            guard let mediaImage = Media(withImage: imageRes, forKey: key) else { return }
+            mediaImages.append(mediaImage)
+         }
+        
+         let boundary = UUID().uuidString
+
+         let method = endpoint.method
+         let params = endpoint.body
+         let headers = endpoint.headers
+
+         var request = URLRequest(url: url)
+
+         request.httpMethod = method.rawValue
+
+         for (key, value) in headers {
+            request.setValue(value, forHTTPHeaderField: key)
+         }
+         request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
+
+         let dataBody = createDataBody(withParameters: params, media: mediaImages, boundary: boundary)
+         request.httpBody = dataBody
+
+         log(request, "REQUEST MULTIPART")
+
+         start(request: request, seal: seal)
+      }
+   }
 
    func processPUT(endpoint: EndpointProtocol) -> Promise<ApiEngineResult> {
       Promise { seal in

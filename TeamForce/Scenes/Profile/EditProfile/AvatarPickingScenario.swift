@@ -10,6 +10,7 @@ import UIKit
 struct AvatarPickingScenarioEvents {
    let startImagePicking: VoidWorkVoid
    let addImageToBasket: VoidWork<UIImage>
+   let saveCroppedImage: VoidWork<UIImage>
 }
 
 final class AvatarPickingScenario<Asset: AssetProtocol>:
@@ -22,5 +23,11 @@ final class AvatarPickingScenario<Asset: AssetProtocol>:
       events.addImageToBasket
          .doNext(works.addImage)
          .onSuccess(setState) { .presentPickedImage($0) }
+      
+      events.saveCroppedImage
+         .doNext(works.saveCroppedImage)
+         .onSuccess(setState) {
+            .presentPickedImage($0)
+         }
    }
 }
