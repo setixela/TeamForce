@@ -22,7 +22,7 @@ struct ProfileBuilder<Design: DSP>: ProfileModelBuilder {
    var userEditPanel: M<ImageViewModel>.R<FullAndNickNameY<Design>>.R2<ButtonModel>.Combo { .init()
       .setMain { image in
          image
-            .image(Design.icon.avatarPlaceholder)
+            .image(Design.icon.newAvatar)
             .contentMode(.scaleAspectFill)
             .cornerRadius(52 / 2)
             .set(.size(.square(52)))
@@ -52,7 +52,7 @@ struct ProfileBuilder<Design: DSP>: ProfileModelBuilder {
    var userPanel: M<ImageViewModel>.R<FullAndNickNameY<Design>>.Combo { .init()
          .setMain { image in
             image
-               .image(Design.icon.avatarPlaceholder)
+               .image(Design.icon.newAvatar)
                .contentMode(.scaleAspectFill)
                .cornerRadius(52 / 2)
                .set(.size(.square(52)))
@@ -129,7 +129,7 @@ final class EditPhotoBlock<Design: DSP>: M<ButtonModel>.R<FullAndNickNameY<Desig
          button
             .size(.square(Grid.x60.value))
             .image(Design.icon.camera)
-            .backImage(Design.icon.avatarPlaceholder)
+            .backImage(Design.icon.newAvatar)
             .contentMode(.scaleAspectFill)
             .cornerRadius(Grid.x60.value / 2)
       }

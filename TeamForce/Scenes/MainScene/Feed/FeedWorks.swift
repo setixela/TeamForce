@@ -22,8 +22,10 @@ final class FeedWorksTempStorage: InitProtocol {
    var transactions: [NewFeed] = []
    var challenges: [NewFeed] = []
    var winners: [NewFeed] = []
+   
 
    lazy var currentUserName = ""
+   var profileId: Int?
    var segmentId: Int = 0
    var currentTransactId: Int?
    var limit = 20
@@ -86,6 +88,7 @@ final class FeedWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedWorksTempStorage
          work.fail()
          return
       }
+      Self.store.profileId = user?.profile.id
       Self.store.currentUserName = userName
       
       Self.store.feedOffset = 1
@@ -166,6 +169,48 @@ final class FeedWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedWorksTempStorage
       work.success(result: (filtered, Self.store.currentUserName))
    }.retainBy(retainer) }
 
+   typealias DetailInput = Result2<
+      NewFeed,
+      ChallengeDetailsSceneInput
+   >
+   var createInputForDetailView: Work<NewFeed, DetailInput> { .init { [weak self] work in
+      guard let input = work.input else { work.fail(); return }
+      switch input.objectSelector {
+      case "T":
+         work.success(.result1(input))
+      case "Q":
+         guard
+            let challengeId = input.challenge?.id,
+            let profileId = Self.store.profileId
+         else { work.fail(); return }
+         
+         self?.getChallengeById
+            .doAsync(challengeId)
+            .onSuccess {
+               let res = ChallengeDetailsSceneInput(challenge: $0,
+                                                    profileId: profileId,
+                                                    currentButton: 0)
+               work.success(.result2(res))
+            }
+            .onFail { work.fail() }
+      default:
+         work.fail()
+         break
+      }
+   }.retainBy(retainer) }
+   
+   var getChallengeById: Work<Int, Challenge> { .init { [weak self] work in
+      guard let id = work.input else { return }
+      self?.apiUseCase.GetChallengeById
+         .doAsync(id)
+         .onSuccess {
+            work.success(result: $0)
+         }
+         .onFail {
+            work.fail()
+         }
+   }.retainBy(retainer) }
+   
    var getFeedByRowNumber: Work<Int, NewFeed> { .init { work in
       let segmentId = Self.store.segmentId
       var filtered: [NewFeed] = []
@@ -177,7 +222,7 @@ final class FeedWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedWorksTempStorage
       if let index = work.input {
          let feed = filtered[index]
          Self.store.currentTransactId = feed.id
-         if feed.objectSelector == "T" {
+         if feed.objectSelector == "T" || feed.objectSelector == "Q" {
             work.success(result: feed)
          } else {
             work.fail()

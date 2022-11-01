@@ -92,10 +92,21 @@ final class FeedScenario<Asset: AssetProtocol>:
 
       events.presentDetail
          .doNext(works.getFeedByRowNumber)
-         .onSuccess(setState) { .presentDetailView($0) }
-         .onFail {
-            print("fail ")
+         .doNext(works.createInputForDetailView)
+         .onSuccess { [weak self] (result: FeedWorks.DetailInput) in
+            guard let stateFunc = self?.setState else { return }
+            
+            switch result {
+            case .result1(let value):
+               stateFunc(.presentDetailView(value))
+            case .result2(let value):
+               stateFunc(.presentChallengeDetails(value))
+            }
          }
+         .onFail {
+            print("failed")
+         }
+         
 
       events.pagination
          .doNext(works.pagination)

@@ -19,7 +19,7 @@ final class FeedDetailUserInfoBlock<Design: DSP>: StackModel, Designable {
    var events: EventsStore = .init()
 
    lazy var image = WrappedY(ImageViewModel()
-      .image(Design.icon.avatarPlaceholder)
+      .image(Design.icon.newAvatar)
       .contentMode(.scaleAspectFill)
       .cornerRadius(70 / 2)
       .size(.square(70))

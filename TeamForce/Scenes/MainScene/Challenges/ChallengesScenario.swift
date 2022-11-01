@@ -23,7 +23,7 @@ final class ChallengesScenario<Asset: AssetProtocol>:
 {
    override func start() {
       works.getChallenges
-         .doAsync()
+         .doAsync(false)
          .onSuccess(setState) { .presentChallenges($0) }
          .onFail(setState) { .presentChallenges([]) }
 

@@ -45,7 +45,10 @@ final class ChallengeResCancelWorks<Asset: AssetProtocol>: BaseSceneWorks<Challe
    var rejectReport: Work<Void, Void> { .init { [weak self] work in
       guard
          let id = Self.store.resultId
-      else { return }
+      else {
+         work.fail()
+         return
+      }
       
       let request = CheckReportRequestBody(
          id: id,

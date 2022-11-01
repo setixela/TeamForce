@@ -112,7 +112,7 @@ final class TransactDeatilViewModel<Asset: AssetProtocol>: BaseSceneModel<
    private lazy var currentUser: String = ""
 
    private lazy var image = WrappedY(ImageViewModel()
-      .image(Design.icon.avatarPlaceholder)
+      .image(Design.icon.newAvatar)
       .contentMode(.scaleAspectFill)
       .cornerRadius(70 / 2)
       .size(.square(70))

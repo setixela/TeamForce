@@ -70,12 +70,12 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
          .hidden(true),
       SecondaryButtonDT<Design>()
          .title("Победители")
-         .font(Design.font.default)
-         .hidden(true),
+         .font(Design.font.default),
+         //.hidden(true),
       SecondaryButtonDT<Design>()
          .title("Комментарии")
-         .font(Design.font.default)
-         .hidden(true),
+         .font(Design.font.default),
+         //.hidden(true),
       SecondaryButtonDT<Design>()
          .title("Участники")
          .font(Design.font.default)
@@ -209,9 +209,8 @@ extension ChallengeDetailsScene: StateMachine {
             .arrangedModels([
                challDetails
             ])
+         challDetails.models.down.sendButton.hidden(true)
          challDetails.setState(.presentChallenge(challenge))
-         filterButtons.button4.hidden(false)
-         filterButtons.button5.hidden(false)
          let isActive = challenge.active.bool
          statusLabel
             .text(isActive ? "Активен" : "Завершен")
@@ -226,29 +225,20 @@ extension ChallengeDetailsScene: StateMachine {
                challComments
             ])
       case .presentSendResultScreen(let challenge, let profileId):
-         vcModel?.dismiss(animated: true)
-
          Asset.router?.route(
-            .presentModally(.automatic),
+            .presentModallyOnPresented(.automatic),
             scene: \.challengeSendResult,
             payload: challenge.id
-         ) { success in
-
+         ) { [weak self] success in
             switch success {
             case true:
-               Asset.router?.route(
-                  .presentModally(.automatic),
-                  scene: \.challengeDetails,
-                  payload: ChallengeDetailsSceneInput(
-                     challenge: challenge,
-                     profileId: profileId,
-                     currentButton: 0
-                  )
-               )
+               self?.filterButtons.button2.hidden(false)
+               self?.filterButtons.button2.send(\.didTap)
             case false:
-               print("failure")
+               break
             }
          }
+         
       case .enableMyResult(_):
          filterButtons.button2.hidden(false)
 
@@ -278,52 +268,25 @@ extension ChallengeDetailsScene: StateMachine {
                contendersBlock
             ])
       case .presentCancelView(let challenge, let profileId, let resultId):
-         vcModel?.dismiss(animated: true)
-
          Asset.router?.route(
-            .presentModally(.automatic),
+            .presentModallyOnPresented(.automatic),
             scene: \.challengeResCancel,
             payload: resultId
-         ) { success in
+         ) { [weak self] success in
             switch success {
             case true:
-               Asset.router?.route(
-                  .presentModally(.automatic),
-                  scene: \.challengeDetails,
-                  payload: ChallengeDetailsSceneInput(
-                     challenge: challenge,
-                     profileId: profileId,
-                     currentButton: 2
-                  )
-               )
+               self?.filterButtons.button3.send(\.didTap)
             case false:
                break
             }
          }
 
       case .presentReportDetailView(let challenge, let profileId, let reportId):
-         vcModel?.dismiss(animated: true)
-
          Asset.router?.route(
-            .presentModally(.automatic),
+            .presentModallyOnPresented(.automatic),
             scene: \.challengeReportDetail,
             payload: reportId
-         ) { success in
-            switch success {
-            case true:
-               Asset.router?.route(
-                  .presentModally(.automatic),
-                  scene: \.challengeDetails,
-                  payload: ChallengeDetailsSceneInput(
-                     challenge: challenge,
-                     profileId: profileId,
-                     currentButton: 3
-                  )
-               )
-            case false:
-               break
-            }
-         }
+         )
 
       case .sendButtonDisabled:
          challComments.setState(.sendButtonDisabled)

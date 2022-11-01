@@ -8,7 +8,7 @@
 import ReactiveWorks
 
 protocol ChallengesWorksProtocol {
-   var getChallenges: Work<Void, [Challenge]> { get }
+   var getChallenges: Work<Bool, [Challenge]> { get }
 
    var getAllChallenges: Work<Void, [Challenge]> { get }
    var getActiveChallenges: Work<Void, [Challenge]> { get }
@@ -17,8 +17,15 @@ protocol ChallengesWorksProtocol {
 
 final class ChallengesTempStorage: InitProtocol {
    var challenges: [Challenge] = []
+   var activeChallenges: [Challenge] = []
    var presentingChallenges: [Challenge] = []
    var profileId: Int?
+   
+   var allOffset = 1
+   var activeOffset = 1
+   
+   var isAllPaginating = false
+   var isActivePaginating = false
 }
 
 final class ChallengesWorks<Asset: AssetProtocol>: BaseSceneWorks<ChallengesTempStorage, Asset> {
@@ -41,9 +48,14 @@ extension ChallengesWorks: ChallengesWorksProtocol {
       work.success(id)
    }.retainBy(retainer) }
    
-   var getChallenges: Work<Void, [Challenge]> { .init { [weak self] work in
+   var getChallenges: Work<Bool, [Challenge]> { .init { [weak self] work in
+      guard let activeOnly = work.input else { work.fail(); return }
+      
+      let request = ChallengesRequest(token: "",
+                                      activeOnly: activeOnly,
+                                      pagination: nil)
       self?.apiUseCase.getChanllenges
-         .doAsync()
+         .doAsync(request)
          .onSuccess {
             Self.store.challenges = $0
             Self.store.presentingChallenges = $0
@@ -54,14 +66,32 @@ extension ChallengesWorks: ChallengesWorksProtocol {
          }
    }.retainBy(retainer) }
 
-   var getAllChallenges: VoidWork<[Challenge]> { .init {  work in
+   var getAllChallenges: VoidWork<[Challenge]> { .init {  [weak self] work in
+      self?.getChallenges
+         .doAsync(false)
+         .onSuccess {
+            Self.store.challenges = $0
+            Self.store.presentingChallenges = $0
+            work.success($0)
+         }
       Self.store.presentingChallenges = Self.store.challenges
       work.success(Self.store.presentingChallenges)
    }.retainBy(retainer) }
 
-   var getActiveChallenges: VoidWork<[Challenge]> { .init {  work in
-      Self.store.presentingChallenges = Self.store.challenges.filter(\.active.bool)
-      work.success(Self.store.presentingChallenges)
+   var getActiveChallenges: VoidWork<[Challenge]> { .init { [weak self] work in
+      self?.getChallenges
+         .doAsync(true)
+         .onSuccess {
+            Self.store.activeChallenges = $0
+            Self.store.presentingChallenges = $0
+            work.success($0)
+         }
+         .onFail {
+            work.fail()
+         }
+      
+      //Self.store.presentingChallenges = Self.store.challenges.filter(\.active.bool)
+     // work.success(Self.store.presentingChallenges)
    }.retainBy(retainer) }
 
    var getPresentedChallengeByIndex: Work<Int, Challenge> { .init {  work in
