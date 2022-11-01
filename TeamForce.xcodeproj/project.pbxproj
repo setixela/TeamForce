@@ -94,6 +94,11 @@
 		196D883428ADB6EC00F4C09D /* MainScreenVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196D883328ADB6EC00F4C09D /* MainScreenVM.swift */; };
 		196D883628ADB74800F4C09D /* TabBarPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196D883528ADB74800F4C09D /* TabBarPanel.swift */; };
 		196F642228F32C37002F5187 /* ManyButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196F642128F32C37002F5187 /* ManyButtons.swift */; };
+		1974471C2911AB8E0089BB2B /* ChallengeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1974471B2911AB8E0089BB2B /* ChallengeCell.swift */; };
+		1974471E2911ABC00089BB2B /* ChallengeCellInfoBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1974471D2911ABC00089BB2B /* ChallengeCellInfoBlock.swift */; };
+		197447202911ABEC0089BB2B /* ChallengeCellStatusBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1974471F2911ABEC0089BB2B /* ChallengeCellStatusBlock.swift */; };
+		197447222911AC340089BB2B /* ChallengeCellPresenters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197447212911AC340089BB2B /* ChallengeCellPresenters.swift */; };
+		197447242911AC6A0089BB2B /* CreateChallengePanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197447232911AC6A0089BB2B /* CreateChallengePanel.swift */; };
 		1977518D28A8329F006CFAF3 /* ReactiveWorks in Frameworks */ = {isa = PBXBuildFile; productRef = 1977518C28A8329F006CFAF3 /* ReactiveWorks */; };
 		1977519028A83395006CFAF3 /* SwiftCSSParser in Frameworks */ = {isa = PBXBuildFile; productRef = 1977518F28A83395006CFAF3 /* SwiftCSSParser */; };
 		19775FFE28C5922B008DF8E0 /* ImagePickingScenario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19775FFD28C5922B008DF8E0 /* ImagePickingScenario.swift */; };
@@ -446,6 +451,11 @@
 		196D883328ADB6EC00F4C09D /* MainScreenVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenVM.swift; sourceTree = "<group>"; };
 		196D883528ADB74800F4C09D /* TabBarPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarPanel.swift; sourceTree = "<group>"; };
 		196F642128F32C37002F5187 /* ManyButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManyButtons.swift; sourceTree = "<group>"; };
+		1974471B2911AB8E0089BB2B /* ChallengeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeCell.swift; sourceTree = "<group>"; };
+		1974471D2911ABC00089BB2B /* ChallengeCellInfoBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeCellInfoBlock.swift; sourceTree = "<group>"; };
+		1974471F2911ABEC0089BB2B /* ChallengeCellStatusBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeCellStatusBlock.swift; sourceTree = "<group>"; };
+		197447212911AC340089BB2B /* ChallengeCellPresenters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeCellPresenters.swift; sourceTree = "<group>"; };
+		197447232911AC6A0089BB2B /* CreateChallengePanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateChallengePanel.swift; sourceTree = "<group>"; };
 		19775FFD28C5922B008DF8E0 /* ImagePickingScenario.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickingScenario.swift; sourceTree = "<group>"; };
 		1977BE5428A7238F00D554EA /* TextFieldStates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldStates.swift; sourceTree = "<group>"; };
 		1977BE5728A7343400D554EA /* InputCheckers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputCheckers.swift; sourceTree = "<group>"; };
@@ -858,6 +868,11 @@
 			isa = PBXGroup;
 			children = (
 				1921A13A28EEE16A00E41E86 /* ChallengesViewModels.swift */,
+				1974471B2911AB8E0089BB2B /* ChallengeCell.swift */,
+				1974471D2911ABC00089BB2B /* ChallengeCellInfoBlock.swift */,
+				1974471F2911ABEC0089BB2B /* ChallengeCellStatusBlock.swift */,
+				197447212911AC340089BB2B /* ChallengeCellPresenters.swift */,
+				197447232911AC6A0089BB2B /* CreateChallengePanel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -1819,6 +1834,7 @@
 				196D883428ADB6EC00F4C09D /* MainScreenVM.swift in Sources */,
 				631995B428F53F7600EB2638 /* ChallengeCreateWorks.swift in Sources */,
 				19AE3AEF28691B2E00A0C6E4 /* MainScene.swift in Sources */,
+				197447242911AC6A0089BB2B /* CreateChallengePanel.swift in Sources */,
 				197A2DA428A9BF4B00190656 /* Combos.swift in Sources */,
 				19F15389289964D200ECF000 /* ApiUseCase.swift in Sources */,
 				19C1E98F285F426B00E7976D /* TeamForceApi.swift in Sources */,
@@ -1912,6 +1928,7 @@
 				19C1E9A328610E4E00E7976D /* MainRouter.swift in Sources */,
 				631D8EC728F960AE005332BD /* ChallContendersPresenters.swift in Sources */,
 				63A37EAE28EF1D6300DBD59F /* CreateChallengeUseCase.swift in Sources */,
+				197447222911AC340089BB2B /* ChallengeCellPresenters.swift in Sources */,
 				19A9BE7328C255690099F8EA /* TransactBuilder.swift in Sources */,
 				19221EF528CE1D1B00B7B604 /* EditContactsViewModels.swift in Sources */,
 				1953CF0428E8DF8500C670A6 /* InternetRechability.swift in Sources */,
@@ -2060,6 +2077,7 @@
 				19C1E990285F426B00E7976D /* TeamForceEndpoints.swift in Sources */,
 				1953DE862879FE30000DC537 /* PickerViewModel.swift in Sources */,
 				6368D82C289415EC0049EEAB /* TextViewModel.swift in Sources */,
+				1974471E2911ABC00089BB2B /* ChallengeCellInfoBlock.swift in Sources */,
 				19B2C5D428B7D37A00E7B47D /* Shadow.swift in Sources */,
 				1953CF0228E8A1C500C670A6 /* FeedDetailsBlock.swift in Sources */,
 				190C1D12285D15FF00FB3518 /* AppDelegate.swift in Sources */,
@@ -2080,6 +2098,7 @@
 				1955879228F733D30001F734 /* ChallengeResultWorks.swift in Sources */,
 				63A37EBA28F3289900DBD59F /* CheckChallengeReportUseCase.swift in Sources */,
 				19CAB9C828B41C6500A0A3B1 /* LabelSwitcher.swift in Sources */,
+				1974471C2911AB8E0089BB2B /* ChallengeCell.swift in Sources */,
 				1999B6FE28A2F5D300D3570B /* DataToDecodableParser.swift in Sources */,
 				19B39E5F28D343B300BB2C77 /* SelectWrapper.swift in Sources */,
 				63BB2C2628E3DD8D00C1E3DB /* CommentPresenters.swift in Sources */,
@@ -2104,6 +2123,7 @@
 				19466E03289FFC040052F0AB /* IconTitleSubtitleModel.swift in Sources */,
 				63FCC9B729075748009D0001 /* GetEventsTransactByIdApiWorker.swift in Sources */,
 				19EE849028AB20CE00D862EE /* DoubleStacksBrandedVM.swift in Sources */,
+				197447202911ABEC0089BB2B /* ChallengeCellStatusBlock.swift in Sources */,
 				198BBEF028B69C810006CD30 /* LoadBothTokensUseCase.swift in Sources */,
 				19D0835D286F428600F75E4A /* BarButtonModel.swift in Sources */,
 				63BB2C2228E150CA00C1E3DB /* DeleteCommentApiWorker.swift in Sources */,

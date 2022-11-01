@@ -49,7 +49,7 @@ final class PaddingLabel: UILabel, Marginable, Tappable {
    }
 
    override var intrinsicContentSize: CGSize {
-      guard let text = text else { return super.intrinsicContentSize }
+      guard let text, let font else { return super.intrinsicContentSize }
 
       var contentSize = super.intrinsicContentSize
       var textWidth: CGFloat = contentSize.width
@@ -61,11 +61,15 @@ final class PaddingLabel: UILabel, Marginable, Tappable {
 
       textWidth += insetsWidth
 
-      let newSize = text.boundingRect(with: CGSize(width: textWidth, height: .greatestFiniteMagnitude),
-                                      options: [.usesLineFragmentOrigin],
-                                      attributes: [NSAttributedString.Key.font: font!,
-                                                   .paragraphStyle: paragraphStyle],
-                                      context: nil)
+      let maxHeight =
+         font.lineHeight * (numberOfLines == 0 ? CGFloat.greatestFiniteMagnitude : CGFloat(numberOfLines + 1))
+      let newSize = text.boundingRect(
+         with: CGSize(width: textWidth, height: maxHeight),
+         options: [.usesLineFragmentOrigin],
+         attributes: [NSAttributedString.Key.font: font,
+                      .paragraphStyle: paragraphStyle],
+         context: nil
+      )
 
       contentSize.height = ceil(newSize.size.height) + insetsHeight
       contentSize.width = ceil(newSize.size.width) + insetsWidth
@@ -418,9 +422,7 @@ extension Shimmering {
       //      context.restoreGState()
    }
 
-   private func animateShimmering() {
-
-   }
+   private func animateShimmering() {}
 }
 
 // MARK: - ScrollView
@@ -430,6 +432,7 @@ final class ScrollViewExtended: UIScrollView {
       super.init(frame: frame)
    }
 
+   @available(*, unavailable)
    required init?(coder: NSCoder) {
       fatalError("init(coder:) has not been implemented")
    }
