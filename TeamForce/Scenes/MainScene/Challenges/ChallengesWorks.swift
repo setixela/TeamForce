@@ -57,8 +57,8 @@ extension ChallengesWorks: ChallengesWorksProtocol {
       self?.apiUseCase.getChanllenges
          .doAsync(request)
          .onSuccess {
-//            Self.store.challenges = $0
-//            Self.store.presentingChallenges = $0
+            Self.store.challenges = $0
+            Self.store.presentingChallenges = $0
             work.success(result: $0)
          }
          .onFail {

@@ -35,40 +35,6 @@ struct NewFeed: Codable {
       case winner
    }
 
-//   struct Transaction: Codable {
-//      let id: Int
-//      let userLiked: Bool
-//      let amount: Int
-//      let updatedAt: String
-//      let senderId: Int?
-//      let recipientId: Int?
-//      let isAnonymous: Bool
-//      let senderTgName: String?
-//      let recipientTgName: String?
-//      let recipientPhoto: String?
-//      let tags: [FeedTag]?
-//
-//      enum CodingKeys: String, CodingKey {
-//         case id
-//         case userLiked = "user_liked"
-//         case amount
-//         case updatedAt = "updated_at"
-//         case senderId = "sender_id"
-//         case recipientId = "recipient_id"
-//         case isAnonymous = "is_anonymous"
-//         case senderTgName = "sender_tg_name"
-//         case recipientTgName = "recipient_tg_name"
-//         case recipientPhoto = "recipient_photo"
-//         case tags
-//      }
-//
-//      var photoUrl: String? {
-//         guard let photo = recipientPhoto else { return nil }
-//
-//         return TeamForceEndpoints.urlBase + photo
-//      }
-//   }
-
    struct Challenge: Codable {
       let id: Int
       var userLiked: Bool

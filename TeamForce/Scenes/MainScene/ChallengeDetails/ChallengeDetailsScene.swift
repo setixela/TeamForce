@@ -70,12 +70,12 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
          .hidden(true),
       SecondaryButtonDT<Design>()
          .title("Победители")
-         .font(Design.font.default)
-         .hidden(true),
+         .font(Design.font.default),
+         //.hidden(true),
       SecondaryButtonDT<Design>()
          .title("Комментарии")
-         .font(Design.font.default)
-         .hidden(true),
+         .font(Design.font.default),
+         //.hidden(true),
       SecondaryButtonDT<Design>()
          .title("Участники")
          .font(Design.font.default)
@@ -210,8 +210,8 @@ extension ChallengeDetailsScene: StateMachine {
                challDetails
             ])
          challDetails.setState(.presentChallenge(challenge))
-         filterButtons.button4.hidden(false)
-         filterButtons.button5.hidden(false)
+         //filterButtons.button4.hidden(false)
+         //filterButtons.button5.hidden(false)
          let isActive = challenge.active.bool
          statusLabel
             .text(isActive ? "Активен" : "Завершен")
