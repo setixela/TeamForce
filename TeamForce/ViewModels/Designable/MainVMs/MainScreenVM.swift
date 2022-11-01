@@ -25,7 +25,7 @@ final class MainScreenVM<Design: DesignProtocol>:
    var footerStack: TabBarPanel<Design> { models.down2 }
 
    lazy var profileButton = ImageViewModel()
-      .image(Design.icon.avatarPlaceholder)
+      .image(Design.icon.newAvatar)
       .contentMode(.scaleAspectFill)
       .size(.square(Grid.x36.value))
       .cornerRadius(Grid.x36.value / 2)

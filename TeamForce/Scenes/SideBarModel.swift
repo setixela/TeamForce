@@ -51,7 +51,7 @@ final class SideBarModel<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>
    override func start() {
       view.backgroundColor = .white
 
-      userModel.avatar.set(.image(Design.icon.avatarPlaceholder))
+      userModel.avatar.set(.image(Design.icon.newAvatar))
 
       axis(.vertical)
          .distribution(.fill)

@@ -31,7 +31,7 @@ class ChallContendersPresenters<Design: DesignProtocol>: Designable {
 
          let icon = ImageViewModel()
             .contentMode(.scaleAspectFill)
-            .image(Design.icon.avatarPlaceholder)
+            .image(Design.icon.newAvatar)
             .size(.square(Grid.x36.value))
             .cornerRadius(Grid.x36.value / 2)
 
