@@ -11,12 +11,23 @@ struct GetChallengesUseCase: UseCaseProtocol {
    let safeStringStorage: StringStorageWorker
    let getChallengesApiWorker: GetChallengesApiWorker
 
-   var work: Work<Void, [Challenge]> {
-      Work<Void, [Challenge]>() { work in
+   var work: Work<ChallengesRequest, [Challenge]> {
+      Work<ChallengesRequest, [Challenge]>() { work in
          safeStringStorage
             .doAsync("token")
             .onFail {
                work.fail()
+            }
+            .doMap {
+               guard
+                  let input = work.input
+               else {
+                  work.fail()
+                  return nil
+               }
+               let request = ChallengesRequest(token: $0,
+                                               activeOnly: input.activeOnly, pagination: input.pagination)
+               return request
             }
             .doNext(worker: getChallengesApiWorker)
             .onSuccess {

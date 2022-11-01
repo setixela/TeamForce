@@ -403,9 +403,14 @@ enum TeamForceEndpoints {
    struct GetChallenges: EndpointProtocol {
       let method = HTTPMethod.get
       
-      var endPoint: String { urlBase + "/challenges/" }
+      var endPoint: String = urlBase + "/challenges/" 
       
       var headers: [String : String]
+      
+      init(activeOnly: Bool, headers: [String : String]) {
+         endPoint = endPoint + "?active_only=" + String(activeOnly)
+         self.headers = headers
+      }
    }
    
    struct GetChallengeById: EndpointProtocol {
