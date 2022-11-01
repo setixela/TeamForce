@@ -140,7 +140,7 @@ extension ChallengeDetailsViewModel: SetupProtocol {
 final class ChallengeInfoVM<Design: DSP>: StackModel, Designable {
    lazy var title = Design.label.headline6
       .numberOfLines(0)
-   lazy var body = Design.label.caption
+   lazy var body = Design.label.default
       .numberOfLines(0)
       .lineSpacing(8)
    lazy var tags = StackModel()
@@ -151,7 +151,7 @@ final class ChallengeInfoVM<Design: DSP>: StackModel, Designable {
 
       arrangedModels([
          title,
-         Spacer(6),
+         Spacer(12),
          body,
          Spacer(12),
          tags
