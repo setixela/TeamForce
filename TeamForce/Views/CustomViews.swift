@@ -265,7 +265,7 @@ final class StackViewExtended: UIStackView, Eventable {
          .filter {
             $0 is (any Tappable)
          }
-         .first(where: {
+         .last(where: {
             let subPoint = $0.convert(point, from: self)
             return $0.hitTest(subPoint, with: event) != nil
          })
@@ -308,7 +308,6 @@ final class ButtonExtended: UIButton, AlamoLoader, Shimmering, Tappable {
    }
 
 //   override func startTapGestureRecognize(cancelTouch: Bool = false) {
-//      fatalError() /// check
 //      self.addTarget(self, action: #selector(didTap), for: .touchUpInside)
 //   }
 
