@@ -115,6 +115,14 @@ extension ChallengeDetailsViewModel: StateMachine {
             let likesAmount = String(challenge.likesAmount ?? 0)
             buttonsPanel.likeButton.models.right.text(likesAmount)
          }
+         
+         if challenge.active == true,
+            challenge.approvedReportsAmount < challenge.awardees,
+            challenge.status == "Можно отправить отчёт" ||
+            challenge.status == "Отчёт отклонён"
+         {
+            buttonsPanel.sendButton.hidden(false)
+         }
 
       case .updateDetails(let challenge):
 //         activity.hidden(true)
@@ -216,6 +224,7 @@ final class SendChallengePanel<Design: DSP>: StackModel, Designable {
             .set(Design.state.button.default)
             .font(Design.font.body1)
             .title("Отправить результат")
+            .hidden(true)
 //         dislikeButton
 //            .set(Design.state.button.secondary)
 //            .image(Design.icon.dislike)

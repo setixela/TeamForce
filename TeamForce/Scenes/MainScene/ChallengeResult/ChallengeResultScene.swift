@@ -87,7 +87,7 @@ final class ChallengeResultScene<Asset: AssetProtocol>: BaseSceneModel<
       mainVM.closeButton
          .on(\.didTap, self) {
             $0.dismiss()
-            $0.finisher?(true)
+            $0.finisher?(false)
          }
 
       scenario.start()

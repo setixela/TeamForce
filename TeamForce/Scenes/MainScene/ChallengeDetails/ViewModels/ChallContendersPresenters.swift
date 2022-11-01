@@ -76,6 +76,7 @@ class ChallContendersPresenters<Design: DesignProtocol>: Designable {
 
          let textLabel = LabelModel()
             .set(Design.state.label.caption)
+            .numberOfLines(0)
             .text(reportText)
             .padding(Design.params.cellContentPadding)
 
@@ -123,8 +124,8 @@ class ChallContendersPresenters<Design: DesignProtocol>: Designable {
             .height(Design.params.buttonHeightSmall)
             .cornerRadius(Design.params.cornerRadiusSmall)
 
-         acceptButton.view.startTapGestureRecognize()
-         rejectButton.view.startTapGestureRecognize()
+         //acceptButton.view.startTapGestureRecognize()
+         //rejectButton.view.startTapGestureRecognize()
 
          rejectButton.view.on(\.didTap, self) {
             $0.send(\.rejectPressed, reportId)
