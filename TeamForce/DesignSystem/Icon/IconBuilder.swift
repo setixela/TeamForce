@@ -38,6 +38,8 @@ protocol IconElements: InitProtocol, DesignElementable where DesignElement == UI
    var calendarLine: DesignElement { get }
 
    var avatarPlaceholder: DesignElement { get }
+   var newAvatar: DesignElement { get }
+   var challengeAvatar: DesignElement { get }
 
    var sideMenu: DesignElement { get }
 
@@ -128,6 +130,8 @@ struct IconBuilder: IconElements {
    var calendarLine: UIImage { make("calendar-line") }
 
    var avatarPlaceholder: UIImage { make("avatarPlaceholder") }
+   var newAvatar: UIImage { make("avatar") }
+   var challengeAvatar: UIImage { make("challengeAvatar") }
 
    var sideMenu: UIImage { make("menu_24px") }
 

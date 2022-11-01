@@ -109,20 +109,28 @@ final class Challenge: Codable {
    var photoCache: UIImage?
 }
 
-final class GetChallengesApiWorker: BaseApiWorker<String, [Challenge]> {
+struct ChallengesRequest {
+   let token: String
+   let activeOnly: Bool?
+   let pagination: Pagination?
+}
+
+final class GetChallengesApiWorker: BaseApiWorker<ChallengesRequest, [Challenge]> {
    override func doAsync(work: Wrk) {
       let cookieName = "csrftoken"
 
       guard
-         let token = work.input,
+         let request = work.input,
          let cookie = HTTPCookieStorage.shared.cookies?.first(where: { $0.name == cookieName })
       else {
          print("No csrf cookie")
          return
       }
       apiEngine?
-         .process(endpoint: TeamForceEndpoints.GetChallenges(headers: [
-            "Authorization": token,
+         .process(endpoint: TeamForceEndpoints.GetChallenges(
+            activeOnly: request.activeOnly ?? false,
+            headers: [
+            "Authorization": request.token,
             "X-CSRFToken": cookie.value
          ]))
          .done { result in

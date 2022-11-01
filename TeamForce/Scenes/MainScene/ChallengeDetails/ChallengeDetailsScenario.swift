@@ -36,10 +36,10 @@ final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<Challen
          .doVoidNext(works.getChallengeById)
          .onSuccess(setState) { .updateDetails($0) }
          // .doNext(works.saveInput)
-         .doVoidNext(works.isSendResultActive)
-         .onFail(setState) { .disableSendResult }
-         .onSuccess { print("success") }
-         .doRecover()
+//         .doVoidNext(works.isSendResultActive)
+//         .onFail(setState) { .disableSendResult }
+//         .onSuccess { print("success") }
+//         .doRecover()
          .doVoidNext(works.amIOwnerCheck)
          .onSuccess(setState, .enableContenders)
          .onFail { print("you are not owner") }
@@ -97,7 +97,9 @@ final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<Challen
 
       events.rejectPressed
          .doNext(works.getInputForCancel)
-         .onSuccess(setState) { .presentCancelView($0.0, $0.1, $0.2) }
+         .onSuccess(setState) {
+            .presentCancelView($0.0, $0.1, $0.2)
+         }
 
       events.acceptPressed
          .doMap { (CheckReportRequestBody.State.W, $0) }

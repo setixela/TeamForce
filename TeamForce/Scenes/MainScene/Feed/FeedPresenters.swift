@@ -286,7 +286,7 @@ extension FeedPresenters {
    func makeIcon(feed: NewFeed, type: EventType) -> ImageViewModel {
       let icon = ImageViewModel()
          .contentMode(.scaleAspectFill)
-         .image(Design.icon.avatarPlaceholder)
+         .image(Design.icon.newAvatar)
          .size(.square(Grid.x36.value))
          .cornerRadius(Grid.x36.value / 2)
       switch type {
@@ -294,16 +294,16 @@ extension FeedPresenters {
          if let recipientPhoto = feed.transaction?.recipientPhoto {
             icon.url(TeamForceEndpoints.urlBase + recipientPhoto)
          } else {
-            icon.image(Design.icon.avatarPlaceholder)
+            icon.image(Design.icon.newAvatar)
          }
       case .winner:
          if let winnerPhoto = feed.winner?.winnerPhoto {
             icon.url(TeamForceEndpoints.urlBase + winnerPhoto)
          } else {
-            icon.image(Design.icon.avatarPlaceholder)
+            icon.image(Design.icon.newAvatar)
          }
       case .challenge:
-         icon.image(Design.icon.avatarPlaceholder)
+         icon.image(Design.icon.challengeAvatar)
       }
 
       return icon

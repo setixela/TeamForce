@@ -15,6 +15,7 @@ enum NavType {
    case pop
    case popToRoot
    case presentModally(UIModalPresentationStyle)
+   case presentModallyOnPresented(UIModalPresentationStyle)
 }
 
 final class MainRouter<Asset: AssetProtocol>: RouterProtocol, Assetable {
@@ -54,6 +55,10 @@ final class MainRouter<Asset: AssetProtocol>: RouterProtocol, Assetable {
          let vc = makeVC()
          vc.modalPresentationStyle = value
          nc.present(vc, animated: true)
+      case .presentModallyOnPresented(let value):
+         let vc = makeVC()
+         vc.modalPresentationStyle = value
+         nc.presentedViewController?.present(vc, animated: true)
       }
 
       // local func

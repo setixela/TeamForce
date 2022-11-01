@@ -46,7 +46,7 @@ final class ImageViewerScene<Asset: AssetProtocol>: BaseSceneModel<
 
       closeButton.on(\.didTap, self) {
          $0.dismiss()
-         $0.finisher?(true)
+         $0.finishCanceled()
       }
 
       mainVM.backColor(Design.color.background)

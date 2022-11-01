@@ -80,6 +80,7 @@ enum FeedSceneState {
    case presentDetailView(NewFeed)
    case updateFeed([NewFeed])
    case updateFeedAtIndex(NewFeed, Int)
+   case presentChallengeDetails(ChallengeDetailsSceneInput)
 }
 
 extension FeedScene: StateMachine {
@@ -118,6 +119,13 @@ extension FeedScene: StateMachine {
          viewModels.feedTableModel.set(.items(value + [SpacerItem(size: Grid.x64.value)]))
       case .updateFeedAtIndex(let feed, let index):
          viewModels.feedTableModel.set(.updateItemAtIndex(feed, index))
+         
+      case .presentChallengeDetails(let value):
+         Asset.router?.route(
+            .presentModally(.automatic),
+            scene: \.challengeDetails,
+            payload: value
+         )
       }
    }
 }
