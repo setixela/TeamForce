@@ -19,6 +19,9 @@ struct Config {
 
    static let baseAspectWidth: CGFloat = 360
    static var sizeAspectCoeficient: CGFloat { UIScreen.main.bounds.width / baseAspectWidth }
+
+   static let imageSendSize: CGFloat = 1920
+   static let avatarSendSize: CGFloat = 1920
 }
 
 extension CGFloat {

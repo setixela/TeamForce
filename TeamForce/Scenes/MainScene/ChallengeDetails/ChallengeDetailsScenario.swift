@@ -19,7 +19,7 @@ struct ChallengeDetailsInputEvents {
 
    let didEditingComment: VoidWork<String>
    let didSendCommentPressed: VoidWorkVoid
-   
+
    let reactionPressed: VoidWorkVoid
 }
 
@@ -42,19 +42,16 @@ final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<Challen
          .doRecover()
          .doVoidNext(works.getChallengeResult)
          .onSuccess(setState) { .enableMyResult($0) }
-         .onFail{
-            print("fail")
+         .onFail { [weak self] in
+            self?.works.anyReportToPresent
+               .doAsync()
+               .onSuccess {
+                  self?.setState(.presentReportDetailView($0))
+               }
+               .onFail {
+                  print("fail")
+               }
          }
-//         .doRecover()
-//         .doVoidNext(works.anyReportToPresent)
-//         .onSuccess(setState) {
-//            .presentReportDetailView($0)
-//         }
-//         .onFail {
-//            print("fail")
-//         }
-      
-         
 
       events.challengeResult
          .doNext(works.getChallenge)
@@ -91,7 +88,7 @@ final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<Challen
                stateFunc(.presentWinners(value))
 
             case .result5(let value):
-               //guard !value.isEmpty else { stateFunc(.hereIsEmpty); return }
+               // guard !value.isEmpty else { stateFunc(.hereIsEmpty); return }
 
                stateFunc(.presentComments(value))
 
@@ -118,7 +115,7 @@ final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<Challen
 
       events.didSelectWinnerIndex
          .doNext(works.getWinnerReportIdByIndex)
-         //.doNext(works.getInputForReportDetail)
+         // .doNext(works.getInputForReportDetail)
          .onSuccess(setState) { .presentReportDetailView($0) }
          .onFail { print("fail") }
 
@@ -133,7 +130,7 @@ final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<Challen
          .doNext(works.createComment)
          .onSuccess(setState, .commentDidSend)
          .onFail { print("error sending comment") }
-      
+
       events.reactionPressed
          .doNext(works.isLikedByMe)
          .onSuccess(setState) { .buttonLikePressed(alreadySelected: $0) }
