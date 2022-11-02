@@ -102,6 +102,17 @@ final class ChallengeDetailsWorks<Asset: AssetProtocol>: BaseSceneWorks<Challeng
          work.fail()
       }
    }.retainBy(retainer) }
+   
+   var anyReportToPresent: Work<Void, Int> { .init { work in
+      guard
+         let reportId = Self.store.reportId
+      else {
+         work.fail()
+         return
+      }
+      work.success(reportId)
+      
+   }.retainBy(retainer) }
 
    var saveInput: Work<ChallengeDetailsSceneInput, ChallengeDetailsSceneInput> { .init { work in
       guard let input = work.input else { return }
@@ -109,6 +120,7 @@ final class ChallengeDetailsWorks<Asset: AssetProtocol>: BaseSceneWorks<Challeng
       Self.store.challengeId = input.challenge.id
       Self.store.profileId = input.profileId
       Self.store.filterButton = input.currentButton
+      Self.store.reportId = input.reportId
 
       work.success(result: input)
    }.retainBy(retainer) }
@@ -138,15 +150,13 @@ final class ChallengeDetailsWorks<Asset: AssetProtocol>: BaseSceneWorks<Challeng
       work.success((challenge, profileId, resultId))
    }.retainBy(retainer) }
 
-   var getInputForReportDetail: Work<Int, (Challenge, Int, Int)> { .init { work in
-      guard
-         let challenge = Self.store.challenge,
-         let profileId = Self.store.profileId,
-         let reportId = work.input
-      else { return }
-
-      work.success((challenge, profileId, reportId))
-   }.retainBy(retainer) }
+//   var getInputForReportDetail: Work<Void, Int> { .init { work in
+//      guard
+//         let reportId = Self.store.reportId
+//      else { return }
+//
+//      work.success(reportId)
+//   }.retainBy(retainer) }
 
    var getWinnerReportIdByIndex: Work<Int, Int> { .init { work in
       let id = Self.store.winnersReports[work.unsafeInput].id

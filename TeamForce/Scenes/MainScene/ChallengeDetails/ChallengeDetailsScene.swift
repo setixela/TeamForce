@@ -12,6 +12,17 @@ struct ChallengeDetailsSceneInput {
    let challenge: Challenge
    let profileId: Int
    let currentButton: Int
+   let reportId: Int?
+   
+   init(challenge: Challenge,
+        profileId: Int,
+        currentButton: Int,
+        reportId: Int? = nil) {
+      self.challenge = challenge
+      self.profileId = profileId
+      self.currentButton = currentButton
+      self.reportId = reportId
+   }
 }
 
 final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
@@ -179,7 +190,7 @@ enum ChallengeDetailsState {
    case presentWinners([ChallengeWinnerReport])
    case presentContenders([Contender])
    case presentCancelView(Challenge, Int, Int)
-   case presentReportDetailView(Challenge, Int, Int)
+   case presentReportDetailView(Int)
 
    case disableSendResult
 
@@ -245,6 +256,7 @@ extension ChallengeDetailsScene: StateMachine {
       case .enableContenders:
          filterButtons.button3.hidden(false)
          challDetails.models.down.sendButton.hidden(true)
+         filterButtons.button2.hidden(true)
          // challDetails.models.down.hidden(true)
 
       case .presentMyResults(let results):
@@ -281,7 +293,7 @@ extension ChallengeDetailsScene: StateMachine {
             }
          }
 
-      case .presentReportDetailView(let challenge, let profileId, let reportId):
+      case .presentReportDetailView(let reportId):
          Asset.router?.route(
             .presentModallyOnPresented(.automatic),
             scene: \.challengeReportDetail,

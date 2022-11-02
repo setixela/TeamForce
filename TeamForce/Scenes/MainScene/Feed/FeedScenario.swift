@@ -101,6 +101,8 @@ final class FeedScenario<Asset: AssetProtocol>:
                stateFunc(.presentDetailView(value))
             case .result2(let value):
                stateFunc(.presentChallengeDetails(value))
+            case .result3(let value):
+               stateFunc(.presentChallengeDetails(value))
             }
          }
          .onFail {

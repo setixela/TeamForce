@@ -169,8 +169,9 @@ final class FeedWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedWorksTempStorage
       work.success(result: (filtered, Self.store.currentUserName))
    }.retainBy(retainer) }
 
-   typealias DetailInput = Result2<
+   typealias DetailInput = Result3<
       NewFeed,
+      ChallengeDetailsSceneInput,
       ChallengeDetailsSceneInput
    >
    var createInputForDetailView: Work<NewFeed, DetailInput> { .init { [weak self] work in
@@ -193,6 +194,25 @@ final class FeedWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedWorksTempStorage
                work.success(.result2(res))
             }
             .onFail { work.fail() }
+      case "R":
+         guard
+            let reportId = input.winner?.id,
+            let challengeId = input.winner?.challengeId,
+            let profileId = Self.store.profileId
+         else {work.fail(); return }
+         
+         self?.getChallengeById
+            .doAsync(challengeId)
+            .onSuccess {
+               let res = ChallengeDetailsSceneInput(challenge: $0,
+                                                    profileId: profileId,
+                                                    currentButton: 3,
+                                                    reportId: reportId)
+               work.success(.result3(res))
+            }
+            .onFail {
+               work.fail()
+            }
       default:
          work.fail()
          break
@@ -222,7 +242,9 @@ final class FeedWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedWorksTempStorage
       if let index = work.input {
          let feed = filtered[index]
          Self.store.currentTransactId = feed.id
-         if feed.objectSelector == "T" || feed.objectSelector == "Q" {
+         if feed.objectSelector == "T" ||
+               feed.objectSelector == "Q" ||
+               feed.objectSelector == "R" {
             work.success(result: feed)
          } else {
             work.fail()
