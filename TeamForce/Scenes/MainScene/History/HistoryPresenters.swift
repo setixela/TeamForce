@@ -30,11 +30,9 @@ class HistoryPresenters<Design: DesignProtocol>: Designable {
          var textColor: UIColor = Design.color.text
          // var image = ImageViewModel()
 
-         if let nameFirstLetter = item.recipient.recipientFirstName?.first,
-            let surnameFirstLetter = item.recipient.recipientSurname?.first
-         {
-            userIconText = String(nameFirstLetter) + String(surnameFirstLetter)
-         }
+         let nameFirstLetter = String(item.recipient.recipientFirstName?.first ?? "?")
+         let surnameFirstLetter = String(item.recipient.recipientSurname?.first ?? "?")
+         userIconText = nameFirstLetter + surnameFirstLetter
 
          sumText = item.amount
          switch item.state {
@@ -45,11 +43,10 @@ class HistoryPresenters<Design: DesignProtocol>: Designable {
             //sumText = "+" + item.amount
             statusColor = .clear
             statusHidden = true
-            if let nameFirstLetter = item.sender.senderFirstName?.first,
-               let surnameFirstLetter = item.sender.senderSurname?.first
-            {
-               userIconText = String(nameFirstLetter) + String(surnameFirstLetter)
-            }
+            let nameFirstLetter = String(item.sender.senderFirstName?.first ?? "?")
+            let surnameFirstLetter = String(item.sender.senderSurname?.first ?? "?")
+            userIconText = String(nameFirstLetter) + String(surnameFirstLetter)
+            
 //            image = Design.icon.recieveCoinIcon
          case .waiting:
             userNameText = item.recipient.recipientTgName.string
@@ -94,10 +91,9 @@ class HistoryPresenters<Design: DesignProtocol>: Designable {
                   if let urlSuffix = item.photo {
                      icon.url(TeamForceEndpoints.urlBase + urlSuffix)
                   } else {
-                     let image = userIconText.drawImage(backColor: Design.color.backgroundBrand)
                      icon
+                        .textImage(userIconText, Design.color.backgroundBrand)
                         .backColor(Design.color.backgroundBrand)
-                        .image(image)
                   }
                }
 

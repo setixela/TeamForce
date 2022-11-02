@@ -430,6 +430,18 @@ extension ViewModelProtocol where Self: Stateable, View: PaddingImageView {
       view.layer.masksToBounds = true
       return self
    }
+   
+   @discardableResult func textImage(_ value: String, _ backColor: UIColor) -> Self {
+      DispatchQueue.global(qos: .background).async { [weak self] in
+         let image = value.drawImage(backColor: backColor)
+         DispatchQueue.main.async {
+            self?.view.image = image
+            self?.view.backgroundColor = backColor
+            self?.view.layer.masksToBounds = true
+         }
+      }
+      return self
+   }
 
    @discardableResult func contentMode(_ value: UIView.ContentMode) -> Self {
       view.contentMode = value
