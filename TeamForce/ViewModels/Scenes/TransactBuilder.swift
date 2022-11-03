@@ -122,7 +122,7 @@ struct TransactBuilder<Design: DSP>: TransactModelBuilder {
                         .contentMode(.scaleAspectFill)
                         .size(.square(Grid.x26.value))
                         .cornerRadius(Grid.x26.value / 2)
-                     if let photo = user.photo, photo.count != 0 {
+                     if let photo = user.photo, photo.count > 7 {
                         let urlString = TeamForceEndpoints.urlMediaBase + photo
                         avatar.url(urlString)
                      } else {

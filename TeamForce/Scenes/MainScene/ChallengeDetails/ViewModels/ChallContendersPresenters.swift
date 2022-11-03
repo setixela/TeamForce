@@ -47,17 +47,13 @@ class ChallContendersPresenters<Design: DesignProtocol>: Designable {
          if let avatar = contender.participantPhoto {
             icon.url(TeamForceEndpoints.urlBase + avatar)
          } else {
-            if let nameFirstLetter = name.first,
-               let surnameFirstLetter = surname.first
-            {
-               let text = String(nameFirstLetter) + String(surnameFirstLetter)
-               DispatchQueue.global(qos: .background).async {
-                  let image = text.drawImage(backColor: Design.color.backgroundBrand)
-                  DispatchQueue.main.async {
-                     icon
-                        .backColor(Design.color.backgroundBrand)
-                        .image(image)
-                  }
+            let userIconText = String(name.first ?? "?") + String(surname.first ?? "?")
+            DispatchQueue.global(qos: .background).async {
+               let image = userIconText.drawImage(backColor: Design.color.backgroundBrand)
+               DispatchQueue.main.async {
+                  icon
+                     .backColor(Design.color.backgroundBrand)
+                     .image(image)
                }
             }
          }

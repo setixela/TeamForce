@@ -103,17 +103,16 @@ private extension FeedDetailUserInfoBlock {
       if let recipientPhoto = feed.transaction?.recipientPhoto {
          image.subModel.url(TeamForceEndpoints.urlBase + recipientPhoto)
       } else {
-         if let nameFirstLetter = feed.transaction?.recipientFirstName?.first,
-            let surnameFirstLetter = feed.transaction?.recipientSurname?.first
-         {
-            let text = String(nameFirstLetter) + String(surnameFirstLetter)
-            DispatchQueue.global(qos: .background).async {
-               let image = text.drawImage(backColor: Design.color.backgroundBrand)
-               DispatchQueue.main.async { [weak self] in
-                  self?.image.subModel
-                     .backColor(Design.color.backgroundBrand)
-                     .image(image)
-               }
+         // TODO: - сделать через .textImage
+         let userIconText =
+         String(feed.transaction?.recipientFirstName?.first ?? "?") +
+         String(feed.transaction?.recipientSurname?.first ?? "?")
+         DispatchQueue.global(qos: .background).async {
+            let image = userIconText.drawImage(backColor: Design.color.backgroundBrand)
+            DispatchQueue.main.async { [weak self] in
+               self?.image.subModel
+                  .backColor(Design.color.backgroundBrand)
+                  .image(image)
             }
          }
       }
