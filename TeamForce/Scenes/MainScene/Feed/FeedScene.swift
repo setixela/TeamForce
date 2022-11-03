@@ -25,9 +25,6 @@ final class FeedScene<Asset: AssetProtocol>: DoubleStacksModel,
       events: FeedScenarioInputEvents(
          loadFeedForCurrentUser: on(\.userDidLoad),
          filterTapped: viewModels.filterButtons.on(\.didTapButtons),
-         //presentAllFeed: viewModels.filterButtons.on(\.didTapButtons),
-         //presentTransactions: viewModels.filterButtons.on(\.didTapMy),
-//         presentPublicFeed: viewModels.filterButtons.on(\.didTapPublic),
          presentProfile: viewModels.presenter.on(\.didSelect),
          reactionPressed: viewModels.presenter.on(\.reactionPressed),
          presentDetail: viewModels.feedTableModel.on(\.didSelectRowInt),
@@ -46,8 +43,18 @@ final class FeedScene<Asset: AssetProtocol>: DoubleStacksModel,
    override func start() {
       super.start()
 
+      view.on(\.willAppear, self) {
+         $0.configure()
+      }
+
+      setState(.initial)
+   }
+}
+
+extension FeedScene: Configurable {
+   func configure() {
       bodyStack.arrangedModels([
-         viewModels.filterButtons
+         viewModels.filterButtons,
       ])
       .padding(.horizontalOffset(8))
       .padBottom(8)
@@ -55,7 +62,7 @@ final class FeedScene<Asset: AssetProtocol>: DoubleStacksModel,
       footerStack.arrangedModels([
          activityIndicator,
          errorBlock,
-         hereIsEmptyBlock,
+         hereIsEmptyBlock.hidden(true),
          viewModels.feedTableModel,
       ])
 
@@ -66,8 +73,6 @@ final class FeedScene<Asset: AssetProtocol>: DoubleStacksModel,
          .on(\.willEndDragging) { [weak self] in
             self?.send(\.willEndDragging, $0)
          }
-
-      setState(.initial)
    }
 }
 
@@ -77,10 +82,9 @@ enum FeedSceneState {
    case loadFeedError
    case presentProfile(Int)
    case reactionChanged
-   case presentDetailView(NewFeed)
+   case presentDetailView((feed: NewFeed, profileId: Int))
    case updateFeed([NewFeed])
    case updateFeedAtIndex(NewFeed, Int)
-   case presentChallengeDetails(ChallengeDetailsSceneInput)
 }
 
 extension FeedScene: StateMachine {
@@ -88,10 +92,12 @@ extension FeedScene: StateMachine {
       self.state = state
       switch state {
       case .initial:
-         activityIndicator.hidden(false)
+         footerStack.arrangedModels([
+            activityIndicator,
+         ])
          errorBlock.hidden(true)
-         hereIsEmptyBlock.hidden(true)
       case .presentFeed(let tuple):
+         hereIsEmptyBlock.hidden(true)
          activityIndicator.hidden(true)
          errorBlock.hidden(true)
          viewModels.set(.userName(tuple.1))
@@ -103,7 +109,6 @@ extension FeedScene: StateMachine {
          }
 
          viewModels.feedTableModel.hidden(false)
-         hereIsEmptyBlock.hidden(true)
          viewModels.feedTableModel.set(.items(tuple.0 + [SpacerItem(size: Grid.x64.value)]))
       case .loadFeedError:
          log("Feed Error!")
@@ -113,19 +118,37 @@ extension FeedScene: StateMachine {
          Asset.router?.route(.push, scene: \.profile, payload: id)
       case .reactionChanged:
          print("Hello")
-      case .presentDetailView(let feed):
-         Asset.router?.route(.push, scene: \.feedDetail, payload: (feed, viewModels.userName))
+      case .presentDetailView(let tuple):
+         switch tuple.feed.objectSelector {
+         case "T":
+            Asset.router?.route(
+               .push,
+               scene: \.feedDetail,
+               payload: (tuple.feed, viewModels.userName) // TODO: - Why getting data from viewModel?
+            )
+         case "Q":
+            Asset.router?.route(
+               .presentModally(.automatic),
+               scene: \.challengeDetails,
+               payload: ChallengeDetailsSceneInput(feed: tuple.feed,
+                                                   profileId: tuple.profileId,
+                                                   currentButton: 0)
+            )
+         case "R":
+            Asset.router?.route(
+               .presentModally(.automatic),
+               scene: \.challengeDetails,
+               payload: ChallengeDetailsSceneInput(feed: tuple.feed,
+                                                   profileId: tuple.profileId,
+                                                   currentButton: 3)
+            )
+         default:
+            break
+         }
       case .updateFeed(let value):
          viewModels.feedTableModel.set(.items(value + [SpacerItem(size: Grid.x64.value)]))
       case .updateFeedAtIndex(let feed, let index):
          viewModels.feedTableModel.set(.updateItemAtIndex(feed, index))
-         
-      case .presentChallengeDetails(let value):
-         Asset.router?.route(
-            .presentModally(.automatic),
-            scene: \.challengeDetails,
-            payload: value
-         )
       }
    }
 }

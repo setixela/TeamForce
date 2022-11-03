@@ -9,12 +9,16 @@ import ReactiveWorks
 import UIKit
 
 struct ChallengeDetailsSceneInput {
-   let challenge: Challenge
+
+   let challenge: Challenge?
+   let feed: NewFeed?
+
    let profileId: Int
    let currentButton: Int
    let reportId: Int?
    
-   init(challenge: Challenge,
+   init(challenge: Challenge? = nil,
+        feed: NewFeed? = nil,
         profileId: Int,
         currentButton: Int,
         reportId: Int? = nil) {
@@ -22,6 +26,7 @@ struct ChallengeDetailsSceneInput {
       self.profileId = profileId
       self.currentButton = currentButton
       self.reportId = reportId
+      self.feed = feed
    }
 }
 

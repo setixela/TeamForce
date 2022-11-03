@@ -5,8 +5,8 @@
 //  Created by Aleksandr Solovyev on 10.10.2022.
 //
 
-import ReactiveWorks
 import Foundation
+import ReactiveWorks
 
 protocol ChallengeDetailsWorksProtocol {
    var getChallengeById: Work<Void, Challenge> { get }
@@ -27,15 +27,14 @@ final class ChallengeDetailsWorksStore: InitProtocol {
    var winnersReports: [ChallengeWinnerReport] = []
 
    var inputComment = ""
-   
+
    var filterButton = 0
-   
+
    var userLiked = false
 }
 
-
 final class ChallengeDetailsWorks<Asset: AssetProtocol>: BaseSceneWorks<ChallengeDetailsWorksStore, Asset> {
-   private lazy var apiUseCase = Asset.apiUseCase
+   let apiUseCase = Asset.apiUseCase
 
    typealias Button6Result = Result6<
       Challenge,
@@ -102,7 +101,7 @@ final class ChallengeDetailsWorks<Asset: AssetProtocol>: BaseSceneWorks<Challeng
          work.fail()
       }
    }.retainBy(retainer) }
-   
+
    var anyReportToPresent: Work<Void, Int> { .init { work in
       guard
          let reportId = Self.store.reportId
@@ -111,18 +110,39 @@ final class ChallengeDetailsWorks<Asset: AssetProtocol>: BaseSceneWorks<Challeng
          return
       }
       work.success(reportId)
-      
+
    }.retainBy(retainer) }
 
-   var saveInput: Work<ChallengeDetailsSceneInput, ChallengeDetailsSceneInput> { .init { work in
+   var saveInput: Work<ChallengeDetailsSceneInput, ChallengeDetailsSceneInput> { .init { [weak self] work in
       guard let input = work.input else { return }
-      Self.store.challenge = input.challenge
-      Self.store.challengeId = input.challenge.id
-      Self.store.profileId = input.profileId
-      Self.store.filterButton = input.currentButton
-      Self.store.reportId = input.reportId
 
-      work.success(result: input)
+      if let feed = input.feed {
+         self?.createInputForDetailView
+            .doAsync((feed, input.profileId))
+            .onSuccess { input in
+               guard let challenge = input.challenge else {
+                  work.fail()
+                  return
+               }
+
+               Self.store.challenge = challenge
+               Self.store.challengeId = challenge.id
+               Self.store.profileId = input.profileId
+               Self.store.filterButton = input.currentButton
+               Self.store.reportId = input.reportId
+               work.success(result: input)
+            }
+      } else if let challenge = input.challenge {
+         Self.store.challenge = challenge
+         Self.store.challengeId = challenge.id
+         Self.store.profileId = input.profileId
+         Self.store.filterButton = input.currentButton
+         Self.store.reportId = input.reportId
+         work.success(result: input)
+
+      } else {
+         work.fail()
+      }
    }.retainBy(retainer) }
 
    var getChallengeId: Work<Void, Int> { .init { work in
@@ -163,6 +183,8 @@ final class ChallengeDetailsWorks<Asset: AssetProtocol>: BaseSceneWorks<Challeng
       work.success(id)
    }.retainBy(retainer) }
 }
+
+extension ChallengeDetailsWorks: DetailInputForFeedWorksProtocol {}
 
 extension ChallengeDetailsWorks: ChallengeDetailsWorksProtocol {
    var getChallengeById: Work<Void, Challenge> { .init { [weak self] work in
@@ -287,7 +309,7 @@ extension ChallengeDetailsWorks: ChallengeDetailsWorksProtocol {
             work.fail()
          }
    }.retainBy(retainer) }
-   
+
    var getLikesAmount: Work<Void, Int> { .init { [weak self] work in
       guard let id = Self.store.challengeId else { work.fail(); return }
       let body = LikesCommentsStatRequest.Body(challengeId: id)
@@ -309,12 +331,12 @@ extension ChallengeDetailsWorks: ChallengeDetailsWorksProtocol {
             work.fail()
          }
    }.retainBy(retainer) }
-   
+
    var pressLike: Work<Void, Bool> { .init { [weak self] work in
       guard
          let id = Self.store.challengeId
       else { work.fail(); return }
-      
+
       let body = PressLikeRequest.Body(likeKind: 1, challengeId: id)
       let request = PressLikeRequest(token: "", body: body, index: 1)
       self?.apiUseCase.pressLike
@@ -327,10 +349,9 @@ extension ChallengeDetailsWorks: ChallengeDetailsWorksProtocol {
             work.fail(Self.store.userLiked)
          }
    }.retainBy(retainer) }
-   
+
    var isLikedByMe: VoidWork<Bool> { .init { work in
       let isMyLike = Self.store.userLiked
       work.success(isMyLike)
-   }.retainBy(retainer)}
-   
+   }.retainBy(retainer) }
 }

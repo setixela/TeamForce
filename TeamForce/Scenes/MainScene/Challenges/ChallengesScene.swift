@@ -68,7 +68,7 @@ final class ChallengesScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtend
 enum ChallengesState {
    case initial
    case presentChallenges([Challenge])
-   case presentChallengeDetails((Challenge, Int)) // challenge and profileId
+   case presentChallengeDetails((challenge: Challenge, profileId: Int)) // challenge and profileId
    case presentCreateChallenge
 
    case presentActivityIndicator
@@ -88,8 +88,8 @@ extension ChallengesScene: StateMachine {
             .presentModally(.automatic),
             scene: \.challengeDetails,
             payload: ChallengeDetailsSceneInput(
-               challenge: value.0,
-               profileId: value.1,
+               challenge: value.challenge,
+               profileId: value.profileId,
                currentButton: 0
             )
          )
