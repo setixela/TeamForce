@@ -92,17 +92,6 @@ final class FeedPresenters<Design: DesignProtocol>: Designable {
                likeButton.setState(.selected)
             }
 
-//            likeButton.view.startTapGestureRecognize(cancelTouch: true)
-//
-//            likeButton.view.on(\.didTap, self) {
-//               let request = PressLikeRequest(token: "",
-//                                              likeKind: 1,
-//                                              transactionId: transactionId)
-//               $0.send(\.reactionPressed, request)
-//
-//               likeButton.setState(.selected)
-//            }
-
             let hashTagBlock = HashTagsScrollModel<Design>()
             hashTagBlock.setup(transaction)
 
@@ -286,21 +275,54 @@ extension FeedPresenters {
    func makeIcon(feed: NewFeed, type: EventType) -> ImageViewModel {
       let icon = ImageViewModel()
          .contentMode(.scaleAspectFill)
-         .image(Design.icon.newAvatar)
-         .size(.square(Grid.x36.value))
-         .cornerRadius(Grid.x36.value / 2)
+         //.image(Design.icon.newAvatar)
+         .cornerRadius(Grid.x48.value / 2)
+         .size(.square(Grid.x48.value))
+      
       switch type {
       case .transaction:
          if let recipientPhoto = feed.transaction?.recipientPhoto {
             icon.url(TeamForceEndpoints.urlBase + recipientPhoto)
          } else {
-            icon.image(Design.icon.newAvatar)
+            let userIconText =
+            String(feed.transaction?.recipientFirstName?.first ?? "?") +
+            String(feed.transaction?.recipientSurname?.first ?? "?")
+//            icon
+//               .textImage(userIconText, Design.color.backgroundBrand)
+//               .backColor(Design.color.backgroundBrand)
+            // TODO: - сделать через .textImage
+            DispatchQueue.global(qos: .background).async {
+               let image = userIconText.drawImage(backColor: Design.color.backgroundBrand)
+               DispatchQueue.main.async {
+                  icon
+                     .backColor(Design.color.backgroundBrand)
+                     .image(image)
+               }
+            }
+            
+            //icon.image(Design.icon.newAvatar)
          }
       case .winner:
          if let winnerPhoto = feed.winner?.winnerPhoto {
             icon.url(TeamForceEndpoints.urlBase + winnerPhoto)
          } else {
-            icon.image(Design.icon.newAvatar)
+            //icon.image(Design.icon.newAvatar)
+            let userIconText =
+            String(feed.winner?.winnerFirstName?.first ?? "?") +
+            String(feed.winner?.winnerSurname?.first ?? "?")
+            // TODO: - сделать через .textImage
+            DispatchQueue.global(qos: .background).async {
+               let image = userIconText.drawImage(backColor: Design.color.backgroundBrand)
+               DispatchQueue.main.async {
+                  icon
+                     .backColor(Design.color.backgroundBrand)
+                     .image(image)
+               }
+            }
+            
+//            icon
+//               .textImage(userIconText, Design.color.backgroundBrand)
+//               .backColor(Design.color.backgroundBrand)
          }
       case .challenge:
          icon.image(Design.icon.challengeAvatar)

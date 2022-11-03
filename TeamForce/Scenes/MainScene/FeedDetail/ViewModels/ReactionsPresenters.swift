@@ -29,17 +29,15 @@ class ReactionsPresenters<Design: DesignProtocol>: Designable {
          if let avatar = user.avatar {
             icon.url(TeamForceEndpoints.urlBase + avatar)
          } else {
-            if let nameFirstLetter = user.name?.first,
-               let surnameFirstLetter = user.surname?.first
-            {
-               let text = String(nameFirstLetter) + String(surnameFirstLetter)
-               DispatchQueue.global(qos: .background).async {
-                  let image = text.drawImage(backColor: Design.color.backgroundBrand)
-                  DispatchQueue.main.async {
-                     icon
-                        .backColor(Design.color.backgroundBrand)
-                        .image(image)
-                  }
+            let userIconText =
+            String(user.name?.first ?? "?") +
+            String(user.surname?.first ?? "?")
+            DispatchQueue.global(qos: .background).async {
+               let image = userIconText.drawImage(backColor: Design.color.backgroundBrand)
+               DispatchQueue.main.async {
+                  icon
+                     .backColor(Design.color.backgroundBrand)
+                     .image(image)
                }
             }
          }
