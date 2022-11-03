@@ -44,16 +44,10 @@ final class ChallengesScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtend
    private lazy var filterButtons = CreateChallengePanel<Design>()
    private lazy var viewModel = ChallengesViewModel<Design>()
    private lazy var activity = ActivityIndicator<Design>()
+   private lazy var errorBlock = CommonErrorBlock<Design>()
 
    override func start() {
-      arrangedModels([
-         createChallengeButton,
-         Grid.x16.spacer,
-         filterButtons,
-         Grid.x16.spacer,
-         activity,
-         viewModel,
-      ])
+      setState(.initial)
 
       viewModel.challengesTable
          .on(\.didScroll) { [weak self] in
@@ -68,11 +62,13 @@ final class ChallengesScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtend
 enum ChallengesState {
    case initial
    case presentChallenges([Challenge])
-   case presentChallengeDetails((Challenge, Int)) // challenge and profileId
+   case presentChallengeDetails((challenge: Challenge, profileId: Int)) // challenge and profileId
    case presentCreateChallenge
 
    case presentActivityIndicator
    case hideActivityIndicator
+
+   case presentError
 }
 
 extension ChallengesScene: StateMachine {
@@ -88,8 +84,8 @@ extension ChallengesScene: StateMachine {
             .presentModally(.automatic),
             scene: \.challengeDetails,
             payload: ChallengeDetailsSceneInput(
-               challenge: value.0,
-               profileId: value.1,
+               challenge: value.challenge,
+               profileId: value.profileId,
                currentButton: 0
             )
          )
@@ -107,9 +103,23 @@ extension ChallengesScene: StateMachine {
             }
          }
       case .presentActivityIndicator:
-         activity.hidden(false)
+         arrangedModels([
+            activity,
+            Spacer()
+         ])
       case .hideActivityIndicator:
-         activity.hidden(true)
+         arrangedModels([
+            createChallengeButton,
+            Grid.x16.spacer,
+            filterButtons,
+            Grid.x16.spacer,
+            viewModel
+         ])
+      case .presentError:
+         arrangedModels([
+            errorBlock,
+            Spacer()
+         ])
       }
    }
 }

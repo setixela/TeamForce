@@ -278,13 +278,31 @@ extension ViewModelProtocol where Self: Stateable, View: StackViewExtended {
    }
 
    @discardableResult func arrangedModels(_ value: [UIViewModel]) -> Self {
-      view.subviews.forEach {
+      view.arrangedSubviews.forEach {
          $0.removeFromSuperview()
       }
       value.forEach {
          let subview = $0.uiView
          view.addArrangedSubview(subview)
       }
+      return self
+   }
+
+   @discardableResult func arrangedModel(_ value: UIViewModel) -> Self {
+      view.arrangedSubviews.forEach {
+         $0.removeFromSuperview()
+      }
+
+      let subview = value.uiView
+      view.addArrangedSubview(subview)
+
+      return self
+   }
+
+   @discardableResult func addArrangedModel(_ value: UIViewModel) -> Self {
+      let subview = value.uiView
+      view.addArrangedSubview(subview)
+
       return self
    }
 
@@ -428,6 +446,18 @@ extension ViewModelProtocol where Self: Stateable, View: PaddingImageView {
    @discardableResult func image(_ value: UIImage) -> Self {
       view.image = value
       view.layer.masksToBounds = true
+      return self
+   }
+
+   @discardableResult func textImage(_ value: String, _ backColor: UIColor) -> Self {
+      DispatchQueue.global(qos: .background).async { [weak self] in
+         let image = value.drawImage(backColor: backColor)
+         DispatchQueue.main.async {
+            self?.view.image = image
+            self?.view.backgroundColor = backColor
+            self?.view.layer.masksToBounds = true
+         }
+      }
       return self
    }
 

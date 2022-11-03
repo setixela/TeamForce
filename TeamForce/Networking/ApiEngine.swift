@@ -62,9 +62,11 @@ final class ApiEngine: ApiEngineProtocol {
             return
          }
 
-         let size = image.size
-         let image = image.resized(to: .init(width: size.width / 4, height: size.height / 4))
+//         let size = image.size
+//         let image = image.resized(to: .init(width: size.width / 4, height: size.height / 4))
+
          guard let mediaImage = Media(withImage: image, forKey: "photo") else { return }
+
          let boundary = UUID().uuidString
 
          let method = endpoint.method
@@ -99,9 +101,8 @@ final class ApiEngine: ApiEngineProtocol {
          for i in 0..<images.count {
             let image = images[i]
             let key = names[i]
-            let size = image.size
-            let imageRes = image.resized(to: .init(width: size.width / 4, height: size.height / 4))
-            guard let mediaImage = Media(withImage: imageRes, forKey: key) else { return }
+
+            guard let mediaImage = Media(withImage: image, forKey: key) else { return }
             mediaImages.append(mediaImage)
          }
         
@@ -234,14 +235,17 @@ final class ApiEngine: ApiEngineProtocol {
 
 extension UIImage {
    func resized(to size: CGSize) -> UIImage {
-      UIGraphicsImageRenderer(size: size).image { _ in
+      guard self.size.width > size.width else { return self }
+
+      return UIGraphicsImageRenderer(size: size).image { _ in
          draw(in: CGRect(origin: .zero, size: size))
       }
    }
 
    func resized(to width: CGFloat) -> UIImage {
-      let curSize = size
-      let coef = curSize.width / curSize.height
+      guard size.width > width else { return self }
+      
+      let coef = size.width / size.height
       let newSize = CGSize(width: width, height: width / coef)
 
       return UIGraphicsImageRenderer(size: newSize).image { _ in

@@ -59,6 +59,7 @@ struct NewFeed: Codable {
 
    struct Winner: Codable {
       let id: Int
+      let challengeId: Int?
       var userLiked: Bool
       let updatedAt: String?
       let challengeName: String
@@ -70,6 +71,7 @@ struct NewFeed: Codable {
 
       enum CodingKeys: String, CodingKey {
          case id
+         case challengeId = "challenge_id"
          case userLiked = "user_liked"
          case updatedAt = "updated_at"
          case challengeName = "challenge_name"

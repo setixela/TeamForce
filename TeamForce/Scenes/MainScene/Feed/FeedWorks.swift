@@ -22,9 +22,8 @@ final class FeedWorksTempStorage: InitProtocol {
    var transactions: [NewFeed] = []
    var challenges: [NewFeed] = []
    var winners: [NewFeed] = []
-   
 
-   lazy var currentUserName = ""
+   var currentUserName = ""
    var profileId: Int?
    var segmentId: Int = 0
    var currentTransactId: Int?
@@ -44,11 +43,11 @@ final class FeedWorksTempStorage: InitProtocol {
 
 final class FeedWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedWorksTempStorage, Asset>, FeedWorksProtocol {
    private lazy var apiUseCase = Asset.apiUseCase
-   
+
    var getSegmentId: Work<Void, Int> { .init { work in
       work.success(Self.store.segmentId)
    }.retainBy(retainer) }
-   
+
    var getFeedBySegment: Work<Int, ([NewFeed], String)> { .init { [weak self] work in
       guard let id = work.input else { work.fail(); return }
       switch id {
@@ -76,10 +75,7 @@ final class FeedWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedWorksTempStorage
          work.fail()
       }
    }.retainBy(retainer) }
-    
-//   var loadAllSegments: Work<Void, Void> { .init { [weak self] work in
-//
-//   }.retainBy(retainer) }
+
    var loadFeedForCurrentUser: Work<UserData?, Void> { .init { [weak self] work in
       guard
          let user = work.input,
@@ -90,28 +86,27 @@ final class FeedWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedWorksTempStorage
       }
       Self.store.profileId = user?.profile.id
       Self.store.currentUserName = userName
-      
+
       Self.store.feedOffset = 1
-      Self.store.transactOffset =  1
+      Self.store.transactOffset = 1
       Self.store.challengeOffset = 1
       Self.store.winnerOffset = 1
-      
+
       self?.getEvents
          .doAsync(false)
          .onSuccess { work.success() }
          .onFail { work.fail() }
-
       self?.getEventsTransact
          .doAsync(false)
-         .onSuccess { work.success() }
+         //      .onSuccess { work.success() }
          .onFail { work.fail() }
       self?.getEventsWinners
          .doAsync(false)
-         .onSuccess { work.success() }
+         //       .onSuccess { work.success() }
          .onFail { work.fail() }
       self?.getEventsChallenge
          .doAsync(false)
-         .onSuccess { work.success() }
+         //      .onSuccess { work.success() }
          .onFail { work.fail() }
    }.retainBy(retainer) }
 
@@ -169,49 +164,8 @@ final class FeedWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedWorksTempStorage
       work.success(result: (filtered, Self.store.currentUserName))
    }.retainBy(retainer) }
 
-   typealias DetailInput = Result2<
-      NewFeed,
-      ChallengeDetailsSceneInput
-   >
-   var createInputForDetailView: Work<NewFeed, DetailInput> { .init { [weak self] work in
-      guard let input = work.input else { work.fail(); return }
-      switch input.objectSelector {
-      case "T":
-         work.success(.result1(input))
-      case "Q":
-         guard
-            let challengeId = input.challenge?.id,
-            let profileId = Self.store.profileId
-         else { work.fail(); return }
-         
-         self?.getChallengeById
-            .doAsync(challengeId)
-            .onSuccess {
-               let res = ChallengeDetailsSceneInput(challenge: $0,
-                                                    profileId: profileId,
-                                                    currentButton: 0)
-               work.success(.result2(res))
-            }
-            .onFail { work.fail() }
-      default:
-         work.fail()
-         break
-      }
-   }.retainBy(retainer) }
-   
-   var getChallengeById: Work<Int, Challenge> { .init { [weak self] work in
-      guard let id = work.input else { return }
-      self?.apiUseCase.GetChallengeById
-         .doAsync(id)
-         .onSuccess {
-            work.success(result: $0)
-         }
-         .onFail {
-            work.fail()
-         }
-   }.retainBy(retainer) }
-   
-   var getFeedByRowNumber: Work<Int, NewFeed> { .init { work in
+   var getFeedByRowNumber: Work<Int, (feed: NewFeed, profileId: Int)> { .init { work in
+      let profileId = Self.store.profileId ?? 0
       let segmentId = Self.store.segmentId
       var filtered: [NewFeed] = []
       if segmentId == 0 { filtered = Self.store.feed }
@@ -222,12 +176,15 @@ final class FeedWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedWorksTempStorage
       if let index = work.input {
          let feed = filtered[index]
          Self.store.currentTransactId = feed.id
-         if feed.objectSelector == "T" || feed.objectSelector == "Q" {
-            work.success(result: feed)
+         if feed.objectSelector == "T" ||
+            feed.objectSelector == "Q" ||
+            feed.objectSelector == "R"
+         {
+            work.success(result: (feed, profileId))
          } else {
             work.fail()
          }
-         
+
       } else {
          work.fail()
       }
@@ -246,7 +203,7 @@ final class FeedWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedWorksTempStorage
             work.fail()
          }
    }.retainBy(retainer) }
-   
+
    var createStatRequest: Work<PressLikeRequest, LikesCommentsStatRequest> { .init { work in
       guard let input = work.input else { work.fail(); return }
       let reqBody = LikesCommentsStatRequest.Body(
@@ -257,18 +214,18 @@ final class FeedWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedWorksTempStorage
       work.success(request)
 
    }.retainBy(retainer) }
-   
+
    var getIndexFromLikeRequest: Work<PressLikeRequest, Int> { .init { work in
       guard let input = work.input else { work.fail(); return }
       work.success(input.index)
    }.retainBy(retainer) }
-   
-   var updateFeedElement: Work<(LikesCommentsStatistics, Int), (NewFeed, Int)> { .init { [weak self] work in
+
+   var updateFeedElement: Work<(LikesCommentsStatistics, Int), (NewFeed, Int)> { .init { work in
       guard
          let stat = work.input?.0,
          let index = work.input?.1
       else { work.fail(); return }
-      //get stats
+      // get stats
       var likesAmount: Int?
       if let reactions = stat.likes {
          for reaction in reactions {
@@ -278,8 +235,8 @@ final class FeedWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedWorksTempStorage
          }
       }
       let commentsAmount = stat.comments
-      
-      //get feed from array
+
+      // get feed from array
       var tempFeed: NewFeed?
       switch Self.store.segmentId {
       case 0:
@@ -293,10 +250,10 @@ final class FeedWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedWorksTempStorage
       default:
          break
       }
-      //update feed
+      // update feed
       tempFeed?.commentsAmount = commentsAmount ?? 0
       tempFeed?.likesAmount = likesAmount ?? 0
-      
+
       if tempFeed?.transaction?.userLiked != nil {
          tempFeed!.transaction!.userLiked = !tempFeed!.transaction!.userLiked
       }
@@ -307,11 +264,11 @@ final class FeedWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedWorksTempStorage
       guard
          let feed = tempFeed
       else { work.fail(); return }
-      
-      //update array
+
+      // update array
       switch Self.store.segmentId {
       case 0:
-          Self.store.feed[index] = feed
+         Self.store.feed[index] = feed
       case 1:
          Self.store.transactions[index] = feed
       case 2:
@@ -321,7 +278,7 @@ final class FeedWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedWorksTempStorage
       default:
          break
       }
-      //send res
+      // send res
       work.success((feed, index))
    }.retainBy(retainer) }
 

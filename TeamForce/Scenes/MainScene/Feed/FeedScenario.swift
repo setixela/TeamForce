@@ -12,9 +12,6 @@ struct FeedScenarioInputEvents {
    let loadFeedForCurrentUser: VoidWork<UserData?>
 
    let filterTapped: VoidWork<Button4Event>
-   // let presentAllFeed: VoidWork<Void>
-   // let presentTransactions: VoidWork<Void>
-//   let presentPublicFeed: VoidWork<Void>
    let presentProfile: VoidWork<Int>
    let reactionPressed: VoidWork<PressLikeRequest>
    let presentDetail: VoidWork<Int>
@@ -80,33 +77,10 @@ final class FeedScenario<Asset: AssetProtocol>:
          .onSuccess(setState) {
             .updateFeedAtIndex($0.0, $0.1)
          }
-         
-         
-      
-
-//         .doNext(works.getLikesCommentsStat)
-//         .onFail(setState, .loadFeedError)
-//         .doNext(works.getAllFeed)
-//         .onSuccess(setState) { .presentFeed($0) }
-//         .onFail(setState, .loadFeedError)
 
       events.presentDetail
          .doNext(works.getFeedByRowNumber)
-         .doNext(works.createInputForDetailView)
-         .onSuccess { [weak self] (result: FeedWorks.DetailInput) in
-            guard let stateFunc = self?.setState else { return }
-            
-            switch result {
-            case .result1(let value):
-               stateFunc(.presentDetailView(value))
-            case .result2(let value):
-               stateFunc(.presentChallengeDetails(value))
-            }
-         }
-         .onFail {
-            print("failed")
-         }
-         
+         .onSuccess(setState) { .presentDetailView($0) }
 
       events.pagination
          .doNext(works.pagination)

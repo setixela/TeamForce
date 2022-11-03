@@ -19,7 +19,7 @@ struct ChallengeDetailsInputEvents {
 
    let didEditingComment: VoidWork<String>
    let didSendCommentPressed: VoidWorkVoid
-   
+
    let reactionPressed: VoidWorkVoid
 }
 
@@ -29,24 +29,29 @@ final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<Challen
 {
    override func start() {
       events.saveInputAndLoadChallenge
-         .onSuccess(setState) { .setHeaderImage($0.challenge.photoCache) }
+         .onSuccess(setState) { .setHeaderImage($0.challenge?.photoCache) }
          .doNext(works.saveInput)
          .onSuccess(setState) { .sendFilterButtonEvent($0.currentButton) }
-         //.onSuccess(setState) { .presentChallenge($0) }
          .doVoidNext(works.getChallengeById)
          .onSuccess(setState) { .updateDetails($0) }
-         // .doNext(works.saveInput)
-//         .doVoidNext(works.isSendResultActive)
-//         .onFail(setState) { .disableSendResult }
-//         .onSuccess { print("success") }
-//         .doRecover()
          .doVoidNext(works.amIOwnerCheck)
          .onSuccess(setState, .enableContenders)
-         .onFail { print("you are not owner") }
+         .onFail {
+            print("fail")
+         }
          .doRecover()
-         .doNext(works.getChallengeResult)
+         .doVoidNext(works.getChallengeResult)
          .onSuccess(setState) { .enableMyResult($0) }
-         .onFail { print("failed to get results") }
+         .onFail { [weak self] in
+            self?.works.anyReportToPresent
+               .doAsync()
+               .onSuccess {
+                  self?.setState(.presentReportDetailView($0))
+               }
+               .onFail {
+                  print("fail")
+               }
+         }
 
       events.challengeResult
          .doNext(works.getChallenge)
@@ -83,7 +88,7 @@ final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<Challen
                stateFunc(.presentWinners(value))
 
             case .result5(let value):
-               //guard !value.isEmpty else { stateFunc(.hereIsEmpty); return }
+               // guard !value.isEmpty else { stateFunc(.hereIsEmpty); return }
 
                stateFunc(.presentComments(value))
 
@@ -110,8 +115,8 @@ final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<Challen
 
       events.didSelectWinnerIndex
          .doNext(works.getWinnerReportIdByIndex)
-         .doNext(works.getInputForReportDetail)
-         .onSuccess(setState) { .presentReportDetailView($0.0, $0.1, $0.2) }
+         // .doNext(works.getInputForReportDetail)
+         .onSuccess(setState) { .presentReportDetailView($0) }
          .onFail { print("fail") }
 
       events.didEditingComment
@@ -125,7 +130,7 @@ final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<Challen
          .doNext(works.createComment)
          .onSuccess(setState, .commentDidSend)
          .onFail { print("error sending comment") }
-      
+
       events.reactionPressed
          .doNext(works.isLikedByMe)
          .onSuccess(setState) { .buttonLikePressed(alreadySelected: $0) }

@@ -75,7 +75,7 @@ extension ChallengeCreateWorks: ChallengeCreateWorksProtocol {
          description: Self.store.desription,
          endAt: Self.store.finishDate.convertToString(.yearMonthDayDigits),
          startBalance: Int(Self.store.prizeFund).int,
-         photo: Self.store.images.first?.resized(to: 1280),
+         photo: Self.store.images.first?.resized(to: Config.imageSendSize),
          parameterId: nil,
          parameterValue: nil
       )

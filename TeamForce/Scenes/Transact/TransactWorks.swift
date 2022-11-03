@@ -159,7 +159,7 @@ final class TransactWorks<Asset: AssetProtocol>: BaseSceneWorks<TransacrtTempSto
       if let image = Self.store.images.first {
          let size = image.size
          let coef = size.width / size.height
-         let newSize = CGSize(width: 1920, height: 1920 / coef)
+         let newSize = CGSize(width: Config.imageSendSize, height: Config.imageSendSize / coef)
          sendImage = image.resized(to: newSize)
       }
       let request = SendCoinRequest(

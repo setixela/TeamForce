@@ -94,8 +94,8 @@ final class BalanceScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>
    private lazy var scrollWrapper = ScrollViewModelY()
       .set(.bounce(false))
       .set(.arrangedModels([
-      //   selectPeriod, // TODO: - Period select
-      //   Spacer(20),
+         //   selectPeriod, // TODO: - Period select
+         //   Spacer(20),
          Spacer(8),
          frameCellStackModel,
          Spacer(27),
@@ -105,6 +105,9 @@ final class BalanceScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>
          Grid.xxx.spacer
       ]))
 
+   private lazy var errorBlock = CommonErrorBlock<Design>()
+   private lazy var activityIndicator = ActivityIndicator<Design>()
+
    // MARK: - Services
 
    private lazy var useCase = Asset.apiUseCase
@@ -112,12 +115,19 @@ final class BalanceScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>
    private var balance: Balance?
 
    override func start() {
-      set(.axis(.vertical))
-      set(.distribution(.fill))
-      set(.alignment(.fill))
-      set(.arrangedModels([
+      axis(.vertical)
+      distribution(.fill)
+      alignment(.fill)
+      arrangedModels([
          scrollWrapper
-      ]))
+      ])
+
+      addModel(errorBlock, setup: {
+         $0.fitToView($1)
+      })
+      addModel(activityIndicator, setup: {
+         $0.fitToView($1)
+      })
 
       scrollWrapper
          .on(\.didScroll) { [weak self] in
@@ -127,6 +137,8 @@ final class BalanceScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>
             self?.send(\.willEndDragging, $0)
          }
       scrollWrapper.view.alwaysBounceVertical = true
+
+      setState(.initial)
    }
 }
 
@@ -184,6 +196,7 @@ extension BalanceScene {
 }
 
 enum BalanceSceneState {
+   case initial
    case balanceDidLoad(Balance)
    case loadBalanceError
 }
@@ -191,10 +204,19 @@ enum BalanceSceneState {
 extension BalanceScene: StateMachine {
    func setState(_ state: BalanceSceneState) {
       switch state {
+      case .initial:
+         scrollWrapper.alpha(0.42)
+         errorBlock.hidden(true)
+         activityIndicator.hidden(false)
       case .balanceDidLoad(let balance):
+         scrollWrapper.alpha(1)
+         errorBlock.hidden(true)
+         activityIndicator.hidden(true)
          setBalance(balance)
       case .loadBalanceError:
-         log("Balance Error!")
+         scrollWrapper.alpha(0.42)
+         errorBlock.hidden(false)
+         activityIndicator.hidden(true)
       }
    }
 }

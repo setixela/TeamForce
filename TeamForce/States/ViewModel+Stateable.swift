@@ -169,6 +169,7 @@ enum ImageViewState {
    case contentMode(UIView.ContentMode)
    case padding(UIEdgeInsets)
    case imageTintColor(UIColor)
+   case textImage(String, UIColor)
 }
 
 extension ViewModelProtocol where Self: Stateable, View: PaddingImageView {
@@ -182,6 +183,8 @@ extension ViewModelProtocol where Self: Stateable, View: PaddingImageView {
          padding(value)
       case .imageTintColor(let value):
          imageTintColor(value)
+      case .textImage(let value, let backColor):
+         textImage(value, backColor)
       }
    }
 }

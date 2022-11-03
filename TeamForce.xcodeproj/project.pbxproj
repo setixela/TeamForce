@@ -99,6 +99,9 @@
 		197447202911ABEC0089BB2B /* ChallengeCellStatusBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1974471F2911ABEC0089BB2B /* ChallengeCellStatusBlock.swift */; };
 		197447222911AC340089BB2B /* ChallengeCellPresenters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197447212911AC340089BB2B /* ChallengeCellPresenters.swift */; };
 		197447242911AC6A0089BB2B /* CreateChallengePanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197447232911AC6A0089BB2B /* CreateChallengePanel.swift */; };
+		197447262912EDB20089BB2B /* Configurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197447252912EDB20089BB2B /* Configurable.swift */; };
+		1974472829132A6A0089BB2B /* DetailInputForFeedWorksProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1974472729132A6A0089BB2B /* DetailInputForFeedWorksProtocol.swift */; };
+		1974472A2913481C0089BB2B /* ChekInternetWorks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197447292913481C0089BB2B /* ChekInternetWorks.swift */; };
 		1977518D28A8329F006CFAF3 /* ReactiveWorks in Frameworks */ = {isa = PBXBuildFile; productRef = 1977518C28A8329F006CFAF3 /* ReactiveWorks */; };
 		1977519028A83395006CFAF3 /* SwiftCSSParser in Frameworks */ = {isa = PBXBuildFile; productRef = 1977518F28A83395006CFAF3 /* SwiftCSSParser */; };
 		19775FFE28C5922B008DF8E0 /* ImagePickingScenario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19775FFD28C5922B008DF8E0 /* ImagePickingScenario.swift */; };
@@ -456,6 +459,9 @@
 		1974471F2911ABEC0089BB2B /* ChallengeCellStatusBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeCellStatusBlock.swift; sourceTree = "<group>"; };
 		197447212911AC340089BB2B /* ChallengeCellPresenters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeCellPresenters.swift; sourceTree = "<group>"; };
 		197447232911AC6A0089BB2B /* CreateChallengePanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateChallengePanel.swift; sourceTree = "<group>"; };
+		197447252912EDB20089BB2B /* Configurable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configurable.swift; sourceTree = "<group>"; };
+		1974472729132A6A0089BB2B /* DetailInputForFeedWorksProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailInputForFeedWorksProtocol.swift; sourceTree = "<group>"; };
+		197447292913481C0089BB2B /* ChekInternetWorks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChekInternetWorks.swift; sourceTree = "<group>"; };
 		19775FFD28C5922B008DF8E0 /* ImagePickingScenario.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickingScenario.swift; sourceTree = "<group>"; };
 		1977BE5428A7238F00D554EA /* TextFieldStates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldStates.swift; sourceTree = "<group>"; };
 		1977BE5728A7343400D554EA /* InputCheckers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputCheckers.swift; sourceTree = "<group>"; };
@@ -904,6 +910,8 @@
 			children = (
 				1938929D28F87EE100826522 /* ImageWorks.swift */,
 				19775FFD28C5922B008DF8E0 /* ImagePickingScenario.swift */,
+				197447292913481C0089BB2B /* ChekInternetWorks.swift */,
+				1974472729132A6A0089BB2B /* DetailInputForFeedWorksProtocol.swift */,
 			);
 			path = CommonBusiness;
 			sourceTree = "<group>";
@@ -1399,6 +1407,7 @@
 				19221EF028CDBC7300B7B604 /* Multiplexor.swift */,
 				19221EF228CDBCB000B7B604 /* SetupProtocol.swift */,
 				19B39E5E28D343B300BB2C77 /* SelectWrapper.swift */,
+				197447252912EDB20089BB2B /* Configurable.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -1855,6 +1864,7 @@
 				1953DE88287B4574000DC537 /* Fonts.swift in Sources */,
 				197A2DA228A9BF4B00190656 /* Combos+Configure.swift in Sources */,
 				199E321628BD3A790088BA71 /* TransactScene.swift in Sources */,
+				197447262912EDB20089BB2B /* Configurable.swift in Sources */,
 				1952EA6528A7115D003F7852 /* StackStateBuilder.swift in Sources */,
 				19D0835B286F424000F75E4A /* LabelIconX.swift in Sources */,
 				19A9BE7128C1B34E0099F8EA /* ImageLabelLabelMRD.swift in Sources */,
@@ -2079,6 +2089,7 @@
 				6368D82C289415EC0049EEAB /* TextViewModel.swift in Sources */,
 				1974471E2911ABC00089BB2B /* ChallengeCellInfoBlock.swift in Sources */,
 				19B2C5D428B7D37A00E7B47D /* Shadow.swift in Sources */,
+				1974472829132A6A0089BB2B /* DetailInputForFeedWorksProtocol.swift in Sources */,
 				1953CF0228E8A1C500C670A6 /* FeedDetailsBlock.swift in Sources */,
 				190C1D12285D15FF00FB3518 /* AppDelegate.swift in Sources */,
 				63A37EA628EECEBB00DBD59F /* GetChallengeContendersUseCase.swift in Sources */,
@@ -2134,6 +2145,7 @@
 				1921A13328EECABE00E41E86 /* ChallengesScenario.swift in Sources */,
 				63BB2C0E28DA179D00C1E3DB /* PressLikeUseCase.swift in Sources */,
 				63A37EB428F059D800DBD59F /* CreateChallengeReportApiWorker.swift in Sources */,
+				1974472A2913481C0089BB2B /* ChekInternetWorks.swift in Sources */,
 				63A37EA828EECF8400DBD59F /* GetChallengeContendersApiWorker.swift in Sources */,
 				63AB071B28C0E3AF00FD650F /* BalanceScenario.swift in Sources */,
 				63A37EA228EE874100DBD59F /* GetChallengeByIdApiWorker.swift in Sources */,
