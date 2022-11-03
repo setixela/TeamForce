@@ -32,6 +32,8 @@ final class ChallengesWorks<Asset: AssetProtocol>: BaseSceneWorks<ChallengesTemp
    private lazy var apiUseCase = Asset.apiUseCase
 }
 
+extension ChallengesWorks: CheckInternetWorks {}
+
 extension ChallengesWorks: ChallengesWorksProtocol {
    
    var saveProfileId: Work<UserData?, Int> { .init { work in

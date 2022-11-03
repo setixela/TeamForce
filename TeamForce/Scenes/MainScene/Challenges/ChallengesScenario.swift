@@ -22,10 +22,12 @@ final class ChallengesScenario<Asset: AssetProtocol>:
    BaseScenario<ChallengesScenarioInputEvents, ChallengesState, ChallengesWorks<Asset>>, Assetable
 {
    override func start() {
+      works.retainer.cleanAll()
+
       works.getChallenges
          .doAsync(false)
          .onSuccess(setState) { .presentChallenges($0) }
-         .onFail(setState) { .presentChallenges([]) }
+         .onFail(setState) { .presentError }
 
       events.saveProfileId
          .doNext(works.saveProfileId)

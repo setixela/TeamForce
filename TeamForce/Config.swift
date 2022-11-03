@@ -5,18 +5,27 @@
 //  Created by Aleksandr Solovyev on 11.08.2022.
 //
 
-import ReactiveWorks
 import Foundation
+import ReactiveWorks
 import UIKit
 
 struct Config {
+   #if DEBUG
    static let urlBase = "http://176.99.6.251:8888"
+   #else
+   static let urlBase = "http://176.99.6.251:8889"
+   #endif
+
    static let isDebug = false
 
    static let isDebugView = true
 
+   #if DEBUG
+   static let httpTimeout: TimeInterval = 5
+   #else
    static let httpTimeout: TimeInterval = 30
-
+   #endif
+   
    static let baseAspectWidth: CGFloat = 360
    static var sizeAspectCoeficient: CGFloat { UIScreen.main.bounds.width / baseAspectWidth }
 
@@ -43,5 +52,3 @@ extension Int {
       CGFloat(self) / Config.sizeAspectCoeficient
    }
 }
-
-

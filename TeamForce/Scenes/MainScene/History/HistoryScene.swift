@@ -107,6 +107,7 @@ extension HistoryScene: StateMachine {
       //
       case .loadTransactionsError:
          errorBlock.hidden(false)
+         activityIndicator.hidden(true)
          scenario.start()
       //
       case .presentAllTransactions(let value):
