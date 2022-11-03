@@ -30,16 +30,21 @@ final class ImageViewerScene<Asset: AssetProtocol>: BaseSceneModel<
       .contentMode(.scaleAspectFit)
 
    private lazy var scrollModel = ScrollViewModel()
+   private lazy var activity = ActivityIndicator<Design>()
 
    override func start() {
       super.start()
 
       on(\.input, self) {
-         $0.image.url($1)
+         $0.image.url($1) { [weak self] _, _ in
+            self?.activity.hidden(true)
+         }
+
          $0.mainVM
             .arrangedModels([
                Spacer(16),
-               $0.titlePanel
+               $0.titlePanel,
+               $0.activity
             ])
             .backViewModel($0.scrollModel)
       }
@@ -56,8 +61,7 @@ final class ImageViewerScene<Asset: AssetProtocol>: BaseSceneModel<
       mainVM
          .arrangedModels([
             Spacer(16),
-            titlePanel,
-            ActivityIndicator<Design>()
+            titlePanel
          ])
    }
 }
