@@ -41,7 +41,18 @@ final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<Challen
          }
          .doRecover()
          .doVoidNext(works.getChallengeResult)
-         .onSuccess(setState) { .enableMyResult($0) }
+         .onSuccess { [weak self] in
+            self?.setState(.enableMyResult($0))
+            
+            self?.works.anyReportToPresent
+               .doAsync()
+               .onSuccess {
+                  self?.setState(.presentReportDetailView($0))
+               }
+               .onFail {
+                  print("fail")
+               }
+         }
          .onFail { [weak self] in
             self?.works.anyReportToPresent
                .doAsync()
