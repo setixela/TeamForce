@@ -39,29 +39,30 @@ final class FeedDetailScene<Asset: AssetProtocol>:
    )
 
    override func start() {
-      configure()
+      vcModel?.on(\.viewDidLoad, self) {
+         $0.configure()
+      }
    }
 
    private var state = FeedDetailSceneState.initial
 
    private func configure() {
-      vcModel?.on(\.viewDidLoad, self) {
-         $0.mainVM.headerStack.arrangedModels([Spacer(8)])
-         $0.mainVM.bodyStack
-            .set(Design.state.stack.default)
-            .alignment(.fill)
-            .distribution(.fill)
-            .set(.backColor(Design.color.backgroundSecondary))
-            .arrangedModels([
-               Spacer(32),
-               $0.feedDetailVM
-            ])
+      mainVM.headerStack.arrangedModels([Spacer(8)])
+      mainVM.bodyStack
+         .set(Design.state.stack.default)
+         .alignment(.fill)
+         .distribution(.fill)
+         .set(.backColor(Design.color.backgroundSecondary))
+         .arrangedModels([
+            Spacer(32),
+            feedDetailVM
+         ])
 
-         guard let inputValue = $0.inputValue else { assertionFailure(); return }
+      guard let inputValue = inputValue else { assertionFailure(); return }
 
-         $0.feedDetailVM.setState(.initial(inputValue))
-         $0.scenario.start()
-      }
+      feedDetailVM.setState(.initial(inputValue))
+      setState(.initial)
+      scenario.start()
    }
 }
 
@@ -88,7 +89,7 @@ extension FeedDetailScene: StateMachine {
       self.state = state
       switch state {
       case .initial:
-         print("hello")
+         feedDetailVM.setState(.loadingActivity)
       case .presentComments(let comments):
          feedDetailVM.setState(.comments(comments))
       case .presentReactions(let items):

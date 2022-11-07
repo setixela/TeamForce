@@ -49,17 +49,20 @@ final class FeedDetailScenario<Asset: AssetProtocol>:
          .onSuccess(setState) { .presentDetails($0) }
 
       events.presentDetails
+         .doCancel(events.presentComment, events.presentReactions)
          .onSuccess(setState, .presntActivityIndicator)
          .doNext(works.getTransaction)
          .onSuccess(setState) { .presentDetails($0) }
 
       events.presentComment
+         .doCancel(events.presentDetails, events.presentReactions)
          .onSuccess(setState, .presntActivityIndicator)
          .doNext(works.getComments)
          .onSuccess(setState) { .presentComments($0) }
          .onFail(setState) { .presentComments([]) }
 
       events.presentReactions
+         .doCancel(events.presentDetails, events.presentComment)
          .onSuccess(setState, .presntActivityIndicator)
          .doNext(works.getLikesByTransaction)
          .doNext(works.getSelectedReactions)
