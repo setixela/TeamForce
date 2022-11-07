@@ -21,7 +21,7 @@ struct Config {
    static let isDebugView = true
 
    #if DEBUG
-   static let httpTimeout: TimeInterval = 5
+   static let httpTimeout: TimeInterval = 10
    #else
    static let httpTimeout: TimeInterval = 30
    #endif

@@ -82,6 +82,7 @@
 		1955879028F733C50001F734 /* ChallengeResultScenario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1955878F28F733C50001F734 /* ChallengeResultScenario.swift */; };
 		1955879228F733D30001F734 /* ChallengeResultWorks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1955879128F733D30001F734 /* ChallengeResultWorks.swift */; };
 		1955879428F733DC0001F734 /* ChallengeResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1955879328F733DC0001F734 /* ChallengeResultViewModel.swift */; };
+		1955C78D2915B0D40066C96B /* WorkCancelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1955C78C2915B0D40066C96B /* WorkCancelTests.swift */; };
 		195870F228A8C8040075D505 /* KeyPathMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 195870F128A8C8040075D505 /* KeyPathMaker.swift */; };
 		1959F27428AA8E9700DEEE5C /* LoginWorks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1959F27328AA8E9700DEEE5C /* LoginWorks.swift */; };
 		1967509F286492780019A6DE /* Labels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1967509E286492780019A6DE /* Labels.swift */; };
@@ -442,6 +443,7 @@
 		1955878F28F733C50001F734 /* ChallengeResultScenario.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeResultScenario.swift; sourceTree = "<group>"; };
 		1955879128F733D30001F734 /* ChallengeResultWorks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeResultWorks.swift; sourceTree = "<group>"; };
 		1955879328F733DC0001F734 /* ChallengeResultViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeResultViewModel.swift; sourceTree = "<group>"; };
+		1955C78C2915B0D40066C96B /* WorkCancelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkCancelTests.swift; sourceTree = "<group>"; };
 		195870F128A8C8040075D505 /* KeyPathMaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyPathMaker.swift; sourceTree = "<group>"; };
 		1959F27328AA8E9700DEEE5C /* LoginWorks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginWorks.swift; sourceTree = "<group>"; };
 		1967509E286492780019A6DE /* Labels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Labels.swift; sourceTree = "<group>"; };
@@ -837,6 +839,7 @@
 			children = (
 				190C1D28285D160000FB3518 /* WorksTests.swift */,
 				194D7B5928B17DD4002DE840 /* WorksTests2.swift */,
+				1955C78C2915B0D40066C96B /* WorkCancelTests.swift */,
 				19A097FD28AEC4C700D8FFF2 /* MemoryLeakTests.swift */,
 				19A9BE6628C139CA0099F8EA /* EventableTests.swift */,
 			);
@@ -2164,6 +2167,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				19A9BE6728C139CA0099F8EA /* EventableTests.swift in Sources */,
+				1955C78D2915B0D40066C96B /* WorkCancelTests.swift in Sources */,
 				194D7B5A28B17DD4002DE840 /* WorksTests2.swift in Sources */,
 				190C1D29285D160000FB3518 /* WorksTests.swift in Sources */,
 				19A097FE28AEC4C700D8FFF2 /* MemoryLeakTests.swift in Sources */,

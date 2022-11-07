@@ -15,7 +15,7 @@ protocol PresenterProtocol {
 
 open class Presenter<In, Out: UIViewModel>: Work<(item: In, index: Int), Out>, PresenterProtocol {
    func viewModel(for item: Any, index: Int) -> UIViewModel {
-      doSync((item: item, index: index) as? (In, Int))
+      doSync((item: item, index: index) as? (In, Int)) ?? { fatalError() }()
    }
 
    var cellType: String {
