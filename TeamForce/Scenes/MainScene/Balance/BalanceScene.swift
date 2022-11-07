@@ -123,10 +123,10 @@ final class BalanceScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>
       ])
 
       addModel(errorBlock, setup: {
-         $0.fitToView($1)
+         $0.fitToTop($1)
       })
       addModel(activityIndicator, setup: {
-         $0.fitToView($1)
+         $0.fitToTop($1)
       })
 
       scrollWrapper
