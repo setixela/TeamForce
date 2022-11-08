@@ -31,15 +31,18 @@ final class HistoryScenario<Asset: AssetProtocol>:
          .onSuccess(setState) { .presentAllTransactions($0) }
 
       events.presentAllTransactions
-         .doNext(works.getAllTransactItems)
+         .doNext(works.getTransactions)
+         .doVoidNext(works.getAllTransactItems)
          .onSuccess(setState) { .presentAllTransactions($0) }
 
       events.presentSentTransactions
-         .doNext(works.getSentTransactItems)
+         .doNext(works.getSentTransactions)
+         .doVoidNext(works.getSentTransactItems)
          .onSuccess(setState) { .presentSentTransactions($0) }
 
       events.presentRecievedTransaction
-         .doNext(works.getRecievedTransactItems)
+         .doNext(works.getRecievedTransactions)
+         .doVoidNext(works.getRecievedTransactItems)
          .onSuccess(setState) { .presentRecievedTransaction($0) }
       
       events.presentDetailView

@@ -28,16 +28,53 @@ final class HistoryWorks<Asset: AssetProtocol>: BaseSceneWorks<HistoryWorks.Temp
       var sections: [TableItemsSection]?
       var currentTransaction: Transaction?
       var segmentId: Int?
+      
+      var sentTransactions: [Transaction]?
+      var recievedTransactions: [Transaction]?
    }
 
    // MARK: - Works
 
    var getTransactions: Work<Void, [Transaction]> {
+      
       .init { [weak self] work in
+         let request = HistoryRequest()
          self?.useCase.getTransactions
-            .doAsync()
+            .doAsync(request)
             .onSuccess {
                Self.store.transactions = $0
+               work.success(result: $0)
+            }
+            .onFail {
+               work.fail()
+            }
+      }
+      .retainBy(retainer)
+   }
+   
+   var getSentTransactions: Work<Void, [Transaction]> {
+      .init { [weak self] work in
+         let request = HistoryRequest(sentOnly: true)
+         self?.useCase.getTransactions
+            .doAsync(request)
+            .onSuccess {
+               Self.store.sentTransactions = $0
+               work.success(result: $0)
+            }
+            .onFail {
+               work.fail()
+            }
+      }
+      .retainBy(retainer)
+   }
+   
+   var getRecievedTransactions: Work<Void, [Transaction]> {
+      .init { [weak self] work in
+         let request = HistoryRequest(receivedOnly: true)
+         self?.useCase.getTransactions
+            .doAsync(request)
+            .onSuccess {
+               Self.store.recievedTransactions = $0
                work.success(result: $0)
             }
             .onFail {
@@ -81,9 +118,9 @@ final class HistoryWorks<Asset: AssetProtocol>: BaseSceneWorks<HistoryWorks.Temp
 
          let segmentId = Self.store.segmentId
          var filtered: [Transaction] = []
-         if segmentId == 0 { filtered = Self.filteredAll() }
-         else if segmentId == 1 { filtered = Self.filteredRecieved() }
-         else if segmentId == 2 { filtered = Self.filteredSent() }
+         if segmentId == 0 { filtered = Self.store.transactions ?? [] }
+         else if segmentId == 1 { filtered = Self.store.recievedTransactions ?? [] }
+         else if segmentId == 2 { filtered = Self.store.sentTransactions ?? [] }
 
          if let index = work.input?.1 {
             let transaction = filtered[index]
@@ -112,7 +149,7 @@ final class HistoryWorks<Asset: AssetProtocol>: BaseSceneWorks<HistoryWorks.Temp
 
    var getAllTransactItems: Work<Void, [TableItemsSection]> {
       .init {
-         let filtered = Self.filteredAll()
+         guard let filtered = Self.store.transactions else { $0.fail(); return }
          let items = Self.convertToItems(filtered)
          Self.store.segmentId = 0
 
@@ -123,7 +160,7 @@ final class HistoryWorks<Asset: AssetProtocol>: BaseSceneWorks<HistoryWorks.Temp
 
    var getSentTransactItems: Work<Void, [TableItemsSection]> {
       .init {
-         let filtered = Self.filteredSent()
+         guard let filtered = Self.store.sentTransactions else { $0.fail(); return }
          let items = Self.convertToItems(filtered)
          Self.store.segmentId = 2
 
@@ -134,7 +171,7 @@ final class HistoryWorks<Asset: AssetProtocol>: BaseSceneWorks<HistoryWorks.Temp
 
    var getRecievedTransactItems: Work<Void, [TableItemsSection]> {
       .init {
-         let filtered = Self.filteredRecieved()
+         guard let filtered = Self.store.recievedTransactions else { $0.fail(); return }
          let items = Self.convertToItems(filtered)
          Self.store.segmentId = 1
 
@@ -160,33 +197,6 @@ final class HistoryWorks<Asset: AssetProtocol>: BaseSceneWorks<HistoryWorks.Temp
 }
 
 private extension HistoryWorks {
-   static func filteredAll() -> [Transaction] {
-      guard let transactions = store.transactions else {
-         return []
-      }
-
-      return transactions
-   }
-
-   static func filteredSent() -> [Transaction] {
-      guard let transactions = store.transactions else {
-         return []
-      }
-
-      return transactions.filter {
-         $0.sender?.senderTgName == Self.store.currentUser
-      }
-   }
-
-   static func filteredRecieved() -> [Transaction] {
-      guard let transactions = store.transactions else {
-         return []
-      }
-
-      return transactions.filter {
-         $0.sender?.senderTgName != Self.store.currentUser
-      }
-   }
 
    static func convertToItems(_ filtered: [Transaction]) -> [TableItemsSection] {
       guard !filtered.isEmpty else { return [] }

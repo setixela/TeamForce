@@ -90,14 +90,26 @@ enum TeamForceEndpoints {
         
     }
     
-    struct GetTransactions: EndpointProtocol {
-        //
-        let method = HTTPMethod.get
+    struct GetTransactions: EndpointProtocol{
+      //
+      let method = HTTPMethod.get
         
-        var endPoint: String { urlBase + "/user/transactions/" }
+      var endPoint: String = urlBase + "/user/transactions/"
         
-        let headers: [String : String]
-    }
+      let headers: [String: String]
+       
+       init(headers: [String: String],
+            sentOnly: Bool? = nil,
+            recievedOnly: Bool? = nil) {
+          self.headers = headers
+          if sentOnly == true {
+             endPoint += "?sent_only=1"
+          }
+          if recievedOnly == true {
+             endPoint += "?received_only=1"
+          }
+      }
+   }
     
     struct GetTransactionById: EndpointProtocol {
         //
@@ -403,7 +415,7 @@ enum TeamForceEndpoints {
    struct GetChallenges: EndpointProtocol {
       let method = HTTPMethod.get
       
-      var endPoint: String = urlBase + "/challenges/" 
+      var endPoint: String = urlBase + "/challenges/"
       
       var headers: [String : String]
       
