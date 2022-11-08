@@ -24,6 +24,11 @@ final class MainScreenVM<Design: DesignProtocol>:
    var bodyStack: StackModel { models.down.subModel }
    var footerStack: TabBarPanel<Design> { models.down2 }
 
+   lazy var notifyButton = ButtonModel()
+      .set(Design.state.button.transparent)
+      .set(.image(Design.icon.alarm))
+      .size(.square(Grid.x36.value))
+
    lazy var profileButton = ImageViewModel()
       .image(Design.icon.newAvatar)
       .contentMode(.scaleAspectFill)
@@ -36,10 +41,7 @@ final class MainScreenVM<Design: DesignProtocol>:
       .arrangedModels([
          BrandLogoIcon<Design>(),
          Grid.xxx.spacer,
-         ButtonModel()
-            .set(Design.state.button.transparent)
-            .set(.image(Design.icon.alarm))
-            .size(.square(Grid.x36.value)),
+         notifyButton,
          profileButton
       ])
 

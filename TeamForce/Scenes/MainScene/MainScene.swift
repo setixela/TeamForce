@@ -70,6 +70,11 @@ final class MainScene<Asset: AssetProtocol>:
 
       mainVM.header.text("Благодарности")
       vcModel?.send(\.setTitle, "Благодарности")
+
+      mainVM.notifyButton.on(\.didTap) {
+         Asset.router?.route(.push, scene: \.notifications)
+      }
+
       presentHeader()
    }
 

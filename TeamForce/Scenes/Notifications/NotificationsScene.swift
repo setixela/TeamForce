@@ -10,12 +10,29 @@ import ReactiveWorks
 
 final class NotificationsScene<Asset: AssetProtocol>: BaseSceneModel<
    DefaultVCModel,
-   StackModel,
+   DoubleStacksBrandedVM<Asset.Design>,
    Asset,
    Void
 > {
    //
-   
+
+   private lazy var notifyViewModel = NotificationsViewModel<Design>()
+
+   override func start() {
+      super.start()
+
+      vcModel?.title = "Уведомления"
+      vcModel?.on(\.viewDidLoad, self) {
+         $0.configure()
+      }
+   }
+}
+
+extension NotificationsScene: Configurable {
+   func configure() {
+      mainVM.headerStack.arrangedModel(Spacer(8))
+      mainVM.bodyStack.arrangedModel(notifyViewModel)
+   }
 }
 
 enum NotificationsState {
