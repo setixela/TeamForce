@@ -10,7 +10,7 @@ import ReactiveWorks
 
 protocol HistoryWorksProtocol {
    var loadProfile: Work<Void, Void> { get }
-   var getTransactions: Work<Void, [Transaction]> { get }
+   var getTransactions: Work<Bool, Void> { get }
    var getTransactionById: Work<Int, Transaction> { get }
 
    var getAllTransactItems: Work<Void, [TableItemsSection]> { get }
@@ -24,64 +24,183 @@ final class HistoryWorks<Asset: AssetProtocol>: BaseSceneWorks<HistoryWorks.Temp
    // Temp Storage
    final class Temp: InitProtocol {
       var currentUser: String?
-      var transactions: [Transaction]?
+      var transactions: [Transaction] = []
       var sections: [TableItemsSection]?
       var currentTransaction: Transaction?
-      var segmentId: Int?
-      
-      var sentTransactions: [Transaction]?
-      var recievedTransactions: [Transaction]?
+      var segmentId: Int = 0
+
+      var sentTransactions: [Transaction] = []
+      var recievedTransactions: [Transaction] = []
+
+      var allOffset = 1
+      var sentOffset = 1
+      var recievedOffset = 1
+
+      var isAllPaginating = false
+      var isSentPaginating = false
+      var isRecievedPaginating = false
+
+      var limit = 20
    }
 
    // MARK: - Works
 
-   var getTransactions: Work<Void, [Transaction]> {
-      
-      .init { [weak self] work in
-         let request = HistoryRequest()
-         self?.useCase.getTransactions
-            .doAsync(request)
+   var pagination: Work<Bool, [TableItemsSection]> { .init { [weak self] work in
+      guard let input = work.input else { work.fail(); return }
+
+      switch Self.store.segmentId {
+      case 0:
+         self?.getTransactions
+            .doAsync(true)
             .onSuccess {
+               self?.getAllTransactItems
+                  .doAsync()
+                  .onSuccess {
+                     work.success($0)
+                  }
+                  .onFail {
+                     work.fail()
+                  }
+            }
+            .onFail { work.fail() }
+      case 1:
+         self?.getRecievedTransactions
+            .doAsync(true)
+            .onSuccess {
+               self?.getRecievedTransactItems
+                  .doAsync()
+                  .onSuccess {
+                     work.success($0)
+                  }
+                  .onFail {
+                     work.fail()
+                  }
+            }
+            .onFail { work.fail() }
+      case 2:
+         self?.getSentTransactions
+            .doAsync(true)
+            .onSuccess {
+               self?.getSentTransactItems
+                  .doAsync()
+                  .onSuccess {
+                     work.success($0)
+                  }
+                  .onFail {
+                     work.fail()
+                  }
+            }
+            .onFail { work.fail() }
+      default:
+         work.fail()
+      }
+   }.retainBy(retainer) }
+   
+   var getTransactions: Work<Bool, Void> { .init { [weak self] work in
+      guard let paginating = work.input else { work.fail(); return }
+
+      if Self.store.isAllPaginating { work.fail(); return }
+      if paginating {
+         Self.store.isAllPaginating = true
+         Self.store.allOffset += 1
+      }
+      let pagination = Pagination(
+         offset: Self.store.allOffset,
+         limit: Self.store.limit
+      )
+
+      let request = HistoryRequest(pagination: pagination)
+      self?.useCase.getTransactions
+         .doAsync(request)
+         .onSuccess {
+            switch paginating {
+            case true:
+               Self.store.isAllPaginating = false
+               Self.store.transactions.append(contentsOf: $0)
+            case false:
                Self.store.transactions = $0
-               work.success(result: $0)
             }
-            .onFail {
-               work.fail()
-            }
-      }
-      .retainBy(retainer)
+            work.success()
+         }
+         .onFail {
+            work.fail()
+         }
    }
-   
-   var getSentTransactions: Work<Void, [Transaction]> {
-      .init { [weak self] work in
-         let request = HistoryRequest(sentOnly: true)
-         self?.useCase.getTransactions
-            .doAsync(request)
-            .onSuccess {
-               Self.store.sentTransactions = $0
-               work.success(result: $0)
-            }
-            .onFail {
-               work.fail()
-            }
-      }
-      .retainBy(retainer)
+   .retainBy(retainer)
    }
-   
-   var getRecievedTransactions: Work<Void, [Transaction]> {
-      .init { [weak self] work in
-         let request = HistoryRequest(receivedOnly: true)
-         self?.useCase.getTransactions
-            .doAsync(request)
-            .onSuccess {
+
+   var getRecievedTransactions: Work<Bool, Void> { .init { [weak self] work in
+
+      guard let paginating = work.input else { work.fail(); return }
+
+      if Self.store.isRecievedPaginating { work.fail(); return }
+      if paginating {
+         Self.store.isRecievedPaginating = true
+         Self.store.recievedOffset += 1
+      }
+      let pagination = Pagination(
+         offset: Self.store.recievedOffset,
+         limit: Self.store.limit
+      )
+
+      let request = HistoryRequest(
+         pagination: pagination,
+         receivedOnly: true
+      )
+
+      self?.useCase.getTransactions
+         .doAsync(request)
+         .onSuccess {
+            switch paginating {
+            case true:
+               Self.store.isRecievedPaginating = false
+               Self.store.recievedTransactions.append(contentsOf: $0)
+            case false:
                Self.store.recievedTransactions = $0
-               work.success(result: $0)
             }
-            .onFail {
-               work.fail()
-            }
+            work.success()
+         }
+         .onFail {
+            work.fail()
+         }
+   }
+   .retainBy(retainer)
+   }
+
+   var getSentTransactions: Work<Bool, Void> { .init { [weak self] work in
+      guard let paginating = work.input else { work.fail(); return }
+
+      if Self.store.isSentPaginating { work.fail(); return }
+      if paginating {
+         Self.store.isSentPaginating = true
+         Self.store.sentOffset += 1
       }
-      .retainBy(retainer)
+      let pagination = Pagination(
+         offset: Self.store.sentOffset,
+         limit: Self.store.limit
+      )
+
+      let request = HistoryRequest(
+         pagination: pagination,
+         sentOnly: true
+      )
+      self?.useCase.getTransactions
+         .doAsync(request)
+         .onSuccess {
+            switch paginating {
+            case true:
+               Self.store.isSentPaginating = false
+               Self.store.sentTransactions.append(contentsOf: $0)
+            case false:
+               Self.store.sentTransactions = $0
+            }
+            work.success()
+         }
+         .onFail {
+            work.fail()
+         }
+   }
+   .retainBy(retainer)
    }
 
    var getTransactionById: Work<Int, Transaction> {
@@ -98,6 +217,7 @@ final class HistoryWorks<Asset: AssetProtocol>: BaseSceneWorks<HistoryWorks.Temp
       }
       .retainBy(retainer)
    }
+
    //
    var getProfileById: Work<Int, UserData> {
       .init { [weak self] work in
@@ -118,9 +238,9 @@ final class HistoryWorks<Asset: AssetProtocol>: BaseSceneWorks<HistoryWorks.Temp
 
          let segmentId = Self.store.segmentId
          var filtered: [Transaction] = []
-         if segmentId == 0 { filtered = Self.store.transactions ?? [] }
-         else if segmentId == 1 { filtered = Self.store.recievedTransactions ?? [] }
-         else if segmentId == 2 { filtered = Self.store.sentTransactions ?? [] }
+         if segmentId == 0 { filtered = Self.store.transactions }
+         else if segmentId == 1 { filtered = Self.store.recievedTransactions }
+         else if segmentId == 2 { filtered = Self.store.sentTransactions }
 
          if let index = work.input?.1 {
             let transaction = filtered[index]
@@ -132,6 +252,27 @@ final class HistoryWorks<Asset: AssetProtocol>: BaseSceneWorks<HistoryWorks.Temp
       .retainBy(retainer)
    }
 
+   var initStorage: Work<Void, Void> {
+      .init { [weak self] work in
+         Self.store.allOffset = 1
+         Self.store.sentOffset = 1
+         Self.store.recievedOffset = 1
+         Self.store.transactions = []
+         Self.store.sentTransactions = []
+         Self.store.recievedTransactions = []
+         
+         self?.getTransactions
+            .doAsync(false)
+            .onSuccess { work.success() }
+            .onFail { work.fail() }
+         self?.getSentTransactions
+            .doAsync(false)
+            .onFail { work.fail() }
+         self?.getRecievedTransactions
+            .doAsync(false)
+            .onFail { work.fail() }
+      }
+   }
    var loadProfile: Work<Void, Void> {
       .init { [weak self] work in
          self?.useCase.loadProfile
@@ -149,7 +290,7 @@ final class HistoryWorks<Asset: AssetProtocol>: BaseSceneWorks<HistoryWorks.Temp
 
    var getAllTransactItems: Work<Void, [TableItemsSection]> {
       .init {
-         guard let filtered = Self.store.transactions else { $0.fail(); return }
+         let filtered = Self.store.transactions
          let items = Self.convertToItems(filtered)
          Self.store.segmentId = 0
 
@@ -160,7 +301,7 @@ final class HistoryWorks<Asset: AssetProtocol>: BaseSceneWorks<HistoryWorks.Temp
 
    var getSentTransactItems: Work<Void, [TableItemsSection]> {
       .init {
-         guard let filtered = Self.store.sentTransactions else { $0.fail(); return }
+         let filtered = Self.store.sentTransactions
          let items = Self.convertToItems(filtered)
          Self.store.segmentId = 2
 
@@ -171,7 +312,7 @@ final class HistoryWorks<Asset: AssetProtocol>: BaseSceneWorks<HistoryWorks.Temp
 
    var getRecievedTransactItems: Work<Void, [TableItemsSection]> {
       .init {
-         guard let filtered = Self.store.recievedTransactions else { $0.fail(); return }
+         let filtered = Self.store.recievedTransactions
          let items = Self.convertToItems(filtered)
          Self.store.segmentId = 1
 
@@ -179,7 +320,7 @@ final class HistoryWorks<Asset: AssetProtocol>: BaseSceneWorks<HistoryWorks.Temp
       }
       .retainBy(retainer)
    }
-   
+
    var cancelTransactionById: Work<Int, Void> {
       .init { [weak self] work in
          self?.useCase.cancelTransactionById
@@ -191,13 +332,40 @@ final class HistoryWorks<Asset: AssetProtocol>: BaseSceneWorks<HistoryWorks.Temp
             .onFail {
                work.fail()
             }
-         
+
       }.retainBy(retainer)
    }
+   
+   var getSegmentId: Work<Void, Int> { .init { work in
+      work.success(Self.store.segmentId)
+   }.retainBy(retainer) }
+
+   var getTransactionsBySegment: Work<Int, [TableItemsSection]> { .init { [weak self] work in
+      guard let id = work.input else { work.fail(); return }
+      switch id {
+      case 0:
+         self?.getAllTransactItems
+            .doAsync()
+            .onSuccess { work.success($0) }
+            .onFail { work.fail() }
+      case 1:
+         self?.getRecievedTransactItems
+            .doAsync()
+            .onSuccess { work.success($0) }
+            .onFail { work.fail() }
+      case 2:
+         self?.getSentTransactItems
+            .doAsync()
+            .onSuccess { work.success($0) }
+            .onFail { work.fail() }
+    
+      default:
+         work.fail()
+      }
+   }.retainBy(retainer) }
 }
 
 private extension HistoryWorks {
-
    static func convertToItems(_ filtered: [Transaction]) -> [TableItemsSection] {
       guard !filtered.isEmpty else { return [] }
 
@@ -251,7 +419,7 @@ private extension HistoryWorks {
             )
 
             var result = result
-            
+
             var currentDay = item.createdAt.dateConverted
             if let date = item.createdAt.dateConvertedToDate {
                if Calendar.current.isDateInToday(date) {

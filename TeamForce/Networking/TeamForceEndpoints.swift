@@ -100,14 +100,18 @@ enum TeamForceEndpoints {
        
        init(headers: [String: String],
             sentOnly: Bool? = nil,
-            recievedOnly: Bool? = nil) {
+            recievedOnly: Bool? = nil,
+            offset: Int,
+            limit: Int) {
           self.headers = headers
+          endPoint = endPoint + "?offset=" + String(offset) + "&limit=" + String(limit)
           if sentOnly == true {
-             endPoint += "?sent_only=1"
+             endPoint += "&sent_only=1"
           }
           if recievedOnly == true {
-             endPoint += "?received_only=1"
+             endPoint += "&received_only=1"
           }
+          
       }
    }
     

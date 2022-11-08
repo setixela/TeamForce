@@ -140,7 +140,9 @@ final class GetTransactionsApiWorker: BaseApiWorker<HistoryRequest, [Transaction
             "Authorization": request.token.string
             ],
             sentOnly: request.sentOnly,
-            recievedOnly: request.receivedOnly
+            recievedOnly: request.receivedOnly,
+            offset: request.pagination?.offset ?? 1,
+            limit: request.pagination?.limit ?? 0
          ))
          .done { result in
             let decoder = DataToDecodableParser()

@@ -40,6 +40,7 @@ protocol IconElements: InitProtocol, DesignElementable where DesignElement == UI
    var avatarPlaceholder: DesignElement { get }
    var newAvatar: DesignElement { get }
    var challengeAvatar: DesignElement { get }
+   var anonAvatar: DesignElement { get }
 
    var sideMenu: DesignElement { get }
 
@@ -132,6 +133,7 @@ struct IconBuilder: IconElements {
    var avatarPlaceholder: UIImage { make("avatarPlaceholder") }
    var newAvatar: UIImage { make("avatar") }
    var challengeAvatar: UIImage { make("challengeAvatar") }
+   var anonAvatar: UIImage { make("anon_avatar") }
 
    var sideMenu: UIImage { make("menu_24px") }
 
