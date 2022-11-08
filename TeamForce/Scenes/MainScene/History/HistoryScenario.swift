@@ -14,6 +14,8 @@ struct HistoryScenarioEvents {
    let presentRecievedTransaction: VoidWork<Void>
    let presentDetailView: VoidWork<(IndexPath, Int)>
    let cancelTransaction: VoidWork<Int>
+   
+   let pagination: VoidWork<Bool>
 }
 
 final class HistoryScenario<Asset: AssetProtocol>:
@@ -25,21 +27,31 @@ final class HistoryScenario<Asset: AssetProtocol>:
       works.loadProfile
          .doAsync()
          .onFail(setState, .loadProfilError)
+         .doNext(works.initStorage)
+         .doInput(false)
          .doNext(works.getTransactions)
          .onFail(setState, .loadTransactionsError)
-         .doVoidNext(works.getAllTransactItems)
+         //.doVoidNext(works.getAllTransactItems)
+         .doNext(works.getSegmentId)
+         .doNext(works.getTransactionsBySegment)
          .onSuccess(setState) { .presentAllTransactions($0) }
 
       events.presentAllTransactions
-         .doNext(works.getAllTransactItems)
+         //.doInput(false)
+         //.doNext(works.getTransactions)
+         .doVoidNext(works.getAllTransactItems)
          .onSuccess(setState) { .presentAllTransactions($0) }
 
       events.presentSentTransactions
-         .doNext(works.getSentTransactItems)
+         //.doInput(false)
+         //.doNext(works.getSentTransactions)
+         .doVoidNext(works.getSentTransactItems)
          .onSuccess(setState) { .presentSentTransactions($0) }
 
       events.presentRecievedTransaction
-         .doNext(works.getRecievedTransactItems)
+         //.doInput(false)
+         //.doNext(works.getRecievedTransactions)
+         .doVoidNext(works.getRecievedTransactItems)
          .onSuccess(setState) { .presentRecievedTransaction($0) }
       
       events.presentDetailView
@@ -52,5 +64,9 @@ final class HistoryScenario<Asset: AssetProtocol>:
          .onFail {
             print("can not cancel transaction")
          }
+      
+      events.pagination
+         .doNext(works.pagination)
+         .onSuccess(setState) { .presentAllTransactions($0) } 
    }
 }

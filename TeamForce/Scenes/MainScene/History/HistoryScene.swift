@@ -32,7 +32,8 @@ final class HistoryScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>
          presentSentTransactions: viewModels.segmentedControl.onEvent(\.selected2),
          presentRecievedTransaction: viewModels.segmentedControl.onEvent(\.selected1),
          presentDetailView: viewModels.tableModel.on(\.didSelectRow),
-         cancelTransaction: viewModels.presenter.on(\.cancelButtonPressed)
+         cancelTransaction: viewModels.presenter.on(\.cancelButtonPressed),
+         pagination: viewModels.tableModel.on(\.pagination)
       )
    )
 
