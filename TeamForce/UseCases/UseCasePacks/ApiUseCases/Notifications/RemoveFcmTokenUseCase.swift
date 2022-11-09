@@ -1,5 +1,5 @@
 //
-//  SetFcmTokenUseCase.swift
+//  RemoveFcmTokenUseCase.swift
 //  TeamForce
 //
 //  Created by Yerzhan Gapurinov on 09.11.2022.
@@ -7,12 +7,12 @@
 
 import ReactiveWorks
 
-struct SetFcmTokenUseCase: UseCaseProtocol {
+struct RemoveFcmTokenUseCase: UseCaseProtocol {
    let safeStringStorage: StringStorageWorker
-   let setFcmTokenApiWorker: SetFcmTokenApiWorker
+   let removeFcmTokenApiWorker: RemoveFcmTokenApiWorker
 
-   var work: Work<FcmToken, Void> {
-      Work<FcmToken, Void>() { work in
+   var work: Work<RemoveFcmToken, Void> {
+      Work<RemoveFcmToken, Void>() { work in
          safeStringStorage
             .doAsync("token")
             .onFail {
@@ -20,10 +20,10 @@ struct SetFcmTokenUseCase: UseCaseProtocol {
             }
             .doMap {
                guard let input = work.input else { return nil }
-               let request = FcmRequest(token: $0, fcmToken: input)
+               let request = RemoveFcmRequest(token: $0, removeFcmToken: input)
                return request
             }
-            .doNext(worker: setFcmTokenApiWorker)
+            .doNext(worker: removeFcmTokenApiWorker)
             .onSuccess {
                work.success(result: $0)
             }

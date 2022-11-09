@@ -275,6 +275,8 @@
 		636A459C2900D746003E412D /* ChallReportDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636A459B2900D746003E412D /* ChallReportDetailsViewModel.swift */; };
 		6384AD7F291B6EE100188769 /* SetFcmTokenApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6384AD7E291B6EE100188769 /* SetFcmTokenApiWorker.swift */; };
 		6384AD82291B703700188769 /* SetFcmTokenUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6384AD81291B703700188769 /* SetFcmTokenUseCase.swift */; };
+		6384AD84291B89FC00188769 /* RemoveFcmTokenApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6384AD83291B89FC00188769 /* RemoveFcmTokenApiWorker.swift */; };
+		6384AD86291B8B4000188769 /* RemoveFcmTokenUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6384AD85291B8B4000188769 /* RemoveFcmTokenUseCase.swift */; };
 		63A2233D28CD503B00D92615 /* AvatarPickingScenario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A2233C28CD503B00D92615 /* AvatarPickingScenario.swift */; };
 		63A2233F28CF772900D92615 /* GetTagsApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A2233E28CF772900D92615 /* GetTagsApiWorker.swift */; };
 		63A2234128CF797600D92615 /* GetTagsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A2234028CF797600D92615 /* GetTagsUseCase.swift */; };
@@ -638,6 +640,8 @@
 		636A459B2900D746003E412D /* ChallReportDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallReportDetailsViewModel.swift; sourceTree = "<group>"; };
 		6384AD7E291B6EE100188769 /* SetFcmTokenApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetFcmTokenApiWorker.swift; sourceTree = "<group>"; };
 		6384AD81291B703700188769 /* SetFcmTokenUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetFcmTokenUseCase.swift; sourceTree = "<group>"; };
+		6384AD83291B89FC00188769 /* RemoveFcmTokenApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveFcmTokenApiWorker.swift; sourceTree = "<group>"; };
+		6384AD85291B8B4000188769 /* RemoveFcmTokenUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveFcmTokenUseCase.swift; sourceTree = "<group>"; };
 		63A2233C28CD503B00D92615 /* AvatarPickingScenario.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarPickingScenario.swift; sourceTree = "<group>"; };
 		63A2233E28CF772900D92615 /* GetTagsApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTagsApiWorker.swift; sourceTree = "<group>"; };
 		63A2234028CF797600D92615 /* GetTagsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTagsUseCase.swift; sourceTree = "<group>"; };
@@ -1710,6 +1714,7 @@
 			isa = PBXGroup;
 			children = (
 				6384AD7E291B6EE100188769 /* SetFcmTokenApiWorker.swift */,
+				6384AD83291B89FC00188769 /* RemoveFcmTokenApiWorker.swift */,
 			);
 			path = Notifications;
 			sourceTree = "<group>";
@@ -1718,6 +1723,7 @@
 			isa = PBXGroup;
 			children = (
 				6384AD81291B703700188769 /* SetFcmTokenUseCase.swift */,
+				6384AD85291B8B4000188769 /* RemoveFcmTokenUseCase.swift */,
 			);
 			path = Notifications;
 			sourceTree = "<group>";
@@ -2033,6 +2039,7 @@
 				63CFA198289C3FB6000E4D1E /* GetTransactionsUseCase.swift in Sources */,
 				1977BE5828A7343400D554EA /* InputCheckers.swift in Sources */,
 				63FCC9B32907535C009D0001 /* GetEventsChallApiWorker.swift in Sources */,
+				6384AD84291B89FC00188769 /* RemoveFcmTokenApiWorker.swift in Sources */,
 				63AB070F28BD552A00FD650F /* CreateContactApiWorker.swift in Sources */,
 				631D8EB528F78D4D005332BD /* GetChallengeResultApiWorker.swift in Sources */,
 				19017B7328A69CD400B06345 /* DTLogoTitleX.swift in Sources */,
@@ -2204,6 +2211,7 @@
 				197447202911ABEC0089BB2B /* ChallengeCellStatusBlock.swift in Sources */,
 				198BBEF028B69C810006CD30 /* LoadBothTokensUseCase.swift in Sources */,
 				19D0835D286F428600F75E4A /* BarButtonModel.swift in Sources */,
+				6384AD86291B8B4000188769 /* RemoveFcmTokenUseCase.swift in Sources */,
 				63BB2C2228E150CA00C1E3DB /* DeleteCommentApiWorker.swift in Sources */,
 				63A37EB828F3199D00DBD59F /* CheckChallengeReportApiWorker.swift in Sources */,
 				63AB070928BD4C1B00FD650F /* UpdateProfileApiWorker.swift in Sources */,

@@ -423,6 +423,14 @@ final class ApiUseCase<Asset: AssetProtocol>: InitProtocol, Assetable, WorkBaske
       .retainedWork(retainer)
    }
    
+   var removeFcmToken: RemoveFcmTokenUseCase.WRK {
+      RemoveFcmTokenUseCase(
+         safeStringStorage: safeStringStorage,
+         removeFcmTokenApiWorker: removeFcmTokenApiWorker
+      )
+      .retainedWork(retainer)
+   }
+   
    
    // MARK: - Dependencies
 
@@ -496,4 +504,5 @@ final class ApiUseCase<Asset: AssetProtocol>: InitProtocol, Assetable, WorkBaske
    private var getEventsTransactByIdApiWorker: GetEventsTransactByIdApiWorker { .init(apiEngine: Asset.service.apiEngine) }
    private var setFcmTokenApiWorker: SetFcmTokenApiWorker { .init(apiEngine:
        Asset.service.apiEngine) }
+   private var removeFcmTokenApiWorker: RemoveFcmTokenApiWorker { .init(apiEngine: Asset.service.apiEngine) }
 }

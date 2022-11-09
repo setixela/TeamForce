@@ -1,23 +1,27 @@
 //
-//  SetFcmTokenApiWorker.swift
+//  RemoveFcmTokenApiWorker.swift
 //  TeamForce
 //
 //  Created by Yerzhan Gapurinov on 09.11.2022.
 //
 
-import Foundation
 import ReactiveWorks
 
-struct FcmRequest {
+struct RemoveFcmRequest {
    let token: String
-   let fcmToken: FcmToken
+   let removeFcmToken: RemoveFcmToken
 }
-struct FcmToken: Codable {
-   let token: String
+struct RemoveFcmToken: Codable {
    let device: String
+   let userId: Int
+   
+   enum CodingKeys: String, CodingKey {
+      case device
+      case userId = "user_id"
+   }
 }
 
-final class SetFcmTokenApiWorker: BaseApiWorker<FcmRequest, Void> {
+final class RemoveFcmTokenApiWorker: BaseApiWorker<RemoveFcmRequest, Void> {
    override func doAsync(work: Wrk) {
       
       guard
@@ -28,9 +32,9 @@ final class SetFcmTokenApiWorker: BaseApiWorker<FcmRequest, Void> {
       }
 
       apiEngine?
-         .process(endpoint: TeamForceEndpoints.SetFcmToken(headers: [
+         .process(endpoint: TeamForceEndpoints.RemoveFcmToken(headers: [
             "Authorization": request.token,
-         ], body: request.fcmToken.dictionary ?? [:]))
+         ], body: request.removeFcmToken.dictionary ?? [:]))
          .done { result in
             work.success()
          }

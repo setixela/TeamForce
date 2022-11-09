@@ -623,6 +623,16 @@ enum TeamForceEndpoints {
 
       var headers: [String : String]
       
-      var body: [String : Any]
+      let body: [String : Any]
+   }
+   
+   struct RemoveFcmToken: EndpointProtocol {
+      let method = HTTPMethod.post
+      
+      var endPoint: String { urlBase + "/remove-fcm-token/" }
+      
+      let headers: [String : String]
+      
+      let body: [String : Any]
    }
 }
