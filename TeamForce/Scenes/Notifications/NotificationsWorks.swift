@@ -17,13 +17,15 @@ final class NotificationsWorks<Asset: AssetProtocol>: BaseSceneWorks<Notificatio
    
    var setFcmToken: Work<Void, Void> { .init { [weak self] work in
       guard
-         let deviceId = UIDevice.current.identifierForVendor?.uuidString
+         let deviceId = UIDevice.current.identifierForVendor?.uuidString,
+         let currentFcmToken = UserDefaults.standard.string(forKey: "fcmToken")
       else {
          work.fail()
          return
       }
-      
-      let fcm = FcmToken(token: "", device: deviceId)
+      print("deviceId \(deviceId)")
+      print("fcmToken \(currentFcmToken)")
+      let fcm = FcmToken(token: currentFcmToken, device: deviceId)
       self?.apiUseCase.setFcmToken
          .doAsync(fcm)
          .onSuccess {
