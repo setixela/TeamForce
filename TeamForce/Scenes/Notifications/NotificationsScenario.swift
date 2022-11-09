@@ -12,6 +12,18 @@ struct NotificationsEvents {
 }
 
 final class NotificationsScenario<Asset: AssetProtocol>:
-   BaseScenario<NotificationsEvents, NotificationsState, NotificationsWorks<Asset>> {
-
+   BaseScenario<NotificationsEvents, NotificationsState, NotificationsWorks<Asset>>, Assetable {
+   
+   override func start() {
+      works.retainer.cleanAll()
+      works.setFcmToken
+         .doAsync()
+         .onSuccess {
+            print("success")
+         }
+         .onFail {
+            print("fail")
+         }
+      
+   }
 }

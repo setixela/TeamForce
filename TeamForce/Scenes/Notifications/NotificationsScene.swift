@@ -13,8 +13,15 @@ final class NotificationsScene<Asset: AssetProtocol>: BaseSceneModel<
    DoubleStacksBrandedVM<Asset.Design>,
    Asset,
    Void
-> {
+>, Scenarible {
    //
+   
+   lazy var scenario: Scenario = NotificationsScenario(
+      works: NotificationsWorks<Asset>(),
+      stateDelegate: stateDelegate,
+      events: NotificationsEvents(
+      )
+   )
 
    private lazy var notifyViewModel = NotificationsViewModel<Design>()
 
@@ -25,6 +32,7 @@ final class NotificationsScene<Asset: AssetProtocol>: BaseSceneModel<
       vcModel?.on(\.viewDidLoad, self) {
          $0.configure()
       }
+      scenario.start()
    }
 }
 

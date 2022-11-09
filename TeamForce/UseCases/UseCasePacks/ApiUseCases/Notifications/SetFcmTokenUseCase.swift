@@ -20,7 +20,8 @@ struct SetFcmTokenUseCase: UseCaseProtocol {
             }
             .doMap {
                guard let input = work.input else { return nil }
-               let request = FcmRequest(token: $0, fcmToken: input)
+               let fcm = FcmToken(token: $0, device: input.device)
+               let request = FcmRequest(token: $0, fcmToken: fcm)
                return request
             }
             .doNext(worker: setFcmTokenApiWorker)

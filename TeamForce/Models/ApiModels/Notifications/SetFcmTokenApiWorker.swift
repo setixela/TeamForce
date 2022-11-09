@@ -19,9 +19,11 @@ struct FcmToken: Codable {
 
 final class SetFcmTokenApiWorker: BaseApiWorker<FcmRequest, Void> {
    override func doAsync(work: Wrk) {
+      let cookieName = "csrftoken"
       
       guard
-         let request = work.input
+         let request = work.input,
+         let cookie = HTTPCookieStorage.shared.cookies?.first(where: { $0.name == cookieName })
       else {
          work.fail()
          return
@@ -30,6 +32,7 @@ final class SetFcmTokenApiWorker: BaseApiWorker<FcmRequest, Void> {
       apiEngine?
          .process(endpoint: TeamForceEndpoints.SetFcmToken(headers: [
             "Authorization": request.token,
+            "X-CSRFToken": cookie.value
          ], body: request.fcmToken.dictionary ?? [:]))
          .done { result in
             work.success()
