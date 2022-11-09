@@ -273,6 +273,8 @@
 		636A45982900D71D003E412D /* ChallReportDetailsScenario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636A45972900D71D003E412D /* ChallReportDetailsScenario.swift */; };
 		636A459A2900D72F003E412D /* ChallReportDetailsWorks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636A45992900D72F003E412D /* ChallReportDetailsWorks.swift */; };
 		636A459C2900D746003E412D /* ChallReportDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636A459B2900D746003E412D /* ChallReportDetailsViewModel.swift */; };
+		6384AD7F291B6EE100188769 /* SetFcmTokenApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6384AD7E291B6EE100188769 /* SetFcmTokenApiWorker.swift */; };
+		6384AD82291B703700188769 /* SetFcmTokenUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6384AD81291B703700188769 /* SetFcmTokenUseCase.swift */; };
 		63A2233D28CD503B00D92615 /* AvatarPickingScenario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A2233C28CD503B00D92615 /* AvatarPickingScenario.swift */; };
 		63A2233F28CF772900D92615 /* GetTagsApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A2233E28CF772900D92615 /* GetTagsApiWorker.swift */; };
 		63A2234128CF797600D92615 /* GetTagsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A2234028CF797600D92615 /* GetTagsUseCase.swift */; };
@@ -634,6 +636,8 @@
 		636A45972900D71D003E412D /* ChallReportDetailsScenario.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallReportDetailsScenario.swift; sourceTree = "<group>"; };
 		636A45992900D72F003E412D /* ChallReportDetailsWorks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallReportDetailsWorks.swift; sourceTree = "<group>"; };
 		636A459B2900D746003E412D /* ChallReportDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallReportDetailsViewModel.swift; sourceTree = "<group>"; };
+		6384AD7E291B6EE100188769 /* SetFcmTokenApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetFcmTokenApiWorker.swift; sourceTree = "<group>"; };
+		6384AD81291B703700188769 /* SetFcmTokenUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetFcmTokenUseCase.swift; sourceTree = "<group>"; };
 		63A2233C28CD503B00D92615 /* AvatarPickingScenario.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarPickingScenario.swift; sourceTree = "<group>"; };
 		63A2233E28CF772900D92615 /* GetTagsApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTagsApiWorker.swift; sourceTree = "<group>"; };
 		63A2234028CF797600D92615 /* GetTagsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTagsUseCase.swift; sourceTree = "<group>"; };
@@ -1515,6 +1519,7 @@
 		19EF32AC287CE8140078F53D /* ApiModels */ = {
 			isa = PBXGroup;
 			children = (
+				6384AD7D291B6ECB00188769 /* Notifications */,
 				636BAEF0291A5AC800B1FA79 /* History */,
 				63FCC9A429073966009D0001 /* Events */,
 				635FC6C128EE7A8F00826B67 /* Challenge */,
@@ -1563,6 +1568,7 @@
 		19F153822899647100ECF000 /* ApiUseCases */ = {
 			isa = PBXGroup;
 			children = (
+				6384AD80291B702600188769 /* Notifications */,
 				636BAEF1291A60EF00B1FA79 /* History */,
 				63FCC9A729073DD2009D0001 /* Events */,
 				635FC6C428EE7F1E00826B67 /* Challenge */,
@@ -1698,6 +1704,22 @@
 				63AD132728A3B06C00CFF75B /* GetTransactionByIdUseCase.swift */,
 			);
 			path = History;
+			sourceTree = "<group>";
+		};
+		6384AD7D291B6ECB00188769 /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				6384AD7E291B6EE100188769 /* SetFcmTokenApiWorker.swift */,
+			);
+			path = Notifications;
+			sourceTree = "<group>";
+		};
+		6384AD80291B702600188769 /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				6384AD81291B703700188769 /* SetFcmTokenUseCase.swift */,
+			);
+			path = Notifications;
 			sourceTree = "<group>";
 		};
 		63BB2C2728E3E78300C1E3DB /* FeedDetail */ = {
@@ -2036,6 +2058,7 @@
 				19A9BE8028C307000099F8EA /* Queue.swift in Sources */,
 				19D08357286F41B200F75E4A /* DoubleLabelPairModel.swift in Sources */,
 				63FCC9B929075A70009D0001 /* GetEventsTransactByIdUseCase.swift in Sources */,
+				6384AD7F291B6EE100188769 /* SetFcmTokenApiWorker.swift in Sources */,
 				19B39E5928D341B900BB2C77 /* TagList.swift in Sources */,
 				1952EA6D28A71537003F7852 /* ButtonElements.swift in Sources */,
 				635FC6C628EE7F3800826B67 /* GetChallengesUseCase.swift in Sources */,
@@ -2147,6 +2170,7 @@
 				194E308028F36657001E2967 /* ChallengeDetailsWorks.swift in Sources */,
 				1952EA6928A711F2003F7852 /* Associated.swift in Sources */,
 				19D08353286F403400F75E4A /* SideBarModel.swift in Sources */,
+				6384AD82291B703700188769 /* SetFcmTokenUseCase.swift in Sources */,
 				631D8EC328F94F39005332BD /* ChallWinnersPresenters.swift in Sources */,
 				196D883628ADB74800F4C09D /* TabBarPanel.swift in Sources */,
 				1955879228F733D30001F734 /* ChallengeResultWorks.swift in Sources */,

@@ -615,4 +615,14 @@ enum TeamForceEndpoints {
           self.headers = headers
       }
    }
+   
+   struct SetFcmToken: EndpointProtocol {
+      let method = HTTPMethod.post
+      
+      var endPoint: String { urlBase + "/set-fcm-token/"}
+
+      var headers: [String : String]
+      
+      var body: [String : Any]
+   }
 }
