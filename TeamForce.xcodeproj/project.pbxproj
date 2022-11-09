@@ -649,6 +649,7 @@
 		6384AD85291B8B4000188769 /* RemoveFcmTokenUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveFcmTokenUseCase.swift; sourceTree = "<group>"; };
 		6384AD87291BBE8600188769 /* GetNotificationsApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetNotificationsApiWorker.swift; sourceTree = "<group>"; };
 		6384AD89291BC07300188769 /* GetNotificationsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetNotificationsUseCase.swift; sourceTree = "<group>"; };
+		6384AD8B291C335100188769 /* TeamForce.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TeamForce.entitlements; sourceTree = "<group>"; };
 		63A2233C28CD503B00D92615 /* AvatarPickingScenario.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarPickingScenario.swift; sourceTree = "<group>"; };
 		63A2233E28CF772900D92615 /* GetTagsApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTagsApiWorker.swift; sourceTree = "<group>"; };
 		63A2234028CF797600D92615 /* GetTagsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTagsUseCase.swift; sourceTree = "<group>"; };
@@ -835,6 +836,7 @@
 		190C1D10285D15FF00FB3518 /* TeamForce */ = {
 			isa = PBXGroup;
 			children = (
+				6384AD8B291C335100188769 /* TeamForce.entitlements */,
 				1985A12328B2780000B017E0 /* README.md */,
 				19CF792728A54D60001531B8 /* Config.swift */,
 				190C1D13285D15FF00FB3518 /* SceneDelegate.swift */,
@@ -2403,6 +2405,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = TeamForce/TeamForce.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 23;
@@ -2441,6 +2444,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = TeamForce/TeamForce.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 23;
