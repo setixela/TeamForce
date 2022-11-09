@@ -431,6 +431,13 @@ final class ApiUseCase<Asset: AssetProtocol>: InitProtocol, Assetable, WorkBaske
       .retainedWork(retainer)
    }
    
+   var getNotifications: GetNotificationsUseCase.WRK {
+      GetNotificationsUseCase(
+         safeStringStorage: safeStringStorage,
+         getNotificationsApiWorker: getNotificationsApiWorker
+      )
+      .retainedWork(retainer)
+   }
    
    // MARK: - Dependencies
 
@@ -505,4 +512,5 @@ final class ApiUseCase<Asset: AssetProtocol>: InitProtocol, Assetable, WorkBaske
    private var setFcmTokenApiWorker: SetFcmTokenApiWorker { .init(apiEngine:
        Asset.service.apiEngine) }
    private var removeFcmTokenApiWorker: RemoveFcmTokenApiWorker { .init(apiEngine: Asset.service.apiEngine) }
+   private var getNotificationsApiWorker: GetNotificationsApiWorker { .init(apiEngine: Asset.service.apiEngine) }
 }
