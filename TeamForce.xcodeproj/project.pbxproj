@@ -45,6 +45,8 @@
 		1921CAA3291AA3B3007AE024 /* NotificationsScenario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1921CAA2291AA3B3007AE024 /* NotificationsScenario.swift */; };
 		1921CAA5291AA3C0007AE024 /* NotificationsWorks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1921CAA4291AA3C0007AE024 /* NotificationsWorks.swift */; };
 		1921CAA7291AA3CD007AE024 /* NotificationsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1921CAA6291AA3CD007AE024 /* NotificationsViewModel.swift */; };
+		1921CAAA291B877D007AE024 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 1921CAA9291B877D007AE024 /* FirebaseMessaging */; };
+		1921CAAC291C1B8E007AE024 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1921CAAB291C1B8E007AE024 /* GoogleService-Info.plist */; };
 		19221EE828C9ADC300B7B604 /* ProfileEditScenario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19221EE728C9ADC300B7B604 /* ProfileEditScenario.swift */; };
 		19221EEA28C9AF3400B7B604 /* Optional+Unwrap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19221EE928C9AF3400B7B604 /* Optional+Unwrap.swift */; };
 		19221EEC28C9B04700B7B604 /* TitledTextFieldY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19221EEB28C9B04700B7B604 /* TitledTextFieldY.swift */; };
@@ -411,6 +413,7 @@
 		1921CAA2291AA3B3007AE024 /* NotificationsScenario.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsScenario.swift; sourceTree = "<group>"; };
 		1921CAA4291AA3C0007AE024 /* NotificationsWorks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsWorks.swift; sourceTree = "<group>"; };
 		1921CAA6291AA3CD007AE024 /* NotificationsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewModel.swift; sourceTree = "<group>"; };
+		1921CAAB291C1B8E007AE024 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		19221EE728C9ADC300B7B604 /* ProfileEditScenario.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditScenario.swift; sourceTree = "<group>"; };
 		19221EE928C9AF3400B7B604 /* Optional+Unwrap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Optional+Unwrap.swift"; sourceTree = "<group>"; };
 		19221EEB28C9B04700B7B604 /* TitledTextFieldY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitledTextFieldY.swift; sourceTree = "<group>"; };
@@ -728,6 +731,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1921CAAA291B877D007AE024 /* FirebaseMessaging in Frameworks */,
 				1913F656286E1EC80033FAB3 /* RealmSwift in Frameworks */,
 				1977518D28A8329F006CFAF3 /* ReactiveWorks in Frameworks */,
 				19D5DC3A289D682700ACC440 /* Anchorage in Frameworks */,
@@ -838,6 +842,7 @@
 				19C1E983285F426B00E7976D /* Networking */,
 				190C1D41285D195800FB3518 /* Main */,
 				190C1D1F285D160000FB3518 /* Info.plist */,
+				1921CAAB291C1B8E007AE024 /* GoogleService-Info.plist */,
 			);
 			path = TeamForce;
 			sourceTree = "<group>";
@@ -1767,6 +1772,7 @@
 				1977518C28A8329F006CFAF3 /* ReactiveWorks */,
 				1977518F28A83395006CFAF3 /* SwiftCSSParser */,
 				19CAB9D328B432CD00A0A3B1 /* AlamofireImage */,
+				1921CAA9291B877D007AE024 /* FirebaseMessaging */,
 			);
 			productName = TeamForce;
 			productReference = 190C1D0E285D15FF00FB3518 /* TeamForce.app */;
@@ -1826,6 +1832,7 @@
 				19D5DC38289D682700ACC440 /* XCRemoteSwiftPackageReference "Anchorage" */,
 				1977518E28A83395006CFAF3 /* XCRemoteSwiftPackageReference "swift-css-parser" */,
 				19CAB9D228B432CC00A0A3B1 /* XCRemoteSwiftPackageReference "AlamofireImage" */,
+				1921CAA8291B877D007AE024 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = 190C1D0F285D15FF00FB3518 /* Products */;
 			projectDirPath = "";
@@ -1843,6 +1850,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				190C1D1E285D160000FB3518 /* LaunchScreen.storyboard in Resources */,
+				1921CAAC291C1B8E007AE024 /* GoogleService-Info.plist in Resources */,
 				19EFD4C228A82ABC00651E0A /* CssColors.css in Resources */,
 				190C1D1B285D160000FB3518 /* Assets.xcassets in Resources */,
 			);
@@ -2507,6 +2515,14 @@
 				kind = branch;
 			};
 		};
+		1921CAA8291B877D007AE024 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.0.0;
+			};
+		};
 		1953DE7D2878BCB5000DC537 /* XCRemoteSwiftPackageReference "SwiftKeychainWrapper" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/jrendel/SwiftKeychainWrapper";
@@ -2562,6 +2578,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 1913F654286E1EC80033FAB3 /* XCRemoteSwiftPackageReference "realm-swift" */;
 			productName = RealmSwift;
+		};
+		1921CAA9291B877D007AE024 /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1921CAA8291B877D007AE024 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
 		};
 		1953DE7E2878BCB5000DC537 /* SwiftKeychainWrapper */ = {
 			isa = XCSwiftPackageProductDependency;
