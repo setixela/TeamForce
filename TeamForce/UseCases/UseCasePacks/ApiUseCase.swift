@@ -415,6 +415,29 @@ final class ApiUseCase<Asset: AssetProtocol>: InitProtocol, Assetable, WorkBaske
       .retainedWork(retainer)
    }
    
+   var setFcmToken: SetFcmTokenUseCase.WRK {
+      SetFcmTokenUseCase(
+         safeStringStorage: safeStringStorage,
+         setFcmTokenApiWorker: setFcmTokenApiWorker
+      )
+      .retainedWork(retainer)
+   }
+   
+   var removeFcmToken: RemoveFcmTokenUseCase.WRK {
+      RemoveFcmTokenUseCase(
+         safeStringStorage: safeStringStorage,
+         removeFcmTokenApiWorker: removeFcmTokenApiWorker
+      )
+      .retainedWork(retainer)
+   }
+   
+   var getNotifications: GetNotificationsUseCase.WRK {
+      GetNotificationsUseCase(
+         safeStringStorage: safeStringStorage,
+         getNotificationsApiWorker: getNotificationsApiWorker
+      )
+      .retainedWork(retainer)
+   }
    
    // MARK: - Dependencies
 
@@ -486,4 +509,8 @@ final class ApiUseCase<Asset: AssetProtocol>: InitProtocol, Assetable, WorkBaske
    private var getEventsWinnersApiWorker: GetEventsWinnersApiWorker { .init(apiEngine: Asset.service.apiEngine) }
    private var getEventsChallApiWorker: GetEventsChallApiWorker { .init(apiEngine: Asset.service.apiEngine) }
    private var getEventsTransactByIdApiWorker: GetEventsTransactByIdApiWorker { .init(apiEngine: Asset.service.apiEngine) }
+   private var setFcmTokenApiWorker: SetFcmTokenApiWorker { .init(apiEngine:
+       Asset.service.apiEngine) }
+   private var removeFcmTokenApiWorker: RemoveFcmTokenApiWorker { .init(apiEngine: Asset.service.apiEngine) }
+   private var getNotificationsApiWorker: GetNotificationsApiWorker { .init(apiEngine: Asset.service.apiEngine) }
 }
