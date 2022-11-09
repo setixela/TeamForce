@@ -10,7 +10,7 @@ import Foundation
 struct TransactionData: Codable {
    let amount: Int?
    let status: Status?
-   let senderId: String?
+   let senderId: Int?
    let recipientId: Int?
    let senderTgName: String?
    let recipientTgName: String?
@@ -32,12 +32,12 @@ struct TransactionData: Codable {
    }
    
    enum Status: String, Codable {
-      case W = "Ожидает подтверждения"
-      case A = "Одобрена"
-      case D = "Отклонена"
-      case C = "Отменена"
-      case R = "Выполнена"
-      case G = "Ожидает"
+      case W
+      case A
+      case D
+      case C
+      case R
+      case G
    }
 }
 

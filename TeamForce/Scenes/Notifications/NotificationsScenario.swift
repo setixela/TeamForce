@@ -25,5 +25,14 @@ final class NotificationsScenario<Asset: AssetProtocol>:
             print("fail")
          }
       
+      works.getNotifications
+         .doAsync()
+         .onSuccess {
+            print("success")
+         }
+         .onFail {
+            print("fail")
+         }
+      
    }
 }
