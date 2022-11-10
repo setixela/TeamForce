@@ -112,7 +112,6 @@ final class LoginWorks<Asset: AssetProtocol>: BaseSceneWorks<LoginWorks.Temp, As
    }}
    
    var setFcmToken: Work<Void, Void> { .init { [weak self] work in
-      print("hello")
       guard
          let deviceId = UIDevice.current.identifierForVendor?.uuidString,
          let currentFcmToken = UserDefaults.standard.string(forKey: "fcmToken")
@@ -120,17 +119,14 @@ final class LoginWorks<Asset: AssetProtocol>: BaseSceneWorks<LoginWorks.Temp, As
          work.fail()
          return
       }
-      print("deviceId \(deviceId)")
-      print("fcmToken \(currentFcmToken)")
+
       let fcm = FcmToken(token: currentFcmToken, device: deviceId)
       self?.useCase.setFcmToken
          .doAsync(fcm)
          .onSuccess {
-            print("success")
             work.success()
          }
          .onFail {
-            print("fail")
             work.fail()
          }
    } }
