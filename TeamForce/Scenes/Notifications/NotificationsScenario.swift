@@ -16,6 +16,7 @@ final class NotificationsScenario<Asset: AssetProtocol>:
    
    override func start() {
       works.retainer.cleanAll()
+
       works.setFcmToken
          .doAsync()
          .onSuccess {
@@ -27,9 +28,7 @@ final class NotificationsScenario<Asset: AssetProtocol>:
       
       works.getNotifications
          .doAsync()
-         .onSuccess {
-            print("success")
-         }
+         .onSuccess(setState) { .notificationsList($0) }
          .onFail {
             print("fail")
          }

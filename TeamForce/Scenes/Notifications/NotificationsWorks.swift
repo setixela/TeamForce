@@ -37,15 +37,15 @@ final class NotificationsWorks<Asset: AssetProtocol>: BaseSceneWorks<Notificatio
       work.success()
    }.retainBy(retainer) }
    
-   var getNotifications: Work<Void, Void> { .init { [weak self] work in
+   var getNotifications: Work<Void, [Notification]> { .init { [weak self] work in
       let pagination = Pagination(offset: 1, limit: 20)
       self?.apiUseCase.getNotifications
          .doAsync(pagination)
          .onSuccess {
-            print($0)
+            work.success($0)
          }
          .onFail {
-            print("fail")
+            work.fail()
          }
    }.retainBy(retainer) }
 }

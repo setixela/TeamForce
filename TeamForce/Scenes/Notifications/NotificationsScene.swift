@@ -32,7 +32,6 @@ final class NotificationsScene<Asset: AssetProtocol>: BaseSceneModel<
       vcModel?.on(\.viewDidLoad, self) {
          $0.configure()
       }
-      scenario.start()
    }
 }
 
@@ -40,11 +39,14 @@ extension NotificationsScene: Configurable {
    func configure() {
       mainVM.headerStack.arrangedModel(Spacer(8))
       mainVM.bodyStack.arrangedModel(notifyViewModel)
+
+      scenario.start()
    }
 }
 
 enum NotificationsState {
    case initial
+   case notificationsList([Notification])
 }
 
 extension NotificationsScene: StateMachine {
@@ -52,6 +54,8 @@ extension NotificationsScene: StateMachine {
       switch state {
       case .initial:
          break
+      case .notificationsList(let notifications):
+         notifyViewModel.setState(.tableData(notifications))
       }
    }
 }

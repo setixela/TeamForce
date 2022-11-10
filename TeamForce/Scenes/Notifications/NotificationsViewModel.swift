@@ -11,8 +11,11 @@ final class NotificationsViewModel<Design: DSP>: StackModel, Designable {
    //
    private lazy var tableModel = TableItemsModel<Design>()
       .backColor(Design.color.background)
+      .set(.presenters([
+         NotificationsPresenter<Design>.notifyCell
+      ]))
 
-   private lazy var presenter = HistoryPresenters<Design>()
+  // private lazy var presenter = HistoryPresenters<Design>()
 
    override func start() {
       super.start()
@@ -24,22 +27,27 @@ final class NotificationsViewModel<Design: DSP>: StackModel, Designable {
 }
 
 enum NotifyVMState {
-   case tableData
+   case tableData([Notification])
 }
 
 extension NotificationsViewModel: StateMachine {
    func setState(_ state: NotifyVMState) {
       switch state {
-      case .tableData:
-         break
+      case .tableData(let notifies):
+         tableModel.set(.items(notifies))
       }
    }
 }
 
 struct NotificationsPresenter<Design: DSP>: Designable {
-   var notifyCell: Presenter<TransactionItem, HistoryCellModel<Design>> {
+   static var notifyCell: Presenter<Notification, NotificationsCellModel<Design>> {
       Presenter { work in
          let item = work.unsafeInput.item
+
+         let cell = NotificationsCellModel<Design>()
+         cell.setup(item)
+
+         work.success(cell)
       }
    }
 }

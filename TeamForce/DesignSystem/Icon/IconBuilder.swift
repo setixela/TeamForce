@@ -131,7 +131,7 @@ struct IconBuilder: IconElements {
    var calendarLine: UIImage { make("calendar-line") }
 
    var avatarPlaceholder: UIImage { make("avatarPlaceholder") }
-   var newAvatar: UIImage { make("avatar") }
+   var newAvatar: UIImage { make("user") }
    var challengeAvatar: UIImage { make("challengeAvatar") }
    var anonAvatar: UIImage { make("anon_avatar") }
 
