@@ -17,14 +17,14 @@ final class NotificationsScenario<Asset: AssetProtocol>:
    override func start() {
       works.retainer.cleanAll()
 
-      works.setFcmToken
-         .doAsync()
-         .onSuccess {
-            print("success")
-         }
-         .onFail {
-            print("fail")
-         }
+//      works.setFcmToken
+//         .doAsync()
+//         .onSuccess {
+//            print("success")
+//         }
+//         .onFail {
+//            print("fail")
+//         }
       
       works.getNotifications
          .doAsync()

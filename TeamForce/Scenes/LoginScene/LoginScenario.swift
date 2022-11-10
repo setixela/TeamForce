@@ -52,8 +52,16 @@ final class LoginScenario<Asset: AssetProtocol>:
          .doNext(works.verifyCode)
          .onFail(setState, .invalidSmsCode)
          .doNext(works.saveLoginResults)
+         .doNext(works.setFcmToken)
+//         .onSuccess {
+//            print("success")
+//         }
+//         .onFail {
+//            print("fail")
+//         }
          .onSuccess {
             Asset.router?.route(.presentInitial, scene: \.main, payload: ())
          }
+
    }
 }
