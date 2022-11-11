@@ -19,7 +19,6 @@ struct SetFcmTokenUseCase: UseCaseProtocol {
                work.fail()
             }
             .doMap {
-               print("hello")
                guard let input = work.input else { return nil }
                let request = FcmRequest(token: $0, fcmToken: input)
                return request
