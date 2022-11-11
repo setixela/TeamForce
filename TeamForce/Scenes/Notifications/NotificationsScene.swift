@@ -40,7 +40,7 @@ final class NotificationsScene<Asset: AssetProtocol>: BaseSceneModel<
 
 enum NotificationsState {
    case initial
-   case notificationsList([Notification])
+   case presentNotifySections([TableItemsSection])
    case hereIsEmpty
    case loadNotifyError
 }
@@ -54,7 +54,7 @@ extension NotificationsScene: StateMachine {
             ActivityIndicator<Design>(),
             Spacer()
          )
-      case .notificationsList(let notifications):
+      case .presentNotifySections(let notifications):
          mainVM.bodyStack.arrangedModels(notifyViewModel)
          notifyViewModel.setState(.tableData(notifications))
       case .hereIsEmpty:

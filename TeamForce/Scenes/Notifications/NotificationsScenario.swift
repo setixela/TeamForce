@@ -19,8 +19,9 @@ final class NotificationsScenario<Asset: AssetProtocol>:
          .doAsync()
          .onFail(setState, .loadNotifyError)
          .doNext(usecase: IsNotEmpty())
-         .onSuccess(setState) { .notificationsList($0) }
          .onFail(setState, .hereIsEmpty)
+         .doNext(works.getNotifySections)
+         .onSuccess(setState) { .presentNotifySections($0) }
 
       events.didSelectIndex
          .doNext(works.getNotificationByIndex)
