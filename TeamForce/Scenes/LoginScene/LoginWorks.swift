@@ -120,7 +120,9 @@ final class LoginWorks<Asset: AssetProtocol>: BaseSceneWorks<LoginWorks.Temp, As
          return
       }
 
-      let fcm = FcmToken(token: currentFcmToken, device: deviceId)
+      let devicedToken = (deviceId + Config.urlBase).md5()
+      let fcm = FcmToken(token: currentFcmToken, device: devicedToken)
+
       self?.useCase.setFcmToken
          .doAsync(fcm)
          .onSuccess {

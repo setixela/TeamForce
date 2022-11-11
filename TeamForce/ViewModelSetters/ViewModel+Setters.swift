@@ -293,14 +293,14 @@ extension ViewModelProtocol where Self: Stateable, View: StackViewExtended {
       return self
    }
 
-   @discardableResult func arrangedModel(_ value: UIViewModel) -> Self {
+   @discardableResult func arrangedModels(_ value: UIViewModel...) -> Self {
       view.arrangedSubviews.forEach {
          $0.removeFromSuperview()
       }
-
-      let subview = value.uiView
-      view.addArrangedSubview(subview)
-
+      value.forEach {
+         let subview = $0.uiView
+         view.addArrangedSubview(subview)
+      }
       return self
    }
 

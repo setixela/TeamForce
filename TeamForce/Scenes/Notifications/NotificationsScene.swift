@@ -15,7 +15,7 @@ final class NotificationsScene<Asset: AssetProtocol>: BaseSceneModel<
    Void
 >, Scenarible {
    //
-   
+
    lazy var scenario: Scenario = NotificationsScenario(
       works: NotificationsWorks<Asset>(),
       stateDelegate: stateDelegate,
@@ -29,34 +29,38 @@ final class NotificationsScene<Asset: AssetProtocol>: BaseSceneModel<
    override func start() {
       super.start()
 
+      setState(.initial)
+
       vcModel?.title = "Уведомления"
       vcModel?.on(\.viewDidLoad, self) {
-         $0.configure()
+         $0.scenario.start()
       }
-   }
-}
-
-extension NotificationsScene: Configurable {
-   func configure() {
-      mainVM.headerStack.arrangedModel(Spacer(8))
-      mainVM.bodyStack.arrangedModel(notifyViewModel)
-
-      scenario.start()
    }
 }
 
 enum NotificationsState {
    case initial
    case notificationsList([Notification])
+   case hereIsEmpty
 }
 
 extension NotificationsScene: StateMachine {
    func setState(_ state: NotificationsState) {
       switch state {
       case .initial:
-         break
+         mainVM.headerStack.arrangedModels(Spacer(8))
+         mainVM.bodyStack.arrangedModels(
+            ActivityIndicator<Design>(),
+            Spacer()
+         )
       case .notificationsList(let notifications):
+         mainVM.bodyStack.arrangedModels(notifyViewModel)
          notifyViewModel.setState(.tableData(notifications))
+      case .hereIsEmpty:
+         mainVM.bodyStack.arrangedModels(
+            HereIsEmpty<Design>(),
+            Spacer()
+         )
       }
    }
 }

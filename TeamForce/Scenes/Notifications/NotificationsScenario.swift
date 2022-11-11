@@ -17,10 +17,9 @@ final class NotificationsScenario<Asset: AssetProtocol>:
    override func start() {
       works.getNotifications
          .doAsync()
+         .doNext(usecase: IsNotEmpty())
          .onSuccess(setState) { .notificationsList($0) }
-         .onFail {
-            print("fail")
-         }
+         .onFail(setState, .hereIsEmpty)
 
       events.didSelectIndex
          .doNext(works.getNotificationByIndex)

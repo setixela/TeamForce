@@ -135,6 +135,7 @@
 		197A771828AD90800082CD81 /* XelaLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197A771728AD90800082CD81 /* XelaLog.swift */; };
 		197A771A28AD90B30082CD81 /* Presenting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197A771928AD90B30082CD81 /* Presenting.swift */; };
 		197A771C28AD91E20082CD81 /* HistoryPresenters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197A771B28AD91E20082CD81 /* HistoryPresenters.swift */; };
+		1984A109291E421600F65262 /* String+MD5.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1984A108291E421600F65262 /* String+MD5.swift */; };
 		1985A12628B2966400B017E0 /* SegmentControlButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1985A12528B2966400B017E0 /* SegmentControlButtons.swift */; };
 		1985A12828B296FB00B017E0 /* SegmentControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1985A12728B296FB00B017E0 /* SegmentControl.swift */; };
 		198BBEE928B6957C0006CD30 /* StorageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198BBEE828B6957C0006CD30 /* StorageUseCase.swift */; };
@@ -505,6 +506,7 @@
 		197A771728AD90800082CD81 /* XelaLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XelaLog.swift; sourceTree = "<group>"; };
 		197A771928AD90B30082CD81 /* Presenting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Presenting.swift; sourceTree = "<group>"; };
 		197A771B28AD91E20082CD81 /* HistoryPresenters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryPresenters.swift; sourceTree = "<group>"; };
+		1984A108291E421600F65262 /* String+MD5.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+MD5.swift"; sourceTree = "<group>"; };
 		1985A12328B2780000B017E0 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		1985A12528B2966400B017E0 /* SegmentControlButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentControlButtons.swift; sourceTree = "<group>"; };
 		1985A12728B296FB00B017E0 /* SegmentControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentControl.swift; sourceTree = "<group>"; };
@@ -1187,6 +1189,7 @@
 				197A2D9828A98F4300190656 /* UIColor+Random.swift */,
 				197A360C28BBB18D006E44C1 /* String+DrawImage.swift */,
 				199E321328BC1A560088BA71 /* String+DateFormat.swift */,
+				1984A108291E421600F65262 /* String+MD5.swift */,
 				19221EE928C9AF3400B7B604 /* Optional+Unwrap.swift */,
 			);
 			path = Extensions;
@@ -2053,6 +2056,7 @@
 				63BB2C1828E132E600C1E3DB /* GetCommentsUseCase.swift in Sources */,
 				19221EE828C9ADC300B7B604 /* ProfileEditScenario.swift in Sources */,
 				63BB2C0C28DA160B00C1E3DB /* PressLikeApiWorker.swift in Sources */,
+				1984A109291E421600F65262 /* String+MD5.swift in Sources */,
 				63CFA198289C3FB6000E4D1E /* GetTransactionsUseCase.swift in Sources */,
 				1977BE5828A7343400D554EA /* InputCheckers.swift in Sources */,
 				63FCC9B32907535C009D0001 /* GetEventsChallApiWorker.swift in Sources */,
