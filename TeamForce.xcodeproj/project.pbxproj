@@ -41,6 +41,12 @@
 		1921A13528EECAC900E41E86 /* ChallengesScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1921A13428EECAC900E41E86 /* ChallengesScene.swift */; };
 		1921A13728EECAD500E41E86 /* ChallengesWorks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1921A13628EECAD500E41E86 /* ChallengesWorks.swift */; };
 		1921A13B28EEE16A00E41E86 /* ChallengesViewModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1921A13A28EEE16A00E41E86 /* ChallengesViewModels.swift */; };
+		1921CAA1291AA3A5007AE024 /* NotificationsScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1921CAA0291AA3A5007AE024 /* NotificationsScene.swift */; };
+		1921CAA3291AA3B3007AE024 /* NotificationsScenario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1921CAA2291AA3B3007AE024 /* NotificationsScenario.swift */; };
+		1921CAA5291AA3C0007AE024 /* NotificationsWorks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1921CAA4291AA3C0007AE024 /* NotificationsWorks.swift */; };
+		1921CAA7291AA3CD007AE024 /* NotificationsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1921CAA6291AA3CD007AE024 /* NotificationsViewModel.swift */; };
+		1921CAAA291B877D007AE024 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 1921CAA9291B877D007AE024 /* FirebaseMessaging */; };
+		1921CAAC291C1B8E007AE024 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1921CAAB291C1B8E007AE024 /* GoogleService-Info.plist */; };
 		19221EE828C9ADC300B7B604 /* ProfileEditScenario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19221EE728C9ADC300B7B604 /* ProfileEditScenario.swift */; };
 		19221EEA28C9AF3400B7B604 /* Optional+Unwrap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19221EE928C9AF3400B7B604 /* Optional+Unwrap.swift */; };
 		19221EEC28C9B04700B7B604 /* TitledTextFieldY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19221EEB28C9B04700B7B604 /* TitledTextFieldY.swift */; };
@@ -269,6 +275,12 @@
 		636A45982900D71D003E412D /* ChallReportDetailsScenario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636A45972900D71D003E412D /* ChallReportDetailsScenario.swift */; };
 		636A459A2900D72F003E412D /* ChallReportDetailsWorks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636A45992900D72F003E412D /* ChallReportDetailsWorks.swift */; };
 		636A459C2900D746003E412D /* ChallReportDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636A459B2900D746003E412D /* ChallReportDetailsViewModel.swift */; };
+		6384AD7F291B6EE100188769 /* SetFcmTokenApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6384AD7E291B6EE100188769 /* SetFcmTokenApiWorker.swift */; };
+		6384AD82291B703700188769 /* SetFcmTokenUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6384AD81291B703700188769 /* SetFcmTokenUseCase.swift */; };
+		6384AD84291B89FC00188769 /* RemoveFcmTokenApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6384AD83291B89FC00188769 /* RemoveFcmTokenApiWorker.swift */; };
+		6384AD86291B8B4000188769 /* RemoveFcmTokenUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6384AD85291B8B4000188769 /* RemoveFcmTokenUseCase.swift */; };
+		6384AD88291BBE8600188769 /* GetNotificationsApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6384AD87291BBE8600188769 /* GetNotificationsApiWorker.swift */; };
+		6384AD8A291BC07300188769 /* GetNotificationsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6384AD89291BC07300188769 /* GetNotificationsUseCase.swift */; };
 		63A2233D28CD503B00D92615 /* AvatarPickingScenario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A2233C28CD503B00D92615 /* AvatarPickingScenario.swift */; };
 		63A2233F28CF772900D92615 /* GetTagsApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A2233E28CF772900D92615 /* GetTagsApiWorker.swift */; };
 		63A2234128CF797600D92615 /* GetTagsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A2234028CF797600D92615 /* GetTagsUseCase.swift */; };
@@ -403,6 +415,11 @@
 		1921A13428EECAC900E41E86 /* ChallengesScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengesScene.swift; sourceTree = "<group>"; };
 		1921A13628EECAD500E41E86 /* ChallengesWorks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengesWorks.swift; sourceTree = "<group>"; };
 		1921A13A28EEE16A00E41E86 /* ChallengesViewModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengesViewModels.swift; sourceTree = "<group>"; };
+		1921CAA0291AA3A5007AE024 /* NotificationsScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsScene.swift; sourceTree = "<group>"; };
+		1921CAA2291AA3B3007AE024 /* NotificationsScenario.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsScenario.swift; sourceTree = "<group>"; };
+		1921CAA4291AA3C0007AE024 /* NotificationsWorks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsWorks.swift; sourceTree = "<group>"; };
+		1921CAA6291AA3CD007AE024 /* NotificationsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewModel.swift; sourceTree = "<group>"; };
+		1921CAAB291C1B8E007AE024 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		19221EE728C9ADC300B7B604 /* ProfileEditScenario.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditScenario.swift; sourceTree = "<group>"; };
 		19221EE928C9AF3400B7B604 /* Optional+Unwrap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Optional+Unwrap.swift"; sourceTree = "<group>"; };
 		19221EEB28C9B04700B7B604 /* TitledTextFieldY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitledTextFieldY.swift; sourceTree = "<group>"; };
@@ -626,6 +643,13 @@
 		636A45972900D71D003E412D /* ChallReportDetailsScenario.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallReportDetailsScenario.swift; sourceTree = "<group>"; };
 		636A45992900D72F003E412D /* ChallReportDetailsWorks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallReportDetailsWorks.swift; sourceTree = "<group>"; };
 		636A459B2900D746003E412D /* ChallReportDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallReportDetailsViewModel.swift; sourceTree = "<group>"; };
+		6384AD7E291B6EE100188769 /* SetFcmTokenApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetFcmTokenApiWorker.swift; sourceTree = "<group>"; };
+		6384AD81291B703700188769 /* SetFcmTokenUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetFcmTokenUseCase.swift; sourceTree = "<group>"; };
+		6384AD83291B89FC00188769 /* RemoveFcmTokenApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveFcmTokenApiWorker.swift; sourceTree = "<group>"; };
+		6384AD85291B8B4000188769 /* RemoveFcmTokenUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveFcmTokenUseCase.swift; sourceTree = "<group>"; };
+		6384AD87291BBE8600188769 /* GetNotificationsApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetNotificationsApiWorker.swift; sourceTree = "<group>"; };
+		6384AD89291BC07300188769 /* GetNotificationsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetNotificationsUseCase.swift; sourceTree = "<group>"; };
+		6384AD8B291C335100188769 /* TeamForce.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TeamForce.entitlements; sourceTree = "<group>"; };
 		63A2233C28CD503B00D92615 /* AvatarPickingScenario.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarPickingScenario.swift; sourceTree = "<group>"; };
 		63A2233E28CF772900D92615 /* GetTagsApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTagsApiWorker.swift; sourceTree = "<group>"; };
 		63A2234028CF797600D92615 /* GetTagsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTagsUseCase.swift; sourceTree = "<group>"; };
@@ -720,6 +744,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1921CAAA291B877D007AE024 /* FirebaseMessaging in Frameworks */,
 				1913F656286E1EC80033FAB3 /* RealmSwift in Frameworks */,
 				1977518D28A8329F006CFAF3 /* ReactiveWorks in Frameworks */,
 				19D5DC3A289D682700ACC440 /* Anchorage in Frameworks */,
@@ -811,15 +836,15 @@
 		190C1D10285D15FF00FB3518 /* TeamForce */ = {
 			isa = PBXGroup;
 			children = (
+				6384AD8B291C335100188769 /* TeamForce.entitlements */,
 				1985A12328B2780000B017E0 /* README.md */,
 				19CF792728A54D60001531B8 /* Config.swift */,
 				190C1D13285D15FF00FB3518 /* SceneDelegate.swift */,
 				19C1E9A228610E4E00E7976D /* MainRouter.swift */,
-				197A2D9728A95D7500190656 /* States */,
-				6368D8272891E7C30049EEAB /* UserDefault+helpers.swift */,
-				1938929C28F87ED800826522 /* CommonBusiness */,
+				197A2D9728A95D7500190656 /* ViewModelSetters */,
 				195870F328A8CDD90075D505 /* Assets */,
 				196750A02865168F0019A6DE /* Scenes */,
+				1938929C28F87ED800826522 /* CommonBusiness */,
 				199C4B6728632461008AD6FD /* DesignSystem */,
 				198FE1CA28999A1500BAF1A5 /* Systems */,
 				19F153812899646900ECF000 /* UseCases */,
@@ -830,6 +855,7 @@
 				19C1E983285F426B00E7976D /* Networking */,
 				190C1D41285D195800FB3518 /* Main */,
 				190C1D1F285D160000FB3518 /* Info.plist */,
+				1921CAAB291C1B8E007AE024 /* GoogleService-Info.plist */,
 			);
 			path = TeamForce;
 			sourceTree = "<group>";
@@ -884,6 +910,17 @@
 				197447232911AC6A0089BB2B /* CreateChallengePanel.swift */,
 			);
 			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		1921CA9F291AA38B007AE024 /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				1921CAA0291AA3A5007AE024 /* NotificationsScene.swift */,
+				1921CAA2291AA3B3007AE024 /* NotificationsScenario.swift */,
+				1921CAA4291AA3C0007AE024 /* NotificationsWorks.swift */,
+				1921CAA6291AA3CD007AE024 /* NotificationsViewModel.swift */,
+			);
+			path = Notifications;
 			sourceTree = "<group>";
 		};
 		19221EED28CB17CD00B7B604 /* EditProfile */ = {
@@ -1069,6 +1106,7 @@
 		196750A02865168F0019A6DE /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				1921CA9F291AA38B007AE024 /* Notifications */,
 				193C74752909E417008B3AD9 /* ImageViewerScene */,
 				1953DE822879FDB3000DC537 /* MainScene */,
 				1959F27228AA8E7400DEEE5C /* IntroScene */,
@@ -1114,13 +1152,13 @@
 			path = InputCheckers;
 			sourceTree = "<group>";
 		};
-		197A2D9728A95D7500190656 /* States */ = {
+		197A2D9728A95D7500190656 /* ViewModelSetters */ = {
 			isa = PBXGroup;
 			children = (
 				19A8229528A925760081D385 /* ViewModel+Setters.swift */,
 				194C095528759FD900D88D5B /* ViewModel+Stateable.swift */,
 			);
-			path = States;
+			path = ViewModelSetters;
 			sourceTree = "<group>";
 		};
 		197A2D9C28A9B06900190656 /* Wrapping */ = {
@@ -1397,6 +1435,7 @@
 			children = (
 				197A360B28BBB16D006E44C1 /* Extensions */,
 				1952EA6A28A71399003F7852 /* DesignElements.swift */,
+				6368D8272891E7C30049EEAB /* UserDefault+helpers.swift */,
 				19E9F30E28AC14D100AD951F /* SceneStateProtocol.swift */,
 				19D08360286F430B00F75E4A /* Designable.swift */,
 				1999B6FD28A2F5D300D3570B /* DataToDecodableParser.swift */,
@@ -1495,6 +1534,8 @@
 		19EF32AC287CE8140078F53D /* ApiModels */ = {
 			isa = PBXGroup;
 			children = (
+				6384AD7D291B6ECB00188769 /* Notifications */,
+				636BAEF0291A5AC800B1FA79 /* History */,
 				63FCC9A429073966009D0001 /* Events */,
 				635FC6C128EE7A8F00826B67 /* Challenge */,
 				19AE3AF12869230C00A0C6E4 /* AuthApiWorker.swift */,
@@ -1504,14 +1545,10 @@
 				1953DE802879FC55000DC537 /* SearchUserApiWorker.swift */,
 				634F4332288F4EE9003B2256 /* LogoutApiWorker.swift */,
 				6368D825289187B50049EEAB /* SendCoinApiModel.swift */,
-				63CFA195289C38A9000E4D1E /* GetTransactionsApiWorker.swift */,
-				63AD132528A39B4800CFF75B /* GetTransactionByIdApiWorker.swift */,
 				63D419E628A50F730024E22C /* GetUsersListApiWorker.swift */,
 				63D419EA28AA500A0024E22C /* GetFeedsApiWorker.swift */,
 				63D419EE28AA81800024E22C /* GetPeriodsApiWorker.swift */,
 				63D419F228AA85560024E22C /* GetStatByPeriodIdApiWorker.swift */,
-				63578E5728AB8DA000423957 /* GetTransactionsByPeriodApiWorker.swift */,
-				63578E5B28AB9B3E00423957 /* CancelTransactionByIdApiWorker.swift */,
 				63E7A73A28AF9A7500FB2C80 /* GetCurrentPeriodApiWorker.swift */,
 				63E7A74028AFA0D200FB2C80 /* GetPeriodByDateApiWorker.swift */,
 				63E7A74428AFBC5300FB2C80 /* GetPeriodsFromDateApiWorker.swift */,
@@ -1546,6 +1583,8 @@
 		19F153822899647100ECF000 /* ApiUseCases */ = {
 			isa = PBXGroup;
 			children = (
+				6384AD80291B702600188769 /* Notifications */,
+				636BAEF1291A60EF00B1FA79 /* History */,
 				63FCC9A729073DD2009D0001 /* Events */,
 				635FC6C428EE7F1E00826B67 /* Challenge */,
 				19F153832899649900ECF000 /* LoadProfileUseCase.swift */,
@@ -1553,16 +1592,12 @@
 				198FE1C82899994A00BAF1A5 /* LoginUseCase.swift */,
 				198FE1CD2899BB8E00BAF1A5 /* LoadBalanceUseCase.swift */,
 				63352DE6289AA69A00489F5F /* SendCoinUseCase.swift */,
-				63CFA197289C3FB6000E4D1E /* GetTransactionsUseCase.swift */,
-				63AD132728A3B06C00CFF75B /* GetTransactionByIdUseCase.swift */,
 				19F1538D2899692D00ECF000 /* UserSearchUseCase.swift */,
 				63D419E828A5109E0024E22C /* GetUsersListUseCase.swift */,
 				63D419EC28AA56570024E22C /* GetFeedUseCase.swift */,
 				63D419F028AA825F0024E22C /* GetPeriodsUseCase.swift */,
 				63D419F628AA8AA70024E22C /* GetStatByPeriodIdUseCase.swift */,
 				190991E528AA9D2A00371909 /* VerifyCodeUseCase.swift */,
-				63578E5928AB8F6000423957 /* GetTransactionsByPeriodUseCase.swift */,
-				63578E5D28ABA2E500423957 /* CancelTransactionByIdUseCase.swift */,
 				63E7A73C28AF9BC100FB2C80 /* GetCurrentPeriodUseCase.swift */,
 				63E7A74228AFA35E00FB2C80 /* GetPeriodByDateUseCase.swift */,
 				63E7A74628AFBDE500FB2C80 /* GetPeriodsFromDateUseCase.swift */,
@@ -1664,6 +1699,48 @@
 			path = ChallengeReportDetails;
 			sourceTree = "<group>";
 		};
+		636BAEF0291A5AC800B1FA79 /* History */ = {
+			isa = PBXGroup;
+			children = (
+				63CFA195289C38A9000E4D1E /* GetTransactionsApiWorker.swift */,
+				63AD132528A39B4800CFF75B /* GetTransactionByIdApiWorker.swift */,
+				63578E5B28AB9B3E00423957 /* CancelTransactionByIdApiWorker.swift */,
+				63578E5728AB8DA000423957 /* GetTransactionsByPeriodApiWorker.swift */,
+			);
+			path = History;
+			sourceTree = "<group>";
+		};
+		636BAEF1291A60EF00B1FA79 /* History */ = {
+			isa = PBXGroup;
+			children = (
+				63578E5D28ABA2E500423957 /* CancelTransactionByIdUseCase.swift */,
+				63578E5928AB8F6000423957 /* GetTransactionsByPeriodUseCase.swift */,
+				63CFA197289C3FB6000E4D1E /* GetTransactionsUseCase.swift */,
+				63AD132728A3B06C00CFF75B /* GetTransactionByIdUseCase.swift */,
+			);
+			path = History;
+			sourceTree = "<group>";
+		};
+		6384AD7D291B6ECB00188769 /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				6384AD7E291B6EE100188769 /* SetFcmTokenApiWorker.swift */,
+				6384AD83291B89FC00188769 /* RemoveFcmTokenApiWorker.swift */,
+				6384AD87291BBE8600188769 /* GetNotificationsApiWorker.swift */,
+			);
+			path = Notifications;
+			sourceTree = "<group>";
+		};
+		6384AD80291B702600188769 /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				6384AD81291B703700188769 /* SetFcmTokenUseCase.swift */,
+				6384AD85291B8B4000188769 /* RemoveFcmTokenUseCase.swift */,
+				6384AD89291BC07300188769 /* GetNotificationsUseCase.swift */,
+			);
+			path = Notifications;
+			sourceTree = "<group>";
+		};
 		63BB2C2728E3E78300C1E3DB /* FeedDetail */ = {
 			isa = PBXGroup;
 			children = (
@@ -1731,6 +1808,7 @@
 				1977518C28A8329F006CFAF3 /* ReactiveWorks */,
 				1977518F28A83395006CFAF3 /* SwiftCSSParser */,
 				19CAB9D328B432CD00A0A3B1 /* AlamofireImage */,
+				1921CAA9291B877D007AE024 /* FirebaseMessaging */,
 			);
 			productName = TeamForce;
 			productReference = 190C1D0E285D15FF00FB3518 /* TeamForce.app */;
@@ -1790,6 +1868,7 @@
 				19D5DC38289D682700ACC440 /* XCRemoteSwiftPackageReference "Anchorage" */,
 				1977518E28A83395006CFAF3 /* XCRemoteSwiftPackageReference "swift-css-parser" */,
 				19CAB9D228B432CC00A0A3B1 /* XCRemoteSwiftPackageReference "AlamofireImage" */,
+				1921CAA8291B877D007AE024 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = 190C1D0F285D15FF00FB3518 /* Products */;
 			projectDirPath = "";
@@ -1807,6 +1886,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				190C1D1E285D160000FB3518 /* LaunchScreen.storyboard in Resources */,
+				1921CAAC291C1B8E007AE024 /* GoogleService-Info.plist in Resources */,
 				19EFD4C228A82ABC00651E0A /* CssColors.css in Resources */,
 				190C1D1B285D160000FB3518 /* Assets.xcassets in Resources */,
 			);
@@ -1832,6 +1912,7 @@
 				19A9BE6528BEB57C0099F8EA /* ImagePickerViewModel.swift in Sources */,
 				63BB2C0A28D9293A00C1E3DB /* FeedPresenters.swift in Sources */,
 				199C4B6D2863299E008AD6FD /* DesignSystem.swift in Sources */,
+				6384AD8A291BC07300188769 /* GetNotificationsUseCase.swift in Sources */,
 				63578E5828AB8DA000423957 /* GetTransactionsByPeriodApiWorker.swift in Sources */,
 				19221EF328CDBCB000B7B604 /* SetupProtocol.swift in Sources */,
 				63BB2C1E28E14AAF00C1E3DB /* UpdateCommentApiWorker.swift in Sources */,
@@ -1933,7 +2014,9 @@
 				63D419F328AA85560024E22C /* GetStatByPeriodIdApiWorker.swift in Sources */,
 				192FCFFF28C9477100E6FACC /* ModalDoubleStackModel.swift in Sources */,
 				6368D8282891E7C40049EEAB /* UserDefault+helpers.swift in Sources */,
+				1921CAA1291AA3A5007AE024 /* NotificationsScene.swift in Sources */,
 				19017B6928A6986F00B06345 /* TitleSubtitleX.swift in Sources */,
+				1921CAA3291AA3B3007AE024 /* NotificationsScenario.swift in Sources */,
 				19E9F30F28AC14D100AD951F /* SceneStateProtocol.swift in Sources */,
 				19775FFE28C5922B008DF8E0 /* ImagePickingScenario.swift in Sources */,
 				63AB071128BD6B0F00FD650F /* ProfileWorks.swift in Sources */,
@@ -1973,6 +2056,7 @@
 				63CFA198289C3FB6000E4D1E /* GetTransactionsUseCase.swift in Sources */,
 				1977BE5828A7343400D554EA /* InputCheckers.swift in Sources */,
 				63FCC9B32907535C009D0001 /* GetEventsChallApiWorker.swift in Sources */,
+				6384AD84291B89FC00188769 /* RemoveFcmTokenApiWorker.swift in Sources */,
 				63AB070F28BD552A00FD650F /* CreateContactApiWorker.swift in Sources */,
 				631D8EB528F78D4D005332BD /* GetChallengeResultApiWorker.swift in Sources */,
 				19017B7328A69CD400B06345 /* DTLogoTitleX.swift in Sources */,
@@ -1998,6 +2082,7 @@
 				19A9BE8028C307000099F8EA /* Queue.swift in Sources */,
 				19D08357286F41B200F75E4A /* DoubleLabelPairModel.swift in Sources */,
 				63FCC9B929075A70009D0001 /* GetEventsTransactByIdUseCase.swift in Sources */,
+				6384AD7F291B6EE100188769 /* SetFcmTokenApiWorker.swift in Sources */,
 				19B39E5928D341B900BB2C77 /* TagList.swift in Sources */,
 				1952EA6D28A71537003F7852 /* ButtonElements.swift in Sources */,
 				635FC6C628EE7F3800826B67 /* GetChallengesUseCase.swift in Sources */,
@@ -2042,6 +2127,7 @@
 				19CAB9C528B41C1F00A0A3B1 /* Switcher.swift in Sources */,
 				19A9232A28B2A8200080D491 /* SpacerPresenter.swift in Sources */,
 				63AB071328BD7DD700FD650F /* ProfileEditScene.swift in Sources */,
+				1921CAA7291AA3CD007AE024 /* NotificationsViewModel.swift in Sources */,
 				63A2233D28CD503B00D92615 /* AvatarPickingScenario.swift in Sources */,
 				19F153842899649900ECF000 /* LoadProfileUseCase.swift in Sources */,
 				19CAB9D628B44C4700A0A3B1 /* StackItemsModel.swift in Sources */,
@@ -2067,6 +2153,7 @@
 				636A458D2900A429003E412D /* GetChallengeWinnersReportsUseCase.swift in Sources */,
 				636A459C2900D746003E412D /* ChallReportDetailsViewModel.swift in Sources */,
 				1955878E28F733AA0001F734 /* ChallengeResultScene.swift in Sources */,
+				1921CAA5291AA3C0007AE024 /* NotificationsWorks.swift in Sources */,
 				632DADD128FD6B3300998DCD /* ChallengeResCancelWorks.swift in Sources */,
 				19ECD54128623D1F001765F6 /* LabelModel.swift in Sources */,
 				196750B0286518F80019A6DE /* DoubleStacksModel.swift in Sources */,
@@ -2107,6 +2194,7 @@
 				194E308028F36657001E2967 /* ChallengeDetailsWorks.swift in Sources */,
 				1952EA6928A711F2003F7852 /* Associated.swift in Sources */,
 				19D08353286F403400F75E4A /* SideBarModel.swift in Sources */,
+				6384AD82291B703700188769 /* SetFcmTokenUseCase.swift in Sources */,
 				631D8EC328F94F39005332BD /* ChallWinnersPresenters.swift in Sources */,
 				196D883628ADB74800F4C09D /* TabBarPanel.swift in Sources */,
 				1955879228F733D30001F734 /* ChallengeResultWorks.swift in Sources */,
@@ -2122,6 +2210,7 @@
 				63EB469728AC35920070A271 /* HistoryScenario.swift in Sources */,
 				63E7A73B28AF9A7500FB2C80 /* GetCurrentPeriodApiWorker.swift in Sources */,
 				19D7BE9728B3CC1100C95053 /* CurrencyButtonDT.swift in Sources */,
+				6384AD88291BBE8600188769 /* GetNotificationsApiWorker.swift in Sources */,
 				197A360428B90BD3006E44C1 /* MainSceneEvents.swift in Sources */,
 				19C1E98C285F426B00E7976D /* EndpointProtocol.swift in Sources */,
 				196750B4286519660019A6DE /* ProductionAsset.swift in Sources */,
@@ -2140,6 +2229,7 @@
 				197447202911ABEC0089BB2B /* ChallengeCellStatusBlock.swift in Sources */,
 				198BBEF028B69C810006CD30 /* LoadBothTokensUseCase.swift in Sources */,
 				19D0835D286F428600F75E4A /* BarButtonModel.swift in Sources */,
+				6384AD86291B8B4000188769 /* RemoveFcmTokenUseCase.swift in Sources */,
 				63BB2C2228E150CA00C1E3DB /* DeleteCommentApiWorker.swift in Sources */,
 				63A37EB828F3199D00DBD59F /* CheckChallengeReportApiWorker.swift in Sources */,
 				63AB070928BD4C1B00FD650F /* UpdateProfileApiWorker.swift in Sources */,
@@ -2315,6 +2405,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = TeamForce/TeamForce.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 23;
@@ -2353,6 +2444,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = TeamForce/TeamForce.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 23;
@@ -2467,6 +2559,14 @@
 				kind = branch;
 			};
 		};
+		1921CAA8291B877D007AE024 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.0.0;
+			};
+		};
 		1953DE7D2878BCB5000DC537 /* XCRemoteSwiftPackageReference "SwiftKeychainWrapper" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/jrendel/SwiftKeychainWrapper";
@@ -2522,6 +2622,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 1913F654286E1EC80033FAB3 /* XCRemoteSwiftPackageReference "realm-swift" */;
 			productName = RealmSwift;
+		};
+		1921CAA9291B877D007AE024 /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1921CAA8291B877D007AE024 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
 		};
 		1953DE7E2878BCB5000DC537 /* SwiftKeychainWrapper */ = {
 			isa = XCSwiftPackageProductDependency;

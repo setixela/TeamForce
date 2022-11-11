@@ -14,7 +14,7 @@ final class SettingsScene<Asset: AssetProtocol>: BaseSceneModel<
    DefaultVCModel,
    ModalDoubleStackModel<Asset>,
    Asset,
-   Void
+   Int
 > {
    // MARK: - Frame Cells
 
@@ -118,6 +118,19 @@ final class SettingsScene<Asset: AssetProtocol>: BaseSceneModel<
          .onSuccess(self) { slf,_ in
             slf.dismiss()
             UserDefaults.standard.setIsLoggedIn(value: false)
+            guard
+               let userId = slf.inputValue,
+               let deviceId = UIDevice.current.identifierForVendor?.uuidString
+            else { return }
+            let request = RemoveFcmToken(device: deviceId, userId: userId)
+            slf.useCase.removeFcmToken
+               .doAsync(request)
+               .onSuccess {
+                  print("success")
+               }
+               .onFail {
+                  print("fail")
+               }
             Asset.router?.route(.presentInitial, scene: \.digitalThanks, payload: ())
          }.onFail {
             print("logout api failed")

@@ -13,13 +13,23 @@ struct GetTransactionsUseCase: UseCaseProtocol {
    let safeStringStorage: StringStorageWorker
    let getTransactionsApiWorker: GetTransactionsApiWorker
 
-   var work: Work<Void, [Transaction]> {
-      Work<Void, [Transaction]>() { work in
+   var work: Work<HistoryRequest, [Transaction]> {
+      Work<HistoryRequest, [Transaction]>() { work in
          safeStringStorage
             .doAsync("token")
             .onFail {
                log("No token")
                work.fail()
+            }
+            .doMap {
+               guard
+                  let input = work.input
+               else { work.fail(); return nil }
+               let request = HistoryRequest(token: $0,
+                                            pagination: input.pagination,
+                                            sentOnly: input.sentOnly,
+                                            receivedOnly: input.receivedOnly)
+               return request
             }
             .doNext(worker: getTransactionsApiWorker)
             .onSuccess {

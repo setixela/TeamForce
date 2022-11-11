@@ -7,6 +7,7 @@
 
 import Foundation
 import ReactiveWorks
+import UIKit
 
 protocol LoginBackstageProtocol: Assetable {
    var authByName: VoidWork<AuthResult> { get }
@@ -109,4 +110,24 @@ final class LoginWorks<Asset: AssetProtocol>: BaseSceneWorks<LoginWorks.Temp, As
 
       work.success()
    }}
+   
+   var setFcmToken: Work<Void, Void> { .init { [weak self] work in
+      guard
+         let deviceId = UIDevice.current.identifierForVendor?.uuidString,
+         let currentFcmToken = UserDefaults.standard.string(forKey: "fcmToken")
+      else {
+         work.fail()
+         return
+      }
+
+      let fcm = FcmToken(token: currentFcmToken, device: deviceId)
+      self?.useCase.setFcmToken
+         .doAsync(fcm)
+         .onSuccess {
+            work.success()
+         }
+         .onFail {
+            work.fail()
+         }
+   } }
 }

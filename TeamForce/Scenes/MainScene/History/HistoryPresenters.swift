@@ -8,17 +8,14 @@
 import ReactiveWorks
 import UIKit
 
-class HistoryPresenters<Design: DesignProtocol>: Designable {
+final class HistoryPresenters<Design: DesignProtocol>: Designable {
    var events: EventsStore = .init()
-
-   private lazy var retainer = Retainer()
 
    var transactToHistoryCell: Presenter<TransactionItem, HistoryCellModel<Design>> {
       Presenter { [weak self] work in
          guard let self = self else { return }
          
          let item = work.unsafeInput.item
-         let index = work.unsafeInput.index
          
          // print(work.input)
          var userNameText: String
@@ -136,7 +133,6 @@ class HistoryPresenters<Design: DesignProtocol>: Designable {
             $0.send(\.cancelButtonPressed, item.id ?? 0)
          }
 
-         self.retainer.retain(work)
          work.success(result: cell)
       }
    }

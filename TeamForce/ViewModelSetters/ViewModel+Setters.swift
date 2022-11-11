@@ -224,6 +224,11 @@ extension ViewModelProtocol where Self: Stateable {
       view.isUserInteractionEnabled = value
       return self
    }
+
+   @discardableResult func contentScale(_ value: CGFloat) -> Self {
+      view.contentScaleFactor = value
+      return self
+   }
 }
 
 extension ViewModelProtocol where Self: Stateable, View: StackViewExtended {

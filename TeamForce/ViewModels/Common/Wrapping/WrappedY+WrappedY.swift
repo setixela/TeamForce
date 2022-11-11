@@ -62,12 +62,9 @@ final class Wrapped3Y<VM1: VMP, VM2: VMP, VM3: VMP>: BaseViewModel<StackViewExte
    }
 }
 
-final class WrappedX<VM: VMP>: BaseViewModel<StackViewExtended>,
-   VMWrapper,
-   Stateable
+final class WrappedX<VM: VMP>: StackModel,
+   VMWrapper
 {
-   typealias State = StackState
-
    lazy var subModel: VM = .init()
 
    override func start() {

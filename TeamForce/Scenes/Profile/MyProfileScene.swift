@@ -69,9 +69,13 @@ class MyProfileScene<Asset: AssetProtocol>: BaseSceneModel<
 
    lazy var settingsButton = Design.button.secondary
       .title("Настройки")
-      .on(\.didTap) {
-         Asset.router?.route(.presentModally(.automatic), scene: \.settings)
+      .on(\.didTap) { [weak self] in
+         guard let id = self?.userId else {
+            return
+         }
+         Asset.router?.route(.presentModally(.automatic), scene: \.settings, payload: id)
       }
+     
 
    lazy var infoStackSecondary = UserProfileStack<Design>()
       .arrangedModels([
@@ -95,6 +99,7 @@ class MyProfileScene<Asset: AssetProtocol>: BaseSceneModel<
    private var balance: Balance?
 
    private var userAvatar: String?
+   private var userId: Int?
 
    override func start() {
       vcModel?.send(\.setTitle, "Профиль")
@@ -146,6 +151,8 @@ class MyProfileScene<Asset: AssetProtocol>: BaseSceneModel<
 
    private func configureProfile() {
       if let input = inputValue {
+         userId = input
+
          print("input is \(input)")
          useCase.getProfileById
             .doAsync(input)
@@ -169,6 +176,7 @@ class MyProfileScene<Asset: AssetProtocol>: BaseSceneModel<
             }
             .doNext(worker: userProfileApiModel)
             .onSuccess { [weak self] userData in
+               self?.userId = userData.profile.id
                self?.setLabels(userData: userData)
                self?.userAvatar = userData.profile.photo
             }.onFail {

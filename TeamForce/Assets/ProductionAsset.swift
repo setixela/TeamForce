@@ -37,6 +37,8 @@ protocol ScenesProtocol: InitProtocol {
    var challengeResCancel: SMP { get }
    var challengeReportDetail: SMP { get }
 
+   var notifications: SMP { get }
+
    var settings: SMP { get }
 
    var imageViewer: SMP { get }
@@ -65,6 +67,8 @@ struct Scenes: ScenesProtocol {
    var challengeDetails: SMP { ChallengeDetailsScene<PA>() }
    var challengeResCancel: SMP { ChallengeResCancelScene<PA>() }
    var challengeReportDetail: SMP { ChallReportDetailsScene<PA>() }
+
+   var notifications: SMP { NotificationsScene<PA>() }
 
    var imageViewer: SMP { ImageViewerScene<PA>() }
 }

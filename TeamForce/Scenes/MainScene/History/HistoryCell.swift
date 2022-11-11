@@ -18,7 +18,7 @@ final class HistoryCellModel<Design: DSP>:
 
       setAll { icon, nameStatus, summa in
          icon
-            .image(Design.icon.newAvatar)
+            .image(Design.icon.anonAvatar)
             .contentMode(.scaleAspectFill)
             .cornerRadius(48 / 2)
             .size(.square(48))
