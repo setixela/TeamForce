@@ -60,32 +60,37 @@ protocol IconElements: InitProtocol, DesignElementable where DesignElement == UI
    // bottom panel
    var bottomPanel: DesignElement { get }
    var tabBarMainButton: DesignElement { get }
-   var tabBarButton1: UIImage { get }
-   var tabBarButton2: UIImage { get }
-   var tabBarButton3: UIImage { get }
-   var tabBarButton4: UIImage { get }
+   var tabBarButton1: DesignElement { get }
+   var tabBarButton2: DesignElement { get }
+   var tabBarButton3: DesignElement { get }
+   var tabBarButton4: DesignElement { get }
 
    // transact
-   var transactSuccess: UIImage { get }
-   var userNotFound: UIImage { get }
+   var transactSuccess: DesignElement { get }
+   var userNotFound: DesignElement { get }
 
    // profile
-   var editCircle: UIImage { get }
-   var camera: UIImage { get }
+   var editCircle: DesignElement { get }
+   var camera: DesignElement { get }
 
    // errors
-   var errorIllustrate: UIImage { get }
+   var errorIllustrate: DesignElement { get }
 
    // tabler
-   var tablerCircleCheck: UIImage { get }
-   var tablerDiamond: UIImage { get }
-   var tablerChevronRight: UIImage { get }
-   var tablerCamera: UIImage { get }
-   var tablerMark: UIImage { get }
-   var tablerBrandTelegram: UIImage { get }
-   var tablerClock: UIImage { get }
-   var tablerGift: UIImage { get }
-   var tablerAward: UIImage { get }
+   var tablerCircleCheck: DesignElement { get }
+   var tablerDiamond: DesignElement { get }
+   var tablerChevronRight: DesignElement { get }
+   var tablerCamera: DesignElement { get }
+   var tablerMark: DesignElement { get }
+   var tablerBrandTelegram: DesignElement { get }
+   var tablerClock: DesignElement { get }
+   var tablerGift: DesignElement { get }
+   var tablerAward: DesignElement { get }
+
+   var tablerRefresh: DesignElement { get }
+   var tablerUserCheck: DesignElement { get }
+   var tablerMessageCircle: DesignElement { get }
+   var tablerMoodSmile: DesignElement { get }
 
    // illusttrates
    var challengeWinnerIllustrateFull: DesignElement { get }
@@ -177,6 +182,11 @@ struct IconBuilder: IconElements {
    var tablerClock: UIImage { make("tabler_clock") }
    var tablerGift: UIImage { make("tabler_gift") }
    var tablerAward: UIImage { make("tabler_award") }
+
+   var tablerRefresh: UIImage { make("tabler_refresh") }
+   var tablerUserCheck: UIImage { make("tabler_user-check") }
+   var tablerMessageCircle: UIImage { make("tabler_message-circle-2") }
+   var tablerMoodSmile: UIImage { make("tabler_mood-smile") }
 
    // illusttrates
    var challengeWinnerIllustrateFull: UIImage { make("challenge_winner_illustrate_full") }

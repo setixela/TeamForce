@@ -841,11 +841,10 @@
 				19CF792728A54D60001531B8 /* Config.swift */,
 				190C1D13285D15FF00FB3518 /* SceneDelegate.swift */,
 				19C1E9A228610E4E00E7976D /* MainRouter.swift */,
-				197A2D9728A95D7500190656 /* States */,
-				6368D8272891E7C30049EEAB /* UserDefault+helpers.swift */,
-				1938929C28F87ED800826522 /* CommonBusiness */,
+				197A2D9728A95D7500190656 /* ViewModelSetters */,
 				195870F328A8CDD90075D505 /* Assets */,
 				196750A02865168F0019A6DE /* Scenes */,
+				1938929C28F87ED800826522 /* CommonBusiness */,
 				199C4B6728632461008AD6FD /* DesignSystem */,
 				198FE1CA28999A1500BAF1A5 /* Systems */,
 				19F153812899646900ECF000 /* UseCases */,
@@ -1153,13 +1152,13 @@
 			path = InputCheckers;
 			sourceTree = "<group>";
 		};
-		197A2D9728A95D7500190656 /* States */ = {
+		197A2D9728A95D7500190656 /* ViewModelSetters */ = {
 			isa = PBXGroup;
 			children = (
 				19A8229528A925760081D385 /* ViewModel+Setters.swift */,
 				194C095528759FD900D88D5B /* ViewModel+Stateable.swift */,
 			);
-			path = States;
+			path = ViewModelSetters;
 			sourceTree = "<group>";
 		};
 		197A2D9C28A9B06900190656 /* Wrapping */ = {
@@ -1436,6 +1435,7 @@
 			children = (
 				197A360B28BBB16D006E44C1 /* Extensions */,
 				1952EA6A28A71399003F7852 /* DesignElements.swift */,
+				6368D8272891E7C30049EEAB /* UserDefault+helpers.swift */,
 				19E9F30E28AC14D100AD951F /* SceneStateProtocol.swift */,
 				19D08360286F430B00F75E4A /* Designable.swift */,
 				1999B6FD28A2F5D300D3570B /* DataToDecodableParser.swift */,

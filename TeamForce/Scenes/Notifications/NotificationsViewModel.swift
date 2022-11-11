@@ -8,6 +8,7 @@
 import ReactiveWorks
 
 final class NotificationsViewModel<Design: DSP>: StackModel, Designable {
+   var events = EventsStore()
    //
    private lazy var tableModel = TableItemsModel<Design>()
       .backColor(Design.color.background)
@@ -15,7 +16,7 @@ final class NotificationsViewModel<Design: DSP>: StackModel, Designable {
          NotificationsPresenter<Design>.notifyCell
       ]))
 
-  // private lazy var presenter = HistoryPresenters<Design>()
+   // private lazy var presenter = HistoryPresenters<Design>()
 
    override func start() {
       super.start()
@@ -23,6 +24,16 @@ final class NotificationsViewModel<Design: DSP>: StackModel, Designable {
       arrangedModels([
          tableModel
       ])
+
+      tableModel.on(\.didSelectRowInt, self) {
+         $0.send(\.didSelectRow, $1)
+      }
+   }
+}
+
+extension NotificationsViewModel: Eventable {
+   struct Events: InitProtocol {
+      var didSelectRow: Int?
    }
 }
 
@@ -53,39 +64,75 @@ struct NotificationsPresenter<Design: DSP>: Designable {
 }
 
 final class NotificationsCellModel<Design: DSP>:
-   Main<ImageViewModel>.Right<LabelModel>.Down<LabelModel>.Combo,
+   Main<WrappedX<ImageViewModel>>.Right<LabelModel>
+   .Down<LabelModel>.Combo,
+   //
    Designable
 {
-
-   var icon: ImageViewModel { models.main }
+   //
+   var iconPlace: StackModel { models.main }
+   var icon: ImageViewModel { models.main.subModel }
    var date: LabelModel { models.right }
    var type: LabelModel { models.down }
+
+   private lazy var typeIcon = ImageViewModel()
+      .size(.square(15))
+
+   private lazy var typeIconWrapper = WrappedX(typeIcon)
+      .backColor(Design.color.background)
+      .cornerRadius(21/2)
+      .size(.square(21))
+      .alignment(.center)
+      .distribution(.equalCentering)
 
    required init() {
       super.init(isAutoreleaseView: true)
 
       setAll { icon, date, notify in
-
+         //
+         icon
+            .size(.square(36))
+            .cornerRadius(36/2)
+         //
+         date
+            .set(Design.state.label.captionSecondary)
+         //
+         notify
+            .set(Design.state.label.caption)
       }
+
+      iconPlace
+         .addModel(typeIconWrapper) { anchors, view in
+            anchors
+               .centerX(view.centerXAnchor, 36/3)
+               .centerY(view.centerYAnchor, -36/3)
+         }
+
+      padding(.outline(16))
+      spacing(12)
    }
 }
 
 extension NotificationsCellModel: SetupProtocol {
    func setup(_ data: Notification) {
+//
+      icon.image(Design.icon.anonAvatar)
+      date.text(data.updatedAt?.timeAgoConverted ?? "")
+      type.text(data.theme.rawValue)
+
       switch data.type {
       case .T:
-         type.text("Создан новый перевод")
+         typeIcon.image(Design.icon.tablerBrandTelegram)
       case .C:
-         type.text("Добавлен комментарий")
+         typeIcon.image(Design.icon.tablerMessageCircle)
       case .L:
-         type.text("Добавлен лайк")
+         typeIcon.image(Design.icon.like)
       case .W:
-         type.text("Пользователь победил в челлендже")
+         typeIcon.image(Design.icon.tablerMessageCircle)
       case .R:
-         type.text("Пользователь выполнил челлендж")
-      default:
-         break
+         typeIcon.image(Design.icon.tablerUserCheck)
+      case .H:
+         typeIcon.image(Design.icon.tablerMoodSmile)
       }
    }
 }
-

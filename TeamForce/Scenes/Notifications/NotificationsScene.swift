@@ -20,6 +20,7 @@ final class NotificationsScene<Asset: AssetProtocol>: BaseSceneModel<
       works: NotificationsWorks<Asset>(),
       stateDelegate: stateDelegate,
       events: NotificationsEvents(
+         didSelectIndex: notifyViewModel.on(\.didSelectRow)
       )
    )
 
