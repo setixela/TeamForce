@@ -113,18 +113,18 @@ struct HistoryRequest {
    let pagination: Pagination?
    let sentOnly: Bool?
    let receivedOnly: Bool?
-   
+
    init(token: String? = nil,
         pagination: Pagination? = nil,
         sentOnly: Bool? = nil,
-        receivedOnly: Bool? = nil) {
+        receivedOnly: Bool? = nil)
+   {
       self.token = token
       self.pagination = pagination
       self.sentOnly = sentOnly
       self.receivedOnly = receivedOnly
    }
 }
-
 
 final class GetTransactionsApiWorker: BaseApiWorker<HistoryRequest, [Transaction]> {
    override func doAsync(work: Wrk) {
@@ -133,11 +133,11 @@ final class GetTransactionsApiWorker: BaseApiWorker<HistoryRequest, [Transaction
          work.fail()
          return
       }
-      
+
       apiEngine?
          .process(endpoint: TeamForceEndpoints.GetTransactions(
             headers: [
-            "Authorization": request.token.string
+               "Authorization": request.token.string
             ],
             sentOnly: request.sentOnly,
             recievedOnly: request.receivedOnly,

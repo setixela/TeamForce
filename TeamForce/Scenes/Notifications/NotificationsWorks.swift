@@ -18,6 +18,7 @@ where Asset: AssetProtocol, Temp == NotificationsStore
    var apiUseCase: ApiUseCase<Asset> { get }
 
    var getNotifications: Work<Void, [Notification]> { get }
+   var getNotifySections: Work<[Notification], [TableItemsSection]> { get }
    var getNotificationByIndex: Work<Int, Notification> { get }
 }
 
@@ -40,6 +41,46 @@ extension NotificationsWorksProtocol {
          $0.success(Self.store.notifications[$0.unsafeInput])
       }.retainBy(retainer)
    }
+
+   var getNotifySections: Work<[Notification], [TableItemsSection]> { .init {
+      let items = $0.unsafeInput
+
+      guard !items.isEmpty else {
+         $0.success([])
+         return
+      }
+
+      var prevDay = ""
+
+      let result = items
+         .reduce([TableItemsSection]()) { result, notify in
+
+            guard let dateString = notify.createdAt else {
+               result.last?.items.append(notify)
+               return result
+            }
+
+            var currentDay = dateString.dateConverted
+            if let date = dateString.dateConvertedToDate {
+               if Calendar.current.isDateInToday(date) {
+                  currentDay = Design.Text.title.today
+               } else if Calendar.current.isDateInYesterday(date) {
+                  currentDay = Design.Text.title.yesterday
+               }
+            }
+
+            var result = result
+            if prevDay != currentDay {
+               result.append(TableItemsSection(title: currentDay))
+            }
+
+            result.last?.items.append(notify)
+            prevDay = currentDay
+            return result
+         }
+
+      $0.success(result)
+   }.retainBy(retainer) }
 }
 
 final class NotificationsWorks<Asset: AssetProtocol>: BaseSceneWorks<NotificationsStore, Asset>,

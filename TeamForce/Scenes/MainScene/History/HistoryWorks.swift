@@ -46,8 +46,6 @@ final class HistoryWorks<Asset: AssetProtocol>: BaseSceneWorks<HistoryWorks.Temp
    // MARK: - Works
 
    var pagination: Work<Bool, [TableItemsSection]> { .init { [weak self] work in
-      guard let input = work.input else { work.fail(); return }
-
       switch Self.store.segmentId {
       case 0:
          self?.getTransactions

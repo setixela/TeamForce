@@ -38,14 +38,14 @@ extension NotificationsViewModel: Eventable {
 }
 
 enum NotifyVMState {
-   case tableData([Notification])
+   case tableData([TableItemsSection])
 }
 
 extension NotificationsViewModel: StateMachine {
    func setState(_ state: NotifyVMState) {
       switch state {
-      case .tableData(let notifies):
-         tableModel.set(.items(notifies))
+      case .tableData(let sections):
+         tableModel.set(.itemSections(sections))
       }
    }
 }
