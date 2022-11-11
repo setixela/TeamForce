@@ -106,10 +106,10 @@ struct LikeData: Codable {
       case transactionId = "transaction_id"
       case commentId = "comment_id"
       case challengeId = "challenge_id"
-      case reactionFromPhoto = "reaction_from_photo"
-      case reactionFromTgName = "reaction_from_tg_name"
-      case reactionFromSurname = "reaction_from_surname"
-      case reactionFromFirstName = "reaction_from_first_name"
+      case reactionFromPhoto = "like_from_photo"
+      case reactionFromTgName = "like_from_tg_name"
+      case reactionFromSurname = "like_from_surname"
+      case reactionFromFirstName = "like_from_first_name"
    }
 }
 
