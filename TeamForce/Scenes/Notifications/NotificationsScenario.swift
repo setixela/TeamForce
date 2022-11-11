@@ -17,6 +17,7 @@ final class NotificationsScenario<Asset: AssetProtocol>:
    override func start() {
       works.getNotifications
          .doAsync()
+         .onFail(setState, .loadNotifyError)
          .doNext(usecase: IsNotEmpty())
          .onSuccess(setState) { .notificationsList($0) }
          .onFail(setState, .hereIsEmpty)

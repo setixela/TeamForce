@@ -76,7 +76,7 @@ final class NotificationsCellModel<Design: DSP>:
    var type: LabelModel { models.down }
 
    private lazy var typeIcon = ImageViewModel()
-      .size(.square(15))
+      .size(.square(13))
 
    private lazy var typeIconWrapper = WrappedX(typeIcon)
       .backColor(Design.color.background)
@@ -118,7 +118,7 @@ extension NotificationsCellModel: SetupProtocol {
 //
       icon.image(Design.icon.anonAvatar)
       date.text(data.updatedAt?.timeAgoConverted ?? "")
-      type.text(data.theme.rawValue)
+      type.text(data.theme)
 
       switch data.type {
       case .T:

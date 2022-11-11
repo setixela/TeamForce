@@ -140,20 +140,10 @@ enum NotificationType: String, Codable {
    case R
 }
 
-enum NotificationTheme: String, Codable {
-   case recievedTransaction = "Вам пришла благодарность"
-   case transactionStatus = "Статус вашей благодарности изменился"
-   case newChallenge = "Новый челлендж"
-   case newReaction = "Новая реакция"
-   case newComment = "Новый комментарий"
-   case newChallengeReport = "Новый отчёт к челленджу"
-   case challengeWinner = "Победа в челлендже"
-}
-
 struct Notification: Codable {
    let id: Int
    let type: NotificationType
-   let theme: NotificationTheme
+   let theme: String
    let transactionData: TransactionData?
    let challengeData: ChallengeData?
    let reportData: ReportData?

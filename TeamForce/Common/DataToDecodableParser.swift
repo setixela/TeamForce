@@ -11,13 +11,13 @@ struct DataToDecodableParser {
    func parse<T: Decodable>(_ data: Data) -> T? {
       let decoder = JSONDecoder()
 
-      guard
-         let result = try? decoder.decode(T.self, from: data)
-      else {
+      do {
+         let result = try decoder.decode(T.self, from: data)
+         return result
+      } catch {
+         print("Decode Pardsing Error: \(error)")
          return nil
       }
-
-      return result
    }
 
 //   func parseArray<T: Decodable>(_ data: Data) -> [T]? {
@@ -33,10 +33,10 @@ struct DataToDecodableParser {
 //   }
 }
 
-//do {
+// do {
 //    let result = try decoder.decode(T.self, from: data)
 //    return result
-//} catch DecodingError.keyNotFound(let key, let context) {
+// } catch DecodingError.keyNotFound(let key, let context) {
 //     Swift.print("could not find key \(key) in JSON: \(context.debugDescription)")
 // } catch DecodingError.valueNotFound(let type, let context) {
 //     Swift.print("could not find type \(type) in JSON: \(context.debugDescription)")
@@ -47,4 +47,3 @@ struct DataToDecodableParser {
 // } catch let error as NSError {
 //     NSLog("Error in read(from:ofType:) domain= \(error.domain), description= \(error.localizedDescription)")
 // }
-

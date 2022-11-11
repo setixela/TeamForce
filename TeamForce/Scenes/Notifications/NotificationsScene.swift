@@ -42,6 +42,7 @@ enum NotificationsState {
    case initial
    case notificationsList([Notification])
    case hereIsEmpty
+   case loadNotifyError
 }
 
 extension NotificationsScene: StateMachine {
@@ -61,6 +62,8 @@ extension NotificationsScene: StateMachine {
             HereIsEmpty<Design>(),
             Spacer()
          )
+      case .loadNotifyError:
+         mainVM.bodyStack.arrangedModels(CommonErrorBlock<Design>())
       }
    }
 }
