@@ -77,8 +77,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/google/GoogleUtilities.git",
       "state" : {
-        "revision" : "68ea347bdb1a69e2d2ae2e25cd085b6ef92f64cb",
-        "version" : "7.9.0"
+        "revision" : "6db6edb48bdd9943426562c7f042a5492de5ba3d",
+        "version" : "7.10.0"
       }
     },
     {
@@ -133,6 +133,15 @@
       "state" : {
         "revision" : "3e4e743631e86c8c70dbc6efdc7beaa6e90fd3bb",
         "version" : "2.1.1"
+      }
+    },
+    {
+      "identity" : "reactiveworks",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/setixela/ReactiveWorks.git",
+      "state" : {
+        "branch" : "master",
+        "revision" : "c45b7487af58956093ecb8e5a3cef3cfdfb35fee"
       }
     },
     {
