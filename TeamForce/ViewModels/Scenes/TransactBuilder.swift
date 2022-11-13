@@ -36,7 +36,6 @@ struct TransactBuilder<Design: DSP>: TransactModelBuilder {
       .borderColor(Design.color.boundary)
       .borderWidth(Design.params.borderWidth)
       .cornerRadius(Design.params.cornerRadius)
-      .minHeight(144)
    }
 
    var userSearchTextField: TextFieldModel { .init()

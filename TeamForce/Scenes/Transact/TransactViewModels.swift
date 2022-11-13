@@ -15,6 +15,7 @@ final class TransactViewModels<Design: DSP>: Designable {
    lazy var userSearchTextField = Design.model.transact.userSearchTextField.hidden(true)
    lazy var reasonTextView = Design.model.transact.reasonInputTextView
       .hidden(true)
+      .minHeight(144)
       .placeholder(Design.Text.title.reasonPlaceholder)
    lazy var amountInputModel = Design.model.transact.amountIputViewModel.hidden(true)
    lazy var foundUsersList = Design.model.transact.foundUsersList

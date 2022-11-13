@@ -74,6 +74,7 @@ final class ChallengeCreateScene<Asset: AssetProtocol>: BaseSceneModel<
    private lazy var descriptionInput = Design.model.transact.reasonInputTextView
       .placeholder("Описание")
       .placeholderColor(Design.color.textFieldPlaceholder)
+      .minHeight(144)
 
    private lazy var finishDateButton = LabelIconX<Design>(Design.state.stack.buttonFrame)
       .set {

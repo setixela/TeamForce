@@ -33,7 +33,7 @@ final class ChallengeResultScene<Asset: AssetProtocol>: BaseSceneModel<
       stateDelegate: stateDelegate,
       events: ChallengeResultEvents(
          saveInput: on(\.input),
-         commentInputChanged: inputView.on(\.didEditingChanged),
+         commentInputChanged: inputModel.on(\.didEditingChanged),
          sendResult: sendButton.on(\.didTap)
       )
    )
@@ -44,16 +44,19 @@ final class ChallengeResultScene<Asset: AssetProtocol>: BaseSceneModel<
       events: ImagePickingScenarioEvents(
          startImagePicking: addPhotoButton.on(\.didTap),
          addImageToBasket: imagePicker.on(\.didImagePicked),
-         removeImageFromBasket: photosPanel.on(\.didCloseImage),
-         didMaximumReach: photosPanel.on(\.didMaximumReached)
+         removeImageFromBasket: photosPanel.subModel.on(\.didCloseImage),
+         didMaximumReach: photosPanel.subModel.on(\.didMaximumReached)
       )
    )
 
-   private lazy var inputView = Design.model.transact.reasonInputTextView
+   private lazy var inputModel = Design.model.transact.reasonInputTextView
       .placeholder(Design.Text.title.comment)
-      .minHeight(166)
+      .height(166)
 
-   private lazy var photosPanel = Design.model.transact.pickedImagesPanel.hidden(true)
+   private lazy var photosPanel = Design.model.transact.pickedImagesPanel
+      .lefted()
+      .hidden(true)
+
    private lazy var addPhotoButton = Design.model.transact.addPhotoButton
    private lazy var sendButton = Design.model.transact.sendButton
 
@@ -65,24 +68,15 @@ final class ChallengeResultScene<Asset: AssetProtocol>: BaseSceneModel<
       mainVM.title
          .text("Результат")
 
+      mainVM.bodyStack
+         .spacing(Grid.x16.value)
+         .arrangedModels(ActivityIndicator<Design>())
+
       vcModel?.on(\.viewDidLoad, self) { $0.configure() }
    }
 
    private func configure() {
-      mainVM.bodyStack
-         .spacing(Grid.x16.value)
-         .arrangedModels([
-            inputView,
-            photosPanel.lefted(),
-            addPhotoButton,
-            Spacer(),
-         ])
-
-      mainVM.footerStack
-         .arrangedModels([
-            Grid.x16.spacer,
-            sendButton
-         ])
+      setState(.initial)
 
       mainVM.closeButton
          .on(\.didTap, self) {
@@ -99,7 +93,19 @@ extension ChallengeResultScene {
    func setState(_ state: ChallengeResultSceneState) {
       switch state {
       case .initial:
-         break
+         mainVM.bodyStack
+            .arrangedModels(
+               inputModel,
+               photosPanel,
+               addPhotoButton,
+               Spacer()
+            )
+         mainVM.footerStack
+            .arrangedModels(
+               Grid.x16.spacer,
+               sendButton
+            )
+         mainVM.view.setNeedsLayout()
       case .sendingEnabled:
          sendButton.set(Design.state.button.default)
       case .sendingDisabled:
@@ -120,7 +126,7 @@ extension ChallengeResultScene: StateMachine2 {
       switch state {
          //
       case .presentPickedImage(let image):
-         photosPanel.addButton(image: image)
+         photosPanel.subModel.addButton(image: image)
          //
       case .presentImagePicker:
          imagePicker.send(\.presentOn, vcModel)
