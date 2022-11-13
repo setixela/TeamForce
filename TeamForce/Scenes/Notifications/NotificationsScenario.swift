@@ -33,22 +33,31 @@ final class NotificationsScenario<Asset: AssetProtocol>:
                Asset.router?.route(.push, scene: \.transactDetails, payload: feed)
             //
             case .challengeCreated:
-               Asset.router?.route(.push, scene: \.challengeDetails, payload: nil)
+               guard let challInput = NotificationToChallengeDetailsSceneInput.convert($0) else { return }
+
+               Asset.router?.route(.push, scene: \.challengeDetails, payload: challInput)
             //
             case .commentAdded:
-//               Asset.router?.route(.push, scene: \.transactionDetail, payload: $0.transactionData)
-               //
-               break
+               if let feed = NotificationToFeedElement.convert($0) {
+                  Asset.router?.route(.push, scene: \.transactDetails, payload: feed)
+               } else if let challInput = NotificationToChallengeDetailsSceneInput.convert($0) {
+                  Asset.router?.route(.push, scene: \.challengeDetails, payload: challInput)
+               }
+            //
             case .likeAdded:
-//               Asset.router?.route(.push, scene: \.transactionDetail, payload: $0.transactionData)
-               //
+               guard let likeData = $0.likeData else { return }
+               
                break
+            //
             case .challengeWin:
-               Asset.router?.route(.push, scene: \.challengeDetails, payload: nil)
+               guard let challInput = NotificationToChallengeDetailsSceneInput.convert($0) else { return }
+
+               Asset.router?.route(.push, scene: \.challengeDetails, payload: challInput)
             //
             case .finishedChallenge:
-               Asset.router?.route(.push, scene: \.challengeDetails, payload: nil)
-               //
+               guard let challInput = NotificationToChallengeDetailsSceneInput.convert($0) else { return }
+
+               Asset.router?.route(.push, scene: \.challengeDetails, payload: challInput)
             }
          }
    }

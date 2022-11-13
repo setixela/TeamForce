@@ -12,40 +12,41 @@ struct NotificationToChallengeDetailsSceneInput: Converter {
          let challData = input.challengeData
       else { return nil }
 
-      //      let eventTransaction = EventTransaction(
-      //         id: transactData.transactionId,
-      //         photo: transactData.recipientPhoto,
-      //         reason: nil,
-      //         amount: transactData.amount.int,
-      //         updatedAt: notify.updatedAt,
-      //         userLiked: false,
-      //         senderId: transactData.senderId,
-      //         senderFirstName: nil,
-      //         senderSurname: nil,
-      //         senderPhoto: transactData.senderPhoto,
-      //         senderTgName: transactData.senderTgName,
-      //         recipientId: transactData.recipientId,
-      //         recipientFirstName: nil,
-      //         recipientSurname: nil,
-      //         recipientPhoto: transactData.recipientPhoto,
-      //         recipientTgName: transactData.recipientTgName,
-      //         isAnonymous: nil,
-      //         tags: nil
-      //      )
-      //
-      //      let feedElement = FeedElement(
-      //         id: transactData.transactionId,
-      //         time: notify.createdAt,
-      //         eventTypeId: 0,
-      //         eventObjectId: nil,
-      //         eventRecordId: nil,
-      //         objectSelector: nil,
-      //         likesAmount: 0,
-      //         commentsAmount: 0,
-      //         transaction: eventTransaction
-      //      )
+      let chall = Challenge(
+         id: challData.challengeId,
+         userLiked: nil,
+         likesAmount: nil,
+         name: challData.challengeName,
+         photo: nil,
+         updatedAt: notify.updatedAt,
+         states: nil,
+         description: nil,
+         startBalance: nil,
+         creatorId: 0,
+         parameters: nil,
+         endAt: nil,
+         approvedReportsAmount: 0,
+         status: nil,
+         isNewReports: false,
+         winnersCount: nil,
+         creatorOrganizationId: nil,
+         prizeSize: 0,
+         awardees: 0,
+         fund: 0,
+         creatorName: challData.creatorFirstName,
+         creatorSurname: challData.creatorSurname,
+         creatorPhoto: challData.creatorPhoto,
+         creatorTgName: challData.creatorTgName,
+         active: nil,
+         completed: nil,
+         remainingTopPlaces: nil,
+         photoCache: nil
+      )
 
-      return ChallengeDetailsSceneInput(profileId: 0,
-                                        currentButton: 0)
+      return ChallengeDetailsSceneInput(
+         challenge: chall,
+         profileId: 0,
+         currentButton: 0
+      )
    }
 }
