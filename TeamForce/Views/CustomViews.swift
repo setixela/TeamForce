@@ -136,8 +136,7 @@ protocol AlamoLoader {}
 extension AlamoLoader {
    func loadImage(_ urlStr: String?, result: @escaping (UIImage?) -> Void) {
       guard
-         let str = urlStr,
-         let url = URL(string: str)
+         let str = urlStr
       else { result(nil); return }
 
       AF.request(str).responseImage {
@@ -147,24 +146,6 @@ extension AlamoLoader {
          }
          result(nil)
       }
-
-//      let imageDownloader = ImageDownloader(
-//         configuration: ImageDownloader.defaultURLSessionConfiguration(),
-//         downloadPrioritization: .lifo,
-//         maximumActiveDownloads: 4,
-//         imageCache: AutoPurgingImageCache(memoryCapacity: 500_000_000, preferredMemoryUsageAfterPurge: 60_000_000)
-//      )
-//
-//      let urlRequest = URLRequest(url: url)
-//
-//      imageDownloader.download(urlRequest, completion: { response in
-//
-//         guard case .success(let image) = response.result else { result(nil); return }
-//
-//         let coef = image.size.width / image.size.height
-//         let image2 = image.resized(to: .init(width: 256, height: 256 / coef))
-//         result(image2)
-//      })
    }
 }
 
@@ -436,4 +417,62 @@ final class ScrollViewExtended: UIScrollView {
    required init?(coder: NSCoder) {
       fatalError("init(coder:) has not been implemented")
    }
+}
+
+final class TextViewExtended: UITextView, UITextViewDelegate {
+   var events: EventsStore = .init()
+
+   var placeholder: String? {
+      didSet {
+         text = placeholder
+      }
+   }
+
+   var placeHolderColor: UIColor = .gray
+
+   private var baseTextColor: UIColor?
+   private var isPlaceholded: Bool { text == placeholder }
+
+   override init(frame: CGRect, textContainer: NSTextContainer?) {
+      super.init(frame: frame, textContainer: textContainer)
+
+      self.delegate = self
+   }
+
+   @available(*, unavailable)
+   required init?(coder: NSCoder) {
+      fatalError("init(coder:) has not been implemented")
+   }
+
+   func textViewDidChange(_ textView: UITextView) {
+      send(\.didEditingChanged, textView.text)
+   }
+
+   override func layoutSubviews() {
+      super.layoutSubviews()
+
+      if isPlaceholded {
+         textColor = placeHolderColor
+      } else {
+         textColor = baseTextColor
+      }
+   }
+
+   func textViewDidBeginEditing(_ textView: UITextView) {
+      if isPlaceholded {
+         text = nil
+         textColor = baseTextColor
+      }
+   }
+
+   func textViewDidEndEditing(_ textView: UITextView) {
+      if textView.text == nil || textView.text.isEmpty {
+         textView.text = placeholder
+         textView.textColor = placeHolderColor
+      }
+   }
+}
+
+extension TextViewExtended: Eventable {
+   typealias Events = TextViewEvents
 }

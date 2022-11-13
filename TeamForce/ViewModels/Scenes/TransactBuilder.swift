@@ -30,8 +30,7 @@ struct TransactBuilder<Design: DSP>: TransactModelBuilder {
    //
    var reasonInputTextView: TextViewModel { .init()
       .set(Design.state.label.body1)
-      .padding(Design.params.contentPadding)
-      .placeholder(Design.Text.title.reasonPlaceholder)
+      .padding(Design.params.textViewPadding)
       .placeholderColor(Design.color.textFieldPlaceholder)
       .backColor(Design.color.background)
       .borderColor(Design.color.boundary)
