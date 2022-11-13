@@ -29,17 +29,19 @@ final class NotificationsScenario<Asset: AssetProtocol>:
             Asset.router?.route(.pop)
             switch $0.type {
             case .transactAdded: 
-               Asset.router?.route(.push, scene: \.transactionDetail, payload: $0.transactionData)
+               Asset.router?.route(.push, scene: \.transactionDetail, payload: nil)
             case .challengeCreated:
-               Asset.router?.route(.push, scene: \.transactionDetail, payload: $0.transactionData)
+               Asset.router?.route(.push, scene: \.challengeDetails, payload: nil)
             case .commentAdded:
-               Asset.router?.route(.push, scene: \.transactionDetail, payload: $0.transactionData)
+//               Asset.router?.route(.push, scene: \.transactionDetail, payload: $0.transactionData)
+               break
             case .likeAdded:
-               Asset.router?.route(.push, scene: \.transactionDetail, payload: $0.transactionData)
+//               Asset.router?.route(.push, scene: \.transactionDetail, payload: $0.transactionData)
+               break
             case .challengeWin:
-               Asset.router?.route(.push, scene: \.transactionDetail, payload: $0.transactionData)
+               Asset.router?.route(.push, scene: \.challengeDetails, payload: nil)
             case .finishedChallenge:
-               Asset.router?.route(.push, scene: \.transactionDetail, payload: $0.transactionData)
+               Asset.router?.route(.push, scene: \.challengeDetails, payload: nil)
             }
          }
    }
