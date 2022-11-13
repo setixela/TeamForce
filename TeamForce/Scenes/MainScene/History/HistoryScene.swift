@@ -131,7 +131,7 @@ extension HistoryScene: StateMachine {
       //
       case .presentDetailView(let value):
          ProductionAsset.router?.route(.presentModally(.automatic),
-                                       scene: \.transactionDetail,
+                                       scene: \.sentTransactDetails,
                                        payload: value)
       case .cancelTransaction:
          scenario.start()

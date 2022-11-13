@@ -11,14 +11,14 @@ import UIKit
 struct ChallengeDetailsSceneInput {
 
    let challenge: Challenge?
-   let feed: NewFeed?
+   let feed: FeedElement?
 
    let profileId: Int
    let currentButton: Int
    let reportId: Int?
    
    init(challenge: Challenge? = nil,
-        feed: NewFeed? = nil,
+        feed: FeedElement? = nil,
         profileId: Int,
         currentButton: Int,
         reportId: Int? = nil) {

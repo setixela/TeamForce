@@ -10,6 +10,7 @@ import ReactiveWorks
 
 struct LoadProfileUseCase: UseCaseProtocol {
    let loadToken: LoadTokenUseCase.WRK
+   let saveUserNameWork: SaveCurrentUserUseCase.WRK
    let userProfileApiModel: ProfileApiWorker
 
    var work: Work<Void, UserData> {
@@ -27,6 +28,13 @@ struct LoadProfileUseCase: UseCaseProtocol {
             }
             .onFail {
                work.fail()
+            }
+            .doMap {
+               $0.userName
+            }
+            .doNext(saveUserNameWork)
+            .onFail {
+               assertionFailure("cannot save saveUserNameWork")
             }
       }
    }

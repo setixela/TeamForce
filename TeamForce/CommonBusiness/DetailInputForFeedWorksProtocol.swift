@@ -19,7 +19,7 @@ where Asset: AssetProtocol
    var apiUseCase: ApiUseCase<Asset> { get }
 
    var getChallengeById: Work<Int, Challenge> { get }
-   var createInputForDetailView: Work<(feed: NewFeed, profileId: Int), ChallengeDetailsSceneInput> { get }
+   var createInputForDetailView: Work<(feed: FeedElement, profileId: Int), ChallengeDetailsSceneInput> { get }
 }
 
 extension DetailInputForFeedWorksProtocol {
@@ -35,7 +35,7 @@ extension DetailInputForFeedWorksProtocol {
          }
    }.retainBy(retainer) }
 
-   var createInputForDetailView: Work<(feed: NewFeed, profileId: Int), ChallengeDetailsSceneInput> { .init { [weak self] work in
+   var createInputForDetailView: Work<(feed: FeedElement, profileId: Int), ChallengeDetailsSceneInput> { .init { [weak self] work in
 
       let input = work.unsafeInput.feed
       let profileId = work.unsafeInput.profileId

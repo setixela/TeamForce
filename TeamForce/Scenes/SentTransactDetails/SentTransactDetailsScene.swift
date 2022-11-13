@@ -8,13 +8,12 @@
 import ReactiveWorks
 import UIKit
 
-final class TransactDeatilViewModel<Asset: AssetProtocol>: BaseSceneModel<
+final class SentTransactDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
    DefaultVCModel,
    ModalDoubleStackModel<Asset>,
    Asset,
    Transaction
 > {
-   private lazy var input: Transaction? = nil
    typealias State = StackState
 
    private lazy var transactionOwnerLabel = LabelModel()
@@ -37,7 +36,7 @@ final class TransactDeatilViewModel<Asset: AssetProtocol>: BaseSceneModel<
          currencyLabel,
       ]))
 
-   lazy var reasonLabel = SettingsTitleBodyDT<Design>()
+   private lazy var reasonLabel = SettingsTitleBodyDT<Design>()
       .setAll {
          $0
             .text("Cообщение")
@@ -47,7 +46,7 @@ final class TransactDeatilViewModel<Asset: AssetProtocol>: BaseSceneModel<
             .set(Design.state.label.caption)
       }
 
-   lazy var statusLabel = SettingsTitleBodyDT<Design>()
+   private lazy var statusLabel = SettingsTitleBodyDT<Design>()
       .setAll {
          $0
             .text("Статус благодарности")
@@ -142,7 +141,7 @@ final class TransactDeatilViewModel<Asset: AssetProtocol>: BaseSceneModel<
 
 // MARK: - Private funcs
 
-extension TransactDeatilViewModel {
+extension SentTransactDetailsScene {
    private func configure() {
       mainVM.bodyStack
          .alignment(.center)
@@ -163,9 +162,8 @@ extension TransactDeatilViewModel {
          ])
    }
 
-   private func configureLabels(wS: TransactDeatilViewModel<Asset>?) {
+   private func configureLabels(wS: SentTransactDetailsScene<Asset>?) {
       guard let input = wS?.inputValue else { return }
-      wS?.input = input
 
       print("detail input \(input)")
       currencyLabel.label
@@ -248,7 +246,7 @@ extension TransactDeatilViewModel {
                scene: \.imageViewer,
                payload: TeamForceEndpoints.convertToFullImageUrl(photoLink)
             ) { [weak self] _ in
-               Asset.router?.route(.presentModally(.automatic), scene: \.transactionDetail, payload: self?.input)
+               Asset.router?.route(.presentModally(.automatic), scene: \.sentTransactDetails, payload: self?.inputValue)
             }
          }
          transactPhoto.hidden(false)

@@ -11,7 +11,7 @@ import UIKit
 
 struct Config {
    #if DEBUG
-   static let urlBase = "http://176.99.6.251:8888"
+   static let urlBase = "http://176.99.6.251:8889"
    #else
    static let urlBase = "http://176.99.6.251:8889"
    #endif

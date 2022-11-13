@@ -7,6 +7,22 @@
 
 import ReactiveWorks
 
+protocol CurrentUserStorageWorksProtocol: WorkBasket, Assetable where Asset: AssetProtocol {}
+
+extension CurrentUserStorageWorksProtocol {
+   var saveCurrentUserName: SaveCurrentUserUseCase.WRK {
+      SaveCurrentUserUseCase(safeStringStorage: Asset.service.safeStringStorage)
+         .retainedWork(retainer)
+   }
+
+   var getCurrentUserName: GetCurrentUserUseCase.WRK {
+      GetCurrentUserUseCase(safeStringStorage: Asset.service.safeStringStorage)
+         .retainedWork(retainer)
+   }
+}
+
+extension StorageWorks: CurrentUserStorageWorksProtocol {}
+
 struct StorageWorks<Asset: AssetProtocol>: Assetable, WorkBasket {
    let retainer = Retainer()
 

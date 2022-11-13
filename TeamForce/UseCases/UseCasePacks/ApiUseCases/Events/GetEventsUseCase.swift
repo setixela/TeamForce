@@ -12,8 +12,8 @@ struct GetEventsUseCase: UseCaseProtocol {
    let safeStringStorage: StringStorageWorker
    let getEventsApiWorker: GetEventsApiWorker
 
-   var work: Work<Pagination, [NewFeed]> {
-      Work<Pagination, [NewFeed]>() { work in
+   var work: Work<Pagination, [FeedElement]> {
+      Work<Pagination, [FeedElement]>() { work in
          safeStringStorage
             .doAsync("token")
             .onFail {
