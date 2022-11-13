@@ -92,7 +92,7 @@ extension ChallengesScene: StateMachine {
       case .presentCreateChallenge:
          setState(.presentActivityIndicator)
          Asset.router?.route(
-            .presentModally(.automatic),
+            .presentModally(.pageSheet),
             scene: \.challengeCreate,
             payload: ()
          ) { [weak self] in

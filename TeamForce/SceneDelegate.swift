@@ -37,6 +37,7 @@ private extension SceneDelegate {
    func startDispatcher(_ nc: UINavigationController) {
       nc.navigationBar.tintColor = .white
       router = ProductionAsset.makeRouter(with: nc)
+      self.window?.backgroundColor = ProductionAsset.Design.color.backgroundBrand
       router?.start()
    }
 }

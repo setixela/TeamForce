@@ -66,10 +66,10 @@ final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<Challen
 
       events.challengeResult
          .doNext(works.getChallenge)
-         .doSaveResult()
-         .doVoidNext(works.getProfileId)
-         .onSuccessMixSaved(setState) {
-            .presentSendResultScreen($1, $0)
+       //  .doSaveResult()
+       //  .doVoidNext(works.getProfileId)
+         .onSuccess(setState) {
+            .presentSendResultScreen($0)
          }
 
       events.filterButtonTapped
@@ -114,7 +114,7 @@ final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<Challen
       events.rejectPressed
          .doNext(works.getInputForCancel)
          .onSuccess(setState) {
-            .presentCancelView($0.0, $0.1, $0.2)
+            .presentCancelView($0.0, $0.1)
          }
 
       events.acceptPressed

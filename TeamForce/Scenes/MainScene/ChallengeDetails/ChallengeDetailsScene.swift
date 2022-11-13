@@ -186,7 +186,7 @@ enum ChallengeDetailsState {
 
    case presentComments([Comment])
 
-   case presentSendResultScreen(Challenge, Int)
+   case presentSendResultScreen(Challenge)
    case enableMyResult([ChallengeResult])
    case enableContenders
 
@@ -194,7 +194,7 @@ enum ChallengeDetailsState {
    case presentMyResults([ChallengeResult])
    case presentWinners([ChallengeWinnerReport])
    case presentContenders([Contender])
-   case presentCancelView(Challenge, Int, Int)
+   case presentCancelView(Challenge, Int)
    case presentReportDetailView(Int)
 
    case disableSendResult
@@ -240,7 +240,7 @@ extension ChallengeDetailsScene: StateMachine {
             .arrangedModels([
                challComments
             ])
-      case .presentSendResultScreen(let challenge, let profileId):
+      case .presentSendResultScreen(let challenge):
          Asset.router?.route(
             .presentModallyOnPresented(.automatic),
             scene: \.challengeSendResult,
@@ -284,7 +284,7 @@ extension ChallengeDetailsScene: StateMachine {
             .arrangedModels([
                contendersBlock
             ])
-      case .presentCancelView(let challenge, let profileId, let resultId):
+      case .presentCancelView(let challenge, let resultId):
          Asset.router?.route(
             .presentModallyOnPresented(.automatic),
             scene: \.challengeResCancel,

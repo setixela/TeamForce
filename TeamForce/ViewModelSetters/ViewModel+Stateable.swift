@@ -337,13 +337,13 @@ extension ViewModelProtocol where Self: Stateable, View: PaddingTextField {
 
 // MARK: - Text View
 
-extension ViewModelProtocol where Self: Stateable, View: UITextView {
+extension ViewModelProtocol where Self: Stateable, View: TextViewExtended {
    func applyState(_ state: TextViewState) {
       switch state {
       case .text(let string):
          text(string)
-      case .placeholder(let string):
-         text(string)
+//      case .placeholder(let string, let color):
+//         text(string)
       case .font(let value):
          font(value)
       case .padding(let value):
@@ -356,7 +356,7 @@ extension ViewModelProtocol where Self: Stateable, View: UITextView {
    }
 }
 
-extension ViewModelProtocol where Self: Stateable, View: UITextView {
+extension ViewModelProtocol where Self: Stateable, View: TextViewExtended {
    func applyState(_ state: LabelState) {
       switch state {
       case .text(let value):

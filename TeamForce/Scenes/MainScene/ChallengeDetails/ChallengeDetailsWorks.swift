@@ -264,14 +264,14 @@ final class ChallengeDetailsWorks<Asset: AssetProtocol>: BaseSceneWorks<Challeng
       work.success(id)
    }.retainBy(retainer) }
 
-   var getInputForCancel: Work<Int, (Challenge, Int, Int)> { .init { work in
+   var getInputForCancel: Work<Int, (Challenge, Int)> { .init { work in
       guard
          let resultId = work.input,
-         let challenge = Self.store.challenge,
-         let profileId = Self.store.profileId
+         let challenge = Self.store.challenge
+//         let profileId = Self.store.profileId
       else { return }
 
-      work.success((challenge, profileId, resultId))
+      work.success((challenge, resultId))
    }.retainBy(retainer) }
 
 //   var getInputForReportDetail: Work<Void, Int> { .init { work in

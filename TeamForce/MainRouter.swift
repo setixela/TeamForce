@@ -23,6 +23,7 @@ final class MainRouter<Asset: AssetProtocol>: RouterProtocol, Assetable {
 
    init(nc: UINavigationController) {
       self.nc = nc
+      nc.view.backgroundColor = Design.color.backgroundBrand
    }
 
    func start() {
@@ -84,6 +85,10 @@ final class MainRouter<Asset: AssetProtocol>: RouterProtocol, Assetable {
          return vc
       }
    }
+}
+
+extension MainRouter {
+   private var currentVC: UIViewController? { nc.viewControllers.last }
 }
 
 protocol Alert {}

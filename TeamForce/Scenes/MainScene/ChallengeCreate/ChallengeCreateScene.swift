@@ -70,8 +70,10 @@ final class ChallengeCreateScene<Asset: AssetProtocol>: BaseSceneModel<
 
    private lazy var titleInput = Design.model.transact.userSearchTextField
       .placeholder("Название")
+      .placeholderColor(Design.color.textFieldPlaceholder)
    private lazy var descriptionInput = Design.model.transact.reasonInputTextView
       .placeholder("Описание")
+      .placeholderColor(Design.color.textFieldPlaceholder)
 
    private lazy var finishDateButton = LabelIconX<Design>(Design.state.stack.buttonFrame)
       .set {
@@ -209,6 +211,7 @@ extension ChallengeCreateScene {
 
 extension ChallengeCreateScene {
    private func toggleDatePickerHidden() {
+      vcModel?.hideKeyboard()
       datePickWrapper.hiddenAnimated(!datePickWrapper.view.isHidden,
                                      duration: 0.25)
    }

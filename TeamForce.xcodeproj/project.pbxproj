@@ -92,6 +92,10 @@
 		195870F228A8C8040075D505 /* KeyPathMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 195870F128A8C8040075D505 /* KeyPathMaker.swift */; };
 		1959F27428AA8E9700DEEE5C /* LoginWorks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1959F27328AA8E9700DEEE5C /* LoginWorks.swift */; };
 		19633988292148CE00B66A7D /* GetCurrentUserUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19633987292148CE00B66A7D /* GetCurrentUserUseCase.swift */; };
+		1963398B2921641200B66A7D /* NotificationToFeedElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1963398A2921641200B66A7D /* NotificationToFeedElement.swift */; };
+		1963398D2921644300B66A7D /* Converter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1963398C2921644300B66A7D /* Converter.swift */; };
+		1963398F2921646800B66A7D /* NotificationToTransactionNotificationToTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1963398E2921646800B66A7D /* NotificationToTransactionNotificationToTransaction.swift */; };
+		1963399229218CDF00B66A7D /* NotificationToChallengeDetailsSceneInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196339902921692800B66A7D /* NotificationToChallengeDetailsSceneInput.swift */; };
 		1967509F286492780019A6DE /* Labels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1967509E286492780019A6DE /* Labels.swift */; };
 		196750A22865169C0019A6DE /* DigitalThanksScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196750A12865169C0019A6DE /* DigitalThanksScene.swift */; };
 		196750A6286516F40019A6DE /* LoginScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196750A5286516F40019A6DE /* LoginScene.swift */; };
@@ -466,6 +470,10 @@
 		195870F128A8C8040075D505 /* KeyPathMaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyPathMaker.swift; sourceTree = "<group>"; };
 		1959F27328AA8E9700DEEE5C /* LoginWorks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginWorks.swift; sourceTree = "<group>"; };
 		19633987292148CE00B66A7D /* GetCurrentUserUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetCurrentUserUseCase.swift; sourceTree = "<group>"; };
+		1963398A2921641200B66A7D /* NotificationToFeedElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationToFeedElement.swift; sourceTree = "<group>"; };
+		1963398C2921644300B66A7D /* Converter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Converter.swift; sourceTree = "<group>"; };
+		1963398E2921646800B66A7D /* NotificationToTransactionNotificationToTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationToTransactionNotificationToTransaction.swift; sourceTree = "<group>"; };
+		196339902921692800B66A7D /* NotificationToChallengeDetailsSceneInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationToChallengeDetailsSceneInput.swift; sourceTree = "<group>"; };
 		1967509E286492780019A6DE /* Labels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Labels.swift; sourceTree = "<group>"; };
 		196750A12865169C0019A6DE /* DigitalThanksScene.swift */ = {isa = PBXFileReference; indentWidth = 3; lastKnownFileType = sourcecode.swift; path = DigitalThanksScene.swift; sourceTree = "<group>"; tabWidth = 3; };
 		196750A5286516F40019A6DE /* LoginScene.swift */ = {isa = PBXFileReference; indentWidth = 3; lastKnownFileType = sourcecode.swift; path = LoginScene.swift; sourceTree = "<group>"; tabWidth = 3; };
@@ -1038,10 +1046,10 @@
 			isa = PBXGroup;
 			children = (
 				19AE3AEE28691B2E00A0C6E4 /* MainScene.swift */,
-				19A9BE6C28C1AA360099F8EA /* BottomPopupPresenter.swift */,
 				197A361728BBC9AC006E44C1 /* MainScenario.swift */,
 				197A361928BBC9B3006E44C1 /* MainWorks.swift */,
 				197A360328B90BD3006E44C1 /* MainSceneEvents.swift */,
+				19A9BE6C28C1AA360099F8EA /* BottomPopupPresenter.swift */,
 				1921A12F28EEC93300E41E86 /* Challenges */,
 				194E307A28F35D90001E2967 /* ChallengeDetails */,
 				1955878C28F7337E0001F734 /* ChallengeResult */,
@@ -1105,6 +1113,16 @@
 				196750A12865169C0019A6DE /* DigitalThanksScene.swift */,
 			);
 			path = IntroScene;
+			sourceTree = "<group>";
+		};
+		19633989292163F600B66A7D /* DTO Converters */ = {
+			isa = PBXGroup;
+			children = (
+				1963398A2921641200B66A7D /* NotificationToFeedElement.swift */,
+				1963398E2921646800B66A7D /* NotificationToTransactionNotificationToTransaction.swift */,
+				196339902921692800B66A7D /* NotificationToChallengeDetailsSceneInput.swift */,
+			);
+			path = "DTO Converters";
 			sourceTree = "<group>";
 		};
 		196750A02865168F0019A6DE /* Scenes */ = {
@@ -1456,6 +1474,7 @@
 				19221EF228CDBCB000B7B604 /* SetupProtocol.swift */,
 				19B39E5E28D343B300BB2C77 /* SelectWrapper.swift */,
 				197447252912EDB20089BB2B /* Configurable.swift */,
+				1963398C2921644300B66A7D /* Converter.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -1581,6 +1600,7 @@
 		19F153812899646900ECF000 /* UseCases */ = {
 			isa = PBXGroup;
 			children = (
+				19633989292163F600B66A7D /* DTO Converters */,
 				19F15387289964C300ECF000 /* UseCasePacks */,
 			);
 			path = UseCases;
@@ -2021,6 +2041,7 @@
 				63D419F328AA85560024E22C /* GetStatByPeriodIdApiWorker.swift in Sources */,
 				192FCFFF28C9477100E6FACC /* ModalDoubleStackModel.swift in Sources */,
 				6368D8282891E7C40049EEAB /* UserDefault+helpers.swift in Sources */,
+				1963399229218CDF00B66A7D /* NotificationToChallengeDetailsSceneInput.swift in Sources */,
 				1921CAA1291AA3A5007AE024 /* NotificationsScene.swift in Sources */,
 				19017B6928A6986F00B06345 /* TitleSubtitleX.swift in Sources */,
 				1921CAA3291AA3B3007AE024 /* NotificationsScenario.swift in Sources */,
@@ -2028,10 +2049,12 @@
 				19775FFE28C5922B008DF8E0 /* ImagePickingScenario.swift in Sources */,
 				63AB071128BD6B0F00FD650F /* ProfileWorks.swift in Sources */,
 				63E1916D2889519E000FD312 /* BadgeModel.swift in Sources */,
+				1963398B2921641200B66A7D /* NotificationToFeedElement.swift in Sources */,
 				19C1E9A328610E4E00E7976D /* MainRouter.swift in Sources */,
 				631D8EC728F960AE005332BD /* ChallContendersPresenters.swift in Sources */,
 				63A37EAE28EF1D6300DBD59F /* CreateChallengeUseCase.swift in Sources */,
 				197447222911AC340089BB2B /* ChallengeCellPresenters.swift in Sources */,
+				1963398F2921646800B66A7D /* NotificationToTransactionNotificationToTransaction.swift in Sources */,
 				19A9BE7328C255690099F8EA /* TransactBuilder.swift in Sources */,
 				19221EF528CE1D1B00B7B604 /* EditContactsViewModels.swift in Sources */,
 				1953CF0428E8DF8500C670A6 /* InternetRechability.swift in Sources */,
@@ -2182,6 +2205,7 @@
 				1953CF0028E8A19A00C670A6 /* FeedReactionsBlock.swift in Sources */,
 				19D7BE9928B3E55F00C95053 /* ScrollViewModels.swift in Sources */,
 				197A360628BADC83006E44C1 /* FeedViewModels.swift in Sources */,
+				1963398D2921644300B66A7D /* Converter.swift in Sources */,
 				19C1E990285F426B00E7976D /* TeamForceEndpoints.swift in Sources */,
 				1953DE862879FE30000DC537 /* PickerViewModel.swift in Sources */,
 				6368D82C289415EC0049EEAB /* TextViewModel.swift in Sources */,
