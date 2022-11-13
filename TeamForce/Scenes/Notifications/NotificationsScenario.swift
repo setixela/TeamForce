@@ -26,21 +26,28 @@ final class NotificationsScenario<Asset: AssetProtocol>:
       events.didSelectIndex
          .doNext(works.getNotificationByIndex)
          .onSuccess {
-//            Asset.router?.route(.pop)
-//            switch $0.type {
-//            case .T:
-//               Asset.router?.route(.push, scene: \.transactionDetail, payload: $0.transactionData)
-//            case .H:
-//               Asset.router?.route(.push, scene: \.transactionDetail, payload: $0.transactionData)
-//            case .C:
-//               Asset.router?.route(.push, scene: \.transactionDetail, payload: $0.transactionData)
-//            case .L:
-//               Asset.router?.route(.push, scene: \.transactionDetail, payload: $0.transactionData)
-//            case .W:
-//               Asset.router?.route(.push, scene: \.transactionDetail, payload: $0.transactionData)
-//            case .R:
-//               Asset.router?.route(.push, scene: \.transactionDetail, payload: $0.transactionData)
-//            }
+            Asset.router?.route(.pop)
+            switch $0.type {
+            case .transactAdded: 
+               Asset.router?.route(.push, scene: \.transactionDetail, payload: $0.transactionData)
+            case .challengeCreated:
+               Asset.router?.route(.push, scene: \.transactionDetail, payload: $0.transactionData)
+            case .commentAdded:
+               Asset.router?.route(.push, scene: \.transactionDetail, payload: $0.transactionData)
+            case .likeAdded:
+               Asset.router?.route(.push, scene: \.transactionDetail, payload: $0.transactionData)
+            case .challengeWin:
+               Asset.router?.route(.push, scene: \.transactionDetail, payload: $0.transactionData)
+            case .finishedChallenge:
+               Asset.router?.route(.push, scene: \.transactionDetail, payload: $0.transactionData)
+            }
          }
    }
 }
+
+// Transaction event
+// Challenge created
+// Comment added
+// Some liked
+// Comment added
+// User finished challenge

@@ -121,17 +121,17 @@ extension NotificationsCellModel: SetupProtocol {
       type.text(data.theme)
 
       switch data.type {
-      case .T:
+      case .transactAdded:
          typeIcon.image(Design.icon.tablerBrandTelegram)
-      case .C:
+      case .commentAdded:
          typeIcon.image(Design.icon.tablerMessageCircle)
-      case .L:
+      case .likeAdded:
          typeIcon.image(Design.icon.like)
-      case .W:
+      case .challengeWin:
          typeIcon.image(Design.icon.tablerMessageCircle)
-      case .R:
+      case .finishedChallenge:
          typeIcon.image(Design.icon.tablerUserCheck)
-      case .H:
+      case .challengeCreated:
          typeIcon.image(Design.icon.tablerMoodSmile)
       }
    }
