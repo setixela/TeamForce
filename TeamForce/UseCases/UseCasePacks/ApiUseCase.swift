@@ -57,6 +57,7 @@ final class ApiUseCase<Asset: AssetProtocol>: InitProtocol, Assetable, WorkBaske
    var loadProfile: LoadProfileUseCase.WRK {
       LoadProfileUseCase(
          loadToken: storageUseCase.loadToken,
+         saveUserNameWork: storageUseCase.saveCurrentUserName,
          userProfileApiModel: userProfileApiModel
       )
       .retainedWork(retainer)

@@ -94,16 +94,16 @@ protocol TitleTextsProtocol: InitProtocol {
 // MARK: - Button texts implements
 
 struct ButtonTexts: ButtonTextsProtocol {
-   var enterButton: String { "ВОЙТИ" }
-   var nextButton: String { "ДАЛЕЕ" }
-   var registerButton: String { "РЕГИСТРАЦИЯ" }
-   var getCodeButton: String { "ПОЛУЧИТЬ КОД" }
-   var changeUserButton: String { "СМЕНИТЬ ПОЛЬЗОВАТЕЛЯ" }
-   var sendButton: String { "ОТПРАВИТЬ" }
-   var toTheBeginingButton: String { "В НАЧАЛО" }
-   var logoutButton: String { "ВЫЙТИ" }
+   var enterButton: String { "Войти" }
+   var nextButton: String { "Далее" }
+   var registerButton: String { "Регистрация" }
+   var getCodeButton: String { "Получить код" }
+   var changeUserButton: String { "Сменить пользователя" }
+   var sendButton: String { "Отправить" }
+   var toTheBeginingButton: String { "В начало" }
+   var logoutButton: String { "Выйти" }
 
-   var closeButton: String { "ЗАКРЫТЬ" }
+   var closeButton: String { "Закрыть" }
 }
 
 struct TitleTexts: TitleTextsProtocol {

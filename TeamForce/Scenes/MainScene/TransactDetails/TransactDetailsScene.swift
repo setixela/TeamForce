@@ -8,12 +8,12 @@
 import ReactiveWorks
 import UIKit
 
-final class FeedDetailScene<Asset: AssetProtocol>:
+final class TransactDetailsScene<Asset: AssetProtocol>:
    BaseSceneModel<
       DefaultVCModel,
       DoubleStacksBrandedVM<Asset.Design>,
       Asset,
-      (NewFeed, String)
+      FeedElement
    >, Scenarible
 {
    typealias State = ViewState
@@ -58,9 +58,6 @@ final class FeedDetailScene<Asset: AssetProtocol>:
             feedDetailVM
          ])
 
-      guard let inputValue = inputValue else { assertionFailure(); return }
-
-      feedDetailVM.setState(.initial(inputValue))
       setState(.initial)
       scenario.start()
    }
@@ -68,6 +65,7 @@ final class FeedDetailScene<Asset: AssetProtocol>:
 
 enum FeedDetailSceneState {
    case initial
+   case present(feed: FeedElement, currentUsername: String)
    case presentDetails(EventTransaction)
    case presentComments([Comment])
    case presentReactions([ReactItem])
@@ -84,19 +82,29 @@ enum FeedDetailSceneState {
    case error
 }
 
-extension FeedDetailScene: StateMachine {
+extension TransactDetailsScene: StateMachine {
    func setState(_ state: FeedDetailSceneState) {
       self.state = state
       switch state {
       case .initial:
          feedDetailVM.setState(.loadingActivity)
+         //
+      case .present(let feed, let userName):
+         feedDetailVM.setState(.initial(feed: feed, curUsername: userName))
+         //
+      case .presentDetails(let feed):
+         feedDetailVM.setState(.details(feed))
+         //
       case .presentComments(let comments):
          feedDetailVM.setState(.comments(comments))
+         //
       case .presentReactions(let items):
          feedDetailVM.setState(.reactions(items))
+         //
       case .failedToReact(let selected):
          print("failed to like")
          setState(.buttonLikePressed(alreadySelected: !selected))
+         //
       case .updateReactions(let value):
          if let reactions = value.0.likes {
             for reaction in reactions {
@@ -105,17 +113,20 @@ extension FeedDetailScene: StateMachine {
                }
             }
          }
-      case .presentDetails(let feed):
-         feedDetailVM.setState(.details(feed))
+         //
       case .presntActivityIndicator:
          feedDetailVM.setState(.loadingActivity)
+         //
       case .sendButtonDisabled:
          feedDetailVM.setState(.sendButtonDisabled)
+         //
       case .sendButtonEnabled:
          feedDetailVM.setState(.sendButtonEnabled)
+         //
       case .commentDidSend:
          feedDetailVM.filterButtons.send(\.didTapComments)
          feedDetailVM.setState(.commentDidSend)
+         //
       case .error:
          print("Load token error")
       case .buttonLikePressed(let selected):
@@ -124,10 +135,13 @@ extension FeedDetailScene: StateMachine {
          } else {
             feedDetailVM.infoBlock.likeButton.setState(.selected)
          }
+         //
       case .presentUserProfile(let userId):
          Asset.router?.route(.push, scene: \.profile, payload: userId)
+         //
       case .hereIsEmpty:
          feedDetailVM.setState(.hereIsEmpty)
+         //
       }
    }
 }

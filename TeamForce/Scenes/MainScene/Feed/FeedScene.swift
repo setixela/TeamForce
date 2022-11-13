@@ -78,13 +78,13 @@ extension FeedScene: Configurable {
 
 enum FeedSceneState {
    case initial
-   case presentFeed(([NewFeed], String))
+   case presentFeed(([FeedElement], String))
    case loadFeedError
    case presentProfile(Int)
    case reactionChanged
-   case presentDetailView((feed: NewFeed, profileId: Int))
-   case updateFeed([NewFeed])
-   case updateFeedAtIndex(NewFeed, Int)
+   case presentDetailView((feed: FeedElement, profileId: Int))
+   case updateFeed([FeedElement])
+   case updateFeedAtIndex(FeedElement, Int)
 }
 
 extension FeedScene: StateMachine {
@@ -123,8 +123,8 @@ extension FeedScene: StateMachine {
          case "T":
             Asset.router?.route(
                .push,
-               scene: \.feedDetail,
-               payload: (tuple.feed, viewModels.userName) // TODO: - Why getting data from viewModel?
+               scene: \.transactDetails,
+               payload: tuple.feed
             )
          case "Q":
             Asset.router?.route(

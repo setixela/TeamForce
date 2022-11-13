@@ -12,8 +12,8 @@ struct NotificationsEvents {
 }
 
 final class NotificationsScenario<Asset: AssetProtocol>:
-   BaseScenario<NotificationsEvents, NotificationsState, NotificationsWorks<Asset>>, Assetable {
-   
+   BaseScenario<NotificationsEvents, NotificationsState, NotificationsWorks<Asset>>, Assetable
+{
    override func start() {
       works.getNotifications
          .doAsync()
@@ -26,21 +26,39 @@ final class NotificationsScenario<Asset: AssetProtocol>:
       events.didSelectIndex
          .doNext(works.getNotificationByIndex)
          .onSuccess {
-//            Asset.router?.route(.pop)
-//            switch $0.type {
-//            case .T:
-//               Asset.router?.route(.push, scene: \.transactionDetail, payload: $0.transactionData)
-//            case .H:
-//               Asset.router?.route(.push, scene: \.transactionDetail, payload: $0.transactionData)
-//            case .C:
-//               Asset.router?.route(.push, scene: \.transactionDetail, payload: $0.transactionData)
-//            case .L:
-//               Asset.router?.route(.push, scene: \.transactionDetail, payload: $0.transactionData)
-//            case .W:
-//               Asset.router?.route(.push, scene: \.transactionDetail, payload: $0.transactionData)
-//            case .R:
-//               Asset.router?.route(.push, scene: \.transactionDetail, payload: $0.transactionData)
-//            }
+            switch $0.type {
+            case .transactAdded:
+               guard let feed = NotificationToFeedElement.convert($0) else { return }
+
+               Asset.router?.route(.push, scene: \.transactDetails, payload: feed)
+            //
+            case .challengeCreated:
+               guard let challInput = NotificationToChallengeDetailsSceneInput.convert($0) else { return }
+
+               Asset.router?.route(.push, scene: \.challengeDetails, payload: challInput)
+            //
+            case .commentAdded:
+               if let feed = NotificationToFeedElement.convert($0) {
+                  Asset.router?.route(.push, scene: \.transactDetails, payload: feed)
+               } else if let challInput = NotificationToChallengeDetailsSceneInput.convert($0) {
+                  Asset.router?.route(.push, scene: \.challengeDetails, payload: challInput)
+               }
+            //
+            case .likeAdded:
+               guard let likeData = $0.likeData else { return }
+               
+               break
+            //
+            case .challengeWin:
+               guard let challInput = NotificationToChallengeDetailsSceneInput.convert($0) else { return }
+
+               Asset.router?.route(.push, scene: \.challengeDetails, payload: challInput)
+            //
+            case .finishedChallenge:
+               guard let challInput = NotificationToChallengeDetailsSceneInput.convert($0) else { return }
+
+               Asset.router?.route(.push, scene: \.challengeDetails, payload: challInput)
+            }
          }
    }
 }

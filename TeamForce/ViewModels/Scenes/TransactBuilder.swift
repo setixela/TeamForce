@@ -29,9 +29,9 @@ protocol TransactModelBuilder: InitProtocol, Designable {
 struct TransactBuilder<Design: DSP>: TransactModelBuilder {
    //
    var reasonInputTextView: TextViewModel { .init()
-      .padding(Design.params.contentPadding)
-      .placeholder(Design.Text.title.reasonPlaceholder)
       .set(Design.state.label.body1)
+      .padding(Design.params.textViewPadding)
+      .placeholderColor(Design.color.textFieldPlaceholder)
       .backColor(Design.color.background)
       .borderColor(Design.color.boundary)
       .borderWidth(Design.params.borderWidth)

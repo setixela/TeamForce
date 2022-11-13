@@ -9,7 +9,7 @@ protocol Indexable {
    var index: Int { get }
 }
 
-struct NewFeed: Codable {
+struct FeedElement: Codable {
    let id: Int
    let time: String?
    let eventTypeId: Int
@@ -84,7 +84,7 @@ struct NewFeed: Codable {
    }
 }
 
-final class GetEventsApiWorker: BaseApiWorker<(String, Pagination), [NewFeed]> {
+final class GetEventsApiWorker: BaseApiWorker<(String, Pagination), [FeedElement]> {
    override func doAsync(work: Wrk) {
       guard let request = work.input
       else {
@@ -104,7 +104,7 @@ final class GetEventsApiWorker: BaseApiWorker<(String, Pagination), [NewFeed]> {
             let decoder = DataToDecodableParser()
             guard
                let data = result.data,
-               let feeds: [NewFeed] = decoder.parse(data)
+               let feeds: [FeedElement] = decoder.parse(data)
             else {
                work.fail()
                return

@@ -294,14 +294,7 @@ extension ViewModelProtocol where Self: Stateable, View: StackViewExtended {
    }
 
    @discardableResult func arrangedModels(_ value: UIViewModel...) -> Self {
-      view.arrangedSubviews.forEach {
-         $0.removeFromSuperview()
-      }
-      value.forEach {
-         let subview = $0.uiView
-         view.addArrangedSubview(subview)
-      }
-      return self
+      return arrangedModels(value)
    }
 
    @discardableResult func addArrangedModel(_ value: UIViewModel) -> Self {
@@ -671,15 +664,21 @@ extension ViewModelProtocol where Self: Stateable, View: PaddingTextField {
    }
 }
 
-extension ViewModelProtocol where Self: Stateable, View: UITextView {
+extension ViewModelProtocol where Self: Stateable, View: TextViewExtended {
    @discardableResult func text(_ value: String) -> Self {
       view.text = value
       return self
    }
 
    @discardableResult func placeholder(_ value: String) -> Self {
-      view.text = value
-      view.delegate?.textViewDidEndEditing?(view)
+      view.placeholder = value
+      view.textViewDidEndEditing(view)
+      return self
+   }
+
+   @discardableResult func placeholderColor(_ value: UIColor) -> Self {
+      view.placeHolderColor = value
+      view.textViewDidEndEditing(view)
       return self
    }
 

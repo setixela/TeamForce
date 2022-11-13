@@ -18,7 +18,7 @@ struct FeedDetailEvents {
    let reactionPressed: VoidWork<Void>
    let userAvatarPressed: VoidWork<Int>
 
-   let saveInput: VoidWork<(NewFeed, String)>
+   let saveInput: VoidWork<FeedElement>
 
    let didEditingComment: VoidWork<String>
    let didSendCommentPressed: VoidWorkVoid
@@ -45,8 +45,16 @@ final class FeedDetailScenario<Asset: AssetProtocol>:
          .onSuccess(setState) { .updateReactions($0) }
 
       events.saveInput
+         .doSaveResult()
+         .doVoidNext(works.getCurrentUserName)
+         .onSuccessMixSaved(setState) {
+            .present(feed: $1, currentUsername: $0)
+         }
+         .doLoadResult()
          .doNext(works.saveInput)
-         .onSuccess(setState) { .presentDetails($0) }
+         .onSuccess(setState) { transactDetails in
+            .presentDetails(transactDetails)
+         }
 
       events.presentDetails
          .doCancel(events.presentComment, events.presentReactions)

@@ -5,8 +5,8 @@
 //  Created by Yerzhan Gapurinov on 06.10.2022.
 //
 
-import UIKit
 import ReactiveWorks
+import UIKit
 
 enum ChallengeState: String, Codable {
    case O = "От имени организации"
@@ -39,6 +39,66 @@ enum ChallengeStatus: String, Codable {
 }
 
 final class Challenge: Codable {
+   internal init(
+      id: Int,
+      userLiked: Bool? = nil,
+      likesAmount: Int? = nil,
+      name: String? = nil,
+      photo: String? = nil,
+      updatedAt: String? = nil,
+      states: [ChallengeState]? = nil,
+      description: String? = nil,
+      startBalance: Int? = nil,
+      creatorId: Int,
+      parameters: [Challenge.Parameter]? = nil,
+      endAt: String? = nil,
+      approvedReportsAmount: Int,
+      status: String? = nil,
+      isNewReports: Bool,
+      winnersCount: Int? = nil,
+      creatorOrganizationId: Int? = nil,
+      prizeSize: Int,
+      awardees: Int,
+      fund: Int,
+      creatorName: String? = nil,
+      creatorSurname: String? = nil,
+      creatorPhoto: String? = nil,
+      creatorTgName: String? = nil,
+      active: Bool? = nil,
+      completed: Bool? = nil,
+      remainingTopPlaces: Int? = nil,
+      photoCache: UIImage? = nil
+   ) {
+      self.id = id
+      self.userLiked = userLiked
+      self.likesAmount = likesAmount
+      self.name = name
+      self.photo = photo
+      self.updatedAt = updatedAt
+      self.states = states
+      self.description = description
+      self.startBalance = startBalance
+      self.creatorId = creatorId
+      self.parameters = parameters
+      self.endAt = endAt
+      self.approvedReportsAmount = approvedReportsAmount
+      self.status = status
+      self.isNewReports = isNewReports
+      self.winnersCount = winnersCount
+      self.creatorOrganizationId = creatorOrganizationId
+      self.prizeSize = prizeSize
+      self.awardees = awardees
+      self.fund = fund
+      self.creatorName = creatorName
+      self.creatorSurname = creatorSurname
+      self.creatorPhoto = creatorPhoto
+      self.creatorTgName = creatorTgName
+      self.active = active
+      self.completed = completed
+      self.remainingTopPlaces = remainingTopPlaces
+      self.photoCache = photoCache
+   }
+
    let id: Int
    let userLiked: Bool?
    let likesAmount: Int?
@@ -130,9 +190,10 @@ final class GetChallengesApiWorker: BaseApiWorker<ChallengesRequest, [Challenge]
          .process(endpoint: TeamForceEndpoints.GetChallenges(
             activeOnly: request.activeOnly ?? false,
             headers: [
-            "Authorization": request.token,
-            "X-CSRFToken": cookie.value
-         ]))
+               "Authorization": request.token,
+               "X-CSRFToken": cookie.value
+            ]
+         ))
          .done { result in
             let decoder = DataToDecodableParser()
             guard

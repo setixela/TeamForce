@@ -41,6 +41,7 @@ protocol ParamsProtocol: InitProtocol, Designable {
    var profileUserPanelShadow: Shadow { get }
    // paddings
    var contentPadding: UIEdgeInsets { get }
+   var textViewPadding: UIEdgeInsets { get }
    var contentVerticalPadding: UIEdgeInsets { get }
    var cellContentPadding: UIEdgeInsets { get }
    var userInfoHeaderPadding: UIEdgeInsets { get }
@@ -102,6 +103,11 @@ struct ParamBuilder<Design: DSP>: ParamsProtocol {
    // paddings
    var contentPadding: UIEdgeInsets { .init(top: 12, left: commonSideOffset, bottom: 12, right: commonSideOffset) }
    var contentVerticalPadding: UIEdgeInsets { .init(top: 12, left: 0, bottom: 12, right: 0) }
+
+   var textViewPadding: UIEdgeInsets {
+      .init(top: 12, left: 10, bottom: 12, right: 10)
+   }
+
    var cellContentPadding: UIEdgeInsets { .init(top: 12, left: commonSideOffset, bottom: 12, right: commonSideOffset) }
    var userInfoHeaderPadding: UIEdgeInsets { .init(top: 12, left: 12, bottom: 12, right: 12) }
    var infoFramePadding: UIEdgeInsets { .init(top: 16, left: 24, bottom: 24, right: 24) }

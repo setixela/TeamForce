@@ -13,55 +13,19 @@ struct TextViewEvents: InitProtocol {
    var didEditingChanged: String?
 }
 
-class TextViewModel: BaseViewModel<UITextView>, UITextViewDelegate {
-
+class TextViewModel: BaseViewModel<TextViewExtended> {
    var events: EventsStore = .init()
 
-   private var placeholder: String = ""
-   private var isPlaceholded = true
-
    override func start() {
-      view.delegate = self
-      view.textColor = UIColor.lightGray
-   }
-
-   @objc func changValue() {
-      guard let text = view.text else { return }
-
-      send(\.didEditingChanged, text)
-   }
-
-   func textViewDidChange(_ textView: UITextView) {
-      send(\.didEditingChanged, textView.text)
-   }
-
-   func textViewDidBeginEditing(_ textView: UITextView) {
-
-      if textView.text == placeholder {
-         textView.text = nil
-         textView.textColor = UIColor.black
-         isPlaceholded = false
+      view.on(\.didEditingChanged, self) {
+         $0.send(\.didEditingChanged, $1)
       }
-   }
-
-   func textViewDidEndEditing(_ textView: UITextView) {
-      if textView.text == nil || textView.text.isEmpty {
-         textView.text = self.placeholder
-         textView.textColor = UIColor.lightGray
-         isPlaceholded = true
-      }
-   }
-
-   @discardableResult func placeholder(_ value: String) -> Self {
-      set(.placeholder(value))
-      textViewDidEndEditing(view)
-      return self
    }
 }
 
 enum TextViewState {
    case text(String)
-   case placeholder(String)
+   // case placeholder(String, UIColor)
    case font(UIFont)
    case padding(UIEdgeInsets)
    case height(CGFloat)
@@ -77,9 +41,10 @@ extension TextViewModel: Stateable3 {
       switch state {
       case .text(let string):
          text(string)
-      case .placeholder(let string):
-         self.placeholder = string
-         text(string)
+//      case .placeholder(let string, let color):
+//         self.placeholder = string
+//         self.currentTextColor = color
+//         text(string)
       case .font(let value):
          font(value)
       case .padding(let value):

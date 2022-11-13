@@ -13,7 +13,9 @@ final class TransactViewModels<Design: DSP>: Designable {
    //
    lazy var balanceInfo = Design.model.transact.balanceInfo.hidden(true)
    lazy var userSearchTextField = Design.model.transact.userSearchTextField.hidden(true)
-   lazy var reasonTextView = Design.model.transact.reasonInputTextView.hidden(true)
+   lazy var reasonTextView = Design.model.transact.reasonInputTextView
+      .hidden(true)
+      .placeholder(Design.Text.title.reasonPlaceholder)
    lazy var amountInputModel = Design.model.transact.amountIputViewModel.hidden(true)
    lazy var foundUsersList = Design.model.transact.foundUsersList
    lazy var addPhotoButton = Design.model.transact.addPhotoButton.hidden(true)

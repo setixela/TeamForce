@@ -24,12 +24,12 @@ protocol ScenesProtocol: InitProtocol {
    var login: SMP { get }
    var main: SMP { get }
 
-   var feedDetail: SMP { get }
+   var transactDetails: SMP { get }
 
    var myProfile: SMP { get }
    var profile: SMP { get }
 
-   var transactionDetail: SMP { get }
+   var sentTransactDetails: SMP { get }
 
    var challengeDetails: SMP { get }
    var challengeCreate: SMP { get }
@@ -57,10 +57,10 @@ struct Scenes: ScenesProtocol {
    var main: SMP { MainScene<PA>() }
    var myProfile: SMP { MyProfileScene<PA>() }
    var profile: SMP { ProfileScene<PA>() }
-   var transactionDetail: SMP { TransactDeatilViewModel<PA>() }
+   var sentTransactDetails: SMP { SentTransactDetailsScene<PA>() }
    // var profileEdit: SMP { ProfileEditScene<PA>() }
 
-   var feedDetail: SMP { FeedDetailScene<PA>() }
+   var transactDetails: SMP { TransactDetailsScene<PA>() }
 
    var challengeCreate: SMP { ChallengeCreateScene<PA>() }
    var challengeSendResult: SMP { ChallengeResultScene<PA>() }

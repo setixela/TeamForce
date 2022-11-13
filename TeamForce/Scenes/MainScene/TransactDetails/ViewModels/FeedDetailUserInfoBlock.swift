@@ -76,9 +76,9 @@ final class FeedDetailUserInfoBlock<Design: DSP>: StackModel, Designable {
 }
 
 extension FeedDetailUserInfoBlock: SetupProtocol {
-   func setup(_ data: (NewFeed, String)) {
-      let feed = data.0
-      let userName = data.1
+   func setup(_ data: (feedElement: FeedElement, currentUserName: String)) {
+      let feed = data.feedElement
+      let userName = data.currentUserName
       configureImage(feed: feed)
       configureEvents(feed: feed)
       let dateText = FeedPresenters<Design>.makeInfoDateLabel(feed: feed).view.text
@@ -99,7 +99,7 @@ extension FeedDetailUserInfoBlock: SetupProtocol {
 }
 
 private extension FeedDetailUserInfoBlock {
-   func configureImage(feed: NewFeed) {
+   func configureImage(feed: FeedElement) {
       if let recipientPhoto = feed.transaction?.recipientPhoto {
          image.subModel.url(TeamForceEndpoints.urlBase + recipientPhoto)
       } else {
@@ -118,7 +118,7 @@ private extension FeedDetailUserInfoBlock {
       }
    }
 
-   func configureEvents(feed: NewFeed) {
+   func configureEvents(feed: FeedElement) {
       likeButton.view.startTapGestureRecognize()
       likeButton.view.on(\.didTap, self) {
          $0.send(\.reactionPressed)

@@ -132,12 +132,12 @@ struct CommentData: Codable {
 }
 
 enum NotificationType: String, Codable {
-   case T
-   case H
-   case C
-   case L
-   case W
-   case R
+   case transactAdded = "T" // Transaction event
+   case challengeCreated = "H" // Challenge created
+   case commentAdded = "C" // Comment added
+   case likeAdded = "L" // Some liked
+   case challengeWin = "W" // Challenge Win
+   case finishedChallenge = "R" // User finished challenge
 }
 
 struct Notification: Codable {

@@ -23,5 +23,3 @@ struct LoadTokenUseCase: UseCaseProtocol {
       }
    }
 }
-
-
