@@ -47,7 +47,7 @@ final class ChallengeDetailsWorks<Asset: AssetProtocol>: BaseSceneWorks<Challeng
 
    // works that can be cancelled
 
-   lazy var getChallengeById: Work<Void, Challenge> = .init { [weak self] work in
+   var getChallengeById: Work<Void, Challenge> { .init { [weak self] work in
       guard let id = Self.store.challengeId else { return }
       self?.apiUseCase.GetChallengeById
          .doAsync(id)
@@ -59,7 +59,7 @@ final class ChallengeDetailsWorks<Asset: AssetProtocol>: BaseSceneWorks<Challeng
          .onFail {
             work.fail()
          }
-   }
+   }.retainBy(retainer) }
 
    lazy var getChallengeResult: Work<Void, [ChallengeResult]> = .init { [weak self] work in
       guard let id = Self.store.challengeId else { return }
@@ -213,6 +213,7 @@ final class ChallengeDetailsWorks<Asset: AssetProtocol>: BaseSceneWorks<Challeng
          work.fail()
          return
       }
+      Self.store.reportId = nil
       work.success(reportId)
 
    }.retainBy(retainer) }

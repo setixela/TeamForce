@@ -23,7 +23,8 @@ struct ChallengeCellPresenters<Design: DSP>: Designable {
                //               participant.title.text(data.approvedReportsAmount.toString)
                //               participant.body.text("Участников")
 
-               winner.title.text(data.awardees.toString)
+               let winnersCount = data.winnersCount ?? 0
+               winner.title.text(winnersCount.toString)
                winner.body.text("Победителей")
 
                prizeFund.title.text(data.fund.toString)

@@ -664,4 +664,12 @@ enum TeamForceEndpoints {
          self.jsonData = jsonData
       }
    }
+   
+   struct NotificationsAmount: EndpointProtocol {
+      let method = HTTPMethod.get
+      
+      var endPoint: String { urlBase + "/notifications/unread/amount/" }
+      
+      let headers: [String : String]
+   }
 }
