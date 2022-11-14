@@ -276,8 +276,8 @@ extension FeedPresenters {
       let icon = ImageViewModel()
          .contentMode(.scaleAspectFill)
          //.image(Design.icon.newAvatar)
-         .cornerRadius(Grid.x48.value / 2)
-         .size(.square(Grid.x48.value))
+         .cornerRadius(Grid.x36.value / 2)
+         .size(.square(Grid.x36.value))
       
       switch type {
       case .transaction:

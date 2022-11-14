@@ -92,6 +92,49 @@ protocol IconElements: InitProtocol, DesignElementable where DesignElement == UI
    var tablerMessageCircle: DesignElement { get }
    var tablerMoodSmile: DesignElement { get }
 
+   var tablerChess: DesignElement { get }
+   var tablerBrandRedhat: DesignElement { get }
+   var uilShieldSlash: DesignElement { get }
+   var tablerUsers: DesignElement { get }
+   var tablerWalk: DesignElement { get }
+   var tablerRocket: DesignElement { get }
+   var tablerRobot: DesignElement { get }
+   var tablerHistory: DesignElement { get }
+   var tablerSmartHome: DesignElement { get }
+   var tablerSettings: DesignElement { get }
+   var tablerPlus: DesignElement { get }
+   var tablerBell: DesignElement { get }
+   var tablerCreditCard: DesignElement { get }
+   var tablerHeartPlus: DesignElement { get }
+   var tablerLogin: DesignElement { get }
+   var tablerLogout: DesignElement { get }
+   var tablerEditCircle: DesignElement { get }
+   var tablerArrowBackUp: DesignElement { get }
+   var tablerInfoCircle: DesignElement { get }
+   var tablerMailOpened: DesignElement { get }
+   var tablerArrowLeft: DesignElement { get }
+   var tablerCameraRotate: DesignElement { get }
+   var tablerCameraOff: DesignElement { get }
+   var tablerKeyboardShow: DesignElement { get }
+   var tablerKeyboard: DesignElement { get }
+   var tablerFilter: DesignElement { get }
+   var tablerChevronDown: DesignElement { get }
+   var tablerAlertCircle: DesignElement { get }
+   var tablerWifiOff: DesignElement { get }
+   var tablerSearch: DesignElement { get }
+   var tablerCalendar: DesignElement { get }
+   var tablerChevronUp: DesignElement { get }
+   var tablerBrandSnapchat: DesignElement { get }
+   var tablerHeartbeat: DesignElement { get }
+   var tablerBuildingArch: DesignElement { get }
+   var tablerDevicesPc: DesignElement { get }
+   var tablerAerialLift: DesignElement { get }
+   var tablerUser: DesignElement { get }
+   var tablerPhone: DesignElement { get }
+   var tablerMapIn: DesignElement { get }
+   var tablerBriefcase: DesignElement { get }
+   var tablerLayoutDashboard: DesignElement { get }
+
    // illusttrates
    var challengeWinnerIllustrateFull: DesignElement { get }
    var challengeWinnerIllustrate: DesignElement { get }
@@ -182,6 +225,49 @@ struct IconBuilder: IconElements {
    var tablerClock: UIImage { make("tabler_clock") }
    var tablerGift: UIImage { make("tabler_gift") }
    var tablerAward: UIImage { make("tabler_award") }
+
+   var tablerChess: UIImage { make("tabler_chess") }
+   var tablerBrandRedhat: UIImage { make("tabler_brand-redhat") }
+   var uilShieldSlash: UIImage { make("uil_shield-slash") }
+   var tablerUsers: UIImage { make("tabler_users") }
+   var tablerWalk: UIImage { make("tabler_walk") }
+   var tablerRocket: UIImage { make("tabler_rocket") }
+   var tablerRobot: UIImage { make("tabler_robot") }
+   var tablerHistory: UIImage { make("tabler_history") }
+   var tablerSmartHome: UIImage { make("tabler_smart-home") }
+   var tablerSettings: UIImage { make("tabler_settings") }
+   var tablerPlus: UIImage { make("tabler_plus") }
+   var tablerBell: UIImage { make("tabler_bell") }
+   var tablerCreditCard: UIImage { make("tabler_credit-card") }
+   var tablerHeartPlus: UIImage { make("tabler_heart-plus") }
+   var tablerLogin: UIImage { make("tabler_login") }
+   var tablerLogout: UIImage { make("tabler_logout") }
+   var tablerEditCircle: UIImage { make("tabler_edit-circle") }
+   var tablerArrowBackUp: UIImage { make("tabler_arrow-back-up") }
+   var tablerInfoCircle: UIImage { make("tabler_info-circle") }
+   var tablerMailOpened: UIImage { make("tabler_mail-opened") }
+   var tablerArrowLeft: UIImage { make("tabler_arrow-left") }
+   var tablerCameraRotate: UIImage { make("tabler_camera-rotate") }
+   var tablerCameraOff: UIImage { make("tabler_camera-off") }
+   var tablerKeyboardShow: UIImage { make("tabler_keyboard-show") }
+   var tablerKeyboard: UIImage { make("tabler_keyboard") }
+   var tablerFilter: UIImage { make("tabler_filter") }
+   var tablerChevronDown: UIImage { make("tabler_chevron-down") }
+   var tablerAlertCircle: UIImage { make("tabler_alert-circle") }
+   var tablerWifiOff: UIImage { make("tabler_wifi-off") }
+   var tablerSearch: UIImage { make("tabler_search") }
+   var tablerCalendar: UIImage { make("tabler_calendar") }
+   var tablerChevronUp: UIImage { make("tabler_chevron-up") }
+   var tablerBrandSnapchat: UIImage { make("tabler_brand-snapchat") }
+   var tablerHeartbeat: UIImage { make("tabler_heartbeat") }
+   var tablerBuildingArch: UIImage { make("tabler_building-arch") }
+   var tablerDevicesPc: UIImage { make("tabler_devices-pc") }
+   var tablerAerialLift: UIImage { make("tabler_aerial-lift") }
+   var tablerUser: UIImage { make("tabler_user") }
+   var tablerPhone: UIImage { make("tabler_phone") }
+   var tablerMapIn: UIImage { make("tabler_map-pin") }
+   var tablerBriefcase: UIImage { make("tabler_briefcase") }
+   var tablerLayoutDashboard: UIImage { make("tabler_layout-dashboard") }
 
    var tablerRefresh: UIImage { make("tabler_refresh") }
    var tablerUserCheck: UIImage { make("tabler_user-check") }
