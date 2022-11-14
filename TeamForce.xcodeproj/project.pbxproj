@@ -365,6 +365,8 @@
 		63EB469928AC35A30070A271 /* HistoryWorks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EB469828AC35A30070A271 /* HistoryWorks.swift */; };
 		63F00F4D2922364300CF807C /* NotificationReadWithIdApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F00F4C2922364300CF807C /* NotificationReadWithIdApiWorker.swift */; };
 		63F00F4F292236ED00CF807C /* NotificationReadWithIdUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F00F4E292236ED00CF807C /* NotificationReadWithIdUseCase.swift */; };
+		63F00F512922457400CF807C /* GetNotificationsAmountApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F00F502922457400CF807C /* GetNotificationsAmountApiWorker.swift */; };
+		63F00F532922465A00CF807C /* GetNotificationsAmountUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F00F522922465A00CF807C /* GetNotificationsAmountUseCase.swift */; };
 		63FCC9A629073981009D0001 /* GetEventsApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FCC9A529073981009D0001 /* GetEventsApiWorker.swift */; };
 		63FCC9A929073DE6009D0001 /* GetEventsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FCC9A829073DE6009D0001 /* GetEventsUseCase.swift */; };
 		63FCC9AB29074A61009D0001 /* GetEventsTransactApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FCC9AA29074A61009D0001 /* GetEventsTransactApiWorker.swift */; };
@@ -743,6 +745,8 @@
 		63EB469828AC35A30070A271 /* HistoryWorks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryWorks.swift; sourceTree = "<group>"; };
 		63F00F4C2922364300CF807C /* NotificationReadWithIdApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationReadWithIdApiWorker.swift; sourceTree = "<group>"; };
 		63F00F4E292236ED00CF807C /* NotificationReadWithIdUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationReadWithIdUseCase.swift; sourceTree = "<group>"; };
+		63F00F502922457400CF807C /* GetNotificationsAmountApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetNotificationsAmountApiWorker.swift; sourceTree = "<group>"; };
+		63F00F522922465A00CF807C /* GetNotificationsAmountUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetNotificationsAmountUseCase.swift; sourceTree = "<group>"; };
 		63FCC9A529073981009D0001 /* GetEventsApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetEventsApiWorker.swift; sourceTree = "<group>"; };
 		63FCC9A829073DE6009D0001 /* GetEventsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetEventsUseCase.swift; sourceTree = "<group>"; };
 		63FCC9AA29074A61009D0001 /* GetEventsTransactApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetEventsTransactApiWorker.swift; sourceTree = "<group>"; };
@@ -1758,6 +1762,7 @@
 				6384AD83291B89FC00188769 /* RemoveFcmTokenApiWorker.swift */,
 				6384AD87291BBE8600188769 /* GetNotificationsApiWorker.swift */,
 				63F00F4C2922364300CF807C /* NotificationReadWithIdApiWorker.swift */,
+				63F00F502922457400CF807C /* GetNotificationsAmountApiWorker.swift */,
 			);
 			path = Notifications;
 			sourceTree = "<group>";
@@ -1769,6 +1774,7 @@
 				6384AD85291B8B4000188769 /* RemoveFcmTokenUseCase.swift */,
 				6384AD89291BC07300188769 /* GetNotificationsUseCase.swift */,
 				63F00F4E292236ED00CF807C /* NotificationReadWithIdUseCase.swift */,
+				63F00F522922465A00CF807C /* GetNotificationsAmountUseCase.swift */,
 			);
 			path = Notifications;
 			sourceTree = "<group>";
@@ -2035,6 +2041,7 @@
 				19DD3D97288A0A8C0085CDA8 /* CoverViewModel.swift in Sources */,
 				191B0C292865F119001CF3D9 /* TextBuilder.swift in Sources */,
 				19D08355286F405500F75E4A /* DoubleLabelModel.swift in Sources */,
+				63F00F532922465A00CF807C /* GetNotificationsAmountUseCase.swift in Sources */,
 				197A2D9928A98F4300190656 /* UIColor+Random.swift in Sources */,
 				63AD132628A39B4900CFF75B /* GetTransactionByIdApiWorker.swift in Sources */,
 				635FC6BC28EBE50800826B67 /* GetLikesByTransactionApiWorker.swift in Sources */,
@@ -2262,6 +2269,7 @@
 				63BB2C1A28E1384700C1E3DB /* CreateCommentApiWorker.swift in Sources */,
 				63A37EB028F0528800DBD59F /* GetChallengeWinnersApiWorker.swift in Sources */,
 				19A8229828A9305D0081D385 /* UIEdgeInsets+Padding.swift in Sources */,
+				63F00F512922457400CF807C /* GetNotificationsAmountApiWorker.swift in Sources */,
 				19466E03289FFC040052F0AB /* IconTitleSubtitleModel.swift in Sources */,
 				63FCC9B729075748009D0001 /* GetEventsTransactByIdApiWorker.swift in Sources */,
 				19EE849028AB20CE00D862EE /* DoubleStacksBrandedVM.swift in Sources */,

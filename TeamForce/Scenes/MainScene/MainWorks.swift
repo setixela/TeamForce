@@ -20,4 +20,15 @@ final class MainWorks<Asset: AssetProtocol>: BaseSceneWorks<MainWorksStorage, As
    private lazy var apiUseCase = Asset.apiUseCase
 
    var loadProfile: VoidWork<UserData> { apiUseCase.loadProfile }
+   
+   var getNotificationsAmount: Work<Void, Int> { .init { [weak self] work in
+      self?.apiUseCase.getNotificationsAmount
+         .doAsync()
+         .onSuccess {
+            work.success($0)
+         }
+         .onFail {
+            work.fail()
+         }
+   }.retainBy(retainer) }
 }
