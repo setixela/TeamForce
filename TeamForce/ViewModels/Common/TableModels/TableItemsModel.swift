@@ -22,6 +22,8 @@ enum TableItemsState {
    case itemSections([TableItemsSection])
    case presenters([PresenterProtocol])
    case updateItemAtIndex(Any, Int)
+   case separatorStyle(UITableViewCell.SeparatorStyle)
+   case separatorColor(UIColor)
 }
 
 protocol ScrollEventsProtocol: InitProtocol {
@@ -194,6 +196,10 @@ extension TableItemsModel: Stateable2 {
          items[index] = item
          let indexPath = IndexPath(item: index, section: 0)
          view.reloadRows(at: [indexPath], with: .automatic)
+      case .separatorStyle(let value):
+         view.separatorStyle = value
+      case .separatorColor(let value):
+         view.separatorColor = value
       }
    }
 }

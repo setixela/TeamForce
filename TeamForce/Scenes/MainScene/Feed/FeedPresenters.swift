@@ -124,9 +124,10 @@ final class FeedPresenters<Design: DesignProtocol>: Designable {
                   .backColor(backColor)
                   .cornerRadius(Design.params.cornerRadiusSmall)
             )
-            .padding(.verticalOffset(Grid.x16.value))
+            .padding(.verticalOffset(Grid.x4.value))
 
             work.success(result: cellStack)
+
          } else if feed.winner != nil {
             let icon = self.makeIcon(feed: feed, type: EventType.winner)
             let infoLabel = FeedPresenters.makeInfoLabel(feed: feed, eventType: EventType.winner)
@@ -152,9 +153,10 @@ final class FeedPresenters<Design: DesignProtocol>: Designable {
                   ])
                   .cornerRadius(Design.params.cornerRadiusSmall)
             )
-            .padding(.verticalOffset(Grid.x16.value))
+            .padding(.verticalOffset(Grid.x4.value))
 
             work.success(result: cellStack)
+
          } else if feed.challenge != nil {
             let icon = self.makeIcon(feed: feed, type: EventType.challenge)
             let infoLabel = FeedPresenters.makeInfoLabel(feed: feed, eventType: EventType.challenge)
@@ -162,7 +164,7 @@ final class FeedPresenters<Design: DesignProtocol>: Designable {
             if feed.challenge?.userLiked == true {
                likeButton.setState(.selected)
             }
-            
+
             let infoBlock = StackModel()
                .spacing(Grid.x10.value)
                .axis(.vertical)
@@ -184,7 +186,7 @@ final class FeedPresenters<Design: DesignProtocol>: Designable {
                   ])
                   .cornerRadius(Design.params.cornerRadiusSmall)
             )
-            .padding(.verticalOffset(Grid.x16.value))
+            .padding(.verticalOffset(Grid.x4.value))
 
             work.success(result: cellStack)
          }
@@ -275,18 +277,18 @@ extension FeedPresenters {
    func makeIcon(feed: FeedElement, type: EventType) -> ImageViewModel {
       let icon = ImageViewModel()
          .contentMode(.scaleAspectFill)
-         //.image(Design.icon.newAvatar)
+         // .image(Design.icon.newAvatar)
          .cornerRadius(Grid.x36.value / 2)
          .size(.square(Grid.x36.value))
-      
+
       switch type {
       case .transaction:
          if let recipientPhoto = feed.transaction?.recipientPhoto {
             icon.url(TeamForceEndpoints.urlBase + recipientPhoto)
          } else {
             let userIconText =
-            String(feed.transaction?.recipientFirstName?.first ?? "?") +
-            String(feed.transaction?.recipientSurname?.first ?? "?")
+               String(feed.transaction?.recipientFirstName?.first ?? "?") +
+               String(feed.transaction?.recipientSurname?.first ?? "?")
 //            icon
 //               .textImage(userIconText, Design.color.backgroundBrand)
 //               .backColor(Design.color.backgroundBrand)
@@ -299,17 +301,17 @@ extension FeedPresenters {
                      .image(image)
                }
             }
-            
-            //icon.image(Design.icon.newAvatar)
+
+            // icon.image(Design.icon.newAvatar)
          }
       case .winner:
          if let winnerPhoto = feed.winner?.winnerPhoto {
             icon.url(TeamForceEndpoints.urlBase + winnerPhoto)
          } else {
-            //icon.image(Design.icon.newAvatar)
+            // icon.image(Design.icon.newAvatar)
             let userIconText =
-            String(feed.winner?.winnerFirstName?.first ?? "?") +
-            String(feed.winner?.winnerSurname?.first ?? "?")
+               String(feed.winner?.winnerFirstName?.first ?? "?") +
+               String(feed.winner?.winnerSurname?.first ?? "?")
             // TODO: - сделать через .textImage
             DispatchQueue.global(qos: .background).async {
                let image = userIconText.drawImage(backColor: Design.color.backgroundBrand)
@@ -319,7 +321,7 @@ extension FeedPresenters {
                      .image(image)
                }
             }
-            
+
 //            icon
 //               .textImage(userIconText, Design.color.backgroundBrand)
 //               .backColor(Design.color.backgroundBrand)
