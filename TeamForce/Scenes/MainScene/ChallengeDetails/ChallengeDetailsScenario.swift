@@ -30,10 +30,19 @@ final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<Challen
    override func start() {
       events.saveInputAndLoadChallenge
          .onSuccess(setState) { .setHeaderImage($0.challenge?.photoCache) }
+         .onFail {
+            print("fail")
+         }
          .doNext(works.saveInput)
          .onSuccess(setState) { .sendFilterButtonEvent($0.currentButton) }
+         .onFail {
+            print("fail")
+         }
          .doVoidNext(works.getChallengeById)
          .onSuccess(setState) { .updateDetails($0) }
+         .onFail {
+            print("fail")
+         }
          .doVoidNext(works.amIOwnerCheck)
          .onSuccess(setState, .enableContenders)
          .onFail {
