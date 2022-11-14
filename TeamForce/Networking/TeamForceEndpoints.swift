@@ -648,4 +648,20 @@ enum TeamForceEndpoints {
 //         self.headers = headers
 //      }
    }
+   
+   struct NotificationReadWithId: EndpointProtocol {
+      let method = HTTPMethod.put
+      
+      var endPoint: String = urlBase + "/notifications/"
+      
+      let headers: [String : String]
+      
+      let jsonData: Data?
+      
+      init(id: String, headers: [String : String], jsonData: Data?) {
+         endPoint = endPoint + id + "/"
+         self.headers = headers
+         self.jsonData = jsonData
+      }
+   }
 }

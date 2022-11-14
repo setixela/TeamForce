@@ -60,5 +60,15 @@ final class NotificationsScenario<Asset: AssetProtocol>:
                Asset.router?.route(.push, scene: \.challengeDetails, payload: challInput)
             }
          }
+         .doMap {
+            $0.id
+         }
+         .doNext(works.notificationReadWithId)
+         .onSuccess {
+            print("success")
+         }
+         .onFail {
+            print("fail")
+         }
    }
 }

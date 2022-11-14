@@ -440,6 +440,13 @@ final class ApiUseCase<Asset: AssetProtocol>: InitProtocol, Assetable, WorkBaske
       .retainedWork(retainer)
    }
    
+   var notificationReadWithId: NotificationReadWithIdUseCase.WRK {
+      NotificationReadWithIdUseCase(
+         safeStringStorage: safeStringStorage,
+         notificationReadWithIdApiWorker: notificationReadWithIdApiWorker
+      ).retainedWork(retainer)
+   }
+   
    // MARK: - Dependencies
 
    private var userProfileApiModel: ProfileApiWorker { .init(apiEngine: Asset.service.apiEngine) }
@@ -514,4 +521,5 @@ final class ApiUseCase<Asset: AssetProtocol>: InitProtocol, Assetable, WorkBaske
        Asset.service.apiEngine) }
    private var removeFcmTokenApiWorker: RemoveFcmTokenApiWorker { .init(apiEngine: Asset.service.apiEngine) }
    private var getNotificationsApiWorker: GetNotificationsApiWorker { .init(apiEngine: Asset.service.apiEngine) }
+   private var notificationReadWithIdApiWorker: NotificationReadWithIdApiWorker { .init(apiEngine: Asset.service.apiEngine) }
 }

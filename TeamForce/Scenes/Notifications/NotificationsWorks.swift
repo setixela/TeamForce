@@ -20,6 +20,7 @@ where Asset: AssetProtocol, Temp == NotificationsStore
    var getNotifications: Work<Void, [Notification]> { get }
    var getNotifySections: Work<[Notification], [TableItemsSection]> { get }
    var getNotificationByIndex: Work<Int, Notification> { get }
+   var notificationReadWithId: Work<Int, Void> { get }
 }
 
 extension NotificationsWorksProtocol {
@@ -80,6 +81,18 @@ extension NotificationsWorksProtocol {
          }
 
       $0.success(result)
+   }.retainBy(retainer) }
+   
+   var notificationReadWithId: Work<Int, Void> { .init { [weak self] work in
+      guard let id = work.input else { work.fail(); return }
+      self?.apiUseCase.notificationReadWithId
+         .doAsync(id)
+         .onSuccess {
+            work.success()
+         }
+         .onFail {
+            work.fail()
+         }
    }.retainBy(retainer) }
 }
 
