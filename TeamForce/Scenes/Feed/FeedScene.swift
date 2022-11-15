@@ -40,6 +40,8 @@ final class FeedScene<Asset: AssetProtocol>: DoubleStacksModel,
 
    private var state = FeedSceneState.initial
 
+   private lazy var detailsPresenter = DetailsPresenter<Asset>()
+
    override func start() {
       super.start()
 
@@ -78,13 +80,13 @@ extension FeedScene: Configurable {
 
 enum FeedSceneState {
    case initial
-   case presentFeed(([FeedElement], String))
+   case presentFeed(([Feed], String))
    case loadFeedError
    case presentProfile(Int)
    case reactionChanged
-   case presentDetailView((feed: FeedElement, profileId: Int))
-   case updateFeed([FeedElement])
-   case updateFeedAtIndex(FeedElement, Int)
+   case presentDetailView(feed: Feed)
+   case updateFeed([Feed])
+   case updateFeedAtIndex(Feed, Int)
 }
 
 extension FeedScene: StateMachine {
@@ -118,30 +120,20 @@ extension FeedScene: StateMachine {
          Asset.router?.route(.push, scene: \.profile, payload: id)
       case .reactionChanged:
          print("Hello")
-      case .presentDetailView(let tuple):
-         switch tuple.feed.objectSelector {
+      case .presentDetailView(let feed):
+         switch feed.objectSelector {
          case "T":
-            Asset.router?.route(
-               .push,
-               scene: \.transactDetails,
-               payload: tuple.feed
-            )
+            detailsPresenter.setState(.presentDetails(.transaction(.feedElement(feed))))
          case "Q":
-            Asset.router?.route(
-               .presentModally(.automatic),
-               scene: \.challengeDetails,
-               payload: ChallengeDetailsSceneInput(feed: tuple.feed,
-                                                   profileId: tuple.profileId,
-                                                   currentButton: 0)
-            )
+            detailsPresenter.setState(.presentDetails(
+               .challenge(.byFeed(feed)),
+               navType: .presentModally(.automatic)
+            ))
          case "R":
-            Asset.router?.route(
-               .presentModally(.automatic),
-               scene: \.challengeDetails,
-               payload: ChallengeDetailsSceneInput(feed: tuple.feed,
-                                                   profileId: tuple.profileId,
-                                                   currentButton: 3)
-            )
+            detailsPresenter.setState(.presentDetails(
+               .challenge(.byFeed(feed, chapter: .winners)),
+               navType: .presentModally(.automatic)
+            ))
          default:
             break
          }

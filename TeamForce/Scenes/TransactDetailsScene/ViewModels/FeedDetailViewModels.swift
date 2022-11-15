@@ -9,7 +9,7 @@ import ReactiveWorks
 import UIKit
 
 enum FeedDetailsState {
-   case initial(feed: FeedElement, curUsername: String)
+   case initial(feed: Feed, curUsername: String)
    case details(EventTransaction)
    case comments([Comment])
    case reactions([ReactItem])
@@ -48,7 +48,7 @@ final class FeedDetailViewModels<Asset: AssetProtocol>: DoubleStacksModel, Asset
 extension FeedDetailViewModels: Eventable {
    struct Events: InitProtocol {
       // var reactionPressed: PressLikeRequest?
-      var saveInput: FeedElement?
+      var saveInput: Feed?
    }
 }
 

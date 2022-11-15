@@ -18,7 +18,7 @@ struct FeedDetailEvents {
    let reactionPressed: VoidWork<Void>
    let userAvatarPressed: VoidWork<Int>
 
-   let saveInput: VoidWork<FeedElement>
+   let saveInput: VoidWork<TransactDetailsSceneInput>
 
    let didEditingComment: VoidWork<String>
    let didSendCommentPressed: VoidWorkVoid
@@ -28,8 +28,8 @@ struct FeedDetailEvents {
    //  let presentDislikeReactions: VoidWork<Void>
 }
 
-final class FeedDetailScenario<Asset: AssetProtocol>:
-   BaseScenario<FeedDetailEvents, FeedDetailSceneState, FeedDetailWorks<Asset>>, Assetable
+final class TransactDetailsScenario<Asset: AssetProtocol>:
+   BaseScenario<FeedDetailEvents, FeedDetailSceneState, TransactDetailsWorks<Asset>>, Assetable
 {
    override func start() {
       works.loadToken
@@ -47,8 +47,13 @@ final class FeedDetailScenario<Asset: AssetProtocol>:
       events.saveInput
          .doSaveResult()
          .doVoidNext(works.getCurrentUserName)
-         .onSuccessMixSaved(setState) {
-            .present(feed: $1, currentUsername: $0)
+         .onSuccessMixSaved(setState) { (userName: String, input: TransactDetailsSceneInput) in
+            switch input {
+            case .feedElement(let feed):
+               return .present(feed: feed, currentUsername: userName)
+            case .transactId:
+               return .initial
+            }
          }
          .doLoadResult()
          .doNext(works.saveInput)

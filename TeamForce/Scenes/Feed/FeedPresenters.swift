@@ -12,7 +12,7 @@ final class FeedPresenters<Design: DesignProtocol>: Designable {
    var events: EventsStore = .init()
    var userName: String = ""
 
-   var feedCellPresenter: Presenter<FeedElement, WrappedX<StackModel>> {
+   var feedCellPresenter: Presenter<Feed, WrappedX<StackModel>> {
       Presenter { [weak self] work in
 
          guard let self = self else { return }
@@ -195,7 +195,7 @@ final class FeedPresenters<Design: DesignProtocol>: Designable {
 }
 
 extension FeedPresenters {
-   static func makeInfoDateLabel(feed: FeedElement) -> LabelModel {
+   static func makeInfoDateLabel(feed: Feed) -> LabelModel {
       let dateAgoText = feed.time?.timeAgoConverted
       var eventText = ""
       if let anon = feed.transaction?.isAnonymous {
@@ -213,7 +213,7 @@ extension FeedPresenters {
       return dateLabel
    }
 
-   static func makeInfoLabel(feed: FeedElement, type: FeedTransactType? = nil, eventType: EventType) -> LabelModel {
+   static func makeInfoLabel(feed: Feed, type: FeedTransactType? = nil, eventType: EventType) -> LabelModel {
       let infoLabel = LabelModel()
          .numberOfLines(0)
          .set(Design.state.label.caption)
@@ -274,7 +274,7 @@ extension FeedPresenters {
       return infoLabel
    }
 
-   func makeIcon(feed: FeedElement, type: EventType) -> ImageViewModel {
+   func makeIcon(feed: Feed, type: EventType) -> ImageViewModel {
       let icon = ImageViewModel()
          .contentMode(.scaleAspectFill)
          // .image(Design.icon.newAvatar)
@@ -335,7 +335,7 @@ extension FeedPresenters {
 }
 
 enum FeedTransactType {
-   static func make(feed: FeedElement, currentUserName: String) -> Self {
+   static func make(feed: Feed, currentUserName: String) -> Self {
       if feed.transaction?.recipientTgName == currentUserName {
          if feed.transaction?.isAnonymous ?? false {
             return .youGotAmountFromAnonym

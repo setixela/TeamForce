@@ -8,7 +8,7 @@
 import ReactiveWorks
 
 struct ChallengeDetailsInputEvents {
-   let saveInputAndLoadChallenge: VoidWork<ChallengeDetailsSceneInput>
+   let saveInputAndLoadChallenge: VoidWork<ChallengeDetailsInput>
 
    let challengeResult: VoidWorkVoid
    let filterButtonTapped: VoidWork<Button6Event>
@@ -29,30 +29,55 @@ final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<Challen
 {
    override func start() {
       events.saveInputAndLoadChallenge
-         .onSuccess(setState) { .setHeaderImage($0.challenge?.photoCache) }
-         .onFail {
-            print("fail")
+         .onSuccess(setState) { (input: ChallengeDetailsInput) in
+            switch input {
+            case .byChallenge(let chall, _):
+               return .setHeaderImage(chall.photoCache)
+            case .byFeed:
+               return .initial
+            case .byId:
+               return .initial
+            }
+         }
+         .doMap { $0 }
+         .onSuccess(setState) {
+            var beginChapter: ChallengeDetailsInput.Chapter
+            switch $0 {
+            case .byChallenge(_, let chapter):
+               beginChapter = chapter
+            case .byFeed(_, let chapter):
+               beginChapter = chapter
+            case .byId(_, let chapter):
+               beginChapter = chapter
+            }
+
+            switch beginChapter {
+            case .details:
+               return .detailsChapter
+            case .winners:
+               return .winnersChapter
+            case .comments:
+               return .commentsChapter
+            case .report:
+               return .winnersChapter
+            }
          }
          .doNext(works.saveInput)
-         .onSuccess(setState) { .sendFilterButtonEvent($0.currentButton) }
+         .doNext(works.getChallengeById)
+         .onSuccess(setState) { .presentChallenge($0) }
          .onFail {
-            print("fail")
-         }
-         .doVoidNext(works.getChallengeById)
-         .onSuccess(setState) { .updateDetails($0) }
-         .onFail {
-            print("fail")
+            assertionFailure("fail")
          }
          .doVoidNext(works.amIOwnerCheck)
          .onSuccess(setState, .enableContenders)
          .onFail {
-            print("fail")
+           print("fail")
          }
          .doRecover()
          .doVoidNext(works.getChallengeResult)
          .onSuccess { [weak self] in
             self?.setState(.enableMyResult($0))
-            
+
             self?.works.anyReportToPresent
                .doAsync()
                .onSuccess {
@@ -117,7 +142,7 @@ final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<Challen
             }
          }
          .onFail {
-            print("fail button works")
+            assertionFailure("fail button works")
          }
 
       events.rejectPressed
@@ -131,13 +156,13 @@ final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<Challen
          .doNext(works.checkChallengeReport)
          .doNext(works.getChallengeContenders)
          .onSuccess(setState) { .presentContenders($0) }
-         .onFail { print("fail") }
+         .onFail { assertionFailure("fail") }
 
       events.didSelectWinnerIndex
          .doNext(works.getWinnerReportIdByIndex)
          // .doNext(works.getInputForReportDetail)
          .onSuccess(setState) { .presentReportDetailView($0) }
-         .onFail { print("fail") }
+         .onFail { assertionFailure("fail") }
 
       events.didEditingComment
          .doNext(works.updateInputComment)
@@ -149,7 +174,7 @@ final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<Challen
          .onSuccess(setState, .sendButtonDisabled)
          .doNext(works.createComment)
          .onSuccess(setState, .commentDidSend)
-         .onFail { print("error sending comment") }
+         .onFail { assertionFailure("error sending comment") }
 
       events.reactionPressed
          .doNext(works.isLikedByMe)

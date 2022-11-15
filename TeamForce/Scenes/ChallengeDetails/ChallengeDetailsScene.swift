@@ -8,33 +8,46 @@
 import ReactiveWorks
 import UIKit
 
-struct ChallengeDetailsSceneInput {
+enum ChallengeDetailsInput {
+   case byChallenge(Challenge, chapter: Chapter = .details)
+   case byFeed(Feed, chapter: Chapter = .details)
+   case byId(Int, chapter: Chapter = .details)
 
-   let challenge: Challenge?
-   let feed: FeedElement?
-
-   let profileId: Int
-   let currentButton: Int
-   let reportId: Int?
-   
-   init(challenge: Challenge? = nil,
-        feed: FeedElement? = nil,
-        profileId: Int,
-        currentButton: Int,
-        reportId: Int? = nil) {
-      self.challenge = challenge
-      self.profileId = profileId
-      self.currentButton = currentButton
-      self.reportId = reportId
-      self.feed = feed
+   enum Chapter {
+      case details
+      case winners
+      case comments
+      case report(id: Int)
    }
 }
+
+//struct ChallengeDetailsData {
+
+//   let challenge: Challenge?
+//   let feed: Feed?
+
+//   let profileId: Int
+//   let currentButton: Int
+//   let reportId: Int?
+//
+//   init(challenge: Challenge? = nil,
+//        feed: Feed? = nil,
+//        profileId: Int,
+//        currentButton: Int,
+//        reportId: Int? = nil) {
+//      self.challenge = challenge
+//      self.profileId = profileId
+//      self.currentButton = currentButton
+//      self.reportId = reportId
+//      self.feed = feed
+//   }
+//}
 
 final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
    DefaultVCModel,
    TripleStacksModel,
    Asset,
-   ChallengeDetailsSceneInput
+   ChallengeDetailsInput
 >, Scenarible {
    //
    lazy var scenario: Scenario = ChallengeDetailsScenario(
@@ -190,7 +203,10 @@ enum ChallengeDetailsState {
    case enableMyResult([ChallengeResult])
    case enableContenders
 
-   case sendFilterButtonEvent(Int)
+   case detailsChapter
+   case winnersChapter
+   case commentsChapter
+
    case presentMyResults([ChallengeResult])
    case presentWinners([ChallengeWinnerReport])
    case presentContenders([Contender])
@@ -321,8 +337,7 @@ extension ChallengeDetailsScene: StateMachine {
             .arrangedModels([
                HereIsEmptySpacedBlock<Design>()
             ])
-      case .sendFilterButtonEvent(let value):
-         filterButtons.buttons[value].send(\.didTap)
+
       case .setHeaderImage(let image):
          if let image {
             headerImage.image(image)
@@ -339,6 +354,12 @@ extension ChallengeDetailsScene: StateMachine {
          setState(.buttonLikePressed(alreadySelected: !selected))
       case .updateLikesAmount(let amount):
          challDetails.buttonsPanel.likeButton.models.right.text(String(amount))
+      case .detailsChapter:
+         filterButtons.buttons[0].send(\.didTap)
+      case .winnersChapter:
+         filterButtons.buttons[3].send(\.didTap)
+      case .commentsChapter:
+         filterButtons.buttons[4].send(\.didTap)
       }
    }
 }

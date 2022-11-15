@@ -31,7 +31,7 @@ class BaseScenario<Events, State, Works>: Scenario {
    var events: Events
 
    var setState: (State) -> Void = { _ in
-      log("stateDelegate (setState:) did not injected into Scenario")
+      assertionFailure("stateDelegate (setState:) did not injected into Scenario")
    }
 
    required init(works: Works, stateDelegate: ((State) -> Void)?, events: Events) {

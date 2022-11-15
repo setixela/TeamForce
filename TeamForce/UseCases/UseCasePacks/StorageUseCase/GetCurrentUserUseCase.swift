@@ -8,6 +8,7 @@
 import ReactiveWorks
 
 fileprivate let currentUserKey = "currentUser"
+fileprivate let currentUserIdKey = "currentUserId"
 
 struct GetCurrentUserUseCase: UseCaseProtocol {
    let safeStringStorage: StringStorageProtocol
@@ -35,3 +36,31 @@ struct SaveCurrentUserUseCase: UseCaseProtocol {
       }
    }
 }
+
+struct GetCurrentUserIdUseCase: UseCaseProtocol {
+   let safeStringStorage: StringStorageProtocol
+
+   var work: VoidWork<String> {
+      .init {
+         guard let curUser = safeStringStorage.load(forKey: currentUserIdKey) else {
+            $0.fail()
+            return
+         }
+
+         $0.success(curUser)
+      }
+   }
+}
+
+struct SaveCurrentUserIdUseCase: UseCaseProtocol {
+   let safeStringStorage: StringStorageProtocol
+
+   var work: Work<String, String> {
+      .init {
+         safeStringStorage.save($0.unsafeInput, forKey: currentUserIdKey)
+
+         $0.success($0.unsafeInput)
+      }
+   }
+}
+

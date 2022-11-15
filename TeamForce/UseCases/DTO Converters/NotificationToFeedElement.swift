@@ -6,7 +6,7 @@
 //
 
 struct NotificationToFeedElement: Converter {
-   static func convert(_ input: Notification) -> FeedElement? {
+   static func convert(_ input: Notification) -> Feed? {
       let notify = input
       guard
          let transactData = input.transactionData
@@ -33,7 +33,7 @@ struct NotificationToFeedElement: Converter {
          tags: nil
       )
 
-      return FeedElement(
+      return Feed(
          id: transactData.transactionId,
          time: notify.createdAt,
          eventTypeId: 0,

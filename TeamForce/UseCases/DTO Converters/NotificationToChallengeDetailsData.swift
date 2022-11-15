@@ -5,8 +5,8 @@
 //  Created by Aleksandr Solovyev on 13.11.2022.
 //
 
-struct NotificationToChallengeDetailsSceneInput: Converter {
-   static func convert(_ input: Notification) -> ChallengeDetailsSceneInput? {
+struct NotificationToChallengeDetailsData: Converter {
+   static func convert(_ input: Notification) -> Challenge? {
       let notify = input
       guard
          let challData = input.challengeData
@@ -43,10 +43,6 @@ struct NotificationToChallengeDetailsSceneInput: Converter {
          photoCache: nil
       )
 
-      return ChallengeDetailsSceneInput(
-         challenge: chall,
-         profileId: 0,
-         currentButton: 0
-      )
+      return chall
    }
 }

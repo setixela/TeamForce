@@ -8,12 +8,17 @@
 import ReactiveWorks
 import UIKit
 
+enum TransactDetailsSceneInput {
+   case feedElement(Feed)
+   case transactId(Int)
+}
+
 final class TransactDetailsScene<Asset: AssetProtocol>:
    BaseSceneModel<
       DefaultVCModel,
       DoubleStacksBrandedVM<Asset.Design>,
       Asset,
-      FeedElement
+      TransactDetailsSceneInput
    >, Scenarible
 {
    typealias State = ViewState
@@ -21,8 +26,8 @@ final class TransactDetailsScene<Asset: AssetProtocol>:
 
    private lazy var feedDetailVM = FeedDetailViewModels<Asset>()
 
-   lazy var scenario: Scenario = FeedDetailScenario<Asset>(
-      works: FeedDetailWorks<Asset>(),
+   lazy var scenario: Scenario = TransactDetailsScenario<Asset>(
+      works: TransactDetailsWorks<Asset>(),
       stateDelegate: stateDelegate,
       events: FeedDetailEvents(
          presentDetails: feedDetailVM.filterButtons.on(\.didTapDetails),
@@ -65,7 +70,7 @@ final class TransactDetailsScene<Asset: AssetProtocol>:
 
 enum FeedDetailSceneState {
    case initial
-   case present(feed: FeedElement, currentUsername: String)
+   case present(feed: Feed, currentUsername: String)
    case presentDetails(EventTransaction)
    case presentComments([Comment])
    case presentReactions([ReactItem])

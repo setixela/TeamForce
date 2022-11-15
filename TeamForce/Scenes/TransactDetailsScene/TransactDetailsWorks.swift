@@ -11,7 +11,7 @@ import ReactiveWorks
 final class FeedDetailWorksTempStorage: InitProtocol {
    var currentUserName = ""
    var currentTransactId: Int?
-   var currentFeed: FeedElement?
+   var currentFeed: Feed?
    var userLiked: Bool = false
 //   var userDisliked: Bool = false
    var token: String?
@@ -23,7 +23,7 @@ final class FeedDetailWorksTempStorage: InitProtocol {
    var transaction: EventTransaction?
 }
 
-final class FeedDetailWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedDetailWorksTempStorage, Asset>,
+final class TransactDetailsWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedDetailWorksTempStorage, Asset>,
    CurrentUserStorageWorksProtocol
 {
    private lazy var apiUseCase = Asset.apiUseCase
@@ -41,14 +41,28 @@ final class FeedDetailWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedDetailWork
          }
    }.retainBy(retainer) }
 
-   var saveInput: Work<FeedElement, EventTransaction> { .init { [weak self] work in
+   var saveInput: Work<TransactDetailsSceneInput, EventTransaction> { .init { [weak self] work in
       guard let input = work.input else { return }
 
-      Self.store.currentFeed = input
-      Self.store.currentTransactId = input.transaction?.id
-      Self.store.userLiked = input.transaction?.userLiked ?? false
-//      Self.store.userDisliked = input.0.transaction.userDisliked ?? false
-      if let transactionId = input.transaction?.id {
+      switch input {
+      case .feedElement(let input):
+         Self.store.currentFeed = input
+         Self.store.currentTransactId = input.transaction?.id
+         Self.store.userLiked = input.transaction?.userLiked ?? false
+         //      Self.store.userDisliked = input.0.transaction.userDisliked ?? false
+         if let transactionId = input.transaction?.id {
+            self?.getEventsTransactById
+               .doAsync(transactionId)
+               .onSuccess {
+                  Self.store.transaction = $0
+                  Self.store.userLiked = $0.userLiked
+                  work.success(result: $0)
+               }
+         } else {
+            work.fail()
+         }
+      case .transactId(let transactionId):
+         Self.store.currentTransactId = transactionId
          self?.getEventsTransactById
             .doAsync(transactionId)
             .onSuccess {
@@ -56,10 +70,7 @@ final class FeedDetailWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedDetailWork
                Self.store.userLiked = $0.userLiked
                work.success(result: $0)
             }
-      } else {
-         work.fail()
       }
-
    }.retainBy(retainer) }
 
    var getTransaction: VoidWork<EventTransaction> { .init { work in
@@ -248,7 +259,7 @@ final class FeedDetailWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedDetailWork
    }.retainBy(retainer) }
 }
 
-private extension FeedDetailWorks {
+private extension TransactDetailsWorks {
    static func filteredAll() -> [ReactItem] {
       guard let likes = store.likes else {
          return []

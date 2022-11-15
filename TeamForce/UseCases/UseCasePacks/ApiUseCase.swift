@@ -58,6 +58,7 @@ final class ApiUseCase<Asset: AssetProtocol>: InitProtocol, Assetable, WorkBaske
       LoadProfileUseCase(
          loadToken: storageUseCase.loadToken,
          saveUserNameWork: storageUseCase.saveCurrentUserName,
+         saveUserIdWork: storageUseCase.saveCurrentUserId,
          userProfileApiModel: userProfileApiModel
       )
       .retainedWork(retainer)
@@ -123,13 +124,13 @@ final class ApiUseCase<Asset: AssetProtocol>: InitProtocol, Assetable, WorkBaske
       .retainedWork(retainer)
    }
 
-   var getFeed: GetFeedUseCase.WRK {
-      GetFeedUseCase(
-         safeStringStorage: safeStringStorage,
-         getFeedsApiWorker: getFeedsApiWorker
-      )
-      .retainedWork(retainer)
-   }
+//   var getFeed: GetFeedUseCase.WRK {
+//      GetFeedUseCase(
+//         safeStringStorage: safeStringStorage,
+//         getFeedsApiWorker: getFeedsApiWorker
+//      )
+//      .retainedWork(retainer)
+//   }
 
    var getPeriods: GetPeriodsUseCase.WRK {
       GetPeriodsUseCase(
@@ -466,7 +467,6 @@ final class ApiUseCase<Asset: AssetProtocol>: InitProtocol, Assetable, WorkBaske
    private var getTransactionsApiWorker: GetTransactionsApiWorker { .init(apiEngine: Asset.service.apiEngine) }
    private var getTransactionByIdApiWorker: GetTransactionByIdApiWorker { .init(apiEngine: Asset.service.apiEngine) }
    private var getUsersListApiWorker: GetUsersListApiWorker { .init(apiEngine: Asset.service.apiEngine) }
-   private var getFeedsApiWorker: GetFeedsApiWorker { .init(apiEngine: Asset.service.apiEngine) }
    private var getPeriodsApiWorker: GetPeriodsApiWorker { .init(apiEngine: Asset.service.apiEngine) }
    private var getStatByPeriodIdApiWorker: GetStatByPeriodIdApiWorker { .init(apiEngine: Asset.service.apiEngine) }
    private var getTransactionsByPeriodApiWorker: GetTransactionsByPeriodApiWorker { .init(apiEngine: Asset.service.apiEngine) }

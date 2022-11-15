@@ -35,7 +35,7 @@ final class FeedViewModels<Design: DSP>: BaseModel, Designable, Stateable {
    
    lazy var feedTableModel = TableItemsModel<Design>()
       .backColor(Design.color.background)
-      .set(.separatorColor(Design.color.iconMidpoint))
+      .set(.separatorColor(Design.color.cellSeparatorColor))
       .set(.separatorStyle(.singleLine))
       .set(.presenters([
          presenter.feedCellPresenter,

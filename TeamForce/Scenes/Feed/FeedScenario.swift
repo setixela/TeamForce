@@ -80,7 +80,7 @@ final class FeedScenario<Asset: AssetProtocol>:
 
       events.presentDetail
          .doNext(works.getFeedByRowNumber)
-         .onSuccess(setState) { .presentDetailView($0) }
+         .onSuccess(setState) { .presentDetailView(feed: $0) }
 
       events.pagination
          .doNext(works.pagination)

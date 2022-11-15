@@ -11,6 +11,7 @@ import ReactiveWorks
 struct LoadProfileUseCase: UseCaseProtocol {
    let loadToken: LoadTokenUseCase.WRK
    let saveUserNameWork: SaveCurrentUserUseCase.WRK
+   let saveUserIdWork: SaveCurrentUserIdUseCase.WRK
    let userProfileApiModel: ProfileApiWorker
 
    var work: Work<Void, UserData> {
@@ -23,16 +24,26 @@ struct LoadProfileUseCase: UseCaseProtocol {
                TokenRequest(token: $0)
             }
             .doNext(worker: userProfileApiModel)
-            .onSuccess { userData in
-               work.success(result: userData)
-            }
             .onFail {
                work.fail()
             }
+            .doSaveResult()
             .doMap {
                $0.userName
             }
             .doNext(saveUserNameWork)
+            .onFail {
+               assertionFailure("cannot save saveUserNameWork")
+            }
+            .doLoadResult()
+            .doMap { (userData: UserData) in
+               userData.profile.id.toString
+            }
+            .doNext(saveUserIdWork)
+            .doLoadResult()
+            .onSuccess {
+               work.success(result: $0)
+            }
             .onFail {
                assertionFailure("cannot save saveUserNameWork")
             }
