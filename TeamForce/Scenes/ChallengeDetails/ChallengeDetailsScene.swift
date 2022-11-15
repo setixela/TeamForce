@@ -203,9 +203,7 @@ enum ChallengeDetailsState {
    case enableMyResult([ChallengeResult])
    case enableContenders
 
-   case detailsChapter
-   case winnersChapter
-   case commentsChapter
+   case presentChapter(ChallengeDetailsInput.Chapter)
 
    case presentMyResults([ChallengeResult])
    case presentWinners([ChallengeWinnerReport])
@@ -354,12 +352,17 @@ extension ChallengeDetailsScene: StateMachine {
          setState(.buttonLikePressed(alreadySelected: !selected))
       case .updateLikesAmount(let amount):
          challDetails.buttonsPanel.likeButton.models.right.text(String(amount))
-      case .detailsChapter:
-         filterButtons.buttons[0].send(\.didTap)
-      case .winnersChapter:
-         filterButtons.buttons[3].send(\.didTap)
-      case .commentsChapter:
-         filterButtons.buttons[4].send(\.didTap)
+      case .presentChapter(let chapter):
+         switch chapter {
+         case .details:
+            filterButtons.buttons[0].send(\.didTap)
+         case .winners:
+            filterButtons.buttons[3].send(\.didTap)
+         case .comments:
+            filterButtons.buttons[4].send(\.didTap)
+         case .report:
+            filterButtons.buttons[3].send(\.didTap)
+         }
       }
    }
 }

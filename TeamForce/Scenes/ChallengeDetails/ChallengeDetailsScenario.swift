@@ -33,33 +33,19 @@ final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<Challen
             switch input {
             case .byChallenge(let chall, _):
                return .setHeaderImage(chall.photoCache)
-            case .byFeed:
-               return .initial
-            case .byId:
+            default:
                return .initial
             }
          }
          .doMap { $0 }
          .onSuccess(setState) {
-            var beginChapter: ChallengeDetailsInput.Chapter
             switch $0 {
             case .byChallenge(_, let chapter):
-               beginChapter = chapter
+               return .presentChapter(chapter)
             case .byFeed(_, let chapter):
-               beginChapter = chapter
+               return .presentChapter(chapter)
             case .byId(_, let chapter):
-               beginChapter = chapter
-            }
-
-            switch beginChapter {
-            case .details:
-               return .detailsChapter
-            case .winners:
-               return .winnersChapter
-            case .comments:
-               return .commentsChapter
-            case .report:
-               return .winnersChapter
+               return .presentChapter(chapter)
             }
          }
          .doNext(works.saveInput)
