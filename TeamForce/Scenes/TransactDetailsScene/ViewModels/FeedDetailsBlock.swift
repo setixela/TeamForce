@@ -77,8 +77,8 @@ extension FeedDetailsBlock: SetupProtocol {
       }
 
       if let photoLink = data.photo {
-         imageUrl = TeamForceEndpoints.urlBase + photoLink
-         transactPhoto.models.down.url(TeamForceEndpoints.urlBase + photoLink)
+         imageUrl = TeamForceEndpoints.convertToImageUrl(photoLink)
+         transactPhoto.models.down.url(imageUrl)
          transactPhoto.hidden(false)
       }
    }

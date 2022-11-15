@@ -39,8 +39,6 @@ final class ChallengeDetailsViewModel<Design: DSP>:
    private lazy var userPanel = Design.model.profile.userPanel
       .shadow(Design.params.cellShadow)
 
-//   private lazy var activity = ActivityIndicator<Design>()
-
    required init() {
       super.init()
       setAll { _, sendPanel in

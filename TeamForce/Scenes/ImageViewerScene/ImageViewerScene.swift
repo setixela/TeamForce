@@ -35,18 +35,29 @@ final class ImageViewerScene<Asset: AssetProtocol>: BaseSceneModel<
    override func start() {
       super.start()
 
-      on(\.input, self) {
-         $0.image.url($1) { [weak self] _, _ in
-            self?.activity.hidden(true)
-         }
+      vcModel?.on(\.viewDidLoad, self) {
+         $0.mainVM.backColor(Design.color.background)
+         $0.scrollModel.setState(.viewModel($0.image))
 
          $0.mainVM
             .arrangedModels([
                Spacer(16),
                $0.titlePanel,
-               $0.activity
             ])
             .backViewModel($0.scrollModel)
+            .addModel($0.activity) { anchors, view in
+               anchors
+                  .centerX(view.centerXAnchor)
+                  .centerY(view.centerYAnchor)
+            }
+      }
+
+      on(\.input, self) { slf, url in
+         slf.image.url(url) { [weak self] _, _ in
+            self?.image.url(TeamForceEndpoints.removeThumbSuffix(url)) { [weak self] _, _ in
+              self?.activity.hidden(true)
+            }
+         }
       }
 
       closeButton.on(\.didTap, self) {
@@ -54,14 +65,5 @@ final class ImageViewerScene<Asset: AssetProtocol>: BaseSceneModel<
          $0.finishCanceled()
       }
 
-      mainVM.backColor(Design.color.background)
-
-      scrollModel.setState(.viewModel(image))
-
-      mainVM
-         .arrangedModels([
-            Spacer(16),
-            titlePanel
-         ])
    }
 }

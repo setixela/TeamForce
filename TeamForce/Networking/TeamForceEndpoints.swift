@@ -18,7 +18,11 @@ enum TeamForceEndpoints {
    }
 
    static func convertToFullImageUrl(_ urlString: String) -> String {
-      urlBase + urlString.replacingOccurrences(of: "_thumb", with: "")
+      urlBase + removeThumbSuffix(urlString)
+   }
+
+   static func removeThumbSuffix(_ urlString: String) -> String {
+      urlString.replacingOccurrences(of: "_thumb", with: "")
    }
 
    //
