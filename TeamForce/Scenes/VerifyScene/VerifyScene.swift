@@ -1,32 +1,31 @@
 //
-//  LoginScene.swift
+//  VerifyScene.swift
 //  TeamForce
 //
-//  Created by Aleksandr Solovyev on 24.06.2022.
+//  Created by Yerzhan Gapurinov on 15.11.2022.
 //
 
 import ReactiveWorks
 
-// MARK: - LoginScene
+// MARK: - VerifyScene
 
-final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
+final class VerifyScene<Asset: AssetProtocol>: BaseSceneModel<
    DefaultVCModel,
    DoubleStacksBrandedVM<Asset.Design>,
    Asset,
-   Void
+   AuthResult
 >, Scenarible {
    //
 
-   private lazy var viewModels = LoginViewModels<Design>()
+   private lazy var viewModels = VerifyViewModels<Design>()
 
-   lazy var scenario: Scenario = LoginScenario(
-      works: LoginWorks<Asset>(),
+   lazy var scenario: Scenario = VerifyScenario(
+      works: VerifyWorks<Asset>(),
       stateDelegate: viewModels.stateDelegate,
-      events: LoginScenarioEvents(
-         userNameStringEvent: viewModels.userNameInputModel.mainModel.textField.on(\.didEditingChanged),
+      events: VerifyScenarioEvents(
+         saveInput: on(\.input),
          smsCodeStringEvent: viewModels.smsCodeInputModel.mainModel.textField.on(\.didEditingChanged),
-         getCodeButtonEvent: viewModels.getCodeButton.on(\.didTap)
-//         loginButtonEvent: viewModels.loginButton.on(\.didTap)
+         loginButtonEvent: viewModels.loginButton.on(\.didTap)
       )
    )
 
@@ -35,23 +34,21 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
    override func start() {
       configure()
 
-      viewModels.setState(.inputUserName)
+      viewModels.setState(.inputSmsCode)
       scenario.start()
    }
 }
 
 // MARK: - Configure presenting
 
-private extension LoginScene {
+private extension VerifyScene {
    func configure() {
       mainVM.header
          .text(Design.Text.title.autorisation)
       mainVM.bodyStack
          .arrangedModels([
-            viewModels.userNameInputModel,
             viewModels.smsCodeInputModel,
             Spacer(Design.params.buttonsSpacingY),
-            viewModels.getCodeButton,
             viewModels.loginButton,
             viewModels.activityIndicator,
             Grid.xxx.spacer

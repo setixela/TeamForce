@@ -11,7 +11,7 @@ import ReactiveWorks
 struct LoginUseCase: UseCaseProtocol {
    let authApiWorker: AuthApiWorker
 
-   var work: Work<String, AuthResult> {
+   var work: Work<String, Auth2Result> {
       authApiWorker.work
    }
 }

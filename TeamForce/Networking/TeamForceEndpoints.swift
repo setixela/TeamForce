@@ -701,4 +701,15 @@ enum TeamForceEndpoints {
 
        let headers: [String: String]
    }
+   
+   struct ChooseOrganizationEndpoint: EndpointProtocol {
+       //
+       let method = HTTPMethod.post
+
+       var endPoint: String { urlBase + "/choose-organization/" }
+
+       let body: [String: Any]
+
+       let headers: [String: String]
+   }
 }
