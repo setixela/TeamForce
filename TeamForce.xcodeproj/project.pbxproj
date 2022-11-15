@@ -184,6 +184,7 @@
 		19A9BE7C28C2E9790099F8EA /* SendCoinRecipentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A9BE7B28C2E9790099F8EA /* SendCoinRecipentCell.swift */; };
 		19A9BE7E28C2EB7D0099F8EA /* TransactSendErrorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A9BE7D28C2EB7D0099F8EA /* TransactSendErrorViewModel.swift */; };
 		19A9BE8028C307000099F8EA /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A9BE7F28C306FF0099F8EA /* Queue.swift */; };
+		19AA24F929244522001AB635 /* ProfileScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19AA24F829244522001AB635 /* ProfileScene.swift */; };
 		19AE3AEF28691B2E00A0C6E4 /* MainScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19AE3AEE28691B2E00A0C6E4 /* MainScene.swift */; };
 		19AE3AF22869230C00A0C6E4 /* AuthApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19AE3AF12869230C00A0C6E4 /* AuthApiWorker.swift */; };
 		19B2C5D428B7D37A00E7B47D /* Shadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B2C5D328B7D37A00E7B47D /* Shadow.swift */; };
@@ -581,6 +582,7 @@
 		19A9BE7B28C2E9790099F8EA /* SendCoinRecipentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendCoinRecipentCell.swift; sourceTree = "<group>"; };
 		19A9BE7D28C2EB7D0099F8EA /* TransactSendErrorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactSendErrorViewModel.swift; sourceTree = "<group>"; };
 		19A9BE7F28C306FF0099F8EA /* Queue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
+		19AA24F829244522001AB635 /* ProfileScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileScene.swift; sourceTree = "<group>"; };
 		19AE3AEE28691B2E00A0C6E4 /* MainScene.swift */ = {isa = PBXFileReference; indentWidth = 3; lastKnownFileType = sourcecode.swift; path = MainScene.swift; sourceTree = "<group>"; tabWidth = 3; };
 		19AE3AF12869230C00A0C6E4 /* AuthApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthApiWorker.swift; sourceTree = "<group>"; };
 		19B2C5D328B7D37A00E7B47D /* Shadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shadow.swift; sourceTree = "<group>"; };
@@ -1181,7 +1183,6 @@
 				1953DE822879FDB3000DC537 /* MainScene */,
 				19ACB3CD28A599ED00B5AD71 /* Feed */,
 				19ACB3CB28A599DF00B5AD71 /* Balance */,
-				19ACB3CA28A599D600B5AD71 /* Transact */,
 				19ACB3CC28A599E600B5AD71 /* History */,
 				1921A12F28EEC93300E41E86 /* Challenges */,
 				1921CA9F291AA38B007AE024 /* Notifications */,
@@ -1190,7 +1191,6 @@
 				632DADCB28FD68E900998DCD /* ChallengeResCancel */,
 				636A45942900D6AD003E412D /* ChallengeReportDetails */,
 				631995AE28F53EA800EB2638 /* ChallengeCreate */,
-				19017B8328A6C79400B06345 /* SentTransactDetails */,
 				63BB2C2728E3E78300C1E3DB /* TransactDetailsScene */,
 				193C74752909E417008B3AD9 /* ImageViewerScene */,
 				1959F27228AA8E7400DEEE5C /* IntroScene */,
@@ -1463,6 +1463,7 @@
 		19ACB3CE28A59A2900B5AD71 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				19AA24F829244522001AB635 /* ProfileScene.swift */,
 				6368D8212891508C0049EEAB /* MyProfileScene.swift */,
 				63AB071028BD6B0F00FD650F /* ProfileWorks.swift */,
 				19221EED28CB17CD00B7B604 /* EditProfile */,
@@ -2106,7 +2107,7 @@
 				1977BE5528A7238F00D554EA /* TextFieldStates.swift in Sources */,
 				631D8EC528F96054005332BD /* ChallContendersViewModel.swift in Sources */,
 				63BB2C2928E3E7B600C1E3DB /* TransactDetailsScenario.swift in Sources */,
-				63BB2C2928E3E7B600C1E3DB /* FeedDetailScenario.swift in Sources */,
+				63BB2C2928E3E7B600C1E3DB /* TransactDetailsScenario.swift in Sources */,
 				636AE7242923CD82004A24E5 /* ChooseOrgApiWorker.swift in Sources */,
 				1921A13728EECAD500E41E86 /* ChallengesWorks.swift in Sources */,
 				191571D1289F12350061510F /* PlaygroundScene.swift in Sources */,
@@ -2398,6 +2399,7 @@
 				63FCC9AD29074AEC009D0001 /* GetEventsTransactUseCase.swift in Sources */,
 				196750AC2865189C0019A6DE /* TextFieldModel.swift in Sources */,
 				1921A13328EECABE00E41E86 /* ChallengesScenario.swift in Sources */,
+				19AA24F929244522001AB635 /* ProfileScene.swift in Sources */,
 				63BB2C0E28DA179D00C1E3DB /* PressLikeUseCase.swift in Sources */,
 				63A37EB428F059D800DBD59F /* CreateChallengeReportApiWorker.swift in Sources */,
 				1974472A2913481C0089BB2B /* ChekInternetWorks.swift in Sources */,

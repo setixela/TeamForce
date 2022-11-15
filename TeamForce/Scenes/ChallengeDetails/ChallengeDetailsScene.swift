@@ -21,28 +21,6 @@ enum ChallengeDetailsInput {
    }
 }
 
-//struct ChallengeDetailsData {
-
-//   let challenge: Challenge?
-//   let feed: Feed?
-
-//   let profileId: Int
-//   let currentButton: Int
-//   let reportId: Int?
-//
-//   init(challenge: Challenge? = nil,
-//        feed: Feed? = nil,
-//        profileId: Int,
-//        currentButton: Int,
-//        reportId: Int? = nil) {
-//      self.challenge = challenge
-//      self.profileId = profileId
-//      self.currentButton = currentButton
-//      self.reportId = reportId
-//      self.feed = feed
-//   }
-//}
-
 final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
    DefaultVCModel,
    TripleStacksModel,
@@ -55,8 +33,6 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
       stateDelegate: stateDelegate,
       events: ChallengeDetailsInputEvents(
          saveInputAndLoadChallenge: on(\.input),
-         // getContenders: ,
-         // getWinners: ,
          challengeResult: challDetails.buttonsPanel.sendButton.on(\.didTap),
          filterButtonTapped: filterButtons.on(\.didTapButtons),
          acceptPressed: contendersBlock.presenter.on(\.acceptPressed),

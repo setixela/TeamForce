@@ -18,6 +18,8 @@ protocol TypographyElements: InitProtocol, DesignElementable {
    var headline5: DesignElement { get }
    var headline6: DesignElement { get }
 
+   var headline6Invert: DesignElement { get }
+
    var title: DesignElement { get }
    var title2: DesignElement { get }
 
@@ -55,6 +57,8 @@ struct LabelBuilder<Design: DSP>: LabelProtocol, Designable {
    var headline4: LabelModel { .init(Design.state.label.headline4) }
    var headline5: LabelModel { .init(Design.state.label.headline5) }
    var headline6: LabelModel { .init(Design.state.label.headline6) }
+
+   var headline6Invert: LabelModel { .init(Design.state.label.headline6Invert) }
 
    var title: LabelModel { .init(Design.state.label.title) }
    var title2: LabelModel { .init(Design.state.label.title2) }
@@ -118,6 +122,11 @@ struct LabelStateBuilder<Design: DSP>: LabelStateProtocol, Designable {
    var headline6: [LabelState] { [
       .font(.systemFont(ofSize: 20, weight: .regular)),
       .textColor(Design.color.text)
+   ] }
+
+   var headline6Invert: [LabelState] { [
+      .font(.systemFont(ofSize: 20, weight: .medium)),
+      .textColor(Design.color.textInvert)
    ] }
 
    var title: [LabelState] { [
