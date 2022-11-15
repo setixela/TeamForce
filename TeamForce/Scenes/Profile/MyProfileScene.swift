@@ -148,7 +148,7 @@ class MyProfileScene<Asset: AssetProtocol>: BaseSceneModel<
          Asset.router?.route(.presentModally(.automatic), scene: \.imageViewer, payload: fullUrl)
       }
    }
-   
+//   
 //   private func getOrganizations() {
 //      useCase.getUserOrganizations
 //         .doAsync()
@@ -164,7 +164,25 @@ class MyProfileScene<Asset: AssetProtocol>: BaseSceneModel<
 //      useCase.changeOrganization
 //         .doAsync(id)
 //         .onSuccess {
-//            print("success \($0)")
+//            print($0)
+//            let smsCode = ""
+//            var request = VerifyRequest(xId: $0.xId,
+//                                        xCode: $0.xCode,
+//                                        smsCode: smsCode ?? "",
+//                                        organizationId: $0.organizationId)
+//            self.verifyCode(request: request)
+//         }
+//         .onFail {
+//            print("fail")
+//         }
+//   }
+//   
+//   private func verifyCode(request: VerifyRequest) {
+//      useCase.changeOrgVerifyCode
+//         .doAsync(request)
+//         .onSuccess {
+//            print($0)
+//            print("success")
 //         }
 //         .onFail {
 //            print("fail")
@@ -205,8 +223,8 @@ class MyProfileScene<Asset: AssetProtocol>: BaseSceneModel<
                print("load profile error")
             }
       }
-      getOrganizations()
-      changeOrganization(id: 69)
+//      getOrganizations()
+//      changeOrganization(id: 69)
    }
    
    private func clearLabels() {

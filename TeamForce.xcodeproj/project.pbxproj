@@ -285,6 +285,8 @@
 		636AE70C29235C8F004A24E5 /* GetUserOrganizationsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636AE70B29235C8F004A24E5 /* GetUserOrganizationsUseCase.swift */; };
 		636AE71029238DF1004A24E5 /* ChangeOrganizationApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636AE70F29238DF1004A24E5 /* ChangeOrganizationApiWorker.swift */; };
 		636AE71229238E90004A24E5 /* ChangeOrganizationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636AE71129238E90004A24E5 /* ChangeOrganizationUseCase.swift */; };
+		636AE71429239668004A24E5 /* ChangeOrgVerifyApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636AE71329239668004A24E5 /* ChangeOrgVerifyApiWorker.swift */; };
+		636AE716292399A4004A24E5 /* ChangeOrgVerifyUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636AE715292399A4004A24E5 /* ChangeOrgVerifyUseCase.swift */; };
 		6384AD7F291B6EE100188769 /* SetFcmTokenApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6384AD7E291B6EE100188769 /* SetFcmTokenApiWorker.swift */; };
 		6384AD82291B703700188769 /* SetFcmTokenUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6384AD81291B703700188769 /* SetFcmTokenUseCase.swift */; };
 		6384AD84291B89FC00188769 /* RemoveFcmTokenApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6384AD83291B89FC00188769 /* RemoveFcmTokenApiWorker.swift */; };
@@ -667,6 +669,8 @@
 		636AE70B29235C8F004A24E5 /* GetUserOrganizationsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserOrganizationsUseCase.swift; sourceTree = "<group>"; };
 		636AE70F29238DF1004A24E5 /* ChangeOrganizationApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeOrganizationApiWorker.swift; sourceTree = "<group>"; };
 		636AE71129238E90004A24E5 /* ChangeOrganizationUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeOrganizationUseCase.swift; sourceTree = "<group>"; };
+		636AE71329239668004A24E5 /* ChangeOrgVerifyApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeOrgVerifyApiWorker.swift; sourceTree = "<group>"; };
+		636AE715292399A4004A24E5 /* ChangeOrgVerifyUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeOrgVerifyUseCase.swift; sourceTree = "<group>"; };
 		6384AD7E291B6EE100188769 /* SetFcmTokenApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetFcmTokenApiWorker.swift; sourceTree = "<group>"; };
 		6384AD81291B703700188769 /* SetFcmTokenUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetFcmTokenUseCase.swift; sourceTree = "<group>"; };
 		6384AD83291B89FC00188769 /* RemoveFcmTokenApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveFcmTokenApiWorker.swift; sourceTree = "<group>"; };
@@ -1748,6 +1752,7 @@
 			children = (
 				636AE70829235BE1004A24E5 /* GetUserOrganizationsApiWorker.swift */,
 				636AE70F29238DF1004A24E5 /* ChangeOrganizationApiWorker.swift */,
+				636AE71329239668004A24E5 /* ChangeOrgVerifyApiWorker.swift */,
 			);
 			path = Organizations;
 			sourceTree = "<group>";
@@ -1757,6 +1762,7 @@
 			children = (
 				636AE70B29235C8F004A24E5 /* GetUserOrganizationsUseCase.swift */,
 				636AE71129238E90004A24E5 /* ChangeOrganizationUseCase.swift */,
+				636AE715292399A4004A24E5 /* ChangeOrgVerifyUseCase.swift */,
 			);
 			path = Organizations;
 			sourceTree = "<group>";
@@ -1972,6 +1978,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				636AE71429239668004A24E5 /* ChangeOrgVerifyApiWorker.swift in Sources */,
+				636AE716292399A4004A24E5 /* ChangeOrgVerifyUseCase.swift in Sources */,
 				194C095628759FD900D88D5B /* ViewModel+Stateable.swift in Sources */,
 				632DADD328FD6BAB00998DCD /* ChallengeResCancelViewModel.swift in Sources */,
 				19A8229628A925760081D385 /* ViewModel+Setters.swift in Sources */,

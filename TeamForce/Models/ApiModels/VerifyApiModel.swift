@@ -12,6 +12,16 @@ struct VerifyRequest {
     let xId: String
     let xCode: String
     let smsCode: String
+    let organizationId: String?
+   init(xId: String,
+        xCode: String,
+        smsCode: String,
+        organizationId: String? = nil) {
+      self.xId = xId
+      self.xCode = xCode
+      self.smsCode = smsCode
+      self.organizationId = organizationId
+   }
 }
 
 struct VerifyResult {

@@ -468,6 +468,13 @@ final class ApiUseCase<Asset: AssetProtocol>: InitProtocol, Assetable, WorkBaske
       ).retainedWork(retainer)
    }
    
+   var changeOrgVerifyCode: ChangeOrgVerifyCodeUseCase.WRK {
+      ChangeOrgVerifyCodeUseCase(
+         changeOrgVerifyApiWorker: changeOrgVerifyApiWorker
+      )
+      .retainedWork(retainer)
+   }
+   
    // MARK: - Dependencies
 
    private var userProfileApiModel: ProfileApiWorker { .init(apiEngine: Asset.service.apiEngine) }
@@ -549,4 +556,6 @@ final class ApiUseCase<Asset: AssetProtocol>: InitProtocol, Assetable, WorkBaske
        .init(apiEngine: Asset.service.apiEngine) }
    private var changeOrganizationApiWorker: ChangeOrganizationApiWorker {
        .init(apiEngine: Asset.service.apiEngine) }
+   private var changeOrgVerifyApiWorker: ChangeOrgVerifyApiWorker {
+      .init(apiEngine: Asset.service.apiEngine) }
 }

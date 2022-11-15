@@ -690,4 +690,15 @@ enum TeamForceEndpoints {
       
       let jsonData: Data?
    }
+   
+   struct ChangeOrganizationVerifyEndpoint: EndpointProtocol {
+       //
+       let method = HTTPMethod.post
+
+       var endPoint: String { urlBase + "/user/change-organization/verify/" }
+
+       let body: [String: Any]
+
+       let headers: [String: String]
+   }
 }
