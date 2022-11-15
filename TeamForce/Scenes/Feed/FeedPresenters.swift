@@ -284,7 +284,7 @@ extension FeedPresenters {
       switch type {
       case .transaction:
          if let recipientPhoto = feed.transaction?.recipientPhoto {
-            icon.url(TeamForceEndpoints.urlBase + recipientPhoto)
+            icon.url(TeamForceEndpoints.convertToImageUrl(recipientPhoto), placeHolder: Design.icon.avatarPlaceholder)
          } else {
             let userIconText =
                String(feed.transaction?.recipientFirstName?.first ?? "?") +
@@ -306,7 +306,7 @@ extension FeedPresenters {
          }
       case .winner:
          if let winnerPhoto = feed.winner?.winnerPhoto {
-            icon.url(TeamForceEndpoints.urlBase + winnerPhoto)
+            icon.url(TeamForceEndpoints.convertToImageUrl(winnerPhoto), placeHolder: Design.icon.avatarPlaceholder)
          } else {
             // icon.image(Design.icon.newAvatar)
             let userIconText =
