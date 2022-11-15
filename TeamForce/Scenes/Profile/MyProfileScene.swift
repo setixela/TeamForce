@@ -148,6 +148,46 @@ class MyProfileScene<Asset: AssetProtocol>: BaseSceneModel<
          Asset.router?.route(.presentModally(.automatic), scene: \.imageViewer, payload: fullUrl)
       }
    }
+//   
+//   private func getOrganizations() {
+//      useCase.getUserOrganizations
+//         .doAsync()
+//         .onSuccess {
+//            print("result \($0)")
+//         }
+//         .onFail {
+//            print("fail")
+//         }
+//   }
+//   
+//   private func changeOrganization(id: Int) {
+//      useCase.changeOrganization
+//         .doAsync(id)
+//         .onSuccess {
+//            print($0)
+//            let smsCode = ""
+//            var request = VerifyRequest(xId: $0.xId,
+//                                        xCode: $0.xCode,
+//                                        smsCode: smsCode ?? "",
+//                                        organizationId: $0.organizationId)
+//            self.verifyCode(request: request)
+//         }
+//         .onFail {
+//            print("fail")
+//         }
+//   }
+//   
+//   private func verifyCode(request: VerifyRequest) {
+//      useCase.changeOrgVerifyCode
+//         .doAsync(request)
+//         .onSuccess {
+//            print($0)
+//            print("success")
+//         }
+//         .onFail {
+//            print("fail")
+//         }
+//   }
 
    private func configureProfile() {
       if let input = inputValue {
@@ -183,6 +223,8 @@ class MyProfileScene<Asset: AssetProtocol>: BaseSceneModel<
                print("load profile error")
             }
       }
+//      getOrganizations()
+//      changeOrganization(id: 69)
    }
    
    private func clearLabels() {
@@ -193,6 +235,7 @@ class MyProfileScene<Asset: AssetProtocol>: BaseSceneModel<
          $1.text("-")
       }
    }
+   
    
    private func setLabels(userData: UserData) {
       clearLabels()

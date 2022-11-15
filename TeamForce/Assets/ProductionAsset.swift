@@ -22,6 +22,8 @@ fileprivate typealias PA = ProductionAsset
 protocol ScenesProtocol: InitProtocol {
    var digitalThanks: SMP { get }
    var login: SMP { get }
+   var verify: SMP { get }
+   var chooseOrgScene: SMP { get }
    var main: SMP { get }
 
    var transactDetails: SMP { get }
@@ -54,6 +56,8 @@ struct Scenes: ScenesProtocol {
    //
    var digitalThanks: SMP { DigitalThanksScene<PA>() }
    var login: SMP { LoginScene<PA>() }
+   var verify: SMP { VerifyScene<PA>() }
+   var chooseOrgScene: SMP { ChooseOrgScene<PA>() }
    var main: SMP { MainScene<PA>() }
    var myProfile: SMP { MyProfileScene<PA>() }
    var profile: SMP { ProfileScene<PA>() }

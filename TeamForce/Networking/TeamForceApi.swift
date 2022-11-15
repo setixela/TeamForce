@@ -82,6 +82,17 @@ struct AuthResult {
     let xId: String
     let xCode: String
     let account: Account
+    let organizationId: String?
+   
+   init(xId: String,
+        xCode: String,
+        account: Account,
+        organizationId: String? = nil) {
+      self.xId = xId
+      self.xCode = xCode
+      self.account = account
+      self.organizationId = organizationId
+   }
 }
 
 struct AuthResultBody: Decodable {

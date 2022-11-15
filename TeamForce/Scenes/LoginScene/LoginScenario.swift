@@ -14,7 +14,7 @@ struct LoginScenarioEvents {
    let userNameStringEvent: VoidWork<String>
    let smsCodeStringEvent: VoidWork<String>
    let getCodeButtonEvent: VoidWork<Void>
-   let loginButtonEvent: VoidWork<Void>
+//   let loginButtonEvent: VoidWork<Void>
 }
 
 final class LoginScenario<Asset: AssetProtocol>:
@@ -35,7 +35,15 @@ final class LoginScenario<Asset: AssetProtocol>:
       events.getCodeButtonEvent
          .onSuccess(setState, .startActivityIndicator)
          .doNext(works.authByName)
-         .onSuccess(setState, .inputSmsCode)
+         .onSuccess{
+            switch $0 {
+            case .auth(let value):
+               Asset.router?.route(.push, scene: \.verify, payload: ())
+            case .organisations(let value):
+               Asset.router?.route(.push, scene: \.chooseOrgScene, payload: value)
+            }
+            
+         }
          .onFail(setState, .invalidUserName)
 
       // setup input field reactions
@@ -46,22 +54,22 @@ final class LoginScenario<Asset: AssetProtocol>:
          .onFail(setState) { .smsInputParseError($0) }
 
       // setup login button reactions
-      events.loginButtonEvent
-         .onSuccess(setState, .startActivityIndicator)
-         //
-         .doNext(works.verifyCode)
-         .onFail(setState, .invalidSmsCode)
-         .doNext(works.saveLoginResults)
-         .doNext(works.setFcmToken)
+//      events.loginButtonEvent
+//         .onSuccess(setState, .startActivityIndicator)
+//         //
+//         .doNext(works.verifyCode)
+//         .onFail(setState, .invalidSmsCode)
+//         .doNext(works.saveLoginResults)
+//         .doNext(works.setFcmToken)
+////         .onSuccess {
+////            print("success")
+////         }
+////         .onFail {
+////            print("fail")
+////         }
 //         .onSuccess {
-//            print("success")
+//            Asset.router?.route(.presentInitial, scene: \.main, payload: ())
 //         }
-//         .onFail {
-//            print("fail")
-//         }
-         .onSuccess {
-            Asset.router?.route(.presentInitial, scene: \.main, payload: ())
-         }
 
    }
 }
