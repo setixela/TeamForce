@@ -148,6 +148,28 @@ class MyProfileScene<Asset: AssetProtocol>: BaseSceneModel<
          Asset.router?.route(.presentModally(.automatic), scene: \.imageViewer, payload: fullUrl)
       }
    }
+   
+//   private func getOrganizations() {
+//      useCase.getUserOrganizations
+//         .doAsync()
+//         .onSuccess {
+//            print("result \($0)")
+//         }
+//         .onFail {
+//            print("fail")
+//         }
+//   }
+//   
+//   private func changeOrganization(id: Int) {
+//      useCase.changeOrganization
+//         .doAsync(id)
+//         .onSuccess {
+//            print("success \($0)")
+//         }
+//         .onFail {
+//            print("fail")
+//         }
+//   }
 
    private func configureProfile() {
       if let input = inputValue {
@@ -183,6 +205,8 @@ class MyProfileScene<Asset: AssetProtocol>: BaseSceneModel<
                print("load profile error")
             }
       }
+      getOrganizations()
+      changeOrganization(id: 69)
    }
    
    private func clearLabels() {
@@ -193,6 +217,7 @@ class MyProfileScene<Asset: AssetProtocol>: BaseSceneModel<
          $1.text("-")
       }
    }
+   
    
    private func setLabels(userData: UserData) {
       clearLabels()

@@ -680,4 +680,14 @@ enum TeamForceEndpoints {
       
       let headers: [String : String]
    }
+   
+   struct ChangeOrganization: EndpointProtocol {
+      let method = HTTPMethod.post
+      
+      var endPoint: String { urlBase + "/user/change-organization/" }
+      
+      let headers: [String : String]
+      
+      let jsonData: Data?
+   }
 }
