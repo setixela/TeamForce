@@ -672,4 +672,12 @@ enum TeamForceEndpoints {
       
       let headers: [String : String]
    }
+   
+   struct UserOrganizations: EndpointProtocol {
+      let method = HTTPMethod.get
+      
+      var endPoint: String { urlBase + "/user/organizations/" }
+      
+      let headers: [String : String]
+   }
 }

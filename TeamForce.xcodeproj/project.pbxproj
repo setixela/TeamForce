@@ -281,6 +281,8 @@
 		636A45982900D71D003E412D /* ChallReportDetailsScenario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636A45972900D71D003E412D /* ChallReportDetailsScenario.swift */; };
 		636A459A2900D72F003E412D /* ChallReportDetailsWorks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636A45992900D72F003E412D /* ChallReportDetailsWorks.swift */; };
 		636A459C2900D746003E412D /* ChallReportDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636A459B2900D746003E412D /* ChallReportDetailsViewModel.swift */; };
+		636AE70929235BE1004A24E5 /* GetUserOrganizationsApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636AE70829235BE1004A24E5 /* GetUserOrganizationsApiWorker.swift */; };
+		636AE70C29235C8F004A24E5 /* GetUserOrganizationsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636AE70B29235C8F004A24E5 /* GetUserOrganizationsUseCase.swift */; };
 		6384AD7F291B6EE100188769 /* SetFcmTokenApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6384AD7E291B6EE100188769 /* SetFcmTokenApiWorker.swift */; };
 		6384AD82291B703700188769 /* SetFcmTokenUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6384AD81291B703700188769 /* SetFcmTokenUseCase.swift */; };
 		6384AD84291B89FC00188769 /* RemoveFcmTokenApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6384AD83291B89FC00188769 /* RemoveFcmTokenApiWorker.swift */; };
@@ -659,6 +661,8 @@
 		636A45972900D71D003E412D /* ChallReportDetailsScenario.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallReportDetailsScenario.swift; sourceTree = "<group>"; };
 		636A45992900D72F003E412D /* ChallReportDetailsWorks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallReportDetailsWorks.swift; sourceTree = "<group>"; };
 		636A459B2900D746003E412D /* ChallReportDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallReportDetailsViewModel.swift; sourceTree = "<group>"; };
+		636AE70829235BE1004A24E5 /* GetUserOrganizationsApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserOrganizationsApiWorker.swift; sourceTree = "<group>"; };
+		636AE70B29235C8F004A24E5 /* GetUserOrganizationsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserOrganizationsUseCase.swift; sourceTree = "<group>"; };
 		6384AD7E291B6EE100188769 /* SetFcmTokenApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetFcmTokenApiWorker.swift; sourceTree = "<group>"; };
 		6384AD81291B703700188769 /* SetFcmTokenUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetFcmTokenUseCase.swift; sourceTree = "<group>"; };
 		6384AD83291B89FC00188769 /* RemoveFcmTokenApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveFcmTokenApiWorker.swift; sourceTree = "<group>"; };
@@ -1567,6 +1571,7 @@
 		19EF32AC287CE8140078F53D /* ApiModels */ = {
 			isa = PBXGroup;
 			children = (
+				636AE70729235BC6004A24E5 /* Organizations */,
 				6384AD7D291B6ECB00188769 /* Notifications */,
 				636BAEF0291A5AC800B1FA79 /* History */,
 				63FCC9A429073966009D0001 /* Events */,
@@ -1617,6 +1622,7 @@
 		19F153822899647100ECF000 /* ApiUseCases */ = {
 			isa = PBXGroup;
 			children = (
+				636AE70A29235C7D004A24E5 /* Organizations */,
 				6384AD80291B702600188769 /* Notifications */,
 				636BAEF1291A60EF00B1FA79 /* History */,
 				63FCC9A729073DD2009D0001 /* Events */,
@@ -1731,6 +1737,22 @@
 				636A459B2900D746003E412D /* ChallReportDetailsViewModel.swift */,
 			);
 			path = ChallengeReportDetails;
+			sourceTree = "<group>";
+		};
+		636AE70729235BC6004A24E5 /* Organizations */ = {
+			isa = PBXGroup;
+			children = (
+				636AE70829235BE1004A24E5 /* GetUserOrganizationsApiWorker.swift */,
+			);
+			path = Organizations;
+			sourceTree = "<group>";
+		};
+		636AE70A29235C7D004A24E5 /* Organizations */ = {
+			isa = PBXGroup;
+			children = (
+				636AE70B29235C8F004A24E5 /* GetUserOrganizationsUseCase.swift */,
+			);
+			path = Organizations;
 			sourceTree = "<group>";
 		};
 		636BAEF0291A5AC800B1FA79 /* History */ = {
@@ -2024,6 +2046,7 @@
 				19EF32B02884B6C80078F53D /* TableViewModel.swift in Sources */,
 				19A9BE7828C283650099F8EA /* ModelBuilder.swift in Sources */,
 				19171F4B28AD23AE000926B1 /* HistoryViewModels.swift in Sources */,
+				636AE70C29235C8F004A24E5 /* GetUserOrganizationsUseCase.swift in Sources */,
 				19CAB9D128B4265C00A0A3B1 /* TransactOptionsVM.swift in Sources */,
 				194E308228F36661001E2967 /* ChallengeDetailsViewModel.swift in Sources */,
 				197A361828BBC9AC006E44C1 /* MainScenario.swift in Sources */,
@@ -2177,6 +2200,7 @@
 				19F153842899649900ECF000 /* LoadProfileUseCase.swift in Sources */,
 				19CAB9D628B44C4700A0A3B1 /* StackItemsModel.swift in Sources */,
 				19221EEF28CB509A00B7B604 /* ProfileEditViewModels.swift in Sources */,
+				636AE70929235BE1004A24E5 /* GetUserOrganizationsApiWorker.swift in Sources */,
 				19F15386289964AA00ECF000 /* LogoutUseCase.swift in Sources */,
 				1953DE842879FDE3000DC537 /* TransactViewModels.swift in Sources */,
 				19BD2A8728ABB35C00FCC00A /* LoginScenario.swift in Sources */,

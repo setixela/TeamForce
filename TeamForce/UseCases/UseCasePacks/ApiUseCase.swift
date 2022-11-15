@@ -454,6 +454,13 @@ final class ApiUseCase<Asset: AssetProtocol>: InitProtocol, Assetable, WorkBaske
       ).retainedWork(retainer)
    }
    
+   var getUserOrganizations: GetUserOrganizationsUseCase.WRK {
+      GetUserOrganizationsUseCase(
+         safeStringStorage: safeStringStorage,
+         getUserOrganizationsApiWorker: getUserOrganizationsApiWorker
+      ).retainedWork(retainer)
+   }
+   
    // MARK: - Dependencies
 
    private var userProfileApiModel: ProfileApiWorker { .init(apiEngine: Asset.service.apiEngine) }
@@ -530,5 +537,7 @@ final class ApiUseCase<Asset: AssetProtocol>: InitProtocol, Assetable, WorkBaske
    private var getNotificationsApiWorker: GetNotificationsApiWorker { .init(apiEngine: Asset.service.apiEngine) }
    private var notificationReadWithIdApiWorker: NotificationReadWithIdApiWorker { .init(apiEngine: Asset.service.apiEngine) }
    private var getNotificationsAmountApiWorker: GetNotificationsAmountApiWorker {
+       .init(apiEngine: Asset.service.apiEngine) }
+   private var getUserOrganizationsApiWorker: GetUserOrganizationsApiWorker {
        .init(apiEngine: Asset.service.apiEngine) }
 }
