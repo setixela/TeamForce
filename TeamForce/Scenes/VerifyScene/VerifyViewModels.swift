@@ -50,7 +50,7 @@ extension VerifyViewModels: StateMachine {
       switch state {
       case .inputSmsCode:
          smsCodeInputModel.hidden(false)
-         //loginButton.hidden(false)
+         // loginButton.hidden(false)
          activityIndicator.hidden(true)
 
       case .smsInputParseSuccess(let value):

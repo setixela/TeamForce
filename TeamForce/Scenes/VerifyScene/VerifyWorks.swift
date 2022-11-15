@@ -11,9 +11,7 @@ import UIKit
 
 protocol VerifyBackstageProtocol: Assetable {
    var verifyCode: VoidWork<VerifyResultBody> { get }
-
    var smsCodeInputParse: Work<String, String> { get }
-
    var saveLoginResults: Work<VerifyResultBody, Void> { get }
 }
 
@@ -87,7 +85,7 @@ final class VerifyWorks<Asset: AssetProtocol>: BaseSceneWorks<VerifyWorks.Temp, 
 
       work.success()
    }}
-   
+
    var setFcmToken: Work<Void, Void> { .init { [weak self] work in
       guard
          let deviceId = UIDevice.current.identifierForVendor?.uuidString,

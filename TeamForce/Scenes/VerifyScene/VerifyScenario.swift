@@ -7,8 +7,6 @@
 
 import ReactiveWorks
 
-
-
 struct VerifyScenarioEvents {
    let saveInput: VoidWork<AuthResult>
    let smsCodeStringEvent: VoidWork<String>
@@ -23,7 +21,6 @@ final class VerifyScenario<Asset: AssetProtocol>:
    >
 {
    override func start() {
-      
       events.saveInput
          .doNext(works.saveInput)
          .onSuccess {
@@ -56,7 +53,5 @@ final class VerifyScenario<Asset: AssetProtocol>:
 //         .onFail {
 //            print("fail")
 //         }
-         
-
    }
 }
