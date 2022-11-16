@@ -10,11 +10,18 @@ import ReactiveWorks
 import UIKit
 
 struct Config {
+   private static let urlBaseDebug = "http://176.99.6.251:8888"
+   private static let urlBaseProduction = "http://176.99.6.251:8889"
+
    #if DEBUG
-   static let urlBase = "http://176.99.6.251:8888"
+   static var urlBase = urlBaseDebug
    #else
-   static let urlBase = "http://176.99.6.251:8889"
+   static var urlBase = urlBaseProduction
    #endif
+
+   static func setDebugMode(_ isDebug: Bool) {
+      urlBase = isDebug ? urlBaseDebug : urlBaseProduction
+   }
 
    static let isDebug = false
 

@@ -68,16 +68,26 @@ class BasePopupPresenter: BaseModel, PopupPresenterProtocol, Eventable {
          self.queue.push(model)
       }
       .on(\.presentAuto) { [weak self] model, onView in
-         onView?.endEditing(true)
+          onView?.endEditing(true)
 
-         guard let self = self,
-               let onView = onView
+         guard
+            let self = self,
+            let onView = onView
          else { return }
 
          let view = self.prepareModel(model, onView: onView)
-         view.addAnchors
-            .width(onView.widthAnchor)
-            .bottom(onView.bottomAnchor)
+
+         switch self.align {
+         case .bottom:
+            view.addAnchors
+               .width(onView.widthAnchor)
+               .bottom(onView.bottomAnchor)
+         case .top:
+            view.addAnchors
+               .width(onView.widthAnchor)
+               .top(onView.topAnchor)
+         }
+
          self.animateViewAppear(view)
          self.queue.push(model)
       }
