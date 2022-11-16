@@ -87,7 +87,7 @@ final class MyProfileScene<Asset: AssetProtocol>: ProfileScene<Asset> {
          .onSuccess {
             print("result \($0)")
             var orgNames = $0.map { $0.name }
-            var labelModels: [LabelModel] = []
+            var labelModels: [UIViewModel] = [Spacer(1)]
 //            orgNames.append("Hello")
 //            orgNames.append("Hello")
 //            orgNames.append("Hello")
