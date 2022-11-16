@@ -13,18 +13,29 @@ final class NotificationsScene<Asset: AssetProtocol>: BaseSceneModel<
    DoubleStacksBrandedVM<Asset.Design>,
    Asset,
    Void
->, Scenarible {
+>, Scenarible2 {
    //
 
+   private lazy var works = NotificationsWorks<Asset>()
+
    lazy var scenario: Scenario = NotificationsScenario(
-      works: NotificationsWorks<Asset>(),
+      works: works,
       stateDelegate: stateDelegate,
-      events: NotificationsEvents(
-         didSelectIndex: notifyViewModel.on(\.didSelectRow)
+      events: NotificationsEvents()
+   )
+
+   lazy var scenario2: Scenario = NotificationsDetailsScenario(
+      works: works,
+      stateDelegate: detailsPresenter.stateDelegate,
+      events: NotificationsDetailsEvents(
+          didSelectIndex: notifyViewModel.on(\.didSelectRow)
       )
    )
 
    private lazy var notifyViewModel = NotificationsViewModel<Design>()
+
+   // Details Presenter
+   private lazy var detailsPresenter = DetailsPresenter<Asset>()
 
    override func start() {
       super.start()
@@ -34,6 +45,7 @@ final class NotificationsScene<Asset: AssetProtocol>: BaseSceneModel<
       vcModel?.title = "Уведомления"
       vcModel?.on(\.viewDidLoad, self) {
          $0.scenario.start()
+         $0.scenario2.start()
       }
    }
 }

@@ -19,6 +19,16 @@ extension CurrentUserStorageWorksProtocol {
       GetCurrentUserUseCase(safeStringStorage: Asset.service.safeStringStorage)
          .retainedWork(retainer)
    }
+
+   var saveCurrentUserId: SaveCurrentUserIdUseCase.WRK {
+      SaveCurrentUserUseCase(safeStringStorage: Asset.service.safeStringStorage)
+         .retainedWork(retainer)
+   }
+
+   var getCurrentUserId: SaveCurrentUserIdUseCase.WRK {
+      SaveCurrentUserUseCase(safeStringStorage: Asset.service.safeStringStorage)
+         .retainedWork(retainer)
+   }
 }
 
 extension StorageWorks: CurrentUserStorageWorksProtocol {}

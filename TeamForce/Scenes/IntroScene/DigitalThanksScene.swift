@@ -18,16 +18,30 @@ final class DigitalThanksScene<Asset: AssetProtocol>: BaseSceneModel<
    private lazy var enterButton = Design.button.default
       .title(Text.button.enterButton)
 
+   // Debug
+   private lazy var popup = BottomPopupPresenter()
+   private lazy var popupTable = TableViewModel()
+   private lazy var debugLabel = LabelModel()
+      .text("Debug mode")
+      .padding(.horizontalOffset(16))
+      .height(50)
+   private lazy var prodLabel = LabelModel()
+      .text("Production mode")
+      .padding(.horizontalOffset(16))
+      .height(50)
+
    // MARK: - Start
 
    override func start() {
       //
-      configure()
+      vcModel?.on(\.viewDidLoad, self) {
+         $0.configure()
 
-      enterButton
-         .on(\.didTap) {
-            Asset.router?.route(.push, scene: \.login)
-         }
+         $0.enterButton
+            .on(\.didTap) {
+               Asset.router?.route(.push, scene: \.login)
+            }
+      }
    }
 
    private func configure() {
@@ -61,5 +75,29 @@ final class DigitalThanksScene<Asset: AssetProtocol>: BaseSceneModel<
             Grid.x1.spacer,
             enterButton
          ])
+
+      vcModel?.on(\.motionEnded, self) { slf, event in
+         switch event {
+         case .motionShake:
+            slf.popupTable.set(.models([
+               slf.debugLabel,
+               slf.prodLabel,
+               Spacer(64)
+            ]))
+            slf.popup.send(\.presentAuto, (slf.popupTable, onView: slf.vcModel?.view.superview))
+         default:
+            break
+         }
+
+         slf.popupTable.onEvent(\.didSelectRow) {
+            switch $0.row {
+            case 0:
+               Config.setDebugMode(true)
+            default:
+               Config.setDebugMode(false)
+            }
+            slf.popup.send(\.hide)
+         }
+      }
    }
 }

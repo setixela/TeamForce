@@ -17,6 +17,7 @@ protocol CommonModelBuilder: InitProtocol, Designable {
    var imagePicker: ImagePickerViewModel { get }
 
    var bottomPopupPresenter: BottomPopupPresenter { get }
+   var topPopupPresenter: TopPopupPresenter { get }
 
    var divider: WrappedX<ViewModel> { get }
 }
@@ -30,6 +31,7 @@ struct CommonBuilder<Design: DSP>: CommonModelBuilder {
    var imagePicker: ImagePickerViewModel { .init() }
 
    var bottomPopupPresenter: BottomPopupPresenter { .init() }
+   var topPopupPresenter: TopPopupPresenter { .init() }
 
    var divider: WrappedX<ViewModel> {
       .init()

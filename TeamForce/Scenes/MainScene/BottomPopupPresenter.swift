@@ -14,17 +14,39 @@ struct PopupEvent: InitProtocol {
    var hide: Void?
 }
 
-final class BottomPopupPresenter: BaseModel, Eventable {
-   typealias Events = PopupEvent
+enum PopupAlign: CGFloat {
+   case top = -1
+   case bottom = 1
+}
 
+protocol PopupPresenterProtocol: AnyObject {
+   var align: PopupAlign { get }
+   var darkView: UIView? { get set }
+   var presentDuration: CGFloat { get }
+}
+
+final class BottomPopupPresenter: BasePopupPresenter {
+   override var align: PopupAlign { .bottom }
+}
+
+final class TopPopupPresenter: BasePopupPresenter {
+   override var align: PopupAlign { .top }
+}
+
+// BASE
+
+class BasePopupPresenter: BaseModel, PopupPresenterProtocol, Eventable {
+   var align: PopupAlign { .bottom }
+   var darkView: UIView?
+
+   typealias Events = PopupEvent
    var events: [Int: LambdaProtocol?] = [:]
 
-   private var viewTranslation = CGPoint(x: 0, y: 0)
-   private var darkView: UIView?
+   let presentDuration: CGFloat = 0.3
 
-   private var presentDuration = 0.3
+   var viewTranslation = CGPoint(x: 0, y: 0)
 
-   private lazy var queue: Queue<UIViewModel> = .init()
+   lazy var queue: Queue<UIViewModel> = .init()
 
    override func start() {
       on(\.present) { [weak self] model, onView in
@@ -35,21 +57,37 @@ final class BottomPopupPresenter: BaseModel, Eventable {
          else { return }
 
          let view = self.prepareModel(model, onView: onView)
-         view.addAnchors.fitToViewInsetted(onView, .init(top: 40, left: 0, bottom: 0, right: 0))
+         switch self.align {
+         case .top:
+            view.addAnchors.fitToTop(onView)
+         case .bottom:
+            view.addAnchors.fitToViewInsetted(onView, .init(top: 40, left: 0, bottom: 0, right: 0))
+         }
+
          self.animateViewAppear(view)
          self.queue.push(model)
       }
       .on(\.presentAuto) { [weak self] model, onView in
-         onView?.endEditing(true)
-         
-         guard let self = self,
-               let onView = onView
+          onView?.endEditing(true)
+
+         guard
+            let self = self,
+            let onView = onView
          else { return }
 
          let view = self.prepareModel(model, onView: onView)
-         view.addAnchors
-            .width(onView.widthAnchor)
-            .bottom(onView.bottomAnchor)
+
+         switch self.align {
+         case .bottom:
+            view.addAnchors
+               .width(onView.widthAnchor)
+               .bottom(onView.bottomAnchor)
+         case .top:
+            view.addAnchors
+               .width(onView.widthAnchor)
+               .top(onView.topAnchor)
+         }
+
          self.animateViewAppear(view)
          self.queue.push(model)
       }
@@ -58,7 +96,7 @@ final class BottomPopupPresenter: BaseModel, Eventable {
       }
    }
 
-   private func prepareModel(_ model: UIViewModel, onView: UIView) -> UIView {
+   func prepareModel(_ model: UIViewModel, onView: UIView) -> UIView {
       self.darkView?.removeFromSuperview()
 
       let view = model.uiView
@@ -74,12 +112,18 @@ final class BottomPopupPresenter: BaseModel, Eventable {
       return view
    }
 
-   private func animateViewAppear(_ view: UIView) {
+   func animateViewAppear(_ view: UIView) {
       view.layoutIfNeeded()
 
-      let viewHeight = view.frame.height
+      let viewHeight: CGFloat
+      switch align {
+      case .top:
+         viewHeight = view.intrinsicContentSize.height
+      case .bottom:
+         viewHeight = view.frame.height
+      }
 
-      view.transform = CGAffineTransform(translationX: 0, y: viewHeight)
+      view.transform = CGAffineTransform(translationX: 0, y: viewHeight * align.rawValue)
       UIView.animate(withDuration: presentDuration) {
          view.transform = CGAffineTransform(translationX: 0, y: 0)
          self.darkView?.alpha = 0.75
@@ -92,35 +136,57 @@ final class BottomPopupPresenter: BaseModel, Eventable {
       view.addGestureRecognizer(tapGest)
    }
 
-   @objc private func handleDismiss(sender: UIPanGestureRecognizer) {
+   @objc func didTapOnView(sender: UITapGestureRecognizer) {
+      sender.view?.endEditing(true)
+   }
+
+   @objc func handleDismiss(sender: UIPanGestureRecognizer) {
       guard let view = sender.view else { return }
 
       switch sender.state {
       case .changed:
          viewTranslation = sender.translation(in: view)
-         UIView.animate(withDuration: presentDuration, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
-            view.transform = CGAffineTransform(
-               translationX: 0,
-               y: self.viewTranslation.y > 0 ? self.viewTranslation.y : 0)
-         })
-      case .ended:
-         if viewTranslation.y < 200 {
+         switch align {
+         case .bottom:
             UIView.animate(withDuration: presentDuration, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
-               view.transform = .identity
+               view.transform = CGAffineTransform(
+                  translationX: 0,
+                  y: self.viewTranslation.y > 0 ? self.viewTranslation.y : 0)
             })
-         } else {
-            hideView()
+         case .top:
+            UIView.animate(withDuration: presentDuration, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+               view.transform = CGAffineTransform(
+                  translationX: 0,
+                  y: self.viewTranslation.y < 0 ? self.viewTranslation.y : 0)
+            })
+         }
+
+      case .ended:
+         switch align {
+         case .bottom:
+
+            if viewTranslation.y < 200 {
+               UIView.animate(withDuration: presentDuration, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+                  view.transform = .identity
+               })
+            } else {
+               hideView()
+            }
+         case .top:
+            if viewTranslation.y > 200 {
+               UIView.animate(withDuration: presentDuration, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+                  view.transform = .identity
+               })
+            } else {
+               hideView()
+            }
          }
       default:
          break
       }
    }
 
-   @objc private func didTapOnView(sender: UITapGestureRecognizer) {
-      sender.view?.endEditing(true)
-   }
-
-   private func hideView() {
+   func hideView() {
       guard let view = queue.pop()?.uiView else {
          return
       }
@@ -129,7 +195,7 @@ final class BottomPopupPresenter: BaseModel, Eventable {
          if self.queue.isEmpty {
             self.darkView?.alpha = 0
          }
-         view.transform = CGAffineTransform(translationX: 0, y: view.frame.height)
+         view.transform = CGAffineTransform(translationX: 0, y: view.frame.height * self.align.rawValue)
       } completion: { _ in
          if self.queue.isEmpty {
             self.darkView?.removeFromSuperview()

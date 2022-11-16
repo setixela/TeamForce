@@ -29,6 +29,8 @@ struct FontBuilder: FontProtocol {
    var headline5: UIFont { .systemFont(ofSize: 28, weight: .bold) }
    var headline6: UIFont { .systemFont(ofSize: 20, weight: .regular) }
 
+   var headline6Invert: UIFont { .systemFont(ofSize: 20, weight: .regular) }
+
    var title: UIFont { .systemFont(ofSize: 24, weight: .bold) }
    var title2: UIFont { .systemFont(ofSize: 24, weight: .medium) }
 

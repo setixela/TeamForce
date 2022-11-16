@@ -58,6 +58,7 @@ final class ApiUseCase<Asset: AssetProtocol>: InitProtocol, Assetable, WorkBaske
       LoadProfileUseCase(
          loadToken: storageUseCase.loadToken,
          saveUserNameWork: storageUseCase.saveCurrentUserName,
+         saveUserIdWork: storageUseCase.saveCurrentUserId,
          userProfileApiModel: userProfileApiModel
       )
       .retainedWork(retainer)
@@ -123,13 +124,13 @@ final class ApiUseCase<Asset: AssetProtocol>: InitProtocol, Assetable, WorkBaske
       .retainedWork(retainer)
    }
 
-   var getFeed: GetFeedUseCase.WRK {
-      GetFeedUseCase(
-         safeStringStorage: safeStringStorage,
-         getFeedsApiWorker: getFeedsApiWorker
-      )
-      .retainedWork(retainer)
-   }
+//   var getFeed: GetFeedUseCase.WRK {
+//      GetFeedUseCase(
+//         safeStringStorage: safeStringStorage,
+//         getFeedsApiWorker: getFeedsApiWorker
+//      )
+//      .retainedWork(retainer)
+//   }
 
    var getPeriods: GetPeriodsUseCase.WRK {
       GetPeriodsUseCase(
@@ -440,6 +441,47 @@ final class ApiUseCase<Asset: AssetProtocol>: InitProtocol, Assetable, WorkBaske
       .retainedWork(retainer)
    }
    
+   var notificationReadWithId: NotificationReadWithIdUseCase.WRK {
+      NotificationReadWithIdUseCase(
+         safeStringStorage: safeStringStorage,
+         notificationReadWithIdApiWorker: notificationReadWithIdApiWorker
+      ).retainedWork(retainer)
+   }
+   
+   var getNotificationsAmount: GetNotificationsAmountUseCase.WRK {
+      GetNotificationsAmountUseCase(
+         safeStringStorage: safeStringStorage,
+         getNotificationsAmountApiWorker: getNotificationsAmountApiWorker
+      ).retainedWork(retainer)
+   }
+   
+   var getUserOrganizations: GetUserOrganizationsUseCase.WRK {
+      GetUserOrganizationsUseCase(
+         safeStringStorage: safeStringStorage,
+         getUserOrganizationsApiWorker: getUserOrganizationsApiWorker
+      ).retainedWork(retainer)
+   }
+   
+   var changeOrganization: ChangeOrganizationUseCase.WRK {
+      ChangeOrganizationUseCase(
+         safeStringStorage: safeStringStorage,
+         changeOrganizationApiWorker: changeOrganizationApiWorker
+      ).retainedWork(retainer)
+   }
+   
+   var changeOrgVerifyCode: ChangeOrgVerifyCodeUseCase.WRK {
+      ChangeOrgVerifyCodeUseCase(
+         changeOrgVerifyApiWorker: changeOrgVerifyApiWorker
+      )
+      .retainedWork(retainer)
+   }
+   
+   var chooseOrganization: ChooseOrgUseCase.WRK {
+      ChooseOrgUseCase(
+         chooseOrgApiWorker: chooseOrgApiWorker
+      ).retainedWork(retainer)
+   }
+   
    // MARK: - Dependencies
 
    private var userProfileApiModel: ProfileApiWorker { .init(apiEngine: Asset.service.apiEngine) }
@@ -452,7 +494,6 @@ final class ApiUseCase<Asset: AssetProtocol>: InitProtocol, Assetable, WorkBaske
    private var getTransactionsApiWorker: GetTransactionsApiWorker { .init(apiEngine: Asset.service.apiEngine) }
    private var getTransactionByIdApiWorker: GetTransactionByIdApiWorker { .init(apiEngine: Asset.service.apiEngine) }
    private var getUsersListApiWorker: GetUsersListApiWorker { .init(apiEngine: Asset.service.apiEngine) }
-   private var getFeedsApiWorker: GetFeedsApiWorker { .init(apiEngine: Asset.service.apiEngine) }
    private var getPeriodsApiWorker: GetPeriodsApiWorker { .init(apiEngine: Asset.service.apiEngine) }
    private var getStatByPeriodIdApiWorker: GetStatByPeriodIdApiWorker { .init(apiEngine: Asset.service.apiEngine) }
    private var getTransactionsByPeriodApiWorker: GetTransactionsByPeriodApiWorker { .init(apiEngine: Asset.service.apiEngine) }
@@ -514,4 +555,14 @@ final class ApiUseCase<Asset: AssetProtocol>: InitProtocol, Assetable, WorkBaske
        Asset.service.apiEngine) }
    private var removeFcmTokenApiWorker: RemoveFcmTokenApiWorker { .init(apiEngine: Asset.service.apiEngine) }
    private var getNotificationsApiWorker: GetNotificationsApiWorker { .init(apiEngine: Asset.service.apiEngine) }
+   private var notificationReadWithIdApiWorker: NotificationReadWithIdApiWorker { .init(apiEngine: Asset.service.apiEngine) }
+   private var getNotificationsAmountApiWorker: GetNotificationsAmountApiWorker {
+       .init(apiEngine: Asset.service.apiEngine) }
+   private var getUserOrganizationsApiWorker: GetUserOrganizationsApiWorker {
+       .init(apiEngine: Asset.service.apiEngine) }
+   private var changeOrganizationApiWorker: ChangeOrganizationApiWorker {
+       .init(apiEngine: Asset.service.apiEngine) }
+   private var changeOrgVerifyApiWorker: ChangeOrgVerifyApiWorker {
+      .init(apiEngine: Asset.service.apiEngine) }
+   private var chooseOrgApiWorker: ChooseOrgApiWorker { .init(apiEngine: Asset.service.apiEngine) }
 }

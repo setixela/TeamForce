@@ -12,62 +12,11 @@ struct ProfileEvents: InitProtocol {
    var saveSuccess: Void?
 }
 
-final class ProfileScene<Asset: AssetProtocol>: MyProfileScene<Asset> {
-   override func start() {
+final class MyProfileScene<Asset: AssetProtocol>: ProfileScene<Asset> {
+   //
+   private let titleModel = ProfileTitle<Design>()
 
-      settingsButton.hidden(true)
-      super.start()
-   }
-}
-
-class MyProfileScene<Asset: AssetProtocol>: BaseSceneModel<
-   DefaultVCModel,
-   DoubleStacksBrandedVM<Asset.Design>,
-   Asset,
-   Int
-> {
-   lazy var userModel = Design.model.profile.userEditPanel
-
-   lazy var email = SettingsTitleBodyDT<Design>()
-      .setAll {
-         $0.text("Корпоративная почта")
-         $1.text("-")
-      }
-
-   lazy var phone = SettingsTitleBodyDT<Design>()
-      .setAll {
-         $0.text("Мобильный номер")
-         $1.text("-")
-      }
-
-   lazy var infoStack = UserProfileStack<Design>()
-      .arrangedModels([
-         LabelModel()
-            .text("ИНФОРМАЦИЯ")
-            .set(Design.state.label.caption2),
-         email,
-         phone,
-      ])
-
-   lazy var organization = SettingsTitleBodyDT<Design>()
-      .setAll {
-         $0.text("Компания")
-         $1.text("-")
-      }
-
-   lazy var department = SettingsTitleBodyDT<Design>()
-      .setAll {
-         $0.text("Подразделение")
-         $1.text("-")
-      }
-
-   lazy var hiredAt = SettingsTitleBodyDT<Design>()
-      .setAll {
-         $0.text("Дата начала работы")
-         $1.text("-")
-      }
-
-   lazy var settingsButton = Design.button.secondary
+   private lazy var settingsButton = Design.button.secondary
       .title("Настройки")
       .on(\.didTap) { [weak self] in
          guard let id = self?.userId else {
@@ -75,63 +24,51 @@ class MyProfileScene<Asset: AssetProtocol>: BaseSceneModel<
          }
          Asset.router?.route(.presentModally(.automatic), scene: \.settings, payload: id)
       }
-     
 
-   lazy var infoStackSecondary = UserProfileStack<Design>()
-      .arrangedModels([
-         LabelModel()
-            .text("МЕСТО РАБОТЫ")
-            .set(Design.state.label.caption2),
-         organization,
-         department,
-         hiredAt,
-      ])
-
-   lazy var bottomPopupPresenter = Design.model.common.bottomPopupPresenter
+   private lazy var topPopupPresenter = Design.model.common.topPopupPresenter
+   private lazy var bottomPopupPresenter = Design.model.common.bottomPopupPresenter
 
    private lazy var editProfileModel = ProfileEditScene<Asset>(vcModel: vcModel)
-
-   // MARK: - Services
-
-   private lazy var userProfileApiModel = ProfileApiWorker(apiEngine: Asset.service.apiEngine)
-   private lazy var safeStringStorageModel = StringStorageWorker(engine: Asset.service.safeStringStorage)
+   
    private lazy var useCase = Asset.apiUseCase
-   private var balance: Balance?
+   private var organizations: [Organization] = []
 
-   private var userAvatar: String?
-   private var userId: Int?
+   private let test = TableViewModel()
+//      .set(.models([
+//         LabelModel().text("     1"),
+//         LabelModel().text("     2"),
+//         LabelModel().text("     3"),
+//         LabelModel().text("     4")
+//      ]))
+      .backColor(Design.color.background)
 
    override func start() {
-      vcModel?.send(\.setTitle, "Профиль")
-      configure()
-      configureProfile()
+      vcModel?.titleModel(titleModel)
+      super.start()
    }
 
-   private func configure() {
-      mainVM.headerStack.arrangedModels([Grid.x64.spacer])
-      mainVM.bodyStack
-         .set(.backColor(Design.color.backgroundSecondary))
-         .set(.axis(.vertical))
-         .set(.distribution(.fill))
-         .set(.alignment(.fill))
-         .padTop(-32)
-         .set(.arrangedModels([
-            userModel,
-            Spacer(32),
-            infoStack,
-            Spacer(8),
-            infoStackSecondary,
-            Spacer(8),
-            settingsButton,
-            Grid.xxx.spacer,
-         ]))
+   override func configure() {
+      
+      configureTable()
+      configureEvents()
+      
+      mainVM.bodyStack.arrangedModels(
+         userModel,
+         Spacer(32),
+         infoStack,
+         Spacer(8),
+         infoStackSecondary,
+         Spacer(8),
+         settingsButton,
+         Grid.xxx.spacer
+      )
 
       userModel.models.right2.on(\.didTap, self) { slf in
          slf.bottomPopupPresenter.send(\.present, (slf.editProfileModel, slf.vcModel?.view.rootSuperview))
          slf.editProfileModel.closeButton.on(\.didTap) {
             slf.bottomPopupPresenter.send(\.hide)
          }
-         
+
          slf.editProfileModel.on(\.saveSuccess) {
             slf.editProfileModel.clearcontactModelsStock()
             slf.editProfileModel.scenario.start()
@@ -140,130 +77,110 @@ class MyProfileScene<Asset: AssetProtocol>: BaseSceneModel<
          }
       }
 
-      userModel.models.main.view.on(\.didTap, self) {
-         guard let userAvatarUrl = $0.userAvatar else { return }
-
-         let fullUrl = TeamForceEndpoints.convertToFullImageUrl(userAvatarUrl)
-
-         Asset.router?.route(.presentModally(.automatic), scene: \.imageViewer, payload: fullUrl)
+      titleModel.view.startTapGestureRecognize()
+      titleModel.view.on(\.didTap, self) { slf in
+         slf.topPopupPresenter.send(\.present, (slf.test, slf.vcModel?.view.rootSuperview))
       }
    }
 
-   private func configureProfile() {
-      if let input = inputValue {
-         userId = input
+   private func configureTable() {
+      useCase.getUserOrganizations
+         .doAsync()
+         .onSuccess {
+            self.organizations = $0
+            print("result \($0)")
+            let orgNames = $0.map { $0.name }
+            var labelModels: [UIViewModel] = [Spacer(1)]
+            
+            let icon = ImageViewModel()
+               .contentMode(.scaleAspectFill)
+               .image(Design.icon.anonAvatar)
+               .size(.square(Grid.x36.value))
+               .cornerRadius(Grid.x36.value / 2)
 
-         print("input is \(input)")
-         useCase.getProfileById
-            .doAsync(input)
-            .onSuccess { [weak self] userData in
-               self?.setLabels(userData: userData)
-               self?.userAvatar = userData.profile.photo
+            for orgName in orgNames {
+               let label = LabelModel().text(orgName ?? "")
+               let cellStack2 = WrappedX(
+                  StackModel()
+                     .spacing(Grid.x12.value)
+                     .axis(.horizontal)
+                     .alignment(.center)
+                     .arrangedModels([
+                        Spacer(16),
+                        icon,
+                        label
+                     ])
+               )
+               labelModels.append(cellStack2)
             }
-            .onFail {
-               print("failed to load profile")
-            }
-         userModel.models.right2.hidden(true)
-         
-      } else {
-         safeStringStorageModel
-            .doAsync("token")
-            .onFail {
-               print("token not found")
-            }
-            .doMap {
-               TokenRequest(token: $0)
-            }
-            .doNext(worker: userProfileApiModel)
-            .onSuccess { [weak self] userData in
-               self?.userId = userData.profile.id
-               self?.setLabels(userData: userData)
-               self?.userAvatar = userData.profile.photo
-            }.onFail {
-               print("load profile error")
-            }
-      }
-   }
-   
-   private func clearLabels() {
-      email.setAll {
-         $1.text("-")
-      }
-      phone.setAll {
-         $1.text("-")
-      }
-   }
-   
-   private func setLabels(userData: UserData) {
-      clearLabels()
-      let profile = userData.profile
-      let fullName = profile.surName.string + " " +
-         profile.firstName.string + " " + profile.middleName.string
-      userModel.models.right.fullName.text(fullName)
-      userModel.models.right.nickName.text("@" + profile.tgName)
-      if let urlSuffix = profile.photo {
-         userModel.models.main.url(TeamForceEndpoints.urlBase + urlSuffix)
-      }
-
-      // infoStackSecondary
-      organization.setAll {
-         $1.text(profile.organization)
-      }
-      department.setAll {
-         $1.text(profile.department)
-      }
-      hiredAt.setAll {
-         $1.text(profile.hiredAt.string)
-      }
-
-      // infoStack
-      if let contacts = profile.contacts {
-         for contact in contacts {
-            switch contact.contactType {
-            case "@":
-               email.setAll {
-                  $1.text(contact.contactId)
-               }
-            case "P":
-               phone.setAll {
-                  $1.text(contact.contactId)
-               }
-            case "T":
-               userModel.models.right.nickName.text("@" + contact.contactId)
-            default:
-               print("Contact error")
-            }
+            
+            self.test.set(.models(labelModels))
          }
+         .onFail {
+            print("fail")
+         }
+   }
+   
+   private func configureEvents() {
+      test.onEvent(\.didSelectRow) {
+         print($0)
+         let index = $0.row - 1
+         let id = self.organizations[index].id
+         self.useCase.changeOrganization
+            .doAsync(id)
+            .onSuccess {
+               print($0)
+               let authResult = AuthResult(xId: $0.xId,
+                                           xCode: $0.xCode,
+                                           account: $0.account,
+                                           organizationId: $0.organizationId)
+               self.topPopupPresenter.hideView()
+               Asset.router?.route(.push, scene: \.verify, payload: authResult)
+            }
+            .onFail {
+               print("fail")
+            }
       }
    }
-}
 
-final class SettingsTitleBodyDT<Design: DSP>: TitleSubtitleY<Design> {
-   required init() {
-      super.init()
-      spacing(4)
-      setAll { main, down in
-         main
-            .alignment(.left)
-            .set(Design.state.label.caption)
-            .textColor(Design.color.textSecondary)
-         down
-            .alignment(.left)
-            .set(Design.state.label.default)
-            .textColor(Design.color.text)
-      }
-   }
-}
-
-final class UserProfileStack<Design: DSP>: StackModel, Designable {
-   override func start() {
-      super.start()
-
-      backColor(Design.color.backgroundInfoSecondary)
-      padding(.init(top: 16, left: 16, bottom: 16, right: 16))
-      cornerRadius(Design.params.cornerRadiusSmall)
-      spacing(12)
-      distribution(.equalSpacing)
-      alignment(.leading)
-   }
+   //
+   //   private func getOrganizations() {
+   //      useCase.getUserOrganizations
+   //         .doAsync()
+   //         .onSuccess {
+   //            print("result \($0)")
+   //         }
+   //         .onFail {
+   //            print("fail")
+   //         }
+   //   }
+   //
+   //   private func changeOrganization(id: Int) {
+   //      useCase.changeOrganization
+   //         .doAsync(id)
+   //         .onSuccess {
+   //            print($0)
+   //            let smsCode = ""
+   //            var request = VerifyRequest(xId: $0.xId,
+   //                                        xCode: $0.xCode,
+   //                                        smsCode: smsCode ?? "",
+   //                                        organizationId: $0.organizationId)
+   //            self.verifyCode(request: request)
+   //         }
+   //         .onFail {
+   //            print("fail")
+   //         }
+   //   }
+   //
+   //   private func verifyCode(request: VerifyRequest) {
+   //      useCase.changeOrgVerifyCode
+   //         .doAsync(request)
+   //         .onSuccess {
+   //            print($0)
+   //            print("success")
+   //         }
+   //         .onFail {
+   //            print("fail")
+   //         }
+   //   }
 }

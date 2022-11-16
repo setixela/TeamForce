@@ -12,8 +12,8 @@ struct GetEventsWinnersUseCase: UseCaseProtocol {
    let safeStringStorage: StringStorageWorker
    let getEventsWinnersApiWorker: GetEventsWinnersApiWorker
 
-   var work: Work<Pagination, [FeedElement]> {
-      Work<Pagination, [FeedElement]>() { work in
+   var work: Work<Pagination, [Feed]> {
+      Work<Pagination, [Feed]>() { work in
          safeStringStorage
             .doAsync("token")
             .onFail {

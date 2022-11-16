@@ -18,7 +18,11 @@ enum TeamForceEndpoints {
    }
 
    static func convertToFullImageUrl(_ urlString: String) -> String {
-      urlBase + urlString.replacingOccurrences(of: "_thumb", with: "")
+      urlBase + removeThumbSuffix(urlString)
+   }
+
+   static func removeThumbSuffix(_ urlString: String) -> String {
+      urlString.replacingOccurrences(of: "_thumb", with: "")
    }
 
    //
@@ -647,5 +651,69 @@ enum TeamForceEndpoints {
 //         endPoint = endPoint + "?offset=" + String(offset) + "&limit=" + String(limit)
 //         self.headers = headers
 //      }
+   }
+   
+   struct NotificationReadWithId: EndpointProtocol {
+      let method = HTTPMethod.put
+      
+      var endPoint: String = urlBase + "/notifications/"
+      
+      let headers: [String : String]
+      
+      let jsonData: Data?
+      
+      init(id: String, headers: [String : String], jsonData: Data?) {
+         endPoint = endPoint + id + "/"
+         self.headers = headers
+         self.jsonData = jsonData
+      }
+   }
+   
+   struct NotificationsAmount: EndpointProtocol {
+      let method = HTTPMethod.get
+      
+      var endPoint: String { urlBase + "/notifications/unread/amount/" }
+      
+      let headers: [String : String]
+   }
+   
+   struct UserOrganizations: EndpointProtocol {
+      let method = HTTPMethod.get
+      
+      var endPoint: String { urlBase + "/user/organizations/" }
+      
+      let headers: [String : String]
+   }
+   
+   struct ChangeOrganization: EndpointProtocol {
+      let method = HTTPMethod.post
+      
+      var endPoint: String { urlBase + "/user/change-organization/" }
+      
+      let headers: [String : String]
+      
+      let jsonData: Data?
+   }
+   
+   struct ChangeOrganizationVerifyEndpoint: EndpointProtocol {
+       //
+       let method = HTTPMethod.post
+
+       var endPoint: String { urlBase + "/user/change-organization/verify/" }
+
+       let body: [String: Any]
+
+       let headers: [String: String]
+   }
+   
+   struct ChooseOrganizationEndpoint: EndpointProtocol {
+       //
+       let method = HTTPMethod.post
+
+       var endPoint: String { urlBase + "/choose-organization/" }
+
+       let body: [String: Any]
+
+       let headers: [String: String]
    }
 }

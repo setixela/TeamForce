@@ -25,8 +25,8 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
       events: LoginScenarioEvents(
          userNameStringEvent: viewModels.userNameInputModel.mainModel.textField.on(\.didEditingChanged),
          smsCodeStringEvent: viewModels.smsCodeInputModel.mainModel.textField.on(\.didEditingChanged),
-         getCodeButtonEvent: viewModels.getCodeButton.on(\.didTap),
-         loginButtonEvent: viewModels.loginButton.on(\.didTap)
+         getCodeButtonEvent: viewModels.getCodeButton.on(\.didTap)
+//         loginButtonEvent: viewModels.loginButton.on(\.didTap)
       )
    )
 

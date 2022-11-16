@@ -12,11 +12,11 @@ final class NotificationsViewModel<Design: DSP>: StackModel, Designable {
    //
    private lazy var tableModel = TableItemsModel<Design>()
       .backColor(Design.color.background)
+      .set(.separatorColor(Design.color.cellSeparatorColor))
+      .set(.separatorStyle(.singleLine))
       .set(.presenters([
          NotificationsPresenter<Design>.notifyCell
       ]))
-
-   // private lazy var presenter = HistoryPresenters<Design>()
 
    override func start() {
       super.start()

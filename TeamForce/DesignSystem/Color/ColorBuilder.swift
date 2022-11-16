@@ -97,6 +97,9 @@ protocol ColorsProtocol: InitProtocol {
     var frameCellBackground: UIColor { get }
     var frameCellBackgroundSecondary: UIColor { get }
 
+    // Tables
+    var cellSeparatorColor: UIColor { get }
+
     // success error
     var errorSecondary: UIColor { get }
     var success: UIColor { get }
@@ -159,6 +162,9 @@ struct ColorBuilder: ColorsProtocol {
     // Frame cell color
     var frameCellBackground: UIColor { Token.extra1.color }
     var frameCellBackgroundSecondary: UIColor { Token.extra2.color }
+
+    // Tables
+    var cellSeparatorColor: UIColor { Token.midpoint.color }
 
     // success error
     var errorSecondary: UIColor { Token.errorSecondary.color }

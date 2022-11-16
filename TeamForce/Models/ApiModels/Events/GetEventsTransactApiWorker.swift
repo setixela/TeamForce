@@ -7,7 +7,7 @@
 
 import ReactiveWorks
 
-final class GetEventsTransactApiWorker: BaseApiWorker<(String, Pagination), [FeedElement]> {
+final class GetEventsTransactApiWorker: BaseApiWorker<(String, Pagination), [Feed]> {
    override func doAsync(work: Wrk) {
       guard let request = work.input
       else {
@@ -27,7 +27,7 @@ final class GetEventsTransactApiWorker: BaseApiWorker<(String, Pagination), [Fee
             let decoder = DataToDecodableParser()
             guard
                let data = result.data,
-               let feeds: [FeedElement] = decoder.parse(data)
+               let feeds: [Feed] = decoder.parse(data)
             else {
                work.fail()
                return

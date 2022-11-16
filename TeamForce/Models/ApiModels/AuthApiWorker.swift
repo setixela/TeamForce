@@ -67,7 +67,7 @@ struct Contact: Codable {
    let id: Int
    let contactType: String
    let contactId: String
-   
+
    enum CodingKeys: String, CodingKey {
       case id
       case contactType = "contact_type"
@@ -127,8 +127,32 @@ class BaseApiWorker<In, Out>: ApiProtocol, WorkerProtocol {
    }
 }
 
-final class AuthApiWorker: BaseApiWorker<String, AuthResult> {
-   override func doAsync(work: Work<String, AuthResult>) {
+struct SoloOrgResult: Codable {
+   let status: String?
+   let organizations: [OrganizationAuth]
+}
+
+struct OrganizationAuth: Codable {
+   let userId: Int
+   let organizationId: Int
+   let organizationName: String?
+   let organizationPhoto: String?
+
+   enum CodingKeys: String, CodingKey {
+      case userId = "user_id"
+      case organizationId = "organization_id"
+      case organizationName = "organization_name"
+      case organizationPhoto = "organization_photo"
+   }
+}
+
+enum Auth2Result {
+   case auth(AuthResult)
+   case organisations([OrganizationAuth])
+}
+
+final class AuthApiWorker: BaseApiWorker<String, Auth2Result> {
+   override func doAsync(work: Work<String, Auth2Result>) {
       guard let loginName = work.input else { return }
 
       let cookieStore = HTTPCookieStorage.shared
@@ -142,27 +166,44 @@ final class AuthApiWorker: BaseApiWorker<String, AuthResult> {
                    "login": loginName]
          ))
          .done { result in
-            guard
-               let xCode = result.response?.headerValueFor("X-Code")
-            else {
-               work.fail()
-               return
-            }
-            let account: Account?
-            let xId: String?
-            if (result.response?.headerValueFor("X-Telegram")) != nil {
-               xId = result.response?.headerValueFor("X-Telegram") ?? ""
-               account = .telegram
+
+            if let status = result.response?.headerValueFor("login") {
+               let decoder = DataToDecodableParser()
+
+               guard
+                  let data = result.data,
+                  let soloOrg: SoloOrgResult = decoder.parse(data)
+               else {
+                  work.fail()
+                  return
+               }
+               let res = Auth2Result.organisations(soloOrg.organizations)
+               work.success(result: res)
+               
             } else {
-               xId = result.response?.headerValueFor("X-Email") ?? ""
-               account = .email
+               guard
+                  let xCode = result.response?.headerValueFor("X-Code")
+               else {
+                  work.fail()
+                  return
+               }
+               let account: Account?
+               let xId: String?
+               if (result.response?.headerValueFor("X-Telegram")) != nil {
+                  xId = result.response?.headerValueFor("X-Telegram") ?? ""
+                  account = .telegram
+               } else {
+                  xId = result.response?.headerValueFor("X-Email") ?? ""
+                  account = .email
+               }
+
+               guard
+                  let xId = xId,
+                  let account = account
+               else { return }
+               let res = Auth2Result.auth(AuthResult(xId: xId, xCode: xCode, account: account))
+               work.success(result: res)
             }
-            
-            guard
-               let xId = xId,
-               let account = account
-            else { return }
-            work.success(result: AuthResult(xId: xId, xCode: xCode, account: account))
          }
          .catch { _ in
             work.fail()

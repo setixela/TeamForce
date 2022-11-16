@@ -10,8 +10,8 @@ import ReactiveWorks
 import UIKit
 
 protocol LoginBackstageProtocol: Assetable {
-   var authByName: VoidWork<AuthResult> { get }
-   var verifyCode: VoidWork<VerifyResultBody> { get }
+   var authByName: VoidWork<Auth2Result> { get }
+//   var verifyCode: VoidWork<VerifyResultBody> { get }
 
    var loginNameInputParse: Work<String, String> { get }
    var smsCodeInputParse: Work<String, String> { get }
@@ -30,16 +30,16 @@ final class LoginWorks<Asset: AssetProtocol>: BaseSceneWorks<LoginWorks.Temp, As
    final class Temp: InitProtocol {
       var loginName: String?
       var smsCodeInput: String?
-      var authResult: AuthResult?
+      var auth2Result: Auth2Result?
    }
 
    // MARK: - Works
 
-   var authByName: VoidWork<AuthResult> { .init { [weak self] work in
+   var authByName: VoidWork<Auth2Result> { .init { [weak self] work in
       self?.useCase.login
          .doAsync(Self.store.loginName)
          .onSuccess {
-            Self.store.authResult = $0
+            Self.store.auth2Result = $0
             work.success(result: $0)
          }
          .onFail {
@@ -47,30 +47,30 @@ final class LoginWorks<Asset: AssetProtocol>: BaseSceneWorks<LoginWorks.Temp, As
          }
    }}
 
-   var verifyCode: VoidWork<VerifyResultBody> { .init { [weak self] work in
-
-      guard
-         let inputCode = Self.store.smsCodeInput,
-         let authResult = Self.store.authResult
-      else {
-         work.fail()
-         return
-      }
-
-      let request = VerifyRequest(
-         xId: authResult.xId,
-         xCode: authResult.xCode,
-         smsCode: inputCode)
-
-      self?.useCase.verifyCode
-         .doAsync(request)
-         .onSuccess {
-            work.success(result: $0)
-         }
-         .onFail {
-            work.fail()
-         }
-   }}
+//   var verifyCode: VoidWork<VerifyResultBody> { .init { [weak self] work in
+//
+//      guard
+//         let inputCode = Self.store.smsCodeInput,
+//         let auth2Result = Self.store.auth2Result
+//      else {
+//         work.fail()
+//         return
+//      }
+//
+//      let request = VerifyRequest(
+//         xId: auth2Result.xId,
+//         xCode: auth2Result.xCode,
+//         smsCode: inputCode)
+//
+//      self?.useCase.verifyCode
+//         .doAsync(request)
+//         .onSuccess {
+//            work.success(result: $0)
+//         }
+//         .onFail {
+//            work.fail()
+//         }
+//   }}
 
    var loginNameInputParse: Work<String, String> { .init { [weak self] work in
       self?.loginParser.work
