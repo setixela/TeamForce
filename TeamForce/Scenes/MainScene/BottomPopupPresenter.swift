@@ -105,7 +105,13 @@ class BasePopupPresenter: BaseModel, PopupPresenterProtocol, Eventable {
    func animateViewAppear(_ view: UIView) {
       view.layoutIfNeeded()
 
-      let viewHeight = view.intrinsicContentSize.height//.frame.height
+      let viewHeight: CGFloat
+      switch align {
+      case .top:
+         viewHeight = view.intrinsicContentSize.height
+      case .bottom:
+         viewHeight = view.frame.height
+      }
 
       view.transform = CGAffineTransform(translationX: 0, y: viewHeight * align.rawValue)
       UIView.animate(withDuration: presentDuration) {
