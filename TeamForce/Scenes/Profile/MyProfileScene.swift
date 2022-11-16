@@ -30,14 +30,13 @@ final class MyProfileScene<Asset: AssetProtocol>: ProfileScene<Asset> {
 
    private lazy var editProfileModel = ProfileEditScene<Asset>(vcModel: vcModel)
 
-   private let test = StackModel()
-      .arrangedModels(
-         Spacer(64),
+   private let test = TableViewModel()
+      .set(.models([
          LabelModel().text("     1"),
          LabelModel().text("     2"),
          LabelModel().text("     3"),
          LabelModel().text("     4")
-      )
+      ]))
       .backColor(Design.color.background)
    
    override func start() {

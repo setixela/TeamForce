@@ -8,6 +8,12 @@
 import ReactiveWorks
 import UIKit
 
+final class TableView: UITableView {
+   override var intrinsicContentSize: CGSize {
+      return contentSize
+   }
+}
+
 struct TableSection {
    let title: String
    let models: [UIViewModel]
@@ -24,7 +30,7 @@ struct TableViewEvents: InitProtocol {
    var reloadData: Event<Void>?
 }
 
-final class TableViewModel: BaseViewModel<UITableView> {
+final class TableViewModel: BaseViewModel<TableView> {
    var events: TableViewEvents = .init()
 
    private var cellName = "cellName"// String(Int.random(in: 0...999999900000))
