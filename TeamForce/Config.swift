@@ -14,13 +14,14 @@ struct Config {
    private static let urlBaseProduction = "http://176.99.6.251:8889"
 
    #if DEBUG
-   static var urlBase = urlBaseDebug
+   static var urlBase = UserDefaults.standard.loadString(forKey: .urlBase) ?? urlBaseDebug
    #else
-   static var urlBase = urlBaseProduction
+   static var urlBase = UserDefaults.standard.loadString(forKey: .urlBase) ?? urlBaseProduction
    #endif
 
    static func setDebugMode(_ isDebug: Bool) {
       urlBase = isDebug ? urlBaseDebug : urlBaseProduction
+      UserDefaults.standard.saveString(urlBase, forKey: .urlBase)
    }
 
    static let isDebug = false
@@ -28,7 +29,7 @@ struct Config {
    static let isDebugView = true
 
    #if DEBUG
-   static let httpTimeout: TimeInterval = 10
+   static let httpTimeout: TimeInterval = 20
    #else
    static let httpTimeout: TimeInterval = 30
    #endif

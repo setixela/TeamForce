@@ -29,17 +29,11 @@ final class MyProfileScene<Asset: AssetProtocol>: ProfileScene<Asset> {
    private lazy var bottomPopupPresenter = Design.model.common.bottomPopupPresenter
 
    private lazy var editProfileModel = ProfileEditScene<Asset>(vcModel: vcModel)
-   
+
    private lazy var useCase = Asset.apiUseCase
    private var organizations: [Organization] = []
 
    private let test = TableViewModel()
-//      .set(.models([
-//         LabelModel().text("     1"),
-//         LabelModel().text("     2"),
-//         LabelModel().text("     3"),
-//         LabelModel().text("     4")
-//      ]))
       .backColor(Design.color.background)
 
    override func start() {
@@ -48,10 +42,9 @@ final class MyProfileScene<Asset: AssetProtocol>: ProfileScene<Asset> {
    }
 
    override func configure() {
-      
       configureTable()
       configureEvents()
-      
+
       mainVM.bodyStack.arrangedModels(
          userModel,
          Spacer(32),
@@ -89,9 +82,9 @@ final class MyProfileScene<Asset: AssetProtocol>: ProfileScene<Asset> {
          .onSuccess {
             self.organizations = $0
             print("result \($0)")
-            let orgNames = $0.map { $0.name }
+            let orgNames = $0.map(\.name)
             var labelModels: [UIViewModel] = [Spacer(1)]
-            
+
             let icon = ImageViewModel()
                .contentMode(.scaleAspectFill)
                .image(Design.icon.anonAvatar)
@@ -111,16 +104,18 @@ final class MyProfileScene<Asset: AssetProtocol>: ProfileScene<Asset> {
                         label
                      ])
                )
+               .backColor(Design.color.background)
+
                labelModels.append(cellStack2)
             }
-            
+
             self.test.set(.models(labelModels))
          }
          .onFail {
             print("fail")
          }
    }
-   
+
    private func configureEvents() {
       test.onEvent(\.didSelectRow) {
          print($0)
