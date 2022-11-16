@@ -34,6 +34,7 @@ final class VerifyWorks<Asset: AssetProtocol>: BaseSceneWorks<VerifyWorks.Temp, 
       Self.store.authResult = input
       work.success()
    }}
+   
    var verifyCode: VoidWork<VerifyResultBody> { .init { [weak self] work in
 
       guard
@@ -50,15 +51,30 @@ final class VerifyWorks<Asset: AssetProtocol>: BaseSceneWorks<VerifyWorks.Temp, 
          smsCode: inputCode,
          organizationId: authResult.organizationId
       )
-
-      self?.useCase.verifyCode
-         .doAsync(request)
-         .onSuccess {
-            work.success(result: $0)
-         }
-         .onFail {
-            work.fail()
-         }
+      guard let isNumber = authResult.organizationId?.isNumber else {
+         work.fail()
+         return
+      }
+      if isNumber == true {
+         self?.useCase.verifyCode
+            .doAsync(request)
+            .onSuccess {
+               work.success(result: $0)
+            }
+            .onFail {
+               work.fail()
+            }
+      } else {
+         self?.useCase.changeOrgVerifyCode
+            .doAsync(request)
+            .onSuccess {
+               work.success(result: $0)
+            }
+            .onFail {
+               work.fail()
+            }
+      }
+      
    }}
 
    var smsCodeInputParse: Work<String, String> { .init { [weak self] work in

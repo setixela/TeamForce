@@ -31,14 +31,15 @@ final class MyProfileScene<Asset: AssetProtocol>: ProfileScene<Asset> {
    private lazy var editProfileModel = ProfileEditScene<Asset>(vcModel: vcModel)
    
    private lazy var useCase = Asset.apiUseCase
+   private var organizations: [Organization] = []
 
    private let test = TableViewModel()
-      .set(.models([
-         LabelModel().text("     1"),
-         LabelModel().text("     2"),
-         LabelModel().text("     3"),
-         LabelModel().text("     4")
-      ]))
+//      .set(.models([
+//         LabelModel().text("     1"),
+//         LabelModel().text("     2"),
+//         LabelModel().text("     3"),
+//         LabelModel().text("     4")
+//      ]))
       .backColor(Design.color.background)
 
    override func start() {
@@ -49,6 +50,7 @@ final class MyProfileScene<Asset: AssetProtocol>: ProfileScene<Asset> {
    override func configure() {
       
       configureTable()
+      configureEvents()
       
       mainVM.bodyStack.arrangedModels(
          userModel,
@@ -85,21 +87,60 @@ final class MyProfileScene<Asset: AssetProtocol>: ProfileScene<Asset> {
       useCase.getUserOrganizations
          .doAsync()
          .onSuccess {
+            self.organizations = $0
             print("result \($0)")
-            var orgNames = $0.map { $0.name }
+            let orgNames = $0.map { $0.name }
             var labelModels: [UIViewModel] = [Spacer(1)]
-//            orgNames.append("Hello")
-//            orgNames.append("Hello")
-//            orgNames.append("Hello")
+            
+            let icon = ImageViewModel()
+               .contentMode(.scaleAspectFill)
+               .image(Design.icon.anonAvatar)
+               .size(.square(Grid.x36.value))
+               .cornerRadius(Grid.x36.value / 2)
+
             for orgName in orgNames {
-               let label = LabelModel().text("     \(orgName)")
-               labelModels.append(label)
+               let label = LabelModel().text(orgName ?? "")
+               let cellStack2 = WrappedX(
+                  StackModel()
+                     .spacing(Grid.x12.value)
+                     .axis(.horizontal)
+                     .alignment(.center)
+                     .arrangedModels([
+                        Spacer(16),
+                        icon,
+                        label
+                     ])
+               )
+               labelModels.append(cellStack2)
             }
+            
             self.test.set(.models(labelModels))
          }
          .onFail {
             print("fail")
          }
+   }
+   
+   private func configureEvents() {
+      test.onEvent(\.didSelectRow) {
+         print($0)
+         let index = $0.row - 1
+         let id = self.organizations[index].id
+         self.useCase.changeOrganization
+            .doAsync(id)
+            .onSuccess {
+               print($0)
+               let authResult = AuthResult(xId: $0.xId,
+                                           xCode: $0.xCode,
+                                           account: $0.account,
+                                           organizationId: $0.organizationId)
+               self.topPopupPresenter.hideView()
+               Asset.router?.route(.push, scene: \.verify, payload: authResult)
+            }
+            .onFail {
+               print("fail")
+            }
+      }
    }
 
    //

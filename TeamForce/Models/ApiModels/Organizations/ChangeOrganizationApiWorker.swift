@@ -75,7 +75,8 @@ final class ChangeOrganizationApiWorker: BaseApiWorker<RequestWithId, AuthResult
                                             organizationId: organizationId
                                            ))
          }
-         .catch { _ in
+         .catch { error in
+            print(error)
             work.fail()
          }
    }
