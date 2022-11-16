@@ -29,6 +29,16 @@ final class MyProfileScene<Asset: AssetProtocol>: ProfileScene<Asset> {
    private lazy var bottomPopupPresenter = Design.model.common.bottomPopupPresenter
 
    private lazy var editProfileModel = ProfileEditScene<Asset>(vcModel: vcModel)
+
+   private let test = StackModel()
+      .arrangedModels(
+         Spacer(64),
+         LabelModel().text("     1"),
+         LabelModel().text("     2"),
+         LabelModel().text("     3"),
+         LabelModel().text("     4")
+      )
+      .backColor(Design.color.background)
    
    override func start() {
       vcModel?.titleModel(titleModel)
@@ -63,17 +73,8 @@ final class MyProfileScene<Asset: AssetProtocol>: ProfileScene<Asset> {
 
       titleModel.view.startTapGestureRecognize()
       titleModel.view.on(\.didTap, self) { slf in
-         slf.topPopupPresenter.send(\.present, (slf.editProfileModel, slf.vcModel?.view.rootSuperview))
-         slf.editProfileModel.closeButton.on(\.didTap) {
-            slf.topPopupPresenter.send(\.hide)
-         }
+         slf.topPopupPresenter.send(\.present, (slf.test, slf.vcModel?.view.rootSuperview))
 
-         slf.editProfileModel.on(\.saveSuccess) {
-            slf.editProfileModel.clearcontactModelsStock()
-            slf.editProfileModel.scenario.start()
-            slf.configureProfile()
-            slf.topPopupPresenter.send(\.hide)
-         }
       }
    }
 

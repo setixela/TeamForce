@@ -59,7 +59,7 @@ class BasePopupPresenter: BaseModel, PopupPresenterProtocol, Eventable {
          let view = self.prepareModel(model, onView: onView)
          switch self.align {
          case .top:
-            view.addAnchors.fitToViewInsetted(onView, .init(top: 0, left: 0, bottom: 40, right: 0))
+            view.addAnchors.fitToTop(onView)
          case .bottom:
             view.addAnchors.fitToViewInsetted(onView, .init(top: 40, left: 0, bottom: 0, right: 0))
          }
