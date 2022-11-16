@@ -29,6 +29,8 @@ final class MyProfileScene<Asset: AssetProtocol>: ProfileScene<Asset> {
    private lazy var bottomPopupPresenter = Design.model.common.bottomPopupPresenter
 
    private lazy var editProfileModel = ProfileEditScene<Asset>(vcModel: vcModel)
+   
+   private lazy var useCase = Asset.apiUseCase
 
    private let test = TableViewModel()
       .set(.models([
@@ -38,13 +40,16 @@ final class MyProfileScene<Asset: AssetProtocol>: ProfileScene<Asset> {
          LabelModel().text("     4")
       ]))
       .backColor(Design.color.background)
-   
+
    override func start() {
       vcModel?.titleModel(titleModel)
       super.start()
    }
 
    override func configure() {
+      
+      configureTable()
+      
       mainVM.bodyStack.arrangedModels(
          userModel,
          Spacer(32),
@@ -73,8 +78,28 @@ final class MyProfileScene<Asset: AssetProtocol>: ProfileScene<Asset> {
       titleModel.view.startTapGestureRecognize()
       titleModel.view.on(\.didTap, self) { slf in
          slf.topPopupPresenter.send(\.present, (slf.test, slf.vcModel?.view.rootSuperview))
-
       }
+   }
+
+   private func configureTable() {
+      useCase.getUserOrganizations
+         .doAsync()
+         .onSuccess {
+            print("result \($0)")
+            var orgNames = $0.map { $0.name }
+            var labelModels: [LabelModel] = []
+//            orgNames.append("Hello")
+//            orgNames.append("Hello")
+//            orgNames.append("Hello")
+            for orgName in orgNames {
+               let label = LabelModel().text("     \(orgName)")
+               labelModels.append(label)
+            }
+            self.test.set(.models(labelModels))
+         }
+         .onFail {
+            print("fail")
+         }
    }
 
    //
