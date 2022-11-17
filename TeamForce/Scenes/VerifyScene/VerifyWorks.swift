@@ -51,10 +51,8 @@ final class VerifyWorks<Asset: AssetProtocol>: BaseSceneWorks<VerifyWorks.Temp, 
          smsCode: inputCode,
          organizationId: authResult.organizationId
       )
-      guard let isNumber = authResult.organizationId?.isNumber else {
-         work.fail()
-         return
-      }
+      let isNumber = authResult.organizationId?.isNumber ?? true
+      
       if isNumber == true {
          self?.useCase.verifyCode
             .doAsync(request)

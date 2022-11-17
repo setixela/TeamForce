@@ -38,7 +38,7 @@ final class LoginScenario<Asset: AssetProtocol>:
          .onSuccess{
             switch $0 {
             case .auth(let value):
-               Asset.router?.route(.push, scene: \.verify, payload: ())
+               Asset.router?.route(.push, scene: \.verify, payload: value)
             case .organisations(let value):
                Asset.router?.route(.push, scene: \.chooseOrgScene, payload: value)
             }
