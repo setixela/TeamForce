@@ -68,8 +68,8 @@ final class MainScene<Asset: AssetProtocol>:
       tabBarPanel.button1.setSelfMode(\.normal)
       selectedModel = 0
 
-      mainVM.header.text("Благодарности")
-      vcModel?.send(\.setTitle, "Благодарности")
+      mainVM.header.text("События")
+      vcModel?.send(\.setTitle, "События")
 
       mainVM.notifyButton.on(\.didTap) {
          Asset.router?.route(.push, scene: \.notifications)
@@ -91,8 +91,8 @@ private extension MainScene {
       tabBarPanel.button1
          .on(\.didTap, self) {
             $0.unlockTabButtons()
-            $0.mainVM.header.text("Благодарности")
-            $0.vcModel?.send(\.setTitle, "Благодарности")
+            $0.mainVM.header.text("События")
+            $0.vcModel?.send(\.setTitle, "События")
             $0.presentModel($0.feedViewModel)
             $0.tabBarPanel.button1.setSelfMode(\.normal)
             $0.selectedModel = 0
