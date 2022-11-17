@@ -85,14 +85,16 @@ final class MyProfileScene<Asset: AssetProtocol>: ProfileScene<Asset> {
             let orgNames = $0.map(\.name)
             var labelModels: [UIViewModel] = [Spacer(1)]
 
-            let icon = ImageViewModel()
-               .contentMode(.scaleAspectFill)
-               .image(Design.icon.anonAvatar)
-               .size(.square(Grid.x36.value))
-               .cornerRadius(Grid.x36.value / 2)
-
             for orgName in orgNames {
-               let label = LabelModel().text(orgName ?? "")
+               let label = LabelModel()
+                  .text(orgName ?? "")
+                  .textColor(Design.color.text)
+               let icon = ImageViewModel()
+                  .contentMode(.scaleAspectFill)
+                  .image(Design.icon.anonAvatar)
+                  .size(.square(Grid.x36.value))
+                  .cornerRadius(Grid.x36.value / 2)
+               
                let cellStack2 = WrappedX(
                   StackModel()
                      .spacing(Grid.x12.value)
