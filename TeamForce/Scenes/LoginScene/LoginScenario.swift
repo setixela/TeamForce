@@ -35,14 +35,13 @@ final class LoginScenario<Asset: AssetProtocol>:
       events.getCodeButtonEvent
          .onSuccess(setState, .startActivityIndicator)
          .doNext(works.authByName)
-         .onSuccess{
+         .onSuccess(setState){
             switch $0 {
             case .auth(let value):
-               Asset.router?.route(.push, scene: \.verify, payload: value)
+               return .routeAuth(value)
             case .organisations(let value):
-               Asset.router?.route(.push, scene: \.chooseOrgScene, payload: value)
+               return .routeOrganizations(value)
             }
-            
          }
          .onFail(setState, .invalidUserName)
 
