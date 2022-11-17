@@ -76,37 +76,85 @@ final class FeedDetailUserInfoBlock<Design: DSP>: StackModel, Designable {
 }
 
 extension FeedDetailUserInfoBlock: SetupProtocol {
-   func setup(_ data: (feedElement: Feed, currentUserName: String)) {
-      let feed = data.feedElement
+   func makeInfoLabel(transaction: EventTransaction, type: FeedTransactType) -> LabelModel {
+      let infoLabel = LabelModel()
+         .numberOfLines(0)
+         .set(Design.state.label.caption)
+         .textColor(Design.color.iconBrand)
+
+      let infoText: NSMutableAttributedString = .init(string: "")
+
+      let recipientName = "@" + (transaction.recipientTgName ?? "")
+      let senderName = "@" + (transaction.senderTgName ?? "")
+      let amountText = "\(Int(transaction.amount))" + " " + "спасибок"
+      switch type {
+      case .youGotAmountFromSome:
+         infoText.append("Вы получили ".colored(Design.color.text))
+         infoText.append(amountText.colored(Design.color.textSuccess))
+         infoText.append(" от ".colored(Design.color.text))
+         infoText.append(senderName.colored(Design.color.textBrand))
+      case .youGotAmountFromAnonym:
+         infoText.append("Вы получили ".colored(Design.color.text))
+         infoText.append(amountText.colored(Design.color.textSuccess))
+         infoText.append(" от аноним".colored(Design.color.text))
+      case .someGotAmountFromSome:
+         infoText.append(recipientName.colored(Design.color.textBrand))
+         infoText.append(" получил ".colored(Design.color.text))
+         infoText.append(amountText.colored(Design.color.textSuccess))
+         infoText.append(" от ".colored(Design.color.text))
+         infoText.append(senderName.colored(Design.color.textBrand))
+      case .someGotAmountFromAnonym:
+         infoText.append(recipientName.colored(Design.color.textBrand))
+         infoText.append(" получил ".colored(Design.color.text))
+         infoText.append(amountText.colored(Design.color.textSuccess))
+         infoText.append(" от аноним".colored(Design.color.text))
+      }
+
+      infoLabel.attributedText(infoText)
+
+      infoLabel.view.makePartsClickable(user1: recipientName, user2: senderName)
+
+      infoLabel.attributedText(infoText)
+
+      return infoLabel
+   }
+
+   func setup(_ data: (transaction: EventTransaction, currentUserName: String)) {
+      let transaction = data.transaction
       let userName = data.currentUserName
-      configureImage(feed: feed)
-      configureEvents(feed: feed)
-      let dateText = FeedPresenters<Design>.makeInfoDateLabel(feed: feed).view.text
-      dateLabel.text(dateText ?? "")
-      let type = FeedTransactType.make(feed: feed, currentUserName: userName)
-      let infoText = FeedPresenters<Design>.makeInfoLabel(feed: feed, type: type, eventType: EventType.transaction).view.attributedText
-
+      configureImage(transaction: transaction)
+      configureEvents(transaction: transaction)
+      // let dateText = FeedPresenters<Design>.makeInfoDateLabel(feed: feed).view.text
+      // dateLabel.text(dateText ?? "")
+      dateLabel.text("00:00")
+      let type = FeedTransactType.makeForTransaction(
+         transaction: transaction,
+         currentUserName: userName
+      )
+//      let infoText = FeedPresenters<Design>.makeInfoLabel(feed: feed, type: type, eventType: EventType.transaction).view.attributedText
+//
+//            infoLabel.attributedText(infoText!)
+      let infoText = makeInfoLabel(transaction: transaction, type: type).view.attributedText
       infoLabel.attributedText(infoText!)
-
-      let likeAmount = String(feed.likesAmount)
+      let likeAmount = String(transaction.likeAmount ?? 0)
 
       likeButton.models.right.text(likeAmount)
 
-      if feed.transaction?.userLiked == true {
+      if transaction.userLiked == true {
          likeButton.setState(.selected)
       }
    }
 }
 
 private extension FeedDetailUserInfoBlock {
-   func configureImage(feed: Feed) {
-      if let recipientPhoto = feed.transaction?.recipientPhoto {
+   func configureImage(transaction: EventTransaction) {
+      if let recipientPhoto = transaction.recipientPhoto {
          image.subModel.url(TeamForceEndpoints.urlBase + recipientPhoto)
       } else {
          // TODO: - сделать через .textImage
          let userIconText =
-         String(feed.transaction?.recipientFirstName?.first ?? "?") +
-         String(feed.transaction?.recipientSurname?.first ?? "?")
+            String(transaction.recipientFirstName?.first ?? "?") +
+            String(transaction.recipientSurname?.first ?? "?")
          DispatchQueue.global(qos: .background).async {
             let image = userIconText.drawImage(backColor: Design.color.backgroundBrand)
             DispatchQueue.main.async { [weak self] in
@@ -118,14 +166,15 @@ private extension FeedDetailUserInfoBlock {
       }
    }
 
-   func configureEvents(feed: Feed) {
+   func configureEvents(transaction: EventTransaction) {
       likeButton.view.startTapGestureRecognize()
       likeButton.view.on(\.didTap, self) {
          $0.send(\.reactionPressed)
       }
 
       guard
-         let userId = feed.transaction?.recipientId ?? feed.challenge?.creatorId ?? feed.winner?.winnerId
+         // let userId = feed.transaction?.recipientId ?? feed.challenge?.creatorId ?? feed.winner?.winnerId
+         let userId = transaction.recipientId
       else {
          return
       }

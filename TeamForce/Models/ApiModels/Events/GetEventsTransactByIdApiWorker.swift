@@ -31,6 +31,9 @@ struct EventTransaction: Codable {
    let isAnonymous: Bool?
    let tags: [FeedTag]?
    
+   let likeAmount: Int?
+   let commentsAmount: Int?
+   
    enum CodingKeys: String, CodingKey {
       case id
       case photo
@@ -53,6 +56,9 @@ struct EventTransaction: Codable {
       
       case isAnonymous = "is_anonymous"
       case tags
+      
+      case likeAmount = "like_amount"
+      case commentsAmount = "comments_amount"
    }
 }
 

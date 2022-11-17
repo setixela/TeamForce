@@ -57,15 +57,27 @@ final class TransactDetailsScenario<Asset: AssetProtocol>:
          }
          .doLoadResult()
          .doNext(works.saveInput)
-         .onSuccess(setState) { transactDetails in
-            .presentDetails(transactDetails)
+         .doSaveResult()
+         .doVoidNext(works.getCurrentUserName)
+         .onSuccessMixSaved(setState) {
+            (userName: String, transaction: EventTransaction) in
+               .presentDetails(transaction: transaction, currentUsername: userName)
          }
+//         .onSuccess(setState) { transactDetails in
+//            .presentDetails(transactDetails)
+//         }
 
       events.presentDetails
          .doCancel(events.presentComment, events.presentReactions)
          .onSuccess(setState, .presntActivityIndicator)
          .doNext(works.getTransaction)
-         .onSuccess(setState) { .presentDetails($0) }
+         .doSaveResult()
+         .doVoidNext(works.getCurrentUserName)
+         .onSuccessMixSaved(setState) {
+            (userName: String, transaction: EventTransaction) in
+               .presentDetails(transaction: transaction, currentUsername: userName)
+         }
+         //.onSuccess(setState) { .presentDetails($0) }
 
       events.presentComment
          .doCancel(events.presentDetails, events.presentReactions)

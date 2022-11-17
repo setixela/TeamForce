@@ -348,6 +348,20 @@ enum FeedTransactType {
       }
       return .someGotAmountFromSome
    }
+   
+   static func makeForTransaction(transaction: EventTransaction, currentUserName: String) -> Self {
+      if transaction.recipientTgName == currentUserName {
+         if transaction.isAnonymous ?? false {
+            return .youGotAmountFromAnonym
+         } else {
+            return .youGotAmountFromSome
+         }
+      }
+      if transaction.isAnonymous ?? false {
+         return .someGotAmountFromAnonym
+      }
+      return .someGotAmountFromSome
+   }
 
    case youGotAmountFromSome
    case youGotAmountFromAnonym

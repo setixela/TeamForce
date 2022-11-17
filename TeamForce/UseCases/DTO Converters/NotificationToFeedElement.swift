@@ -30,7 +30,9 @@ struct NotificationToFeedElement: Converter {
          recipientPhoto: transactData.recipientPhoto,
          recipientTgName: transactData.recipientTgName,
          isAnonymous: nil,
-         tags: nil
+         tags: nil,
+         likeAmount: nil,
+         commentsAmount: nil
       )
 
       return Feed(
