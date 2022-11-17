@@ -26,17 +26,21 @@ final class ChooseOrgScene<Asset: AssetProtocol>: BaseSceneModel<
          SpacerPresenter.presenter
       ]))
 
+   private lazy var activity = ActivityIndicator<Design>()
+
    // MARK: - Start
 
    override func start() {
       configure()
+      setState(.initial)
+
       guard let organizations = inputValue else { return }
       
       organizationsTable.set(.items(organizations + [SpacerItem(size: Grid.x64.value)]))
       
       organizationsTable
          .on(\.didSelectRowInt) { [weak self] in
-
+            self?.setState(.loading)
             let org = organizations[$0]
             self?.useCase.chooseOrganization
                .doAsync(org)
@@ -45,13 +49,33 @@ final class ChooseOrgScene<Asset: AssetProtocol>: BaseSceneModel<
                                               xCode: $0.xCode,
                                               account: $0.account,
                                               organizationId: String(org.organizationId))
-                  print("success")
+                  self?.setState(.initial)
                   Asset.router?.route(.push, scene: \.verify, payload: authResult)
                }
                .onFail {
-                  print("fail")
+                  self?.setState(.initial)
+                  assertionFailure("fail chooseOrganization")
                }
          }
+   }
+}
+
+extension ChooseOrgScene: StateMachine {
+   enum ChooseState {
+      case initial
+      case loading
+   }
+   func setState(_ state: ChooseState) {
+      switch state {
+      case .initial:
+        organizationsTable.userInterractionEnabled(true)
+        organizationsTable.alpha(1)
+        activity.hidden(true)
+      case .loading:
+         organizationsTable.userInterractionEnabled(false)
+         organizationsTable.alpha(0.5)
+         activity.hidden(false)
+      }
    }
 }
 
@@ -64,7 +88,7 @@ private extension ChooseOrgScene {
       mainVM.bodyStack
          .arrangedModels([
             organizationsTable,
-            Grid.xxx.spacer
+            activity,
          ])
    }
 }

@@ -17,7 +17,7 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
 >, Scenarible {
    //
 
-   private lazy var viewModels = LoginViewModels<Design>()
+   private lazy var viewModels = LoginViewModels<Asset>()
 
    lazy var scenario: Scenario = LoginScenario(
       works: LoginWorks<Asset>(),
@@ -37,6 +37,7 @@ final class LoginScene<Asset: AssetProtocol>: BaseSceneModel<
 
       viewModels.setState(.inputUserName)
       scenario.start()
+      vcModel?.clearBackButton()
    }
 }
 

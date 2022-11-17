@@ -22,11 +22,15 @@ enum LoginSceneState {
    case invalidSmsCode
    //
    case startActivityIndicator
+   case hideActivityIndicator
+   //
+   case routeAuth(AuthResult)
+   case routeOrganizations([OrganizationAuth])
 }
 
 // MARK: - View models
 
-final class LoginViewModels<Design: DSP>: BaseModel, Designable {
+final class LoginViewModels<Asset: AssetProtocol>: BaseModel, Assetable {
    //
    lazy var activityIndicator = ActivityIndicator<Design>()
       .hidden(true)
@@ -106,12 +110,23 @@ extension LoginViewModels: StateMachine {
       case .invalidUserName:
          userNameInputModel.set(.presentBadge(" " + Design.Text.title.wrongUsername + " "))
          activityIndicator.hidden(true)
+         getCodeButton.set(Design.state.button.default)
 
       case .invalidSmsCode:
          smsCodeInputModel.set(.presentBadge(" " + Design.Text.title.wrongCode + " "))
          activityIndicator.hidden(true)
       case .startActivityIndicator:
+         getCodeButton.set(Design.state.button.inactive)
          activityIndicator.hidden(false)
+      case .hideActivityIndicator:
+         activityIndicator.hidden(true)
+         getCodeButton.set(Design.state.button.default)
+      case .routeAuth(let value):
+         Asset.router?.route(.push, scene: \.verify, payload: value)
+         setState(.hideActivityIndicator)
+      case .routeOrganizations(let value):
+         Asset.router?.route(.push, scene: \.chooseOrgScene, payload: value)
+         setState(.hideActivityIndicator)
       }
    }
 }
