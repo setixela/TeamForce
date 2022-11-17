@@ -124,9 +124,8 @@ extension FeedDetailUserInfoBlock: SetupProtocol {
       let userName = data.currentUserName
       configureImage(transaction: transaction)
       configureEvents(transaction: transaction)
-      // let dateText = FeedPresenters<Design>.makeInfoDateLabel(feed: feed).view.text
-      // dateLabel.text(dateText ?? "")
-      dateLabel.text("00:00")
+      let dateText = FeedPresenters<Design>.makeInfoDateLabelForTransaction(transaction: transaction).view.text
+      dateLabel.text(dateText ?? "--:--")
       let type = FeedTransactType.makeForTransaction(
          transaction: transaction,
          currentUserName: userName

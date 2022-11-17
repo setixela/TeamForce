@@ -212,6 +212,24 @@ extension FeedPresenters {
 
       return dateLabel
    }
+   
+   static func makeInfoDateLabelForTransaction(transaction: EventTransaction) -> LabelModel {
+      let dateAgoText = transaction.updatedAt?.timeAgoConverted
+      var eventText = ""
+      if let anon = transaction.isAnonymous {
+         eventText = anon ? "" : " • " + "Публичная благодарность"
+      }
+
+      let titleText = dateAgoText.string + eventText
+
+      let dateLabel = LabelModel()
+         .numberOfLines(0)
+         .set(Design.state.label.caption)
+         .textColor(Design.color.textSecondary)
+         .text(titleText)
+
+      return dateLabel
+   }
 
    static func makeInfoLabel(feed: Feed, type: FeedTransactType? = nil, eventType: EventType) -> LabelModel {
       let infoLabel = LabelModel()
