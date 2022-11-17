@@ -71,7 +71,7 @@ final class TransactDetailsScene<Asset: AssetProtocol>:
 enum FeedDetailSceneState {
    case initial
    case present(feed: Feed, currentUsername: String)
-   case presentDetails(EventTransaction)
+   case presentDetails(transaction: EventTransaction, currentUsername: String)
    case presentComments([Comment])
    case presentReactions([ReactItem])
    case buttonLikePressed(alreadySelected: Bool)
@@ -97,8 +97,9 @@ extension TransactDetailsScene: StateMachine {
       case .present(let feed, let userName):
          feedDetailVM.setState(.initial(feed: feed, curUsername: userName))
          //
-      case .presentDetails(let feed):
-         feedDetailVM.setState(.details(feed))
+      case .presentDetails(let transaction, let userName):
+         feedDetailVM.infoBlock.setup((transaction, userName))
+         feedDetailVM.setState(.details(transaction))
          //
       case .presentComments(let comments):
          feedDetailVM.setState(.comments(comments))

@@ -57,8 +57,8 @@ extension FeedDetailViewModels: StateMachine {
       switch state {
       case .initial(let feedElement, let curUserName):
          send(\.saveInput, feedElement)
-         infoBlock.setup((feedElement, curUserName))
          if let transaction = feedElement.transaction {
+            infoBlock.setup((transaction, curUserName))
             setState(.details(transaction))
          }
       case .details(let feed):
