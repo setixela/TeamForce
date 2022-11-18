@@ -9,10 +9,13 @@ import ReactiveWorks
 
 class ProfileScene<Asset: AssetProtocol>: BaseSceneModel<
    DefaultVCModel,
-   DoubleStacksBrandedVM<Asset.Design>,
+   BrandDoubleStackVM<Asset.Design>,
    Asset,
    Int
 >, Configurable {
+
+   //
+   var userData: UserData?
    //
    lazy var userModel = Design.model.profile.userEditPanel
 
@@ -34,8 +37,6 @@ class ProfileScene<Asset: AssetProtocol>: BaseSceneModel<
          department,
          hiredAt,
       ])
-
-   var userId: Int?
 
    // MARK: - Private
 
@@ -102,7 +103,6 @@ class ProfileScene<Asset: AssetProtocol>: BaseSceneModel<
    }
 
    private func configureModels() {
-      mainVM.headerStack.arrangedModels([Grid.x64.spacer])
       mainVM.bodyStack
          .set(.backColor(Design.color.backgroundSecondary))
          .set(.axis(.vertical))
@@ -121,14 +121,13 @@ class ProfileScene<Asset: AssetProtocol>: BaseSceneModel<
 
    func configureProfile() {
       if let input = inputValue {
-         userId = input
-
          print("input is \(input)")
          useCase.getProfileById
             .doAsync(input)
             .onSuccess { [weak self] userData in
                self?.setLabels(userData: userData)
                self?.userAvatar = userData.profile.photo
+               self?.userData = userData
             }
             .onFail {
                print("failed to load profile")
@@ -146,7 +145,7 @@ class ProfileScene<Asset: AssetProtocol>: BaseSceneModel<
             }
             .doNext(worker: userProfileApiModel)
             .onSuccess { [weak self] userData in
-               self?.userId = userData.profile.id
+               self?.userData = userData
                self?.setLabels(userData: userData)
                self?.userAvatar = userData.profile.photo
             }.onFail {

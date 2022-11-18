@@ -36,6 +36,7 @@ struct UserData: Codable {
       let id: Int
       let contacts: [Contact]?
       let organization: String
+      let organizationId: Int
       let department: String
       let tgId: String
       let tgName: String
@@ -50,6 +51,7 @@ struct UserData: Codable {
          case id
          case contacts
          case organization
+         case organizationId = "organization_id"
          case department
          case tgId = "tg_id"
          case tgName = "tg_name"

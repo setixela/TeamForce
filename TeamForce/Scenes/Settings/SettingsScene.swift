@@ -12,13 +12,13 @@ struct SettingsViewEvent: InitProtocol {}
 
 final class SettingsScene<Asset: AssetProtocol>: BaseSceneModel<
    DefaultVCModel,
-   ModalDoubleStackModel<Asset>,
+   BrandDoubleStackVM<Asset.Design>,
    Asset,
-   Int
+   UserData
 > {
    // MARK: - Frame Cells
 
-   private lazy var organizationsModel = ChangeOrganizationModel<Design>()
+   private lazy var organizationsModel = ChangeOrganizationVM<Design>()
 
    lazy var general = Combos<SComboMDD<LabelModel, DoubleLabelHorizontal, DoubleLabelHorizontal>>()
       .setMain { header in
@@ -99,7 +99,6 @@ final class SettingsScene<Asset: AssetProtocol>: BaseSceneModel<
    private lazy var useCase = Asset.apiUseCase
 
    override func start() {
-      mainVM.closeButton.on(\.didTap, self) { $0.dismiss() }
       vcModel?.on(\.viewDidLoad, self) { $0.configure() }
    }
 
@@ -108,10 +107,10 @@ final class SettingsScene<Asset: AssetProtocol>: BaseSceneModel<
          .arrangedModels([
             organizationsModel,
             Spacer(16),
-            general,
-            Spacer(8),
-            help,
-            Spacer(16),
+//            general,
+//            Spacer(8),
+//            help,
+//            Spacer(16),
             logoutButton,
             Grid.xxx.spacer,
          ])
@@ -123,7 +122,7 @@ final class SettingsScene<Asset: AssetProtocol>: BaseSceneModel<
             slf.dismiss()
             UserDefaults.standard.setIsLoggedIn(value: false)
             guard
-               let userId = slf.inputValue,
+               let userId = slf.inputValue?.profile.id,
                let deviceId = UIDevice.current.identifierForVendor?.uuidString
             else { return }
             let request = RemoveFcmToken(device: deviceId, userId: userId)
@@ -146,94 +145,31 @@ final class SettingsScene<Asset: AssetProtocol>: BaseSceneModel<
 
 extension SettingsScene {
    private func loadOrganizations() {
+      guard let currentOrg = inputValue?.profile.organization else {
+         assertionFailure("no current organization"); return
+      }
+
       useCase.getUserOrganizations
          .doAsync()
-         .onSuccess(self) {
-            $0.organizationsModel.setup($1)
+         .onSuccess(self) { slf, organizations in
+            slf.organizationsModel.setup((currentOrg: currentOrg, orgs: organizations))
+            slf.organizationsModel.on(\.didSelectOrganizationIndex) { index in
+               let id = organizations[index].id
+               self.useCase.changeOrganization
+                  .doAsync(id)
+                  .onSuccess {
+                     print($0)
+                     let authResult = AuthResult(xId: $0.xId,
+                                                 xCode: $0.xCode,
+                                                 account: $0.account,
+                                                 organizationId: $0.organizationId)
+
+                     Asset.router?.route(.presentInitial, scene: \.verify, payload: authResult)
+                  }
+                  .onFail {
+                     print("fail")
+                  }
+            }
          }
    }
 }
-
-final class ChangeOrganizationModel<Design: DSP>: StackModel, Designable {
-   private lazy var changeButton = StackModel()
-      .backColor(Design.color.backgroundBrandSecondary)
-      .cornerRadius(Design.params.cornerRadius)
-      .arrangedModels(
-         M<LabelModel>.D<LabelModel>.R<ImageViewModel>.Combo()
-            .setAll { title, organization, icon in
-               title
-                  .set(Design.state.label.caption)
-                  .text("Текущая организация")
-                  .textColor(Design.color.textBrand)
-               organization
-                  .set(Design.state.label.body1)
-               icon
-                  .image(Design.icon.arrowDropDownLine)
-                  .size(.square(24))
-            }
-            .padding(Design.params.cellContentPadding)
-      )
-
-   private lazy var organizationsTable = TableItemsModel<Design>()
-      .set(.presenters([organizationPresenter]))
-      .hidden(true)
-
-   override func start() {
-      view.on(\.willAppear, self) {
-         $0.configure()
-      }
-   }
-
-   private func configure() {
-      arrangedModels(
-         changeButton,
-         Spacer(8),
-         organizationsTable
-      )
-
-      changeButton.view.startTapGestureRecognize()
-      changeButton.view.on(\.didTap, self) {
-         $0.organizationsTable.hidden(!$0.organizationsTable.view.isHidden)
-      }
-   }
-
-   private var organizationPresenter: Presenter<Organization, StackModel> { .init { work in
-      let organization = work.unsafeInput
-
-      let label = LabelModel()
-         .text(organization.item.name ?? "")
-         .textColor(Design.color.text)
-      let icon = ImageViewModel()
-         .contentMode(.scaleAspectFill)
-         .image(Design.icon.anonAvatar)
-         .size(.square(Grid.x36.value))
-         .cornerRadius(Grid.x36.value / 2)
-
-      let cell = StackModel()
-         .spacing(Grid.x12.value)
-         .axis(.horizontal)
-         .alignment(.center)
-         .arrangedModels([
-            icon,
-            label,
-            Spacer(),
-         ])
-         .padding(.outline(16))
-
-      work.success(cell)
-   }}
-}
-
-extension ChangeOrganizationModel: SetupProtocol {
-   func setup(_ data: [Organization]) {
-      organizationsTable.set(.items(data))
-   }
-}
-
-// final class OrganizationCell: StackModel {
-//   var
-//
-//   required init() {
-//      super.init(isAutoreleaseView: true)
-//   }
-// }
