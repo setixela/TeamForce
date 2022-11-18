@@ -116,6 +116,7 @@ final class ChallengeCreateScene<Asset: AssetProtocol>: BaseSceneModel<
    private lazy var prizePlacesInput = TextFieldModel()
       .set(Design.state.textField.default)
       .placeholder("Укажите количество призовых мест")
+      .placeholderColor(Design.color.textFieldPlaceholder)
       .onlyDigitsMode()
       .hidden(true)
 
