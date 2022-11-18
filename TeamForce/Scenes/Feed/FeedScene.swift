@@ -66,6 +66,7 @@ extension FeedScene: Configurable {
          errorBlock,
          hereIsEmptyBlock.hidden(true),
          viewModels.feedTableModel,
+         Spacer()
       ])
 
       viewModels.feedTableModel
