@@ -32,6 +32,7 @@ struct TransactBuilder<Design: DSP>: TransactModelBuilder {
       .set(Design.state.label.body1)
       .padding(Design.params.textViewPadding)
       .placeholderColor(Design.color.textFieldPlaceholder)
+      .textColor(Design.color.text)
       .backColor(Design.color.background)
       .borderColor(Design.color.boundary)
       .borderWidth(Design.params.borderWidth)

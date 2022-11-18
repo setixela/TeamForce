@@ -429,8 +429,8 @@ final class TextViewExtended: UITextView, UITextViewDelegate {
    }
 
    var placeHolderColor: UIColor = .gray
+   var baseTextColor: UIColor?
 
-   private var baseTextColor: UIColor?
    private var isPlaceholded: Bool { text == placeholder }
 
    override init(frame: CGRect, textContainer: NSTextContainer?) {
@@ -460,8 +460,8 @@ final class TextViewExtended: UITextView, UITextViewDelegate {
 
    func textViewDidBeginEditing(_ textView: UITextView) {
       if isPlaceholded {
-         text = nil
          textColor = baseTextColor
+         text = ""
       }
    }
 

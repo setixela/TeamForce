@@ -698,7 +698,7 @@ extension ViewModelProtocol where Self: Stateable, View: TextViewExtended {
    }
 
    @discardableResult func textColor(_ value: UIColor) -> Self {
-      view.textColor = value
+      view.baseTextColor = value
       return self
    }
 
