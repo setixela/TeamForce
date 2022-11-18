@@ -41,10 +41,6 @@ extension TextViewModel: Stateable3 {
       switch state {
       case .text(let string):
          text(string)
-//      case .placeholder(let string, let color):
-//         self.placeholder = string
-//         self.currentTextColor = color
-//         text(string)
       case .font(let value):
          font(value)
       case .padding(let value):

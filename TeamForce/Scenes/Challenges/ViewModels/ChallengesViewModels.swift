@@ -26,6 +26,7 @@ final class ChallengesViewModel<Design: DSP>: StackModel, Designable, Eventable 
 
       arrangedModels([
          challengesTable,
+         Spacer()
       ])
 
       challengesTable

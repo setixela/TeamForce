@@ -50,7 +50,7 @@ protocol ScenesProtocol: InitProtocol {
 }
 
 struct Scenes: ScenesProtocol {
-   var settings: ReactiveWorks.SMP { SettingsScene<PA>() }
+   var settings: SMP { SettingsScene<PA>() }
    //
    var playground: SMP { PlaygroundScene<PA>() }
    //

@@ -24,6 +24,7 @@ enum TableItemsState {
    case updateItemAtIndex(Any, Int)
    case separatorStyle(UITableViewCell.SeparatorStyle)
    case separatorColor(UIColor)
+   case reload
 }
 
 protocol ScrollEventsProtocol: InitProtocol {
@@ -45,7 +46,20 @@ struct TableItemsEvents: ScrollEventsProtocol {
    var pagination: Bool?
 }
 
-final class TableItemsModel<Design: DSP>: BaseViewModel<UITableView>,
+final class TableViewExtended: UITableView {
+   override var contentSize:CGSize {
+      didSet {
+         invalidateIntrinsicContentSize()
+      }
+   }
+
+   override var intrinsicContentSize: CGSize {
+      layoutIfNeeded()
+      return CGSize(width: UIView.noIntrinsicMetric, height: contentSize.height)
+   }
+}
+
+final class TableItemsModel<Design: DSP>: BaseViewModel<TableViewExtended>,
    Designable,
    Presenting,
    UITableViewDelegate,
@@ -72,6 +86,8 @@ final class TableItemsModel<Design: DSP>: BaseViewModel<UITableView>,
       view.separatorColor = .clear
       view.clipsToBounds = true
       view.layer.masksToBounds = true
+      view.rowHeight = UITableView.automaticDimension
+      view.estimatedRowHeight = UITableView.automaticDimension
 
       backColor(Design.color.background)
 
@@ -200,6 +216,8 @@ extension TableItemsModel: Stateable2 {
          view.separatorStyle = value
       case .separatorColor(let value):
          view.separatorColor = value
+      case .reload:
+         view.reloadData()
       }
    }
 }

@@ -12,11 +12,13 @@ struct SettingsViewEvent: InitProtocol {}
 
 final class SettingsScene<Asset: AssetProtocol>: BaseSceneModel<
    DefaultVCModel,
-   ModalDoubleStackModel<Asset>,
+   BrandDoubleStackVM<Asset.Design>,
    Asset,
-   Int
+   UserData
 > {
    // MARK: - Frame Cells
+
+   private lazy var organizationsModel = ChangeOrganizationVM<Design>()
 
    lazy var general = Combos<SComboMDD<LabelModel, DoubleLabelHorizontal, DoubleLabelHorizontal>>()
       .setMain { header in
@@ -97,17 +99,18 @@ final class SettingsScene<Asset: AssetProtocol>: BaseSceneModel<
    private lazy var useCase = Asset.apiUseCase
 
    override func start() {
-      mainVM.closeButton.on(\.didTap, self) { $0.dismiss() }
       vcModel?.on(\.viewDidLoad, self) { $0.configure() }
    }
 
    func configure() {
       mainVM.bodyStack
          .arrangedModels([
-            general,
-            Spacer(8),
-            help,
+            organizationsModel,
             Spacer(16),
+//            general,
+//            Spacer(8),
+//            help,
+//            Spacer(16),
             logoutButton,
             Grid.xxx.spacer,
          ])
@@ -115,11 +118,11 @@ final class SettingsScene<Asset: AssetProtocol>: BaseSceneModel<
       logoutButton
          .on(\.didTap)
          .doNext(useCase.logout)
-         .onSuccess(self) { slf,_ in
+         .onSuccess(self) { slf, _ in
             slf.dismiss()
             UserDefaults.standard.setIsLoggedIn(value: false)
             guard
-               let userId = slf.inputValue,
+               let userId = slf.inputValue?.profile.id,
                let deviceId = UIDevice.current.identifierForVendor?.uuidString
             else { return }
             let request = RemoveFcmToken(device: deviceId, userId: userId)
@@ -134,6 +137,39 @@ final class SettingsScene<Asset: AssetProtocol>: BaseSceneModel<
             Asset.router?.route(.presentInitial, scene: \.digitalThanks, payload: ())
          }.onFail {
             print("logout api failed")
+         }
+
+      loadOrganizations()
+   }
+}
+
+extension SettingsScene {
+   private func loadOrganizations() {
+      guard let currentOrg = inputValue?.profile.organization else {
+         assertionFailure("no current organization"); return
+      }
+
+      useCase.getUserOrganizations
+         .doAsync()
+         .onSuccess(self) { slf, organizations in
+            slf.organizationsModel.setup((currentOrg: currentOrg, orgs: organizations))
+            slf.organizationsModel.on(\.didSelectOrganizationIndex) { index in
+               let id = organizations[index].id
+               self.useCase.changeOrganization
+                  .doAsync(id)
+                  .onSuccess {
+                     print($0)
+                     let authResult = AuthResult(xId: $0.xId,
+                                                 xCode: $0.xCode,
+                                                 account: $0.account,
+                                                 organizationId: $0.organizationId)
+
+                     Asset.router?.route(.presentInitial, scene: \.verify, payload: authResult)
+                  }
+                  .onFail {
+                     print("fail")
+                  }
+            }
          }
    }
 }

@@ -135,10 +135,10 @@ final class TransactScene<Asset: AssetProtocol>: ModalDoubleStackModel<Asset>, S
       configure()
 
       view.on(\.willAppear) { [weak self] in
+         self?.setToInitialCondition()
          self?.viewModels.foundUsersList.set(.items([]))
          self?.scenario.start()
          self?.scenario2.start()
-         self?.setToInitialCondition()
       }
    }
 
@@ -391,15 +391,15 @@ private extension TransactScene {
    }
 
    func applySelectUserMode() {
-      footerStack.hidden(true, isAnimated: true)
-      viewModels.options.hidden(true, isAnimated: true)
-      viewModels.addPhotoButton.hidden(true, isAnimated: true)
-      viewModels.pickedImages.hidden(true, isAnimated: true)
-      viewModels.reasonTextView.hidden(true, isAnimated: true)
-      viewModels.amountInputModel.set(.hidden(true, isAnimated: true))
-      viewModels.userSearchTextField.hidden(false, isAnimated: true)
-      viewModels.balanceInfo.set(.hidden(true, isAnimated: true))
-      viewModels.options.tagsCloud.set(.hidden(true, isAnimated: true))
+      footerStack.hidden(true)
+      viewModels.options.hidden(true)
+      viewModels.addPhotoButton.hidden(true)
+      viewModels.pickedImages.hidden(true)
+      viewModels.reasonTextView.hidden(true)
+      viewModels.amountInputModel.set(.hidden(true))
+      viewModels.userSearchTextField.hidden(false)
+      viewModels.balanceInfo.set(.hidden(true))
+      viewModels.options.tagsCloud.set(.hidden(true))
 
       viewModels.notFoundBlock.hidden(true)
    }
