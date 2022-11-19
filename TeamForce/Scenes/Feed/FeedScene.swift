@@ -76,6 +76,10 @@ extension FeedScene: Configurable {
          .on(\.willEndDragging) { [weak self] in
             self?.send(\.willEndDragging, $0)
          }
+         .activateRefreshControl(color: Design.color.iconBrand)
+         .on(\.refresh, self) {
+            $0.send(\.userDidLoad, nil)
+         }
    }
 }
 

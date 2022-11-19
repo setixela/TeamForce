@@ -33,6 +33,9 @@ struct TableItemsEvents: ScrollEventsProtocol {
    var didScroll: CGFloat?
    var willEndDragging: CGFloat?
    var pagination: Bool?
+
+   // refresh
+   var refresh: Void?
 }
 
 final class TableItemsModel<Design: DSP>: BaseViewModel<TableViewExtended>,
@@ -52,7 +55,8 @@ final class TableItemsModel<Design: DSP>: BaseViewModel<TableViewExtended>,
    private var itemSections: [TableItemsSection] = []
 
    private var prevScrollOffset: CGFloat = 0
-   // private var velocity: CGFloat = 0
+
+   private lazy var refreshControl = UIRefreshControl()
 
    // MARK: - Start
 
@@ -163,6 +167,15 @@ final class TableItemsModel<Design: DSP>: BaseViewModel<TableViewExtended>,
    {
       send(\.willEndDragging, velocity.y)
    }
+
+   // Refresh
+
+   @objc func refresh(_ sender: AnyObject) {
+      view.isScrollEnabled = false
+      send(\.refresh)
+      refreshControl.endRefreshing()
+      view.isScrollEnabled = true
+   }
 }
 
 extension TableItemsModel: Stateable {
@@ -213,6 +226,15 @@ extension TableItemsModel {
 
    @discardableResult func reload() -> Self {
       view.reloadData()
+      return self
+   }
+
+   @discardableResult func activateRefreshControl(text: String = "", color: UIColor? = nil) -> Self {
+      refreshControl.attributedTitle = NSAttributedString(string: text)
+      refreshControl.addTarget(self, action: #selector(self.refresh(_:)), for: .valueChanged)
+      refreshControl.tintColor = color ?? refreshControl.tintColor
+      refreshControl.transform = CGAffineTransformMakeScale(0.70, 0.70);
+      view.refreshControl = refreshControl
       return self
    }
 }

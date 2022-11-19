@@ -56,6 +56,10 @@ final class ChallengesScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtend
          .on(\.willEndDragging) { [weak self] in
             self?.send(\.willEndDragging, $0)
          }
+         .activateRefreshControl(color: Design.color.iconBrand)
+         .on(\.refresh, self) {
+            $0.scenario.start()
+         }
    }
 }
 
@@ -84,12 +88,6 @@ extension ChallengesScene: StateMachine {
             .presentModally(.automatic),
             scene: \.challengeDetails,
             payload: ChallengeDetailsInput.byChallenge(value.challenge)
-//               ChallengeDetailsData(
-//                  challenge: value.challenge,
-//                  profileId: value.profileId,
-//                  currentButton: 0
-//               )
-//            )
          )
       case .presentCreateChallenge:
          setState(.presentActivityIndicator)
