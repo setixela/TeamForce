@@ -46,10 +46,10 @@ final class HistoryScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>
       configure()
       
       viewModels.tableModel
-         .set(.presenters([
+         .presenters(
             viewModels.presenter.transactToHistoryCell,
-            SpacerPresenter.presenter,
-         ]))
+            SpacerPresenter.presenter
+         )
 
       viewModels.tableModel.on(\.didScroll) { [weak self] in
          self?.send(\.didScroll, $0)
@@ -111,19 +111,19 @@ extension HistoryScene: StateMachine {
          errorBlock.hidden(true)
          activityIndicator.hidden(true)
          viewModels.tableModel
-            .set(.itemSections(value.addedSpacer(size: Grid.x80.value)))
+            .itemSections(value.addedSpacer(size: Grid.x80.value))
       //
       case .presentSentTransactions(let value):
          errorBlock.hidden(true)
          activityIndicator.hidden(true)
          viewModels.tableModel
-            .set(.itemSections(value.addedSpacer(size: Grid.x80.value)))
+            .itemSections(value.addedSpacer(size: Grid.x80.value))
       //
       case .presentRecievedTransaction(let value):
          errorBlock.hidden(true)
          activityIndicator.hidden(true)
          viewModels.tableModel
-            .set(.itemSections(value.addedSpacer(size: Grid.x80.value)))
+            .itemSections(value.addedSpacer(size: Grid.x80.value))
       //
       case .presentDetailView(let value):
          ProductionAsset.router?.route(.presentModally(.automatic),

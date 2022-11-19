@@ -30,7 +30,7 @@ final class ChangeOrganizationVM<Design: DSP>: StackModel, Designable {
       .cornerRadius(Design.params.cornerRadius)
 
    private lazy var organizationsTable = TableItemsModel<Design>()
-      .set(.presenters([organizationPresenter]))
+      .presenters(organizationPresenter)
       .cornerRadius(Design.params.cornerRadius)
       .borderWidth(1)
       .borderColor(Design.color.iconBrand)
@@ -89,7 +89,7 @@ final class ChangeOrganizationVM<Design: DSP>: StackModel, Designable {
 extension ChangeOrganizationVM: SetupProtocol {
    func setup(_ data: (currentOrg: String, orgs: [Organization])) {
       changeButton.models.down.text(data.currentOrg)
-      organizationsTable.set(.items(data.orgs))
+      organizationsTable.items(data.orgs)
    }
 }
 

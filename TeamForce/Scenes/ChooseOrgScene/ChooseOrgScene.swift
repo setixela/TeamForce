@@ -18,13 +18,13 @@ final class ChooseOrgScene<Asset: AssetProtocol>: BaseSceneModel<
    //
 
    private lazy var useCase = Asset.apiUseCase
-   
+
    lazy var organizationsTable = TableItemsModel<Design>()
       .backColor(Design.color.background)
-      .set(.presenters([
+      .presenters(
          OrganizationPresenters<Design>.presenter,
          SpacerPresenter.presenter
-      ]))
+      )
 
    private lazy var activity = ActivityIndicator<Design>()
 
@@ -35,9 +35,9 @@ final class ChooseOrgScene<Asset: AssetProtocol>: BaseSceneModel<
       setState(.initial)
 
       guard let organizations = inputValue else { return }
-      
-      organizationsTable.set(.items(organizations + [SpacerItem(size: Grid.x64.value)]))
-      
+
+      organizationsTable.items(organizations + [SpacerItem(size: Grid.x64.value)])
+
       organizationsTable
          .on(\.didSelectRowInt) { [weak self] in
             self?.setState(.loading)
@@ -65,12 +65,13 @@ extension ChooseOrgScene: StateMachine {
       case initial
       case loading
    }
+
    func setState(_ state: ChooseState) {
       switch state {
       case .initial:
-        organizationsTable.userInterractionEnabled(true)
-        organizationsTable.alpha(1)
-        activity.hidden(true)
+         organizationsTable.userInterractionEnabled(true)
+         organizationsTable.alpha(1)
+         activity.hidden(true)
       case .loading:
          organizationsTable.userInterractionEnabled(false)
          organizationsTable.alpha(0.5)
@@ -95,7 +96,7 @@ private extension ChooseOrgScene {
 
 class OrganizationPresenters<Design: DesignProtocol>: Designable {
    var events: EventsStore = .init()
-   
+
    static var presenter: Presenter<OrganizationAuth, WrappedX<StackModel>> {
       Presenter { work in
          let item = work.unsafeInput.item
@@ -105,17 +106,17 @@ class OrganizationPresenters<Design: DesignProtocol>: Designable {
             .image(Design.icon.newAvatar)
             .size(.square(Grid.x36.value))
             .cornerRadius(Grid.x36.value / 2)
-         
+
          let orgName = LabelModel()
             .text(item.organizationName.string)
             .set(Design.state.label.body1)
-         
+
          if let avatar = item.organizationPhoto {
             icon.url(TeamForceEndpoints.urlBase + avatar)
          } else {
             icon.image(Design.icon.anonAvatar)
          }
-         
+
          let cellStack = WrappedX(
             StackModel()
                .padding(Design.params.cellContentPadding)
@@ -124,13 +125,13 @@ class OrganizationPresenters<Design: DesignProtocol>: Designable {
                .alignment(.center)
                .arrangedModels([
                   icon,
-                  orgName
+                  orgName,
                ])
                .cornerRadius(Design.params.cornerRadiusSmall)
                .backColor(Design.color.backgroundInfoSecondary)
          )
          .padding(.outline(Grid.x2.value))
-         
+
          work.success(result: cellStack)
       }
    }

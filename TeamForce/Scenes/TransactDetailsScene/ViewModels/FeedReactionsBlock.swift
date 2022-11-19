@@ -13,10 +13,10 @@ final class FeedReactionsBlock<Design: DSP>: StackModel, Designable {
       .hidden(true)
    lazy var reactedUsersTableModel = TableItemsModel<Design>()
       .backColor(Design.color.background)
-      .set(.presenters([
+      .presenters(
          ReactionsPresenters<Design>().reactionsCellPresenter,
          SpacerPresenter.presenter
-      ]))
+      )
 
    override func start() {
       super.start()
@@ -32,6 +32,6 @@ final class FeedReactionsBlock<Design: DSP>: StackModel, Designable {
 
 extension FeedReactionsBlock: SetupProtocol {
    func setup(_ data: [ReactItem]) {
-      reactedUsersTableModel.set(.items(data + [SpacerItem(size: Grid.x64.value)]))
+      reactedUsersTableModel.items(data + [SpacerItem(size: Grid.x64.value)])
    }
 }

@@ -13,10 +13,10 @@ final class ChallContendersViewModel<Design: DSP>: StackModel, Designable {
    
    lazy var contendersTableModel = TableItemsModel<Design>()
       .backColor(Design.color.background)
-      .set(.presenters([
+      .presenters(
          presenter.contendersCellPresenter,
          SpacerPresenter.presenter
-      ]))
+      )
 
    override func start() {
       super.start()
@@ -30,6 +30,6 @@ final class ChallContendersViewModel<Design: DSP>: StackModel, Designable {
 
 extension ChallContendersViewModel: SetupProtocol {
    func setup(_ data: [Contender]) {
-      contendersTableModel.set(.items(data + [SpacerItem(size: Grid.x64.value)]))
+      contendersTableModel.items(data + [SpacerItem(size: Grid.x64.value)])
    }
 }

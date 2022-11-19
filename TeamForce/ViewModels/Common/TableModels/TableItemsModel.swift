@@ -17,22 +17,11 @@ class TableItemsSection {
    }
 }
 
-enum TableItemsState {
-   case items([Any])
-   case itemSections([TableItemsSection])
-   case presenters([PresenterProtocol])
-   case updateItemAtIndex(Any, Int)
-   case separatorStyle(UITableViewCell.SeparatorStyle)
-   case separatorColor(UIColor)
-   case reload
-}
-
 protocol ScrollEventsProtocol: InitProtocol {
    // TODO: - Обьединять ивенты как Стейты
    var didScroll: CGFloat? { get set }
    var willEndDragging: CGFloat? { get set }
 }
-
 
 struct TableItemsEvents: ScrollEventsProtocol {
    var didSelectRow: (IndexPath, Int)?
@@ -44,19 +33,6 @@ struct TableItemsEvents: ScrollEventsProtocol {
    var didScroll: CGFloat?
    var willEndDragging: CGFloat?
    var pagination: Bool?
-}
-
-final class TableViewExtended: UITableView {
-   override var contentSize:CGSize {
-      didSet {
-         invalidateIntrinsicContentSize()
-      }
-   }
-
-   override var intrinsicContentSize: CGSize {
-      layoutIfNeeded()
-      return CGSize(width: UIView.noIntrinsicMetric, height: contentSize.height)
-   }
 }
 
 final class TableItemsModel<Design: DSP>: BaseViewModel<TableViewExtended>,
@@ -174,9 +150,9 @@ final class TableItemsModel<Design: DSP>: BaseViewModel<TableViewExtended>,
       let velocity = scrollView.contentOffset.y - prevScrollOffset
       prevScrollOffset = scrollView.contentOffset.y
       send(\.didScroll, velocity)
-      
+
       let pos = scrollView.contentOffset.y
-      if pos > self.view.contentSize.height - 50  - scrollView.frame.size.height {
+      if pos > view.contentSize.height - 50 - scrollView.frame.size.height {
          send(\.pagination, true)
       }
    }
@@ -189,40 +165,57 @@ final class TableItemsModel<Design: DSP>: BaseViewModel<TableViewExtended>,
    }
 }
 
-extension TableItemsModel: Stateable2 {
+extension TableItemsModel: Stateable {
    typealias State = ViewState
-
-   func applyState(_ state: TableItemsState) {
-      switch state {
-      case .items(let items):
-         self.items = items
-         view.reloadData()
-      case .itemSections(let sections):
-         itemSections = sections
-         isMultiSection = true
-         view.reloadData()
-      //
-      case .presenters(let presenters):
-         self.presenters.removeAll()
-         presenters.forEach {
-            let key = $0.cellType
-            self.presenters[key] = $0
-         }
-      case .updateItemAtIndex(let item, let index):
-         items[index] = item
-         let indexPath = IndexPath(item: index, section: 0)
-         view.reloadRows(at: [indexPath], with: .automatic)
-      case .separatorStyle(let value):
-         view.separatorStyle = value
-      case .separatorColor(let value):
-         view.separatorColor = value
-      case .reload:
-         view.reloadData()
-      }
-   }
 }
 
 extension TableItemsModel: Eventable {}
+
+extension TableItemsModel {
+   @discardableResult func items(_ value: [Any]) -> Self {
+      items = value
+      view.reloadData()
+      return self
+   }
+
+   @discardableResult func itemSections(_ value: [TableItemsSection]) -> Self {
+      itemSections = value
+      isMultiSection = true
+      view.reloadData()
+      return self
+   }
+
+   @discardableResult func presenters(_ value: PresenterProtocol...) -> Self {
+      presenters.removeAll()
+      value.forEach {
+         let key = $0.cellType
+         self.presenters[key] = $0
+      }
+      return self
+   }
+
+   @discardableResult func updateItemAtIndex(_ value: Any, index: Int) -> Self {
+      items[index] = value
+      let indexPath = IndexPath(item: index, section: 0)
+      view.reloadRows(at: [indexPath], with: .automatic)
+      return self
+   }
+
+   @discardableResult func separatorStyle(_ value: UITableViewCell.SeparatorStyle) -> Self {
+      view.separatorStyle = value
+      return self
+   }
+
+   @discardableResult func separatorColor(_ value: UIColor) -> Self {
+      view.separatorColor = value
+      return self
+   }
+
+   @discardableResult func reload() -> Self {
+      view.reloadData()
+      return self
+   }
+}
 
 final class TableCell: UITableViewCell {
    override func prepareForReuse() {
