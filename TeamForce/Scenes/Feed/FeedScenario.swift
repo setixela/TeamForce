@@ -32,7 +32,6 @@ final class FeedScenario<Asset: AssetProtocol>:
          .onFail(setState, .loadFeedError)
          .doNext(works.getSegmentId)
          .doNext(works.getFeedBySegment)
-         //.doNext(works.getAllFeed)
          .onSuccess(setState) {
             .presentFeed($0)
          }

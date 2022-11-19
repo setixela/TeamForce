@@ -62,7 +62,7 @@ final class MainScene<Asset: AssetProtocol>:
          Spacer()
       ])
 
-      vcModel?.on(\.viewWillAppear) { [weak self] in
+      vcModel?.on(\.viewDidLoad) { [weak self] in
          self?.scenario.start()
       }
       tabBarPanel.button1.setSelfMode(\.normal)

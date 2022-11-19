@@ -57,9 +57,6 @@ final class HistoryScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>
       viewModels.tableModel.on(\.willEndDragging) { [weak self] in
          self?.send(\.willEndDragging, $0)
       }
-      
-      
-//      var historycells = viewModels.tableModel.items as? [HistoryCellModel<Design>]
 
       setState(.initial)
    }
@@ -76,7 +73,6 @@ private extension HistoryScene {
          activityIndicator,
          errorBlock,
          viewModels.tableModel,
-         // Spacer(88),
       ])
    }
 }
