@@ -18,6 +18,8 @@ protocol FeedWorksProtocol {
 }
 
 final class FeedWorksTempStorage: InitProtocol {
+   var userData: UserData?
+
    var feed: [Feed] = []
    var transactions: [Feed] = []
    var challenges: [Feed] = []
@@ -77,14 +79,15 @@ final class FeedWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedWorksTempStorage
 
    var loadFeedForCurrentUser: Work<UserData?, Void> { .init { [weak self] work in
       guard
-         let user = work.input,
-         let userName = user?.profile.tgName
+         let user = work.unsafeInput ?? Self.store.userData
       else {
          work.fail()
          return
       }
-      Self.store.profileId = user?.profile.id
-      Self.store.currentUserName = userName
+
+      Self.store.userData = user
+      Self.store.profileId = user.profile.id
+      Self.store.currentUserName = user.profile.tgName
 
       Self.store.feedOffset = 1
       Self.store.transactOffset = 1

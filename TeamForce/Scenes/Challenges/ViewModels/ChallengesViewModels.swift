@@ -16,10 +16,10 @@ final class ChallengesViewModel<Design: DSP>: StackModel, Designable, Eventable 
    var events: EventsStore = .init()
 
    lazy var challengesTable = TableItemsModel<Design>()
-      .set(.presenters([
+      .presenters(
          ChallengeCellPresenters<Design>.presenter,
-         SpacerPresenter.presenter,
-      ]))
+         SpacerPresenter.presenter
+      )
 
    override func start() {
       super.start()
@@ -44,7 +44,7 @@ extension ChallengesViewModel: StateMachine {
    func setState(_ state: ChallengesViewModelState) {
       switch state {
       case .presentChallenges(let challenges):
-         challengesTable.set(.items(challenges + [SpacerItem(size: 96)]))
+         challengesTable.items(challenges + [SpacerItem(size: 96)])
       }
    }
 }

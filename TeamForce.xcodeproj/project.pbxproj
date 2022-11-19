@@ -235,7 +235,7 @@
 		19EE849028AB20CE00D862EE /* DoubleStacksBrandedVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19EE848F28AB20CE00D862EE /* DoubleStacksBrandedVM.swift */; };
 		19EF32AB287CE80B0078F53D /* StringStorageWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19EF32AA287CE80B0078F53D /* StringStorageWorker.swift */; };
 		19EF32AE287E08F80078F53D /* ColorBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19EF32AD287E08F80078F53D /* ColorBuilder.swift */; };
-		19EF32B02884B6C80078F53D /* TableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19EF32AF2884B6C80078F53D /* TableViewModel.swift */; };
+		19EF32B02884B6C80078F53D /* SimpleTableVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19EF32AF2884B6C80078F53D /* SimpleTableVM.swift */; };
 		19EFD4C228A82ABC00651E0A /* CssColors.css in Resources */ = {isa = PBXBuildFile; fileRef = 19EFD4C028A82A6400651E0A /* CssColors.css */; };
 		19F153842899649900ECF000 /* LoadProfileUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F153832899649900ECF000 /* LoadProfileUseCase.swift */; };
 		19F15386289964AA00ECF000 /* LogoutUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F15385289964AA00ECF000 /* LogoutUseCase.swift */; };
@@ -631,7 +631,7 @@
 		19EE848F28AB20CE00D862EE /* DoubleStacksBrandedVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleStacksBrandedVM.swift; sourceTree = "<group>"; };
 		19EF32AA287CE80B0078F53D /* StringStorageWorker.swift */ = {isa = PBXFileReference; indentWidth = 3; lastKnownFileType = sourcecode.swift; path = StringStorageWorker.swift; sourceTree = "<group>"; tabWidth = 3; };
 		19EF32AD287E08F80078F53D /* ColorBuilder.swift */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = ColorBuilder.swift; sourceTree = "<group>"; tabWidth = 4; };
-		19EF32AF2884B6C80078F53D /* TableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewModel.swift; sourceTree = "<group>"; };
+		19EF32AF2884B6C80078F53D /* SimpleTableVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleTableVM.swift; sourceTree = "<group>"; };
 		19EFD4C028A82A6400651E0A /* CssColors.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = CssColors.css; sourceTree = "<group>"; };
 		19F153832899649900ECF000 /* LoadProfileUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadProfileUseCase.swift; sourceTree = "<group>"; };
 		19F15385289964AA00ECF000 /* LogoutUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutUseCase.swift; sourceTree = "<group>"; };
@@ -1599,7 +1599,7 @@
 				19CAB9D528B44C4700A0A3B1 /* StackItemsModel.swift */,
 				19DD3D94288766860085CDA8 /* LabelCellModel.swift */,
 				6368D823289168740049EEAB /* CustomCellModel.swift */,
-				19EF32AF2884B6C80078F53D /* TableViewModel.swift */,
+				19EF32AF2884B6C80078F53D /* SimpleTableVM.swift */,
 			);
 			path = TableModels;
 			sourceTree = "<group>";
@@ -2129,7 +2129,7 @@
 				63FCC9B529075383009D0001 /* GetEventsChallUseCase.swift in Sources */,
 				19017B7128A69CB100B06345 /* IconTitleY.swift in Sources */,
 				63E7A74528AFBC5300FB2C80 /* GetPeriodsFromDateApiWorker.swift in Sources */,
-				19EF32B02884B6C80078F53D /* TableViewModel.swift in Sources */,
+				19EF32B02884B6C80078F53D /* SimpleTableVM.swift in Sources */,
 				19A9BE7828C283650099F8EA /* ModelBuilder.swift in Sources */,
 				19171F4B28AD23AE000926B1 /* HistoryViewModels.swift in Sources */,
 				636AE70C29235C8F004A24E5 /* GetUserOrganizationsUseCase.swift in Sources */,

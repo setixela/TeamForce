@@ -15,10 +15,10 @@ enum FeedCommentsState {
 final class FeedCommentsBlock<Design: DSP>: DoubleStacksModel, Designable {
    lazy var commentTableModel = TableItemsModel<Design>()
       .backColor(Design.color.background)
-      .set(.presenters([
+      .presenters(
          CommentPresenters<Design>().commentCellPresenter,
          SpacerPresenter.presenter
-      ]))
+      )
 
    lazy var commentField = TextFieldModel()
       .set(Design.state.textField.default)
@@ -67,7 +67,7 @@ extension FeedCommentsBlock: SetupProtocol {
    func setup(_ data: [Comment]) {
       if data.count != 0 {
          hereIsEmptySpacedBlock.hidden(true)
-         commentTableModel.set(.items(data + [SpacerItem(size: Grid.x64.value)]))
+         commentTableModel.items(data + [SpacerItem(size: Grid.x64.value)])
       } else {
          hereIsEmptySpacedBlock.hidden(false)
       }

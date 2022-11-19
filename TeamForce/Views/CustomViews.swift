@@ -476,3 +476,18 @@ final class TextViewExtended: UITextView, UITextViewDelegate {
 extension TextViewExtended: Eventable {
    typealias Events = TextViewEvents
 }
+
+// MARK: - TableViewExtended
+
+final class TableViewExtended: UITableView {
+   override var contentSize:CGSize {
+      didSet {
+         invalidateIntrinsicContentSize()
+      }
+   }
+
+   override var intrinsicContentSize: CGSize {
+      layoutIfNeeded()
+      return CGSize(width: UIView.noIntrinsicMetric, height: contentSize.height)
+   }
+}

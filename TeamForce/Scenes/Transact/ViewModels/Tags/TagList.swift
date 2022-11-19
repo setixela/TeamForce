@@ -21,9 +21,9 @@ final class TagList<Asset: AssetProtocol>: ModalDoubleStackModel<Asset> {
    private lazy var storageUseCase = Asset.storageUseCase
 
    private lazy var tableModel = TableItemsModel<Design>()
-      .set(.presenters([
+      .presenters(
          tagPresenter
-      ]))
+      )
 
    private var items: [SelectWrapper<Tag>] = []
    private var selctedTags: Set<Tag> = []
@@ -51,7 +51,7 @@ final class TagList<Asset: AssetProtocol>: ModalDoubleStackModel<Asset> {
          var item = slf.items[row.1]
          item.isSelected = !item.isSelected
          slf.items[row.1] = item
-         slf.tableModel.set(.items(slf.items))
+         slf.tableModel.items(slf.items)
 
          if item.isSelected {
             slf.selctedTags.insert(item.value)
@@ -89,7 +89,7 @@ final class TagList<Asset: AssetProtocol>: ModalDoubleStackModel<Asset> {
    }
 
    private func setItemsToTable() {
-      tableModel.set(.items(items))
+      tableModel.items(items)
    }
 
    private var tagPresenter: Presenter<SelectWrapper<Tag>, TagCell<Design>> = .init { work in

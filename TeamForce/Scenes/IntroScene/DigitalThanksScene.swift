@@ -20,7 +20,7 @@ final class DigitalThanksScene<Asset: AssetProtocol>: BaseSceneModel<
 
    // Debug
    private lazy var popup = BottomPopupPresenter()
-   private lazy var popupTable = TableViewModel()
+   private lazy var popupTable = SimpleTableVM()
    private lazy var debugLabel = LabelModel()
       .text("Debug mode")
       .padding(.horizontalOffset(16))
@@ -79,11 +79,11 @@ final class DigitalThanksScene<Asset: AssetProtocol>: BaseSceneModel<
       vcModel?.on(\.motionEnded, self) { slf, event in
          switch event {
          case .motionShake:
-            slf.popupTable.set(.models([
+            slf.popupTable.models([
                slf.debugLabel,
                slf.prodLabel,
                Spacer(64)
-            ]))
+            ])
             slf.popup.send(\.presentAuto, (slf.popupTable, onView: slf.vcModel?.view.superview))
          default:
             break

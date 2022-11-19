@@ -76,6 +76,10 @@ extension FeedScene: Configurable {
          .on(\.willEndDragging) { [weak self] in
             self?.send(\.willEndDragging, $0)
          }
+         .activateRefreshControl(color: Design.color.iconBrand)
+         .on(\.refresh, self) {
+            $0.send(\.userDidLoad, nil)
+         }
    }
 }
 
@@ -112,7 +116,7 @@ extension FeedScene: StateMachine {
          }
 
          viewModels.feedTableModel.hidden(false)
-         viewModels.feedTableModel.set(.items(tuple.0 + [SpacerItem(size: Grid.x64.value)]))
+         viewModels.feedTableModel.items(tuple.0 + [SpacerItem(size: Grid.x64.value)])
       case .loadFeedError:
          log("Feed Error!")
          activityIndicator.hidden(true)
@@ -139,9 +143,9 @@ extension FeedScene: StateMachine {
             break
          }
       case .updateFeed(let value):
-         viewModels.feedTableModel.set(.items(value + [SpacerItem(size: Grid.x64.value)]))
+         viewModels.feedTableModel.items(value + [SpacerItem(size: Grid.x64.value)])
       case .updateFeedAtIndex(let feed, let index):
-         viewModels.feedTableModel.set(.updateItemAtIndex(feed, index))
+         viewModels.feedTableModel.updateItemAtIndex(feed, index: index)
       }
    }
 }

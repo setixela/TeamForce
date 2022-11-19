@@ -14,10 +14,10 @@ final class ChallWinnersViewModel<Design: DSP>: StackModel, Designable {
    
    lazy var winnersTableModel = TableItemsModel<Design>()
       .backColor(Design.color.background)
-      .set(.presenters([
+      .presenters(
          ChallWinnersPresenters<Design>().winnersCellPresenter,
          SpacerPresenter.presenter
-      ]))
+      )
 
    override func start() {
       super.start()
@@ -35,7 +35,7 @@ final class ChallWinnersViewModel<Design: DSP>: StackModel, Designable {
 
 extension ChallWinnersViewModel: SetupProtocol {
    func setup(_ data: [ChallengeWinnerReport]) {
-      winnersTableModel.set(.items(data + [SpacerItem(size: Grid.x64.value)]))
+      winnersTableModel.items(data + [SpacerItem(size: Grid.x64.value)])
    }
 }
 

@@ -44,19 +44,24 @@ final class HistoryScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>
 
    override func start() {
       configure()
-      
-      viewModels.tableModel
-         .set(.presenters([
-            viewModels.presenter.transactToHistoryCell,
-            SpacerPresenter.presenter,
-         ]))
 
-      viewModels.tableModel.on(\.didScroll) { [weak self] in
-         self?.send(\.didScroll, $0)
-      }
-      viewModels.tableModel.on(\.willEndDragging) { [weak self] in
-         self?.send(\.willEndDragging, $0)
-      }
+      viewModels.tableModel
+         .presenters(
+            viewModels.presenter.transactToHistoryCell,
+            SpacerPresenter.presenter
+         )
+
+      viewModels.tableModel
+         .on(\.didScroll) { [weak self] in
+            self?.send(\.didScroll, $0)
+         }
+         .on(\.willEndDragging) { [weak self] in
+            self?.send(\.willEndDragging, $0)
+         }
+         .activateRefreshControl(color: Design.color.iconBrand)
+         .on(\.refresh, self) {
+            $0.send(\.userDidLoad, nil)
+         }
 
       setState(.initial)
    }
@@ -73,6 +78,7 @@ private extension HistoryScene {
          activityIndicator,
          errorBlock,
          viewModels.tableModel,
+         Spacer()
       ])
    }
 }
@@ -88,7 +94,7 @@ enum HistoryState {
    case presentRecievedTransaction([TableItemsSection])
 
    case presentDetailView(Transaction)
-   
+
    case cancelTransaction
 }
 
@@ -111,19 +117,19 @@ extension HistoryScene: StateMachine {
          errorBlock.hidden(true)
          activityIndicator.hidden(true)
          viewModels.tableModel
-            .set(.itemSections(value.addedSpacer(size: Grid.x80.value)))
+            .itemSections(value.addedSpacer(size: Grid.x80.value))
       //
       case .presentSentTransactions(let value):
          errorBlock.hidden(true)
          activityIndicator.hidden(true)
          viewModels.tableModel
-            .set(.itemSections(value.addedSpacer(size: Grid.x80.value)))
+            .itemSections(value.addedSpacer(size: Grid.x80.value))
       //
       case .presentRecievedTransaction(let value):
          errorBlock.hidden(true)
          activityIndicator.hidden(true)
          viewModels.tableModel
-            .set(.itemSections(value.addedSpacer(size: Grid.x80.value)))
+            .itemSections(value.addedSpacer(size: Grid.x80.value))
       //
       case .presentDetailView(let value):
          ProductionAsset.router?.route(.presentModally(.automatic),

@@ -12,11 +12,11 @@ final class NotificationsViewModel<Design: DSP>: StackModel, Designable {
    //
    private lazy var tableModel = TableItemsModel<Design>()
       .backColor(Design.color.background)
-      .set(.separatorColor(Design.color.cellSeparatorColor))
-      .set(.separatorStyle(.singleLine))
-      .set(.presenters([
+      .separatorColor(Design.color.cellSeparatorColor)
+      .separatorStyle(.singleLine)
+      .presenters(
          NotificationsPresenter<Design>.notifyCell
-      ]))
+      )
 
    override func start() {
       super.start()
@@ -45,7 +45,7 @@ extension NotificationsViewModel: StateMachine {
    func setState(_ state: NotifyVMState) {
       switch state {
       case .tableData(let sections):
-         tableModel.set(.itemSections(sections))
+         tableModel.itemSections(sections)
       }
    }
 }
