@@ -90,6 +90,7 @@ private extension ChooseOrgScene {
          .arrangedModels([
             organizationsTable,
             activity,
+            Spacer()
          ])
    }
 }

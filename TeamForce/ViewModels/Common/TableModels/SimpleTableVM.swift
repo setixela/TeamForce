@@ -8,20 +8,9 @@
 import ReactiveWorks
 import UIKit
 
-final class TableView: UITableView {
-   override var intrinsicContentSize: CGSize {
-      return contentSize
-   }
-}
-
 struct TableSection {
    let title: String
    let models: [UIViewModel]
-}
-
-enum TableViewState {
-   case models([UIViewModel])
-   case sections([TableSection])
 }
 
 struct TableViewEvents: InitProtocol {
@@ -30,10 +19,10 @@ struct TableViewEvents: InitProtocol {
    var reloadData: Event<Void>?
 }
 
-final class TableViewModel: BaseViewModel<TableView> {
+final class SimpleTableVM: BaseViewModel<TableViewExtended> {
    var events: TableViewEvents = .init()
 
-   private var cellName = "cellName"// String(Int.random(in: 0...999999900000))
+   private var cellName = "cellName"
 
    private var models: [UIViewModel] = []
    private var sections: [TableSection] = []
@@ -46,33 +35,20 @@ final class TableViewModel: BaseViewModel<TableView> {
    }
 }
 
-extension TableViewModel: Stateable2 {
+extension SimpleTableVM: Stateable {
    typealias State = ViewState
-
-   func applyState(_ state: TableViewState) {
-      switch state {
-      case .models(let array):
-         isMultiSection = false
-         models = array
-         view.reloadData()
-      case .sections(let array):
-         isMultiSection = true
-         sections = array
-         view.reloadData()
-      }
-   }
 }
 
-extension TableViewModel: Communicable {}
+extension SimpleTableVM: Communicable {}
 
-extension TableViewModel: UITableViewDelegate {
+extension SimpleTableVM: UITableViewDelegate {
    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
       sendEvent(\.didSelectRow, payload: indexPath)
       tableView.deselectRow(at: indexPath, animated: true)
    }
 }
 
-extension TableViewModel: UITableViewDataSource {
+extension SimpleTableVM: UITableViewDataSource {
    func numberOfSections(in tableView: UITableView) -> Int {
       isMultiSection ? sections.count : 1
    }
@@ -113,5 +89,21 @@ extension TableViewModel: UITableViewDataSource {
 
    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
       UITableView.automaticDimension
+   }
+}
+
+extension SimpleTableVM {
+   @discardableResult func models(_ value: [UIViewModel]) -> Self {
+      isMultiSection = false
+      models = value
+      view.reloadData()
+      return self
+   }
+
+   @discardableResult func sections(_ value: [TableSection]) -> Self {
+      isMultiSection = true
+      sections = value
+      view.reloadData()
+      return self
    }
 }
