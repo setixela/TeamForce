@@ -95,6 +95,11 @@
 		1955879228F733D30001F734 /* ChallengeResultWorks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1955879128F733D30001F734 /* ChallengeResultWorks.swift */; };
 		1955879428F733DC0001F734 /* ChallengeResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1955879328F733DC0001F734 /* ChallengeResultViewModel.swift */; };
 		1955C78D2915B0D40066C96B /* WorkCancelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1955C78C2915B0D40066C96B /* WorkCancelTests.swift */; };
+		19564264292ACB6B007BE9D4 /* ChallengeInfoVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19564263292ACB6B007BE9D4 /* ChallengeInfoVM.swift */; };
+		19564266292ACB88007BE9D4 /* ChallengeStatusBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19564265292ACB88007BE9D4 /* ChallengeStatusBlock.swift */; };
+		19564268292ACBA8007BE9D4 /* ChallengeDetailsInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19564267292ACBA8007BE9D4 /* ChallengeDetailsInfoCell.swift */; };
+		1956426A292ACBE7007BE9D4 /* SendChallengePanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19564269292ACBE7007BE9D4 /* SendChallengePanel.swift */; };
+		1956426C292AD973007BE9D4 /* UIViewContoller+IsModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1956426B292AD973007BE9D4 /* UIViewContoller+IsModal.swift */; };
 		195870F228A8C8040075D505 /* KeyPathMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 195870F128A8C8040075D505 /* KeyPathMaker.swift */; };
 		1959F27428AA8E9700DEEE5C /* LoginWorks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1959F27328AA8E9700DEEE5C /* LoginWorks.swift */; };
 		19633988292148CE00B66A7D /* GetCurrentUserUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19633987292148CE00B66A7D /* GetCurrentUserUseCase.swift */; };
@@ -495,6 +500,11 @@
 		1955879128F733D30001F734 /* ChallengeResultWorks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeResultWorks.swift; sourceTree = "<group>"; };
 		1955879328F733DC0001F734 /* ChallengeResultViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeResultViewModel.swift; sourceTree = "<group>"; };
 		1955C78C2915B0D40066C96B /* WorkCancelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkCancelTests.swift; sourceTree = "<group>"; };
+		19564263292ACB6B007BE9D4 /* ChallengeInfoVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeInfoVM.swift; sourceTree = "<group>"; };
+		19564265292ACB88007BE9D4 /* ChallengeStatusBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeStatusBlock.swift; sourceTree = "<group>"; };
+		19564267292ACBA8007BE9D4 /* ChallengeDetailsInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeDetailsInfoCell.swift; sourceTree = "<group>"; };
+		19564269292ACBE7007BE9D4 /* SendChallengePanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendChallengePanel.swift; sourceTree = "<group>"; };
+		1956426B292AD973007BE9D4 /* UIViewContoller+IsModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewContoller+IsModal.swift"; sourceTree = "<group>"; };
 		195870F128A8C8040075D505 /* KeyPathMaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyPathMaker.swift; sourceTree = "<group>"; };
 		1959F27328AA8E9700DEEE5C /* LoginWorks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginWorks.swift; sourceTree = "<group>"; };
 		19633987292148CE00B66A7D /* GetCurrentUserUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetCurrentUserUseCase.swift; sourceTree = "<group>"; };
@@ -1066,6 +1076,10 @@
 			isa = PBXGroup;
 			children = (
 				194E308128F36661001E2967 /* ChallengeDetailsViewModel.swift */,
+				19564263292ACB6B007BE9D4 /* ChallengeInfoVM.swift */,
+				19564267292ACBA8007BE9D4 /* ChallengeDetailsInfoCell.swift */,
+				19564265292ACB88007BE9D4 /* ChallengeStatusBlock.swift */,
+				19564269292ACBE7007BE9D4 /* SendChallengePanel.swift */,
 				1955878A28F6EFCD0001F734 /* ChallCommentsBlock.swift */,
 				631D8EBC28F91E5E005332BD /* ChallResultsViewModel.swift */,
 				631D8EBE28F91ECF005332BD /* ChallResultsPresenters.swift */,
@@ -1277,6 +1291,7 @@
 				199E321328BC1A560088BA71 /* String+DateFormat.swift */,
 				1984A108291E421600F65262 /* String+MD5.swift */,
 				19221EE928C9AF3400B7B604 /* Optional+Unwrap.swift */,
+				1956426B292AD973007BE9D4 /* UIViewContoller+IsModal.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2086,6 +2101,7 @@
 				63A529F528A1F8AB004A858D /* SegmentedControlModel.swift in Sources */,
 				63D419F128AA825F0024E22C /* GetPeriodsUseCase.swift in Sources */,
 				191722632922DEE80023DE3A /* DetailsPresenter.swift in Sources */,
+				1956426A292ACBE7007BE9D4 /* SendChallengePanel.swift in Sources */,
 				63FCC9AF29075036009D0001 /* GetEventsWinnersApiWorker.swift in Sources */,
 				63E7A73F28AF9E8000FB2C80 /* ReadyWorks.swift in Sources */,
 				190D052328C7C1DC00466893 /* ProfileBuilder.swift in Sources */,
@@ -2175,6 +2191,7 @@
 				19775FFE28C5922B008DF8E0 /* ImagePickingScenario.swift in Sources */,
 				63AB071128BD6B0F00FD650F /* ProfileWorks.swift in Sources */,
 				63E1916D2889519E000FD312 /* BadgeModel.swift in Sources */,
+				19564264292ACB6B007BE9D4 /* ChallengeInfoVM.swift in Sources */,
 				1963398B2921641200B66A7D /* NotificationToFeedElement.swift in Sources */,
 				19C1E9A328610E4E00E7976D /* MainRouter.swift in Sources */,
 				631D8EC728F960AE005332BD /* ChallContendersPresenters.swift in Sources */,
@@ -2216,6 +2233,7 @@
 				1984A109291E421600F65262 /* String+MD5.swift in Sources */,
 				63CFA198289C3FB6000E4D1E /* GetTransactionsUseCase.swift in Sources */,
 				1977BE5828A7343400D554EA /* InputCheckers.swift in Sources */,
+				19564266292ACB88007BE9D4 /* ChallengeStatusBlock.swift in Sources */,
 				63FCC9B32907535C009D0001 /* GetEventsChallApiWorker.swift in Sources */,
 				6384AD84291B89FC00188769 /* RemoveFcmTokenApiWorker.swift in Sources */,
 				63AB070F28BD552A00FD650F /* CreateContactApiWorker.swift in Sources */,
@@ -2271,6 +2289,7 @@
 				197A361628BBB282006E44C1 /* String+Random.swift in Sources */,
 				1918CC77286F67EB004373F3 /* BalanceScene.swift in Sources */,
 				19D08361286F430B00F75E4A /* Designable.swift in Sources */,
+				1956426C292AD973007BE9D4 /* UIViewContoller+IsModal.swift in Sources */,
 				63578E5A28AB8F6000423957 /* GetTransactionsByPeriodUseCase.swift in Sources */,
 				6368D82A2894091B0049EEAB /* TransactInputViewModel.swift in Sources */,
 				194E307E28F36650001E2967 /* ChallengeDetailsScenario.swift in Sources */,
@@ -2338,6 +2357,7 @@
 				63A37EAC28EF1B3400DBD59F /* CreateChallengeApiWorker.swift in Sources */,
 				19A9BE7628C283270099F8EA /* CommonModelBuilder.swift in Sources */,
 				1953CF0028E8A19A00C670A6 /* FeedReactionsBlock.swift in Sources */,
+				19564268292ACBA8007BE9D4 /* ChallengeDetailsInfoCell.swift in Sources */,
 				19D7BE9928B3E55F00C95053 /* ScrollViewModels.swift in Sources */,
 				197A360628BADC83006E44C1 /* FeedViewModels.swift in Sources */,
 				1963398D2921644300B66A7D /* Converter.swift in Sources */,

@@ -9,25 +9,25 @@ import ReactiveWorks
 import UIKit
 
 struct TransactScenarioEvents {
-   let userSearchTXTFLDBeginEditing: VoidWork<String>
-   let userSearchTFDidEditingChanged: VoidWork<String>
-   let userSelected: VoidWork<Int>
-   let sendButtonEvent: VoidWork<Void>
+   let userSearchTXTFLDBeginEditing: WorkVoid<String>
+   let userSearchTFDidEditingChanged: WorkVoid<String>
+   let userSelected: WorkVoid<Int>
+   let sendButtonEvent: WorkVoid<Void>
 
-   let amountInputChanged: VoidWork<String>
-   let reasonInputChanged: VoidWork<String>
+   let amountInputChanged: WorkVoid<String>
+   let reasonInputChanged: WorkVoid<String>
 
-   let anonymousSetOff: VoidWork<Void>
-   let anonymousSetOn: VoidWork<Void>
+   let anonymousSetOff: WorkVoid<Void>
+   let anonymousSetOn: WorkVoid<Void>
 
-   let presentTagsSelectorDidTap: VoidWorkVoid
-   let enableTags: VoidWorkVoid
-   let disableTags: VoidWorkVoid
-   let removeTag: VoidWork<Tag>
+   let presentTagsSelectorDidTap: WorkVoidVoid
+   let enableTags: WorkVoidVoid
+   let disableTags: WorkVoidVoid
+   let removeTag: WorkVoid<Tag>
 
-   let setTags: VoidWork<Set<Tag>>
+   let setTags: WorkVoid<Set<Tag>>
 
-   let cancelButtonDidTap: VoidWorkVoid
+   let cancelButtonDidTap: WorkVoidVoid
 }
 
 final class TransactScenario<Asset: AssetProtocol>:

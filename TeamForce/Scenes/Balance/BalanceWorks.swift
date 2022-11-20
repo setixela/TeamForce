@@ -10,11 +10,11 @@ import ReactiveWorks
 final class BalanceWorksStorage: InitProtocol {}
 
 protocol BalanceWorksProtocol {
-   var loadBalance: VoidWork<Balance> { get }
+   var loadBalance: WorkVoid<Balance> { get }
 }
 
 final class BalanceWorks<Asset: AssetProtocol>: BaseSceneWorks<BalanceWorksStorage, Asset>, BalanceWorksProtocol {
    private lazy var apiUseCase = Asset.apiUseCase
 
-   var loadBalance: VoidWork<Balance> { apiUseCase.loadBalance }
+   var loadBalance: WorkVoid<Balance> { apiUseCase.loadBalance }
 }

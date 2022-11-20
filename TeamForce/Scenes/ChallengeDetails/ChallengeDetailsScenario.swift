@@ -8,19 +8,21 @@
 import ReactiveWorks
 
 struct ChallengeDetailsInputEvents {
-   let saveInputAndLoadChallenge: VoidWork<ChallengeDetailsInput>
+   let saveInputAndLoadChallenge: WorkVoid<ChallengeDetailsInput>
 
-   let challengeResult: VoidWorkVoid
-   let filterButtonTapped: VoidWork<Button6Event>
-   let acceptPressed: VoidWork<Int>
-   let rejectPressed: VoidWork<Int>
+   let challengeResult: WorkVoidVoid
+   let filterButtonTapped: WorkVoid<Button6Event>
+   let acceptPressed: WorkVoid<Int>
+   let rejectPressed: WorkVoid<Int>
 
-   let didSelectWinnerIndex: VoidWork<Int>
+   let didSelectWinnerIndex: WorkVoid<Int>
 
-   let didEditingComment: VoidWork<String>
-   let didSendCommentPressed: VoidWorkVoid
+   let didEditingComment: WorkVoid<String>
+   let didSendCommentPressed: WorkVoidVoid
 
-   let reactionPressed: VoidWorkVoid
+   let reactionPressed: WorkVoidVoid
+
+   let presentChallengeAuthor: WorkVoidVoid
 }
 
 final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<ChallengeDetailsInputEvents,
@@ -86,8 +88,6 @@ final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<Challen
 
       events.challengeResult
          .doNext(works.getChallenge)
-       //  .doSaveResult()
-       //  .doVoidNext(works.getProfileId)
          .onSuccess(setState) {
             .presentSendResultScreen($0)
          }
@@ -146,7 +146,6 @@ final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<Challen
 
       events.didSelectWinnerIndex
          .doNext(works.getWinnerReportIdByIndex)
-         // .doNext(works.getInputForReportDetail)
          .onSuccess(setState) { .presentReportDetailView($0) }
          .onFail { assertionFailure("fail") }
 
@@ -169,5 +168,9 @@ final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<Challen
          .onFail(setState) { .failedToReact(alreadySelected: $0) }
          .doVoidNext(works.getLikesAmount)
          .onSuccess(setState) { .updateLikesAmount($0) }
+
+      events.presentChallengeAuthor
+         .doNext(works.getCreatorId)
+         .onSuccess(setState) { .presentCreator($0) }
    }
 }

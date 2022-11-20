@@ -11,7 +11,7 @@ final class EditContactsViewModels<Design: DSP>: BaseModel, Designable, Multiple
    typealias Stock = Contacts
 
    var stock: Contacts = .init()
-   var work: VoidWork<Contacts> = .init()
+   var work: WorkVoid<Contacts> = .init()
 
    lazy var surnameEditField = Design.model.profile.titledTextField
       .setAll {

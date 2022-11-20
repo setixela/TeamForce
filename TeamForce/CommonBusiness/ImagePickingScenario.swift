@@ -8,10 +8,10 @@
 import UIKit
 
 struct ImagePickingScenarioEvents {
-   let startImagePicking: VoidWorkVoid
-   let addImageToBasket: VoidWork<UIImage>
-   let removeImageFromBasket: VoidWork<UIImage>
-   let didMaximumReach: VoidWork<Void>
+   let startImagePicking: WorkVoidVoid
+   let addImageToBasket: WorkVoid<UIImage>
+   let removeImageFromBasket: WorkVoid<UIImage>
+   let didMaximumReach: WorkVoid<Void>
 }
 
 final class ImagePickingScenario<Asset: AssetProtocol>:

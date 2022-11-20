@@ -8,9 +8,9 @@
 import ReactiveWorks
 
 struct VerifyScenarioEvents {
-   let saveInput: VoidWork<AuthResult>
-   let smsCodeStringEvent: VoidWork<String>
-   let loginButtonEvent: VoidWork<Void>
+   let saveInput: WorkVoid<AuthResult>
+   let smsCodeStringEvent: WorkVoid<String>
+   let loginButtonEvent: WorkVoid<Void>
 }
 
 final class VerifyScenario<Asset: AssetProtocol>:

@@ -22,10 +22,10 @@ final class ChallengesTempStorage: InitProtocol {
    var activeChallenges: [Challenge] = []
    var presentingChallenges: [Challenge] = []
    var profileId: Int?
-   
+
    var allOffset = 1
    var activeOffset = 1
-   
+
    var isAllPaginating = false
    var isActivePaginating = false
 }
@@ -37,7 +37,6 @@ final class ChallengesWorks<Asset: AssetProtocol>: BaseSceneWorks<ChallengesTemp
 extension ChallengesWorks: CheckInternetWorks {}
 
 extension ChallengesWorks: ChallengesWorksProtocol {
-   
    var saveProfileId: Work<UserData?, Void> { .init { work in
       guard
          let userData = work.unsafeInput ?? Self.store.userData
@@ -52,15 +51,15 @@ extension ChallengesWorks: ChallengesWorksProtocol {
       work.success()
 
    }.retainBy(retainer) }
-   
+
    var getProfileId: Work<Void, Int> { .init { work in
       guard let id = Self.store.profileId else { return }
       work.success(id)
    }.retainBy(retainer) }
-   
+
    var getChallenges: Work<Bool, [Challenge]> { .init { [weak self] work in
       guard let activeOnly = work.input else { work.fail(); return }
-      
+
       let request = ChallengesRequest(token: "",
                                       activeOnly: activeOnly,
                                       pagination: nil)
@@ -76,7 +75,7 @@ extension ChallengesWorks: ChallengesWorksProtocol {
          }
    }.retainBy(retainer) }
 
-   var getAllChallenges: VoidWork<[Challenge]> { .init {  [weak self] work in
+   var getAllChallenges: WorkVoid<[Challenge]> { .init { [weak self] work in
       self?.getChallenges
          .doAsync(false)
          .onSuccess {
@@ -88,7 +87,7 @@ extension ChallengesWorks: ChallengesWorksProtocol {
       work.success(Self.store.presentingChallenges)
    }.retainBy(retainer) }
 
-   var getActiveChallenges: VoidWork<[Challenge]> { .init { [weak self] work in
+   var getActiveChallenges: WorkVoid<[Challenge]> { .init { [weak self] work in
       self?.getChallenges
          .doAsync(true)
          .onSuccess {
@@ -99,12 +98,9 @@ extension ChallengesWorks: ChallengesWorksProtocol {
          .onFail {
             work.fail()
          }
-      
-      //Self.store.presentingChallenges = Self.store.challenges.filter(\.active.bool)
-     // work.success(Self.store.presentingChallenges)
    }.retainBy(retainer) }
 
-   var getPresentedChallengeByIndex: Work<Int, Challenge> { .init {  work in
+   var getPresentedChallengeByIndex: Work<Int, Challenge> { .init { work in
       work.success(Self.store.presentingChallenges[work.unsafeInput])
    }.retainBy(retainer) }
 

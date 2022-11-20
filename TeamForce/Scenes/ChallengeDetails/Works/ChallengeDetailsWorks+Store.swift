@@ -76,4 +76,8 @@ extension ChallengeDetailsWorks {
       work.success(id)
    }.retainBy(retainer) }
 
+   var getCreatorId: Work<Void, Int> { .init { work in
+      guard let id = Self.store.challenge?.creatorId else { return }
+      work.success(id)
+   }.retainBy(retainer) }
 }

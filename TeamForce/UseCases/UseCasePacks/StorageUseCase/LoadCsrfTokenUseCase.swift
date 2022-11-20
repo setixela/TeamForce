@@ -10,7 +10,7 @@ import ReactiveWorks
 struct LoadCsrfTokenUseCase: UseCaseProtocol {
    let safeStringStorage: StringStorageUseCase.WRK
 
-   var work: VoidWork<String> {
+   var work: WorkVoid<String> {
       .init { work in
          safeStringStorage
             .doAsync("csrftoken")

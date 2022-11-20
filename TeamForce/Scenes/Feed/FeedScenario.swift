@@ -9,13 +9,13 @@ import ReactiveWorks
 import UIKit
 
 struct FeedScenarioInputEvents {
-   let loadFeedForCurrentUser: VoidWork<UserData?>
-   let filterTapped: VoidWork<Button4Event>
-   let presentProfile: VoidWork<Int>
-   let reactionPressed: VoidWork<PressLikeRequest>
-   let presentDetail: VoidWork<Int>
+   let loadFeedForCurrentUser: WorkVoid<UserData?>
+   let filterTapped: WorkVoid<Button4Event>
+   let presentProfile: WorkVoid<Int>
+   let reactionPressed: WorkVoid<PressLikeRequest>
+   let presentDetail: WorkVoid<Int>
 
-   let pagination: VoidWork<Bool>
+   let pagination: WorkVoid<Bool>
 }
 
 final class FeedScenario<Asset: AssetProtocol>:
@@ -85,6 +85,5 @@ final class FeedScenario<Asset: AssetProtocol>:
          .onSuccess(setState) {
             .presentFeed($0)
          }
-        .onFail{ assertionFailure("history pagination") }
    }
 }

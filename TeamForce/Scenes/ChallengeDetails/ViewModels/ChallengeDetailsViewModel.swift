@@ -7,11 +7,17 @@
 
 import ReactiveWorks
 
+struct ChallengeDetailsVMEvents: InitProtocol {
+   var didTapUser: Void?
+}
+
 final class ChallengeDetailsViewModel<Design: DSP>:
    M<ScrollViewModelY>
    .D<SendChallengePanel<Design>>.Combo,
    Designable
 {
+   var events = EventsStore()
+
    var buttonsPanel: SendChallengePanel<Design> { models.down }
 
    private lazy var challengeInfo = ChallengeInfoVM<Design>()
@@ -68,7 +74,16 @@ final class ChallengeDetailsViewModel<Design: DSP>:
 
       buttonsPanel
          .padding(.horizontalOffset(Design.params.commonSideOffset))
+
+      userPanel.view.startTapGestureRecognize()
+      userPanel.view.on(\.didTap, self) {
+         $0.send(\.didTapUser)
+      }
    }
+}
+
+extension ChallengeDetailsViewModel: Eventable {
+   typealias Events = ChallengeDetailsVMEvents
 }
 
 enum ChallengeDetailsViewModelState {
@@ -123,7 +138,6 @@ extension ChallengeDetailsViewModel: StateMachine {
          }
 
       case .updateDetails(let challenge):
-//         activity.hidden(true)
          setState(.presentChallenge(challenge))
       }
    }
@@ -132,123 +146,5 @@ extension ChallengeDetailsViewModel: StateMachine {
 extension ChallengeDetailsViewModel: SetupProtocol {
    func setup(_ data: Challenge) {
       challengeInfo.setup(data)
-   }
-}
-
-final class ChallengeInfoVM<Design: DSP>: StackModel, Designable {
-   lazy var title = Design.label.headline6
-      .numberOfLines(0)
-   lazy var body = Design.label.default
-      .numberOfLines(0)
-      .lineSpacing(8)
-   lazy var tags = StackModel()
-      .spacing(8)
-
-   override func start() {
-      super.start()
-
-      arrangedModels([
-         title,
-         Spacer(12),
-         body,
-         Spacer(12),
-         tags
-      ])
-      backColor(Design.color.background)
-      distribution(.equalSpacing)
-      alignment(.leading)
-      padding(.outline(16))
-      cornerRadius(Design.params.cornerRadiusSmall)
-      shadow(Design.params.cellShadow)
-   }
-}
-
-extension ChallengeInfoVM: SetupProtocol {
-   func setup(_ data: Challenge) {
-      title.text(data.name.string)
-      body.text(data.description.string)
-      let arrayOfStates = data.status?.components(separatedBy: ", ")
-      let states = arrayOfStates?.map { ChallengeStatusBlock<Design>().text($0) }
-      tags.arrangedModels(states ?? [])
-   }
-}
-
-final class ChallengeStatusBlock<Design: DSP>: LabelModel, Designable {
-   override func start() {
-      font(Design.font.caption)
-      backColor(Design.color.backgroundInfoSecondary)
-      height(36)
-      cornerRadius(36 / 2)
-      padding(.horizontalOffset(12))
-      textColor(Design.color.textInfo)
-   }
-}
-
-final class ChallengeDetailsInfoCell<Design: DSP>:
-   M<ImageViewModel>.R<LabelModel>.R2<Spacer>.R3<LabelModel>.Combo,
-   Designable
-{
-   required init() {
-      super.init()
-
-      setAll { icon, title, _, status in
-         icon.size(.square(24))
-         title.set(Design.state.label.default)
-         status.set(Design.state.label.captionSecondary)
-      }
-      .backColor(Design.color.background)
-      .height(Design.params.buttonHeight)
-      .cornerRadius(Design.params.cornerRadiusSmall)
-      .shadow(Design.params.cellShadow)
-      .spacing(12)
-      .alignment(.center)
-      .padding(.horizontalOffset(16))
-   }
-}
-
-final class SendChallengePanel<Design: DSP>: StackModel, Designable {
-//    var events: EventsStore = .init()
-   
-   var sendButton: ButtonModel { buttons.models.main }
-   var likeButton: ReactionButton<Design> { buttons.models.right }
-
-   // Private
-
-//   private lazy var userPanel = Design.model.profile.userPanel
-
-   private lazy var buttons = M<ButtonModel>.R<ReactionButton<Design>>.Combo()
-      .setAll { sendButton, likeButton in
-         sendButton
-            .set(Design.state.button.default)
-            .font(Design.font.body1)
-            .title("Отправить результат")
-            .hidden(true)
-//         dislikeButton
-//            .set(Design.state.button.secondary)
-//            .image(Design.icon.dislike)
-//            .width(68)
-//            .backColor(Design.color.backgroundInfoSecondary)
-//            .title("13")
-//            .hidden(true)
-         likeButton
-            .setAll {
-               $0.image(Design.icon.like)
-               $1
-                  .font(Design.font.caption)
-                  .text("0")
-            }
-            .removeAllConstraints()
-            .width(68)
-      }
-      .spacing(8)
-
-   override func start() {
-      super.start()
-      likeButton.view.startTapGestureRecognize()
-      
-      arrangedModels([
-         Grid.x16.spacer,
-         buttons
-      ])
    }
 }

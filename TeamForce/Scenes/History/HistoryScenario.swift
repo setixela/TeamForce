@@ -9,15 +9,15 @@ import ReactiveWorks
 import UIKit
 
 struct HistoryScenarioEvents {
-   let loadHistoryForCurrentUser: VoidWork<UserData?>
+   let loadHistoryForCurrentUser: WorkVoid<UserData?>
 
-   let presentAllTransactions: VoidWork<Void>
-   let presentSentTransactions: VoidWork<Void>
-   let presentRecievedTransaction: VoidWork<Void>
-   let presentDetailView: VoidWork<(IndexPath, Int)>
-   let cancelTransaction: VoidWork<Int>
+   let presentAllTransactions: WorkVoid<Void>
+   let presentSentTransactions: WorkVoid<Void>
+   let presentRecievedTransaction: WorkVoid<Void>
+   let presentDetailView: WorkVoid<(IndexPath, Int)>
+   let cancelTransaction: WorkVoid<Int>
    
-   let pagination: VoidWork<Bool>
+   let pagination: WorkVoid<Bool>
 }
 
 final class HistoryScenario<Asset: AssetProtocol>:

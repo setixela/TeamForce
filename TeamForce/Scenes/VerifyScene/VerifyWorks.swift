@@ -10,7 +10,7 @@ import ReactiveWorks
 import UIKit
 
 protocol VerifyBackstageProtocol: Assetable {
-   var verifyCode: VoidWork<VerifyResultBody> { get }
+   var verifyCode: WorkVoid<VerifyResultBody> { get }
    var smsCodeInputParse: Work<String, String> { get }
    var saveLoginResults: Work<VerifyResultBody, Void> { get }
 }
@@ -35,7 +35,7 @@ final class VerifyWorks<Asset: AssetProtocol>: BaseSceneWorks<VerifyWorks.Temp, 
       work.success()
    }}
    
-   var verifyCode: VoidWork<VerifyResultBody> { .init { [weak self] work in
+   var verifyCode: WorkVoid<VerifyResultBody> { .init { [weak self] work in
 
       guard
          let inputCode = Self.store.smsCodeInput,

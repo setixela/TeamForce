@@ -9,10 +9,10 @@ import ReactiveWorks
 import UIKit
 
 protocol ProfileEditWorksProtocol: Assetable {
-   var loadProfile: VoidWork<UserData> { get }
+   var loadProfile: WorkVoid<UserData> { get }
    var updateProfile: Work<UpdateProfileRequest, Void> { get }
    var createFewContacts: Work<CreateFewContactsRequest, Void> { get }
-   var sendRequests: VoidWork<Void> { get }
+   var sendRequests: WorkVoid<Void> { get }
    var addImage: Work<UIImage, UIImage> { get }
    var updateAvatar: Work<UpdateImageRequest, Void> { get }
 }
@@ -33,7 +33,7 @@ final class ProfileEditWorks<Asset: AssetProtocol>: BaseSceneWorks<ProfileEditWo
 
    // MARK: - Works
 
-   var loadProfile: VoidWork<UserData> { .init { [weak self] work in
+   var loadProfile: WorkVoid<UserData> { .init { [weak self] work in
       self?.useCase.loadProfile
          .doAsync()
          .onSuccess {
@@ -113,7 +113,7 @@ final class ProfileEditWorks<Asset: AssetProtocol>: BaseSceneWorks<ProfileEditWo
       }.retainBy(retainer)
    }
 
-   lazy var sendRequests = VoidWork<Void> { work in
+   lazy var sendRequests = WorkVoid<Void> { work in
       let updateProfileRequest = self.formUpdateProfileRequest()
       let fewContactsRequest = self.formFewContactsRequest()
       let avatarRequest = self.formAvatarRequest()

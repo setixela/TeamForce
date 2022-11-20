@@ -132,12 +132,12 @@ extension FeedScene: StateMachine {
          case "Q":
             detailsPresenter.setState(.presentDetails(
                .challenge(.byFeed(feed)),
-               navType: .presentModally(.automatic)
+               navType: .push//.presentModally(.automatic)
             ))
          case "R":
             detailsPresenter.setState(.presentDetails(
                .challenge(.byFeed(feed, chapter: .winners)),
-               navType: .presentModally(.automatic)
+               navType: .push //.presentModally(.automatic)
             ))
          default:
             break

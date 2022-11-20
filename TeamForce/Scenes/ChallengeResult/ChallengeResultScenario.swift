@@ -8,9 +8,9 @@
 import ReactiveWorks
 
 struct ChallengeResultEvents {
-   let saveInput: VoidWork<Int>
-   let commentInputChanged: VoidWork<String>
-   let sendResult: VoidWork<Void>
+   let saveInput: WorkVoid<Int>
+   let commentInputChanged: WorkVoid<String>
+   let sendResult: WorkVoid<Void>
 }
 
 final class ChallengeResultScenario<Asset: AssetProtocol>: BaseScenario<ChallengeResultEvents, ChallengeResultSceneState, ChallengeResultWorks<Asset>> {

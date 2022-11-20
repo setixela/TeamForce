@@ -8,14 +8,14 @@
 import ReactiveWorks
 
 struct ChallengesScenarioInputEvents {
-   let saveProfileId: VoidWork<UserData?>
+   let saveProfileId: WorkVoid<UserData?>
    
-   let presentAllChallenges: VoidWork<Void>
-   let presentActiveChallenges: VoidWork<Void>
+   let presentAllChallenges: WorkVoid<Void>
+   let presentActiveChallenges: WorkVoid<Void>
 
-   let didSelectChallengeIndex: VoidWork<Int>
+   let didSelectChallengeIndex: WorkVoid<Int>
 
-   let createChallenge: VoidWorkVoid
+   let createChallenge: WorkVoidVoid
 }
 
 final class ChallengesScenario<Asset: AssetProtocol>:
