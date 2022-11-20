@@ -54,7 +54,7 @@ extension ChallengeDetailsWorks {
          }
          .doNext(self.storageUseCase.getCurrentUserId)
          .onSuccess {
-            Self.store.currentUserName = $0
+            Self.store.currentUserId = Int($0)
             work.success()
          }
    }.retainBy(retainer) }
