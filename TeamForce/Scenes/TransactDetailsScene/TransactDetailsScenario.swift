@@ -12,19 +12,19 @@ import ReactiveWorks
 import UIKit
 
 struct FeedDetailEvents {
-   let presentDetails: VoidWork<Void>
-   let presentComment: VoidWork<Void>
-   let presentReactions: VoidWork<Void>
-   let reactionPressed: VoidWork<Void>
-   let userAvatarPressed: VoidWork<Int>
+   let presentDetails: WorkVoid<Void>
+   let presentComment: WorkVoid<Void>
+   let presentReactions: WorkVoid<Void>
+   let reactionPressed: WorkVoid<Void>
+   let userAvatarPressed: WorkVoid<Int>
 
-   let saveInput: VoidWork<TransactDetailsSceneInput>
+   let saveInput: WorkVoid<TransactDetailsSceneInput>
 
-   let didEditingComment: VoidWork<String>
-   let didSendCommentPressed: VoidWorkVoid
+   let didEditingComment: WorkVoid<String>
+   let didSendCommentPressed: WorkVoidVoid
 
-   let presentAllReactions: VoidWork<Void>
-   let presentLikeReactions: VoidWork<Void>
+   let presentAllReactions: WorkVoid<Void>
+   let presentLikeReactions: WorkVoid<Void>
    //  let presentDislikeReactions: VoidWork<Void>
 }
 

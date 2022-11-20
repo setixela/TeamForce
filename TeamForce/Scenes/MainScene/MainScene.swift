@@ -55,27 +55,27 @@ final class MainScene<Asset: AssetProtocol>:
    // MARK: - Start
 
    override func start() {
-      vcModel?.send(\.setNavBarTintColor, Design.color.backgroundBrand)
+      vcModel?.titleColor(Design.color.backgroundBrand)
 
       mainVM.bodyStack.arrangedModels([
          ActivityIndicator<Design>(),
          Spacer()
       ])
 
-      vcModel?.on(\.viewDidLoad) { [weak self] in
-         self?.scenario.start()
+      vcModel?.on(\.viewDidLoad, self) {
+         $0.scenario.start()
       }
       tabBarPanel.button1.setSelfMode(\.normal)
       selectedModel = 0
 
       mainVM.header.text("События")
-      vcModel?.send(\.setTitle, "События")
+      vcModel?.title("События")
 
       mainVM.notifyButton.on(\.didTap) {
          Asset.router?.route(.push, scene: \.notifications)
       }
 
-      presentHeader()
+      hideHeader()
    }
 
    private func unlockTabButtons() {
@@ -92,45 +92,45 @@ private extension MainScene {
          .on(\.didTap, self) {
             $0.unlockTabButtons()
             $0.mainVM.header.text("События")
-            $0.vcModel?.send(\.setTitle, "События")
+            $0.vcModel?.title("События")
             $0.presentModel($0.feedViewModel)
             $0.tabBarPanel.button1.setSelfMode(\.normal)
             $0.selectedModel = 0
          }
 
       tabBarPanel.button2
-         .on(\.didTap) { [weak self] in
-            self?.unlockTabButtons()
-            self?.mainVM.header.text("Баланс")
-            self?.vcModel?.send(\.setTitle, "Баланс")
-            self?.presentModel(self?.balanceViewModel)
-            self?.tabBarPanel.button2.setSelfMode(\.normal)
-            self?.selectedModel = 1
+         .on(\.didTap, self) {
+            $0.unlockTabButtons()
+            $0.mainVM.header.text("Баланс")
+            $0.vcModel?.title("Баланс")
+            $0.presentModel($0.balanceViewModel)
+            $0.tabBarPanel.button2.setSelfMode(\.normal)
+            $0.selectedModel = 1
          }
 
       tabBarPanel.buttonMain
-         .on(\.didTap) { [weak self] in
-            self?.presentTransactModel(self?.transactModel)
+         .on(\.didTap, self) {
+            $0.presentTransactModel($0.transactModel)
          }
 
       tabBarPanel.button3
-         .on(\.didTap) { [weak self] in
-            self?.unlockTabButtons()
-            self?.mainVM.header.text("История")
-            self?.vcModel?.send(\.setTitle, "История")
-            self?.presentModel(self?.historyViewModel)
-            self?.tabBarPanel.button3.setSelfMode(\.normal)
-            self?.selectedModel = 2
+         .on(\.didTap, self) {
+            $0.unlockTabButtons()
+            $0.mainVM.header.text("История")
+            $0.vcModel?.title("История")
+            $0.presentModel($0.historyViewModel)
+            $0.tabBarPanel.button3.setSelfMode(\.normal)
+            $0.selectedModel = 2
          }
 
       tabBarPanel.button4
-         .on(\.didTap) { [weak self] in
-            self?.unlockTabButtons()
-            self?.mainVM.header.text("Челленджи")
-            self?.vcModel?.send(\.setTitle, "Челленджи")
-            self?.presentModel(self?.challengesViewModel)
-            self?.tabBarPanel.button4.setSelfMode(\.normal)
-            self?.selectedModel = 3
+         .on(\.didTap, self) {
+            $0.unlockTabButtons()
+            $0.mainVM.header.text("Челленджи")
+            $0.vcModel?.title("Челленджи")
+            $0.presentModel($0.challengesViewModel)
+            $0.tabBarPanel.button4.setSelfMode(\.normal)
+            $0.selectedModel = 3
          }
    }
 }
@@ -184,9 +184,9 @@ extension MainScene {
 
       model.on(\.willEndDragging) { [weak self] velocity in
          if velocity > 0 {
-            self?.presentHeader()
-         } else if velocity < 0 {
             self?.hideHeader()
+         } else if velocity < 0 {
+            self?.presentHeader()
          }
       }
       mainVM.bodyStack
@@ -271,16 +271,16 @@ extension MainScene {
 // MARK: - Header animation
 
 extension MainScene {
-   private func presentHeader() {
+   private func hideHeader() {
       UIView.animate(withDuration: 0.36) {
          self.mainVM.setState(.hideHeaderTitle)
       } completion: { _ in
-         self.vcModel?.send(\.setNavBarTintColor, Design.color.textInvert)
+         self.vcModel?.titleColor(Design.color.textInvert)
       }
    }
 
-   private func hideHeader() {
-      vcModel?.send(\.setNavBarTintColor, Design.color.transparent)
+   private func presentHeader() {
+      vcModel?.titleColor(Design.color.transparent)
       UIView.animate(withDuration: 0.36) {
          self.mainVM.setState(.presentHeaderTitle)
       }

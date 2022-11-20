@@ -7,13 +7,13 @@
 
 import ReactiveWorks
 
-typealias VoidWork<T> = Work<Void, T>
-typealias VoidWorkVoid = Work<Void, Void>
+typealias WorkVoid<T> = Work<Void, T>
+typealias WorkVoidVoid = Work<Void, Void>
 
 struct LoginScenarioEvents {
-   let userNameStringEvent: VoidWork<String>
-   let smsCodeStringEvent: VoidWork<String>
-   let getCodeButtonEvent: VoidWork<Void>
+   let userNameStringEvent: WorkVoid<String>
+   let smsCodeStringEvent: WorkVoid<String>
+   let getCodeButtonEvent: WorkVoid<Void>
 //   let loginButtonEvent: VoidWork<Void>
 }
 

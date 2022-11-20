@@ -138,7 +138,7 @@ extension ChallengeDetailsWorks: ChallengeDetailsWorksProtocol {
          }
    }.retainBy(retainer) }
 
-   var isLikedByMe: VoidWork<Bool> { .init { work in
+   var isLikedByMe: WorkVoid<Bool> { .init { work in
       let isMyLike = Self.store.userLiked
       work.success(isMyLike)
    }.retainBy(retainer) }

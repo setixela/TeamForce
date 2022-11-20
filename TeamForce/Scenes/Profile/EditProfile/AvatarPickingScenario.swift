@@ -8,9 +8,9 @@
 import UIKit
 
 struct AvatarPickingScenarioEvents {
-   let startImagePicking: VoidWorkVoid
-   let addImageToBasket: VoidWork<UIImage>
-   let saveCroppedImage: VoidWork<UIImage>
+   let startImagePicking: WorkVoidVoid
+   let addImageToBasket: WorkVoid<UIImage>
+   let saveCroppedImage: WorkVoid<UIImage>
 }
 
 final class AvatarPickingScenario<Asset: AssetProtocol>:

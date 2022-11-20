@@ -8,14 +8,14 @@
 import ReactiveWorks
 
 struct ChallengesScenarioInputEvents {
-   let saveProfileId: VoidWork<UserData?>
+   let saveProfileId: WorkVoid<UserData?>
    
-   let presentAllChallenges: VoidWork<Void>
-   let presentActiveChallenges: VoidWork<Void>
+   let presentAllChallenges: WorkVoid<Void>
+   let presentActiveChallenges: WorkVoid<Void>
 
-   let didSelectChallengeIndex: VoidWork<Int>
+   let didSelectChallengeIndex: WorkVoid<Int>
 
-   let createChallenge: VoidWorkVoid
+   let createChallenge: WorkVoidVoid
 }
 
 final class ChallengesScenario<Asset: AssetProtocol>:
@@ -24,13 +24,12 @@ final class ChallengesScenario<Asset: AssetProtocol>:
    override func start() {
       works.retainer.cleanAll()
 
-      works.getChallenges
-         .doAsync(false)
-         .onSuccess(setState) { .presentChallenges($0) }
-         .onFail(setState) { .presentError }
-
       events.saveProfileId
          .doNext(works.saveProfileId)
+         .doInput(false)
+         .doNext(works.getChallenges)
+         .onSuccess(setState) { .presentChallenges($0) }
+         .onFail(setState) { .presentError }
       
       events.presentAllChallenges
          .doNext(works.getAllChallenges)

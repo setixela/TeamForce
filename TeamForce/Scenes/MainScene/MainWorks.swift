@@ -13,13 +13,13 @@ final class MainWorksStorage: InitProtocol {
 }
 
 protocol MainWorksProtocol {
-   var loadProfile: VoidWork<UserData> { get }
+   var loadProfile: WorkVoid<UserData> { get }
 }
 
 final class MainWorks<Asset: AssetProtocol>: BaseSceneWorks<MainWorksStorage, Asset>, MainWorksProtocol {
    private lazy var apiUseCase = Asset.apiUseCase
 
-   var loadProfile: VoidWork<UserData> { apiUseCase.loadProfile }
+   var loadProfile: WorkVoid<UserData> { apiUseCase.loadProfile }
    
    var getNotificationsAmount: Work<Void, Int> { .init { [weak self] work in
       self?.apiUseCase.getNotificationsAmount

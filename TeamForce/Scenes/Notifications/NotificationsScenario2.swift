@@ -8,7 +8,7 @@
 import ReactiveWorks
 
 struct NotificationsDetailsEvents {
-   let didSelectIndex: VoidWork<Int>
+   let didSelectIndex: WorkVoid<Int>
 }
 
 final class NotificationsDetailsScenario<Asset: AssetProtocol>:

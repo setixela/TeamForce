@@ -9,12 +9,12 @@ import ReactiveWorks
 import Foundation
 
 struct ChallengeCreateScenarioEvents {
-   let didTitleInputChanged: VoidWork<String>
-   let didDescriptionInputChanged: VoidWork<String>
-   let didPrizeFundChanged: VoidWork<String>
-   let didDatePicked: VoidWork<Date>
+   let didTitleInputChanged: WorkVoid<String>
+   let didDescriptionInputChanged: WorkVoid<String>
+   let didPrizeFundChanged: WorkVoid<String>
+   let didDatePicked: WorkVoid<Date>
 
-   let didSendPressed: VoidWorkVoid
+   let didSendPressed: WorkVoidVoid
 }
 
 final class ChallengeCreateScenario<Asset: AssetProtocol>: BaseScenario<ChallengeCreateScenarioEvents, ChallengeCreateSceneState, ChallengeCreateWorks<Asset>> {

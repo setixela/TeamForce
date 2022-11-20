@@ -10,7 +10,7 @@ import ReactiveWorks
 import UIKit
 
 protocol LoginBackstageProtocol: Assetable {
-   var authByName: VoidWork<Auth2Result> { get }
+   var authByName: WorkVoid<Auth2Result> { get }
 //   var verifyCode: VoidWork<VerifyResultBody> { get }
 
    var loginNameInputParse: Work<String, String> { get }
@@ -35,7 +35,7 @@ final class LoginWorks<Asset: AssetProtocol>: BaseSceneWorks<LoginWorks.Temp, As
 
    // MARK: - Works
 
-   var authByName: VoidWork<Auth2Result> { .init { [weak self] work in
+   var authByName: WorkVoid<Auth2Result> { .init { [weak self] work in
       self?.useCase.login
          .doAsync(Self.store.loginName)
          .onSuccess {

@@ -28,6 +28,7 @@ final class HistoryScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>
       works: HistoryWorks<Asset>(),
       stateDelegate: stateDelegate,
       events: HistoryScenarioEvents(
+         loadHistoryForCurrentUser: on(\.userDidLoad),
          presentAllTransactions: viewModels.segmentedControl.onEvent(\.selected0),
          presentSentTransactions: viewModels.segmentedControl.onEvent(\.selected2),
          presentRecievedTransaction: viewModels.segmentedControl.onEvent(\.selected1),

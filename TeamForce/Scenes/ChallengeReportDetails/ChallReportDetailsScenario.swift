@@ -8,7 +8,7 @@
 import ReactiveWorks
 
 struct ChallReportDetailsEvents {
-   let saveInput: VoidWork<Int>
+   let saveInput: WorkVoid<Int>
 }
 
 final class ChallReportDetailsScenario<Asset: AssetProtocol>: BaseScenario<ChallReportDetailsEvents, ChallReportDetailsSceneState, ChallReportDetailsWorks<Asset>> {

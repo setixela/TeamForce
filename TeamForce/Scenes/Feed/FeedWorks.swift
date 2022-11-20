@@ -11,10 +11,10 @@ import ReactiveWorks
 protocol FeedWorksProtocol {
    var loadFeedForCurrentUser: Work<UserData?, Void> { get }
 
-   var getAllFeed: VoidWork<([Feed], String)> { get }
-   var getTransactionFeed: VoidWork<([Feed], String)> { get }
-   var getChallengesFeed: VoidWork<([Feed], String)> { get }
-   var getWinnersFeed: VoidWork<([Feed], String)> { get }
+   var getAllFeed: WorkVoid<([Feed], String)> { get }
+   var getTransactionFeed: WorkVoid<([Feed], String)> { get }
+   var getChallengesFeed: WorkVoid<([Feed], String)> { get }
+   var getWinnersFeed: WorkVoid<([Feed], String)> { get }
 }
 
 final class FeedWorksTempStorage: InitProtocol {
@@ -139,25 +139,25 @@ final class FeedWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedWorksTempStorage
       }
    }.retainBy(retainer) }
 
-   var getAllFeed: VoidWork<([Feed], String)> { .init { work in
+   var getAllFeed: WorkVoid<([Feed], String)> { .init { work in
       let filtered = Self.filteredAll()
       Self.store.segmentId = 0
       work.success(result: (filtered, Self.store.currentUserName))
    }.retainBy(retainer) }
 
-   var getTransactionFeed: VoidWork<([Feed], String)> { .init { work in
+   var getTransactionFeed: WorkVoid<([Feed], String)> { .init { work in
       let filtered = Self.filteredTransactions()
       Self.store.segmentId = 1
       work.success(result: (filtered, Self.store.currentUserName))
    }.retainBy(retainer) }
 
-   var getChallengesFeed: VoidWork<([Feed], String)> { .init { work in
+   var getChallengesFeed: WorkVoid<([Feed], String)> { .init { work in
       let filtered = Self.filteredChallenges()
       Self.store.segmentId = 2
       work.success(result: (filtered, Self.store.currentUserName))
    }.retainBy(retainer) }
 
-   var getWinnersFeed: VoidWork<([Feed], String)> { .init { work in
+   var getWinnersFeed: WorkVoid<([Feed], String)> { .init { work in
       let filtered = Self.filteredWinners()
       Self.store.segmentId = 3
       work.success(result: (filtered, Self.store.currentUserName))

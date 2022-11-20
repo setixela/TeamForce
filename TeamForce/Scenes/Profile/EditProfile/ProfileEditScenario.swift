@@ -9,8 +9,8 @@ import ReactiveWorks
 import UIKit
 
 struct ProfileEditEvents {
-   let contactsEvents: VoidWork<Contacts>
-   let saveButtonDidTap: VoidWork<Void>
+   let contactsEvents: WorkVoid<Contacts>
+   let saveButtonDidTap: WorkVoid<Void>
    var saveSuccess: UserData?
 }
 

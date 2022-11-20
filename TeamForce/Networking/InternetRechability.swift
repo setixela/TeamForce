@@ -21,7 +21,7 @@ import ReactiveWorks
 
 final class InetCheckWorker: WorkerProtocol {
 
-   func doAsync(work: VoidWorkVoid) {
+   func doAsync(work: WorkVoidVoid) {
       if InternetRechability.isConnectedToInternet {
          work.success()
       } else {

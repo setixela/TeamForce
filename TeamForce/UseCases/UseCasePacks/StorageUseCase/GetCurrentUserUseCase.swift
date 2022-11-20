@@ -13,7 +13,7 @@ fileprivate let currentUserIdKey = "currentUserId"
 struct GetCurrentUserUseCase: UseCaseProtocol {
    let safeStringStorage: StringStorageProtocol
 
-   var work: VoidWork<String> {
+   var work: WorkVoid<String> {
       .init {
          guard let curUser = safeStringStorage.load(forKey: currentUserKey) else {
             $0.fail()
@@ -40,7 +40,7 @@ struct SaveCurrentUserUseCase: UseCaseProtocol {
 struct GetCurrentUserIdUseCase: UseCaseProtocol {
    let safeStringStorage: StringStorageProtocol
 
-   var work: VoidWork<String> {
+   var work: WorkVoid<String> {
       .init {
          guard let curUser = safeStringStorage.load(forKey: currentUserIdKey) else {
             $0.fail()

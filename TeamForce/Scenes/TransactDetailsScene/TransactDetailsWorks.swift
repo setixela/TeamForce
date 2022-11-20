@@ -29,7 +29,7 @@ final class TransactDetailsWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedDetai
    private lazy var apiUseCase = Asset.apiUseCase
    private lazy var storeUseCase = Asset.storageUseCase
 
-   var loadToken: VoidWorkVoid { .init { [weak self] work in
+   var loadToken: WorkVoidVoid { .init { [weak self] work in
       self?.storeUseCase.loadToken
          .doAsync()
          .onSuccess {
@@ -73,7 +73,7 @@ final class TransactDetailsWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedDetai
       }
    }.retainBy(retainer) }
 
-   var getTransaction: VoidWork<EventTransaction> { .init { work in
+   var getTransaction: WorkVoid<EventTransaction> { .init { work in
       guard let transaction = Self.store.transaction else {
          work.fail()
          return
@@ -207,19 +207,19 @@ final class TransactDetailsWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedDetai
          }
    }.retainBy(retainer) }
 
-   var getAllReactions: VoidWork<[ReactItem]> { .init { work in
+   var getAllReactions: WorkVoid<[ReactItem]> { .init { work in
       let filtered = Self.filteredAll()
       Self.store.reactionSegment = 0
       work.success(result: filtered)
    }}
 
-   var getLikeReactions: VoidWork<[ReactItem]> { .init { work in
+   var getLikeReactions: WorkVoid<[ReactItem]> { .init { work in
       let filtered = Self.filteredLikes()
       Self.store.reactionSegment = 1
       work.success(result: filtered)
    }}
 
-   var isLikedByMe: VoidWork<Bool> { .init { work in
+   var isLikedByMe: WorkVoid<Bool> { .init { work in
       let isMyLike = Self.store.userLiked
       work.success(isMyLike)
    }.retainBy(retainer) }
@@ -230,7 +230,7 @@ final class TransactDetailsWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedDetai
 //      work.success(result: filtered)
 //   }}
 
-   var getSelectedReactions: VoidWork<[ReactItem]> { .init { work in
+   var getSelectedReactions: WorkVoid<[ReactItem]> { .init { work in
       var filtered: [ReactItem] = []
       switch Self.store.reactionSegment {
       case 0:

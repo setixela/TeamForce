@@ -35,7 +35,7 @@ final class MyProfileScene<Asset: AssetProtocol>: ProfileScene<Asset> {
 
 
    override func start() {
-      vcModel?.send(\.setTitle, "Мой профиль")
+      vcModel?.title("Мой профиль")
       super.start()
    }
 

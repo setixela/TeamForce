@@ -10,7 +10,7 @@ import ReactiveWorks
 struct LoadBothTokensUseCase: UseCaseProtocol {
    let safeStringStorage: StringStorageUseCase.WRK
 
-   var work: VoidWork<(token: String, csrf: String)> { .init { work in
+   var work: WorkVoid<(token: String, csrf: String)> { .init { work in
       safeStringStorage
          .doAsync("token")
          .onFail {

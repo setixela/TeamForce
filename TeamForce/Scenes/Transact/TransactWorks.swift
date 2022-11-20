@@ -12,9 +12,9 @@ import UIKit
 
 protocol TransactWorksProtocol: TempStorage {
    // api works
-   var loadBalance: VoidWork<Balance> { get }
+   var loadBalance: WorkVoid<Balance> { get }
    var searchUser: Work<String, [FoundUser]> { get }
-   var sendCoins: VoidWork<(recipient: String, info: SendCoinRequest)> { get }
+   var sendCoins: WorkVoid<(recipient: String, info: SendCoinRequest)> { get }
    var getUserList: Work<Void, [FoundUser]> { get }
    // data works
    var loadTokens: Work<Void, Void> { get }
@@ -24,7 +24,7 @@ protocol TransactWorksProtocol: TempStorage {
    var coinInputParsing: Work<String, String> { get }
    var reasonInputParsing: Work<String, String> { get }
    //
-   var reset: VoidWork<Void> { get }
+   var reset: WorkVoid<Void> { get }
    //
    var addImage: Work<UIImage, UIImage> { get }
    var removeImage: Work<UIImage, Void> { get }
@@ -67,7 +67,7 @@ final class TransactWorks<Asset: AssetProtocol>: BaseSceneWorks<TransacrtTempSto
 
    // MARK: - Works
 
-   var loadBalance: VoidWork<Balance> { apiUseCase.loadBalance }
+   var loadBalance: WorkVoid<Balance> { apiUseCase.loadBalance }
 
    var loadTokens: Work<Void, Void> { .init { [weak self] work in
       self?.storageUseCase.loadBothTokens
@@ -154,7 +154,7 @@ final class TransactWorks<Asset: AssetProtocol>: BaseSceneWorks<TransacrtTempSto
       work.success()
    } }
 
-   var sendCoins: VoidWork<(recipient: String, info: SendCoinRequest)> { .init { [weak self] work in
+   var sendCoins: WorkVoid<(recipient: String, info: SendCoinRequest)> { .init { [weak self] work in
       var sendImage: UIImage?
       if let image = Self.store.images.first {
          let size = image.size
@@ -236,7 +236,7 @@ final class TransactWorks<Asset: AssetProtocol>: BaseSceneWorks<TransacrtTempSto
          }
    } }
 
-   lazy var reset = VoidWork<Void> { work in
+   lazy var reset = WorkVoid<Void> { work in
       Self.store.inputAmountText = ""
       Self.store.inputReasonText = ""
       Self.store.isCorrectCoinInput = false
@@ -248,12 +248,12 @@ final class TransactWorks<Asset: AssetProtocol>: BaseSceneWorks<TransacrtTempSto
       work.success()
    }
 
-   lazy var anonymousOn = VoidWork<Void> { work in
+   lazy var anonymousOn = WorkVoid<Void> { work in
       Self.store.isAnonymous = true
       work.success()
    }
 
-   lazy var anonymousOff = VoidWork<Void> { work in
+   lazy var anonymousOff = WorkVoid<Void> { work in
       Self.store.isAnonymous = false
       work.success()
    }

@@ -12,7 +12,7 @@ import ReactiveWorks
 protocol Multiplexor: AnyObject {
    associatedtype Stock
 
-   var work: VoidWork<Stock> { get }
+   var work: WorkVoid<Stock> { get }
    var stock: Stock { get set }
 }
 

@@ -9,13 +9,15 @@ import ReactiveWorks
 import UIKit
 
 struct HistoryScenarioEvents {
-   let presentAllTransactions: VoidWork<Void>
-   let presentSentTransactions: VoidWork<Void>
-   let presentRecievedTransaction: VoidWork<Void>
-   let presentDetailView: VoidWork<(IndexPath, Int)>
-   let cancelTransaction: VoidWork<Int>
+   let loadHistoryForCurrentUser: WorkVoid<UserData?>
+
+   let presentAllTransactions: WorkVoid<Void>
+   let presentSentTransactions: WorkVoid<Void>
+   let presentRecievedTransaction: WorkVoid<Void>
+   let presentDetailView: WorkVoid<(IndexPath, Int)>
+   let cancelTransaction: WorkVoid<Int>
    
-   let pagination: VoidWork<Bool>
+   let pagination: WorkVoid<Bool>
 }
 
 final class HistoryScenario<Asset: AssetProtocol>:
@@ -24,33 +26,21 @@ final class HistoryScenario<Asset: AssetProtocol>:
    override func start() {
       works.retainer.cleanAll()
       
-      works.loadProfile
-         .doAsync()
-         .onFail(setState, .loadProfilError)
+      events.loadHistoryForCurrentUser
          .doNext(works.initStorage)
-         .doInput(false)
-         .doNext(works.getTransactions)
-         .onFail(setState, .loadTransactionsError)
-         //.doVoidNext(works.getAllTransactItems)
          .doNext(works.getSegmentId)
          .doNext(works.getTransactionsBySegment)
          .onSuccess(setState) { .presentAllTransactions($0) }
 
       events.presentAllTransactions
-         //.doInput(false)
-         //.doNext(works.getTransactions)
          .doVoidNext(works.getAllTransactItems)
          .onSuccess(setState) { .presentAllTransactions($0) }
 
       events.presentSentTransactions
-         //.doInput(false)
-         //.doNext(works.getSentTransactions)
          .doVoidNext(works.getSentTransactItems)
          .onSuccess(setState) { .presentSentTransactions($0) }
 
       events.presentRecievedTransaction
-         //.doInput(false)
-         //.doNext(works.getRecievedTransactions)
          .doVoidNext(works.getRecievedTransactItems)
          .onSuccess(setState) { .presentRecievedTransaction($0) }
       

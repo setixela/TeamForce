@@ -40,7 +40,8 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
          didSelectWinnerIndex: winnersBlock.on(\.didSelectWinner),
          didEditingComment: challComments.commentField.on(\.didEditingChanged),
          didSendCommentPressed: challComments.sendButton.on(\.didTap),
-         reactionPressed: challDetails.buttonsPanel.likeButton.view.on(\.didTap)
+         reactionPressed: challDetails.buttonsPanel.likeButton.view.on(\.didTap),
+         presentChallengeAuthor: challDetails.on(\.didTapUser)
       )
    )
 
@@ -76,11 +77,9 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
       SecondaryButtonDT<Design>()
          .title("Победители")
          .font(Design.font.default),
-         //.hidden(true),
       SecondaryButtonDT<Design>()
          .title("Комментарии")
          .font(Design.font.default),
-         //.hidden(true),
       SecondaryButtonDT<Design>()
          .title("Участники")
          .font(Design.font.default)
@@ -110,13 +109,19 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
    override func start() {
       super.start()
 
+      vcModel?.clearBackButton()
+      if vcModel?.isModal == false {
+         self.vcModel?.navigationController?.navigationBar.isTranslucent = true
+         closeButton.hidden(true)
+      } else {
+         closeButton.on(\.didTap, self) {
+            $0.dismiss()
+         }
+      }
+
       setState(.presentActivityIndicator)
       vcModel?.on(\.viewDidLoad, self) {
          $0.configure()
-      }
-
-      closeButton.on(\.didTap, self) {
-         $0.dismiss()
       }
    }
 
@@ -127,7 +132,7 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
             Wrapped3X(statusLabel, Spacer(), closeButton)
                .backViewModel(headerImage)
                .height(200)
-               .alignment(.top)
+               .alignment(vcModel?.isModal == true ? .top : .bottom)
                .padding(.init(top: 16, left: 16, bottom: 16, right: 16))
          ])
 
@@ -148,8 +153,6 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
          ))
          .backColor(Design.color.background)
 
-      scenario.start()
-
       challDetails.models.main.on(\.willEndDragging) { [weak self] velocity in
          if velocity < 0 {
             self?.presentHeader()
@@ -159,6 +162,8 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
             self?.presentHeader()
          }
       }
+
+      scenario.start()
    }
 }
 
@@ -192,10 +197,12 @@ enum ChallengeDetailsState {
    case sendButtonDisabled
    case sendButtonEnabled
    case commentDidSend
-   
+
    case buttonLikePressed(alreadySelected: Bool)
    case failedToReact(alreadySelected: Bool)
    case updateLikesAmount(Int)
+
+   case presentCreator(Int)
 }
 
 extension ChallengeDetailsScene: StateMachine {
@@ -244,8 +251,8 @@ extension ChallengeDetailsScene: StateMachine {
                break
             }
          }
-         
-      case .enableMyResult(_):
+
+      case .enableMyResult:
          filterButtons.button2.hidden(false)
 
       case .enableContenders:
@@ -274,7 +281,7 @@ extension ChallengeDetailsScene: StateMachine {
             .arrangedModels([
                contendersBlock
             ])
-      case .presentCancelView(let challenge, let resultId):
+      case .presentCancelView(_, let resultId):
          Asset.router?.route(
             .presentModallyOnPresented(.automatic),
             scene: \.challengeResCancel,
@@ -316,7 +323,7 @@ extension ChallengeDetailsScene: StateMachine {
          if let image {
             headerImage.image(image)
          }
-         
+
       case .buttonLikePressed(let selected):
          if selected {
             challDetails.buttonsPanel.likeButton.setState(.none)
@@ -339,6 +346,8 @@ extension ChallengeDetailsScene: StateMachine {
          case .report:
             filterButtons.buttons[3].send(\.didTap)
          }
+      case .presentCreator(let id):
+         Asset.router?.route(.push, scene: \.profile, payload: id)
       }
    }
 }
@@ -347,10 +356,17 @@ extension ChallengeDetailsScene: StateMachine {
 
 extension ChallengeDetailsScene {
    private func presentHeader() {
+      if vcModel?.isModal == false {
+         vcModel?.navigationController?.navigationBar.backgroundColor = Design.color.transparent
+      }
       UIView.animate(withDuration: 0.36) {
          self.mainVM.headerStack
             .hidden(false)
             .alpha(1)
+
+         if self.vcModel?.isModal == false {
+            self.vcModel?.navigationController?.navigationBar.isTranslucent = true
+         }
       }
    }
 
@@ -359,14 +375,19 @@ extension ChallengeDetailsScene {
          self.mainVM.headerStack
             .alpha(0)
             .hidden(true)
+
+         if self.vcModel?.isModal == false {
+            self.vcModel?.navigationController?.navigationBar.isTranslucent = false
+         }
+      } completion: { _ in
+         if self.vcModel?.isModal == false {
+            self.vcModel?.navigationController?.navigationBar.backgroundColor = Design.color.backgroundBrand
+         }
       }
    }
 
    private func updateHeaderImage(url: String?) {
-      guard
-         let url,
-         let inputValue
-      else { return }
+      guard let url else { return }
 
       let fullUrl = TeamForceEndpoints.convertToFullImageUrl(url)
 
@@ -381,19 +402,12 @@ extension ChallengeDetailsScene {
             )
          }
          .contentMode(.scaleAspectFill)
-         .on(\.didTap, self) {
-            $0.dismiss()
+         .on(\.didTap) {
             Asset.router?.route(
-               .presentModally(.automatic),
+               .presentModallyOnPresented(.automatic),
                scene: \.imageViewer,
                payload: fullUrl
-            ) { _ in
-               Asset.router?.route(
-                  .presentModally(.automatic),
-                  scene: \.challengeDetails,
-                  payload: inputValue
-               )
-            }
+            )
          }
    }
 }

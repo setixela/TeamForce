@@ -59,7 +59,11 @@ final class MainRouter<Asset: AssetProtocol>: RouterProtocol, Assetable {
       case .presentModallyOnPresented(let value):
          let vc = makeVC()
          vc.modalPresentationStyle = value
-         nc.presentedViewController?.present(vc, animated: true)
+         if let presented = nc.presentedViewController {
+            presented.present(vc, animated: true)
+         } else {
+            nc.present(vc, animated: true)
+         }
       }
 
       // local func

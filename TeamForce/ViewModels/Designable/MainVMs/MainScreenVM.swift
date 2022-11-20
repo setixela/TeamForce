@@ -19,6 +19,7 @@ final class MainScreenVM<Design: DesignProtocol>:
       .textColor(Design.color.textInvert)
       .padTop(Grid.x16.value)
       .padBottom(Grid.x6.value)
+      .height(56)
 
    var headerStack: StackModel { models.main }
    var bodyStack: StackModel { models.down.subModel }
