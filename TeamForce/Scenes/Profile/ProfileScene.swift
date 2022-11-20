@@ -82,7 +82,7 @@ class ProfileScene<Asset: AssetProtocol>: BaseSceneModel<
    override func start() {
       vcModel?
          .clearBackButton()
-         .send(\.setTitle, "Профиль")
+         .title("Профиль")
          .on(\.viewDidLoad, self) {
             $0.configureModels()
             $0.configure()

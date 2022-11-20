@@ -9,7 +9,7 @@ import Foundation
 import ReactiveWorks
 
 protocol HistoryWorksProtocol {
-   var loadProfile: Work<Void, Void> { get }
+ //  var loadProfile: Work<Void, Void> { get }
    var getTransactions: Work<Bool, Void> { get }
    var getTransactionById: Work<Int, Transaction> { get }
 
@@ -23,6 +23,8 @@ final class HistoryWorks<Asset: AssetProtocol>: BaseSceneWorks<HistoryWorks.Temp
 
    // Temp Storage
    final class Temp: InitProtocol {
+      var userData: UserData?
+      //
       var currentUser: String?
       var transactions: [Transaction] = []
       var sections: [TableItemsSection]?
@@ -250,8 +252,17 @@ final class HistoryWorks<Asset: AssetProtocol>: BaseSceneWorks<HistoryWorks.Temp
       .retainBy(retainer)
    }
 
-   var initStorage: Work<Void, Void> {
+   var initStorage: Work<UserData?, Void> {
       .init { [weak self] work in
+         guard
+            let userData = work.unsafeInput ?? Self.store.userData
+         else {
+            work.fail()
+            return
+         }
+
+         Self.store.userData = userData
+
          Self.store.allOffset = 1
          Self.store.sentOffset = 1
          Self.store.recievedOffset = 1
@@ -271,20 +282,20 @@ final class HistoryWorks<Asset: AssetProtocol>: BaseSceneWorks<HistoryWorks.Temp
             .onFail { work.fail() }
       }
    }
-   var loadProfile: Work<Void, Void> {
-      .init { [weak self] work in
-         self?.useCase.loadProfile
-            .doAsync()
-            .onSuccess {
-               Self.store.currentUser = $0.profile.tgName
-               work.success()
-            }
-            .onFail {
-               work.fail()
-            }
-      }
-      .retainBy(retainer)
-   }
+//   var loadProfile: Work<Void, Void> {
+//      .init { [weak self] work in
+//         self?.useCase.loadProfile
+//            .doAsync()
+//            .onSuccess {
+//               Self.store.currentUser = $0.profile.tgName
+//               work.success()
+//            }
+//            .onFail {
+//               work.fail()
+//            }
+//      }
+//      .retainBy(retainer)
+//   }
 
    var getAllTransactItems: Work<Void, [TableItemsSection]> {
       .init {

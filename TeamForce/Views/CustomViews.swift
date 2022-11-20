@@ -480,7 +480,7 @@ extension TextViewExtended: Eventable {
 // MARK: - TableViewExtended
 
 final class TableViewExtended: UITableView {
-   override var contentSize:CGSize {
+   override var contentSize: CGSize {
       didSet {
          invalidateIntrinsicContentSize()
       }
