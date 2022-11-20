@@ -16,6 +16,8 @@ protocol ChallengesWorksProtocol {
 }
 
 final class ChallengesTempStorage: InitProtocol {
+   var userData: UserData?
+
    var challenges: [Challenge] = []
    var activeChallenges: [Challenge] = []
    var presentingChallenges: [Challenge] = []
@@ -36,13 +38,19 @@ extension ChallengesWorks: CheckInternetWorks {}
 
 extension ChallengesWorks: ChallengesWorksProtocol {
    
-   var saveProfileId: Work<UserData?, Int> { .init { work in
+   var saveProfileId: Work<UserData?, Void> { .init { work in
       guard
-         let user = work.input,
-         let id = user?.profile.id
-      else { return }
-      Self.store.profileId = id
-      work.success(id)
+         let userData = work.unsafeInput ?? Self.store.userData
+      else {
+         work.fail()
+         return
+      }
+
+      Self.store.userData = userData
+      Self.store.profileId = userData.profile.id
+
+      work.success()
+
    }.retainBy(retainer) }
    
    var getProfileId: Work<Void, Int> { .init { work in

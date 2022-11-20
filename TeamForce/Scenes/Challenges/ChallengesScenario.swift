@@ -24,13 +24,12 @@ final class ChallengesScenario<Asset: AssetProtocol>:
    override func start() {
       works.retainer.cleanAll()
 
-      works.getChallenges
-         .doAsync(false)
-         .onSuccess(setState) { .presentChallenges($0) }
-         .onFail(setState) { .presentError }
-
       events.saveProfileId
          .doNext(works.saveProfileId)
+         .doInput(false)
+         .doNext(works.getChallenges)
+         .onSuccess(setState) { .presentChallenges($0) }
+         .onFail(setState) { .presentError }
       
       events.presentAllChallenges
          .doNext(works.getAllChallenges)

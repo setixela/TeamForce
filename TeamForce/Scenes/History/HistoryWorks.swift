@@ -282,20 +282,6 @@ final class HistoryWorks<Asset: AssetProtocol>: BaseSceneWorks<HistoryWorks.Temp
             .onFail { work.fail() }
       }
    }
-//   var loadProfile: Work<Void, Void> {
-//      .init { [weak self] work in
-//         self?.useCase.loadProfile
-//            .doAsync()
-//            .onSuccess {
-//               Self.store.currentUser = $0.profile.tgName
-//               work.success()
-//            }
-//            .onFail {
-//               work.fail()
-//            }
-//      }
-//      .retainBy(retainer)
-//   }
 
    var getAllTransactItems: Work<Void, [TableItemsSection]> {
       .init {
