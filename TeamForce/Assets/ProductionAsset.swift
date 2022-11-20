@@ -17,64 +17,68 @@ enum ProductionAsset: AssetProtocol {
    weak static var router: MainRouter<ProductionAsset>?
 }
 
-fileprivate typealias PA = ProductionAsset
+private typealias PA = ProductionAsset
 
 protocol ScenesProtocol: InitProtocol {
-   var digitalThanks: SMP { get }
-   var login: SMP { get }
-   var verify: SMP { get }
-   var chooseOrgScene: SMP { get }
-   var main: SMP { get }
-
-   var transactDetails: SMP { get }
-
-   var myProfile: SMP { get }
-   var profile: SMP { get }
-
-   var sentTransactDetails: SMP { get }
-
-   var challengeDetails: SMP { get }
-   var challengeCreate: SMP { get }
-   var challengeSendResult: SMP { get }
-   var challengeResCancel: SMP { get }
-   var challengeReportDetail: SMP { get }
-
-   var notifications: SMP { get }
-
-   var settings: SMP { get }
-
-   var imageViewer: SMP { get }
-
+   //
+   var digitalThanks: BaseScene<Void> { get }
+   //
+   var login: BaseScene<Void> { get }
+   var verify: BaseScene<AuthResult> { get }
+   var chooseOrgScene: BaseScene<[OrganizationAuth]> { get }
+   //
+   var main: BaseScene<Void> { get }
+   //
+   var myProfile: BaseScene<Int> { get }
+   var profile: BaseScene<Int> { get }
+   //
+   var transactDetails: BaseScene<TransactDetailsSceneInput> { get }
+   var sentTransactDetails: BaseScene<Transaction> { get }
+   //
+   var challengeDetails: BaseScene<ChallengeDetailsInput> { get }
+   var challengeCreate: BaseScene<Void> { get }
+   var challengeSendResult: BaseScene<Int> { get }
+   var challengeResCancel: BaseScene<Int> { get }
+   var challengeReportDetail: BaseScene<Int> { get }
+   //
+   var notifications: BaseScene<Void> { get }
+   //
+   var settings: BaseScene<UserData> { get }
+   //
+   var imageViewer: BaseScene<String> { get }
    // plays
-   var playground: SMP { get }
+   var playground: BaseScene<Void> { get }
 }
 
 struct Scenes: ScenesProtocol {
-   var settings: SMP { SettingsScene<PA>() }
    //
-   var playground: SMP { PlaygroundScene<PA>() }
+   var digitalThanks: BaseScene<Void> { DigitalThanksScene<PA>() }
    //
-   var digitalThanks: SMP { DigitalThanksScene<PA>() }
-   var login: SMP { LoginScene<PA>() }
-   var verify: SMP { VerifyScene<PA>() }
-   var chooseOrgScene: SMP { ChooseOrgScene<PA>() }
-   var main: SMP { MainScene<PA>() }
-   var myProfile: SMP { MyProfileScene<PA>() }
-   var profile: SMP { ProfileScene<PA>() }
-   var sentTransactDetails: SMP { SentTransactDetailsScene<PA>() }
-   // var profileEdit: SMP { ProfileEditScene<PA>() }
-
-   var transactDetails: SMP { TransactDetailsScene<PA>() }
-
-   var challengeCreate: SMP { ChallengeCreateScene<PA>() }
-   var challengeSendResult: SMP { ChallengeResultScene<PA>() }
-   var challengeDetails: SMP { ChallengeDetailsScene<PA>() }
-   var challengeResCancel: SMP { ChallengeResCancelScene<PA>() }
-   var challengeReportDetail: SMP { ChallReportDetailsScene<PA>() }
-
-   var notifications: SMP { NotificationsScene<PA>() }
-
-   var imageViewer: SMP { ImageViewerScene<PA>() }
+   var login: BaseScene<Void> { LoginScene<PA>() }
+   var verify: BaseScene<AuthResult> { VerifyScene<PA>() }
+   var chooseOrgScene: BaseScene<[OrganizationAuth]> { ChooseOrgScene<PA>() }
+   //
+   var main: BaseScene<Void> { MainScene<PA>() }
+   //
+   var myProfile: BaseScene<Int> { MyProfileScene<PA>() }
+   var profile: BaseScene<Int> { ProfileScene<PA>() }
+   //
+   var transactDetails: BaseScene<TransactDetailsSceneInput> { TransactDetailsScene<PA>() }
+   var sentTransactDetails: BaseScene<Transaction> { SentTransactDetailsScene<PA>() }
+   //
+   var challengeDetails: BaseScene<ChallengeDetailsInput> { ChallengeDetailsScene<PA>() }
+   var challengeCreate: BaseScene<Void> { ChallengeCreateScene<PA>() }
+   var challengeSendResult: BaseScene<Int> { ChallengeResultScene<PA>() }
+   var challengeResCancel: BaseScene<Int> { ChallengeResCancelScene<PA>() }
+   var challengeReportDetail: BaseScene<Int> { ChallReportDetailsScene<PA>() }
+   //
+   var notifications: BaseScene<Void> { NotificationsScene<PA>() }
+   //
+   var settings: BaseScene<UserData> { SettingsScene<PA>() }
+   //
+   var imageViewer: BaseScene<String> { ImageViewerScene<PA>() }
+   //
+   var playground: BaseScene<Void> { PlaygroundScene<PA>() }
 }
 
 struct ProductionService: ServiceProtocol {
