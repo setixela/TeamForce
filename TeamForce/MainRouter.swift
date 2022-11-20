@@ -38,9 +38,9 @@ final class MainRouter<Asset: AssetProtocol>: RouterProtocol, Assetable {
       }
    }
 
-   func route(_ navType: NavType,
-              scene: KeyPath<Scene, SceneModelProtocol>? = nil,
-              payload: Any? = nil,
+   func route<In, T: BaseScene<In> & SMP>(_ navType: NavType,
+              scene: KeyPath<Scene, T>? = nil,
+              payload: T.Input? = nil,
               finisher: GenericClosure<Bool>? = nil)
    {
       switch navType {
@@ -85,6 +85,54 @@ final class MainRouter<Asset: AssetProtocol>: RouterProtocol, Assetable {
          return vc
       }
    }
+
+//   func route(_ navType: NavType,
+//              scene: KeyPath<Scene, SceneModelProtocol>? = nil,
+//              payload: Any? = nil,
+//              finisher: GenericClosure<Bool>? = nil)
+//   {
+//      switch navType {
+//      case .push:
+//         nc.pushViewController(makeVC(), animated: true)
+//      case .pop:
+//         nc.popViewController(animated: true)
+//      case .popToRoot:
+//         nc.popToRootViewController(animated: true)
+//      case .presentInitial:
+//         nc.viewControllers = [makeVC()]
+//      case .presentModally(let value):
+//         let vc = makeVC()
+//         vc.modalPresentationStyle = value
+//         nc.present(vc, animated: true)
+//      case .presentModallyOnPresented(let value):
+//         let vc = makeVC()
+//         vc.modalPresentationStyle = value
+//         nc.presentedViewController?.present(vc, animated: true)
+//      }
+//
+//      // local func
+//      func makeVC() -> UIViewController {
+//         guard let scene else {
+//            assertionFailure()
+//            return .init()
+//         }
+//
+//         let sceneModel = Scene()[keyPath: scene]
+//         sceneModel.setInput(payload)
+//         let vc = sceneModel.makeVC()
+//
+//         if let finisher {
+//            let wrapped = { (result: Bool) in
+//               finisher(result)
+//               sceneModel.finisher = nil
+//            }
+//
+//            sceneModel.finisher = wrapped
+//         }
+//
+//         return vc
+//      }
+//   }
 }
 
 extension MainRouter {
