@@ -12,7 +12,7 @@ extension ChallengeDetailsWorks {
       guard
          let profileId = Self.store.currentUserId,
          let creatorId = Self.store.challenge?.creatorId
-      else { return }
+      else { work.fail(); return }
 
       if profileId == creatorId {
          work.success(())
