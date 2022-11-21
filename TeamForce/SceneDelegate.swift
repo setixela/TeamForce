@@ -17,7 +17,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
       guard let windowScene = (scene as? UIWindowScene) else { return }
 
       let window = UIWindow(windowScene: windowScene)
-      let nc = UINavigationController(nibName: nil, bundle: nil)
+      let nc = NavController(nibName: nil, bundle: nil)
 
       startDispatcher(nc)
 
@@ -34,19 +34,72 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 }
 
 private extension SceneDelegate {
-   func startDispatcher(_ nc: UINavigationController) {
-      nc.navigationBar.tintColor = .white
+   func startDispatcher(_ nc: NavController) {
+      let brandColor = ProductionAsset.Design.color.backgroundBrand
+      let backBrightness = brandColor.brightnessStyle()
+
+      switch backBrightness {
+         case .dark:
+            nc
+               .barStyle(.black)
+               .titleColor(ProductionAsset.Design.color.iconInvert)
+               .navBarTintColor(ProductionAsset.Design.color.iconInvert)
+               .statusBarStyle(.lightContent)
+         case .light:
+            nc
+               .barStyle(.default)
+               .titleColor(ProductionAsset.Design.color.textBrand)
+               .navBarTintColor(ProductionAsset.Design.color.textBrand)
+               .statusBarStyle(.darkContent)
+      }
+
       router = ProductionAsset.makeRouter(with: nc)
-      self.window?.backgroundColor = ProductionAsset.Design.color.backgroundBrand
+      window?.backgroundColor = ProductionAsset.Design.color.backgroundBrand
       router?.start()
    }
 }
 
 extension AssetProtocol {
-   static func makeRouter(with nc: UINavigationController) -> RouterProtocol {
+   static func makeRouter(with nc: NavController) -> RouterProtocol {
       let router = MainRouter<Asset>(nc: nc)
       self.router = router
       return router
    }
 }
 
+final class NavController: UINavigationController {
+   private var currentStatusBarStyle: UIStatusBarStyle?
+
+   override var preferredStatusBarStyle: UIStatusBarStyle {
+      if let vc = visibleViewController as? any VCModelProtocol {
+         return vc.currentStatusBarStyle ?? currentStatusBarStyle ?? .default
+      } else {
+        return currentStatusBarStyle ?? .default
+      }
+   }
+}
+
+extension NavController {
+   @discardableResult func barStyle(_ value: UIBarStyle) -> Self {
+      navigationBar.barStyle = value
+      return self
+   }
+
+   @discardableResult func navBarTintColor(_ value: UIColor) -> Self {
+      navigationBar.barTintColor = value
+      navigationBar.tintColor = value
+      return self
+   }
+
+   @discardableResult func statusBarStyle(_ value: UIStatusBarStyle) -> Self {
+      currentStatusBarStyle = value
+      setNeedsStatusBarAppearanceUpdate()
+      return self
+   }
+
+   @discardableResult func titleColor(_ value: UIColor) -> Self {
+      let textAttributes = [NSAttributedString.Key.foregroundColor: value]
+      navigationBar.titleTextAttributes = textAttributes
+      return self
+   }
+}

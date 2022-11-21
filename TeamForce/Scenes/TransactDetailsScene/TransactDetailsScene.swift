@@ -44,9 +44,11 @@ final class TransactDetailsScene<Asset: AssetProtocol>:
    )
 
    override func start() {
-      vcModel?.on(\.viewDidLoad, self) {
-         $0.configure()
-      }
+      vcModel?
+         .title("Благодарность")
+         .on(\.viewDidLoad, self) {
+            $0.configure()
+         }
    }
 
    private var state = FeedDetailSceneState.initial
@@ -93,24 +95,24 @@ extension TransactDetailsScene: StateMachine {
       switch state {
       case .initial:
          feedDetailVM.setState(.loadingActivity)
-         //
+      //
       case .present(let feed, let userName):
          feedDetailVM.setState(.initial(feed: feed, curUsername: userName))
-         //
+      //
       case .presentDetails(let transaction, let userName):
          feedDetailVM.infoBlock.setup((transaction, userName))
          feedDetailVM.setState(.details(transaction))
-         //
+      //
       case .presentComments(let comments):
          feedDetailVM.setState(.comments(comments))
-         //
+      //
       case .presentReactions(let items):
          feedDetailVM.setState(.reactions(items))
-         //
+      //
       case .failedToReact(let selected):
          print("failed to like")
          setState(.buttonLikePressed(alreadySelected: !selected))
-         //
+      //
       case .updateReactions(let value):
          if let reactions = value.0.likes {
             for reaction in reactions {
@@ -119,20 +121,20 @@ extension TransactDetailsScene: StateMachine {
                }
             }
          }
-         //
+      //
       case .presntActivityIndicator:
          feedDetailVM.setState(.loadingActivity)
-         //
+      //
       case .sendButtonDisabled:
          feedDetailVM.setState(.sendButtonDisabled)
-         //
+      //
       case .sendButtonEnabled:
          feedDetailVM.setState(.sendButtonEnabled)
-         //
+      //
       case .commentDidSend:
          feedDetailVM.filterButtons.send(\.didTapComments)
          feedDetailVM.setState(.commentDidSend)
-         //
+      //
       case .error:
          print("Load token error")
       case .buttonLikePressed(let selected):
@@ -141,10 +143,10 @@ extension TransactDetailsScene: StateMachine {
          } else {
             feedDetailVM.infoBlock.likeButton.setState(.selected)
          }
-         //
+      //
       case .presentUserProfile(let userId):
          Asset.router?.route(.push, scene: \.profile, payload: userId)
-         //
+      //
       case .hereIsEmpty:
          feedDetailVM.setState(.hereIsEmpty)
          //

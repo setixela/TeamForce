@@ -49,7 +49,7 @@ final class MainScene<Asset: AssetProtocol>:
    private var currentState = MainSceneState.initial
 
    private lazy var bottomPopupPresenter = BottomPopupPresenter()
-   
+
    private lazy var selectedModel: Int = 0
 
    // MARK: - Start
@@ -61,9 +61,20 @@ final class MainScene<Asset: AssetProtocol>:
    }
 
    func configure() {
-      vcModel?
-         .statusBarStyle(.lightContent)
-         .titleColor(Design.color.backgroundBrand)
+      let brightness = Design.color.backgroundBrand.brightnessStyle()
+
+      switch brightness {
+      case .dark:
+         vcModel?
+            .navBarTintColor(Design.color.iconInvert)
+            .titleColor(Design.color.iconInvert)
+            .statusBarStyle(.lightContent)
+      case .light:
+         vcModel?
+            .navBarTintColor(Design.color.iconBrand)
+            .titleColor(Design.color.iconBrand)
+            .statusBarStyle(.darkContent)
+      }
 
       mainVM.bodyStack.arrangedModels([
          ActivityIndicator<Design>(),

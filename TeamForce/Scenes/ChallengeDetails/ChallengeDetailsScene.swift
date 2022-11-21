@@ -45,6 +45,21 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
       )
    )
 
+   // Default header image
+
+   private lazy var headerStackBackColor = Design.color.backgroundBrandSecondary
+
+   private lazy var defaultHeaderImage = {
+      let image = Design.icon.challengeWinnerIllustrateFull
+      self.setNavBarStyleForImage(image, backColor: headerStackBackColor)
+      self.updateNavBarTintForHeaderImage()
+      return image
+   }()
+
+   private var headerImageBrightness = ColorBrightnessStyle.dark
+
+   // View models
+
    private lazy var statusLabel = LabelModel()
       .set(Design.state.label.caption)
       .cornerRadius(Design.params.cornerRadiusMini)
@@ -58,7 +73,7 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
       .height(Design.params.buttonHeightMini)
 
    private lazy var headerImage = ImageViewModel()
-      .image(Design.icon.challengeWinnerIllustrateFull)
+      .image(defaultHeaderImage)
       .contentMode(.scaleAspectFill)
       .set(.tapGesturing)
 
@@ -110,8 +125,9 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
       super.start()
 
       vcModel?.clearBackButton()
+
       if vcModel?.isModal == false {
-         self.vcModel?.navigationController?.navigationBar.isTranslucent = true
+         vcModel?.navigationController?.navigationBar.isTranslucent = true
          closeButton.hidden(true)
       } else {
          closeButton.on(\.didTap, self) {
@@ -127,7 +143,7 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
 
    private func configure() {
       mainVM.headerStack
-         .backColor(Design.color.backgroundBrandSecondary)
+         .backColor(headerStackBackColor)
          .arrangedModels([
             Wrapped3X(statusLabel, Spacer(), closeButton)
                .backViewModel(headerImage)
@@ -210,12 +226,14 @@ extension ChallengeDetailsScene: StateMachine {
       switch state {
       case .initial:
          break
+
       case .presentActivityIndicator:
          mainVM.footerStack
             .arrangedModels([
                ActivityIndicator<Design>(),
                Spacer()
             ])
+
       case .presentChallenge(let challenge):
          updateHeaderImage(url: challenge.photo)
          mainVM.footerStack
@@ -228,15 +246,18 @@ extension ChallengeDetailsScene: StateMachine {
          statusLabel
             .text(isActive ? "Активен" : "Завершен")
             .backColor(isActive ? Design.color.backgroundInfo : Design.color.backgroundSuccess)
+
       case .updateDetails(let challenge):
          challDetails.setState(.updateDetails(challenge))
          updateHeaderImage(url: challenge.photo)
+
       case .presentComments(let comments):
          challComments.setup(comments)
          mainVM.footerStack
             .arrangedModels([
                challComments
             ])
+
       case .presentSendResultScreen(let challenge):
          Asset.router?.route(
             .presentModallyOnPresented(.automatic),
@@ -259,7 +280,6 @@ extension ChallengeDetailsScene: StateMachine {
          filterButtons.button3.hidden(false)
          challDetails.models.down.sendButton.hidden(true)
          filterButtons.button2.hidden(true)
-         // challDetails.models.down.hidden(true)
 
       case .presentMyResults(let results):
          myResultBlock.setup(results)
@@ -281,6 +301,7 @@ extension ChallengeDetailsScene: StateMachine {
             .arrangedModels([
                contendersBlock
             ])
+
       case .presentCancelView(_, let resultId):
          Asset.router?.route(
             .presentModallyOnPresented(.automatic),
@@ -304,8 +325,10 @@ extension ChallengeDetailsScene: StateMachine {
 
       case .sendButtonDisabled:
          challComments.setState(.sendButtonDisabled)
+
       case .sendButtonEnabled:
          challComments.setState(.sendButtonEnabled)
+
       case .commentDidSend:
          filterButtons.button5.send(\.didTap)
          challComments.commentField.text("")
@@ -313,6 +336,7 @@ extension ChallengeDetailsScene: StateMachine {
 
       case .disableSendResult:
          challDetails.models.down.sendButton.hidden(true)
+
       case .hereIsEmpty:
          mainVM.footerStack
             .arrangedModels([
@@ -330,11 +354,14 @@ extension ChallengeDetailsScene: StateMachine {
          } else {
             challDetails.buttonsPanel.likeButton.setState(.selected)
          }
+
       case .failedToReact(let selected):
          print("failed to like")
          setState(.buttonLikePressed(alreadySelected: !selected))
+
       case .updateLikesAmount(let amount):
          challDetails.buttonsPanel.likeButton.models.right.text(String(amount))
+
       case .presentChapter(let chapter):
          switch chapter {
          case .details:
@@ -346,6 +373,7 @@ extension ChallengeDetailsScene: StateMachine {
          case .report:
             filterButtons.buttons[3].send(\.didTap)
          }
+
       case .presentCreator(let id):
          Asset.router?.route(.push, scene: \.profile, payload: id)
       }
@@ -359,6 +387,7 @@ extension ChallengeDetailsScene {
       if vcModel?.isModal == false {
          vcModel?.navigationController?.navigationBar.backgroundColor = Design.color.transparent
       }
+
       UIView.animate(withDuration: 0.36) {
          self.mainVM.headerStack
             .hidden(false)
@@ -366,6 +395,8 @@ extension ChallengeDetailsScene {
 
          if self.vcModel?.isModal == false {
             self.vcModel?.navigationController?.navigationBar.isTranslucent = true
+            self.updateNavBarTintForHeaderImage()
+            self.vcModel?.title("")
          }
       }
    }
@@ -382,6 +413,8 @@ extension ChallengeDetailsScene {
       } completion: { _ in
          if self.vcModel?.isModal == false {
             self.vcModel?.navigationController?.navigationBar.backgroundColor = Design.color.backgroundBrand
+            self.setNavBarTintLight()
+            self.vcModel?.title("Челлендж")
          }
       }
    }
@@ -395,11 +428,16 @@ extension ChallengeDetailsScene {
          .url(
             TeamForceEndpoints.urlBase + url,
             transition: .crossDissolve(0.5)
-         ) { header, _ in
+         ) { [weak self] header, image in
             header?.url(
                fullUrl,
                transition: .crossDissolve(0.5)
             )
+
+            guard let image else { return }
+
+            self?.setNavBarStyleForImage(image)
+            self?.updateNavBarTintForHeaderImage()
          }
          .contentMode(.scaleAspectFill)
          .on(\.didTap) {
@@ -409,5 +447,34 @@ extension ChallengeDetailsScene {
                payload: fullUrl
             )
          }
+   }
+
+   private func setNavBarStyleForImage(_ image: UIImage, backColor: UIColor? = nil) {
+      headerImageBrightness = image.brightnessStyleOfTopLeftImageContent(backColor: backColor)
+   }
+
+   private func updateNavBarTintForHeaderImage() {
+      switch headerImageBrightness {
+      case .dark:
+         setNavBarTintLight()
+      case .light:
+         setNavBarTintDark()
+      }
+   }
+
+   private func setNavBarTintLight() {
+      vcModel?
+         .barStyle(.black)
+         .titleColor(ProductionAsset.Design.color.iconInvert)
+         .navBarTintColor(ProductionAsset.Design.color.iconInvert)
+         .statusBarStyle(.lightContent)
+   }
+
+   private func setNavBarTintDark() {
+      vcModel?
+         .barStyle(.default)
+         .titleColor(ProductionAsset.Design.color.textBrand)
+         .navBarTintColor(ProductionAsset.Design.color.textBrand)
+         .statusBarStyle(.darkContent)
    }
 }
