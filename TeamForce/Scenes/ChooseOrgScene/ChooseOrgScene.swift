@@ -95,8 +95,7 @@ private extension ChooseOrgScene {
    }
 }
 
-class OrganizationPresenters<Design: DesignProtocol>: Designable {
-   var events: EventsStore = .init()
+struct OrganizationPresenters<Design: DesignProtocol>: Designable {
 
    static var presenter: Presenter<OrganizationAuth, WrappedX<StackModel>> {
       Presenter { work in
@@ -131,7 +130,7 @@ class OrganizationPresenters<Design: DesignProtocol>: Designable {
                .cornerRadius(Design.params.cornerRadiusSmall)
                .backColor(Design.color.backgroundInfoSecondary)
          )
-         .padding(.outline(Grid.x2.value))
+         .padding(.init(top: 0, left: 0, bottom: 8, right: 0))
 
          work.success(result: cellStack)
       }

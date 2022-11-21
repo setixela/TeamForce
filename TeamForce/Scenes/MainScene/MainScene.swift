@@ -23,7 +23,7 @@ final class MainScene<Asset: AssetProtocol>:
       MainScreenVM<Asset.Design>,
       Asset,
       Void
-   >, Scenarible
+   >, Scenarible, Configurable
 {
    lazy var scenario: Scenario = MainScenario(
       works: MainWorks<Asset>(),
@@ -49,22 +49,38 @@ final class MainScene<Asset: AssetProtocol>:
    private var currentState = MainSceneState.initial
 
    private lazy var bottomPopupPresenter = BottomPopupPresenter()
-   
+
    private lazy var selectedModel: Int = 0
 
    // MARK: - Start
 
    override func start() {
-      vcModel?.titleColor(Design.color.backgroundBrand)
+      vcModel?.on(\.viewDidLoad, self) {
+         $0.configure()
+      }
+   }
+
+   func configure() {
+      let brightness = Design.color.backgroundBrand.brightnessStyle()
+
+      switch brightness {
+      case .dark:
+         vcModel?
+            .navBarTintColor(Design.color.iconInvert)
+            .titleColor(Design.color.iconInvert)
+            .statusBarStyle(.lightContent)
+      case .light:
+         vcModel?
+            .navBarTintColor(Design.color.iconBrand)
+            .titleColor(Design.color.iconBrand)
+            .statusBarStyle(.darkContent)
+      }
 
       mainVM.bodyStack.arrangedModels([
          ActivityIndicator<Design>(),
          Spacer()
       ])
 
-      vcModel?.on(\.viewDidLoad, self) {
-         $0.scenario.start()
-      }
       tabBarPanel.button1.setSelfMode(\.normal)
       selectedModel = 0
 
@@ -76,6 +92,8 @@ final class MainScene<Asset: AssetProtocol>:
       }
 
       hideHeader()
+
+      scenario.start()
    }
 
    private func unlockTabButtons() {

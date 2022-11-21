@@ -97,6 +97,8 @@ final class ImagePickerScene<Asset: AssetProtocol>: BaseSceneModel<
 
 //
 final class ImagePickerVCModel: UIImagePickerController, VCModelProtocol, Eventable {
+   var currentStatusBarStyle: UIStatusBarStyle?
+
    var events = EventsStore()
 
    public let sceneModel: SceneModelProtocol

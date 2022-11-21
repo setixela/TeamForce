@@ -117,6 +117,8 @@
 		196D883428ADB6EC00F4C09D /* MainScreenVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196D883328ADB6EC00F4C09D /* MainScreenVM.swift */; };
 		196D883628ADB74800F4C09D /* TabBarPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196D883528ADB74800F4C09D /* TabBarPanel.swift */; };
 		196F642228F32C37002F5187 /* ManyButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196F642128F32C37002F5187 /* ManyButtons.swift */; };
+		19732058292B7E58009816CA /* UIImage+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19732057292B7E58009816CA /* UIImage+Ext.swift */; };
+		1973205A292B948B009816CA /* UIImage+Brightness.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19732059292B948B009816CA /* UIImage+Brightness.swift */; };
 		1974471C2911AB8E0089BB2B /* ChallengeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1974471B2911AB8E0089BB2B /* ChallengeCell.swift */; };
 		1974471E2911ABC00089BB2B /* ChallengeCellInfoBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1974471D2911ABC00089BB2B /* ChallengeCellInfoBlock.swift */; };
 		197447202911ABEC0089BB2B /* ChallengeCellStatusBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1974471F2911ABEC0089BB2B /* ChallengeCellStatusBlock.swift */; };
@@ -522,6 +524,8 @@
 		196D883328ADB6EC00F4C09D /* MainScreenVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenVM.swift; sourceTree = "<group>"; };
 		196D883528ADB74800F4C09D /* TabBarPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarPanel.swift; sourceTree = "<group>"; };
 		196F642128F32C37002F5187 /* ManyButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManyButtons.swift; sourceTree = "<group>"; };
+		19732057292B7E58009816CA /* UIImage+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Ext.swift"; sourceTree = "<group>"; };
+		19732059292B948B009816CA /* UIImage+Brightness.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Brightness.swift"; sourceTree = "<group>"; };
 		1974471B2911AB8E0089BB2B /* ChallengeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeCell.swift; sourceTree = "<group>"; };
 		1974471D2911ABC00089BB2B /* ChallengeCellInfoBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeCellInfoBlock.swift; sourceTree = "<group>"; };
 		1974471F2911ABEC0089BB2B /* ChallengeCellStatusBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeCellStatusBlock.swift; sourceTree = "<group>"; };
@@ -1292,6 +1296,8 @@
 				1984A108291E421600F65262 /* String+MD5.swift */,
 				19221EE928C9AF3400B7B604 /* Optional+Unwrap.swift */,
 				1956426B292AD973007BE9D4 /* UIViewContoller+IsModal.swift */,
+				19732057292B7E58009816CA /* UIImage+Ext.swift */,
+				19732059292B948B009816CA /* UIImage+Brightness.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2136,6 +2142,7 @@
 				199C4B6628624B4C008AD6FD /* Spacer.swift in Sources */,
 				193C74772909E42C008B3AD9 /* ImageViewerScene.swift in Sources */,
 				63578E5E28ABA2E500423957 /* CancelTransactionByIdUseCase.swift in Sources */,
+				1973205A292B948B009816CA /* UIImage+Brightness.swift in Sources */,
 				63AB070D28BD526700FD650F /* UpdateContactApiWorker.swift in Sources */,
 				19633988292148CE00B66A7D /* GetCurrentUserUseCase.swift in Sources */,
 				196750A22865169C0019A6DE /* DigitalThanksScene.swift in Sources */,
@@ -2166,6 +2173,7 @@
 				19221EF128CDBC7300B7B604 /* Multiplexor.swift in Sources */,
 				19DD3D97288A0A8C0085CDA8 /* CoverViewModel.swift in Sources */,
 				191B0C292865F119001CF3D9 /* TextBuilder.swift in Sources */,
+				19732058292B7E58009816CA /* UIImage+Ext.swift in Sources */,
 				19D08355286F405500F75E4A /* DoubleLabelModel.swift in Sources */,
 				63F00F532922465A00CF807C /* GetNotificationsAmountUseCase.swift in Sources */,
 				197A2D9928A98F4300190656 /* UIColor+Random.swift in Sources */,
@@ -2607,7 +2615,8 @@
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Allow Photo Library Use";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleDarkContent;
+				INFOPLIST_KEY_UIStatusBarHidden = NO;
+				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -2646,7 +2655,8 @@
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Allow Photo Library Use";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleDarkContent;
+				INFOPLIST_KEY_UIStatusBarHidden = NO;
+				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;

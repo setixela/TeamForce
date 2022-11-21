@@ -135,6 +135,10 @@ extension ChallengeDetailsViewModel: StateMachine {
             challenge.status == "Отчёт отклонён"
          {
             buttonsPanel.sendButton.hidden(false)
+            buttonsPanel.alignment(.fill)
+         } else {
+            buttonsPanel.sendButton.hidden(true)
+            buttonsPanel.alignment(.trailing)
          }
 
       case .updateDetails(let challenge):

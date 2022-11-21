@@ -40,5 +40,6 @@ final class SendChallengePanel<Design: DSP>: StackModel, Designable {
          Grid.x16.spacer,
          buttons
       ])
+      alignment(.trailing)
    }
 }
