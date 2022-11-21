@@ -26,6 +26,10 @@ final class HistoryScenario<Asset: AssetProtocol>:
    override func start() {
       works.retainer.cleanAll()
       
+      works.loadUserProfileId
+         .doAsync()
+         .onSuccess { print("suc") }
+      
       events.loadHistoryForCurrentUser
          .doNext(works.initStorage)
          .doNext(works.getSegmentId)

@@ -14,6 +14,8 @@ struct Sender: Codable {
    let senderFirstName: String?
    let senderSurname: String?
    let senderPhoto: String?
+   let challengeName: String?
+   let challengeId: Int?
 
    enum CodingKeys: String, CodingKey {
       case senderId = "sender_id"
@@ -21,6 +23,8 @@ struct Sender: Codable {
       case senderFirstName = "sender_first_name"
       case senderSurname = "sender_surname"
       case senderPhoto = "sender_photo"
+      case challengeName = "challenge_name"
+      case challengeId = "challenge_id"
    }
 }
 
@@ -60,6 +64,7 @@ struct TransactionClass: Codable {
    }
 }
 
+
 struct Transaction: Codable {
    let id: Int?
    let sender: Sender?
@@ -70,6 +75,9 @@ struct Transaction: Codable {
    let transactionClass: TransactionClass?
    let expireToCancel: String?
    let amount: String?
+   let canUserCancel: Bool?
+   let tags: [FeedTag]?
+   let reasonDef: String?
    let createdAt: String?
    let updatedAt: String?
    let reason: String?
@@ -94,6 +102,9 @@ struct Transaction: Codable {
       case transactionClass = "transaction_class"
       case expireToCancel = "expire_to_cancel"
       case amount
+      case canUserCancel = "can_user_cancel"
+      case tags
+      case reasonDef = "reason_def"
       case createdAt = "created_at"
       case updatedAt = "updated_at"
       case reason
@@ -153,6 +164,7 @@ final class GetTransactionsApiWorker: BaseApiWorker<HistoryRequest, [Transaction
                work.fail()
                return
             }
+            print(transactions)
             work.success(result: transactions)
          }
          .catch { _ in
