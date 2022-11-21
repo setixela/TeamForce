@@ -31,6 +31,8 @@ final class MainScene<Asset: AssetProtocol>:
       events: MainScenarioInputEvents()
    )
 
+   private let headerAnimationDuration: CGFloat = 0.36
+
    private lazy var balanceViewModel = BalanceScene<Asset>()
    private lazy var historyViewModel = HistoryScene<Asset>()
    private lazy var feedViewModel = FeedScene<Asset>()
@@ -52,11 +54,20 @@ final class MainScene<Asset: AssetProtocol>:
 
    private lazy var selectedModel: Int = 0
 
+   private var isHeaderPresented = false
+
    // MARK: - Start
 
    override func start() {
       vcModel?.on(\.viewDidLoad, self) {
          $0.configure()
+      }
+
+      vcModel?.on(\.viewWillAppear, self) {
+         $0.vcModel?
+            .navBarBackColor(Design.color.transparent)
+            .navBarTranslucent(true)
+         $0.updateHeader()
       }
    }
 
@@ -289,18 +300,37 @@ extension MainScene {
 // MARK: - Header animation
 
 extension MainScene {
-   private func hideHeader() {
-      UIView.animate(withDuration: 0.36) {
-         self.mainVM.setState(.hideHeaderTitle)
-      } completion: { _ in
-         self.vcModel?.titleColor(Design.color.textInvert)
+   private func hideHeader(_ isAnimated: Bool = true) {
+      isHeaderPresented = false
+      if isAnimated {
+         UIView.animate(withDuration: headerAnimationDuration) {
+            self.mainVM.setState(.hideHeaderTitle)
+         } completion: { _ in
+            self.vcModel?.titleColor(Design.color.textInvert)
+         }
+      } else {
+         mainVM.setState(.hideHeaderTitle)
+         vcModel?.titleColor(Design.color.textInvert)
       }
    }
 
-   private func presentHeader() {
+   private func presentHeader(_ isAnimated: Bool = true) {
+      isHeaderPresented = true
       vcModel?.titleColor(Design.color.transparent)
-      UIView.animate(withDuration: 0.36) {
-         self.mainVM.setState(.presentHeaderTitle)
+      if isAnimated {
+         UIView.animate(withDuration: headerAnimationDuration) {
+            self.mainVM.setState(.presentHeaderTitle)
+         }
+      } else {
+         mainVM.setState(.presentHeaderTitle)
+      }
+   }
+
+   private func updateHeader() {
+      if isHeaderPresented {
+         presentHeader(false)
+      } else {
+         hideHeader(false)
       }
    }
 }

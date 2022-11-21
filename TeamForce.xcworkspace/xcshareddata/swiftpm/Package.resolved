@@ -14,8 +14,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Alamofire/Alamofire.git",
       "state" : {
-        "revision" : "8dd85aee02e39dd280c75eef88ffdb86eed4b07b",
-        "version" : "5.6.2"
+        "revision" : "f512df48300140994b1ea56a2ff024a4734cef2b",
+        "version" : "5.6.3"
       }
     },
     {
@@ -141,7 +141,7 @@
       "location" : "https://github.com/setixela/ReactiveWorks.git",
       "state" : {
         "branch" : "master",
-        "revision" : "e4474b417a83552537684c8bee10f459c0bfa2b6"
+        "revision" : "9dea23e3bd7f3144d9b30af32040f854c0d7f4ac"
       }
     },
     {

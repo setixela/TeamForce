@@ -124,10 +124,8 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
    override func start() {
       super.start()
 
-      vcModel?.clearBackButton()
-
       if vcModel?.isModal == false {
-         vcModel?.navigationController?.navigationBar.isTranslucent = true
+         vcModel?.navBarTranslucent(true)
          closeButton.hidden(true)
       } else {
          closeButton.on(\.didTap, self) {
@@ -394,7 +392,7 @@ extension ChallengeDetailsScene {
             .alpha(1)
 
          if self.vcModel?.isModal == false {
-            self.vcModel?.navigationController?.navigationBar.isTranslucent = true
+            self.vcModel?.navBarTranslucent(true)
             self.updateNavBarTintForHeaderImage()
             self.vcModel?.title("")
          }
@@ -408,7 +406,7 @@ extension ChallengeDetailsScene {
             .hidden(true)
 
          if self.vcModel?.isModal == false {
-            self.vcModel?.navigationController?.navigationBar.isTranslucent = false
+            self.vcModel?.navBarTranslucent(false)
          }
       } completion: { _ in
          if self.vcModel?.isModal == false {
