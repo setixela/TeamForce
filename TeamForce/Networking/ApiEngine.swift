@@ -233,27 +233,6 @@ final class ApiEngine: ApiEngineProtocol {
    }
 }
 
-extension UIImage {
-   func resized(to size: CGSize) -> UIImage {
-      guard self.size.width > size.width else { return self }
-
-      return UIGraphicsImageRenderer(size: size).image { _ in
-         draw(in: CGRect(origin: .zero, size: size))
-      }
-   }
-
-   func resized(to width: CGFloat) -> UIImage {
-      guard size.width > width else { return self }
-      
-      let coef = size.width / size.height
-      let newSize = CGSize(width: width, height: width / coef)
-
-      return UIGraphicsImageRenderer(size: newSize).image { _ in
-         draw(in: CGRect(origin: .zero, size: newSize))
-      }
-   }
-}
-
 extension Data {
    mutating func append(_ string: String) {
       if let data = string.data(using: .utf8) {

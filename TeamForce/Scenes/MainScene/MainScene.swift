@@ -23,7 +23,7 @@ final class MainScene<Asset: AssetProtocol>:
       MainScreenVM<Asset.Design>,
       Asset,
       Void
-   >, Scenarible
+   >, Scenarible, Configurable
 {
    lazy var scenario: Scenario = MainScenario(
       works: MainWorks<Asset>(),
@@ -55,16 +55,21 @@ final class MainScene<Asset: AssetProtocol>:
    // MARK: - Start
 
    override func start() {
-      vcModel?.titleColor(Design.color.backgroundBrand)
+      vcModel?.on(\.viewDidLoad, self) {
+         $0.configure()
+      }
+   }
+
+   func configure() {
+      vcModel?
+         .statusBarStyle(.lightContent)
+         .titleColor(Design.color.backgroundBrand)
 
       mainVM.bodyStack.arrangedModels([
          ActivityIndicator<Design>(),
          Spacer()
       ])
 
-      vcModel?.on(\.viewDidLoad, self) {
-         $0.scenario.start()
-      }
       tabBarPanel.button1.setSelfMode(\.normal)
       selectedModel = 0
 
@@ -76,6 +81,8 @@ final class MainScene<Asset: AssetProtocol>:
       }
 
       hideHeader()
+
+      scenario.start()
    }
 
    private func unlockTabButtons() {
