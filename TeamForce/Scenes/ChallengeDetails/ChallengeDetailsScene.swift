@@ -77,7 +77,7 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
       .contentMode(.scaleAspectFill)
       .set(.tapGesturing)
 
-   private lazy var filterButtons = SlidedIndexButtons<Button6Event>(buttons:
+   private lazy var filterButtons = SlidedIndexButtons<Button7Event>(buttons:
       SecondaryButtonDT<Design>()
          .title("Детали")
          .font(Design.font.default),
@@ -98,7 +98,10 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
       SecondaryButtonDT<Design>()
          .title("Участники")
          .font(Design.font.default)
-         .hidden(true))
+         .hidden(true),
+      SecondaryButtonDT<Design>()
+         .title("Оценки")
+         .font(Design.font.default))
       .height(16 + 38)
       .backColor(Design.color.background)
 
@@ -120,6 +123,9 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
    private lazy var challComments = FeedCommentsBlock<Design>()
       .set(.padding(.horizontalOffset(Design.params.commonSideOffset)))
       .backColor(Design.color.background)
+   
+   private lazy var reactionsBlock = FeedReactionsBlock<Design>()
+      .set(.padding(.horizontalOffset(Design.params.commonSideOffset)))
 
    override func start() {
       super.start()
@@ -217,6 +223,8 @@ enum ChallengeDetailsState {
    case updateLikesAmount(Int)
 
    case presentCreator(Int)
+   
+   case presentReactions([ReactItem])
 }
 
 extension ChallengeDetailsScene: StateMachine {
@@ -374,6 +382,12 @@ extension ChallengeDetailsScene: StateMachine {
 
       case .presentCreator(let id):
          Asset.router?.route(.push, scene: \.profile, payload: id)
+      case .presentReactions(let reactItems):
+         reactionsBlock.setup(reactItems)
+         mainVM.footerStack
+            .arrangedModels([
+               reactionsBlock
+            ])
       }
    }
 }

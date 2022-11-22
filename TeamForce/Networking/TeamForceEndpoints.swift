@@ -716,4 +716,15 @@ enum TeamForceEndpoints {
 
        let headers: [String: String]
    }
+   
+   struct GetLikes: EndpointProtocol {
+      //
+      let method = HTTPMethod.post
+      
+      var endPoint: String { urlBase + "/get-likes/" }
+      
+      var headers: [String: String]
+
+      let jsonData: Data?
+   }
 }

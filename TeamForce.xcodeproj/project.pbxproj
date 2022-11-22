@@ -307,6 +307,8 @@
 		636AE7242923CD82004A24E5 /* ChooseOrgApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636AE7232923CD82004A24E5 /* ChooseOrgApiWorker.swift */; };
 		636AE7262923D0DB004A24E5 /* ChooseOrgUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636AE7252923D0DB004A24E5 /* ChooseOrgUseCase.swift */; };
 		636AE7292923D309004A24E5 /* ChooseOrgScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636AE7282923D309004A24E5 /* ChooseOrgScene.swift */; };
+		63794188292D09650092D325 /* GetLikesApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63794187292D09650092D325 /* GetLikesApiWorker.swift */; };
+		6379418A292D0B3F0092D325 /* GetLikesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63794189292D0B3F0092D325 /* GetLikesUseCase.swift */; };
 		6384AD7F291B6EE100188769 /* SetFcmTokenApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6384AD7E291B6EE100188769 /* SetFcmTokenApiWorker.swift */; };
 		6384AD82291B703700188769 /* SetFcmTokenUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6384AD81291B703700188769 /* SetFcmTokenUseCase.swift */; };
 		6384AD84291B89FC00188769 /* RemoveFcmTokenApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6384AD83291B89FC00188769 /* RemoveFcmTokenApiWorker.swift */; };
@@ -710,6 +712,8 @@
 		636AE7232923CD82004A24E5 /* ChooseOrgApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseOrgApiWorker.swift; sourceTree = "<group>"; };
 		636AE7252923D0DB004A24E5 /* ChooseOrgUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseOrgUseCase.swift; sourceTree = "<group>"; };
 		636AE7282923D309004A24E5 /* ChooseOrgScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseOrgScene.swift; sourceTree = "<group>"; };
+		63794187292D09650092D325 /* GetLikesApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLikesApiWorker.swift; sourceTree = "<group>"; };
+		63794189292D0B3F0092D325 /* GetLikesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLikesUseCase.swift; sourceTree = "<group>"; };
 		6384AD7E291B6EE100188769 /* SetFcmTokenApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetFcmTokenApiWorker.swift; sourceTree = "<group>"; };
 		6384AD81291B703700188769 /* SetFcmTokenUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetFcmTokenUseCase.swift; sourceTree = "<group>"; };
 		6384AD83291B89FC00188769 /* RemoveFcmTokenApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveFcmTokenApiWorker.swift; sourceTree = "<group>"; };
@@ -1682,6 +1686,7 @@
 				63BB2C2128E150CA00C1E3DB /* DeleteCommentApiWorker.swift */,
 				635FC6BB28EBE50800826B67 /* GetLikesByTransactionApiWorker.swift */,
 				631995B728F5A4D400EB2638 /* GetSendCoinSettingsApiWorker.swift */,
+				63794187292D09650092D325 /* GetLikesApiWorker.swift */,
 			);
 			path = ApiModels;
 			sourceTree = "<group>";
@@ -1732,6 +1737,7 @@
 				63BB2C2328E1513000C1E3DB /* DeleteCommentUseCase.swift */,
 				635FC6BD28EBE56400826B67 /* GetLikesByTransactionUseCase.swift */,
 				631995B928F5A56D00EB2638 /* GetSendCoinSettingsUseCase.swift */,
+				63794189292D0B3F0092D325 /* GetLikesUseCase.swift */,
 			);
 			path = ApiUseCases;
 			sourceTree = "<group>";
@@ -2238,6 +2244,7 @@
 				63BB2C1828E132E600C1E3DB /* GetCommentsUseCase.swift in Sources */,
 				19221EE828C9ADC300B7B604 /* ProfileEditScenario.swift in Sources */,
 				63BB2C0C28DA160B00C1E3DB /* PressLikeApiWorker.swift in Sources */,
+				6379418A292D0B3F0092D325 /* GetLikesUseCase.swift in Sources */,
 				1984A109291E421600F65262 /* String+MD5.swift in Sources */,
 				63CFA198289C3FB6000E4D1E /* GetTransactionsUseCase.swift in Sources */,
 				1977BE5828A7343400D554EA /* InputCheckers.swift in Sources */,
@@ -2311,6 +2318,7 @@
 				197A360D28BBB18D006E44C1 /* String+DrawImage.swift in Sources */,
 				63AB071F28C7E4D200FD650F /* CreateContactUseCase.swift in Sources */,
 				63A2234328CF924000D92615 /* GetTagByIdApiWorker.swift in Sources */,
+				63794188292D09650092D325 /* GetLikesApiWorker.swift in Sources */,
 				19A9BE7C28C2E9790099F8EA /* SendCoinRecipentCell.swift in Sources */,
 				190E18722901C11300838038 /* ManyResults.swift in Sources */,
 				19017B8228A6A3FB00B06345 /* GetUsersListApiWorker.swift in Sources */,

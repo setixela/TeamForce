@@ -75,7 +75,8 @@ extension FeedDetailViewModels: StateMachine {
       case .reactions(let items):
          reactionsBlock.setup(items)
          footerStack.arrangedModels([
-            reactionsBlock
+            reactionsBlock,
+            Spacer()
          ])
       case .loadingActivity:
          footerStack.arrangedModels([
