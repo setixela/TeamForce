@@ -49,14 +49,14 @@ final class HistoryPresenters<Design: DesignProtocol>: Designable {
                } else {
                   infoText.append(senderName.colored(Design.color.textBrand))
                   if let photoUrl = item.sender.senderPhoto {
-                     icon.url(photoUrl)
+                     icon.url(TeamForceEndpoints.urlBase + photoUrl)
                   }
                }
             } else {
                infoText.append(" для ".colored(Design.color.text))
                infoText.append(recipientName.colored(Design.color.textBrand))
                if let photoUrl = item.recipient.recipientPhoto {
-                  icon.url(photoUrl)
+                  icon.url(TeamForceEndpoints.urlBase + photoUrl)
                }
             }
          case "E", "D":
@@ -108,7 +108,8 @@ final class HistoryPresenters<Design: DesignProtocol>: Designable {
          
          let cellStack = WrappedX(
             StackModel()
-               .padding(.outline(Grid.x8.value))
+               .padding(Design.params.cellContentPadding)
+               //.padding(.outline(Grid.x8.value))
                .spacing(Grid.x12.value)
                .axis(.horizontal)
                .alignment(.center)
@@ -118,8 +119,10 @@ final class HistoryPresenters<Design: DesignProtocol>: Designable {
                   cancelButton
                ])
                .cornerRadius(Design.params.cornerRadiusSmall)
+               .backColor(Design.color.background)
+               .shadow(Design.params.cellShadow)
          )
-         .padding(.verticalOffset(Grid.x4.value))
+         .padding(.verticalOffset(Grid.x6.value))
          work.success(result: cellStack)
       }
    }
