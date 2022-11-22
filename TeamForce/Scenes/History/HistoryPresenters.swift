@@ -19,11 +19,15 @@ final class HistoryPresenters<Design: DesignProtocol>: Designable {
          
          guard let transactClass = item.transactClass?.id else {return }
          
-         let icon = ImageViewModel()
-            .contentMode(.scaleAspectFill)
-            .image(Design.icon.newAvatar)
-            .cornerRadius(Grid.x36.value / 2)
-            .size(.square(Grid.x36.value))
+         var userIconText: String = ""
+         
+//         let icon = ImageViewModel()
+//            .contentMode(.scaleAspectFill)
+//            //.image(Design.icon.newAvatar)
+//            .cornerRadius(Grid.x36.value / 2)
+//            .size(.square(Grid.x36.value))
+         
+         let icon = self.makeIcon(item: item)
          
          let amountText = "+" + item.amount + " cпасибок"
          let senderName = (item.sender.senderFirstName ?? "") + " "  + (item.sender.senderSurname ?? "")
@@ -38,6 +42,10 @@ final class HistoryPresenters<Design: DesignProtocol>: Designable {
 
          let infoText: NSMutableAttributedString = .init(string: "")
       
+         let nameFirstLetter = String(item.recipient.recipientFirstName?.first ?? "?")
+         let surnameFirstLetter = String(item.recipient.recipientSurname?.first ?? "?")
+         userIconText = nameFirstLetter + surnameFirstLetter
+         
          switch transactClass {
          case "T":
             infoText.append(amountText.colored(Design.color.textSuccess))
@@ -45,36 +53,47 @@ final class HistoryPresenters<Design: DesignProtocol>: Designable {
                infoText.append(" от ".colored(Design.color.text))
                if item.isAnonymous {
                   infoText.append("аноним".colored(Design.color.text))
-                  icon.image(Design.icon.anonAvatar)
+                  //icon.image(Design.icon.anonAvatar)
                } else {
                   infoText.append(senderName.colored(Design.color.textBrand))
-                  if let photoUrl = item.sender.senderPhoto {
-                     icon.url(TeamForceEndpoints.urlBase + photoUrl)
-                  }
+//                  if let photoUrl = item.sender.senderPhoto {
+//                     icon.url(TeamForceEndpoints.urlBase + photoUrl)
+//                  } else {
+//                     let nameFirstLetter = String(item.sender.senderFirstName?.first ?? "?")
+//                     let surnameFirstLetter = String(item.sender.senderSurname?.first ?? "?")
+//                     userIconText = String(nameFirstLetter) + String(surnameFirstLetter)
+//                     icon
+//                        .textImage(userIconText, Design.color.backgroundBrand)
+//                        .backColor(Design.color.backgroundBrand)
+//                  }
                }
             } else {
                infoText.append(" для ".colored(Design.color.text))
                infoText.append(recipientName.colored(Design.color.textBrand))
-               if let photoUrl = item.recipient.recipientPhoto {
-                  icon.url(TeamForceEndpoints.urlBase + photoUrl)
-               }
+//               if let photoUrl = item.recipient.recipientPhoto {
+//                  icon.url(TeamForceEndpoints.urlBase + photoUrl)
+//               } else {
+//                  icon
+//                     .textImage(userIconText, Design.color.backgroundBrand)
+//                     .backColor(Design.color.backgroundBrand)
+//               }
             }
          case "E", "D":
             print(item)
             infoText.append(amountText.colored(Design.color.textSuccess))
             infoText.append(" пополнение счета от системы".colored(Design.color.text))
          case "H":
-            icon.image(Design.icon.challengeAvatar)
+            //icon.image(Design.icon.challengeAvatar)
             infoText.append(amountText.colored(Design.color.textSuccess))
             infoText.append(" для взноса в челлендж ".colored(Design.color.text))
             infoText.append(challengeName.colored(Design.color.textBrand))
          case "W":
-            icon.image(Design.icon.challengeAvatar)
+            //icon.image(Design.icon.challengeAvatar)
             infoText.append(amountText.colored(Design.color.textSuccess))
             infoText.append(" награда из челленджа ".colored(Design.color.text))
             infoText.append(challengeName.colored(Design.color.textBrand))
          case "F":
-            icon.image(Design.icon.challengeAvatar)
+            //icon.image(Design.icon.challengeAvatar)
             infoText.append(amountText.colored(Design.color.textSuccess))
             infoText.append(" возврат из челленджа ".colored(Design.color.text))
             infoText.append(challengeName.colored(Design.color.textBrand))
@@ -127,6 +146,64 @@ final class HistoryPresenters<Design: DesignProtocol>: Designable {
       }
    }
 }
+
+extension HistoryPresenters {
+   func makeIcon(item: TransactionItem) -> ImageViewModel {
+      
+      let icon = ImageViewModel()
+         .contentMode(.scaleAspectFill)
+         .cornerRadius(Grid.x36.value / 2)
+         .size(.square(Grid.x36.value))
+
+      
+      switch item.transactClass?.id {
+      case "T":
+         if item.isAnonymous == false {
+            var userIconText: String = ""
+            var nameFirstLetter = String(item.recipient.recipientFirstName?.first ?? "?")
+            var surnameFirstLetter = String(item.recipient.recipientSurname?.first ?? "?")
+            var photoUrl = item.recipient.recipientPhoto
+            
+            if item.isSentTransact == false {
+               nameFirstLetter = String(item.sender.senderFirstName?.first ?? "?")
+               surnameFirstLetter = String(item.sender.senderSurname?.first ?? "?")
+               userIconText = nameFirstLetter + surnameFirstLetter
+               photoUrl = item.sender.senderPhoto
+            }
+            
+            userIconText = nameFirstLetter + surnameFirstLetter
+            
+            if let iconPhoto = photoUrl {
+               print(iconPhoto)
+               icon.url(TeamForceEndpoints.urlBase + iconPhoto, placeHolder: Design.icon.avatarPlaceholder)
+            } else {
+
+               // TODO: - сделать через .textImage
+               DispatchQueue.global(qos: .background).async {
+                  let image = userIconText.drawImage(backColor: Design.color.backgroundBrand)
+                  DispatchQueue.main.async {
+                     icon
+                        .backColor(Design.color.backgroundBrand)
+                        .image(image)
+                  }
+               }
+            }
+         } else {
+            icon.image(Design.icon.anonAvatar)
+         }
+         
+      case "E", "D":
+         icon.image(Design.icon.avatarPlaceholder)
+      case "H", "W", "F":
+         icon.image(Design.icon.challengeAvatar)
+      default:
+         icon.image(Design.icon.avatarPlaceholder)
+      }
+
+      return icon
+   }
+}
+
 
 extension HistoryPresenters: Eventable {
    struct Events: InitProtocol {
