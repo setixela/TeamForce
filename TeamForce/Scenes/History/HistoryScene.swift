@@ -33,7 +33,8 @@ final class HistoryScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>
          presentSentTransactions: viewModels.segmentedControl.onEvent(\.selected2),
          presentRecievedTransaction: viewModels.segmentedControl.onEvent(\.selected1),
          presentDetailView: viewModels.tableModel.on(\.didSelectRow),
-         cancelTransaction: viewModels.presenter.on(\.cancelButtonPressed),
+         showCancelAlert: viewModels.presenter.on(\.presentAlert),
+         cancelTransact: viewModels.presenter.on(\.cancelButtonPressed),
          pagination: viewModels.tableModel.on(\.pagination)
       )
    )
@@ -97,6 +98,7 @@ enum HistoryState {
    case presentDetailView(Transaction)
 
    case cancelTransaction
+   case cancelAlert(Int)
 }
 
 extension HistoryScene: StateMachine {
@@ -139,6 +141,26 @@ extension HistoryScene: StateMachine {
       case .cancelTransaction:
          scenario.start()
          print("transaction cancelled")
+         
+      case .cancelAlert(let id):
+         // Create Alert
+         let dialogMessage = UIAlertController(title: nil,
+                                               message: "Отменить перевод?",
+                                               preferredStyle: .alert)
+
+         let yes = UIAlertAction(title: "Да", style: .default, handler: { [weak self] (action) -> Void in
+             print("Yes button tapped")
+            self?.viewModels.presenter.send(\.cancelButtonPressed, id)
+         })
+
+         let no = UIAlertAction(title: "Нет", style: .cancel) { (action) -> Void in
+             print("No button tapped")
+         }
+
+         dialogMessage.addAction(yes)
+         dialogMessage.addAction(no)
+         
+         UIApplication.shared.keyWindow?.rootViewController?.present(dialogMessage, animated: true, completion: nil)
       }
    }
 }

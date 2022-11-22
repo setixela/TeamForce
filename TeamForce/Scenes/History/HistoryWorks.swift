@@ -20,11 +20,13 @@ protocol HistoryWorksProtocol {
 
 final class HistoryWorks<Asset: AssetProtocol>: BaseSceneWorks<HistoryWorks.Temp, Asset>, HistoryWorksProtocol {
    private lazy var useCase = Asset.apiUseCase
+   let storageUseCase = Asset.storageUseCase
 
    // Temp Storage
    final class Temp: InitProtocol {
       var userData: UserData?
       //
+      var currentUserId: Int?
       var currentUser: String?
       var transactions: [Transaction] = []
       var sections: [TableItemsSection]?
@@ -232,6 +234,23 @@ final class HistoryWorks<Asset: AssetProtocol>: BaseSceneWorks<HistoryWorks.Temp
       }
       .retainBy(retainer)
    }
+   
+   var loadUserProfileId: Work<Void, Void> {
+      .init { [weak self] work in
+         guard let self = self else { work.fail(); return }
+         
+         self.storageUseCase.getCurrentUserName
+            .doAsync()
+            .onSuccess {
+               //Self.store.currentUserName = $0
+            }
+            .doNext(self.storageUseCase.getCurrentUserId)
+            .onSuccess {
+               Self.store.currentUserId = Int($0)
+               work.success()
+            }
+      }.retainBy(retainer)
+   }
 
    var getTransactionByRowNumber: Work<(IndexPath, Int), Transaction> {
       .init { work in
@@ -388,8 +407,10 @@ private extension HistoryWorks {
             }
 
             var authorPhoto = transact.recipient?.recipientPhoto
+            
+            let isSentTransact = (transact.senderId == Self.store.currentUserId)
 
-            if transact.sender?.senderTgName != Self.store.currentUser {
+            if isSentTransact == false {
                state = .recieved
                authorPhoto = transact.sender?.senderPhoto
             }
@@ -400,7 +421,9 @@ private extension HistoryWorks {
                                                  senderTgName: nil,
                                                  senderFirstName: nil,
                                                  senderSurname: nil,
-                                                 senderPhoto: nil),
+                                                 senderPhoto: nil,
+                                                 challengeName: nil,
+                                                 challengeId: nil),
                recipient: transact.recipient ?? Recipient(recipientId: nil,
                                                           recipientTgName: nil,
                                                           recipientFirstName: nil,
@@ -410,7 +433,10 @@ private extension HistoryWorks {
                createdAt: transact.createdAt.string,
                photo: authorPhoto,
                isAnonymous: transact.isAnonymous ?? false,
-               id: transact.id
+               id: transact.id,
+               transactClass: transact.transactionClass,
+               canUserCancel: transact.canUserCancel,
+               isSentTransact: isSentTransact
             )
 
             var result = result

@@ -93,7 +93,7 @@ final class FeedPresenters<Design: DesignProtocol>: Designable {
             }
 
             let hashTagBlock = HashTagsScrollModel<Design>()
-            hashTagBlock.setup(transaction)
+            hashTagBlock.setup(transaction.tags)
 
             let infoBlock = StackModel()
                .spacing(Grid.x10.value)

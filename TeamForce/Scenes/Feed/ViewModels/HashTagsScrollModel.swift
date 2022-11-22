@@ -20,8 +20,8 @@ final class HashTagsScrollModel<Design: DSP>: ScrollViewModelX, Designable {
 }
 
 extension HashTagsScrollModel: SetupProtocol {
-   func setup(_ data: EventTransaction) {
-      let tags = (data.tags ?? []).map { tag in
+   func setup(_ data: [FeedTag]?) {
+      let tags = (data ?? []).map { tag in
          WrappedX(
             LabelModel()
                .set(Design.state.label.caption2)
