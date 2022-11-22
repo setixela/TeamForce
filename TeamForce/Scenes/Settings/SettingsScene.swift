@@ -99,7 +99,9 @@ final class SettingsScene<Asset: AssetProtocol>: BaseSceneModel<
    private lazy var useCase = Asset.apiUseCase
 
    override func start() {
-      vcModel?.on(\.viewDidLoad, self) { $0.configure() }
+      vcModel?
+         .title("Настройки")
+         .on(\.viewDidLoad, self) { $0.configure() }
    }
 
    func configure() {
