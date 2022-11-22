@@ -48,7 +48,7 @@ final class ChallengeResultWorks<Asset: AssetProtocol>: BaseSceneWorks<Challenge
       let report = ChallengeReportBody(challengeId: id,
                                        text: Self.store.inputReasonText,
                                        photo: Self.store.images.first?.resized(to: Config.imageSendSize))
-      self?.apiUseCase.CreateChallengeReport
+      self?.apiUseCase.createChallengeReport
          .doAsync(report)
          .onSuccess {
             work.success(result: $0)

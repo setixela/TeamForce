@@ -56,7 +56,7 @@ final class ChallengeResCancelWorks<Asset: AssetProtocol>: BaseSceneWorks<Challe
          text: Self.store.inputReasonText
       )
       
-      self?.apiUseCase.CheckChallengeReport
+      self?.apiUseCase.checkChallengeReport
          .doAsync(request)
          .onSuccess {
             work.success(result: $0)

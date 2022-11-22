@@ -72,7 +72,7 @@ final class TagList<Asset: AssetProtocol>: ModalDoubleStackModel<Asset> {
    private func loadTags() {
       storageUseCase.loadToken
          .doAsync()
-         .doNext(useCase.GetSendCoinSettings)
+         .doNext(useCase.getSendCoinSettings)
          .doMap {
             $0.tags
          }

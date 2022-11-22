@@ -17,7 +17,7 @@ final class ChallReportDetailsWorks<Asset: AssetProtocol>: BaseSceneWorks<ChallR
 
    var getChallengeReportById: Work<Int, ChallengeReport> { .init { [weak self] work in
       guard let id = work.input else { return }
-      self?.apiUseCase.GetChallengeReport
+      self?.apiUseCase.getChallengeReport
          .doAsync(id)
          .onSuccess {
             Self.store.report = $0

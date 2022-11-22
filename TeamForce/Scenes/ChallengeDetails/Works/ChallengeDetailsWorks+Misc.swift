@@ -47,7 +47,7 @@ extension ChallengeDetailsWorks {
 extension ChallengeDetailsWorks: ChallengeDetailsWorksProtocol {
    var getChallengeWinners: Work<Void, [ChallengeWinner]> { .init { [weak self] work in
       guard let id = Self.store.challengeId else { return }
-      self?.apiUseCase.GetChallengeWinners
+      self?.apiUseCase.getChallengeWinners
          .doAsync(id)
          .onSuccess {
             work.success(result: $0)
@@ -64,7 +64,7 @@ extension ChallengeDetailsWorks: ChallengeDetailsWorksProtocol {
       else { return }
 
       let request = CheckReportRequestBody(id: id, state: state, text: "")
-      self?.apiUseCase.CheckChallengeReport
+      self?.apiUseCase.checkChallengeReport
          .doAsync(request)
          .onSuccess {
             work.success(result: $0)

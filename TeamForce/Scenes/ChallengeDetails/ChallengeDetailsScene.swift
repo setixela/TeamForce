@@ -382,6 +382,7 @@ extension ChallengeDetailsScene: StateMachine {
 
       case .presentCreator(let id):
          Asset.router?.route(.push, scene: \.profile, payload: id)
+
       case .presentReactions(let reactItems):
          reactionsBlock.setup(reactItems)
          mainVM.footerStack

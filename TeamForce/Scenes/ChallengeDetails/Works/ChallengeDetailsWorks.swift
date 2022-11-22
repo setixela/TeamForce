@@ -53,7 +53,7 @@ final class ChallengeDetailsWorks<Asset: AssetProtocol>: BaseSceneWorks<Challeng
 
    var getChallengeById: Work<Void, Challenge> { .init { [weak self] work in
       guard let id = Self.store.challengeId else { return }
-      self?.apiUseCase.GetChallengeById
+      self?.apiUseCase.getChallengeById
          .doAsync(id)
          .onSuccess {
             Self.store.challenge = $0
@@ -67,7 +67,7 @@ final class ChallengeDetailsWorks<Asset: AssetProtocol>: BaseSceneWorks<Challeng
 
    lazy var getChallengeResult: Work<Void, [ChallengeResult]> = .init { [weak self] work in
       guard let id = Self.store.challengeId else { return }
-      self?.apiUseCase.GetChallengeResult
+      self?.apiUseCase.getChallengeResult
          .doAsync(id)
          .onSuccess {
             work.success($0)
@@ -79,7 +79,8 @@ final class ChallengeDetailsWorks<Asset: AssetProtocol>: BaseSceneWorks<Challeng
 
    lazy var getChallengeContenders: Work<Void, [Contender]> = .init { [weak self] work in
       guard let id = Self.store.challengeId else { return }
-      self?.apiUseCase.GetChallengeContenders
+
+      self?.apiUseCase.getChallengeContenders
          .doAsync(id)
          .onSuccess {
             Self.store.contenders = $0
@@ -92,7 +93,7 @@ final class ChallengeDetailsWorks<Asset: AssetProtocol>: BaseSceneWorks<Challeng
 
    lazy var getChallengeWinnersReports: Work<Void, [ChallengeWinnerReport]> = .init { [weak self] work in
       guard let id = Self.store.challengeId else { return }
-      self?.apiUseCase.GetChallengeWinnersReports
+      self?.apiUseCase.getChallengeWinnersReports
          .doAsync(id)
          .onSuccess {
             Self.store.winnersReports = $0
