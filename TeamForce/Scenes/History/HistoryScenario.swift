@@ -15,7 +15,8 @@ struct HistoryScenarioEvents {
    let presentSentTransactions: WorkVoid<Void>
    let presentRecievedTransaction: WorkVoid<Void>
    let presentDetailView: WorkVoid<(IndexPath, Int)>
-   let cancelTransaction: WorkVoid<Int>
+   let showCancelAlert: WorkVoid<Int>
+   let cancelTransact: WorkVoid<Int>
    
    let pagination: WorkVoid<Bool>
 }
@@ -52,7 +53,10 @@ final class HistoryScenario<Asset: AssetProtocol>:
          .doNext(works.getTransactionByRowNumber)
          .onSuccess(setState) { .presentDetailView($0)}
       
-      events.cancelTransaction
+      events.showCancelAlert
+         .onSuccess(setState) { .cancelAlert($0) }
+      
+      events.cancelTransact
          .doNext(works.cancelTransactionById)
          .onSuccess(setState) { .cancelTransaction }
          .onFail {

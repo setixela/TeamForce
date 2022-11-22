@@ -98,7 +98,7 @@ final class HistoryPresenters<Design: DesignProtocol>: Designable {
 //         }
          
          cancelButton.view.on(\.didTap, self) {
-            $0.send(\.cancelButtonPressed, item.id ?? 0)
+            $0.send(\.presentAlert, item.id ?? 0)
          }
          
          if item.canUserCancel == true {
@@ -130,6 +130,7 @@ final class HistoryPresenters<Design: DesignProtocol>: Designable {
 
 extension HistoryPresenters: Eventable {
    struct Events: InitProtocol {
+      var presentAlert: Int?
       var cancelButtonPressed: Int?
    }
 }
