@@ -87,11 +87,9 @@ extension MainScreenVM: StateMachine {
       case .hideHeaderTitle:
          header.alpha(0)
          header.hidden(true)
-         header.view.layoutIfNeeded()
       case .presentHeaderTitle:
          header.hidden(false)
          header.alpha(1)
-         header.view.layoutIfNeeded()
       }
    }
 
