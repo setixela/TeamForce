@@ -33,7 +33,7 @@ struct Config {
    #else
    static let httpTimeout: TimeInterval = 30
    #endif
-   
+
    static let baseAspectWidth: CGFloat = 360
    static var sizeAspectCoeficient: CGFloat { UIScreen.main.bounds.width / baseAspectWidth }
 
@@ -58,5 +58,24 @@ extension Int {
 
    var aspectInverted: CGFloat {
       CGFloat(self) / Config.sizeAspectCoeficient
+   }
+}
+
+extension Config {
+   enum AppMode {
+      case debug
+      case testFlight
+      case production
+   }
+
+   static var appMode: AppMode {
+      #if DEBUG
+      return .debug
+      #else
+      guard let path = appStoreReceiptURL?.path, !path.contains("sandboxReceipt") else {
+         return .production
+      }
+      return .testFlight
+      #endif
    }
 }

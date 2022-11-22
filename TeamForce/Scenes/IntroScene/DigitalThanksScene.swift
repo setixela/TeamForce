@@ -76,27 +76,29 @@ final class DigitalThanksScene<Asset: AssetProtocol>: BaseSceneModel<
             enterButton
          ])
 
-      vcModel?.on(\.motionEnded, self) { slf, event in
-         switch event {
-         case .motionShake:
-            slf.popupTable.models([
-               slf.debugLabel,
-               slf.prodLabel,
-               Spacer(64)
-            ])
-            slf.popup.send(\.presentAuto, (slf.popupTable, onView: slf.vcModel?.view.superview))
-         default:
-            break
-         }
-
-         slf.popupTable.onEvent(\.didSelectRow) {
-            switch $0.row {
-            case 0:
-               Config.setDebugMode(true)
+      if Config.appMode != .production {
+         vcModel?.on(\.motionEnded, self) { slf, event in
+            switch event {
+            case .motionShake:
+               slf.popupTable.models([
+                  slf.debugLabel,
+                  slf.prodLabel,
+                  Spacer(64)
+               ])
+               slf.popup.send(\.presentAuto, (slf.popupTable, onView: slf.vcModel?.view.superview))
             default:
-               Config.setDebugMode(false)
+               break
             }
-            slf.popup.send(\.hide)
+
+            slf.popupTable.onEvent(\.didSelectRow) {
+               switch $0.row {
+               case 0:
+                  Config.setDebugMode(true)
+               default:
+                  Config.setDebugMode(false)
+               }
+               slf.popup.send(\.hide)
+            }
          }
       }
    }
