@@ -72,7 +72,7 @@ extension FeedDetailsBlock: SetupProtocol {
       }
 
       if data.tags?.isEmpty == false {
-         hashTagBlock.setup(data)
+         hashTagBlock.setup(data.tags)
          hashTagBlock.hidden(false)
       }
 
