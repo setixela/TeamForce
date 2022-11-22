@@ -59,7 +59,7 @@ final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<Challen
          .doVoidNext(works.amIOwnerCheck)
          .onSuccess(setState, .enableContenders)
          .onFail {
-           print("fail")
+            print("fail")
          }
          .doRecover()
          .doVoidNext(works.getChallengeResult)
@@ -125,9 +125,10 @@ final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<Challen
 
             case .result6:
                break
+
             case .result7(let value):
                guard !value.isEmpty else { stateFunc(.hereIsEmpty); return }
-               
+
                stateFunc(.presentReactions(value))
             }
          }
@@ -145,7 +146,11 @@ final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<Challen
          .doMap { (CheckReportRequestBody.State.W, $0) }
          .doNext(works.checkChallengeReport)
          .doNext(works.getChallengeContenders)
-         .onSuccess(setState) { .presentContenders($0) }
+         .onSuccess { [weak self] contenders in
+            guard !contenders.isEmpty else { self?.setState(.hereIsEmpty); return }
+
+            self?.setState(.presentContenders(contenders))
+         }
          .onFail { assertionFailure("fail") }
 
       events.didSelectWinnerIndex

@@ -82,7 +82,7 @@ final class TransactWorks<Asset: AssetProtocol>: BaseSceneWorks<TransacrtTempSto
    }.retainBy(retainer) }
 
    var getSettings: Work<Void, SendCoinSettings> { .init { [weak self] work in
-      self?.apiUseCase.GetSendCoinSettings
+      self?.apiUseCase.getSendCoinSettings
          .doAsync(Self.store.tokens.token)
          .onSuccess {
             work.success(result: $0)

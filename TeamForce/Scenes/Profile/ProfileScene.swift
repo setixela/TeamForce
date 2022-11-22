@@ -103,6 +103,10 @@ class ProfileScene<Asset: AssetProtocol>: BaseSceneModel<
    }
 
    private func configureModels() {
+      mainVM.headerStack
+         .arrangedModels(
+            Grid.x64.spacer
+         )
       mainVM.bodyStack
          .set(.backColor(Design.color.backgroundSecondary))
          .set(.axis(.vertical))

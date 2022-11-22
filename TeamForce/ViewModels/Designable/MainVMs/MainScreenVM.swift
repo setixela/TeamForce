@@ -92,6 +92,5 @@ extension MainScreenVM: StateMachine {
          header.alpha(1)
       }
    }
-
 }
 

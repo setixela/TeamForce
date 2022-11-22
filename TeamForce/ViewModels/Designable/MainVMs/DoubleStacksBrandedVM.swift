@@ -25,7 +25,7 @@ final class BrandDoubleStackVM<Design: DesignProtocol>: Combos<SComboMD<StackMod
             .backColor(Design.color.backgroundBrand)
             .alignment(.leading)
             .arrangedModels([
-               Grid.x64.spacer
+               Grid.x8.spacer
             ])
       } setDown: {
          $0

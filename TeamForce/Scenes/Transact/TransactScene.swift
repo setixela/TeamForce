@@ -185,7 +185,7 @@ final class TransactScene<Asset: AssetProtocol>: ModalDoubleStackModel<Asset>, S
    private func loadTags() {
       storageUseCase.loadToken
          .doAsync()
-         .doNext(useCase.GetSendCoinSettings)
+         .doNext(useCase.getSendCoinSettings)
          .doMap {
             $0.tags
          }

@@ -86,7 +86,7 @@ extension ChallengesScene: StateMachine {
          viewModel.setState(.presentChallenges(challenges))
       case .presentChallengeDetails(let value):
          Asset.router?.route(
-            .presentModally(.automatic),
+            .push,
             scene: \.challengeDetails,
             payload: ChallengeDetailsInput.byChallenge(value.challenge)
          )

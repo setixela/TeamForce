@@ -323,6 +323,8 @@ extension MainScene {
          UIView.animate(withDuration: headerAnimationDuration) {
             self.mainVM.setState(.presentHeaderTitle)
             self.mainVM.view.layoutIfNeeded()
+         } completion: { _ in
+            self.mainVM.setState(.presentHeaderTitle)
          }
       } else {
          mainVM.setState(.presentHeaderTitle)

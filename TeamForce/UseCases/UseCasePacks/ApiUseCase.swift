@@ -298,7 +298,7 @@ final class ApiUseCase<Asset: AssetProtocol>: InitProtocol, Assetable, WorkBaske
       .retainedWork(retainer)
    }
    
-   var GetChallengeById: GetChallengeByIdUseCase.WRK {
+   var getChallengeById: GetChallengeByIdUseCase.WRK {
       GetChallengeByIdUseCase(
          safeStringStorage: safeStringStorage,
          getChallengeByIdApiWorker: getChallengeByIdApiWorker
@@ -306,7 +306,7 @@ final class ApiUseCase<Asset: AssetProtocol>: InitProtocol, Assetable, WorkBaske
       .retainedWork(retainer)
    }
    
-   var GetChallengeContenders: GetChallengeContendersUseCase.WRK {
+   var getChallengeContenders: GetChallengeContendersUseCase.WRK {
       GetChallengeContendersUseCase(
          safeStringStorage: safeStringStorage,
          getChallengeContendersApiWorker: getChallengeContendersApiWorker
@@ -322,7 +322,7 @@ final class ApiUseCase<Asset: AssetProtocol>: InitProtocol, Assetable, WorkBaske
       .retainedWork(retainer)
    }
    
-   var GetChallengeWinners: GetChallengeWinnersUseCase.WRK {
+   var getChallengeWinners: GetChallengeWinnersUseCase.WRK {
       GetChallengeWinnersUseCase(
          safeStringStorage: safeStringStorage,
          getChallengeWinnersApiWorker: getChallengeWinnersApiWorker
@@ -330,7 +330,7 @@ final class ApiUseCase<Asset: AssetProtocol>: InitProtocol, Assetable, WorkBaske
       .retainedWork(retainer)
    }
    
-   var CreateChallengeReport: CreateChallengeReportUseCase.WRK {
+   var createChallengeReport: CreateChallengeReportUseCase.WRK {
       CreateChallengeReportUseCase(
          safeStringStorage: safeStringStorage,
          createChallengeReportApiWorker: createChallengeReportApiWorker
@@ -338,7 +338,7 @@ final class ApiUseCase<Asset: AssetProtocol>: InitProtocol, Assetable, WorkBaske
       .retainedWork(retainer)
    }
    
-   var CheckChallengeReport: CheckChallengeReportUseCase.WRK {
+   var checkChallengeReport: CheckChallengeReportUseCase.WRK {
       CheckChallengeReportUseCase(
          safeStringStorage: safeStringStorage,
          checkChallengeReportApiWorker: checkChallengeReportApiWorker
@@ -346,14 +346,14 @@ final class ApiUseCase<Asset: AssetProtocol>: InitProtocol, Assetable, WorkBaske
       .retainedWork(retainer)
    }
    
-   var GetSendCoinSettings: GetSendCoinSettingsUseCase.WRK {
+   var getSendCoinSettings: GetSendCoinSettingsUseCase.WRK {
       GetSendCoinSettingsUseCase(
          getSendCoinSettingsApiWorker: getSendCoinSettingsApiWorker
       )
       .retainedWork(retainer)
    }
    
-   var GetChallengeResult: GetChallengeResultUseCase.WRK {
+   var getChallengeResult: GetChallengeResultUseCase.WRK {
       GetChallengeResultUseCase(
          safeStringStorage: safeStringStorage,
          getChallengeResultApiWorker: getChallengeResultApiWorker
@@ -361,7 +361,7 @@ final class ApiUseCase<Asset: AssetProtocol>: InitProtocol, Assetable, WorkBaske
       .retainedWork(retainer)
    }
    
-   var GetChallengeWinnersReports: GetChallWinnersReportsUseCase.WRK {
+   var getChallengeWinnersReports: GetChallWinnersReportsUseCase.WRK {
       GetChallWinnersReportsUseCase(
          safeStringStorage: safeStringStorage,
          getChallWinnersReportsApiWorker: getChallWinnersReportsApiWorker
@@ -369,7 +369,7 @@ final class ApiUseCase<Asset: AssetProtocol>: InitProtocol, Assetable, WorkBaske
       .retainedWork(retainer)
    }
    
-   var GetChallengeReport: GetChallengeReportUseCase.WRK {
+   var getChallengeReport: GetChallengeReportUseCase.WRK {
       GetChallengeReportUseCase(
          safeStringStorage: safeStringStorage,
          getChallengeReportApiWorker: getChallengeReportApiWorker
