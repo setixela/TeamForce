@@ -72,7 +72,7 @@ extension Config {
       #if DEBUG
       return .debug
       #else
-      guard let path = appStoreReceiptURL?.path, !path.contains("sandboxReceipt") else {
+      guard let path = Bundle.main.appStoreReceiptURL?.path, !path.contains("sandboxReceipt") else {
          return .production
       }
       return .testFlight
