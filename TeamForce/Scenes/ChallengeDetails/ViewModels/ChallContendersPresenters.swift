@@ -94,34 +94,17 @@ class ChallContendersPresenters<Design: DesignProtocol>: Designable {
             .backColor(Design.color.backgroundBrand)
             .title("Отклонить")
             .font(Design.font.default)
-            .padding(.sideOffset(Grid.x14.value))
+            .padding(.horizontalOffset(Grid.x14.value))
             .height(Design.params.buttonHeightSmall)
             .cornerRadius(Design.params.cornerRadiusSmall)
-
-//         let rejectButton1 = ReactionButton<Design>()
-//            .setAll {
-//               $0.hidden(true)
-//               $1.text("Отклонить")
-//            }
-//            .height(Design.params.buttonHeightSmall)
-//
-//         let acceptButton1 = ReactionButton<Design>()
-//            .setAll {
-//               $0.hidden(true)
-//               $1.text("Подтвердить")
-//            }
-//            .height(Design.params.buttonHeightSmall)
          
          let acceptButton = ButtonModel()
             .set(Design.state.button.default)
             .title("Подтвердить")
             .font(Design.font.default)
-            .padding(.sideOffset(Grid.x14.value))
+            .padding(.horizontalOffset(Grid.x14.value))
             .height(Design.params.buttonHeightSmall)
             .cornerRadius(Design.params.cornerRadiusSmall)
-
-         //acceptButton.view.startTapGestureRecognize()
-         //rejectButton.view.startTapGestureRecognize()
 
          rejectButton.view.on(\.didTap, self) {
             $0.send(\.rejectPressed, reportId)
@@ -131,7 +114,7 @@ class ChallContendersPresenters<Design: DesignProtocol>: Designable {
             $0.send(\.acceptPressed, reportId)
          }
 
-         var buttonsStack = StackModel()
+         let buttonsStack = StackModel()
             .padding(.outline(Grid.x8.value))
             .spacing(Grid.x12.value)
             .axis(.horizontal)

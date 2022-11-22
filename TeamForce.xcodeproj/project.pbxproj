@@ -123,7 +123,7 @@
 		1974471E2911ABC00089BB2B /* ChallengeCellInfoBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1974471D2911ABC00089BB2B /* ChallengeCellInfoBlock.swift */; };
 		197447202911ABEC0089BB2B /* ChallengeCellStatusBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1974471F2911ABEC0089BB2B /* ChallengeCellStatusBlock.swift */; };
 		197447222911AC340089BB2B /* ChallengeCellPresenters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197447212911AC340089BB2B /* ChallengeCellPresenters.swift */; };
-		197447242911AC6A0089BB2B /* CreateChallengePanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197447232911AC6A0089BB2B /* CreateChallengePanel.swift */; };
+		197447242911AC6A0089BB2B /* ChallengesFilterButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197447232911AC6A0089BB2B /* ChallengesFilterButtons.swift */; };
 		197447262912EDB20089BB2B /* Configurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197447252912EDB20089BB2B /* Configurable.swift */; };
 		1974472A2913481C0089BB2B /* ChekInternetWorks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197447292913481C0089BB2B /* ChekInternetWorks.swift */; };
 		1977518D28A8329F006CFAF3 /* ReactiveWorks in Frameworks */ = {isa = PBXBuildFile; productRef = 1977518C28A8329F006CFAF3 /* ReactiveWorks */; };
@@ -530,7 +530,7 @@
 		1974471D2911ABC00089BB2B /* ChallengeCellInfoBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeCellInfoBlock.swift; sourceTree = "<group>"; };
 		1974471F2911ABEC0089BB2B /* ChallengeCellStatusBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeCellStatusBlock.swift; sourceTree = "<group>"; };
 		197447212911AC340089BB2B /* ChallengeCellPresenters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeCellPresenters.swift; sourceTree = "<group>"; };
-		197447232911AC6A0089BB2B /* CreateChallengePanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateChallengePanel.swift; sourceTree = "<group>"; };
+		197447232911AC6A0089BB2B /* ChallengesFilterButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengesFilterButtons.swift; sourceTree = "<group>"; };
 		197447252912EDB20089BB2B /* Configurable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configurable.swift; sourceTree = "<group>"; };
 		197447292913481C0089BB2B /* ChekInternetWorks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChekInternetWorks.swift; sourceTree = "<group>"; };
 		19775FFD28C5922B008DF8E0 /* ImagePickingScenario.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickingScenario.swift; sourceTree = "<group>"; };
@@ -998,7 +998,7 @@
 				1974471D2911ABC00089BB2B /* ChallengeCellInfoBlock.swift */,
 				1974471F2911ABEC0089BB2B /* ChallengeCellStatusBlock.swift */,
 				197447212911AC340089BB2B /* ChallengeCellPresenters.swift */,
-				197447232911AC6A0089BB2B /* CreateChallengePanel.swift */,
+				197447232911AC6A0089BB2B /* ChallengesFilterButtons.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -2092,7 +2092,7 @@
 				631995B428F53F7600EB2638 /* ChallengeCreateWorks.swift in Sources */,
 				19AE3AEF28691B2E00A0C6E4 /* MainScene.swift in Sources */,
 				636AE7222923BCEE004A24E5 /* VerifyViewModels.swift in Sources */,
-				197447242911AC6A0089BB2B /* CreateChallengePanel.swift in Sources */,
+				197447242911AC6A0089BB2B /* ChallengesFilterButtons.swift in Sources */,
 				197A2DA428A9BF4B00190656 /* Combos.swift in Sources */,
 				19F15389289964D200ECF000 /* ApiUseCase.swift in Sources */,
 				19C1E98F285F426B00E7976D /* TeamForceApi.swift in Sources */,

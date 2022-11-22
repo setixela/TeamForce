@@ -34,7 +34,7 @@ final class CurrencyButtonDT<Design: DSP>: CurrencyLabelDT<Design>, Eventable, M
 
       height(Design.params.buttonHeightSmall)
       cornerRadius(Design.params.cornerRadiusMini)
-      padding(.sideOffset(Grid.x10.value))
+      padding(.horizontalOffset(Grid.x10.value))
       onModeChanged(\.normal) { [weak self] in
          self?.backColor(Design.color.backgroundBrandSecondary)
          self?.label.textColor(Design.color.textError)

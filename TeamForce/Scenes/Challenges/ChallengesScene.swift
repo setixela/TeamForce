@@ -41,12 +41,13 @@ final class ChallengesScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtend
       .title("Создать челлендж")
       .shadow(Design.params.cellShadow)
 
-   private lazy var filterButtons = CreateChallengePanel<Design>()
+   private lazy var filterButtons = ChallengesFilterButtons<Design>()
    private lazy var viewModel = ChallengesViewModel<Design>()
    private lazy var activity = ActivityIndicator<Design>()
    private lazy var errorBlock = CommonErrorBlock<Design>()
 
    override func start() {
+      padding(.horizontalOffset(16))
       setState(.initial)
 
       viewModel.challengesTable

@@ -36,7 +36,7 @@ final class TagsOptionsPanel<Design: DSP>: M<ScrollViewModelX>.D<TitleIconX>.Com
             .height(48)
             .distribution(.fill)
             .alignment(.center)
-            .padding(.sideOffset(16))
+            .padding(.horizontalOffset(16))
       }
    }
 

@@ -11,7 +11,7 @@ final class SecondaryButtonDT<Design: DSP>: ModableButton, Designable {
    override func start() {
       super.start()
 
-      padding(.sideOffset(Grid.x14.value))
+      padding(.horizontalOffset(Grid.x14.value))
       height(Design.params.buttonHeightSmall)
       cornerRadius(Design.params.cornerRadiusSmall)
       shadow(Design.params.cellShadow)

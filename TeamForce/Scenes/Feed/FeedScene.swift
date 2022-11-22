@@ -58,7 +58,7 @@ extension FeedScene: Configurable {
       bodyStack.arrangedModels([
          viewModels.filterButtons,
       ])
-      .padding(.horizontalOffset(8))
+      .padding(.horizontalOffset(16))
       .padBottom(8)
 
       footerStack.arrangedModels([

@@ -21,6 +21,7 @@ struct HistoryViewModels<Design: DesignProtocol>: Designable {
          SegmentButton<Design>.withTitle("Отправлено"),
       ]))
       .set(.selected(0))
+      .padding(.horizontalOffset(16))
    
    lazy var presenter = HistoryPresenters<Design>()
 }

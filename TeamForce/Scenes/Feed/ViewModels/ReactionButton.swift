@@ -20,7 +20,7 @@ final class ReactionButton<Design: DSP>: M<ImageViewModel>.R<LabelModel>.Combo, 
       cornerRadius(Design.params.cornerRadiusMini)
       width(55)
       height(34)
-      padding(.sideOffset(12))
+      padding(.horizontalOffset(12))
 
       setState(.none)
    }

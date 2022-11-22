@@ -7,7 +7,7 @@
 
 import ReactiveWorks
 
-final class CreateChallengePanel<Design: DSP>: StackModel, Designable {
+final class ChallengesFilterButtons<Design: DSP>: StackModel, Designable {
    var events: EventsStore = .init()
 
    private lazy var filterButtons = SlidedIndexButtons<Button2Event>(buttons:
@@ -36,7 +36,7 @@ final class CreateChallengePanel<Design: DSP>: StackModel, Designable {
    }
 }
 
-extension CreateChallengePanel: Eventable {
+extension ChallengesFilterButtons: Eventable {
    struct Events: InitProtocol {
       var didTapFilterAll: Void?
       var didTapFilterActive: Void?

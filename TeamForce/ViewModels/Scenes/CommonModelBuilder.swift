@@ -37,7 +37,7 @@ struct CommonBuilder<Design: DSP>: CommonModelBuilder {
       .init()
       .alignment(.center)
       .height(Grid.x64.value)
-      .padding(.sideOffset(-Design.params.commonSideOffset))
+      .padding(.horizontalOffset(-Design.params.commonSideOffset))
       .arrangedModels([
          ViewModel()
             .height(Grid.x4.value)

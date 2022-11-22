@@ -118,6 +118,7 @@ final class BalanceScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>
       axis(.vertical)
       distribution(.fill)
       alignment(.fill)
+      padding(.horizontalOffset(16))
       arrangedModels([
          scrollWrapper
       ])

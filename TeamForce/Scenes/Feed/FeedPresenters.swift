@@ -124,7 +124,7 @@ final class FeedPresenters<Design: DesignProtocol>: Designable {
                   .backColor(backColor)
                   .cornerRadius(Design.params.cornerRadiusSmall)
             )
-            .padding(.verticalOffset(Grid.x4.value))
+            .padding(.init(top: 8, left: 16, bottom: 8, right: 16))
 
             work.success(result: cellStack)
 
@@ -153,7 +153,7 @@ final class FeedPresenters<Design: DesignProtocol>: Designable {
                   ])
                   .cornerRadius(Design.params.cornerRadiusSmall)
             )
-            .padding(.verticalOffset(Grid.x4.value))
+            .padding(.init(top: 8, left: 16, bottom: 8, right: 16))
 
             work.success(result: cellStack)
 
@@ -186,7 +186,7 @@ final class FeedPresenters<Design: DesignProtocol>: Designable {
                   ])
                   .cornerRadius(Design.params.cornerRadiusSmall)
             )
-            .padding(.verticalOffset(Grid.x4.value))
+            .padding(.init(top: 8, left: 16, bottom: 8, right: 16))
 
             work.success(result: cellStack)
          }
@@ -212,7 +212,7 @@ extension FeedPresenters {
 
       return dateLabel
    }
-   
+
    static func makeInfoDateLabelForTransaction(transaction: EventTransaction) -> LabelModel {
       let dateAgoText = transaction.updatedAt?.timeAgoConverted
       var eventText = ""
@@ -366,7 +366,7 @@ enum FeedTransactType {
       }
       return .someGotAmountFromSome
    }
-   
+
    static func makeForTransaction(transaction: EventTransaction, currentUserName: String) -> Self {
       if transaction.recipientTgName == currentUserName {
          if transaction.isAnonymous ?? false {
