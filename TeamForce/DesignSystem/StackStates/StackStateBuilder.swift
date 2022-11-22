@@ -17,7 +17,8 @@ protocol StackStatesProtocol: InitProtocol, Designable {
    var bottomShadowedPanel: [StackState] { get }
    var bottomTabBar: [StackState] { get }
 
-   var bodyStack: [StackState] { get }
+   var bodyStackVerticalPadded: [StackState] { get }
+   var bodyStackOutlinePadded: [StackState] { get }
 
    var inputContent: [StackState] { get }
 
@@ -81,7 +82,17 @@ struct StackStateBuilder<Design: DesignProtocol>: StackStatesProtocol {
       .spacing(0)
    ] }
 
-   var bodyStack: [StackState] { [
+   var bodyStackVerticalPadded: [StackState] { [
+      .axis(.vertical),
+      .alignment(.fill),
+      .distribution(.fill),
+      .backColor(Design.color.background),
+      .padding(UIEdgeInsets(top: 30, left: 0, bottom: 16, right: 0)),
+      .cornerRadius(Design.params.cornerRadiusMedium),
+      .shadow(.init(radius: 8, color: Design.color.iconContrast, opacity: 0.33))
+   ] }
+
+   var bodyStackOutlinePadded: [StackState] { [
       .axis(.vertical),
       .alignment(.fill),
       .distribution(.fill),

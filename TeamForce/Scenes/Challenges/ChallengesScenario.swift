@@ -48,17 +48,5 @@ final class ChallengesScenario<Asset: AssetProtocol>:
 
       events.createChallenge
          .onSuccess(setState, .presentCreateChallenge)
-      
-//      let input = ChallengeRequestBody(name: "Challenge 13", description: "some description", startBalance: 1)
-//      works.createChallenge
-//         .doAsync(input)
-//         .onSuccess {
-//            print("created challenge")
-//         }
-//         .onFail {
-//            print("not created challenge")
-//         }
-//
-
    }
 }

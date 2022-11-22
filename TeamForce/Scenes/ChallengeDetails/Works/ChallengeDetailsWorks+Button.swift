@@ -10,7 +10,7 @@ import Foundation
 import ReactiveWorks
 
 extension ChallengeDetailsWorks {
-   var filterButtonWork: Work<Button6Event, Button6Result> { .init { [weak self] work in
+   var filterButtonWork: Work<Button7Event, Button7Result> { .init { [weak self] work in
       guard let self, let button = work.input else { return }
 
       // TODO: - В документации не забыть написать про возможную ошибку в очереди асинк синк
@@ -22,7 +22,8 @@ extension ChallengeDetailsWorks {
                self.getChallengeResult,
                self.getChallengeContenders,
                self.getChallengeWinnersReports,
-               self.getComments
+               self.getComments,
+               self.getLikesByChallenge
             )
             .doAsync()
             .onSuccess { work.success(.result1($0)) }
@@ -34,7 +35,8 @@ extension ChallengeDetailsWorks {
                self.getChallengeById,
                self.getChallengeContenders,
                self.getChallengeWinnersReports,
-               self.getComments
+               self.getComments,
+               self.getLikesByChallenge
             )
             .doAsync()
             .onSuccess { work.success(.result2($0)) }
@@ -46,7 +48,8 @@ extension ChallengeDetailsWorks {
                self.getChallengeById,
                self.getChallengeResult,
                self.getChallengeWinnersReports,
-               self.getComments
+               self.getComments,
+               self.getLikesByChallenge
             )
             .doAsync()
             .onSuccess {
@@ -63,7 +66,8 @@ extension ChallengeDetailsWorks {
                self.getChallengeById,
                self.getChallengeResult,
                self.getChallengeContenders,
-               self.getComments
+               self.getComments,
+               self.getLikesByChallenge
             )
             .doAsync()
             .onSuccess { work.success(.result4($0)) }
@@ -75,13 +79,26 @@ extension ChallengeDetailsWorks {
                self.getChallengeById,
                self.getChallengeResult,
                self.getChallengeWinnersReports,
-               self.getChallengeContenders
+               self.getChallengeContenders,
+               self.getLikesByChallenge
             )
             .doAsync()
             .onSuccess { work.success(.result5($0)) }
             .onFail { work.fail() }
       case .didTapButton6:
          break
+      case .didTapButton7:
+         self.getLikesByChallenge
+            .doCancel(
+               self.getChallengeById,
+               self.getChallengeResult,
+               self.getChallengeWinnersReports,
+               self.getChallengeContenders,
+               self.getComments
+            )
+            .doAsync()
+            .onSuccess { work.success(.result7($0)) }
+            .onFail { work.fail() }
       }
    }.retainBy(retainer) }
 }

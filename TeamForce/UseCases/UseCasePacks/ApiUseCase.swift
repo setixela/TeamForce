@@ -479,7 +479,16 @@ final class ApiUseCase<Asset: AssetProtocol>: InitProtocol, Assetable, WorkBaske
    var chooseOrganization: ChooseOrgUseCase.WRK {
       ChooseOrgUseCase(
          chooseOrgApiWorker: chooseOrgApiWorker
-      ).retainedWork(retainer)
+      )
+      .retainedWork(retainer)
+   }
+   
+   var getLikes: GetLikesUseCase.WRK {
+      GetLikesUseCase(
+         safeStringStorage: safeStringStorage,
+         getLikesApiWorker: getLikesApiWorker
+      )
+      .retainedWork(retainer)
    }
    
    // MARK: - Dependencies
@@ -565,4 +574,5 @@ final class ApiUseCase<Asset: AssetProtocol>: InitProtocol, Assetable, WorkBaske
    private var changeOrgVerifyApiWorker: ChangeOrgVerifyApiWorker {
       .init(apiEngine: Asset.service.apiEngine) }
    private var chooseOrgApiWorker: ChooseOrgApiWorker { .init(apiEngine: Asset.service.apiEngine) }
+   private var getLikesApiWorker: GetLikesApiWorker { .init(apiEngine: Asset.service.apiEngine) }
 }

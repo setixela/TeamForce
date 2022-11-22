@@ -92,7 +92,7 @@ struct ProfileBuilder<Design: DSP>: ProfileModelBuilder {
       }
       .borderColor(Design.color.iconMidpoint)
       .borderWidth(1.0)
-      .padding(.sideOffset(16))
+      .padding(.horizontalOffset(16))
       .cornerRadius(Design.params.cornerRadiusSmall)
       .alignment(.fill)
       .height(Grid.x48.value)
@@ -112,7 +112,7 @@ struct ProfileBuilder<Design: DSP>: ProfileModelBuilder {
                .padBottom(Grid.x8.value)
          }
          .backColor(Design.color.backgroundInfoSecondary)
-         .padding(.sideOffset(16))
+         .padding(.horizontalOffset(16))
          .cornerRadius(Design.params.cornerRadiusSmall)
          .alignment(.fill)
       .height(Grid.x48.value) }

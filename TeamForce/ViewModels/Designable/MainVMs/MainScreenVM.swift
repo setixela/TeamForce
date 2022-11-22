@@ -65,7 +65,7 @@ final class MainScreenVM<Design: DesignProtocol>:
             .padding(.top(-Grid.x16.value))
             .padBottom(-88.aspected)
             .subModel
-            .set(Design.state.stack.bodyStack)
+            .set(Design.state.stack.bodyStackVerticalPadded)
             .safeAreaOffsetDisabled()
       } setDown2: { _ in }
       

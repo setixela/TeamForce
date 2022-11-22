@@ -305,8 +305,10 @@ extension MainScene {
       if isAnimated {
          UIView.animate(withDuration: headerAnimationDuration) {
             self.mainVM.setState(.hideHeaderTitle)
+            self.mainVM.view.layoutIfNeeded()
          } completion: { _ in
             self.vcModel?.titleColor(Design.color.textInvert)
+            self.mainVM.view.layoutIfNeeded()
          }
       } else {
          mainVM.setState(.hideHeaderTitle)
@@ -320,6 +322,7 @@ extension MainScene {
       if isAnimated {
          UIView.animate(withDuration: headerAnimationDuration) {
             self.mainVM.setState(.presentHeaderTitle)
+            self.mainVM.view.layoutIfNeeded()
          }
       } else {
          mainVM.setState(.presentHeaderTitle)

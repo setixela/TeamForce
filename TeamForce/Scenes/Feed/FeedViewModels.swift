@@ -28,7 +28,8 @@ final class FeedViewModels<Design: DSP>: BaseModel, Designable, Stateable {
          .title("Победители")
          .font(Design.font.default)
          .height(16 + 38)
-         .backColor(Design.color.background))
+         .backColor(Design.color.background)
+   )
 
    lazy var presenter = FeedPresenters<Design>()
 

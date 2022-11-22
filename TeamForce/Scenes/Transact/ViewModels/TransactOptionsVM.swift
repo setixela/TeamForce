@@ -135,7 +135,7 @@ final class TagCloudButton<Design: DSP>: M<ImageViewModel>.R<LabelModel>.Combo, 
       backColor(Design.color.background)
       cornerRadius(Design.params.cornerRadiusSmall)
       height(32)
-      padding(.sideOffset(8))
+      padding(.horizontalOffset(8))
       borderColor(Design.color.iconBrand)
       borderWidth(1)
    }
