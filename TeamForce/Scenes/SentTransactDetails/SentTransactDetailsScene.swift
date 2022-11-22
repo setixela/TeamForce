@@ -18,6 +18,8 @@ final class SentTransactDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
 
    private lazy var transactionOwnerLabel = LabelModel()
       .set(.numberOfLines(0))
+      .set(.alignment(.center))
+   
    //   private lazy var statusLabel = LabelModel()
    private lazy var dateLabel = LabelModel()
       .set(.textColor(UIColor.gray))
@@ -186,13 +188,7 @@ extension SentTransactDetailsScene {
       }
    }
    
-   private func configureLabels(wS: SentTransactDetailsScene<Asset>?) {
-      guard let input = wS?.inputValue else { return }
-      
-      configureTags(tags: input.tags)
-      print("detail input \(input)")
-      currencyLabel.label
-         .text(input.amount ?? "")
+   private func configureLabelForTransact(input: Transaction) {
       switch input.sender?.senderId == currentUserId {
       case true:
          currencyLabel.models.main.textColor(Design.color.textError)
@@ -216,6 +212,12 @@ extension SentTransactDetailsScene {
             image.subModel
                .image(tempImage)
                .backColor(Design.color.backgroundBrand)
+         }
+         
+         if let challName = input.sender?.challengeName {
+            transactionOwnerLabel
+               .set(.text("Вы отправили для взноса в челлендж " + challName))
+            image.subModel.image(Design.icon.challengeAvatar)
          }
       case false:
          transactionOwnerLabel
@@ -261,6 +263,16 @@ extension SentTransactDetailsScene {
 
       statusLabel.models.down.text(input.transactionStatus?.name ?? "")
       reasonLabel.models.down.text(input.reason ?? "")
+   }
+   
+   private func configureLabels(wS: SentTransactDetailsScene<Asset>?) {
+      guard let input = wS?.inputValue else { return }
+      
+      currencyLabel.label
+         .text(input.amount ?? "")
+      
+      configureTags(tags: input.tags)
+      configureLabelForTransact(input: input)
 
       if let photoLink = input.photo {
          transactPhoto.models.down.url(TeamForceEndpoints.convertToImageUrl(photoLink))
