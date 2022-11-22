@@ -76,7 +76,7 @@ final class DigitalThanksScene<Asset: AssetProtocol>: BaseSceneModel<
             enterButton
          ])
 
-      if Config.appMode != .production {
+      if Config.appConfig != .production {
          vcModel?.on(\.motionEnded, self) { slf, event in
             switch event {
             case .motionShake:

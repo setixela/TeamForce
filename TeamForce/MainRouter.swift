@@ -27,7 +27,7 @@ final class MainRouter<Asset: AssetProtocol>: RouterProtocol, Assetable {
    }
 
    func start() {
-      if Config.isDebug {
+      if Config.isPlaygroundScene {
          route(.push, scene: \.login, payload: ())
       } else {
          if UserDefaults.standard.isLoggedIn() {

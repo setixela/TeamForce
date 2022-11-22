@@ -24,7 +24,7 @@ struct Config {
       UserDefaults.standard.saveString(urlBase, forKey: .urlBase)
    }
 
-   static let isDebug = false
+   static let isPlaygroundScene = false
 
    static let isDebugView = true
 
@@ -62,20 +62,30 @@ extension Int {
 }
 
 extension Config {
-   enum AppMode {
+   enum AppConfig {
       case debug
       case testFlight
       case production
    }
 
-   static var appMode: AppMode {
+   private static let isTestFlight = Bundle.main.appStoreReceiptURL?.lastPathComponent == "sandboxReceipt"
+
+   // This can be used to add debug statements.
+   static var isDebug: Bool {
       #if DEBUG
-      return .debug
+      return true
       #else
-      guard let path = Bundle.main.appStoreReceiptURL?.path, !path.contains("sandboxReceipt") else {
+      return false
+      #endif
+   }
+
+   static var appConfig: AppConfig {
+      if isDebug {
+         return .debug
+      } else if isTestFlight {
+         return .testFlight
+      } else {
          return .production
       }
-      return .testFlight
-      #endif
    }
 }
