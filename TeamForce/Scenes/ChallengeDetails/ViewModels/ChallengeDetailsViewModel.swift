@@ -71,6 +71,7 @@ final class ChallengeDetailsViewModel<Design: DSP>:
             userPanel
          ]))
          .set(.padding(.init(top: 4, left: 16, bottom: 16, right: 16)))
+         .view.alwaysBounceVertical = true
 
       buttonsPanel
          .padding(.horizontalOffset(Design.params.commonSideOffset))

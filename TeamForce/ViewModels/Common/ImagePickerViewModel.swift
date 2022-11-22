@@ -97,6 +97,12 @@ final class ImagePickerScene<Asset: AssetProtocol>: BaseSceneModel<
 
 //
 final class ImagePickerVCModel: UIImagePickerController, VCModelProtocol, Eventable {
+   var currentBarStyle: UIBarStyle?
+   var currentBarTintColor: UIColor?
+   var currentTitleColor: UIColor?
+   var currentBarTranslucent: Bool?
+   var currentBarBackColor: UIColor?
+   var currentTitleAlpha: CGFloat?
    var currentStatusBarStyle: UIStatusBarStyle?
 
    var events = EventsStore()

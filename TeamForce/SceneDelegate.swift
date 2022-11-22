@@ -38,6 +38,11 @@ private extension SceneDelegate {
       let brandColor = ProductionAsset.Design.color.backgroundBrand
       let backBrightness = brandColor.brightnessStyle()
 
+      nc
+         .barBackColor(ProductionAsset.Design.color.transparent)
+         .barTranslucent(true)
+         .titleAlpha(1)
+
       switch backBrightness {
          case .dark:
             nc
@@ -67,25 +72,71 @@ extension AssetProtocol {
    }
 }
 
-final class NavController: UINavigationController {
+final class NavController: UINavigationController, UINavigationControllerDelegate {
    private var currentStatusBarStyle: UIStatusBarStyle?
+   private var currentBarStyle: UIBarStyle?
+   private var currentBarTintColor: UIColor?
+   private var currentTitleColor: UIColor?
+   private var currentBarTranslucent: Bool?
+   private var currentBarBackColor: UIColor?
+   private var currentTitleAlpha: CGFloat?
+
+   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+      super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+
+      delegate = self
+   }
+
+   @available(*, unavailable)
+   required init?(coder aDecoder: NSCoder) {
+      fatalError("init(coder:) has not been implemented")
+   }
+
+   private var visibleVCModel: (any VCModelProtocol)? {
+      visibleViewController as? any VCModelProtocol
+   }
 
    override var preferredStatusBarStyle: UIStatusBarStyle {
-      if let vc = visibleViewController as? any VCModelProtocol {
+      if let vc = visibleVCModel {
          return vc.currentStatusBarStyle ?? currentStatusBarStyle ?? .default
       } else {
-        return currentStatusBarStyle ?? .default
+         return currentStatusBarStyle ?? .default
+      }
+   }
+
+   func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
+      if let vc = viewController as? any VCModelProtocol {
+         if vc.currentBarStyle == nil, let currentBarStyle {
+            barStyle(currentBarStyle)
+         }
+         if vc.currentBarTintColor == nil, let currentBarTintColor {
+            navBarTintColor(currentBarTintColor)
+         }
+         if vc.currentTitleColor == nil, let currentTitleColor {
+            titleColor(currentTitleColor)
+         }
+         if vc.currentTitleAlpha == nil, let currentTitleAlpha {
+            titleAlpha(currentTitleAlpha)
+         }
+         if vc.currentBarTranslucent == nil, let currentBarTranslucent {
+            barTranslucent(currentBarTranslucent)
+         }
+         if vc.currentBarBackColor == nil, let currentBarBackColor {
+            barBackColor(currentBarBackColor)
+         }
       }
    }
 }
 
 extension NavController {
    @discardableResult func barStyle(_ value: UIBarStyle) -> Self {
+      currentBarStyle = value
       navigationBar.barStyle = value
       return self
    }
 
    @discardableResult func navBarTintColor(_ value: UIColor) -> Self {
+      currentBarTintColor = value
       navigationBar.barTintColor = value
       navigationBar.tintColor = value
       return self
@@ -98,8 +149,27 @@ extension NavController {
    }
 
    @discardableResult func titleColor(_ value: UIColor) -> Self {
+      currentTitleColor = value
       let textAttributes = [NSAttributedString.Key.foregroundColor: value]
       navigationBar.titleTextAttributes = textAttributes
+      return self
+   }
+
+   @discardableResult func barTranslucent(_ value: Bool) -> Self {
+      currentBarTranslucent = value
+      navigationBar.isTranslucent = value
+      return self
+   }
+
+   @discardableResult func barBackColor(_ value: UIColor) -> Self {
+      currentBarBackColor = value
+      navigationBar.backgroundColor = value
+      return self
+   }
+
+   @discardableResult func titleAlpha(_ value: CGFloat) -> Self {
+      currentTitleAlpha = value
+      navigationItem.titleView?.alpha = value
       return self
    }
 }
