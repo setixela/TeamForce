@@ -39,13 +39,14 @@ final class ChallengeDetailsWorks<Asset: AssetProtocol>: BaseSceneWorks<Challeng
    let apiUseCase = Asset.apiUseCase
    let storageUseCase = Asset.storageUseCase
 
-   typealias Button6Result = Result6<
+   typealias Button7Result = Result7<
       Challenge,
       [ChallengeResult],
       [Contender],
       [ChallengeWinnerReport],
       [Comment],
-      Void
+      Void,
+      [ReactItem]
    >
 
    // works that can be cancelled
@@ -121,4 +122,26 @@ final class ChallengeDetailsWorks<Asset: AssetProtocol>: BaseSceneWorks<Challeng
             work.fail()
          }
    }
+   
+   var getLikesByChallenge: Work<Void, [ReactItem]> { .init { [weak self] work in
+      // input 1 for likes
+      // input 2 for dislikes
+      guard
+         let challengeId = Self.store.challengeId
+      else { work.fail(); return }
+      
+      let request = LikesRequestBody(challengeId: challengeId,
+                                     likeKind: 1,
+                                     includeName: true)
+      
+      self?.apiUseCase.getLikes
+         .doAsync(request)
+         .onSuccess {
+            work.success($0)
+         }
+         .onFail {
+            work.fail()
+         }
+   }.retainBy(retainer) }
+   
 }

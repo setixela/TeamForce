@@ -11,7 +11,7 @@ struct ChallengeDetailsInputEvents {
    let saveInputAndLoadChallenge: WorkVoid<ChallengeDetailsInput>
 
    let challengeResult: WorkVoidVoid
-   let filterButtonTapped: WorkVoid<Button6Event>
+   let filterButtonTapped: WorkVoid<Button7Event>
    let acceptPressed: WorkVoid<Int>
    let rejectPressed: WorkVoid<Int>
 
@@ -95,7 +95,7 @@ final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<Challen
       events.filterButtonTapped
          .onSuccess(setState, .presentActivityIndicator)
          .doNext(works.filterButtonWork)
-         .onSuccess { [weak self] (result: ChallengeDetailsWorks.Button6Result) in
+         .onSuccess { [weak self] (result: ChallengeDetailsWorks.Button7Result) in
             // можно сет стейт достать из селфа:
             guard let stateFunc = self?.setState else { return }
 
@@ -125,6 +125,10 @@ final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<Challen
 
             case .result6:
                break
+            case .result7(let value):
+               guard !value.isEmpty else { stateFunc(.hereIsEmpty); return }
+               
+               stateFunc(.presentReactions(value))
             }
          }
          .onFail {

@@ -114,6 +114,16 @@ enum Button6Event: Int, ManyButtonEvent {
    case didTapButton6 = 5
 }
 
+enum Button7Event: Int, ManyButtonEvent {
+   case didTapButton1 = 0
+   case didTapButton2 = 1
+   case didTapButton3 = 2
+   case didTapButton4 = 3
+   case didTapButton5 = 4
+   case didTapButton6 = 5
+   case didTapButton7 = 6
+}
+
 protocol IndexedButtonsProtocol: Eventable where Events == TapIndexEvents<ButtEvents> {
    associatedtype Button: ModableButton
    associatedtype ButtEvents: ManyButtonEvent
@@ -169,6 +179,17 @@ extension IndexedButtonsProtocol {
    {
       self.init(buttons: but1, but2, but3, but4, but5, but6)
    }
+   
+   init(_ but1: Button,
+        _ but2: Button,
+        _ but3: Button,
+        _ but4: Button,
+        _ but5: Button,
+        _ but6: Button,
+        _ but7: Button) where Self.ButtEvents == Button5Event
+   {
+      self.init(buttons: but1, but2, but3, but4, but5, but6, but7)
+   }
 }
 
 extension IndexedButtonsProtocol where ButtEvents == Button1Event {
@@ -208,4 +229,14 @@ extension IndexedButtonsProtocol where ButtEvents == Button6Event {
    var button4: Button { buttons[3] }
    var button5: Button { buttons[4] }
    var button6: Button { buttons[5] }
+}
+
+extension IndexedButtonsProtocol where ButtEvents == Button7Event {
+   var button1: Button { buttons[0] }
+   var button2: Button { buttons[1] }
+   var button3: Button { buttons[2] }
+   var button4: Button { buttons[3] }
+   var button5: Button { buttons[4] }
+   var button6: Button { buttons[5] }
+   var button7: Button { buttons[6] }
 }
