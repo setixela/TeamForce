@@ -25,11 +25,36 @@ final class ImagePickerViewModel: BaseModel, Eventable {
    override func start() {
       picker.delegate = self
 
-      on(\.presentOn) { [weak self] in
+      on(\.presentOn) { [weak self] vc in
          guard let picker = self?.picker else { return }
-
-         $0?.view.endEditing(true)
-         $0?.present(picker, animated: true)
+         
+         let photoLibraryAction = UIAlertAction(title: "Выбрать  фото", style: .default) {
+            (action) in
+            picker.sourceType = .photoLibrary
+            vc?.present(picker, animated: true)
+         }
+         
+         let cameraAction = UIAlertAction(title: "Сделать снимок", style: .default) {
+            (action) in
+            picker.sourceType = .camera
+            vc?.present(picker, animated: true)
+         }
+         
+         let cancelAction = UIAlertAction(title: "Отменить", style: .cancel, handler: nil)
+         
+         let dialogMessage = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+         
+         dialogMessage.addAction(photoLibraryAction)
+         dialogMessage.addAction(cameraAction)
+         dialogMessage.addAction(cancelAction)
+         
+         if let rootVC = UIApplication.shared.keyWindow?.rootViewController?.presentedViewController {
+            rootVC.present(dialogMessage, animated: true, completion: nil)
+         } else {
+            UIApplication.shared.keyWindow?.rootViewController?.present(dialogMessage, animated: true, completion: nil)
+         }
+         
+         vc?.view.endEditing(true)
       }
    }
    
