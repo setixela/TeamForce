@@ -426,8 +426,8 @@ extension ChallengeDetailsScene {
       } completion: { _ in
          if self.vcModel?.isModal == false {
             self.vcModel?.navigationController?.navigationBar.backgroundColor = Design.color.backgroundBrand
-            self.setNavBarTintLight()
             self.vcModel?.title("Челлендж")
+            self.setNavBarTintLight()
          }
       }
    }
@@ -481,6 +481,7 @@ extension ChallengeDetailsScene {
          .titleColor(ProductionAsset.Design.color.iconInvert)
          .navBarTintColor(ProductionAsset.Design.color.iconInvert)
          .statusBarStyle(.lightContent)
+         .titleAlpha(1)
    }
 
    private func setNavBarTintDark() {
@@ -489,5 +490,6 @@ extension ChallengeDetailsScene {
          .titleColor(ProductionAsset.Design.color.textBrand)
          .navBarTintColor(ProductionAsset.Design.color.textBrand)
          .statusBarStyle(.darkContent)
+         .titleAlpha(1)
    }
 }
