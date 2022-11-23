@@ -41,6 +41,9 @@ final class ImageViewerScene<Asset: AssetProtocol>: BaseSceneModel<
    private lazy var shareButton = ButtonModel()
       .image(.init(systemName: "square.and.arrow.up")!)
       .tint(Design.color.iconBrand)
+      .size(.square(32))
+
+   private lazy var darkLoader = DarkLoaderVM<Design>()
 
    override func start() {
       super.start()
@@ -74,16 +77,7 @@ final class ImageViewerScene<Asset: AssetProtocol>: BaseSceneModel<
                      .doubleTapForZooming()
 
                   self?.shareButton.on(\.didTap) {
-                     let imageToShare = [image]
-                     let activityViewController = UIActivityViewController(
-                        activityItems: imageToShare as [Any], applicationActivities: nil
-                     )
-                     activityViewController.popoverPresentationController?.sourceView = self?.vcModel?.view
-
-                     activityViewController.excludedActivityTypes = [
-                        UIActivity.ActivityType.postToFacebook,
-                     ]
-                     self?.vcModel?.present(activityViewController, animated: true, completion: nil)
+                     self?.presentSharing(image: image)
                   }
                }
             }
@@ -93,6 +87,23 @@ final class ImageViewerScene<Asset: AssetProtocol>: BaseSceneModel<
       closeButton.on(\.didTap, self) {
          $0.dismiss()
          $0.finishCanceled()
+      }
+   }
+
+   private func presentSharing(image: UIImage?) {
+      darkLoader.setState(.loading(onView: vcModel?.view))
+
+      let imageToShare = [image]
+      let activityViewController = UIActivityViewController(
+         activityItems: imageToShare as [Any], applicationActivities: nil
+      )
+      activityViewController.popoverPresentationController?.sourceView = vcModel?.view
+
+      activityViewController.excludedActivityTypes = [
+         UIActivity.ActivityType.postToFacebook,
+      ]
+      vcModel?.present(activityViewController, animated: true) { [weak self] in
+         self?.darkLoader.setState(.normal)
       }
    }
 }

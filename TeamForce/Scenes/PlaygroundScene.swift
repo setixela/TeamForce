@@ -113,7 +113,8 @@ extension VizitkaDemo: ComboLeft {} // or this
 extension VizitkaDemo: ComboDown {}
 extension VizitkaDemo: ComboTop {}
 
-final class ViewModel: BaseViewModel<UIView> {}
+class ViewModel: BaseViewModel<UIView> {}
+
 extension ViewModel: Stateable {
    typealias State = ViewState
 }

@@ -63,39 +63,12 @@ class ScrollViewModel: BaseViewModel<ScrollViewExtended>, UIScrollViewDelegate, 
    private func configurateFor(size: CGSize) {
       view.contentSize = size
 
-     // setCurrentMaxAndMinZoomScale()
       view.zoomScale = view.minimumZoomScale
 
       guard let imageZoomView = viewForZooming(in: view) else { return }
 
       imageZoomView.addGestureRecognizer(zoomingTap)
       imageZoomView.isUserInteractionEnabled = true
-   }
-
-   private func setCurrentMaxAndMinZoomScale() {
-      guard let imageZoomView = viewForZooming(in: view) else { return }
-
-      let boundsSize = view.bounds.size
-      print(boundsSize)
-      let imageSize = imageZoomView.bounds.size
-      print(imageSize)
-      let xScale = boundsSize.width / imageSize.width
-      let yScale = boundsSize.height / imageSize.height
-      let minScale = min(xScale, yScale)
-
-      var maxScale: CGFloat = 1.0
-      if minScale < 0.1 {
-         maxScale = 0.3
-      }
-      if minScale >= 0.1, minScale < 0.5 {
-         maxScale = 0.7
-      }
-      if minScale >= 0.5 {
-         maxScale = max(1.0, minScale)
-      }
-
-      view.minimumZoomScale = minScale
-      view.maximumZoomScale = maxScale
    }
 }
 
@@ -105,7 +78,6 @@ extension ScrollViewModel {
       view.subviews.forEach { $0.removeFromSuperview() }
       view.addSubview(uiView)
       uiView.addAnchors
-//         .fitToView(view)
          .height(view.heightAnchor)
          .width(view.widthAnchor)
          .centerY(view.centerYAnchor)

@@ -64,6 +64,7 @@
 		192FCFFF28C9477100E6FACC /* ModalDoubleStackModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 192FCFFE28C9477100E6FACC /* ModalDoubleStackModel.swift */; };
 		19360ED0292E77E400DFA8E8 /* UIView+Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19360ECF292E77E400DFA8E8 /* UIView+Constraints.swift */; };
 		19360ED2292E791900DFA8E8 /* ScrollViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19360ED1292E791900DFA8E8 /* ScrollViewModel.swift */; };
+		19360ED4292ED6A100DFA8E8 /* VCModel+Loading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19360ED3292ED6A100DFA8E8 /* VCModel+Loading.swift */; };
 		1938929E28F87EE100826522 /* ImageWorks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1938929D28F87EE100826522 /* ImageWorks.swift */; };
 		193C74772909E42C008B3AD9 /* ImageViewerScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193C74762909E42C008B3AD9 /* ImageViewerScene.swift */; };
 		19466E01289FE28C0052F0AB /* TitleSubtitleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19466E00289FE28C0052F0AB /* TitleSubtitleModel.swift */; };
@@ -237,7 +238,6 @@
 		19D84E3328AC077200418B9E /* LoginViewModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D84E3228AC077200418B9E /* LoginViewModels.swift */; };
 		19DD3D95288766860085CDA8 /* LabelCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19DD3D94288766860085CDA8 /* LabelCellModel.swift */; };
 		19DD3D97288A0A8C0085CDA8 /* CoverViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19DD3D96288A0A8C0085CDA8 /* CoverViewModel.swift */; };
-		19E9F30F28AC14D100AD951F /* SceneStateProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E9F30E28AC14D100AD951F /* SceneStateProtocol.swift */; };
 		19ECD54128623D1F001765F6 /* LabelModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19ECD54028623D1F001765F6 /* LabelModel.swift */; };
 		19ECD54328623D30001765F6 /* StackModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19ECD54228623D30001765F6 /* StackModel.swift */; };
 		19ECD54828623D9C001765F6 /* CustomViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19ECD54728623D9C001765F6 /* CustomViews.swift */; };
@@ -476,6 +476,7 @@
 		192FCFFE28C9477100E6FACC /* ModalDoubleStackModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalDoubleStackModel.swift; sourceTree = "<group>"; };
 		19360ECF292E77E400DFA8E8 /* UIView+Constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Constraints.swift"; sourceTree = "<group>"; };
 		19360ED1292E791900DFA8E8 /* ScrollViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollViewModel.swift; sourceTree = "<group>"; };
+		19360ED3292ED6A100DFA8E8 /* VCModel+Loading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VCModel+Loading.swift"; sourceTree = "<group>"; };
 		1938929D28F87EE100826522 /* ImageWorks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageWorks.swift; sourceTree = "<group>"; };
 		193C74762909E42C008B3AD9 /* ImageViewerScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewerScene.swift; sourceTree = "<group>"; };
 		19466E00289FE28C0052F0AB /* TitleSubtitleModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleSubtitleModel.swift; sourceTree = "<group>"; };
@@ -644,7 +645,6 @@
 		19D84E3228AC077200418B9E /* LoginViewModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModels.swift; sourceTree = "<group>"; };
 		19DD3D94288766860085CDA8 /* LabelCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelCellModel.swift; sourceTree = "<group>"; };
 		19DD3D96288A0A8C0085CDA8 /* CoverViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoverViewModel.swift; sourceTree = "<group>"; };
-		19E9F30E28AC14D100AD951F /* SceneStateProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneStateProtocol.swift; sourceTree = "<group>"; };
 		19ECD54028623D1F001765F6 /* LabelModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelModel.swift; sourceTree = "<group>"; };
 		19ECD54228623D30001765F6 /* StackModel.swift */ = {isa = PBXFileReference; indentWidth = 3; lastKnownFileType = sourcecode.swift; path = StackModel.swift; sourceTree = "<group>"; tabWidth = 3; };
 		19ECD54728623D9C001765F6 /* CustomViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomViews.swift; sourceTree = "<group>"; };
@@ -1558,7 +1558,6 @@
 				197A360B28BBB16D006E44C1 /* Extensions */,
 				1952EA6A28A71399003F7852 /* DesignElements.swift */,
 				6368D8272891E7C30049EEAB /* UserDefault+helpers.swift */,
-				19E9F30E28AC14D100AD951F /* SceneStateProtocol.swift */,
 				19D08360286F430B00F75E4A /* Designable.swift */,
 				1999B6FD28A2F5D300D3570B /* DataToDecodableParser.swift */,
 				1952EA6828A711F2003F7852 /* Associated.swift */,
@@ -1573,6 +1572,7 @@
 				19B39E5E28D343B300BB2C77 /* SelectWrapper.swift */,
 				197447252912EDB20089BB2B /* Configurable.swift */,
 				1963398C2921644300B66A7D /* Converter.swift */,
+				19360ED3292ED6A100DFA8E8 /* VCModel+Loading.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -2207,7 +2207,6 @@
 				1921CAA1291AA3A5007AE024 /* NotificationsScene.swift in Sources */,
 				19017B6928A6986F00B06345 /* TitleSubtitleX.swift in Sources */,
 				1921CAA3291AA3B3007AE024 /* NotificationsScenario.swift in Sources */,
-				19E9F30F28AC14D100AD951F /* SceneStateProtocol.swift in Sources */,
 				19775FFE28C5922B008DF8E0 /* ImagePickingScenario.swift in Sources */,
 				63AB071128BD6B0F00FD650F /* ProfileWorks.swift in Sources */,
 				63E1916D2889519E000FD312 /* BadgeModel.swift in Sources */,
@@ -2444,6 +2443,7 @@
 				63A37EB828F3199D00DBD59F /* CheckChallengeReportApiWorker.swift in Sources */,
 				63AB070928BD4C1B00FD650F /* UpdateProfileApiWorker.swift in Sources */,
 				63FCC9AD29074AEC009D0001 /* GetEventsTransactUseCase.swift in Sources */,
+				19360ED4292ED6A100DFA8E8 /* VCModel+Loading.swift in Sources */,
 				196750AC2865189C0019A6DE /* TextFieldModel.swift in Sources */,
 				1921A13328EECABE00E41E86 /* ChallengesScenario.swift in Sources */,
 				19AA24F929244522001AB635 /* ProfileScene.swift in Sources */,

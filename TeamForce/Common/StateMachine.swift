@@ -29,7 +29,6 @@ extension StateMachine2 {
    }
 }
 extension StateMachine {
-
    var stateDelegate: (ModelState) -> Void {
       let fun: (ModelState) -> Void = { [weak self] in
          self?.setState($0)
@@ -41,8 +40,4 @@ extension StateMachine {
    func debug(_ state: ModelState) {
       log(state, self)
    }
-}
-
-enum ValueState<T> {
-   case value(T)
 }

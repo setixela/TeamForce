@@ -5,7 +5,7 @@
 //  Created by Aleksandr Solovyev on 01.11.2022.
 //
 
-import Foundation
+import ReactiveWorks
 
 final class ChallengeCell<Design: DSP>:
    M<ChallengeCellInfoBlock>
@@ -25,9 +25,6 @@ final class ChallengeCell<Design: DSP>:
                .numberOfLines(2)
                .lineBreakMode(.byWordWrapping)
             title.body.set(Design.state.label.caption)
-
-            //            participant.title.set(Design.state.label.body2)
-            //            participant.body.set(Design.state.label.caption)
 
             winner.title.set(Design.state.label.body2)
             winner.body.set(Design.state.label.caption)
@@ -59,8 +56,6 @@ extension ChallengeCell: StateMachine {
             infoBlock.setAll { title, winner, prizeFund, prizes in
                title.title.textColor(Design.color.textInvert)
                title.body.textColor(Design.color.textInvert)
-               //               participant.title.textColor(Design.color.textInvert)
-               //               participant.body.textColor(Design.color.textInvert)
 
                winner.title.textColor(Design.color.textInvert)
                winner.body.textColor(Design.color.textInvert)
