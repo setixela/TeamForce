@@ -35,7 +35,7 @@ class ScrollViewModelY: BaseViewModel<ScrollViewExtended>, ScrollWrapper, Statea
 
    private var prevScrollOffset: CGFloat = 0
 
-   lazy var stack = StackModel()
+   private lazy var stack = StackModel()
       .axis(.vertical)
       .distribution(.equalSpacing)
 
@@ -150,45 +150,6 @@ extension ScrollViewModelX: Stateable2 {
          view.contentInset = value
       case .bounce(let value):
          view.bounces = value
-      }
-   }
-}
-
-class ScrollViewModel: BaseViewModel<ScrollViewExtended>, UIScrollViewDelegate, Stateable {
-   var events: EventsStore = .init()
-
-   typealias State = ViewState
-
-   override func start() {
-      super.start()
-
-      view.delegate = self
-
-      view.maximumZoomScale = 3
-      view.minimumZoomScale = 1
-      view.isScrollEnabled = true
-   }
-
-   func viewForZooming(in scrollView: UIScrollView) -> UIView? {
-      view.subviews.first
-   }
-}
-
-enum ScrollStateEnum {
-   case viewModel(UIViewModel)
-}
-
-extension ScrollViewModel: StateMachine {
-   func setState(_ state: ScrollStateEnum) {
-      switch state {
-      case .viewModel(let model):
-         let uiView = model.uiView
-         view.subviews.forEach { $0.removeFromSuperview() }
-         view.addSubview(uiView)
-         uiView.addAnchors
-            .fitToView(view)
-            .width(view.widthAnchor)
-            .centerY(view.centerYAnchor)
       }
    }
 }

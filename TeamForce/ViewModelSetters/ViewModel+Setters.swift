@@ -5,6 +5,7 @@
 //  Created by Aleksandr Solovyev on 14.08.2022.
 //
 
+import AlamofireImage
 import Anchorage
 import ReactiveWorks
 import UIKit
@@ -294,7 +295,7 @@ extension ViewModelProtocol where Self: Stateable, View: StackViewExtended {
    }
 
    @discardableResult func arrangedModels(_ value: UIViewModel...) -> Self {
-      return arrangedModels(value)
+      arrangedModels(value)
    }
 
    @discardableResult func addArrangedModel(_ value: UIViewModel) -> Self {
@@ -438,8 +439,6 @@ extension ViewModelProtocol where Self: Stateable, View: PaddingLabel {
    }
 }
 
-import AlamofireImage
-
 extension ViewModelProtocol where Self: Stateable, View: PaddingImageView {
    @discardableResult func image(_ value: UIImage) -> Self {
       view.image = value
@@ -466,7 +465,6 @@ extension ViewModelProtocol where Self: Stateable, View: PaddingImageView {
 
    @discardableResult func padding(_ value: UIEdgeInsets) -> Self {
       view.padding = value
-//      view.image = view.image?.withAlignmentRectInsets(value)
       return self
    }
 
@@ -540,12 +538,12 @@ extension ViewModelProtocol where Self: Stateable, View: ButtonExtended {
       return self
    }
 
-   @discardableResult func image(_ value: UIImage) -> Self {
+   @discardableResult func image(_ value: UIImage?) -> Self {
       view.setImage(value, for: .normal)
       return self
    }
 
-   @discardableResult func backImage(_ value: UIImage) -> Self {
+   @discardableResult func backImage(_ value: UIImage?) -> Self {
       view.setBackgroundImage(value, for: .normal)
       return self
    }
@@ -710,28 +708,5 @@ extension ViewModelProtocol where Self: Stateable, View: TextViewExtended {
    @discardableResult func disableAutocorrection() -> Self {
       view.autocorrectionType = .no
       return self
-   }
-}
-
-private extension UIView {
-   func removeAllConstraints() {
-      var _superview = superview
-
-      while let superview = _superview {
-         for constraint in superview.constraints {
-            if let first = constraint.firstItem as? UIView, first == self {
-               superview.removeConstraint(constraint)
-            }
-
-            if let second = constraint.secondItem as? UIView, second == self {
-               superview.removeConstraint(constraint)
-            }
-         }
-
-         _superview = superview.superview
-      }
-
-      removeConstraints(constraints)
-      translatesAutoresizingMaskIntoConstraints = true
    }
 }
