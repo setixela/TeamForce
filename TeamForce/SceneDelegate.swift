@@ -35,29 +35,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 private extension SceneDelegate {
    func startDispatcher(_ nc: NavController) {
-      let brandColor = ProductionAsset.Design.color.backgroundBrand
-      let backBrightness = brandColor.brightnessStyle()
-
-      nc
-         .barBackColor(ProductionAsset.Design.color.transparent)
-         .barTranslucent(true)
-         .titleAlpha(1)
-
-      switch backBrightness {
-         case .dark:
-            nc
-               .barStyle(.black)
-               .titleColor(ProductionAsset.Design.color.iconInvert)
-               .navBarTintColor(ProductionAsset.Design.color.iconInvert)
-               .statusBarStyle(.lightContent)
-         case .light:
-            nc
-               .barStyle(.default)
-               .titleColor(ProductionAsset.Design.color.textBrand)
-               .navBarTintColor(ProductionAsset.Design.color.textBrand)
-               .statusBarStyle(.darkContent)
-      }
-
       router = ProductionAsset.makeRouter(with: nc)
       window?.backgroundColor = ProductionAsset.Design.color.backgroundBrand
       router?.start()

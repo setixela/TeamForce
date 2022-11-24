@@ -50,10 +50,10 @@ private extension LoginScene {
       mainVM.bodyStack
          .arrangedModels([
             viewModels.userNameInputModel,
-            viewModels.smsCodeInputModel,
+//            viewModels.smsCodeInputModel,
             Spacer(Design.params.buttonsSpacingY),
             viewModels.getCodeButton,
-            viewModels.loginButton,
+//            viewModels.loginButton,
             viewModels.activityIndicator,
             Grid.xxx.spacer
          ])

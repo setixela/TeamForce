@@ -118,6 +118,7 @@ final class ChallengeCreateScene<Asset: AssetProtocol>: BaseSceneModel<
       .placeholder("Укажите количество призовых мест")
       .placeholderColor(Design.color.textFieldPlaceholder)
       .onlyDigitsMode()
+      .keyboardType(.numberPad)
       .hidden(true)
 
    private lazy var photosPanel = Design.model.transact.pickedImagesPanel.hidden(true)
@@ -139,12 +140,13 @@ final class ChallengeCreateScene<Asset: AssetProtocol>: BaseSceneModel<
 
    override func start() {
       super.start()
-      mainVM.bodyStack
-         .arrangedModels([
-            ActivityIndicator<Design>()
-         ])
 
       vcModel?.on(\.viewDidLoad, self) {
+         $0.mainVM.bodyStack
+            .arrangedModels([
+               ActivityIndicator<Design>()
+            ])
+
          $0.mainVM.bodyStack
             .arrangedModels([
                ScrollViewModelY()

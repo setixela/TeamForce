@@ -163,7 +163,7 @@ struct IconBuilder: IconElements {
 
    // brand
    var logo: UIImage { make("dt_logo") }
-   var logoTitle: UIImage { make("dt_logo_title") }
+   var logoTitle: UIImage { make("teamforce_360") }
    var logoCurrency: UIImage { make("dt_currency_logo") }
    var logoCurrencyRed: UIImage { make("dt_currency_logo_red") }
    var logoCurrencyBig: UIImage { make("dt_currency_logo_big") }

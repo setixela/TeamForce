@@ -166,6 +166,13 @@ extension SettingsScene {
                                                  account: $0.account,
                                                  organizationId: $0.organizationId)
 
+                     // TODO: - Сделать нормально
+                     let schemeName = (OrganizationColorScheme.init(rawValue: id) ?? .teamForce)
+                        .colorScheme()
+                     UserDefaults.standard.saveString(schemeName, forKey: .colorSchemeKey)
+                     ColorToken.recolor()
+                     //
+
                      Asset.router?.route(.presentInitial, scene: \.verify, payload: authResult)
                   }
                   .onFail {

@@ -188,6 +188,7 @@ final class PaddingView: UIView, Marginable {
 final class StackViewExtended: UIStackView, Eventable {
    struct Events: InitProtocol {
       var willAppear: Void?
+      var didAppear: Void?
       var willDisappear: Void?
       var didTap: Void?
    }
@@ -240,6 +241,12 @@ final class StackViewExtended: UIStackView, Eventable {
       } else {
          send(\.willAppear)
       }
+   }
+
+   override func didMoveToSuperview() {
+      super.didMoveToSuperview()
+
+      send(\.didAppear)
    }
 
    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {

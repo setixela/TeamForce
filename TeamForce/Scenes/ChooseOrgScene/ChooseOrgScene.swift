@@ -5,6 +5,7 @@
 //  Created by Yerzhan Gapurinov on 15.11.2022.
 //
 
+import Foundation
 import ReactiveWorks
 
 // MARK: - ChooseOrgScne
@@ -50,6 +51,14 @@ final class ChooseOrgScene<Asset: AssetProtocol>: BaseSceneModel<
                                               account: $0.account,
                                               organizationId: String(org.organizationId))
                   self?.setState(.initial)
+
+                  // TODO: - Сделать нормально
+                  let schemeName = (OrganizationColorScheme(rawValue: org.organizationId) ?? .teamForce)
+                     .colorScheme()
+                  UserDefaults.standard.saveString(schemeName, forKey: .colorSchemeKey)
+                  ColorToken.recolor()
+                  //
+
                   Asset.router?.route(.push, scene: \.verify, payload: authResult)
                }
                .onFail {
@@ -85,18 +94,17 @@ extension ChooseOrgScene: StateMachine {
 private extension ChooseOrgScene {
    func configure() {
       mainVM.header
-         .text(Design.Text.title.autorisation)
+         .text("Выбор организации")
       mainVM.bodyStack
          .arrangedModels([
             organizationsTable,
             activity,
-            Spacer()
+            Spacer(),
          ])
    }
 }
 
 struct OrganizationPresenters<Design: DesignProtocol>: Designable {
-
    static var presenter: Presenter<OrganizationAuth, WrappedX<StackModel>> {
       Presenter { work in
          let item = work.unsafeInput.item
@@ -115,6 +123,12 @@ struct OrganizationPresenters<Design: DesignProtocol>: Designable {
             icon.url(TeamForceEndpoints.urlBase + avatar)
          } else {
             icon.image(Design.icon.anonAvatar)
+
+            // TODO: - Сделать нормально
+            let colorScheme = OrganizationColorScheme(rawValue: item.organizationId) ?? .teamForce
+            let brandColor = ColorToken.brandColorForOrganization(colorScheme)
+            icon.imageTintColor(brandColor)
+            //
          }
 
          let cellStack = WrappedX(

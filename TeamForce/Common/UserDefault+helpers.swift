@@ -11,6 +11,7 @@ extension UserDefaults {
    enum UserDefaultsKeys: String {
       case isLoggedIn
       case urlBase
+      case colorSchemeKey
    }
 
    func setIsLoggedIn(value: Bool) {

@@ -40,7 +40,9 @@ final class LoginViewModels<Asset: AssetProtocol>: BaseModel, Assetable {
       .set(.badgeState(.backColor(Design.color.background)))
       .set(.hideBadge)
       .set {
-         $0.mainModel.icon.image(Design.icon.user)
+         $0.mainModel.icon
+            .image(Design.icon.user)
+            .imageTintColor(Design.color.iconBrand)
          $0.mainModel.textField
             .disableAutocorrection()
             .placeholder(Design.Text.title.userName)

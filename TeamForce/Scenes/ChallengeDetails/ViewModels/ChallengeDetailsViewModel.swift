@@ -24,7 +24,9 @@ final class ChallengeDetailsViewModel<Design: DSP>:
 
    private lazy var prizeSizeCell = ChallengeDetailsInfoCell<Design>()
       .setAll { icon, title, _, _ in
-         icon.image(Design.icon.strangeLogo)
+         icon
+            .image(Design.icon.strangeLogo)
+            .imageTintColor(Design.color.iconBrand)
          title.text("Призовой фонд")
       }
 

@@ -65,7 +65,9 @@ extension FrameCellModelDT: Stateable2 {
       case .caption(let string):
          captionLabel.set(.text(string))
       case .burn(let string):
-         burnLabel.icon.image(Design.icon.burn)
+         burnLabel.icon
+            .image(Design.icon.burn)
+            .imageTintColor(Design.color.iconWarning)
          burnLabel.label.text(string)
          burnLabel.label.textColor(Design.color.textBrand)
          burnLabel.hidden(false)

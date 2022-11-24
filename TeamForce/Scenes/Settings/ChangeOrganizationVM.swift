@@ -71,6 +71,11 @@ final class ChangeOrganizationVM<Design: DSP>: StackModel, Designable {
          .size(.square(Grid.x36.value))
          .cornerRadius(Grid.x36.value / 2)
 
+      // TODO: - Сделать нормально
+      let colorScheme = OrganizationColorScheme(rawValue: organization.item.id) ?? .teamForce
+      icon.imageTintColor(ColorToken.brandColorForOrganization(colorScheme))
+      //
+
       let cell = StackModel()
          .spacing(Grid.x12.value)
          .axis(.horizontal)

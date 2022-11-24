@@ -132,13 +132,12 @@ final class TransactScene<Asset: AssetProtocol>: ModalDoubleStackModel<Asset>, S
    override func start() {
       super.start()
 
-      configure()
-
-      view.on(\.willAppear) { [weak self] in
-         self?.setToInitialCondition()
-         self?.viewModels.foundUsersList.set(.items([]))
-         self?.scenario.start()
-         self?.scenario2.start()
+      view.on(\.didAppear, self) {
+         $0.configure()
+         $0.setToInitialCondition()
+         $0.viewModels.foundUsersList.set(.items([]))
+         $0.scenario.start()
+         $0.scenario2.start()
       }
    }
 

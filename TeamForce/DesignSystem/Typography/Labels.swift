@@ -145,7 +145,7 @@ struct LabelStateBuilder<Design: DSP>: LabelStateProtocol, Designable {
    ] }
 
    var body2: [LabelState] { [
-      .font(.systemFont(ofSize: 14, weight: .semibold)),
+      .font(.systemFont(ofSize: 14, weight: .bold)),
       .textColor(Design.color.text)
    ] }
 

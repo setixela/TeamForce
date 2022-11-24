@@ -72,6 +72,7 @@ final class BalanceScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>
             .textColor(Design.color.textError)
       } setDown: {
          $0
+            .padTop(6)
             .text("0")
       }
       .backColor(Design.color.errorSecondary)
@@ -87,6 +88,7 @@ final class BalanceScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtended>
             .textColor(Design.color.success)
       } setDown: {
          $0
+            .padTop(6)
             .text("0")
       }
       .backColor(Design.color.successSecondary)

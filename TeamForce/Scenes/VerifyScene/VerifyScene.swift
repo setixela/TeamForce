@@ -33,6 +33,7 @@ final class VerifyScene<Asset: AssetProtocol>: BaseSceneModel<
 
    override func start() {
       configure()
+      Asset.router?.initColors()
 
       viewModels.setState(.inputSmsCode)
       scenario.start()

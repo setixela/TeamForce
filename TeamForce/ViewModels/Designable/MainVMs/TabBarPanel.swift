@@ -64,8 +64,10 @@ struct BottomPanelVMBuilder<Design: DesignProtocol>: Designable {
       ButtonSelfModable()
          .safeAreaOffsetDisabled()
          //
-         .backImage(Design.icon.tabBarMainButton)
+         .backColor(Design.color.backgroundBrand)
+         .image(Design.icon.tablerBrandTelegram.withTintColor(.white))
          .size(.square(60.aspected))
+         .cornerRadius(60/2)
          .shadow(Design.params.panelMainButtonShadow)
    }
 

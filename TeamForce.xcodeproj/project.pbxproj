@@ -65,6 +65,7 @@
 		19360ED0292E77E400DFA8E8 /* UIView+Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19360ECF292E77E400DFA8E8 /* UIView+Constraints.swift */; };
 		19360ED2292E791900DFA8E8 /* ScrollViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19360ED1292E791900DFA8E8 /* ScrollViewModel.swift */; };
 		19360ED4292ED6A100DFA8E8 /* VCModel+Loading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19360ED3292ED6A100DFA8E8 /* VCModel+Loading.swift */; };
+		19360ED6292FEEE000DFA8E8 /* CssColors2.css in Resources */ = {isa = PBXBuildFile; fileRef = 19360ED5292FEEE000DFA8E8 /* CssColors2.css */; };
 		1938929E28F87EE100826522 /* ImageWorks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1938929D28F87EE100826522 /* ImageWorks.swift */; };
 		193C74772909E42C008B3AD9 /* ImageViewerScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193C74762909E42C008B3AD9 /* ImageViewerScene.swift */; };
 		19466E01289FE28C0052F0AB /* TitleSubtitleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19466E00289FE28C0052F0AB /* TitleSubtitleModel.swift */; };
@@ -477,6 +478,7 @@
 		19360ECF292E77E400DFA8E8 /* UIView+Constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Constraints.swift"; sourceTree = "<group>"; };
 		19360ED1292E791900DFA8E8 /* ScrollViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollViewModel.swift; sourceTree = "<group>"; };
 		19360ED3292ED6A100DFA8E8 /* VCModel+Loading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VCModel+Loading.swift"; sourceTree = "<group>"; };
+		19360ED5292FEEE000DFA8E8 /* CssColors2.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = CssColors2.css; sourceTree = "<group>"; };
 		1938929D28F87EE100826522 /* ImageWorks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageWorks.swift; sourceTree = "<group>"; };
 		193C74762909E42C008B3AD9 /* ImageViewerScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewerScene.swift; sourceTree = "<group>"; };
 		19466E00289FE28C0052F0AB /* TitleSubtitleModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleSubtitleModel.swift; sourceTree = "<group>"; };
@@ -650,7 +652,7 @@
 		19ECD54728623D9C001765F6 /* CustomViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomViews.swift; sourceTree = "<group>"; };
 		19EE848F28AB20CE00D862EE /* DoubleStacksBrandedVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleStacksBrandedVM.swift; sourceTree = "<group>"; };
 		19EF32AA287CE80B0078F53D /* StringStorageWorker.swift */ = {isa = PBXFileReference; indentWidth = 3; lastKnownFileType = sourcecode.swift; path = StringStorageWorker.swift; sourceTree = "<group>"; tabWidth = 3; };
-		19EF32AD287E08F80078F53D /* ColorBuilder.swift */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = ColorBuilder.swift; sourceTree = "<group>"; tabWidth = 4; };
+		19EF32AD287E08F80078F53D /* ColorBuilder.swift */ = {isa = PBXFileReference; indentWidth = 3; lastKnownFileType = sourcecode.swift; path = ColorBuilder.swift; sourceTree = "<group>"; tabWidth = 3; };
 		19EF32AF2884B6C80078F53D /* SimpleTableVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleTableVM.swift; sourceTree = "<group>"; };
 		19EFD4C028A82A6400651E0A /* CssColors.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = CssColors.css; sourceTree = "<group>"; };
 		19F153832899649900ECF000 /* LoadProfileUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadProfileUseCase.swift; sourceTree = "<group>"; };
@@ -880,6 +882,7 @@
 			children = (
 				19EF32AD287E08F80078F53D /* ColorBuilder.swift */,
 				19EFD4C028A82A6400651E0A /* CssColors.css */,
+				19360ED5292FEEE000DFA8E8 /* CssColors2.css */,
 			);
 			path = Color;
 			sourceTree = "<group>";
@@ -2058,6 +2061,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				19360ED6292FEEE000DFA8E8 /* CssColors2.css in Resources */,
 				190C1D1E285D160000FB3518 /* LaunchScreen.storyboard in Resources */,
 				1921CAAC291C1B8E007AE024 /* GoogleService-Info.plist in Resources */,
 				19EFD4C228A82ABC00651E0A /* CssColors.css in Resources */,

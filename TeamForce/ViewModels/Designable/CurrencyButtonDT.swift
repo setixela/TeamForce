@@ -12,7 +12,8 @@ extension CurrencyButtonDT {
    static func makeWithValue(_ text: Int) -> Self {
       let button = Self()
       button.currencyValue = text
-      button.models.main.text(String(text))
+      button.models.main
+         .text(String(text))
       return button
    }
 }
@@ -37,11 +38,11 @@ final class CurrencyButtonDT<Design: DSP>: CurrencyLabelDT<Design>, Eventable, M
       padding(.horizontalOffset(Grid.x10.value))
       onModeChanged(\.normal) { [weak self] in
          self?.backColor(Design.color.backgroundBrandSecondary)
-         self?.label.textColor(Design.color.textError)
-         self?.models.right.imageTintColor(Design.color.textError)
+         self?.label.textColor(Design.color.textBrand)
+         self?.models.right.imageTintColor(Design.color.textBrand)
       }
       onModeChanged(\.selected) { [weak self] in
-         self?.backColor(Design.color.textError)
+         self?.backColor(Design.color.backgroundBrand)
          self?.label.textColor(Design.color.backgroundSecondary)
          self?.models.right.imageTintColor(Design.color.backgroundSecondary)
       }

@@ -45,6 +45,7 @@ final class ChallengesScene<Asset: AssetProtocol>: BaseViewModel<StackViewExtend
    private lazy var viewModel = ChallengesViewModel<Design>()
    private lazy var activity = ActivityIndicator<Design>()
    private lazy var errorBlock = CommonErrorBlock<Design>()
+   private lazy var darkLoader = DarkLoaderVM<Design>()
 
    override func start() {
       padding(.horizontalOffset(16))

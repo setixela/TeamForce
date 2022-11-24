@@ -32,7 +32,9 @@ final class VerifyViewModels<Design: DSP>: BaseModel, Designable {
       .set(.badgeState(.backColor(Design.color.background)))
       .set(.hideBadge)
       .set {
-         $0.mainModel.icon.image(Design.icon.lock)
+         $0.mainModel.icon
+            .image(Design.icon.lock)
+            .imageTintColor(Design.color.iconBrand)
          $0.mainModel.textField
             .disableAutocorrection()
             .placeholder(Design.Text.title.enterSmsCode)

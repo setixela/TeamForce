@@ -39,6 +39,8 @@ struct Config {
 
    static let imageSendSize: CGFloat = 1920
    static let avatarSendSize: CGFloat = 1920
+
+   static let colorSchemeKey = "colorSchemeKey"
 }
 
 extension CGFloat {

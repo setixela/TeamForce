@@ -24,6 +24,7 @@ final class MainRouter<Asset: AssetProtocol>: RouterProtocol, Assetable {
    init(nc: UINavigationController) {
       self.nc = nc
       nc.view.backgroundColor = Design.color.backgroundBrand
+      initColors()
    }
 
    func start() {
@@ -39,9 +40,9 @@ final class MainRouter<Asset: AssetProtocol>: RouterProtocol, Assetable {
    }
 
    func route<In, T: BaseScene<In> & SMP>(_ navType: NavType,
-              scene: KeyPath<Scene, T>? = nil,
-              payload: T.Input? = nil,
-              finisher: GenericClosure<Bool>? = nil)
+                                          scene: KeyPath<Scene, T>? = nil,
+                                          payload: T.Input? = nil,
+                                          finisher: GenericClosure<Bool>? = nil)
    {
       switch navType {
       case .push:
@@ -87,6 +88,30 @@ final class MainRouter<Asset: AssetProtocol>: RouterProtocol, Assetable {
          }
 
          return vc
+      }
+   }
+
+   func initColors() {
+      guard let nc = nc as? NavController else { return }
+
+      let brandColor = ProductionAsset.Design.color.backgroundBrand
+      let backBrightness = brandColor.brightnessStyle()
+
+      nc.barBackColor(ProductionAsset.Design.color.transparent)
+         .barTranslucent(true)
+         .titleAlpha(1)
+
+      switch backBrightness {
+      case .dark:
+         nc.barStyle(.black)
+            .titleColor(ProductionAsset.Design.color.iconInvert)
+            .navBarTintColor(ProductionAsset.Design.color.iconInvert)
+            .statusBarStyle(.lightContent)
+      case .light:
+         nc.barStyle(.default)
+            .titleColor(ProductionAsset.Design.color.textBrand)
+            .navBarTintColor(ProductionAsset.Design.color.textBrand)
+            .statusBarStyle(.darkContent)
       }
    }
 

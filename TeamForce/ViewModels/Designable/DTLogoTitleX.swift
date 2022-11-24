@@ -18,6 +18,9 @@ final class BrandLogoIcon<Design: DesignProtocol>: BaseViewModel<PaddingImageVie
    override func start() {
       image(Design.icon.logo)
       size(.square(34))
+      cornerRadius(34/2)
+      backColor(Design.color.backgroundBrandSecondary)
+      imageTintColor(Design.color.iconBrand)
    }
 }
 
@@ -32,6 +35,7 @@ final class DTLogoTitleX<Design: DesignProtocol>:
       setMain { _ in } setRight: {
          $0
             .image(Design.icon.logoTitle)
+            .imageTintColor(Design.color.iconBrand)
             .width(120)
             .padding(.left(12))
             .contentMode(.scaleAspectFit)
