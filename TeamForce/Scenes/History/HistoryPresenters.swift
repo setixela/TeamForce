@@ -152,7 +152,9 @@ extension HistoryPresenters {
                }
             }
          } else {
-            icon.image(Design.icon.anonAvatar)
+            icon
+               .image(Design.icon.anonAvatar)
+               .imageTintColor(Design.color.iconBrand)
          }
          
       case "E", "D":
