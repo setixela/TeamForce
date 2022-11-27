@@ -172,17 +172,20 @@ final class FeedWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedWorksTempStorage
       else if segmentId == 3 { filtered = Self.store.winners }
 
       if let index = work.input {
-         let feed = filtered[index]
-         Self.store.currentTransactId = feed.id
-         if feed.objectSelector == "T" ||
-            feed.objectSelector == "Q" ||
-            feed.objectSelector == "R"
-         {
-            work.success(result: feed)
+         if filtered.indices.contains(index) {
+            let feed = filtered[index]
+            Self.store.currentTransactId = feed.id
+            if feed.objectSelector == "T" ||
+               feed.objectSelector == "Q" ||
+               feed.objectSelector == "R"
+            {
+               work.success(result: feed)
+            } else {
+               work.fail()
+            }
          } else {
             work.fail()
          }
-
       } else {
          work.fail()
       }

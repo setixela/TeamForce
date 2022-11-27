@@ -131,6 +131,17 @@ final class FeedPresenters<Design: DesignProtocol>: Designable {
          } else if feed.winner != nil {
             let icon = self.makeIcon(feed: feed, type: EventType.winner)
             let infoLabel = FeedPresenters.makeInfoLabel(feed: feed, eventType: EventType.winner)
+            let winnerTgName = "@" + (feed.winner?.winnerTgName ?? "")
+            let winnerId = feed.winner?.winnerId
+            
+            infoLabel.view.on(\.didSelect) {
+               switch $0 {
+               case winnerTgName:
+                  self.send(\.didSelect, winnerId ?? -1)
+               default:
+                  print("selected error")
+               }
+            }
 
             let infoBlock = StackModel()
                .spacing(Grid.x10.value)
@@ -160,7 +171,19 @@ final class FeedPresenters<Design: DesignProtocol>: Designable {
          } else if feed.challenge != nil {
             let icon = self.makeIcon(feed: feed, type: EventType.challenge)
             let infoLabel = FeedPresenters.makeInfoLabel(feed: feed, eventType: EventType.challenge)
+            
+            let createrTgName = "@" + (feed.challenge?.creatorTgName ?? "")
+            let creatorId = feed.challenge?.creatorId
 
+            infoLabel.view.on(\.didSelect) {
+               switch $0 {
+               case createrTgName:
+                  self.send(\.didSelect, creatorId ?? -1)
+               default:
+                  print("selected error")
+               }
+            }
+            
             if feed.challenge?.userLiked == true {
                likeButton.setState(.selected)
             }
@@ -279,6 +302,8 @@ extension FeedPresenters {
          infoText.append(challengeName.colored(Design.color.textBrand))
 
          infoLabel.attributedText(infoText)
+         infoLabel.view.makePartsClickable(user1: winnerName, user2: nil)
+         
       case .challenge:
          let challengeName = "«" + (feed.challenge?.name ?? "") + "»"
          let creatorName = "@" + (feed.challenge?.creatorTgName ?? "")
@@ -288,6 +313,8 @@ extension FeedPresenters {
          infoText.append(creatorName.colored(Design.color.textBrand))
 
          infoLabel.attributedText(infoText)
+         infoLabel.view.makePartsClickable(user1: creatorName, user2: nil)
+         
       }
       return infoLabel
    }

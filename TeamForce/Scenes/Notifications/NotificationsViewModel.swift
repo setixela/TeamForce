@@ -116,7 +116,9 @@ final class NotificationsCellModel<Design: DSP>:
 extension NotificationsCellModel: SetupProtocol {
    func setup(_ data: Notification) {
 //
-      icon.image(Design.icon.anonAvatar)
+      icon
+         .image(Design.icon.anonAvatar)
+         .imageTintColor(Design.color.iconBrand)
       date.text(data.updatedAt?.timeAgoConverted ?? "")
       type.text(data.theme)
 
