@@ -67,7 +67,7 @@ extension EditContactsViewModels: SetupProtocol {
       surnameEditField.textField.text(profile.surName.string)
       nameEditField.textField.text(profile.firstName.string)
       middlenameEditField.textField.text(profile.middleName.string)
-      telegramEditField.textField.text(profile.tgName)
+      telegramEditField.textField.text(profile.tgName.string)
 
       if let contacts = profile.contacts {
          for contact in contacts {

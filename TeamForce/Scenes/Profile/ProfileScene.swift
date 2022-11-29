@@ -173,7 +173,7 @@ class ProfileScene<Asset: AssetProtocol>: BaseSceneModel<
       let fullName = profile.surName.string + " " +
          profile.firstName.string + " " + profile.middleName.string
       userModel.models.right.fullName.text(fullName)
-      userModel.models.right.nickName.text("@" + profile.tgName)
+      userModel.models.right.nickName.text("@" + profile.tgName.string)
       if let urlSuffix = profile.photo {
          userModel.models.main.url(TeamForceEndpoints.urlBase + urlSuffix)
       }

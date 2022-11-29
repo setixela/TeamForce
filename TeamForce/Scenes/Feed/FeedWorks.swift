@@ -87,7 +87,7 @@ final class FeedWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedWorksTempStorage
 
       Self.store.userData = user
       Self.store.profileId = user.profile.id
-      Self.store.currentUserName = user.profile.tgName
+      Self.store.currentUserName = user.profile.tgName.string
 
       Self.store.feedOffset = 1
       Self.store.transactOffset = 1

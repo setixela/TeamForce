@@ -19,7 +19,7 @@ extension ProfileEditViewModels: SetupProtocol {
          profile.firstName.string + " " +
          profile.middleName.string
       editPhotoBlock.fullAndNickName.fullName.text(fullName)
-      editPhotoBlock.fullAndNickName.nickName.text("@" + profile.tgName)
+      editPhotoBlock.fullAndNickName.nickName.text("@" + profile.tgName.string)
       editPhotoBlock.photoButton.backImageUrl(TeamForceEndpoints.urlBase + profile.photo.string)
    }
 }

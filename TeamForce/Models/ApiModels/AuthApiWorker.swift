@@ -38,8 +38,8 @@ struct UserData: Codable {
       let organization: String
       let organizationId: Int
       let department: String
-      let tgId: String
-      let tgName: String
+      let tgId: String?
+      let tgName: String?
       let photo: String?
       let hiredAt: String?
       let surName: String?
