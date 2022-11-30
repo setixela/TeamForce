@@ -3,7 +3,7 @@
 import UIKit
 import PlaygroundSupport
 
-//@testable import TeamForce
+@testable import TeamForce
 
 class MyViewController : UIViewController {
     override func loadView() {
