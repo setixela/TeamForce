@@ -106,6 +106,8 @@
 		1956426C292AD973007BE9D4 /* UIViewContoller+IsModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1956426B292AD973007BE9D4 /* UIViewContoller+IsModal.swift */; };
 		195870F228A8C8040075D505 /* KeyPathMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 195870F128A8C8040075D505 /* KeyPathMaker.swift */; };
 		1959F27428AA8E9700DEEE5C /* LoginWorks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1959F27328AA8E9700DEEE5C /* LoginWorks.swift */; };
+		19607B502937A55500CFBA18 /* TransactDetailsScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BB2C1328E10D1600C1E3DB /* TransactDetailsScene.swift */; };
+		19607B512937A55D00CFBA18 /* TransactDetailsScenario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BB2C2828E3E7B600C1E3DB /* TransactDetailsScenario.swift */; };
 		19633988292148CE00B66A7D /* GetCurrentUserUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19633987292148CE00B66A7D /* GetCurrentUserUseCase.swift */; };
 		1963398B2921641200B66A7D /* NotificationToFeedElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1963398A2921641200B66A7D /* NotificationToFeedElement.swift */; };
 		1963398D2921644300B66A7D /* Converter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1963398C2921644300B66A7D /* Converter.swift */; };
@@ -359,7 +361,6 @@
 		63BB2C0E28DA179D00C1E3DB /* PressLikeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BB2C0D28DA179D00C1E3DB /* PressLikeUseCase.swift */; };
 		63BB2C1028DB38C900C1E3DB /* GetTransactionStatisticsApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BB2C0F28DB38C900C1E3DB /* GetTransactionStatisticsApiWorker.swift */; };
 		63BB2C1228DB3D2A00C1E3DB /* GetTransactionStatisticsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BB2C1128DB3D2A00C1E3DB /* GetTransactionStatisticsUseCase.swift */; };
-		63BB2C1428E10D1600C1E3DB /* TransactDetailsScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BB2C1328E10D1600C1E3DB /* TransactDetailsScene.swift */; };
 		63BB2C1628E128C000C1E3DB /* GetCommentsApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BB2C1528E128BF00C1E3DB /* GetCommentsApiWorker.swift */; };
 		63BB2C1828E132E600C1E3DB /* GetCommentsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BB2C1728E132E600C1E3DB /* GetCommentsUseCase.swift */; };
 		63BB2C1A28E1384700C1E3DB /* CreateCommentApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BB2C1928E1384700C1E3DB /* CreateCommentApiWorker.swift */; };
@@ -369,7 +370,6 @@
 		63BB2C2228E150CA00C1E3DB /* DeleteCommentApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BB2C2128E150CA00C1E3DB /* DeleteCommentApiWorker.swift */; };
 		63BB2C2428E1513000C1E3DB /* DeleteCommentUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BB2C2328E1513000C1E3DB /* DeleteCommentUseCase.swift */; };
 		63BB2C2628E3DD8D00C1E3DB /* CommentPresenters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BB2C2528E3DD8D00C1E3DB /* CommentPresenters.swift */; };
-		63BB2C2928E3E7B600C1E3DB /* TransactDetailsScenario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BB2C2828E3E7B600C1E3DB /* TransactDetailsScenario.swift */; };
 		63C6D11428B2E1F200887AD1 /* SettingsScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C6D11328B2E1F200887AD1 /* SettingsScene.swift */; };
 		63C6D11628B2ECD000887AD1 /* DoubleLabelHorizontal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C6D11528B2ECD000887AD1 /* DoubleLabelHorizontal.swift */; };
 		63CFA196289C38A9000E4D1E /* GetTransactionsApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63CFA195289C38A9000E4D1E /* GetTransactionsApiWorker.swift */; };
@@ -475,6 +475,7 @@
 		19221EF428CE1D1B00B7B604 /* EditContactsViewModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditContactsViewModels.swift; sourceTree = "<group>"; };
 		19221EF728CE262A00B7B604 /* WorkingPlaceViewModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkingPlaceViewModels.swift; sourceTree = "<group>"; };
 		192FCFFE28C9477100E6FACC /* ModalDoubleStackModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalDoubleStackModel.swift; sourceTree = "<group>"; };
+		19347C1F2937AA92002100B2 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		19360ECF292E77E400DFA8E8 /* UIView+Constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Constraints.swift"; sourceTree = "<group>"; };
 		19360ED1292E791900DFA8E8 /* ScrollViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollViewModel.swift; sourceTree = "<group>"; };
 		19360ED3292ED6A100DFA8E8 /* VCModel+Loading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VCModel+Loading.swift"; sourceTree = "<group>"; };
@@ -898,6 +899,7 @@
 		190C1D05285D15FF00FB3518 = {
 			isa = PBXGroup;
 			children = (
+				19347C1F2937AA92002100B2 /* MyPlayground.playground */,
 				190C1D10285D15FF00FB3518 /* TeamForce */,
 				190C1D27285D160000FB3518 /* TeamForceTests */,
 				190C1D0F285D15FF00FB3518 /* Products */,
@@ -2090,6 +2092,7 @@
 				632DADD328FD6BAB00998DCD /* ChallengeResCancelViewModel.swift in Sources */,
 				19A8229628A925760081D385 /* ViewModel+Setters.swift in Sources */,
 				19A9BE6528BEB57C0099F8EA /* ImagePickerViewModel.swift in Sources */,
+				19607B502937A55500CFBA18 /* TransactDetailsScene.swift in Sources */,
 				63BB2C0A28D9293A00C1E3DB /* FeedPresenters.swift in Sources */,
 				199C4B6D2863299E008AD6FD /* DesignSystem.swift in Sources */,
 				6384AD8A291BC07300188769 /* GetNotificationsUseCase.swift in Sources */,
@@ -2148,8 +2151,6 @@
 				1921A13528EECAC900E41E86 /* ChallengesScene.swift in Sources */,
 				1977BE5528A7238F00D554EA /* TextFieldStates.swift in Sources */,
 				631D8EC528F96054005332BD /* ChallContendersViewModel.swift in Sources */,
-				63BB2C2928E3E7B600C1E3DB /* TransactDetailsScenario.swift in Sources */,
-				63BB2C2928E3E7B600C1E3DB /* TransactDetailsScenario.swift in Sources */,
 				636AE7242923CD82004A24E5 /* ChooseOrgApiWorker.swift in Sources */,
 				1921A13728EECAD500E41E86 /* ChallengesWorks.swift in Sources */,
 				191571D1289F12350061510F /* PlaygroundScene.swift in Sources */,
@@ -2332,6 +2333,7 @@
 				190E18722901C11300838038 /* ManyResults.swift in Sources */,
 				19017B8228A6A3FB00B06345 /* GetUsersListApiWorker.swift in Sources */,
 				19CAB9C528B41C1F00A0A3B1 /* Switcher.swift in Sources */,
+				19607B512937A55D00CFBA18 /* TransactDetailsScenario.swift in Sources */,
 				19A9232A28B2A8200080D491 /* SpacerPresenter.swift in Sources */,
 				63AB071328BD7DD700FD650F /* ProfileEditScene.swift in Sources */,
 				1921CAA7291AA3CD007AE024 /* NotificationsViewModel.swift in Sources */,
@@ -2429,7 +2431,6 @@
 				636A45912900D15D003E412D /* GetChallengeReportUseCase.swift in Sources */,
 				194E307C28F35DBF001E2967 /* ChallengeDetailsScene.swift in Sources */,
 				1918CC7B286F6C84004373F3 /* ProfileApiWorker.swift in Sources */,
-				63BB2C1428E10D1600C1E3DB /* TransactDetailsScene.swift in Sources */,
 				190991E628AA9D2A00371909 /* VerifyCodeUseCase.swift in Sources */,
 				197A360A28BADC95006E44C1 /* FeedWorks.swift in Sources */,
 				63BB2C1A28E1384700C1E3DB /* CreateCommentApiWorker.swift in Sources */,
@@ -2651,7 +2652,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -2693,7 +2694,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
