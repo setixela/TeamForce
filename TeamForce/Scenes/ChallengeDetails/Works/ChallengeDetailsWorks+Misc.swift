@@ -137,6 +137,18 @@ extension ChallengeDetailsWorks: ChallengeDetailsWorksProtocol {
             work.fail(Self.store.userLiked)
          }
    }.retainBy(retainer) }
+   
+   var pressLikeContender: Work<PressLikeRequest, PressLikeRequest> { .init { [weak self] work in
+      guard let input = work.input else { work.fail(); return }
+      self?.apiUseCase.pressLike
+         .doAsync(input)
+         .onSuccess {
+            work.success(result: input)
+         }
+         .onFail {
+            work.fail()
+         }
+   }.retainBy(retainer) }
 
    var isLikedByMe: WorkVoid<Bool> { .init { work in
       let isMyLike = Self.store.userLiked

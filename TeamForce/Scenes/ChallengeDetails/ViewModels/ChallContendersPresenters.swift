@@ -13,6 +13,8 @@ class ChallContendersPresenters<Design: DesignProtocol>: Designable {
 
    var contendersCellPresenter: Presenter<Contender, WrappedX<StackModel>> {
       Presenter { work in
+         
+         let index = work.unsafeInput.index
          let contender = work.unsafeInput.item
          let createdAt = contender.reportCreatedAt
          let name = contender.participantName.string
@@ -124,6 +126,46 @@ class ChallContendersPresenters<Design: DesignProtocol>: Designable {
                rejectButton,
                acceptButton
             ])
+         
+         let messageButton = ReactionButton<Design>()
+            .setAll {
+               $0.image(Design.icon.messageCloud)
+               $1.text("")
+            }
+
+         let likeButton = ReactionButton<Design>()
+            .setAll {
+               $0.image(Design.icon.like)
+               $1.text("")
+            }
+
+         likeButton.view.startTapGestureRecognize(cancelTouch: true)
+
+         likeButton.view.on(\.didTap, self) {
+            let body = PressLikeRequest.Body(
+               likeKind: 1,
+               challengeReportId: contender.reportId
+            )
+            let request = PressLikeRequest(
+               token: "",
+               body: body,
+               index: index
+            )
+            $0.send(\.reactionPressed, request)
+
+            likeButton.setState(.selected)
+         }
+         
+         let reactionsBlock = StackModel()
+            .axis(.horizontal)
+            .alignment(.leading)
+            .distribution(.fill)
+            .spacing(4)
+            .arrangedModels([
+               messageButton,
+               likeButton,
+               Grid.xxx.spacer
+            ])
 
          let cellStack = WrappedX(
             StackModel()
@@ -134,7 +176,8 @@ class ChallContendersPresenters<Design: DesignProtocol>: Designable {
                   userInfo,
                   textLabel,
                   photo,
-                  buttonsStack
+                  buttonsStack,
+                  reactionsBlock
                ])
                .cornerRadius(Design.params.cornerRadiusSmall)
                .backColor(Design.color.background)
@@ -152,5 +195,6 @@ extension ChallContendersPresenters: Eventable {
    struct Events: InitProtocol {
       var acceptPressed: Int?
       var rejectPressed: Int?
+      var reactionPressed: PressLikeRequest?
    }
 }

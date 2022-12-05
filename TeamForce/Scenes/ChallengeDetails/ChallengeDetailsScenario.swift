@@ -23,6 +23,8 @@ struct ChallengeDetailsInputEvents {
    let reactionPressed: WorkVoidVoid
 
    let presentChallengeAuthor: WorkVoidVoid
+   
+   let reportReactionPressed: WorkVoid<PressLikeRequest>
 }
 
 final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<ChallengeDetailsInputEvents,
@@ -181,5 +183,14 @@ final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<Challen
       events.presentChallengeAuthor
          .doNext(works.getCreatorId)
          .onSuccess(setState) { .presentCreator($0) }
+      
+      events.reportReactionPressed
+         .doNext(works.pressLikeContender)
+         .onSuccess {
+            print("hello")
+         }
+         .onFail {
+            print("bye")
+         }
    }
 }
