@@ -130,13 +130,13 @@ class ChallContendersPresenters<Design: DesignProtocol>: Designable {
          let messageButton = ReactionButton<Design>()
             .setAll {
                $0.image(Design.icon.messageCloud)
-               $1.text("")
+               $1.text(String(contender.commentsAmount ?? 0))
             }
 
          let likeButton = ReactionButton<Design>()
             .setAll {
                $0.image(Design.icon.like)
-               $1.text("")
+               $1.text(String(contender.likesAmount ?? 0))
             }
 
          likeButton.view.startTapGestureRecognize(cancelTouch: true)
