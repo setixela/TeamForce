@@ -9,10 +9,6 @@ import Foundation
 import ReactiveWorks
 import UIKit
 
-public struct Test {
-   let a = "test"
-}
-
 struct Config {
    private static let urlBaseDebug = "http://176.99.6.251:8888"
    private static let urlBaseProduction = "http://176.99.6.251:8889"

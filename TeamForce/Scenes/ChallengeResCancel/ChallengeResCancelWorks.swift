@@ -15,7 +15,7 @@ final class ChallengeResCancelStore: InitProtocol {
    var resultId: Int?
 }
 
-final class ChallengeResCancelWorks<Asset: AssetProtocol>: BaseSceneWorks<ChallengeResCancelStore, Asset> {
+final class ChallengeResCancelWorks<Asset: AssetProtocol>: BaseWorks<ChallengeResCancelStore, Asset> {
    private lazy var reasonInputParser = ReasonCheckerModel()
    private lazy var apiUseCase = Asset.apiUseCase
 

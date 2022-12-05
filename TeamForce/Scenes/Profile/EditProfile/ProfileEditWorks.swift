@@ -17,7 +17,7 @@ protocol ProfileEditWorksProtocol: Assetable {
    var updateAvatar: Work<UpdateImageRequest, Void> { get }
 }
 
-final class ProfileEditWorks<Asset: AssetProtocol>: BaseSceneWorks<ProfileEditWorks.Temp, Asset>, ProfileEditWorksProtocol {
+final class ProfileEditWorks<Asset: AssetProtocol>: BaseWorks<ProfileEditWorks.Temp, Asset>, ProfileEditWorksProtocol {
    //
    private lazy var useCase = Asset.apiUseCase
 

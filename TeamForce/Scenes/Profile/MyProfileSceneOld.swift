@@ -12,7 +12,7 @@ struct ProfileEvents: InitProtocol {
    var saveSuccess: Void?
 }
 
-final class MyProfileScene<Asset: AssetProtocol>: ProfileScene<Asset> {
+final class MyProfileSceneOld<Asset: AssetProtocol>: ProfileScene<Asset> {
    //
   // private let titleModel = ProfileTitle<Design>()
 
@@ -31,8 +31,8 @@ final class MyProfileScene<Asset: AssetProtocol>: ProfileScene<Asset> {
    private lazy var editProfileModel = ProfileEditScene<Asset>(vcModel: vcModel)
 
    private lazy var useCase = Asset.apiUseCase
-   private var organizations: [Organization] = []
 
+   private var organizations: [Organization] = []
 
    override func start() {
       vcModel?.title("Мой профиль")

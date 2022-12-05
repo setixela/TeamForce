@@ -8,7 +8,7 @@
 import Foundation
 import ReactiveWorks
 
-final class ProfileApiWorker: BaseApiWorker<TokenRequest, UserData> {
+final class GetMyProfileApiWorker: BaseApiWorker<TokenRequest, UserData> {
     override func doAsync(work: Work<TokenRequest, UserData>) {
         guard let request = work.input else { return }
 

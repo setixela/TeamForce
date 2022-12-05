@@ -124,14 +124,6 @@ final class ApiUseCase<Asset: AssetProtocol>: InitProtocol, Assetable, WorkBaske
       .retainedWork(retainer)
    }
 
-//   var getFeed: GetFeedUseCase.WRK {
-//      GetFeedUseCase(
-//         safeStringStorage: safeStringStorage,
-//         getFeedsApiWorker: getFeedsApiWorker
-//      )
-//      .retainedWork(retainer)
-//   }
-
    var getPeriods: GetPeriodsUseCase.WRK {
       GetPeriodsUseCase(
          safeStringStorage: safeStringStorage,
@@ -493,7 +485,7 @@ final class ApiUseCase<Asset: AssetProtocol>: InitProtocol, Assetable, WorkBaske
    
    // MARK: - Dependencies
 
-   private var userProfileApiModel: ProfileApiWorker { .init(apiEngine: Asset.service.apiEngine) }
+   private var userProfileApiModel: GetMyProfileApiWorker { .init(apiEngine: Asset.service.apiEngine) }
    private var loginApiModel: AuthApiWorker { .init(apiEngine: Asset.service.apiEngine) }
    private var verifyCodeApiWorker: VerifyApiModel { .init(apiEngine: Asset.service.apiEngine) }
    private var logoutApiModel: LogoutApiWorker { .init(apiEngine: Asset.service.apiEngine) }

@@ -16,7 +16,7 @@ protocol MainWorksProtocol {
    var loadProfile: WorkVoid<UserData> { get }
 }
 
-final class MainWorks<Asset: AssetProtocol>: BaseSceneWorks<MainWorksStorage, Asset>, MainWorksProtocol {
+final class MainWorks<Asset: AssetProtocol>: BaseWorks<MainWorksStorage, Asset>, MainWorksProtocol {
    private lazy var apiUseCase = Asset.apiUseCase
 
    var loadProfile: WorkVoid<UserData> { apiUseCase.loadProfile }

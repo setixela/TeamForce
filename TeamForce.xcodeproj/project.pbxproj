@@ -16,6 +16,10 @@
 		19017B7328A69CD400B06345 /* DTLogoTitleX.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19017B7228A69CD400B06345 /* DTLogoTitleX.swift */; };
 		19017B8128A6A39800B06345 /* SentTransactDetailsScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19017B7A28A6A2F900B06345 /* SentTransactDetailsScene.swift */; };
 		19017B8228A6A3FB00B06345 /* GetUsersListApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D419E628A50F730024E22C /* GetUsersListApiWorker.swift */; };
+		1906F278293D006F00A8F0BE /* MyProfileScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1906F277293D006F00A8F0BE /* MyProfileScene.swift */; };
+		1906F27A293D128B00A8F0BE /* MyProfileVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1906F279293D128B00A8F0BE /* MyProfileVM.swift */; };
+		1906F27C293E2B7B00A8F0BE /* MyProfileScenario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1906F27B293E2B7B00A8F0BE /* MyProfileScenario.swift */; };
+		1906F27E293E2B8500A8F0BE /* MyProfileWorks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1906F27D293E2B8500A8F0BE /* MyProfileWorks.swift */; };
 		190991E628AA9D2A00371909 /* VerifyCodeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190991E528AA9D2A00371909 /* VerifyCodeUseCase.swift */; };
 		190BE97928ADDFAB0062CCD5 /* TransactScenario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190BE97828ADDFAB0062CCD5 /* TransactScenario.swift */; };
 		190C1D12285D15FF00FB3518 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190C1D11285D15FF00FB3518 /* AppDelegate.swift */; };
@@ -39,7 +43,7 @@
 		1917226C2923D5E90023DE3A /* ChallengeDetailsWorks+Misc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1917226B2923D5E90023DE3A /* ChallengeDetailsWorks+Misc.swift */; };
 		1918CC77286F67EB004373F3 /* BalanceScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1918CC76286F67EB004373F3 /* BalanceScene.swift */; };
 		1918CC79286F6C69004373F3 /* VerifyApiModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1918CC78286F6C69004373F3 /* VerifyApiModel.swift */; };
-		1918CC7B286F6C84004373F3 /* ProfileApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1918CC7A286F6C83004373F3 /* ProfileApiWorker.swift */; };
+		1918CC7B286F6C84004373F3 /* GetMyProfileApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1918CC7A286F6C83004373F3 /* GetMyProfileApiWorker.swift */; };
 		1918CC7D286F6CAC004373F3 /* GetBalanceApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1918CC7C286F6CAC004373F3 /* GetBalanceApiWorker.swift */; };
 		191B0C272865E5C1001CF3D9 /* IconBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191B0C262865E5C1001CF3D9 /* IconBuilder.swift */; };
 		191B0C292865F119001CF3D9 /* TextBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191B0C282865F119001CF3D9 /* TextBuilder.swift */; };
@@ -285,7 +289,7 @@
 		635FC6C028EC17B500826B67 /* ReactionsPresenters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635FC6BF28EC17B500826B67 /* ReactionsPresenters.swift */; };
 		635FC6C328EE7ACC00826B67 /* GetChallengesApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635FC6C228EE7ACC00826B67 /* GetChallengesApiWorker.swift */; };
 		635FC6C628EE7F3800826B67 /* GetChallengesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635FC6C528EE7F3800826B67 /* GetChallengesUseCase.swift */; };
-		6368D8222891508C0049EEAB /* MyProfileScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6368D8212891508C0049EEAB /* MyProfileScene.swift */; };
+		6368D8222891508C0049EEAB /* MyProfileSceneOld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6368D8212891508C0049EEAB /* MyProfileSceneOld.swift */; };
 		6368D824289168740049EEAB /* CustomCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6368D823289168740049EEAB /* CustomCellModel.swift */; };
 		6368D826289187B50049EEAB /* SendCoinApiModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6368D825289187B50049EEAB /* SendCoinApiModel.swift */; };
 		6368D8282891E7C40049EEAB /* UserDefault+helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6368D8272891E7C30049EEAB /* UserDefault+helpers.swift */; };
@@ -428,6 +432,10 @@
 		19017B7028A69CB100B06345 /* IconTitleY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconTitleY.swift; sourceTree = "<group>"; };
 		19017B7228A69CD400B06345 /* DTLogoTitleX.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DTLogoTitleX.swift; sourceTree = "<group>"; };
 		19017B7A28A6A2F900B06345 /* SentTransactDetailsScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SentTransactDetailsScene.swift; sourceTree = "<group>"; };
+		1906F277293D006F00A8F0BE /* MyProfileScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileScene.swift; sourceTree = "<group>"; };
+		1906F279293D128B00A8F0BE /* MyProfileVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileVM.swift; sourceTree = "<group>"; };
+		1906F27B293E2B7B00A8F0BE /* MyProfileScenario.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileScenario.swift; sourceTree = "<group>"; };
+		1906F27D293E2B8500A8F0BE /* MyProfileWorks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileWorks.swift; sourceTree = "<group>"; };
 		190991E528AA9D2A00371909 /* VerifyCodeUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyCodeUseCase.swift; sourceTree = "<group>"; };
 		190BE97828ADDFAB0062CCD5 /* TransactScenario.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactScenario.swift; sourceTree = "<group>"; };
 		190C1D0E285D15FF00FB3518 /* TeamForce.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TeamForce.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -453,7 +461,7 @@
 		1917226B2923D5E90023DE3A /* ChallengeDetailsWorks+Misc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChallengeDetailsWorks+Misc.swift"; sourceTree = "<group>"; };
 		1918CC76286F67EB004373F3 /* BalanceScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceScene.swift; sourceTree = "<group>"; };
 		1918CC78286F6C69004373F3 /* VerifyApiModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyApiModel.swift; sourceTree = "<group>"; };
-		1918CC7A286F6C83004373F3 /* ProfileApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileApiWorker.swift; sourceTree = "<group>"; };
+		1918CC7A286F6C83004373F3 /* GetMyProfileApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetMyProfileApiWorker.swift; sourceTree = "<group>"; };
 		1918CC7C286F6CAC004373F3 /* GetBalanceApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetBalanceApiWorker.swift; sourceTree = "<group>"; };
 		191B0C262865E5C1001CF3D9 /* IconBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconBuilder.swift; sourceTree = "<group>"; };
 		191B0C282865F119001CF3D9 /* TextBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextBuilder.swift; sourceTree = "<group>"; };
@@ -691,7 +699,7 @@
 		635FC6BF28EC17B500826B67 /* ReactionsPresenters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionsPresenters.swift; sourceTree = "<group>"; };
 		635FC6C228EE7ACC00826B67 /* GetChallengesApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetChallengesApiWorker.swift; sourceTree = "<group>"; };
 		635FC6C528EE7F3800826B67 /* GetChallengesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetChallengesUseCase.swift; sourceTree = "<group>"; };
-		6368D8212891508C0049EEAB /* MyProfileScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileScene.swift; sourceTree = "<group>"; };
+		6368D8212891508C0049EEAB /* MyProfileSceneOld.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileSceneOld.swift; sourceTree = "<group>"; };
 		6368D823289168740049EEAB /* CustomCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCellModel.swift; sourceTree = "<group>"; };
 		6368D825289187B50049EEAB /* SendCoinApiModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendCoinApiModel.swift; sourceTree = "<group>"; };
 		6368D8272891E7C30049EEAB /* UserDefault+helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefault+helpers.swift"; sourceTree = "<group>"; };
@@ -893,6 +901,17 @@
 				191B0C282865F119001CF3D9 /* TextBuilder.swift */,
 			);
 			path = Text;
+			sourceTree = "<group>";
+		};
+		1906F276293CFFAA00A8F0BE /* DiagramProfile */ = {
+			isa = PBXGroup;
+			children = (
+				1906F277293D006F00A8F0BE /* MyProfileScene.swift */,
+				1906F27B293E2B7B00A8F0BE /* MyProfileScenario.swift */,
+				1906F27D293E2B8500A8F0BE /* MyProfileWorks.swift */,
+				1906F279293D128B00A8F0BE /* MyProfileVM.swift */,
+			);
+			path = DiagramProfile;
 			sourceTree = "<group>";
 		};
 		190C1D05285D15FF00FB3518 = {
@@ -1231,6 +1250,7 @@
 				636AE7272923D2E3004A24E5 /* ChooseOrgScene */,
 				19ACB3CA28A599D600B5AD71 /* Transact */,
 				19017B8328A6C79400B06345 /* SentTransactDetails */,
+				1906F276293CFFAA00A8F0BE /* DiagramProfile */,
 				19ACB3CE28A59A2900B5AD71 /* Profile */,
 				191571D0289F12350061510F /* PlaygroundScene.swift */,
 			);
@@ -1500,7 +1520,7 @@
 			isa = PBXGroup;
 			children = (
 				19AA24F829244522001AB635 /* ProfileScene.swift */,
-				6368D8212891508C0049EEAB /* MyProfileScene.swift */,
+				6368D8212891508C0049EEAB /* MyProfileSceneOld.swift */,
 				63AB071028BD6B0F00FD650F /* ProfileWorks.swift */,
 				19221EED28CB17CD00B7B604 /* EditProfile */,
 			);
@@ -1667,7 +1687,7 @@
 				635FC6C128EE7A8F00826B67 /* Challenge */,
 				19AE3AF12869230C00A0C6E4 /* AuthApiWorker.swift */,
 				1918CC7C286F6CAC004373F3 /* GetBalanceApiWorker.swift */,
-				1918CC7A286F6C83004373F3 /* ProfileApiWorker.swift */,
+				1918CC7A286F6C83004373F3 /* GetMyProfileApiWorker.swift */,
 				1918CC78286F6C69004373F3 /* VerifyApiModel.swift */,
 				1953DE802879FC55000DC537 /* SearchUserApiWorker.swift */,
 				634F4332288F4EE9003B2256 /* LogoutApiWorker.swift */,
@@ -2237,6 +2257,7 @@
 				19017B6B28A6989000B06345 /* TitleSubtitleY.swift in Sources */,
 				19D84E3328AC077200418B9E /* LoginViewModels.swift in Sources */,
 				19D08351286F401000F75E4A /* SideBarUserModel.swift in Sources */,
+				1906F27A293D128B00A8F0BE /* MyProfileVM.swift in Sources */,
 				19D0835F286F42C000F75E4A /* FrameCellModelDT.swift in Sources */,
 				19466E01289FE28C0052F0AB /* TitleSubtitleModel.swift in Sources */,
 				633FBC8428E535600071FF8C /* TransactDetailsWorks.swift in Sources */,
@@ -2254,6 +2275,7 @@
 				63BB2C0C28DA160B00C1E3DB /* PressLikeApiWorker.swift in Sources */,
 				6379418A292D0B3F0092D325 /* GetLikesUseCase.swift in Sources */,
 				1984A109291E421600F65262 /* String+MD5.swift in Sources */,
+				1906F278293D006F00A8F0BE /* MyProfileScene.swift in Sources */,
 				63CFA198289C3FB6000E4D1E /* GetTransactionsUseCase.swift in Sources */,
 				1977BE5828A7343400D554EA /* InputCheckers.swift in Sources */,
 				19564266292ACB88007BE9D4 /* ChallengeStatusBlock.swift in Sources */,
@@ -2312,6 +2334,7 @@
 				197A361628BBB282006E44C1 /* String+Random.swift in Sources */,
 				1918CC77286F67EB004373F3 /* BalanceScene.swift in Sources */,
 				19D08361286F430B00F75E4A /* Designable.swift in Sources */,
+				1906F27C293E2B7B00A8F0BE /* MyProfileScenario.swift in Sources */,
 				1956426C292AD973007BE9D4 /* UIViewContoller+IsModal.swift in Sources */,
 				63578E5A28AB8F6000423957 /* GetTransactionsByPeriodUseCase.swift in Sources */,
 				6368D82A2894091B0049EEAB /* TransactInputViewModel.swift in Sources */,
@@ -2342,6 +2365,7 @@
 				19221EEF28CB509A00B7B604 /* ProfileEditViewModels.swift in Sources */,
 				636AE70929235BE1004A24E5 /* GetUserOrganizationsApiWorker.swift in Sources */,
 				19360ED2292E791900DFA8E8 /* ScrollViewModel.swift in Sources */,
+				1906F27E293E2B8500A8F0BE /* MyProfileWorks.swift in Sources */,
 				19F15386289964AA00ECF000 /* LogoutUseCase.swift in Sources */,
 				1953DE842879FDE3000DC537 /* TransactViewModels.swift in Sources */,
 				19BD2A8728ABB35C00FCC00A /* LoginScenario.swift in Sources */,
@@ -2428,7 +2452,7 @@
 				196750B4286519660019A6DE /* ProductionAsset.swift in Sources */,
 				636A45912900D15D003E412D /* GetChallengeReportUseCase.swift in Sources */,
 				194E307C28F35DBF001E2967 /* ChallengeDetailsScene.swift in Sources */,
-				1918CC7B286F6C84004373F3 /* ProfileApiWorker.swift in Sources */,
+				1918CC7B286F6C84004373F3 /* GetMyProfileApiWorker.swift in Sources */,
 				190991E628AA9D2A00371909 /* VerifyCodeUseCase.swift in Sources */,
 				197A360A28BADC95006E44C1 /* FeedWorks.swift in Sources */,
 				63BB2C1A28E1384700C1E3DB /* CreateCommentApiWorker.swift in Sources */,
@@ -2458,7 +2482,7 @@
 				63A37EA228EE874100DBD59F /* GetChallengeByIdApiWorker.swift in Sources */,
 				63E7A74728AFBDE500FB2C80 /* GetPeriodsFromDateUseCase.swift in Sources */,
 				63F00F4D2922364300CF807C /* NotificationReadWithIdApiWorker.swift in Sources */,
-				6368D8222891508C0049EEAB /* MyProfileScene.swift in Sources */,
+				6368D8222891508C0049EEAB /* MyProfileSceneOld.swift in Sources */,
 				198FE1C92899994A00BAF1A5 /* LoginUseCase.swift in Sources */,
 				63BB2C1628E128C000C1E3DB /* GetCommentsApiWorker.swift in Sources */,
 				1955879028F733C50001F734 /* ChallengeResultScenario.swift in Sources */,
@@ -2632,6 +2656,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = TeamForce360;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.business";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Allow Camera Use";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Allow Photo Library Use";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
@@ -2677,6 +2702,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = TeamForce360;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.business";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Allow Camera Use";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Allow Photo Library Use";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;

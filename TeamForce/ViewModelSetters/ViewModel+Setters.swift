@@ -538,8 +538,9 @@ extension ViewModelProtocol where Self: Stateable, View: ButtonExtended {
       return self
    }
 
-   @discardableResult func image(_ value: UIImage?) -> Self {
-      view.setImage(value, for: .normal)
+   @discardableResult func image(_ value: UIImage?, color: UIColor? = nil) -> Self {
+      let image = color == nil ? value : value?.withTintColor(color!)
+      view.setImage(image, for: .normal)
       return self
    }
 

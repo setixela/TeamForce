@@ -29,7 +29,6 @@ final class GraphView: UIView {}
 
 extension GraphView: CircleGraphProtocol {
    func drawGraphs(_ graphs: CircleGraphs) {
-
       let arcWidth: CGFloat = 19.8
 
       let fullCircle = 2 * CGFloat.pi
@@ -49,7 +48,7 @@ extension GraphView: CircleGraphProtocol {
          let arcLength = percent
          let endArc: CGFloat = currentStart + arcLength
 
-         let start: CGFloat = (currentStart) * fullCircle
+         let start: CGFloat = currentStart * fullCircle
          let end = endArc * fullCircle
 
          print(start)
@@ -72,7 +71,6 @@ extension GraphView: CircleGraphProtocol {
          shapeLayer.lineWidth = arcWidth
 
          layer.addSublayer(shapeLayer)
-
 
          let arcCenter = (start + end) / 2
          let textPos = CGPoint(

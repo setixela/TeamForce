@@ -25,8 +25,20 @@ protocol Scenario {
    func start()
 }
 
-class BaseScenario<Events, State, Works>: Scenario {
+protocol ScenarioParams {
+   associatedtype Asset: AssetRoot
+   associatedtype ScenarioInputEvents: Any
+   associatedtype ScenarioModelState: Any
+   associatedtype ScenarioWorks: Any
+}
 
+class BaseAssettableScenario<Params: ScenarioParams>: BaseScenario<
+   Params.ScenarioInputEvents,
+   Params.ScenarioModelState,
+   Params.ScenarioWorks
+> {}
+
+class BaseScenario<Events, State, Works>: Scenario {
    var works: Works
    var events: Events
 
@@ -42,11 +54,11 @@ class BaseScenario<Events, State, Works>: Scenario {
       }
    }
 
-   required init() {
-      fatalError("init() has not been implemented")
-   }
+//   required init() {
+//      fatalError("init() has not been implemented")
+//   }
 
    open func start() {
-  //    works.retainer.cleanAll()
+//      works.retainer.cleanAll()
    }
 }

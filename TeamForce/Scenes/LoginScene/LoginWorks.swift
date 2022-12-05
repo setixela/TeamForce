@@ -19,7 +19,7 @@ protocol LoginBackstageProtocol: Assetable {
    var saveLoginResults: Work<VerifyResultBody, Void> { get }
 }
 
-final class LoginWorks<Asset: AssetProtocol>: BaseSceneWorks<LoginWorks.Temp, Asset>, LoginBackstageProtocol {
+final class LoginWorks<Asset: AssetProtocol>: BaseWorks<LoginWorks.Temp, Asset>, LoginBackstageProtocol {
    //
    private lazy var useCase = Asset.apiUseCase
 
@@ -46,31 +46,6 @@ final class LoginWorks<Asset: AssetProtocol>: BaseSceneWorks<LoginWorks.Temp, As
             work.fail()
          }
    }}
-
-//   var verifyCode: VoidWork<VerifyResultBody> { .init { [weak self] work in
-//
-//      guard
-//         let inputCode = Self.store.smsCodeInput,
-//         let auth2Result = Self.store.auth2Result
-//      else {
-//         work.fail()
-//         return
-//      }
-//
-//      let request = VerifyRequest(
-//         xId: auth2Result.xId,
-//         xCode: auth2Result.xCode,
-//         smsCode: inputCode)
-//
-//      self?.useCase.verifyCode
-//         .doAsync(request)
-//         .onSuccess {
-//            work.success(result: $0)
-//         }
-//         .onFail {
-//            work.fail()
-//         }
-//   }}
 
    var loginNameInputParse: Work<String, String> { .init { [weak self] work in
       self?.loginParser.work

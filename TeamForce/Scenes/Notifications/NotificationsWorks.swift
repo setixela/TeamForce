@@ -96,7 +96,7 @@ extension NotificationsWorksProtocol {
    }.retainBy(retainer) }
 }
 
-final class NotificationsWorks<Asset: AssetProtocol>: BaseSceneWorks<NotificationsStore, Asset>,
+final class NotificationsWorks<Asset: AssetProtocol>: BaseWorks<NotificationsStore, Asset>,
                                                       NotificationsWorksProtocol {
    let apiUseCase = Asset.apiUseCase
 }

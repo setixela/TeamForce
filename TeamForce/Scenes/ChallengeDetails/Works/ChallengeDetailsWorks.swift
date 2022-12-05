@@ -35,7 +35,7 @@ final class ChallengeDetailsWorksStore: InitProtocol {
    var userLiked = false
 }
 
-final class ChallengeDetailsWorks<Asset: AssetProtocol>: BaseSceneWorks<ChallengeDetailsWorksStore, Asset> {
+final class ChallengeDetailsWorks<Asset: AssetProtocol>: BaseWorks<ChallengeDetailsWorksStore, Asset> {
    let apiUseCase = Asset.apiUseCase
    let storageUseCase = Asset.storageUseCase
 
