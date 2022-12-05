@@ -156,6 +156,10 @@ class ChallContendersPresenters<Design: DesignProtocol>: Designable {
             likeButton.setState(.selected)
          }
          
+         if contender.userLiked == true {
+            likeButton.setState(.selected)
+         }
+         
          let reactionsBlock = StackModel()
             .axis(.horizontal)
             .alignment(.leading)

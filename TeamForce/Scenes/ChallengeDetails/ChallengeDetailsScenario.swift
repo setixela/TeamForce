@@ -25,6 +25,8 @@ struct ChallengeDetailsInputEvents {
    let presentChallengeAuthor: WorkVoidVoid
    
    let reportReactionPressed: WorkVoid<PressLikeRequest>
+   
+   let winnerReportReactionRressed: WorkVoid<PressLikeRequest>
 }
 
 final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<ChallengeDetailsInputEvents,
@@ -191,6 +193,15 @@ final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<Challen
          }
          .onFail {
             print("bye")
+         }
+      
+      events.winnerReportReactionRressed
+         .doNext(works.pressLikeContender)
+         .onSuccess {
+            print("hello")
+         }
+         .onFail {
+            print("hello")
          }
    }
 }
