@@ -7,12 +7,16 @@
 
 import ReactiveWorks
 
-final class MyProfileVM<Design: DSP>: StackModel, Designable {
+// MARK: - MyProfileVM
+
+final class MyProfileVM<Design: DSP>: ScrollViewModelY, Designable {
    lazy var userBlock = ProfileUserBlock<Design>()
    lazy var userNameBlock = UserNameBlock<Design>()
    lazy var diagramBlock = DiagramVM()
       .height(132)
    lazy var userStatusBlock = UserStatusBlock<Design>()
+   lazy var userContactsBlock = UserContactsBlock<Design>()
+   lazy var workingPlaceBlock = WorkingPlaceBlock<Design>()
    lazy var mapVM = MapsViewModel()
       .height(162)
       .cornerRadius(16)
@@ -20,16 +24,20 @@ final class MyProfileVM<Design: DSP>: StackModel, Designable {
    override func start() {
       super.start()
 
-      arrangedModels(
+      set(.arrangedModels([
          userBlock,
          userNameBlock,
          userStatusBlock,
          diagramBlock,
+         userContactsBlock,
+         workingPlaceBlock,
          mapVM
-      )
-      spacing(16)
+      ]))
+      set(.spacing(16))
    }
 }
+
+// MARK: - ProfileUserBlock
 
 final class ProfileUserBlock<Design: DSP>: M<UserAvatarVM<Design>>.R<Spacer>.R2<ButtonModel>.Combo,
    Designable
@@ -40,7 +48,6 @@ final class ProfileUserBlock<Design: DSP>: M<UserAvatarVM<Design>>.R<Spacer>.R2<
       setAll { avatar, _, notifyButton in
          avatar.setState(.size(48))
          notifyButton
-            // .set(Design.state.button.transparent)
             .image(Design.icon.alarm, color: Design.color.iconContrast)
             .size(.square(36))
       }
@@ -49,13 +56,15 @@ final class ProfileUserBlock<Design: DSP>: M<UserAvatarVM<Design>>.R<Spacer>.R2<
    }
 }
 
-final class UserNameBlock<Design: DSP>: M<LabelModel>.R<LabelModel>.D<LabelModel>.Combo,
+// MARK: - UserNameBlock
+
+final class UserNameBlock<Design: DSP>: M<LabelModel>.R<LabelModel>.LD<LabelModel>.Combo,
    Designable
 {
    required init() {
       super.init()
 
-      setAll { surname, name, nickname in
+      setAll { name, surname, nickname in
          name
             .set(Design.state.label.headline4)
          surname
@@ -64,30 +73,20 @@ final class UserNameBlock<Design: DSP>: M<LabelModel>.R<LabelModel>.D<LabelModel
          nickname
             .set(Design.state.label.subtitle)
       }
+
+      alignment(.leading)
    }
 }
 
 extension UserNameBlock: StateMachine {
-   enum ModelState {
-      case setup(name: String, surname: String, nickname: String)
-   }
-
-   func setState(_ state: ModelState) {
-      switch state {
-      case let .setup(name, surname, nickname):
-         models.main.text(name)
-         models.right.text(surname)
-         models.down.text(nickname)
-      }
+   func setState(_ state: (name: String, surname: String, nickname: String)) {
+      models.main.text(state.name)
+      models.right.text(" " + state.surname)
+      models.leftDown.text("@" + state.nickname)
    }
 }
 
-enum UserStatus {
-   case office
-   case vacation
-   case remote
-   case sickLeave
-}
+// MARK: - UserStatusBlock
 
 final class UserStatusBlock<Design: DSP>: M<LabelModel>.R<LabelModel>.Combo,
    Designable
@@ -102,6 +101,7 @@ final class UserStatusBlock<Design: DSP>: M<LabelModel>.R<LabelModel>.Combo,
             .text("Статус")
          status
             .set(Design.state.label.default)
+            .textColor(Design.color.textInvert)
       }
 
       backColor(Design.color.backgroundBrand)
@@ -114,7 +114,7 @@ extension UserStatusBlock: StateMachine {
    func setState(_ state: UserStatus) {
       switch state {
       case .office:
-         models.right.text("В оффисе")
+         models.right.text("В офисе")
       case .vacation:
          models.right.text("В отпуске")
       case .remote:
@@ -124,6 +124,8 @@ extension UserStatusBlock: StateMachine {
       }
    }
 }
+
+// MARK: - MapsViewModel
 
 import MapKit
 
@@ -138,6 +140,8 @@ final class MapsViewModel: BaseViewModel<MKMapView> {
 extension MapsViewModel: Stateable {
    typealias State = ViewState
 }
+
+// MARK: - DiagramVM
 
 final class DiagramVM: BaseViewModel<GraphView> {
    override func start() {}
@@ -161,14 +165,7 @@ extension GraphView: CircleGraphProtocol {
       let arcWidth: CGFloat = 19.8
       let fullCircle = 2 * CGFloat.pi
       let centerPoint = CGPoint(x: rect.midX, y: rect.midY)
-
-  //    let radius: CGFloat
       let radius = (rect.height - arcWidth) / 2.0
-//      if rect.width > rect.height {
-//         radius = (rect.width - arcWidth) / 2.0
-//      } else {
-//         radius = (rect.height - arcWidth) / 2.0
-//      }
 
       var currentStart: CGFloat = -0.25
       graphs.graphs.forEach {
@@ -231,4 +228,104 @@ struct CircleGraphs {
 struct GraphData {
    let percent: CGFloat
    let color: UIColor
+}
+
+// MARK: - UserContactsBlock
+
+final class UserContactsBlock<Design: DSP>: StackModel, Designable {
+   private lazy var title = LabelModel()
+      .set(Design.state.label.body1)
+      .text("Контактные данные")
+
+   private lazy var surname = ProfileTitleBody<Design>
+      { $0.title.text("Фамилия") }
+   private lazy var name = ProfileTitleBody<Design>
+      { $0.title.text("Имя") }
+   private lazy var middlename = ProfileTitleBody<Design>
+      { $0.title.text("Отчество") }
+   private lazy var email = ProfileTitleBody<Design>
+      { $0.title.text("Корпоративная почта") }
+   private lazy var phone = ProfileTitleBody<Design>
+      { $0.title.text("Мобильный номер") }
+   private lazy var birthDate = ProfileTitleBody<Design>
+      { $0.title.text("День рождения") }
+
+   override func start() {
+      spacing(16)
+      arrangedModels(
+         title,
+         surname,
+         name,
+         middlename,
+         email,
+         phone,
+         birthDate
+      )
+   }
+}
+
+extension UserContactsBlock: StateMachine {
+   func setState(_ state: UserContactData) {
+      surname.setBody(state.surname)
+      name.setBody(state.name)
+      middlename.setBody(state.patronymic)
+      email.setBody(state.corporateEmail)
+      phone.setBody(state.corporateEmail)
+      birthDate.setBody(state.dateOfBirth)
+   }
+}
+
+// MARK: - WorkingPlaceBlock
+
+final class WorkingPlaceBlock<Design: DSP>: StackModel, Designable {
+   private lazy var title = LabelModel()
+      .set(Design.state.label.body1)
+      .text("Место работы")
+
+   private lazy var company = ProfileTitleBody<Design>
+   { $0.title.text("Компания") }
+   private lazy var jobTitle = ProfileTitleBody<Design>
+   { $0.title.text("Должность") }
+
+   override func start() {
+      spacing(16)
+      arrangedModels(
+         title,
+         company,
+         jobTitle
+      )
+   }
+}
+
+extension WorkingPlaceBlock: StateMachine {
+   func setState(_ state: UserWorkData) {
+      company.setBody(state.company)
+      jobTitle.setBody(state.jobTitle)
+   }
+}
+
+// MARK: - ProfileTitleBody
+
+final class ProfileTitleBody<Design: DSP>: M<LabelModel>.D<LabelModel>.Combo, Designable {
+   var title: LabelModel { models.main }
+
+   func setBody(_ text: String?) {
+      guard let text else { hidden(true); return }
+
+      models.down.text(text)
+      hidden(false)
+   }
+
+   required init() {
+      super.init()
+
+      setAll { title, body in
+         title
+            .set(Design.state.label.captionSecondary)
+         body
+            .set(Design.state.label.default)
+      }
+
+      spacing(8)
+   }
 }

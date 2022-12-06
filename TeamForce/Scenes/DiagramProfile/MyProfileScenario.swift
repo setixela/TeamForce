@@ -19,10 +19,15 @@ struct DiagramProfileScenarioParams<Asset: ASP>: ScenarioParams {
 
 final class MyProfileScenario<Asset: ASP>: BaseAssettableScenario<DiagramProfileScenarioParams<Asset>> {
    override func start() {
-      works.getMyProfile
+      works.loadMyProfile
          .doAsync()
-         .onSuccess(setState) { .profile($0) }
+         .doVoidNext(works.getUserStatus)
+         .onSuccess(setState) { .userStatus($0) }
          .doVoidNext(works.getDiagramData)
          .onSuccess(setState) { .diagramData($0) }
+         .doVoidNext(works.getUserContacts)
+         .onSuccess(setState) { .userContacts($0) }
+         .doVoidNext(works.getUserWorkData)
+         .onSuccess(setState) { .userWorkPlace($0) }
    }
 }

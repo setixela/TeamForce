@@ -254,3 +254,17 @@ struct SComboMDDD<M: VMP, D: VMP, D2: VMP, D3: VMP>: SCP {
    var down2: D2 = .init()
    var down3: D3 = .init()
 }
+
+struct SComboMRLD<M: VMP, R: VMP, LD: VMP>: SCP {
+   init(main: M, right: R, leftDown: LD) {
+      self.main = main
+      self.right = right
+      self.leftDown = leftDown
+   }
+
+   init() {}
+
+   var main: M = .init()
+   var right: R = .init()
+   var leftDown: LD = .init()
+}

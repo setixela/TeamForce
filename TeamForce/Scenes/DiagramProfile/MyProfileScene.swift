@@ -21,12 +21,10 @@ final class MyProfileScene<Asset: ASP>: BaseSceneModel<
    lazy var scenario: Scenario = MyProfileScenario<Asset>(
       works: MyProfileWorks<Asset>(),
       stateDelegate: stateDelegate,
-      events: MyProfileScenarioInput(
-         // loadMyProfile: on(\.input)
-      )
+      events: MyProfileScenarioInput()
    )
 
-   lazy var diagramProfileVM = MyProfileVM<Design>()
+   lazy var profileVM = MyProfileVM<Design>()
 
    override func start() {
       vcModel?
@@ -38,7 +36,7 @@ final class MyProfileScene<Asset: ASP>: BaseSceneModel<
 
    func configure() {
       mainVM.bodyStack.arrangedModels(
-         diagramProfileVM,
+         profileVM,
          Spacer()
       )
 
@@ -48,8 +46,11 @@ final class MyProfileScene<Asset: ASP>: BaseSceneModel<
 
 enum MyProfileSceneState {
    case initial
-   case profile(UserData)
+   case userName(name: String, surname: String, nickname: String)
+   case userStatus(UserStatus)
    case diagramData(CircleGraphs)
+   case userContacts(UserContactData)
+   case userWorkPlace(UserWorkData)
 }
 
 extension MyProfileScene: StateMachine {
@@ -57,16 +58,16 @@ extension MyProfileScene: StateMachine {
       switch state {
       case .initial:
          break
-      case .profile(let userData):
-         diagramProfileVM.userNameBlock.setState(
-            .setup(
-               name: userData.profile.firstName.string,
-               surname: userData.profile.surName.string,
-               nickname: userData.profile.tgName.string
-            )
-         )
+      case .userName(let name, let surname, let nickname):
+         profileVM.userNameBlock.setState((name, surname, nickname))
+      case .userStatus(let status):
+         profileVM.userStatusBlock.setState(status)
       case .diagramData(let diagramData):
-         diagramProfileVM.diagramBlock.setState(diagramData)
+         profileVM.diagramBlock.setState(diagramData)
+      case .userContacts(let contacts):
+         profileVM.userContactsBlock.setState(contacts)
+      case .userWorkPlace(let workData):
+         profileVM.workingPlaceBlock.setState(workData)
       }
    }
 }

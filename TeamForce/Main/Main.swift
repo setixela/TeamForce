@@ -18,6 +18,7 @@ struct Main<M: VMP>: InitProtocol {
       typealias Combo = Combos<SComboMR<M, R>>
       typealias R2 = Right2
       typealias D = Down
+      typealias LD = LeftDown
 
       enum Right2<R2: VMP> {
          typealias Combo = Combos<SComboMRR<M, R, R2>>
@@ -45,6 +46,10 @@ struct Main<M: VMP>: InitProtocol {
          enum Down2<D2: VMP> {
             typealias Combo = Combos<SComboMRDD<M, R, D, D2>>
          }
+      }
+
+      enum LeftDown<LD: VMP> {
+         typealias Combo = Combos<SComboMRLD<M, R, LD>>
       }
    }
 
