@@ -138,12 +138,12 @@ extension ChallengeDetailsWorks: ChallengeDetailsWorksProtocol {
          }
    }.retainBy(retainer) }
    
-   var pressLikeContender: Work<PressLikeRequest, PressLikeRequest> { .init { [weak self] work in
+   var pressLikeContender: Work<PressLikeRequest, PressLikeResult> { .init { [weak self] work in
       guard let input = work.input else { work.fail(); return }
       self?.apiUseCase.pressLike
          .doAsync(input)
          .onSuccess {
-            work.success(result: input)
+            work.success(result: $0)
          }
          .onFail {
             work.fail()
@@ -154,4 +154,44 @@ extension ChallengeDetailsWorks: ChallengeDetailsWorksProtocol {
       let isMyLike = Self.store.userLiked
       work.success(isMyLike)
    }.retainBy(retainer) }
+   
+   var updateWinnerReportItem: Work<(PressLikeResult, Int), (ChallengeWinnerReport, Int)> {
+      .init { [weak self] work in
+         guard
+            let likeResult = work.input?.0,
+            let index = work.input?.1
+         else {
+            work.fail()
+            return
+         }
+         if Self.store.winnersReports.indices.contains(index) {
+            var item = Self.store.winnersReports[index]
+            item.update(likesAmount: likeResult.likesAmount ?? 0,
+                        userLiked: likeResult.isLiked ?? false)
+            work.success((item, index))
+         } else {
+            work.fail()
+         }
+      }
+   }
+   
+   var updateContenderReportItem: Work<(PressLikeResult, Int), (Contender, Int)> {
+      .init { [weak self] work in
+         guard
+            let likeResult = work.input?.0,
+            let index = work.input?.1
+         else {
+            work.fail()
+            return
+         }
+         if Self.store.contenders.indices.contains(index) {
+            var item = Self.store.contenders[index]
+            item.update(likesAmount: likeResult.likesAmount ?? 0,
+                        userLiked: likeResult.isLiked ?? false)
+            work.success((item, index))
+         } else {
+            work.fail()
+         }
+      }
+   }
 }

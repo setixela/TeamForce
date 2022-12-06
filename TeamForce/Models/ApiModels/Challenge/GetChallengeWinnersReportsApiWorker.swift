@@ -17,9 +17,9 @@ struct ChallengeWinnerReport: Codable {
    let participantPhoto: String?
    let participantName: String?
    let participantSurname: String?
-   let userLiked: Bool?
+   var userLiked: Bool?
    let commentsAmount: Int?
-   let likesAmount: Int?
+   var likesAmount: Int?
    let award: Int?
    
    enum CodingKeys: String, CodingKey {
@@ -33,6 +33,11 @@ struct ChallengeWinnerReport: Codable {
       case userLiked = "user_liked"
       case commentsAmount = "comments_amount"
       case likesAmount = "likes_amount"
+   }
+   
+   mutating func update(likesAmount: Int, userLiked: Bool) {
+      self.likesAmount = likesAmount
+      self.userLiked = userLiked
    }
 }
 

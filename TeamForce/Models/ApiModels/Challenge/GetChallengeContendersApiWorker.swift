@@ -9,7 +9,7 @@ import Foundation
 import ReactiveWorks
 
 struct Contender: Codable {
-   let userLiked: Bool?
+   var userLiked: Bool?
    let participantId: Int
    let participantPhoto: String?
    let participantName: String?
@@ -19,7 +19,12 @@ struct Contender: Codable {
    let reportPhoto: String?
    let reportId: Int
    let commentsAmount: Int?
-   let likesAmount: Int?
+   var likesAmount: Int?
+   
+   mutating func update(likesAmount: Int, userLiked: Bool) {
+      self.likesAmount = likesAmount
+      self.userLiked = userLiked
+   }
    
    enum CodingKeys: String, CodingKey {
       case userLiked = "user_liked"

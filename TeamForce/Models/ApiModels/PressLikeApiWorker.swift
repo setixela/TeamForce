@@ -8,7 +8,6 @@
 import Foundation
 import ReactiveWorks
 
-
 struct PressLikeRequest: Indexable {
    let token: String
    let body: Body
@@ -20,29 +19,55 @@ struct PressLikeRequest: Indexable {
       let transactionId: Int?
       let challengeId: Int?
       let challengeReportId: Int?
-      
+
       init(likeKind: Int,
            transactionId: Int? = nil,
            challengeId: Int? = nil,
-           challengeReportId: Int? = nil) {
+           challengeReportId: Int? = nil)
+      {
          self.likeKind = likeKind
          self.transactionId = transactionId
          self.challengeId = challengeId
          self.challengeReportId = challengeReportId
       }
-      
+
       enum CodingKeys: String, CodingKey {
          case likeKind = "like_kind"
          case transactionId = "transaction"
          case challengeId = "challenge_id"
          case challengeReportId = "challenge_report_id"
       }
-      
    }
 }
 
-final class PressLikeApiWorker: BaseApiWorker<PressLikeRequest, Void> {
-   override func doAsync(work: Work<PressLikeRequest, Void>) {
+struct PressLikeResult: Codable {
+   let id: Int?
+   let transactionId: Int?
+   let contentTypeId: Int?
+   let objectId: Int?
+   let likeKindId: Int?
+   let isLiked: Bool?
+   let dateCreated: String?
+   let dateDeleted: String?
+   let userId: Int?
+   let likesAmount: Int?
+
+   enum CodingKeys: String, CodingKey {
+      case id
+      case transactionId = "transaction_id"
+      case contentTypeId = "content_type_id"
+      case objectId = "object_id"
+      case likeKindId = "like_kind_id"
+      case isLiked = "is_liked"
+      case dateCreated = "date_created"
+      case dateDeleted = "date_deleted"
+      case userId = "user_id"
+      case likesAmount = "likes_amount"
+   }
+}
+
+final class PressLikeApiWorker: BaseApiWorker<PressLikeRequest, PressLikeResult> {
+   override func doAsync(work: Work<PressLikeRequest, PressLikeResult>) {
       let cookieName = "csrftoken"
 
       guard
@@ -54,7 +79,7 @@ final class PressLikeApiWorker: BaseApiWorker<PressLikeRequest, Void> {
       }
 
       let jsonData = try? JSONEncoder().encode(request.body)
-      
+
       apiEngine?
          .process(endpoint:
             TeamForceEndpoints.PressLike(
@@ -64,10 +89,15 @@ final class PressLikeApiWorker: BaseApiWorker<PressLikeRequest, Void> {
                   "Content-Type": "application/json"
                ], jsonData: jsonData))
          .done { result in
-//            let str = String(decoding: result.data!, as: UTF8.self)
-//            print(str)
-//            print("response status \(String(describing: result.response))")
-            work.success()
+            let decoder = DataToDecodableParser()
+            guard
+               let data = result.data,
+               let result: PressLikeResult = decoder.parse(data)
+            else {
+               work.fail()
+               return
+            }
+            work.success(result: result)
          }
          .catch { _ in
             work.fail()

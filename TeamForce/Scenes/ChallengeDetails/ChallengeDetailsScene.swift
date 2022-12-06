@@ -227,6 +227,10 @@ enum ChallengeDetailsState {
    case presentCreator(Int)
    
    case presentReactions([ReactItem])
+   
+   case updateWinnerAtIndex(ChallengeWinnerReport, Int)
+   
+   case updateContenderAtIndex(Contender, Int)
 }
 
 extension ChallengeDetailsScene: StateMachine {
@@ -391,6 +395,11 @@ extension ChallengeDetailsScene: StateMachine {
             .arrangedModels([
                reactionsBlock
             ])
+      case .updateWinnerAtIndex(let value, let index):
+         //viewModels.feedTableModel.updateItemAtIndex(feed, index: index)
+         winnersBlock.winnersTableModel.updateItemAtIndex(value, index: index)
+      case .updateContenderAtIndex(let value, let index):
+         contendersBlock.contendersTableModel.updateItemAtIndex(value, index: index)
       }
    }
 }

@@ -191,8 +191,17 @@ final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<Challen
          .onSuccess {
             print("hello")
          }
+         .doMap { [weak self] stat in
+            let index = self?.events.reportReactionPressed.result?.index ?? 0
+            let res = (stat, index)
+            return res
+         }
+         .doNext(works.updateContenderReportItem)
+         .onSuccess(setState) {
+            .updateContenderAtIndex($0.0, $0.1)
+         }
          .onFail {
-            print("bye")
+            print("fail")
          }
       
       events.winnerReportReactionRressed
@@ -203,5 +212,21 @@ final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<Challen
          .onFail {
             print("hello")
          }
+         .doMap { [weak self] stat in
+            let index = self?.events.winnerReportReactionRressed.result?.index ?? 0
+            let res = (stat, index)
+            return res
+         }
+         .doNext(works.updateWinnerReportItem)
+         .onSuccess(setState) {
+            .updateWinnerAtIndex($0.0, $0.1)
+         }
+         .onFail {
+            print("fail")
+         }
+//         .doNext(works.updateFeedElement)
+//         .onSuccess(setState) {
+//            .updateFeedAtIndex($0.0, $0.1)
+//         }
    }
 }
