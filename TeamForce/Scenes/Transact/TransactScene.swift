@@ -39,7 +39,7 @@ enum TransactState {
 
    case userSearchTFDidEditingChangedSuccess
 
-   case sendCoinSuccess((String, SendCoinRequest))
+   case sendCoinSuccess((String, SendCoinRequest, FoundUser))
    case sendCoinError
 
    case resetCoinInput
@@ -297,7 +297,7 @@ extension TransactScene {
 
          let sended = StatusViewInput(sendCoinInfo: tuple.1,
                                       username: tuple.0,
-                                      foundUser: viewModels.foundUsersList.items.first as! FoundUser)
+                                      foundUser: tuple.2)
          send(\.finishWithSuccess, sended)
          setToInitialCondition()
       //

@@ -14,7 +14,7 @@ protocol TransactWorksProtocol: TempStorage {
    // api works
    var loadBalance: WorkVoid<Balance> { get }
    var searchUser: Work<String, [FoundUser]> { get }
-   var sendCoins: WorkVoid<(recipient: String, info: SendCoinRequest)> { get }
+   var sendCoins: WorkVoid<(recipient: String, info: SendCoinRequest, user: FoundUser)> { get }
    var getUserList: Work<Void, [FoundUser]> { get }
    // data works
    var loadTokens: Work<Void, Void> { get }
@@ -40,6 +40,7 @@ class TransacrtTempStorage: InitProtocol, ImageStorage {
 
    var tokens: (token: String, csrf: String) = ("", "")
    var foundUsers: [FoundUser] = []
+   var recipientUser: FoundUser?
    var recipientID = 0
    var recipientUsername = ""
    var isAnonymous = false
@@ -154,7 +155,7 @@ final class TransactWorks<Asset: AssetProtocol>: BaseSceneWorks<TransacrtTempSto
       work.success()
    } }
 
-   var sendCoins: WorkVoid<(recipient: String, info: SendCoinRequest)> { .init { [weak self] work in
+   var sendCoins: WorkVoid<(recipient: String, info: SendCoinRequest, user: FoundUser)> { .init { [weak self] work in
       var sendImage: UIImage?
       if let image = Self.store.images.first {
          let size = image.size
@@ -176,7 +177,8 @@ final class TransactWorks<Asset: AssetProtocol>: BaseSceneWorks<TransacrtTempSto
       self?.apiUseCase.sendCoin
          .doAsync(request)
          .onSuccess {
-            let tuple = (Self.store.recipientUsername, request)
+            guard let user = Self.store.foundUsers.first else { work.fail(); return }
+            let tuple = (Self.store.recipientUsername, request, user)
             work.success(result: tuple)
          }.onFail {
             work.fail()
@@ -201,6 +203,7 @@ final class TransactWorks<Asset: AssetProtocol>: BaseSceneWorks<TransacrtTempSto
 
       Self.store.recipientUsername = user.name.string
       Self.store.recipientID = user.userId
+      Self.store.recipientUser = user
       work.success(result: user)
    } }
 
@@ -245,6 +248,7 @@ final class TransactWorks<Asset: AssetProtocol>: BaseSceneWorks<TransacrtTempSto
       Self.store.images = []
       Self.store.isTagsEnabled = false
       Self.store.tags = []
+      Self.store.recipientUser = nil
       work.success()
    }
 
