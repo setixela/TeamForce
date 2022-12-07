@@ -15,6 +15,9 @@ struct ChallengeWinner: Codable {
    let participantName: String?
    let participantSurname: String?
    let awardedAt: String?
+   let userLiked: Bool?
+   let commentsAmount: Int?
+   let likesAmount: Int?
    
    enum CodingKeys: String, CodingKey {
       case nickname
@@ -24,6 +27,9 @@ struct ChallengeWinner: Codable {
       case participantName = "participant_name"
       case participantSurname = "participant_surname"
       case awardedAt = "awarded_at"
+      case userLiked = "user_liked"
+      case commentsAmount = "comments_amount"
+      case likesAmount = "likes_amount"
    }
 }
 

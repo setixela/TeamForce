@@ -41,7 +41,9 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
          didEditingComment: challComments.commentField.on(\.didEditingChanged),
          didSendCommentPressed: challComments.sendButton.on(\.didTap),
          reactionPressed: challDetails.buttonsPanel.likeButton.view.on(\.didTap),
-         presentChallengeAuthor: challDetails.on(\.didTapUser)
+         presentChallengeAuthor: challDetails.on(\.didTapUser),
+         reportReactionPressed: contendersBlock.presenter.on(\.reactionPressed),
+         winnerReportReactionRressed: winnersBlock.presenter.on(\.reactionPressed)
       )
    )
 
@@ -225,6 +227,14 @@ enum ChallengeDetailsState {
    case presentCreator(Int)
    
    case presentReactions([ReactItem])
+   
+   case updateWinnerAtIndex(ChallengeWinnerReport, Int)
+   
+   case updateContenderAtIndex(Contender, Int)
+   
+   case votingChallenge
+   
+   case iAmOwner
 }
 
 extension ChallengeDetailsScene: StateMachine {
@@ -283,9 +293,10 @@ extension ChallengeDetailsScene: StateMachine {
          filterButtons.button2.hidden(false)
 
       case .enableContenders:
+         print("hello")
          filterButtons.button3.hidden(false)
-         challDetails.models.down.sendButton.hidden(true)
-         filterButtons.button2.hidden(true)
+         //challDetails.models.down.sendButton.hidden(true)
+         //filterButtons.button2.hidden(true)
 
       case .presentMyResults(let results):
          myResultBlock.setup(results)
@@ -389,6 +400,17 @@ extension ChallengeDetailsScene: StateMachine {
             .arrangedModels([
                reactionsBlock
             ])
+      case .updateWinnerAtIndex(let value, let index):
+         winnersBlock.winnersTableModel.updateItemAtIndex(value, index: index)
+      case .updateContenderAtIndex(let value, let index):
+         contendersBlock.contendersTableModel.updateItemAtIndex(value, index: index)
+      case .votingChallenge:
+         filterButtons.button3.hidden(false)
+         contendersBlock.presenter.isVoting = true
+      case .iAmOwner:
+         filterButtons.button3.hidden(false)
+         challDetails.models.down.sendButton.hidden(true)
+         
       }
    }
 }

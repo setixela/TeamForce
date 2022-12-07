@@ -18,6 +18,9 @@ struct ChallengeRequestBody: Encodable {
    let photo: UIImage?
    let parameterId: Int?
    let parameterValue: Int?
+   let challengeType: String?
+   let showParticipants: String?
+   let severalReports: String?
 
    enum CodingKeys: String, CodingKey {
       case name, description // , photo
@@ -25,6 +28,9 @@ struct ChallengeRequestBody: Encodable {
       case startBalance = "start_balance"
       case parameterId = "parameter_id"
       case parameterValue = "parameter_value"
+      case challengeType = "challenge_type"
+      case showParticipants = "show_participants"
+      case severalReports = "several_reports"
    }
 
    init(name: String,
@@ -33,7 +39,11 @@ struct ChallengeRequestBody: Encodable {
         startBalance: Int,
         photo: UIImage? = nil,
         parameterId: Int? = nil,
-        parameterValue: Int? = nil)
+        parameterValue: Int? = nil,
+        challengeType: String? = nil,
+        showParticipants: String? = nil,
+        severalReports: String? = nil
+   )
    {
       self.name = name
       self.description = description
@@ -42,6 +52,9 @@ struct ChallengeRequestBody: Encodable {
       self.photo = photo
       self.parameterId = parameterId
       self.parameterValue = parameterValue
+      self.challengeType = challengeType
+      self.showParticipants = showParticipants
+      self.severalReports = severalReports
    }
 }
 

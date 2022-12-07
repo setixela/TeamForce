@@ -32,4 +32,7 @@ extension ChallContendersViewModel: SetupProtocol {
    func setup(_ data: [Contender]) {
       contendersTableModel.items(data + [SpacerItem(size: Grid.x64.value)])
    }
+   func disableOwnerButtons(_ value: Bool) {
+      
+   }
 }
