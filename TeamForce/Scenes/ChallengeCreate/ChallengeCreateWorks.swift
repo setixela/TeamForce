@@ -26,6 +26,9 @@ final class ChallengeCreateWorksStore: InitProtocol, ImageStorage {
    var desription: String = ""
    var prizeFund: String = ""
    var finishDate: Date = .distantFuture
+   
+   var challengeTypes: [(String, Int)] = []
+   var selectedChallengeType = "default"
 
 //   func clear() {
 //      title = ""
@@ -77,7 +80,8 @@ extension ChallengeCreateWorks: ChallengeCreateWorksProtocol {
          startBalance: Int(Self.store.prizeFund).int,
          photo: Self.store.images.first?.resized(to: Config.imageSendSize),
          parameterId: nil,
-         parameterValue: nil
+         parameterValue: nil,
+         challengeType: Self.store.selectedChallengeType
       )
       self?.apiUseCase.createChallenge
          .doAsync(body)
@@ -87,6 +91,37 @@ extension ChallengeCreateWorks: ChallengeCreateWorksProtocol {
          .onFail {
             work.fail()
          }
+   }.retainBy(retainer) }
+   
+   var createChallengeGet: Work<Void, [String]> { .init { [weak self] work in
+      self?.apiUseCase.createChallengeGet
+         .doAsync()
+         .onSuccess {
+            var res: [(String, Int)] = []
+            if $0.types?.default == 1 {
+               res.append(("Обычный", 1))
+            }
+            if $0.types?.voting == 2 {
+               res.append(("Голосование", 2))
+            }
+            Self.store.challengeTypes = res
+            let typeNames = res.map { $0.0 }
+            work.success(typeNames)
+         }
+         .onFail {
+            work.fail()
+         }
+   }.retainBy(retainer) }
+   
+   var changeChallType: Work<Int, Void> { .init { work in
+      guard let input = work.input else { work.fail(); return }
+      if input == 1 {
+         Self.store.selectedChallengeType = "voting"
+      } else {
+         Self.store.selectedChallengeType = "default"
+      }
+      print(Self.store.selectedChallengeType)
+      work.success()
    }.retainBy(retainer) }
 }
 

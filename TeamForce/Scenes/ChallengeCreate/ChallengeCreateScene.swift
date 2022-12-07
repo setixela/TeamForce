@@ -23,6 +23,8 @@ enum ChallengeCreateSceneState {
    case updateDateButton(Date)
 
    case challengeCreated
+   
+   case challengeTypesUpdate([String])
 }
 
 final class ChallengeCreateScene<Asset: AssetProtocol>: BaseSceneModel<
@@ -41,7 +43,8 @@ final class ChallengeCreateScene<Asset: AssetProtocol>: BaseSceneModel<
          didDescriptionInputChanged: descriptionInput.on(\.didEditingChanged),
          didPrizeFundChanged: prizeFundInput.models.main.on(\.didEditingChanged),
          didDatePicked: datePicker.on(\.didDatePicked),
-         didSendPressed: sendButton.on(\.didTap)
+         didSendPressed: sendButton.on(\.didTap),
+         challengeTypeChanged: typePicker.onEvent(\.didSelectRow)
       )
    )
 
@@ -71,6 +74,11 @@ final class ChallengeCreateScene<Asset: AssetProtocol>: BaseSceneModel<
    private lazy var titleInput = Design.model.transact.userSearchTextField
       .placeholder("Название")
       .placeholderColor(Design.color.textFieldPlaceholder)
+   
+   private lazy var challengeTypeTextField = Design.model.transact.userSearchTextField
+      .placeholder("Вид чалика")
+      .placeholderColor(Design.color.textFieldPlaceholder)
+   
    private lazy var descriptionInput = Design.model.transact.reasonInputTextView
       .placeholder("Описание")
       .placeholderColor(Design.color.textFieldPlaceholder)
@@ -135,11 +143,14 @@ final class ChallengeCreateScene<Asset: AssetProtocol>: BaseSceneModel<
    private lazy var imagePicker = Design.model.common.imagePicker
 
    private var currentState = ChallengeCreateSceneState.initial
+   
+   private lazy var typePicker = PickerViewModel()
 
    // MARK: - Start
 
    override func start() {
       super.start()
+      typePicker.attachToTextField(textField: challengeTypeTextField)
 
       vcModel?.on(\.viewDidLoad, self) {
          $0.mainVM.bodyStack
@@ -155,6 +166,7 @@ final class ChallengeCreateScene<Asset: AssetProtocol>: BaseSceneModel<
                      $0.infoBlock,
                      $0.titleInput,
                      $0.descriptionInput,
+                     $0.typePicker.textField,
                      $0.finishDateButton,
                      $0.datePickWrapper,
                      $0.prizeFundInput,
@@ -209,6 +221,11 @@ extension ChallengeCreateScene {
          finishCanceled()
       case .challengeCreated:
          finishSucces()
+      case .challengeTypesUpdate(let value):
+         print(value)
+         typePicker.applyState(.items(value))
+         break
+         
       }
    }
 }
