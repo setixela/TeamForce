@@ -231,6 +231,10 @@ enum ChallengeDetailsState {
    case updateWinnerAtIndex(ChallengeWinnerReport, Int)
    
    case updateContenderAtIndex(Contender, Int)
+   
+   case votingChallenge
+   
+   case iAmOwner
 }
 
 extension ChallengeDetailsScene: StateMachine {
@@ -289,9 +293,10 @@ extension ChallengeDetailsScene: StateMachine {
          filterButtons.button2.hidden(false)
 
       case .enableContenders:
+         print("hello")
          filterButtons.button3.hidden(false)
-         challDetails.models.down.sendButton.hidden(true)
-         filterButtons.button2.hidden(true)
+         //challDetails.models.down.sendButton.hidden(true)
+         //filterButtons.button2.hidden(true)
 
       case .presentMyResults(let results):
          myResultBlock.setup(results)
@@ -399,6 +404,13 @@ extension ChallengeDetailsScene: StateMachine {
          winnersBlock.winnersTableModel.updateItemAtIndex(value, index: index)
       case .updateContenderAtIndex(let value, let index):
          contendersBlock.contendersTableModel.updateItemAtIndex(value, index: index)
+      case .votingChallenge:
+         filterButtons.button3.hidden(false)
+         contendersBlock.presenter.isVoting = true
+      case .iAmOwner:
+         filterButtons.button3.hidden(false)
+         challDetails.models.down.sendButton.hidden(true)
+         
       }
    }
 }

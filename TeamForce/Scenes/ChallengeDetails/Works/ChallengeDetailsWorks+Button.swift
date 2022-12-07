@@ -43,22 +43,22 @@ extension ChallengeDetailsWorks {
             .onFail { work.fail() }
 
       case .didTapButton3:
-         self.amIOwnerCheck
-            .doCancel(
-               self.getChallengeById,
-               self.getChallengeResult,
-               self.getChallengeWinnersReports,
-               self.getComments,
-               self.getLikesByChallenge
-            )
-            .doAsync()
-            .onSuccess {
+//         self.amIOwnerCheck
+//            .doCancel(
+//               self.getChallengeById,
+//               self.getChallengeResult,
+//               self.getChallengeWinnersReports,
+//               self.getComments,
+//               self.getLikesByChallenge
+//            )
+//            .doAsync()
+//            .onSuccess {
                self.getChallengeContenders
                   .doAsync()
                   .onSuccess { work.success(.result3($0)) }
                   .onFail { work.fail() }
-            }
-            .onFail { work.fail() }
+//            }
+//            .onFail { work.fail() }
 
       case .didTapButton4:
          self.getChallengeWinnersReports

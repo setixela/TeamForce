@@ -61,7 +61,13 @@ final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<Challen
             assertionFailure("fail")
          }
          .doVoidNext(works.amIOwnerCheck)
-         .onSuccess(setState, .enableContenders)
+         .onSuccess(setState, .iAmOwner)
+         .onFail {
+            print("fail")
+         }
+         .doRecover()
+         .doVoidNext(works.isVotingChallenge)
+         .onSuccess(setState, .votingChallenge)
          .onFail {
             print("fail")
          }

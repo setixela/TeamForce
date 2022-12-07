@@ -67,7 +67,9 @@ final class Challenge: Codable {
       active: Bool? = nil,
       completed: Bool? = nil,
       remainingTopPlaces: Int? = nil,
-      photoCache: UIImage? = nil
+      photoCache: UIImage? = nil,
+      algorithmName: String? = nil,
+      algorithmType: Int? = nil
    ) {
       self.id = id
       self.userLiked = userLiked
@@ -97,6 +99,8 @@ final class Challenge: Codable {
       self.completed = completed
       self.remainingTopPlaces = remainingTopPlaces
       self.photoCache = photoCache
+      self.algorithmName = algorithmName
+      self.algorithmType = algorithmType
    }
 
    let id: Int
@@ -126,6 +130,8 @@ final class Challenge: Codable {
    let active: Bool?
    let completed: Bool?
    let remainingTopPlaces: Int?
+   let algorithmName: String?
+   let algorithmType: Int?
 
    struct Parameter: Codable {
       let id: Int
@@ -163,6 +169,8 @@ final class Challenge: Codable {
       case creatorTgName = "creator_tg_name"
       case active, completed
       case remainingTopPlaces = "remaining_top_places"
+      case algorithmName = "algorithm_name"
+      case algorithmType = "algorithm_type"
    }
 
    // not codable extensions

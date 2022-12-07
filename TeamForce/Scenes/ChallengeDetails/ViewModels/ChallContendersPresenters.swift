@@ -10,6 +10,8 @@ import UIKit
 
 class ChallContendersPresenters<Design: DesignProtocol>: Designable {
    var events: EventsStore = .init()
+   
+   var isVoting: Bool = false
 
    var contendersCellPresenter: Presenter<Contender, WrappedX<StackModel>> {
       Presenter { work in
@@ -126,6 +128,12 @@ class ChallContendersPresenters<Design: DesignProtocol>: Designable {
                rejectButton,
                acceptButton
             ])
+         
+         if self.isVoting == true {
+            buttonsStack.hidden(true)
+            rejectButton.view.isUserInteractionEnabled = false
+            acceptButton.view.isUserInteractionEnabled = false
+         }
          
          let messageButton = ReactionButton<Design>()
             .setAll {
