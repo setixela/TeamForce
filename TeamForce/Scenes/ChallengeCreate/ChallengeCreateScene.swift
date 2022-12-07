@@ -44,7 +44,11 @@ final class ChallengeCreateScene<Asset: AssetProtocol>: BaseSceneModel<
          didPrizeFundChanged: prizeFundInput.models.main.on(\.didEditingChanged),
          didDatePicked: datePicker.on(\.didDatePicked),
          didSendPressed: sendButton.on(\.didTap),
-         challengeTypeChanged: typePicker.onEvent(\.didSelectRow)
+         challengeTypeChanged: typePicker.onEvent(\.didSelectRow),
+         severalReportsTurnOn: severalReportsSwitcher.switcher.on(\.turnedOn),
+         severalReportsTurnOff: severalReportsSwitcher.switcher.on(\.turnedOff),
+         showCandidatesTurnOn: candidatesSwitcher.switcher.on(\.turnedOn),
+         showCandidatesTurnOff: candidatesSwitcher.switcher.on(\.turnedOff)
       )
    )
 
@@ -145,6 +149,11 @@ final class ChallengeCreateScene<Asset: AssetProtocol>: BaseSceneModel<
    private var currentState = ChallengeCreateSceneState.initial
    
    private lazy var typePicker = PickerViewModel()
+   
+   private lazy var candidatesSwitcher = LabelSwitcherXDT<Design>.switcherWith(text: "Показывать раздел Претенденты")
+   
+   private lazy var severalReportsSwitcher = LabelSwitcherXDT<Design>.switcherWith(text: "Можно отправлять несколько отчетов")
+   
 
    // MARK: - Start
 
@@ -170,6 +179,8 @@ final class ChallengeCreateScene<Asset: AssetProtocol>: BaseSceneModel<
                      $0.finishDateButton,
                      $0.datePickWrapper,
                      $0.prizeFundInput,
+                     $0.candidatesSwitcher,
+                     $0.severalReportsSwitcher,
                      $0.prizePlacesInput,
                      $0.photosPanel.lefted(),
                      $0.addPhotoButton,
@@ -222,10 +233,7 @@ extension ChallengeCreateScene {
       case .challengeCreated:
          finishSucces()
       case .challengeTypesUpdate(let value):
-         print(value)
          typePicker.applyState(.items(value))
-         break
-         
       }
    }
 }

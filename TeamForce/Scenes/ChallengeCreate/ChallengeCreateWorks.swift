@@ -29,6 +29,9 @@ final class ChallengeCreateWorksStore: InitProtocol, ImageStorage {
    
    var challengeTypes: [(String, Int)] = []
    var selectedChallengeType = "default"
+   
+   var showCandidates = "no"
+   var severalReports = "no"
 
 //   func clear() {
 //      title = ""
@@ -81,7 +84,9 @@ extension ChallengeCreateWorks: ChallengeCreateWorksProtocol {
          photo: Self.store.images.first?.resized(to: Config.imageSendSize),
          parameterId: nil,
          parameterValue: nil,
-         challengeType: Self.store.selectedChallengeType
+         challengeType: Self.store.selectedChallengeType,
+         showParticipants: Self.store.showCandidates,
+         severalReports: Self.store.severalReports
       )
       self?.apiUseCase.createChallenge
          .doAsync(body)
@@ -123,6 +128,29 @@ extension ChallengeCreateWorks: ChallengeCreateWorksProtocol {
       print(Self.store.selectedChallengeType)
       work.success()
    }.retainBy(retainer) }
+   
+   
+   var showCandidatesTurnOn: Work<Void, Void> { .init { work in
+      Self.store.showCandidates = "yes"
+      work.success()
+   }.retainBy(retainer) }
+   
+   var showCandidatesTurnOff: Work<Void, Void> { .init { work in
+      Self.store.showCandidates = "no"
+      work.success()
+   }.retainBy(retainer) }
+   
+   var severalReportsTurnOn: Work<Void, Void> { .init { work in
+      Self.store.severalReports = "yes"
+      work.success()
+   }.retainBy(retainer) }
+   
+   var severalReportsTurnOff: Work<Void, Void> { .init { work in
+      Self.store.severalReports = "no"
+      work.success()
+   }.retainBy(retainer) }
+   
+   
 }
 
 extension ChallengeCreateWorks: ImageWorks {}

@@ -17,6 +17,12 @@ struct ChallengeCreateScenarioEvents {
    let didSendPressed: WorkVoidVoid
    
    let challengeTypeChanged: WorkVoid<Int>
+   
+   let severalReportsTurnOn: WorkVoid<Void>
+   let severalReportsTurnOff: WorkVoid<Void>
+   let showCandidatesTurnOn: WorkVoid<Void>
+   let showCandidatesTurnOff: WorkVoid<Void>
+   
 }
 
 final class ChallengeCreateScenario<Asset: AssetProtocol>: BaseScenario<ChallengeCreateScenarioEvents, ChallengeCreateSceneState, ChallengeCreateWorks<Asset>> {
@@ -64,5 +70,17 @@ final class ChallengeCreateScenario<Asset: AssetProtocol>: BaseScenario<Challeng
          .onFail {
             print("fail")
          }
+      
+      events.showCandidatesTurnOn
+         .doNext(works.showCandidatesTurnOn)
+      
+      events.showCandidatesTurnOff
+         .doNext(works.showCandidatesTurnOff)
+      
+      events.severalReportsTurnOn
+         .doNext(works.severalReportsTurnOn)
+      
+      events.severalReportsTurnOff
+         .doNext(works.severalReportsTurnOff)
    }
 }
