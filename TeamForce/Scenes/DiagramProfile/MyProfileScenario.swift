@@ -6,9 +6,10 @@
 //
 
 import ReactiveWorks
+import CoreLocation
 
 struct MyProfileScenarioInput {
-//   let loadMyProfile: WorkVoidVoid
+   let locationCoordinates: WorkVoid<CLLocation>
 }
 
 struct DiagramProfileScenarioParams<Asset: ASP>: ScenarioParams {
@@ -31,5 +32,9 @@ final class MyProfileScenario<Asset: ASP>: BaseAssettableScenario<DiagramProfile
          .onSuccess(setState) { .userWorkPlace($0) }
          .doVoidNext(works.getUserRoleData)
          .onSuccess(setState) { .userRole($0) }
+
+      events.locationCoordinates
+         .doNext(works.getUserLocationData)
+         .onSuccess(setState) { .userLocation($0) }
    }
 }

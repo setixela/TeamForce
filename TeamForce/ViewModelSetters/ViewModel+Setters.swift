@@ -440,8 +440,9 @@ extension ViewModelProtocol where Self: Stateable, View: PaddingLabel {
 }
 
 extension ViewModelProtocol where Self: Stateable, View: PaddingImageView {
-   @discardableResult func image(_ value: UIImage) -> Self {
-      view.image = value
+   @discardableResult func image(_ value: UIImage, color: UIColor? = nil) -> Self {
+      let image = color == nil ? value : value.withTintColor(color!)
+      view.image = image
       view.layer.masksToBounds = true
       return self
    }

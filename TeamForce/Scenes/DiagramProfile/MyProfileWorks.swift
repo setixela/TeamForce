@@ -17,6 +17,28 @@ final class MyProfileWorks<Asset: ASP>: BaseWorks<ProfileStorage, Asset>, Diagra
    GetMyProfileWorksProtocol
 {
    lazy var apiUseCase = Asset.apiUseCase
+
+   private lazy var geocoder = CLGeocoder()
+
+   var getUserLocationData: Work<CLLocation, UserLocationData> { .init { [weak self] work in
+
+      // TODO: - Temp location
+      let location = work.unsafeInput
+
+      self?.geocoder.reverseGeocodeLocation(location) { placemarks, error in
+         if let _ = error {
+            work.fail()
+         } else if let placemarks = placemarks {
+            let placemark = placemarks.first
+            let result = UserLocationData(
+               locationName: (placemark?.locality).string,
+               geoPosition: location.coordinate
+            )
+
+            work.success(result)
+         }
+      }
+   } }
 }
 
 // MARK: - Common works
@@ -78,7 +100,7 @@ protocol GetMyProfileWorksProtocol: StoringWorksProtocol, Assetable
    var getUserContacts: Work<Void, UserContactData> { get }
    var getUserWorkData: Work<Void, UserWorkData> { get }
    var getUserRoleData: Work<Void, UserRoleData> { get }
-   var getUserLocationData: Work<Void, UserLocationData> { get }
+   var getUserLocationData: Work<CLLocation, UserLocationData> { get }
 }
 
 extension GetMyProfileWorksProtocol {
@@ -139,8 +161,6 @@ extension GetMyProfileWorksProtocol {
 
       work.success(userRoleData)
    } }
-
-   var getUserLocationData: Work<Void, UserLocationData> { .init { _ in } }
 }
 
 enum UserStatus: CaseIterable {
@@ -171,4 +191,30 @@ struct UserRoleData {
 struct UserLocationData {
    let locationName: String
    let geoPosition: CLLocationCoordinate2D
+}
+
+struct LocationEvents: InitProtocol {
+   var didUpdateLocation: CLLocation?
+}
+
+final class LocationManager: NSObject, CLLocationManagerDelegate {
+   var events: EventsStore = .init()
+
+   private let locationManager = CLLocationManager()
+
+   func start() {
+      locationManager.delegate = self
+      locationManager.requestWhenInUseAuthorization()
+      locationManager.startUpdatingLocation()
+   }
+
+   func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+      guard let currentLocation = locations.last else { return }
+
+      send(\.didUpdateLocation, currentLocation)
+   }
+}
+
+extension LocationManager: Eventable {
+   typealias Events = LocationEvents
 }

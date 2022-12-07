@@ -18,9 +18,9 @@ final class MyProfileVM<Design: DSP>: ScrollViewModelY, Designable {
    lazy var userContactsBlock = UserContactsBlock<Design>()
    lazy var workingPlaceBlock = WorkingPlaceBlock<Design>()
    lazy var userRoleBlock = UserRoleBlock<Design>()
-   lazy var mapVM = MapsViewModel()
-      .height(162)
-      .cornerRadius(16)
+   lazy var locationBlock = UserLocationBlock<Design>()
+
+   private lazy var userSettingsBlock = UserSettingsBlock<Design>()
 
    override func start() {
       super.start()
@@ -33,9 +33,12 @@ final class MyProfileVM<Design: DSP>: ScrollViewModelY, Designable {
          userContactsBlock,
          workingPlaceBlock,
          userRoleBlock,
-         mapVM
+         locationBlock,
+         userSettingsBlock,
+         Spacer(48)
       ]))
       set(.spacing(16))
+      set(.padding(.horizontalOffset(16)))
    }
 }
 
@@ -218,25 +221,27 @@ struct GraphData {
 
 // MARK: - UserContactsBlock
 
-final class UserContactsBlock<Design: DSP>: StackModel, Designable {
+final class UserContactsBlock<Design: DSP>: ProfileStackModel<Design> {
    private lazy var title = LabelModel()
       .set(Design.state.label.body1)
       .text("Контактные данные")
 
    private lazy var surname = ProfileTitleBody<Design>
-      { $0.title.text("Фамилия") }
+   { $0.title.text("Фамилия") }
    private lazy var name = ProfileTitleBody<Design>
-      { $0.title.text("Имя") }
+   { $0.title.text("Имя") }
    private lazy var middlename = ProfileTitleBody<Design>
-      { $0.title.text("Отчество") }
+   { $0.title.text("Отчество") }
    private lazy var email = ProfileTitleBody<Design>
-      { $0.title.text("Корпоративная почта") }
+   { $0.title.text("Корпоративная почта") }
    private lazy var phone = ProfileTitleBody<Design>
-      { $0.title.text("Мобильный номер") }
+   { $0.title.text("Мобильный номер") }
    private lazy var birthDate = ProfileTitleBody<Design>
-      { $0.title.text("День рождения") }
+   { $0.title.text("День рождения") }
 
    override func start() {
+      super.start()
+
       spacing(16)
       arrangedModels(
          title,
@@ -263,7 +268,7 @@ extension UserContactsBlock: StateMachine {
 
 // MARK: - WorkingPlaceBlock
 
-final class WorkingPlaceBlock<Design: DSP>: StackModel, Designable {
+final class WorkingPlaceBlock<Design: DSP>: ProfileStackModel<Design> {
    private lazy var title = LabelModel()
       .set(Design.state.label.body1)
       .text("Место работы")
@@ -274,6 +279,8 @@ final class WorkingPlaceBlock<Design: DSP>: StackModel, Designable {
    { $0.title.text("Должность") }
 
    override func start() {
+      super.start()
+
       spacing(16)
       arrangedModels(
          title,
@@ -292,11 +299,13 @@ extension WorkingPlaceBlock: StateMachine {
 
 // MARK: - UserRoleBlock
 
-final class UserRoleBlock<Design: DSP>: StackModel, Designable {
+final class UserRoleBlock<Design: DSP>: ProfileStackModel<Design> {
    private lazy var role = ProfileTitleBody<Design>
    { $0.title.text("Роль") }
 
    override func start() {
+      super.start()
+
       spacing(16)
       arrangedModels(
          role
@@ -312,16 +321,21 @@ extension UserRoleBlock: StateMachine {
 
 // MARK: - UserLocationBlock
 
-final class UserLocationBlock<Design: DSP>: StackModel, Designable {
+final class UserLocationBlock<Design: DSP>: ProfileStackModel<Design> {
    private lazy var title = LabelModel()
       .set(Design.state.label.body1)
       .text("Местоположение")
 
    private lazy var adress = ProfileTitleBody<Design>
    { $0.title.text("Адрес") }
+
    private lazy var map = MapsViewModel()
+      .height(162)
+      .cornerRadius(16)
 
    override func start() {
+      super.start()
+
       spacing(16)
       arrangedModels(
          title,
@@ -369,4 +383,22 @@ extension MapsViewModel: StateMachine {
    }
 }
 
+// MARK: - UserSettingsBlock
 
+final class UserSettingsBlock<Design: DSP>: ProfileStackModel<Design> {
+   override func start() {
+      super.start()
+
+      axis(.horizontal)
+      alignment(.center)
+      arrangedModels(
+         LabelModel()
+            .set(Design.state.label.body1)
+            .text("Настройки"),
+         Spacer(),
+         ImageViewModel()
+            .size(.square(24))
+            .image(Design.icon.tablerSettings, color: Design.color.iconContrast)
+      )
+   }
+}

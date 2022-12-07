@@ -21,10 +21,14 @@ final class MyProfileScene<Asset: ASP>: BaseSceneModel<
    lazy var scenario: Scenario = MyProfileScenario<Asset>(
       works: MyProfileWorks<Asset>(),
       stateDelegate: stateDelegate,
-      events: MyProfileScenarioInput()
+      events: MyProfileScenarioInput(
+         locationCoordinates: locationManager.on(\.didUpdateLocation)
+      )
    )
 
-   lazy var profileVM = MyProfileVM<Design>()
+   private lazy var profileVM = MyProfileVM<Design>()
+
+   private lazy var locationManager = LocationManager()
 
    override func start() {
       vcModel?
@@ -35,12 +39,15 @@ final class MyProfileScene<Asset: ASP>: BaseSceneModel<
    }
 
    func configure() {
-      mainVM.bodyStack.arrangedModels(
-         profileVM,
-         Spacer()
-      )
+      mainVM.bodyStack
+         .padding(.verticalOffset(16))
+         .arrangedModels(
+            profileVM,
+            Spacer()
+         )
 
       scenario.start()
+      locationManager.start()
    }
 }
 
@@ -52,6 +59,7 @@ enum MyProfileSceneState {
    case userContacts(UserContactData)
    case userWorkPlace(UserWorkData)
    case userRole(UserRoleData)
+   case userLocation(UserLocationData)
 }
 
 extension MyProfileScene: StateMachine {
@@ -71,6 +79,8 @@ extension MyProfileScene: StateMachine {
          profileVM.workingPlaceBlock.setState(workData)
       case .userRole(let roleData):
          profileVM.userRoleBlock.setState(roleData)
+      case .userLocation(let locData):
+         profileVM.locationBlock.setState(locData)
       }
    }
 }
