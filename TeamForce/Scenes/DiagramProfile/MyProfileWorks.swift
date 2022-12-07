@@ -78,7 +78,7 @@ protocol GetMyProfileWorksProtocol: StoringWorksProtocol, Assetable
    var getUserContacts: Work<Void, UserContactData> { get }
    var getUserWorkData: Work<Void, UserWorkData> { get }
    var getUserRoleData: Work<Void, UserRoleData> { get }
-   var getUserLoacationData: Work<Void, UserLocationData> { get }
+   var getUserLocationData: Work<Void, UserLocationData> { get }
 }
 
 extension GetMyProfileWorksProtocol {
@@ -128,10 +128,19 @@ extension GetMyProfileWorksProtocol {
    } }
 
    var getUserRoleData: Work<Void, UserRoleData> { .init { work in
-      guard let userData = Self.store.userData else { work.fail(); return }
+//      guard
+//         let userData = Self.store.userData,
+//         let privelege = userData.privileged.first
+//      else { work.fail(); return }
+//
+//      let userRoleData = UserRoleData(role: privelege.roleName)
+
+      let userRoleData = UserRoleData(role: "Администратор") // TODO: - Fish yet
+
+      work.success(userRoleData)
    } }
 
-   var getUserLoacationData: Work<Void, UserLocationData> { .init { _ in } }
+   var getUserLocationData: Work<Void, UserLocationData> { .init { _ in } }
 }
 
 enum UserStatus: CaseIterable {

@@ -17,6 +17,7 @@ final class MyProfileVM<Design: DSP>: ScrollViewModelY, Designable {
    lazy var userStatusBlock = UserStatusBlock<Design>()
    lazy var userContactsBlock = UserContactsBlock<Design>()
    lazy var workingPlaceBlock = WorkingPlaceBlock<Design>()
+   lazy var userRoleBlock = UserRoleBlock<Design>()
    lazy var mapVM = MapsViewModel()
       .height(162)
       .cornerRadius(16)
@@ -31,6 +32,7 @@ final class MyProfileVM<Design: DSP>: ScrollViewModelY, Designable {
          diagramBlock,
          userContactsBlock,
          workingPlaceBlock,
+         userRoleBlock,
          mapVM
       ]))
       set(.spacing(16))
@@ -123,22 +125,6 @@ extension UserStatusBlock: StateMachine {
          models.right.text("На больничном")
       }
    }
-}
-
-// MARK: - MapsViewModel
-
-import MapKit
-
-final class MapsViewModel: BaseViewModel<MKMapView> {
-   override func start() {
-      view.isZoomEnabled = false
-      view.isScrollEnabled = false
-      view.showsUserLocation = true
-   }
-}
-
-extension MapsViewModel: Stateable {
-   typealias State = ViewState
 }
 
 // MARK: - DiagramVM
@@ -304,28 +290,83 @@ extension WorkingPlaceBlock: StateMachine {
    }
 }
 
-// MARK: - ProfileTitleBody
+// MARK: - UserRoleBlock
 
-final class ProfileTitleBody<Design: DSP>: M<LabelModel>.D<LabelModel>.Combo, Designable {
-   var title: LabelModel { models.main }
+final class UserRoleBlock<Design: DSP>: StackModel, Designable {
+   private lazy var role = ProfileTitleBody<Design>
+   { $0.title.text("Роль") }
 
-   func setBody(_ text: String?) {
-      guard let text else { hidden(true); return }
-
-      models.down.text(text)
-      hidden(false)
-   }
-
-   required init() {
-      super.init()
-
-      setAll { title, body in
-         title
-            .set(Design.state.label.captionSecondary)
-         body
-            .set(Design.state.label.default)
-      }
-
-      spacing(8)
+   override func start() {
+      spacing(16)
+      arrangedModels(
+         role
+      )
    }
 }
+
+extension UserRoleBlock: StateMachine {
+   func setState(_ state: UserRoleData) {
+      role.setBody(state.role)
+   }
+}
+
+// MARK: - UserLocationBlock
+
+final class UserLocationBlock<Design: DSP>: StackModel, Designable {
+   private lazy var title = LabelModel()
+      .set(Design.state.label.body1)
+      .text("Местоположение")
+
+   private lazy var adress = ProfileTitleBody<Design>
+   { $0.title.text("Адрес") }
+   private lazy var map = MapsViewModel()
+
+   override func start() {
+      spacing(16)
+      arrangedModels(
+         title,
+         adress,
+         map
+      )
+   }
+}
+
+extension UserLocationBlock: StateMachine {
+   func setState(_ state: UserLocationData) {
+      adress.setBody(state.locationName)
+      let span = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
+      let region = MKCoordinateRegion(center: state.geoPosition, span: span)
+      map.setState(.region(region))
+   }
+}
+
+// MARK: - MapsViewModel
+
+import MapKit
+
+final class MapsViewModel: BaseViewModel<MKMapView> {
+   override func start() {
+      view.isZoomEnabled = false
+      view.isScrollEnabled = false
+      view.showsUserLocation = true
+   }
+}
+
+extension MapsViewModel: Stateable {
+   typealias State = ViewState
+}
+
+extension MapsViewModel: StateMachine {
+   enum MapState {
+      case region(MKCoordinateRegion)
+   }
+
+   func setState(_ state: MapState) {
+      switch state {
+      case .region(let region):
+         view.region = region
+      }
+   }
+}
+
+

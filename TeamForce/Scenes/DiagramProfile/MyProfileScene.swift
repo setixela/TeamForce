@@ -51,6 +51,7 @@ enum MyProfileSceneState {
    case diagramData(CircleGraphs)
    case userContacts(UserContactData)
    case userWorkPlace(UserWorkData)
+   case userRole(UserRoleData)
 }
 
 extension MyProfileScene: StateMachine {
@@ -68,6 +69,8 @@ extension MyProfileScene: StateMachine {
          profileVM.userContactsBlock.setState(contacts)
       case .userWorkPlace(let workData):
          profileVM.workingPlaceBlock.setState(workData)
+      case .userRole(let roleData):
+         profileVM.userRoleBlock.setState(roleData)
       }
    }
 }

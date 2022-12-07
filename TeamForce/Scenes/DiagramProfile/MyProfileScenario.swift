@@ -29,5 +29,7 @@ final class MyProfileScenario<Asset: ASP>: BaseAssettableScenario<DiagramProfile
          .onSuccess(setState) { .userContacts($0) }
          .doVoidNext(works.getUserWorkData)
          .onSuccess(setState) { .userWorkPlace($0) }
+         .doVoidNext(works.getUserRoleData)
+         .onSuccess(setState) { .userRole($0) }
    }
 }
