@@ -26,6 +26,12 @@ final class ChallengeCreateWorksStore: InitProtocol, ImageStorage {
    var desription: String = ""
    var prizeFund: String = ""
    var finishDate: Date = .distantFuture
+   
+   var challengeTypes: [(String, Int)] = []
+   var selectedChallengeType = "default"
+   
+   var showCandidates = "no"
+   var severalReports = "no"
 
 //   func clear() {
 //      title = ""
@@ -77,7 +83,10 @@ extension ChallengeCreateWorks: ChallengeCreateWorksProtocol {
          startBalance: Int(Self.store.prizeFund).int,
          photo: Self.store.images.first?.resized(to: Config.imageSendSize),
          parameterId: nil,
-         parameterValue: nil
+         parameterValue: nil,
+         challengeType: Self.store.selectedChallengeType,
+         showParticipants: Self.store.showCandidates,
+         severalReports: Self.store.severalReports
       )
       self?.apiUseCase.createChallenge
          .doAsync(body)
@@ -88,6 +97,60 @@ extension ChallengeCreateWorks: ChallengeCreateWorksProtocol {
             work.fail()
          }
    }.retainBy(retainer) }
+   
+   var createChallengeGet: Work<Void, [String]> { .init { [weak self] work in
+      self?.apiUseCase.createChallengeGet
+         .doAsync()
+         .onSuccess {
+            var res: [(String, Int)] = []
+            if $0.types?.default == 1 {
+               res.append(("Обычный", 1))
+            }
+            if $0.types?.voting == 2 {
+               res.append(("Голосование", 2))
+            }
+            Self.store.challengeTypes = res
+            let typeNames = res.map { $0.0 }
+            work.success(typeNames)
+         }
+         .onFail {
+            work.fail()
+         }
+   }.retainBy(retainer) }
+   
+   var changeChallType: Work<Int, Void> { .init { work in
+      guard let input = work.input else { work.fail(); return }
+      if input == 1 {
+         Self.store.selectedChallengeType = "voting"
+      } else {
+         Self.store.selectedChallengeType = "default"
+      }
+      print(Self.store.selectedChallengeType)
+      work.success()
+   }.retainBy(retainer) }
+   
+   
+   var showCandidatesTurnOn: Work<Void, Void> { .init { work in
+      Self.store.showCandidates = "yes"
+      work.success()
+   }.retainBy(retainer) }
+   
+   var showCandidatesTurnOff: Work<Void, Void> { .init { work in
+      Self.store.showCandidates = "no"
+      work.success()
+   }.retainBy(retainer) }
+   
+   var severalReportsTurnOn: Work<Void, Void> { .init { work in
+      Self.store.severalReports = "yes"
+      work.success()
+   }.retainBy(retainer) }
+   
+   var severalReportsTurnOff: Work<Void, Void> { .init { work in
+      Self.store.severalReports = "no"
+      work.success()
+   }.retainBy(retainer) }
+   
+   
 }
 
 extension ChallengeCreateWorks: ImageWorks {}

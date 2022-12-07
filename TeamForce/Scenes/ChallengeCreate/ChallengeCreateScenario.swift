@@ -15,10 +15,28 @@ struct ChallengeCreateScenarioEvents {
    let didDatePicked: WorkVoid<Date>
 
    let didSendPressed: WorkVoidVoid
+   
+   let challengeTypeChanged: WorkVoid<Int>
+   
+   let severalReportsTurnOn: WorkVoid<Void>
+   let severalReportsTurnOff: WorkVoid<Void>
+   let showCandidatesTurnOn: WorkVoid<Void>
+   let showCandidatesTurnOff: WorkVoid<Void>
+   
 }
 
 final class ChallengeCreateScenario<Asset: AssetProtocol>: BaseScenario<ChallengeCreateScenarioEvents, ChallengeCreateSceneState, ChallengeCreateWorks<Asset>> {
    override func start() {
+      
+      works.createChallengeGet
+         .doAsync()
+         .onSuccess(setState) {
+            .challengeTypesUpdate($0)
+         }
+         .onFail {
+            print("bye")
+         }
+      
       events.didTitleInputChanged
          .doNext(works.setTitle)
          .doNext(works.checkAllReady)
@@ -43,5 +61,26 @@ final class ChallengeCreateScenario<Asset: AssetProtocol>: BaseScenario<Challeng
       events.didDatePicked
          .doNext(works.setFinishDate)
          .onSuccess(setState) { .updateDateButton($0) }
+      
+      events.challengeTypeChanged
+         .doNext(works.changeChallType)
+         .onSuccess {
+            print("success")
+         }
+         .onFail {
+            print("fail")
+         }
+      
+      events.showCandidatesTurnOn
+         .doNext(works.showCandidatesTurnOn)
+      
+      events.showCandidatesTurnOff
+         .doNext(works.showCandidatesTurnOff)
+      
+      events.severalReportsTurnOn
+         .doNext(works.severalReportsTurnOn)
+      
+      events.severalReportsTurnOff
+         .doNext(works.severalReportsTurnOff)
    }
 }

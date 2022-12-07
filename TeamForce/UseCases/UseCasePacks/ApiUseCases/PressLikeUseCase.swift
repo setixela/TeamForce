@@ -11,8 +11,8 @@ struct PressLikeUseCase: UseCaseProtocol {
    let safeStringStorage: StringStorageWorker
    let pressLikeApiWorker: PressLikeApiWorker
 
-   var work: Work<PressLikeRequest, Void> {
-      Work<PressLikeRequest, Void>() { work in
+   var work: Work<PressLikeRequest, PressLikeResult> {
+      Work<PressLikeRequest, PressLikeResult>() { work in
          safeStringStorage
             .doAsync("token")
             .onFail {
@@ -25,7 +25,7 @@ struct PressLikeUseCase: UseCaseProtocol {
             }
             .doNext(worker: pressLikeApiWorker)
             .onSuccess {
-               work.success(result: ())
+               work.success(result: $0)
             }
             .onFail {
                work.fail()

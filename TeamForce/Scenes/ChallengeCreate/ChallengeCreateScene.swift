@@ -23,6 +23,8 @@ enum ChallengeCreateSceneState {
    case updateDateButton(Date)
 
    case challengeCreated
+   
+   case challengeTypesUpdate([String])
 }
 
 final class ChallengeCreateScene<Asset: AssetProtocol>: BaseSceneModel<
@@ -41,7 +43,12 @@ final class ChallengeCreateScene<Asset: AssetProtocol>: BaseSceneModel<
          didDescriptionInputChanged: descriptionInput.on(\.didEditingChanged),
          didPrizeFundChanged: prizeFundInput.models.main.on(\.didEditingChanged),
          didDatePicked: datePicker.on(\.didDatePicked),
-         didSendPressed: sendButton.on(\.didTap)
+         didSendPressed: sendButton.on(\.didTap),
+         challengeTypeChanged: typePicker.onEvent(\.didSelectRow),
+         severalReportsTurnOn: severalReportsSwitcher.switcher.on(\.turnedOn),
+         severalReportsTurnOff: severalReportsSwitcher.switcher.on(\.turnedOff),
+         showCandidatesTurnOn: candidatesSwitcher.switcher.on(\.turnedOn),
+         showCandidatesTurnOff: candidatesSwitcher.switcher.on(\.turnedOff)
       )
    )
 
@@ -71,6 +78,11 @@ final class ChallengeCreateScene<Asset: AssetProtocol>: BaseSceneModel<
    private lazy var titleInput = Design.model.transact.userSearchTextField
       .placeholder("Название")
       .placeholderColor(Design.color.textFieldPlaceholder)
+   
+   private lazy var challengeTypeTextField = Design.model.transact.userSearchTextField
+      .placeholder("Вид чалика")
+      .placeholderColor(Design.color.textFieldPlaceholder)
+   
    private lazy var descriptionInput = Design.model.transact.reasonInputTextView
       .placeholder("Описание")
       .placeholderColor(Design.color.textFieldPlaceholder)
@@ -135,11 +147,19 @@ final class ChallengeCreateScene<Asset: AssetProtocol>: BaseSceneModel<
    private lazy var imagePicker = Design.model.common.imagePicker
 
    private var currentState = ChallengeCreateSceneState.initial
+   
+   private lazy var typePicker = PickerViewModel()
+   
+   private lazy var candidatesSwitcher = LabelSwitcherXDT<Design>.switcherWith(text: "Показывать раздел Претенденты")
+   
+   private lazy var severalReportsSwitcher = LabelSwitcherXDT<Design>.switcherWith(text: "Можно отправлять несколько отчетов")
+   
 
    // MARK: - Start
 
    override func start() {
       super.start()
+      typePicker.attachToTextField(textField: challengeTypeTextField)
 
       vcModel?.on(\.viewDidLoad, self) {
          $0.mainVM.bodyStack
@@ -155,9 +175,12 @@ final class ChallengeCreateScene<Asset: AssetProtocol>: BaseSceneModel<
                      $0.infoBlock,
                      $0.titleInput,
                      $0.descriptionInput,
+                     $0.typePicker.textField,
                      $0.finishDateButton,
                      $0.datePickWrapper,
                      $0.prizeFundInput,
+                     $0.candidatesSwitcher,
+                     $0.severalReportsSwitcher,
                      $0.prizePlacesInput,
                      $0.photosPanel.lefted(),
                      $0.addPhotoButton,
@@ -209,6 +232,8 @@ extension ChallengeCreateScene {
          finishCanceled()
       case .challengeCreated:
          finishSucces()
+      case .challengeTypesUpdate(let value):
+         typePicker.applyState(.items(value))
       }
    }
 }

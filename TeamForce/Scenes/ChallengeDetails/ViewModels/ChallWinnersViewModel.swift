@@ -11,11 +11,12 @@ import UIKit
 final class ChallWinnersViewModel<Design: DSP>: StackModel, Designable {
    
    var events: EventsStore = .init()
-   
+   lazy var presenter = ChallWinnersPresenters<Design>()
    lazy var winnersTableModel = TableItemsModel<Design>()
+   
       .backColor(Design.color.background)
       .presenters(
-         ChallWinnersPresenters<Design>().winnersCellPresenter,
+         presenter.winnersCellPresenter,
          SpacerPresenter.presenter
       )
 

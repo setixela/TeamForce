@@ -23,6 +23,10 @@ struct ChallengeDetailsInputEvents {
    let reactionPressed: WorkVoidVoid
 
    let presentChallengeAuthor: WorkVoidVoid
+   
+   let reportReactionPressed: WorkVoid<PressLikeRequest>
+   
+   let winnerReportReactionRressed: WorkVoid<PressLikeRequest>
 }
 
 final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<ChallengeDetailsInputEvents,
@@ -57,7 +61,13 @@ final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<Challen
             assertionFailure("fail")
          }
          .doVoidNext(works.amIOwnerCheck)
-         .onSuccess(setState, .enableContenders)
+         .onSuccess(setState, .iAmOwner)
+         .onFail {
+            print("fail")
+         }
+         .doRecover()
+         .doVoidNext(works.isVotingChallenge)
+         .onSuccess(setState, .votingChallenge)
          .onFail {
             print("fail")
          }
@@ -181,5 +191,48 @@ final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<Challen
       events.presentChallengeAuthor
          .doNext(works.getCreatorId)
          .onSuccess(setState) { .presentCreator($0) }
+      
+      events.reportReactionPressed
+         .doNext(works.pressLikeContender)
+         .onSuccess {
+            print("hello")
+         }
+         .doMap { [weak self] stat in
+            let index = self?.events.reportReactionPressed.result?.index ?? 0
+            let res = (stat, index)
+            return res
+         }
+         .doNext(works.updateContenderReportItem)
+         .onSuccess(setState) {
+            .updateContenderAtIndex($0.0, $0.1)
+         }
+         .onFail {
+            print("fail")
+         }
+      
+      events.winnerReportReactionRressed
+         .doNext(works.pressLikeContender)
+         .onSuccess {
+            print("hello")
+         }
+         .onFail {
+            print("hello")
+         }
+         .doMap { [weak self] stat in
+            let index = self?.events.winnerReportReactionRressed.result?.index ?? 0
+            let res = (stat, index)
+            return res
+         }
+         .doNext(works.updateWinnerReportItem)
+         .onSuccess(setState) {
+            .updateWinnerAtIndex($0.0, $0.1)
+         }
+         .onFail {
+            print("fail")
+         }
+//         .doNext(works.updateFeedElement)
+//         .onSuccess(setState) {
+//            .updateFeedAtIndex($0.0, $0.1)
+//         }
    }
 }
