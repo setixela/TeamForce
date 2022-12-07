@@ -68,6 +68,20 @@
 		192FCFFF28C9477100E6FACC /* ModalDoubleStackModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 192FCFFE28C9477100E6FACC /* ModalDoubleStackModel.swift */; };
 		1934217E2940BEBB00F113D7 /* ProfileTitleBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1934217D2940BEBB00F113D7 /* ProfileTitleBody.swift */; };
 		19342180294103CC00F113D7 /* ProfileStackModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1934217F294103CC00F113D7 /* ProfileStackModel.swift */; };
+		19342182294116F200F113D7 /* TagsPercentWorks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19342181294116F200F113D7 /* TagsPercentWorks.swift */; };
+		19342185294149B800F113D7 /* DiagramVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19342184294149B800F113D7 /* DiagramVM.swift */; };
+		19342187294149D100F113D7 /* GraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19342186294149D100F113D7 /* GraphView.swift */; };
+		1934218929414A0700F113D7 /* TagsPercentBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1934218829414A0700F113D7 /* TagsPercentBlock.swift */; };
+		1934218B29414A2D00F113D7 /* TagsPercentCloud.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1934218A29414A2D00F113D7 /* TagsPercentCloud.swift */; };
+		1934218D29414A8500F113D7 /* ProfileUserBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1934218C29414A8500F113D7 /* ProfileUserBlock.swift */; };
+		1934218F29414AA200F113D7 /* UserNameBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1934218E29414AA200F113D7 /* UserNameBlock.swift */; };
+		1934219129414AE400F113D7 /* UserStatusBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1934219029414AE400F113D7 /* UserStatusBlock.swift */; };
+		1934219329414B0400F113D7 /* UserContactsBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1934219229414B0400F113D7 /* UserContactsBlock.swift */; };
+		1934219529414B2500F113D7 /* WorkingPlaceBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1934219429414B2500F113D7 /* WorkingPlaceBlock.swift */; };
+		1934219729414B3D00F113D7 /* UserRoleBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1934219629414B3D00F113D7 /* UserRoleBlock.swift */; };
+		1934219929414B5D00F113D7 /* UserLocationBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1934219829414B5D00F113D7 /* UserLocationBlock.swift */; };
+		1934219C29414BB500F113D7 /* MapsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1934219B29414BB500F113D7 /* MapsViewModel.swift */; };
+		1934219E29414BE400F113D7 /* UserSettingsBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1934219D29414BE400F113D7 /* UserSettingsBlock.swift */; };
 		19360ED0292E77E400DFA8E8 /* UIView+Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19360ECF292E77E400DFA8E8 /* UIView+Constraints.swift */; };
 		19360ED2292E791900DFA8E8 /* ScrollViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19360ED1292E791900DFA8E8 /* ScrollViewModel.swift */; };
 		19360ED4292ED6A100DFA8E8 /* VCModel+Loading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19360ED3292ED6A100DFA8E8 /* VCModel+Loading.swift */; };
@@ -489,6 +503,20 @@
 		192FCFFE28C9477100E6FACC /* ModalDoubleStackModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalDoubleStackModel.swift; sourceTree = "<group>"; };
 		1934217D2940BEBB00F113D7 /* ProfileTitleBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTitleBody.swift; sourceTree = "<group>"; };
 		1934217F294103CC00F113D7 /* ProfileStackModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileStackModel.swift; sourceTree = "<group>"; };
+		19342181294116F200F113D7 /* TagsPercentWorks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsPercentWorks.swift; sourceTree = "<group>"; };
+		19342184294149B800F113D7 /* DiagramVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagramVM.swift; sourceTree = "<group>"; };
+		19342186294149D100F113D7 /* GraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphView.swift; sourceTree = "<group>"; };
+		1934218829414A0700F113D7 /* TagsPercentBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsPercentBlock.swift; sourceTree = "<group>"; };
+		1934218A29414A2D00F113D7 /* TagsPercentCloud.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsPercentCloud.swift; sourceTree = "<group>"; };
+		1934218C29414A8500F113D7 /* ProfileUserBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileUserBlock.swift; sourceTree = "<group>"; };
+		1934218E29414AA200F113D7 /* UserNameBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNameBlock.swift; sourceTree = "<group>"; };
+		1934219029414AE400F113D7 /* UserStatusBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStatusBlock.swift; sourceTree = "<group>"; };
+		1934219229414B0400F113D7 /* UserContactsBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserContactsBlock.swift; sourceTree = "<group>"; };
+		1934219429414B2500F113D7 /* WorkingPlaceBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkingPlaceBlock.swift; sourceTree = "<group>"; };
+		1934219629414B3D00F113D7 /* UserRoleBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRoleBlock.swift; sourceTree = "<group>"; };
+		1934219829414B5D00F113D7 /* UserLocationBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLocationBlock.swift; sourceTree = "<group>"; };
+		1934219B29414BB500F113D7 /* MapsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapsViewModel.swift; sourceTree = "<group>"; };
+		1934219D29414BE400F113D7 /* UserSettingsBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettingsBlock.swift; sourceTree = "<group>"; };
 		19360ECF292E77E400DFA8E8 /* UIView+Constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Constraints.swift"; sourceTree = "<group>"; };
 		19360ED1292E791900DFA8E8 /* ScrollViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollViewModel.swift; sourceTree = "<group>"; };
 		19360ED3292ED6A100DFA8E8 /* VCModel+Loading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VCModel+Loading.swift"; sourceTree = "<group>"; };
@@ -917,7 +945,7 @@
 				1906F277293D006F00A8F0BE /* MyProfileScene.swift */,
 				1906F27B293E2B7B00A8F0BE /* MyProfileScenario.swift */,
 				1906F27D293E2B8500A8F0BE /* MyProfileWorks.swift */,
-				1906F279293D128B00A8F0BE /* MyProfileVM.swift */,
+				19342181294116F200F113D7 /* TagsPercentWorks.swift */,
 				192C6B8D2940BCDD00BAA59E /* ViewModels */,
 			);
 			path = DiagramProfile;
@@ -1079,10 +1107,40 @@
 		192C6B8D2940BCDD00BAA59E /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				1934219A29414B9500F113D7 /* MapVMs */,
+				19342183294149A300F113D7 /* TagsVMs */,
+				1906F279293D128B00A8F0BE /* MyProfileVM.swift */,
 				1934217D2940BEBB00F113D7 /* ProfileTitleBody.swift */,
 				1934217F294103CC00F113D7 /* ProfileStackModel.swift */,
+				1934218C29414A8500F113D7 /* ProfileUserBlock.swift */,
+				1934218E29414AA200F113D7 /* UserNameBlock.swift */,
+				1934219029414AE400F113D7 /* UserStatusBlock.swift */,
+				1934219229414B0400F113D7 /* UserContactsBlock.swift */,
+				1934219429414B2500F113D7 /* WorkingPlaceBlock.swift */,
+				1934219629414B3D00F113D7 /* UserRoleBlock.swift */,
+				1934219D29414BE400F113D7 /* UserSettingsBlock.swift */,
 			);
 			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		19342183294149A300F113D7 /* TagsVMs */ = {
+			isa = PBXGroup;
+			children = (
+				19342184294149B800F113D7 /* DiagramVM.swift */,
+				19342186294149D100F113D7 /* GraphView.swift */,
+				1934218829414A0700F113D7 /* TagsPercentBlock.swift */,
+				1934218A29414A2D00F113D7 /* TagsPercentCloud.swift */,
+			);
+			path = TagsVMs;
+			sourceTree = "<group>";
+		};
+		1934219A29414B9500F113D7 /* MapVMs */ = {
+			isa = PBXGroup;
+			children = (
+				1934219829414B5D00F113D7 /* UserLocationBlock.swift */,
+				1934219B29414BB500F113D7 /* MapsViewModel.swift */,
+			);
+			path = MapVMs;
 			sourceTree = "<group>";
 		};
 		1938929C28F87ED800826522 /* CommonBusiness */ = {
@@ -2126,6 +2184,7 @@
 				636AE71429239668004A24E5 /* ChangeOrgVerifyApiWorker.swift in Sources */,
 				636AE716292399A4004A24E5 /* ChangeOrgVerifyUseCase.swift in Sources */,
 				194C095628759FD900D88D5B /* ViewModel+Stateable.swift in Sources */,
+				1934219529414B2500F113D7 /* WorkingPlaceBlock.swift in Sources */,
 				199C82D529283E280092B0BA /* ChangeOrganizationVM.swift in Sources */,
 				632DADD328FD6BAB00998DCD /* ChallengeResCancelViewModel.swift in Sources */,
 				19A8229628A925760081D385 /* ViewModel+Setters.swift in Sources */,
@@ -2149,6 +2208,7 @@
 				631995B428F53F7600EB2638 /* ChallengeCreateWorks.swift in Sources */,
 				19AE3AEF28691B2E00A0C6E4 /* MainScene.swift in Sources */,
 				636AE7222923BCEE004A24E5 /* VerifyViewModels.swift in Sources */,
+				1934218929414A0700F113D7 /* TagsPercentBlock.swift in Sources */,
 				63386118293F6F7B00BC0436 /* CreateChallengeGetUseCase.swift in Sources */,
 				197447242911AC6A0089BB2B /* ChallengesFilterButtons.swift in Sources */,
 				197A2DA428A9BF4B00190656 /* Combos.swift in Sources */,
@@ -2161,11 +2221,13 @@
 				198BBEF228B6CE9B0006CD30 /* StringStorageUseCase.swift in Sources */,
 				63FCC9B1290750BA009D0001 /* GetEventsWinnersUseCase.swift in Sources */,
 				19CAB9CA28B41C8200A0A3B1 /* TitleBodySwitcher.swift in Sources */,
+				19342187294149D100F113D7 /* GraphView.swift in Sources */,
 				19CAB9CE28B4261E00A0A3B1 /* LabelSwitchXDT.swift in Sources */,
 				63A529F528A1F8AB004A858D /* SegmentedControlModel.swift in Sources */,
 				63D419F128AA825F0024E22C /* GetPeriodsUseCase.swift in Sources */,
 				191722632922DEE80023DE3A /* DetailsPresenter.swift in Sources */,
 				1956426A292ACBE7007BE9D4 /* SendChallengePanel.swift in Sources */,
+				19342182294116F200F113D7 /* TagsPercentWorks.swift in Sources */,
 				63FCC9AF29075036009D0001 /* GetEventsWinnersApiWorker.swift in Sources */,
 				63E7A73F28AF9E8000FB2C80 /* ReadyWorks.swift in Sources */,
 				190D052328C7C1DC00466893 /* ProfileBuilder.swift in Sources */,
@@ -2217,6 +2279,7 @@
 				197A361828BBC9AC006E44C1 /* MainScenario.swift in Sources */,
 				199E321428BC1A560088BA71 /* String+DateFormat.swift in Sources */,
 				19C306D828ADF6C2002D5124 /* HistoryCell.swift in Sources */,
+				1934218D29414A8500F113D7 /* ProfileUserBlock.swift in Sources */,
 				19CAB9CC28B41CB400A0A3B1 /* TitleBodySwitcherDT.swift in Sources */,
 				19BD2A8928ABB72500FCC00A /* Scenarible.swift in Sources */,
 				63E7A74128AFA0D200FB2C80 /* GetPeriodByDateApiWorker.swift in Sources */,
@@ -2270,6 +2333,7 @@
 				198FE1D02899E0BF00BAF1A5 /* IsEmpty.swift in Sources */,
 				1938929E28F87EE100826522 /* ImageWorks.swift in Sources */,
 				631995BA28F5A56D00EB2638 /* GetSendCoinSettingsUseCase.swift in Sources */,
+				1934219329414B0400F113D7 /* UserContactsBlock.swift in Sources */,
 				191722602922DE370023DE3A /* NotificationsScenario2.swift in Sources */,
 				63BB2C2028E14BFA00C1E3DB /* UpdateCommentUseCase.swift in Sources */,
 				19AE3AF22869230C00A0C6E4 /* AuthApiWorker.swift in Sources */,
@@ -2279,6 +2343,7 @@
 				19017B6B28A6989000B06345 /* TitleSubtitleY.swift in Sources */,
 				19D84E3328AC077200418B9E /* LoginViewModels.swift in Sources */,
 				19D08351286F401000F75E4A /* SideBarUserModel.swift in Sources */,
+				1934218F29414AA200F113D7 /* UserNameBlock.swift in Sources */,
 				1906F27A293D128B00A8F0BE /* MyProfileVM.swift in Sources */,
 				19D0835F286F42C000F75E4A /* FrameCellModelDT.swift in Sources */,
 				19466E01289FE28C0052F0AB /* TitleSubtitleModel.swift in Sources */,
@@ -2320,6 +2385,7 @@
 				19017B6728A697DF00B06345 /* AligningModels.swift in Sources */,
 				63A37EB628F05DDD00DBD59F /* CreateChallengeReportUseCase.swift in Sources */,
 				631D8EC128F94EC7005332BD /* ChallWinnersViewModel.swift in Sources */,
+				1934219729414B3D00F113D7 /* UserRoleBlock.swift in Sources */,
 				6368D826289187B50049EEAB /* SendCoinApiModel.swift in Sources */,
 				63AB072128C8048C00FD650F /* CreateFewContactsApiWorker.swift in Sources */,
 				196F642228F32C37002F5187 /* ManyButtons.swift in Sources */,
@@ -2335,6 +2401,7 @@
 				635FC6C628EE7F3800826B67 /* GetChallengesUseCase.swift in Sources */,
 				19DD3D95288766860085CDA8 /* LabelCellModel.swift in Sources */,
 				197A361A28BBC9B3006E44C1 /* MainWorks.swift in Sources */,
+				1934218B29414A2D00F113D7 /* TagsPercentCloud.swift in Sources */,
 				197A771C28AD91E20082CD81 /* HistoryPresenters.swift in Sources */,
 				1953CF0628EAC9FB00C670A6 /* HashTagsScrollModel.swift in Sources */,
 				631D8EBF28F91ECF005332BD /* ChallResultsPresenters.swift in Sources */,
@@ -2392,6 +2459,7 @@
 				19F15386289964AA00ECF000 /* LogoutUseCase.swift in Sources */,
 				1953DE842879FDE3000DC537 /* TransactViewModels.swift in Sources */,
 				19BD2A8728ABB35C00FCC00A /* LoginScenario.swift in Sources */,
+				1934219129414AE400F113D7 /* UserStatusBlock.swift in Sources */,
 				19ECD54828623D9C001765F6 /* CustomViews.swift in Sources */,
 				19F1538E2899692D00ECF000 /* UserSearchUseCase.swift in Sources */,
 				63BB2C1028DB38C900C1E3DB /* GetTransactionStatisticsApiWorker.swift in Sources */,
@@ -2402,6 +2470,7 @@
 				19C1E9A128610E2800E7976D /* AssetProtocol.swift in Sources */,
 				1985A12628B2966400B017E0 /* SegmentControlButtons.swift in Sources */,
 				636A45962900D6FD003E412D /* ChallReportDetailsScene.swift in Sources */,
+				1934219929414B5D00F113D7 /* UserLocationBlock.swift in Sources */,
 				631D8EBD28F91E5E005332BD /* ChallResultsViewModel.swift in Sources */,
 				19171F4D28AD663F000926B1 /* TableItemsModel.swift in Sources */,
 				197A361228BBB221006E44C1 /* FeedFilterButtons.swift in Sources */,
@@ -2428,6 +2497,7 @@
 				63D419EB28AA500A0024E22C /* GetFeedsApiWorker.swift in Sources */,
 				636AE71229238E90004A24E5 /* ChangeOrganizationUseCase.swift in Sources */,
 				63A37EAC28EF1B3400DBD59F /* CreateChallengeApiWorker.swift in Sources */,
+				19342185294149B800F113D7 /* DiagramVM.swift in Sources */,
 				19A9BE7628C283270099F8EA /* CommonModelBuilder.swift in Sources */,
 				1953CF0028E8A19A00C670A6 /* FeedReactionsBlock.swift in Sources */,
 				19564268292ACBA8007BE9D4 /* ChallengeDetailsInfoCell.swift in Sources */,
@@ -2449,6 +2519,7 @@
 				1917226A2923D5340023DE3A /* ChallengeDetailsWorks+Button.swift in Sources */,
 				19EF32AE287E08F80078F53D /* ColorBuilder.swift in Sources */,
 				63A2234528CF960E00D92615 /* GetTagByIdUseCase.swift in Sources */,
+				1934219C29414BB500F113D7 /* MapsViewModel.swift in Sources */,
 				63E7A74D28AFCBF400FB2C80 /* UpdateProfileImageUseCase.swift in Sources */,
 				63AD132828A3B06C00CFF75B /* GetTransactionByIdUseCase.swift in Sources */,
 				63AB071D28C0E44300FD650F /* BalanceWorks.swift in Sources */,
@@ -2471,6 +2542,7 @@
 				63E7A73B28AF9A7500FB2C80 /* GetCurrentPeriodApiWorker.swift in Sources */,
 				19D7BE9728B3CC1100C95053 /* CurrencyButtonDT.swift in Sources */,
 				6384AD88291BBE8600188769 /* GetNotificationsApiWorker.swift in Sources */,
+				1934219E29414BE400F113D7 /* UserSettingsBlock.swift in Sources */,
 				197A360428B90BD3006E44C1 /* MainSceneEvents.swift in Sources */,
 				19C1E98C285F426B00E7976D /* EndpointProtocol.swift in Sources */,
 				196750B4286519660019A6DE /* ProductionAsset.swift in Sources */,

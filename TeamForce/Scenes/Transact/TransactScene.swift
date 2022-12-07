@@ -202,7 +202,7 @@ final class TransactScene<Asset: AssetProtocol>: ModalDoubleStackModel<Asset>, S
 
    private func setTagsToCloud() {
       view.layoutIfNeeded()
-      viewModels.options.tagsCloud.setState(.items(tags))
+      viewModels.options.tagsCloud.setState(tags)
    }
 }
 

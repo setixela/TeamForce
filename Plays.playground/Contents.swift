@@ -8,103 +8,61 @@ class MyViewController: UIViewController {
       let view = UIView()
       view.backgroundColor = .white
 
-      let graphs = CircleGraphs(graphs: [
-         .init(percent: 0.25, color: .red),
-         .init(percent: 0.25, color: .blue),
-         .init(percent: 0.5, color: .green),
-      ])
-
-      let graph = GraphView(frame: .init(x: 0, y: 0, width: 132, height: 132))
-      view.addSubview(graph)
       self.view = view
-
-      graph.drawGraphs(graphs)
    }
 }
 
 // Present the view controller in the Live View window
 PlaygroundPage.current.liveView = MyViewController()
 
-final class GraphView: UIView {}
+struct TagPercent {
+   let name: String
+   let percent: Int
+}
 
-extension GraphView: CircleGraphProtocol {
-   func drawGraphs(_ graphs: CircleGraphs) {
-      let arcWidth: CGFloat = 19.8
+struct TagsPercentData {
+   let tagsPercent: [TagPercent]
+}
 
-      let fullCircle = 2 * CGFloat.pi
+// TODO: - Demo fish
+enum RandomTagsPercentDataSource {
+   private static let tags = [
+      "Клиентоориентированность",
+      "Этичность",
+      "Инновационность",
+      "Доверие",
+      "Целеустремленность",
+      "Целенаправленность",
+      "Высокое качество",
+      "Командная работа",
+      "Ответственность"
+   ]
 
-      let centerPoint = CGPoint(x: frame.midX, y: frame.midY)
+   static func getTagsPersents() -> TagsPercentData {
+      let count = Int.random(in: 0..<tags.count)
 
-      let radius: CGFloat
-      if frame.width > frame.height {
-         radius = (frame.width - arcWidth) / 2.0
-      } else {
-         radius = (frame.height - arcWidth) / 2.0
+      var array = tags
+      var selectedElements: [String] = []
+
+      for _ in 0..<count {
+         if let randomElement = array.randomElement() {
+            selectedElements.append(randomElement)
+            array.removeAll(where: { $0 == randomElement })
+         }
       }
 
-      var currentStart: CGFloat = -0.25
-      graphs.graphs.forEach {
-         let percent = $0.percent
-         let arcLength = percent
-         let endArc: CGFloat = currentStart + arcLength
+      let selectedCounts = selectedElements.count
 
-         let start: CGFloat = currentStart * fullCircle
-         let end = endArc * fullCircle
-
-         print(start)
-         print(arcLength)
-         print()
-
-         let path = UIBezierPath(
-            arcCenter: centerPoint,
-            radius: radius,
-            startAngle: start,
-            endAngle: end,
-            clockwise: true
-         )
-
-         let shapeLayer = CAShapeLayer()
-         shapeLayer.path = path.cgPath
-         shapeLayer.strokeColor = $0.color.cgColor
-         shapeLayer.fillColor = CGColor(gray: 0, alpha: 0)
-         shapeLayer.lineCap = .round
-         shapeLayer.lineWidth = arcWidth
-
-         layer.addSublayer(shapeLayer)
-
-         let arcCenter = (start + end) / 2
-         let textPos = CGPoint(
-            x: centerPoint.x + cos(arcCenter) * (frame.width - arcWidth) / 2,
-            y: centerPoint.y + sin(arcCenter) * (frame.height - arcWidth) / 2
-         )
-         print("pos \(textPos)")
-         let label = UILabel()
-
-         label.textColor = .white
-         let text = String(describing: Int(percent * 100)) + "%"
-         label.font = .systemFont(ofSize: 8, weight: .bold)
-         label.text = text
-         label.sizeToFit()
-         label.center = .init(
-            x: textPos.x,
-            y: textPos.y
-         )
-         addSubview(label)
-
-         currentStart += arcLength
+      let randomNumbers = (0..<selectedCounts).map { _ in Double(arc4random_uniform(101)) }
+      let sum = randomNumbers.reduce(0, +)
+      let tagsPercents = randomNumbers.enumerated().map {
+         let tag = selectedElements[$0]
+         let percent = Int(($1 / sum * 100).rounded(.toNearestOrAwayFromZero))
+         return TagPercent(name: tag, percent: percent)
       }
+
+      return TagsPercentData(tagsPercent: tagsPercents)
    }
 }
 
-protocol CircleGraphProtocol {
-   func drawGraphs(_ graphs: CircleGraphs)
-}
-
-struct CircleGraphs {
-   let graphs: [GraphData]
-}
-
-struct GraphData {
-   let percent: CGFloat
-   let color: UIColor
-}
+print(RandomTagsPercentDataSource.getTagsPersents())

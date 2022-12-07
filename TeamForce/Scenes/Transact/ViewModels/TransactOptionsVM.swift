@@ -21,7 +21,7 @@ final class TransactOptionsVM<Design: DSP>: BaseViewModel<StackViewExtended>, De
 
    override func start() {
       arrangedModels([
-         //tagsCloud,
+         // tagsCloud,
          anonimParamModel
       ])
    }
@@ -52,74 +52,66 @@ final class TagsCloud<Design: DSP>: StackModel, Designable, Eventable {
    }
 }
 
-enum TagsCloudState {
-   case items([SelectWrapper<Tag>])
-}
-
 extension TagsCloud: StateMachine {
-   func setState(_ state: TagsCloudState) {
-      switch state {
-      case .items(let tags):
-         self.tags = tags
+   func setState(_ state: [SelectWrapper<Tag>]) {
+      tags = state
 
-         var currStack = StackModel()
-            .axis(.horizontal)
-            .spacing(8)
-         var tagButts: [UIViewModel] = []
-         let width = view.frame.width / 1.5
-         var currWidth: CGFloat = 0
-         let spacing: CGFloat = 8
+      var currStack = StackModel()
+         .axis(.horizontal)
+         .spacing(8)
+      var tagButts: [UIViewModel] = []
+      let width = view.frame.width / 1.5
+      var currWidth: CGFloat = 0
+      let spacing: CGFloat = 8
 
-         tags.enumerated().forEach { ind, tag in
-            let button = TagCloudButton<Design>()
-               .setAll { icon, title in
-                  icon.image(Design.icon.tablerDiamond)
-                  title.text(tag.value.name.string)
-               }
+      tags.enumerated().forEach { ind, tag in
+         let button = TagCloudButton<Design>()
+            .setAll { icon, title in
+               icon.image(Design.icon.tablerDiamond)
+               title.text(tag.value.name.string)
+            }
 
-            button.view.startTapGestureRecognize()
-            button.view.on(\.didTap, self) { [button] in
-               let tag = $0.tags[ind]
-               let isSelected = tag.isSelected
-               $0.tags[ind].isSelected = !isSelected
+         button.view.startTapGestureRecognize()
+         button.view.on(\.didTap, self) { [button] in
+            let tag = $0.tags[ind]
+            let isSelected = tag.isSelected
+            $0.tags[ind].isSelected = !isSelected
 
-               if !isSelected {
-                  button.setState(.selected)
-               } else {
-                  button.setState(.none)
-               }
+            if !isSelected {
+               button.setState(.selected)
+            } else {
+               button.setState(.none)
+            }
 
-               $0.send(
-                  \.updateTags,
-                  Set($0.tags
-                     .filter(\.isSelected)
-                     .map(\.value)
-                  )
+            $0.send(
+               \.updateTags,
+               Set($0.tags
+                  .filter(\.isSelected)
+                  .map(\.value)
                )
-               
-            }
-            currStack.addArrangedModels([button])
-            self.view.layoutIfNeeded()
-            let butWidth = button.uiView.frame.width
-
-            currWidth += butWidth + spacing
-
-            let isNotFit = currWidth > width
-            if isNotFit ||
-               (ind == tags.count - 1)
-            {
-               tagButts.append(currStack)
-               currStack.removeLastModel()
-               currStack = StackModel()
-                  .axis(.horizontal)
-                  .spacing(8)
-               currStack.addArrangedModels([button])
-               currWidth = 0
-            }
+            )
          }
+         currStack.addArrangedModels([button])
+         self.view.layoutIfNeeded()
+         let butWidth = button.uiView.frame.width
 
-         arrangedModels(tagButts)
+         currWidth += butWidth + spacing
+
+         let isNotFit = currWidth > width
+         if isNotFit ||
+            (ind == tags.count - 1)
+         {
+            tagButts.append(currStack)
+            currStack.removeLastModel()
+            currStack = StackModel()
+               .axis(.horizontal)
+               .spacing(8)
+            currStack.addArrangedModels([button])
+            currWidth = 0
+         }
       }
+
+      arrangedModels(tagButts)
    }
 }
 

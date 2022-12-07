@@ -55,7 +55,7 @@ enum MyProfileSceneState {
    case initial
    case userName(name: String, surname: String, nickname: String)
    case userStatus(UserStatus)
-   case diagramData(CircleGraphs)
+   case tagsPercents([TagPercent])
    case userContacts(UserContactData)
    case userWorkPlace(UserWorkData)
    case userRole(UserRoleData)
@@ -71,8 +71,9 @@ extension MyProfileScene: StateMachine {
          profileVM.userNameBlock.setState((name, surname, nickname))
       case .userStatus(let status):
          profileVM.userStatusBlock.setState(status)
-      case .diagramData(let diagramData):
-         profileVM.diagramBlock.setState(diagramData)
+      case .tagsPercents(let tagsData):
+         profileVM.view.layoutIfNeeded()
+         profileVM.diagramBlock.setState(tagsData)
       case .userContacts(let contacts):
          profileVM.userContactsBlock.setState(contacts)
       case .userWorkPlace(let workData):

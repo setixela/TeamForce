@@ -24,8 +24,9 @@ final class MyProfileScenario<Asset: ASP>: BaseAssettableScenario<DiagramProfile
          .doAsync()
          .doVoidNext(works.getUserStatus)
          .onSuccess(setState) { .userStatus($0) }
-         .doVoidNext(works.getDiagramData)
-         .onSuccess(setState) { .diagramData($0) }
+         .doVoidNext(works.loadTagPercents)
+         .doVoidNext(works.getTagsPercentsData)
+         .onSuccess(setState) { .tagsPercents($0) }
          .doVoidNext(works.getUserContacts)
          .onSuccess(setState) { .userContacts($0) }
          .doVoidNext(works.getUserWorkData)

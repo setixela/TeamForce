@@ -8,12 +8,12 @@
 import CoreLocation
 import ReactiveWorks
 
-final class ProfileStorage: InitProtocol {
+class ProfileStorage: TagsPercentsStorage {
    var userData: UserData?
 }
 
-final class MyProfileWorks<Asset: ASP>: BaseWorks<ProfileStorage, Asset>, DiagramProfileWorksProtocol,
-   GetProfileWorksProtocol,
+final class MyProfileWorks<Asset: ASP>: BaseWorks<ProfileStorage, Asset>,
+   DiagramProfileWorksProtocol,
    GetMyProfileWorksProtocol
 {
    lazy var apiUseCase = Asset.apiUseCase
@@ -42,24 +42,6 @@ final class MyProfileWorks<Asset: ASP>: BaseWorks<ProfileStorage, Asset>, Diagra
 }
 
 // MARK: - Common works
-
-protocol DiagramProfileWorksProtocol {
-   var getDiagramData: Work<Void, CircleGraphs> { get }
-}
-
-extension DiagramProfileWorksProtocol {
-   var getDiagramData: Work<Void, CircleGraphs> {
-      .init { work in
-         let graphs = CircleGraphs(graphs: [
-            .init(percent: 0.25, color: .red),
-            .init(percent: 0.25, color: .blue),
-            .init(percent: 0.5, color: .green),
-         ])
-
-         work.success(graphs)
-      }
-   }
-}
 
 protocol GetProfileWorksProtocol: StoringWorksProtocol, Assetable
    where
