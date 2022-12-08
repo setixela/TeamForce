@@ -43,7 +43,8 @@ final class ChallengeDetailsScene<Asset: AssetProtocol>: BaseSceneModel<
          reactionPressed: challDetails.buttonsPanel.likeButton.view.on(\.didTap),
          presentChallengeAuthor: challDetails.on(\.didTapUser),
          reportReactionPressed: contendersBlock.presenter.on(\.reactionPressed),
-         winnerReportReactionRressed: winnersBlock.presenter.on(\.reactionPressed)
+         winnerReportReactionRressed: winnersBlock.presenter.on(\.reactionPressed),
+         presentImage: contendersBlock.presenter.on(\.presentImage)
       )
    )
 

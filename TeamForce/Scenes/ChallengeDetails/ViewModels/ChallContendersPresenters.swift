@@ -89,7 +89,11 @@ class ChallContendersPresenters<Design: DesignProtocol>: Designable {
             .hidden(true)
 
          if let photoLink = contender.reportPhoto, photoLink.count > 1 {
-            photo.url(TeamForceEndpoints.urlBase + photoLink)
+            let imageUrl = TeamForceEndpoints.urlBase + photoLink
+            photo.url(imageUrl)
+            photo.view.on(\.didTap, self) {
+               $0.send(\.presentImage, imageUrl)
+            }
             photo.hidden(false)
          }
 
@@ -208,5 +212,6 @@ extension ChallContendersPresenters: Eventable {
       var acceptPressed: Int?
       var rejectPressed: Int?
       var reactionPressed: PressLikeRequest?
+      var presentImage: String?
    }
 }

@@ -27,6 +27,8 @@ struct ChallengeDetailsInputEvents {
    let reportReactionPressed: WorkVoid<PressLikeRequest>
    
    let winnerReportReactionRressed: WorkVoid<PressLikeRequest>
+   
+   let presentImage: WorkVoid<String>
 }
 
 final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<ChallengeDetailsInputEvents,
@@ -230,9 +232,10 @@ final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<Challen
          .onFail {
             print("fail")
          }
-//         .doNext(works.updateFeedElement)
-//         .onSuccess(setState) {
-//            .updateFeedAtIndex($0.0, $0.1)
-//         }
+         
+      events.presentImage
+         .onSuccess {
+            Asset.router?.route(.presentModally(.automatic), scene: \.imageViewer, payload: $0)
+         }
    }
 }
