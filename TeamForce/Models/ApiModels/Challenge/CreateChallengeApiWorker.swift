@@ -29,7 +29,7 @@ struct ChallengeRequestBody: Encodable {
       case parameterId = "parameter_id"
       case parameterValue = "parameter_value"
       case challengeType = "challenge_type"
-      case showParticipants = "show_participants"
+      case showParticipants = "show_contenders"
       case severalReports = "several_reports"
    }
 

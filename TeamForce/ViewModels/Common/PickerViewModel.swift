@@ -37,7 +37,7 @@ final class PickerViewModel: BaseViewModel<UIPickerView> {
       let toolBar = UIToolbar()
       toolBar.sizeToFit()
 
-      let button = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(self.action))
+      let button = UIBarButtonItem(title: "Выбрать", style: .plain, target: self, action: #selector(self.action))
       toolBar.setItems([button], animated: true)
       toolBar.isUserInteractionEnabled = true
       textField.view.inputAccessoryView = toolBar

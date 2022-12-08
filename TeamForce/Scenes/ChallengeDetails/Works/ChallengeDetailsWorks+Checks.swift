@@ -31,5 +31,14 @@ extension ChallengeDetailsWorks {
          work.fail()
       }
    }.retainBy(retainer) }
+   
+   var checkShowCandidates: Work<Void, Void> { .init { work in
+      guard let challenge = Self.store.challenge else {
+         work.fail();
+         return }
+      challenge.showContenders == true ? work.success() : work.fail()
+   }.retainBy(retainer) }
+   
+   
 }
 

@@ -76,6 +76,7 @@ extension ChallengeCreateWorks: ChallengeCreateWorksProtocol {
    // MARK: - Create chall
 
    var createChallenge: Work<Void, Void> { .init { [weak self] work in
+      let showParticipants = Self.store.selectedChallengeType == "voting" ? nil : Self.store.showCandidates
       let body = ChallengeRequestBody(
          name: Self.store.title,
          description: Self.store.desription,
@@ -85,7 +86,7 @@ extension ChallengeCreateWorks: ChallengeCreateWorksProtocol {
          parameterId: nil,
          parameterValue: nil,
          challengeType: Self.store.selectedChallengeType,
-         showParticipants: Self.store.showCandidates,
+         showParticipants: showParticipants,
          severalReports: Self.store.severalReports
       )
       self?.apiUseCase.createChallenge
@@ -118,15 +119,14 @@ extension ChallengeCreateWorks: ChallengeCreateWorksProtocol {
          }
    }.retainBy(retainer) }
    
-   var changeChallType: Work<Int, Void> { .init { work in
+   var changeChallType: Work<Int, String> { .init { work in
       guard let input = work.input else { work.fail(); return }
       if input == 1 {
          Self.store.selectedChallengeType = "voting"
       } else {
          Self.store.selectedChallengeType = "default"
       }
-      print(Self.store.selectedChallengeType)
-      work.success()
+      work.success(Self.store.selectedChallengeType)
    }.retainBy(retainer) }
    
    

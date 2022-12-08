@@ -11,7 +11,7 @@ import UIKit
 class ChallContendersPresenters<Design: DesignProtocol>: Designable {
    var events: EventsStore = .init()
    
-   var isVoting: Bool = false
+   var showButtons: Bool = false
 
    var contendersCellPresenter: Presenter<Contender, WrappedX<StackModel>> {
       Presenter { work in
@@ -89,7 +89,11 @@ class ChallContendersPresenters<Design: DesignProtocol>: Designable {
             .hidden(true)
 
          if let photoLink = contender.reportPhoto, photoLink.count > 1 {
-            photo.url(TeamForceEndpoints.urlBase + photoLink)
+            let imageUrl = TeamForceEndpoints.urlBase + photoLink
+            photo.url(imageUrl)
+            photo.view.on(\.didTap, self) {
+               $0.send(\.presentImage, imageUrl)
+            }
             photo.hidden(false)
          }
 
@@ -129,7 +133,7 @@ class ChallContendersPresenters<Design: DesignProtocol>: Designable {
                acceptButton
             ])
          
-         if self.isVoting == true {
+         if self.showButtons == false {
             buttonsStack.hidden(true)
             rejectButton.view.isUserInteractionEnabled = false
             acceptButton.view.isUserInteractionEnabled = false
@@ -208,5 +212,6 @@ extension ChallContendersPresenters: Eventable {
       var acceptPressed: Int?
       var rejectPressed: Int?
       var reactionPressed: PressLikeRequest?
+      var presentImage: String?
    }
 }

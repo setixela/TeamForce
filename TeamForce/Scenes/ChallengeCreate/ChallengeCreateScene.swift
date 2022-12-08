@@ -25,6 +25,9 @@ enum ChallengeCreateSceneState {
    case challengeCreated
    
    case challengeTypesUpdate([String])
+   
+   case votingChall
+   case defaultChall
 }
 
 final class ChallengeCreateScene<Asset: AssetProtocol>: BaseSceneModel<
@@ -80,7 +83,7 @@ final class ChallengeCreateScene<Asset: AssetProtocol>: BaseSceneModel<
       .placeholderColor(Design.color.textFieldPlaceholder)
    
    private lazy var challengeTypeTextField = Design.model.transact.userSearchTextField
-      .placeholder("Вид чалика")
+      .placeholder("Вид челленджа")
       .placeholderColor(Design.color.textFieldPlaceholder)
    
    private lazy var descriptionInput = Design.model.transact.reasonInputTextView
@@ -179,9 +182,9 @@ final class ChallengeCreateScene<Asset: AssetProtocol>: BaseSceneModel<
                      $0.finishDateButton,
                      $0.datePickWrapper,
                      $0.prizeFundInput,
+                     $0.prizePlacesInput,
                      $0.candidatesSwitcher,
                      $0.severalReportsSwitcher,
-                     $0.prizePlacesInput,
                      $0.photosPanel.lefted(),
                      $0.addPhotoButton,
                      Grid.x64.spacer
@@ -234,6 +237,10 @@ extension ChallengeCreateScene {
          finishSucces()
       case .challengeTypesUpdate(let value):
          typePicker.applyState(.items(value))
+      case .votingChall:
+         candidatesSwitcher.hidden(true)
+      case .defaultChall:
+         candidatesSwitcher.hidden(false)
       }
    }
 }

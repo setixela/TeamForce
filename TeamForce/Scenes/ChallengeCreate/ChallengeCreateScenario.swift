@@ -64,8 +64,18 @@ final class ChallengeCreateScenario<Asset: AssetProtocol>: BaseScenario<Challeng
       
       events.challengeTypeChanged
          .doNext(works.changeChallType)
-         .onSuccess {
-            print("success")
+         .onSuccess { [weak self] type in
+            guard let stateFunc = self?.setState else { return }
+            
+            switch type {
+            case "default":
+               stateFunc(.defaultChall)
+            case "voting":
+               stateFunc(.votingChall)
+            default:
+               print("error")
+               break
+            }
          }
          .onFail {
             print("fail")
