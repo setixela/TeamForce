@@ -39,6 +39,57 @@ final class MainRouter<Asset: AssetProtocol>: RouterProtocol, Assetable {
       }
    }
 
+   func routeAndAwait<In, Out, T: BaseScene<In> & SMP>(
+      _ navType: NavType,
+      scene: KeyPath<Scene, T>? = nil,
+      payload: T.Input? = nil,
+      completion: GenericClosure<Out?>)
+   {
+      switch navType {
+      case .push:
+         nc.pushViewController(makeVC(), animated: true)
+      case .pop:
+         nc.popViewController(animated: true)
+      case .popToRoot:
+         nc.popToRootViewController(animated: true)
+      case .presentInitial:
+         nc.viewControllers = [makeVC()]
+      case .presentModally(let value):
+         let vc = makeVC()
+         vc.modalPresentationStyle = value
+         nc.present(vc, animated: true)
+      case .presentModallyOnPresented(let value):
+         let vc = makeVC()
+         vc.modalPresentationStyle = value
+         if let presented = nc.presentedViewController {
+            presented.present(vc, animated: true)
+         } else {
+            nc.present(vc, animated: true)
+         }
+      }
+
+      // local func
+      func makeVC() -> UIViewController {
+         guard let scene else {
+            assertionFailure()
+            return .init()
+         }
+
+         let sceneModel = Scene()[keyPath: scene]
+         sceneModel.setInput(payload)
+         let vc = sceneModel.makeVC()
+
+//         let wrapped = { (result: Any?) in
+//            sceneModel.completion?(result)
+//            sceneModel.completion = nil
+//         }
+//
+//         sceneModel.completion = wrapped
+
+         return vc
+      }
+   }
+
    func route<In, T: BaseScene<In> & SMP>(
       _ navType: NavType,
       scene: KeyPath<Scene, T>? = nil,

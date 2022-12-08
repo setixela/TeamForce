@@ -24,6 +24,10 @@ struct Config {
       UserDefaults.standard.saveString(urlBase, forKey: .urlBase)
    }
 
+   static var isDebugServer: Bool {
+      urlBase == urlBaseDebug
+   }
+
    static let isPlaygroundScene = false
 
    static let isDebugView = true

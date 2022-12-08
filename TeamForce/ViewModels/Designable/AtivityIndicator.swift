@@ -18,3 +18,11 @@ final class ActivityIndicator<Design: DSP>: BaseViewModel<UIActivityIndicatorVie
       view.contentScaleFactor = 1.33
    }
 }
+
+final class ActivityIndicatorSpacedBlock<Design: DSP>: M<ActivityIndicator<Design>>.D<Spacer>.Combo, Designable {
+   required init() {
+      super.init()
+
+      setAll { _, _ in }
+   }
+}

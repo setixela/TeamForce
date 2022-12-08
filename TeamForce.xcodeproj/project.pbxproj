@@ -83,6 +83,8 @@
 		1934219C29414BB500F113D7 /* MapsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1934219B29414BB500F113D7 /* MapsViewModel.swift */; };
 		1934219E29414BE400F113D7 /* UserSettingsBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1934219D29414BE400F113D7 /* UserSettingsBlock.swift */; };
 		193421A1294264B600F113D7 /* StatusSelectorScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193421A0294264B600F113D7 /* StatusSelectorScene.swift */; };
+		193421A3294276D900F113D7 /* StatusSelectorScenario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193421A2294276D900F113D7 /* StatusSelectorScenario.swift */; };
+		193421A5294276E500F113D7 /* StatusSelectorWorks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193421A4294276E500F113D7 /* StatusSelectorWorks.swift */; };
 		19360ED0292E77E400DFA8E8 /* UIView+Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19360ECF292E77E400DFA8E8 /* UIView+Constraints.swift */; };
 		19360ED2292E791900DFA8E8 /* ScrollViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19360ED1292E791900DFA8E8 /* ScrollViewModel.swift */; };
 		19360ED4292ED6A100DFA8E8 /* VCModel+Loading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19360ED3292ED6A100DFA8E8 /* VCModel+Loading.swift */; };
@@ -519,6 +521,8 @@
 		1934219B29414BB500F113D7 /* MapsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapsViewModel.swift; sourceTree = "<group>"; };
 		1934219D29414BE400F113D7 /* UserSettingsBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettingsBlock.swift; sourceTree = "<group>"; };
 		193421A0294264B600F113D7 /* StatusSelectorScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusSelectorScene.swift; sourceTree = "<group>"; };
+		193421A2294276D900F113D7 /* StatusSelectorScenario.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusSelectorScenario.swift; sourceTree = "<group>"; };
+		193421A4294276E500F113D7 /* StatusSelectorWorks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusSelectorWorks.swift; sourceTree = "<group>"; };
 		19360ECF292E77E400DFA8E8 /* UIView+Constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Constraints.swift"; sourceTree = "<group>"; };
 		19360ED1292E791900DFA8E8 /* ScrollViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollViewModel.swift; sourceTree = "<group>"; };
 		19360ED3292ED6A100DFA8E8 /* VCModel+Loading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VCModel+Loading.swift"; sourceTree = "<group>"; };
@@ -1150,6 +1154,8 @@
 			isa = PBXGroup;
 			children = (
 				193421A0294264B600F113D7 /* StatusSelectorScene.swift */,
+				193421A2294276D900F113D7 /* StatusSelectorScenario.swift */,
+				193421A4294276E500F113D7 /* StatusSelectorWorks.swift */,
 			);
 			path = StatusSelector;
 			sourceTree = "<group>";
@@ -2208,6 +2214,7 @@
 				19221EF328CDBCB000B7B604 /* SetupProtocol.swift in Sources */,
 				63BB2C1E28E14AAF00C1E3DB /* UpdateCommentApiWorker.swift in Sources */,
 				632DADCD28FD691700998DCD /* ChallengeResCancelScene.swift in Sources */,
+				193421A5294276E500F113D7 /* StatusSelectorWorks.swift in Sources */,
 				636A458F2900CF1D003E412D /* GetChallengeReportApiWorker.swift in Sources */,
 				63BB2C2428E1513000C1E3DB /* DeleteCommentUseCase.swift in Sources */,
 				197A771828AD90800082CD81 /* XelaLog.swift in Sources */,
@@ -2260,6 +2267,7 @@
 				631995B828F5A4D400EB2638 /* GetSendCoinSettingsApiWorker.swift in Sources */,
 				197A771A28AD90B30082CD81 /* Presenting.swift in Sources */,
 				19221EF828CE262A00B7B604 /* WorkingPlaceViewModels.swift in Sources */,
+				193421A3294276D900F113D7 /* StatusSelectorScenario.swift in Sources */,
 				1921A13528EECAC900E41E86 /* ChallengesScene.swift in Sources */,
 				1977BE5528A7238F00D554EA /* TextFieldStates.swift in Sources */,
 				631D8EC528F96054005332BD /* ChallContendersViewModel.swift in Sources */,

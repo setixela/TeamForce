@@ -15,7 +15,7 @@ final class MyProfileScene<Asset: ASP>: BaseSceneModel<
    DefaultVCModel,
    BrandDoubleStackVM<Asset.Design>,
    Asset,
-   Void
+   ProfileID
 >,
    Configurable,
    Scenarible
@@ -105,7 +105,9 @@ extension MyProfileScene: StateMachine {
          profileVM.locationBlock.setState(locData)
       //
       case .presentUserStatusSelector:
-         Asset.router?.route(.presentModally(.automatic), scene: \.userStatusSelector)
+         Asset.router?.routeAndAwait(.presentModally(.automatic), scene: \.userStatusSelector) { (result: UserStatus?) in
+            print(result)
+         }
       }
    }
 }

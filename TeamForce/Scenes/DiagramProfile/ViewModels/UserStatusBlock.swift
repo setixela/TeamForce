@@ -10,7 +10,7 @@ import ReactiveWorks
 // MARK: - UserStatusBlock
 
 final class UserStatusBlock<Design: DSP>: M<LabelModel>.R<LabelModel>.R2<ImageViewModel>.Combo,
-                                          Designable
+   Designable
 {
    var events: EventsStore = .init()
 
@@ -47,15 +47,6 @@ extension UserStatusBlock: Eventable {
 
 extension UserStatusBlock: StateMachine {
    func setState(_ state: UserStatus) {
-      switch state {
-      case .office:
-         models.right.text("В офисе")
-      case .vacation:
-         models.right.text("В отпуске")
-      case .remote:
-         models.right.text("На удаленке")
-      case .sickLeave:
-         models.right.text("На больничном")
-      }
+      models.right.text(UserStatusFabric<Design>.text(state))
    }
 }
