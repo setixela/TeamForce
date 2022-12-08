@@ -28,8 +28,8 @@ extension GraphView: CircleGraphProtocol {
       let radius = (rect.height - arcWidth) / 2.0
 
       var currentStart: CGFloat = -0.25
-      graphs.forEach {
-         let percent = $0.percent
+      graphs.enumerated().forEach {
+         let percent = $1.percent
          let arcLength = percent
          let endArc: CGFloat = currentStart + arcLength
 
@@ -46,31 +46,40 @@ extension GraphView: CircleGraphProtocol {
 
          let shapeLayer = CAShapeLayer()
          shapeLayer.path = path.cgPath
-         shapeLayer.strokeColor = $0.color.cgColor
+         shapeLayer.strokeColor = $1.color.cgColor
          shapeLayer.fillColor = CGColor(gray: 0, alpha: 0)
          shapeLayer.lineCap = .round
          shapeLayer.lineWidth = arcWidth
+         shapeLayer.shadowColor = UIColor.black.cgColor
+         shapeLayer.shadowOpacity = 0.2
+         shapeLayer.shadowRadius = 2
+         shapeLayer.shadowOffset = .init(width: 0, height: 0)
 
-         layer.addSublayer(shapeLayer)
+         layer.insertSublayer(shapeLayer, at: 0)
+//         layer.addSublayer(shapeLayer)
 
+      //   let arcCenter = percent > 0.07 ? (start + end) / 2 : end
+        // let arcCenter = end - 0.01
          let arcCenter = (start + end) / 2
          let textPos = CGPoint(
             x: centerPoint.x + cos(arcCenter) * (rect.height - arcWidth) / 2,
             y: centerPoint.y + sin(arcCenter) * (rect.height - arcWidth) / 2
          )
 
-         let label = UILabel()
+         if percent > 0.05 {
+            let label = UILabel()
 
-         label.textColor = .white
-         let text = $0.text
-         label.font = .systemFont(ofSize: 8, weight: .bold)
-         label.text = text
-         label.sizeToFit()
-         label.center = .init(
-            x: textPos.x,
-            y: textPos.y
-         )
-         addSubview(label)
+            label.textColor = .white
+            let text = $1.text
+            label.font = .systemFont(ofSize: 8, weight: .bold)
+            label.text = text
+            label.sizeToFit()
+            label.center = .init(
+               x: textPos.x,
+               y: textPos.y
+            )
+            addSubview(label)
+         }
 
          currentStart += arcLength
       }

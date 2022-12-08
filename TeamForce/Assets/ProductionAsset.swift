@@ -32,6 +32,7 @@ protocol ScenesProtocol: InitProtocol {
    var myProfile: BaseScene<Void> { get }
    var profile: BaseScene<ProfileID> { get }
   // var diagramProfile: BaseScene<ProfileID> { get }
+   var userStatusSelector: BaseScene<Void> { get }
    //
    var transactDetails: BaseScene<TransactDetailsSceneInput> { get }
    var sentTransactDetails: BaseScene<Transaction> { get }
@@ -65,6 +66,7 @@ struct Scenes: ScenesProtocol {
    var myProfile: BaseScene<Void> { MyProfileScene<PA>() }
    var profile: BaseScene<ProfileID> { ProfileScene<PA>() }
 //   var diagramProfile: BaseScene<ProfileID> { MyProfileScene<PA>() }
+   var userStatusSelector: BaseScene<Void> { UserStatusSelectorScene<PA>() }
    //
    var transactDetails: BaseScene<TransactDetailsSceneInput> { TransactDetailsScene<PA>() }
    var sentTransactDetails: BaseScene<Transaction> { SentTransactDetailsScene<PA>() }

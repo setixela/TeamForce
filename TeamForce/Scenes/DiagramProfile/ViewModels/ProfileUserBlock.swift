@@ -12,6 +12,9 @@ import ReactiveWorks
 final class ProfileUserBlock<Design: DSP>: M<UserAvatarVM<Design>>.R<Spacer>.R2<ButtonModel>.Combo,
                                            Designable
 {
+   var avatarButton: UserAvatarVM<Design> { models.main }
+   var notifyButton: ButtonModel { models.right2 }
+
    required init() {
       super.init()
 
@@ -25,3 +28,4 @@ final class ProfileUserBlock<Design: DSP>: M<UserAvatarVM<Design>>.R<Spacer>.R2<
       alignment(.center)
    }
 }
+

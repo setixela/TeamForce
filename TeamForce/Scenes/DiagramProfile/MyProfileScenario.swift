@@ -10,6 +10,7 @@ import CoreLocation
 
 struct MyProfileScenarioInput {
    let locationCoordinates: WorkVoid<CLLocation>
+   let selectUserStatus: WorkVoidVoid
 }
 
 struct DiagramProfileScenarioParams<Asset: ASP>: ScenarioParams {
@@ -22,6 +23,10 @@ final class MyProfileScenario<Asset: ASP>: BaseAssettableScenario<DiagramProfile
    override func start() {
       works.loadMyProfile
          .doAsync()
+         .onSuccess(setState, .loaded)
+         //
+         .doVoidNext(works.getUserAvatarUrl)
+         .onSuccess(setState) { .userAvatar($0) }
          .doVoidNext(works.getUserName)
          .onSuccess(setState) { .userName($0) }
          .doVoidNext(works.getUserStatus)
@@ -39,5 +44,8 @@ final class MyProfileScenario<Asset: ASP>: BaseAssettableScenario<DiagramProfile
       events.locationCoordinates
          .doNext(works.getUserLocationData)
          .onSuccess(setState) { .userLocation($0) }
+
+      events.selectUserStatus
+         .onSuccess(setState, .presentUserStatusSelector)
    }
 }

@@ -78,6 +78,7 @@ protocol GetMyProfileWorksProtocol: StoringWorksProtocol, Assetable
    //
    var loadMyProfile: Work<Void, Void> { get }
    //
+   var getUserAvatarUrl: Work<Void, String> { get }
    var getUserName: Work<Void, String> { get }
    var getUserStatus: Work<Void, UserStatus> { get }
    var getUserContacts: Work<Void, UserContactData> { get }
@@ -99,6 +100,14 @@ extension GetMyProfileWorksProtocol {
             work.fail()
          }
    }.retainBy(retainer) }
+
+   // MARK - getters
+
+   var getUserAvatarUrl: Work<Void, String> { .init { work in
+      guard let photo = Self.store.userData?.profile.photo else { work.fail(); return }
+
+      work.success(photo)
+   } }
 
    var getUserName: Work<Void, String> { .init { work in
       guard let userData = Self.store.userData else { work.fail(); return }

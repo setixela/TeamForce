@@ -65,7 +65,7 @@ enum RandomTagsPercentDataSource {
    ]
 
    static func getTagsPersents() -> [TagPercent] {
-      let count = Int.random(in: 0..<tags.count)
+      let count = 9// Int.random(in: 0..<tags.count)
 
       var array = tags
       var selectedElements: [String] = []

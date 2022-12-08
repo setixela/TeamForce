@@ -9,6 +9,8 @@ import ReactiveWorks
 
 typealias ProfileID = Int
 
+// TODO: - func Start make call in viewDidLoad and remove vcModel?.on(\.viewDidLoad) everywhere!!!!!
+
 final class MyProfileScene<Asset: ASP>: BaseSceneModel<
    DefaultVCModel,
    BrandDoubleStackVM<Asset.Design>,
@@ -22,7 +24,8 @@ final class MyProfileScene<Asset: ASP>: BaseSceneModel<
       works: MyProfileWorks<Asset>(),
       stateDelegate: stateDelegate,
       events: MyProfileScenarioInput(
-         locationCoordinates: locationManager.on(\.didUpdateLocation)
+         locationCoordinates: locationManager.on(\.didUpdateLocation),
+         selectUserStatus: profileVM.userStatusBlock.on(\.didTap)
       )
    )
 
@@ -41,10 +44,8 @@ final class MyProfileScene<Asset: ASP>: BaseSceneModel<
    func configure() {
       mainVM.bodyStack
          .padding(.verticalOffset(16))
-         .arrangedModels(
-            profileVM,
-            Spacer()
-         )
+
+      setState(.initial)
 
       scenario.start()
       locationManager.start()
@@ -53,20 +54,39 @@ final class MyProfileScene<Asset: ASP>: BaseSceneModel<
 
 enum MyProfileSceneState {
    case initial
-   case userName(String)
-   case userStatus(UserStatus)
-   case tagsPercents([TagPercent])
-   case userContacts(UserContactData)
-   case userWorkPlace(UserWorkData)
-   case userRole(UserRoleData)
+   case loaded
+   //
+   case userAvatar(String) // needs to combine to one i think ))
+   case userName(String) // needs to combine to one i think ))
+   case userStatus(UserStatus) // needs to combine to one i think ))
+   case tagsPercents([TagPercent]) // needs to combine to one i think ))
+   case userContacts(UserContactData) // needs to combine to one i think ))
+   case userWorkPlace(UserWorkData) // needs to combine to one i think ))
+   case userRole(UserRoleData) // needs to combine to one i think ))
+   //
    case userLocation(UserLocationData)
+   //
+   case presentUserStatusSelector
 }
 
 extension MyProfileScene: StateMachine {
    func setState(_ state: MyProfileSceneState) {
       switch state {
       case .initial:
-         break
+         mainVM.bodyStack
+            .arrangedModels(
+               ActivityIndicator<Design>(),
+               Spacer()
+            )
+      case .loaded:
+         mainVM.bodyStack
+            .arrangedModels(
+               profileVM,
+               Spacer()
+            )
+      //
+      case .userAvatar(let avatar):
+         profileVM.userBlock.avatarButton.url(TeamForceEndpoints.urlBase + avatar, placeHolder: Design.icon.newAvatar)
       case .userName(let name):
          profileVM.userNameBlock.setState(name)
       case .userStatus(let status):
@@ -80,8 +100,12 @@ extension MyProfileScene: StateMachine {
          profileVM.workingPlaceBlock.setState(workData)
       case .userRole(let roleData):
          profileVM.userRoleBlock.setState(roleData)
+      //
       case .userLocation(let locData):
          profileVM.locationBlock.setState(locData)
+      //
+      case .presentUserStatusSelector:
+         Asset.router?.route(.presentModally(.automatic), scene: \.userStatusSelector)
       }
    }
 }
