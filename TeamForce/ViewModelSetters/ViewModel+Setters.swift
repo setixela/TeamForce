@@ -437,11 +437,19 @@ extension ViewModelProtocol where Self: Stateable, View: PaddingLabel {
       view.paragraphStyle = style
       return self
    }
+
+   @discardableResult func kerning(_ value: CGFloat) -> Self {
+      let current = NSMutableAttributedString(attributedString: view.attributedText ?? NSMutableAttributedString())
+      current.addAttribute(.kern, value: value, range: .init(location: 0, length: current.length))
+      view.attributedText = current
+      return self
+   }
 }
 
 extension ViewModelProtocol where Self: Stateable, View: PaddingImageView {
-   @discardableResult func image(_ value: UIImage) -> Self {
-      view.image = value
+   @discardableResult func image(_ value: UIImage, color: UIColor? = nil) -> Self {
+      let image = color == nil ? value : value.withTintColor(color!)
+      view.image = image
       view.layer.masksToBounds = true
       return self
    }
@@ -538,8 +546,9 @@ extension ViewModelProtocol where Self: Stateable, View: ButtonExtended {
       return self
    }
 
-   @discardableResult func image(_ value: UIImage?) -> Self {
-      view.setImage(value, for: .normal)
+   @discardableResult func image(_ value: UIImage?, color: UIColor? = nil) -> Self {
+      let image = color == nil ? value : value?.withTintColor(color!)
+      view.setImage(image, for: .normal)
       return self
    }
 

@@ -45,7 +45,7 @@ final class ChallengeCreateWorksStore: InitProtocol, ImageStorage {
 //   }
 }
 
-final class ChallengeCreateWorks<Asset: AssetProtocol>: BaseSceneWorks<ChallengeCreateWorksStore, Asset> {
+final class ChallengeCreateWorks<Asset: AssetProtocol>: BaseWorks<ChallengeCreateWorksStore, Asset> {
    private lazy var apiUseCase = Asset.apiUseCase
 }
 

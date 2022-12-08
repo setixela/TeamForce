@@ -12,7 +12,7 @@ final class ChallReportDetailsStore: InitProtocol {
    var report: ChallengeReport?
 }
 
-final class ChallReportDetailsWorks<Asset: AssetProtocol>: BaseSceneWorks<ChallReportDetailsStore, Asset> {
+final class ChallReportDetailsWorks<Asset: AssetProtocol>: BaseWorks<ChallReportDetailsStore, Asset> {
    private lazy var apiUseCase = Asset.apiUseCase
 
    var getChallengeReportById: Work<Int, ChallengeReport> { .init { [weak self] work in

@@ -42,7 +42,7 @@ final class FeedWorksTempStorage: InitProtocol {
    var isWinnersPaginating = false
 }
 
-final class FeedWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedWorksTempStorage, Asset>, FeedWorksProtocol {
+final class FeedWorks<Asset: AssetProtocol>: BaseWorks<FeedWorksTempStorage, Asset>, FeedWorksProtocol {
    private lazy var apiUseCase = Asset.apiUseCase
 
    var getSegmentId: Work<Void, Int> { .init { work in

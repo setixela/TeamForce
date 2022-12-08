@@ -29,8 +29,10 @@ protocol ScenesProtocol: InitProtocol {
    //
    var main: BaseScene<Void> { get }
    //
-   var myProfile: BaseScene<Int> { get }
-   var profile: BaseScene<Int> { get }
+   var myProfile: BaseScene<ProfileID> { get }
+   var profile: BaseScene<ProfileID> { get }
+   // var diagramProfile: BaseScene<ProfileID> { get }
+   var userStatusSelector: BaseScene<Void> { get }
    //
    var transactDetails: BaseScene<TransactDetailsSceneInput> { get }
    var sentTransactDetails: BaseScene<Transaction> { get }
@@ -46,6 +48,7 @@ protocol ScenesProtocol: InitProtocol {
    var settings: BaseScene<UserData> { get }
    //
    var imageViewer: BaseScene<String> { get }
+
    // plays
    var playground: BaseScene<Void> { get }
 }
@@ -60,8 +63,17 @@ struct Scenes: ScenesProtocol {
    //
    var main: BaseScene<Void> { MainScene<PA>() }
    //
-   var myProfile: BaseScene<Int> { MyProfileScene<PA>() }
-   var profile: BaseScene<Int> { ProfileScene<PA>() }
+   var myProfile: BaseScene<ProfileID> {
+      if Config.isDebugServer {
+         return MyProfileScene<PA>()
+      } else {
+         return MyProfileSceneOld<PA>()
+      }
+   }
+
+   var profile: BaseScene<ProfileID> { ProfileScene<PA>() }
+//   var diagramProfile: BaseScene<ProfileID> { MyProfileScene<PA>() }
+   var userStatusSelector: BaseScene<Void> { StatusSelectorScene<PA>() }
    //
    var transactDetails: BaseScene<TransactDetailsSceneInput> { TransactDetailsScene<PA>() }
    var sentTransactDetails: BaseScene<Transaction> { SentTransactDetailsScene<PA>() }

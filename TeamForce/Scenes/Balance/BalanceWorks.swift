@@ -13,7 +13,7 @@ protocol BalanceWorksProtocol {
    var loadBalance: WorkVoid<Balance> { get }
 }
 
-final class BalanceWorks<Asset: AssetProtocol>: BaseSceneWorks<BalanceWorksStorage, Asset>, BalanceWorksProtocol {
+final class BalanceWorks<Asset: AssetProtocol>: BaseWorks<BalanceWorksStorage, Asset>, BalanceWorksProtocol {
    private lazy var apiUseCase = Asset.apiUseCase
 
    var loadBalance: WorkVoid<Balance> { apiUseCase.loadBalance }

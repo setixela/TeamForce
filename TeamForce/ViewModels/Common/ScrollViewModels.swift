@@ -44,6 +44,8 @@ class ScrollViewModelY: BaseViewModel<ScrollViewExtended>, ScrollWrapper, Statea
    override func start() {
       view.addSubview(stack.uiView)
       view.delegate = self
+      view.insetsLayoutMarginsFromSafeArea = true
+      stack.view.insetsLayoutMarginsFromSafeArea = true
 
       view.isDirectionalLockEnabled = true
       view.showsHorizontalScrollIndicator = false

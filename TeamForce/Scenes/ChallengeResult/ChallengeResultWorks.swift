@@ -17,7 +17,8 @@ final class ChallengeResultStore: InitProtocol, ImageStorage {
    var challengeId: Int?
 }
 
-final class ChallengeResultWorks<Asset: AssetProtocol>: BaseSceneWorks<ChallengeResultStore, Asset> {
+final class ChallengeResultWorks<Asset: AssetProtocol>: BaseWorks<ChallengeResultStore, Asset> {
+
    private lazy var reasonInputParser = ReasonCheckerModel()
    private lazy var apiUseCase = Asset.apiUseCase
 

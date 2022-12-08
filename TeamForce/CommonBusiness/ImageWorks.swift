@@ -12,7 +12,7 @@ protocol ImageStorage: InitClassProtocol {
    var images: [UIImage] { get set }
 }
 
-protocol ImageWorks: TempStorage where Self.Temp: ImageStorage {
+protocol ImageWorks: TempStorage, WorksProtocol where Self.Temp: ImageStorage {
    var addImage: Work<UIImage, UIImage> { get }
    var removeImage: Work<UIImage, Void> { get }
 }

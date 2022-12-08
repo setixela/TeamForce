@@ -15,7 +15,7 @@ protocol VerifyBackstageProtocol: Assetable {
    var saveLoginResults: Work<VerifyResultBody, Void> { get }
 }
 
-final class VerifyWorks<Asset: AssetProtocol>: BaseSceneWorks<VerifyWorks.Temp, Asset>, VerifyBackstageProtocol {
+final class VerifyWorks<Asset: AssetProtocol>: BaseWorks<VerifyWorks.Temp, Asset>, VerifyBackstageProtocol {
    //
    private lazy var useCase = Asset.apiUseCase
 

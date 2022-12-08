@@ -12,7 +12,7 @@ struct LoadProfileUseCase: UseCaseProtocol {
    let loadToken: LoadTokenUseCase.WRK
    let saveUserNameWork: SaveCurrentUserUseCase.WRK
    let saveUserIdWork: SaveCurrentUserIdUseCase.WRK
-   let userProfileApiModel: ProfileApiWorker
+   let userProfileApiModel: GetMyProfileApiWorker
 
    var work: Work<Void, UserData> {
       Work<Void, UserData> { work in

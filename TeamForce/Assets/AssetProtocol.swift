@@ -12,6 +12,8 @@ protocol ServiceProtocol: InitProtocol {
    var safeStringStorage: StringStorageProtocol { get }
 }
 
+typealias ASP = AssetProtocol
+
 protocol AssetProtocol: AssetRoot
    where
    Scene: ScenesProtocol,

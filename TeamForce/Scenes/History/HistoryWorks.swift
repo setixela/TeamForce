@@ -18,7 +18,7 @@ protocol HistoryWorksProtocol {
    var getRecievedTransactItems: Work<Void, [TableItemsSection]> { get }
 }
 
-final class HistoryWorks<Asset: AssetProtocol>: BaseSceneWorks<HistoryWorks.Temp, Asset>, HistoryWorksProtocol {
+final class HistoryWorks<Asset: AssetProtocol>: BaseWorks<HistoryWorks.Temp, Asset>, HistoryWorksProtocol {
    private lazy var useCase = Asset.apiUseCase
    let storageUseCase = Asset.storageUseCase
 

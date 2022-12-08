@@ -58,7 +58,7 @@ class TransacrtTempStorage: InitProtocol, ImageStorage {
 }
 
 // Transact Works - (если нужно хранилище временное, то наследуемся от BaseSceneWorks)
-final class TransactWorks<Asset: AssetProtocol>: BaseSceneWorks<TransacrtTempStorage, Asset>, TransactWorksProtocol {
+final class TransactWorks<Asset: AssetProtocol>: BaseWorks<TransacrtTempStorage, Asset>, TransactWorksProtocol {
    // api works
    private lazy var apiUseCase = Asset.apiUseCase
    private lazy var storageUseCase = Asset.storageUseCase

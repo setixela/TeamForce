@@ -30,7 +30,7 @@ final class ChallengesTempStorage: InitProtocol {
    var isActivePaginating = false
 }
 
-final class ChallengesWorks<Asset: AssetProtocol>: BaseSceneWorks<ChallengesTempStorage, Asset> {
+final class ChallengesWorks<Asset: AssetProtocol>: BaseWorks<ChallengesTempStorage, Asset> {
    private lazy var apiUseCase = Asset.apiUseCase
 }
 

@@ -165,4 +165,15 @@ import ReactiveWorks
       self.init()
       self.setMain(setMain, setDown: setDown, setRight: setRight, setRight2: setRight2)
    }
+
+    convenience init<M, R, LD>(
+      _ setMain: GenericClosure<M>,
+      setRight: GenericClosure<R>,
+      setLeftDown: GenericClosure<LD>) where S == SComboMRLD<M, R, LD>
+    {
+       self.init()
+       self.setMain(setMain,
+                    setRight: setRight,
+                    setLeftDown: setLeftDown)
+    }
 }

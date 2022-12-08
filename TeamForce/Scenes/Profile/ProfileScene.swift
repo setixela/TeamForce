@@ -11,11 +11,12 @@ class ProfileScene<Asset: AssetProtocol>: BaseSceneModel<
    DefaultVCModel,
    BrandDoubleStackVM<Asset.Design>,
    Asset,
-   Int
+   ProfileID
 >, Configurable {
 
    //
    var userData: UserData?
+
    //
    lazy var userModel = Design.model.profile.userEditPanel
 
@@ -72,7 +73,7 @@ class ProfileScene<Asset: AssetProtocol>: BaseSceneModel<
 
    // MARK: - Services
 
-   private lazy var userProfileApiModel = ProfileApiWorker(apiEngine: Asset.service.apiEngine)
+   private lazy var userProfileApiModel = GetMyProfileApiWorker(apiEngine: Asset.service.apiEngine)
    private lazy var safeStringStorageModel = StringStorageWorker(engine: Asset.service.safeStringStorage)
    private lazy var useCase = Asset.apiUseCase
    private var balance: Balance?
@@ -139,6 +140,7 @@ class ProfileScene<Asset: AssetProtocol>: BaseSceneModel<
          userModel.models.right2.hidden(true)
 
       } else {
+         // load my profile
          safeStringStorageModel
             .doAsync("token")
             .onFail {

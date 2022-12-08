@@ -5,6 +5,7 @@
 //  Created by Aleksandr Solovyev on 06.09.2022.
 //
 
+import Foundation
 import ReactiveWorks
 
 protocol ProfileModelBuilder: InitProtocol, Designable {
@@ -50,29 +51,29 @@ struct ProfileBuilder<Design: DSP>: ProfileModelBuilder {
    }
 
    var userPanel: M<ImageViewModel>.R<FullAndNickNameY<Design>>.Combo { .init()
-         .setMain { image in
-            image
-               .image(Design.icon.newAvatar)
-               .contentMode(.scaleAspectFill)
-               .cornerRadius(52 / 2)
-               .set(.size(.square(52)))
-         } setRight: { name in
-            name.fullName
-               .textColor(Design.color.text)
-               .padLeft(Grid.x12.value)
-               .height(Grid.x24.value)
-            name.nickName
-               .set(Design.state.label.defaultBrand)
-               .padLeft(Grid.x12.value)
-               .height(Grid.x24.value)
-         }
-         .alignment(.center)
-         .distribution(.fill)
-         .backColor(Design.color.background)
-         .cornerRadius(Design.params.cornerRadius)
-         .padding(Design.params.cellContentPadding)
-         .shadow(Design.params.profileUserPanelShadow)
-         .height(76)
+      .setMain { image in
+         image
+            .image(Design.icon.newAvatar)
+            .contentMode(.scaleAspectFill)
+            .cornerRadius(52 / 2)
+            .set(.size(.square(52)))
+      } setRight: { name in
+         name.fullName
+            .textColor(Design.color.text)
+            .padLeft(Grid.x12.value)
+            .height(Grid.x24.value)
+         name.nickName
+            .set(Design.state.label.defaultBrand)
+            .padLeft(Grid.x12.value)
+            .height(Grid.x24.value)
+      }
+      .alignment(.center)
+      .distribution(.fill)
+      .backColor(Design.color.background)
+      .cornerRadius(Design.params.cornerRadius)
+      .padding(Design.params.cellContentPadding)
+      .shadow(Design.params.profileUserPanelShadow)
+      .height(76)
    }
 
    var editPhotoBlock: EditPhotoBlock<Design> { .init() }
@@ -99,23 +100,24 @@ struct ProfileBuilder<Design: DSP>: ProfileModelBuilder {
    }
 
    var titleBody: TitleSubtitleY<Design> { .init()
-         .setAll { main, down in
-            main
-               .alignment(.left)
-               .set(Design.state.label.caption)
-               .textColor(Design.color.textSecondary)
-               .padTop(Grid.x8.value)
-            down
-               .alignment(.left)
-               .set(Design.state.label.default)
-               .textColor(Design.color.text)
-               .padBottom(Grid.x8.value)
-         }
-         .backColor(Design.color.backgroundInfoSecondary)
-         .padding(.horizontalOffset(16))
-         .cornerRadius(Design.params.cornerRadiusSmall)
-         .alignment(.fill)
-      .height(Grid.x48.value) }
+      .setAll { main, down in
+         main
+            .alignment(.left)
+            .set(Design.state.label.caption)
+            .textColor(Design.color.textSecondary)
+            .padTop(Grid.x8.value)
+         down
+            .alignment(.left)
+            .set(Design.state.label.default)
+            .textColor(Design.color.text)
+            .padBottom(Grid.x8.value)
+      }
+      .backColor(Design.color.backgroundInfoSecondary)
+      .padding(.horizontalOffset(16))
+      .cornerRadius(Design.params.cornerRadiusSmall)
+      .alignment(.fill)
+      .height(Grid.x48.value)
+   }
 }
 
 final class EditPhotoBlock<Design: DSP>: M<ButtonModel>.R<FullAndNickNameY<Design>>.Combo, Designable {
@@ -136,6 +138,29 @@ final class EditPhotoBlock<Design: DSP>: M<ButtonModel>.R<FullAndNickNameY<Desig
 
       alignment(.center)
       spacing(Grid.x16.value)
+   }
+}
+
+final class UserAvatarVM<Design: DSP>: ImageViewModel, Designable {
+   override func start() {
+      super.start()
+
+      image(Design.icon.newAvatar)
+      contentMode(.scaleAspectFill)
+   }
+}
+
+extension UserAvatarVM: StateMachine {
+   enum ModelState {
+      case size(CGFloat)
+   }
+
+   func setState(_ state: ModelState) {
+      switch state {
+      case .size(let value):
+         size(.square(value))
+         cornerRadius(value / 2)
+      }
    }
 }
 

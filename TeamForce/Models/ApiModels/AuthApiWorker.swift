@@ -23,13 +23,25 @@ struct TokenRequest {
    let token: String
 }
 
+struct Privilege: Codable {
+   let roleName: String
+   let departmentName: String?
+
+   enum CodingKeys: String, CodingKey {
+      case roleName = "role_name"
+      case departmentName = "department_name"
+   }
+}
+
 struct UserData: Codable {
    let userName: String
    let profile: Profile
+   let privileged: [Privilege]
 
    enum CodingKeys: String, CodingKey {
       case userName = "username"
       case profile
+      case privileged
    }
 
    struct Profile: Codable {
@@ -46,6 +58,7 @@ struct UserData: Codable {
       let firstName: String?
       let middleName: String?
       let nickName: String?
+      let jobTitle: String?
 
       enum CodingKeys: String, CodingKey {
          case id
@@ -61,6 +74,7 @@ struct UserData: Codable {
          case firstName = "first_name"
          case middleName = "middle_name"
          case nickName = "nickname"
+         case jobTitle = "job_title"
       }
    }
 }
@@ -74,6 +88,20 @@ struct Contact: Codable {
       case id
       case contactType = "contact_type"
       case contactId = "contact_id"
+   }
+}
+
+extension UserData {
+   var userEmail: String? {
+      profile.contacts?.first(where: {
+         $0.contactType == "@"
+      })?.contactId
+   }
+
+   var userPhone: String? {
+      profile.contacts?.first(where: {
+         $0.contactType == "P"
+      })?.contactId
    }
 }
 
@@ -181,7 +209,7 @@ final class AuthApiWorker: BaseApiWorker<String, Auth2Result> {
                }
                let res = Auth2Result.organisations(soloOrg.organizations)
                work.success(result: res)
-               
+
             } else {
                guard
                   let xCode = result.response?.headerValueFor("X-Code")

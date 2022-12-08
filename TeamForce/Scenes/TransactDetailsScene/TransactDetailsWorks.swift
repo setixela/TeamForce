@@ -23,7 +23,7 @@ final class FeedDetailWorksTempStorage: InitProtocol {
    var transaction: EventTransaction?
 }
 
-final class TransactDetailsWorks<Asset: AssetProtocol>: BaseSceneWorks<FeedDetailWorksTempStorage, Asset>,
+final class TransactDetailsWorks<Asset: AssetProtocol>: BaseWorks<FeedDetailWorksTempStorage, Asset>,
    CurrentUserStorageWorksProtocol
 {
    private lazy var apiUseCase = Asset.apiUseCase

@@ -438,4 +438,34 @@ extension Combos
       }
       return self
    }
+
+   @discardableResult func setMain<M, R, LD>(
+      _ setMain: GenericClosure<M>,
+      setRight: GenericClosure<R>,
+      setLeftDown: GenericClosure<LD>) -> Self where S == SComboMRLD<M, R, LD>
+   {
+      setMain(models.main)
+      setRight(models.right)
+      setLeftDown(models.leftDown)
+      if !isConfigured
+      {
+         configure()
+         isConfigured = true
+      }
+      return self
+   }
+
+   // MARK: - New setAll
+
+   @discardableResult func setAll<M, R, LD>(_ setAll: VariadicClosure3<M, R, LD>) -> Self where S == SComboMRLD<M, R, LD>
+   {
+      setAll(models.main, models.right, models.leftDown)
+      if !isConfigured
+      {
+         configure()
+         isConfigured = true
+      }
+      return self
+   }
+
 }

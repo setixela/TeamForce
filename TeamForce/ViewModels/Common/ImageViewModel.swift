@@ -12,7 +12,7 @@ enum TapGestureState {
    case tapGesturing
 }
 
-final class ImageViewModel: BaseViewModel<PaddingImageView>, Eventable {
+class ImageViewModel: BaseViewModel<PaddingImageView>, Eventable {
    typealias Events = ButtonEvents
    var events = [Int: LambdaProtocol?]()
 
