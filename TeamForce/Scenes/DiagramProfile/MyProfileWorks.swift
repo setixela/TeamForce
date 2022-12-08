@@ -78,6 +78,7 @@ protocol GetMyProfileWorksProtocol: StoringWorksProtocol, Assetable
    //
    var loadMyProfile: Work<Void, Void> { get }
    //
+   var getUserName: Work<Void, String> { get }
    var getUserStatus: Work<Void, UserStatus> { get }
    var getUserContacts: Work<Void, UserContactData> { get }
    var getUserWorkData: Work<Void, UserWorkData> { get }
@@ -98,6 +99,12 @@ extension GetMyProfileWorksProtocol {
             work.fail()
          }
    }.retainBy(retainer) }
+
+   var getUserName: Work<Void, String> { .init { work in
+      guard let userData = Self.store.userData else { work.fail(); return }
+
+      work.success(userData.profile.firstName.string)
+   }}
 
    // TODO: - Default Lorem ipsum
    var getUserStatus: Work<Void, UserStatus> { .init { work in

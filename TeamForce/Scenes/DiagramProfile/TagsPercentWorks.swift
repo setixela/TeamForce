@@ -83,7 +83,7 @@ enum RandomTagsPercentDataSource {
       let sum = randomNumbers.reduce(0, +)
       let tagsPercents = randomNumbers.enumerated().map {
          let tag = selectedElements[$0]
-         let percent = $1 / sum // Int(($1 * 100).rounded(.toNearestOrAwayFromZero))
+         let percent = $1 / sum
          return TagPercent(name: tag, percent: percent)
       }
 

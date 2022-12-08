@@ -13,6 +13,7 @@ protocol CircleGraphProtocol {
 
 struct GraphData {
    let percent: CGFloat
+   let text: String
    let color: UIColor
 }
 
@@ -61,7 +62,7 @@ extension GraphView: CircleGraphProtocol {
          let label = UILabel()
 
          label.textColor = .white
-         let text = String(describing: Int(percent * 100)) + "%"
+         let text = $0.text
          label.font = .systemFont(ofSize: 8, weight: .bold)
          label.text = text
          label.sizeToFit()

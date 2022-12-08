@@ -437,6 +437,13 @@ extension ViewModelProtocol where Self: Stateable, View: PaddingLabel {
       view.paragraphStyle = style
       return self
    }
+
+   @discardableResult func kerning(_ value: CGFloat) -> Self {
+      let current = NSMutableAttributedString(attributedString: view.attributedText ?? NSMutableAttributedString())
+      current.addAttribute(.kern, value: value, range: .init(location: 0, length: current.length))
+      view.attributedText = current
+      return self
+   }
 }
 
 extension ViewModelProtocol where Self: Stateable, View: PaddingImageView {

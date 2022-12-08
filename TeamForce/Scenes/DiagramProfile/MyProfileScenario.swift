@@ -22,6 +22,8 @@ final class MyProfileScenario<Asset: ASP>: BaseAssettableScenario<DiagramProfile
    override func start() {
       works.loadMyProfile
          .doAsync()
+         .doVoidNext(works.getUserName)
+         .onSuccess(setState) { .userName($0) }
          .doVoidNext(works.getUserStatus)
          .onSuccess(setState) { .userStatus($0) }
          .doVoidNext(works.loadTagPercents)

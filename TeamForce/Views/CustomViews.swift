@@ -63,13 +63,26 @@ final class PaddingLabel: UILabel, Marginable, Tappable {
 
       let maxHeight =
          font.lineHeight * (numberOfLines == 0 ? CGFloat.greatestFiniteMagnitude : CGFloat(numberOfLines + 1))
-      let newSize = text.boundingRect(
-         with: CGSize(width: textWidth, height: maxHeight),
-         options: [.usesLineFragmentOrigin],
-         attributes: [NSAttributedString.Key.font: font,
-                      .paragraphStyle: paragraphStyle],
-         context: nil
-      )
+
+      var newSize: CGRect
+      if let kern = attributedText?.attribute(.kern, at: 0, effectiveRange: nil) {
+         newSize = text.boundingRect(
+            with: CGSize(width: textWidth, height: maxHeight),
+            options: [.usesLineFragmentOrigin],
+            attributes: [NSAttributedString.Key.font: font,
+                         .kern: kern,
+                         .paragraphStyle: paragraphStyle],
+            context: nil
+         )
+      } else {
+         newSize = text.boundingRect(
+            with: CGSize(width: textWidth, height: maxHeight),
+            options: [.usesLineFragmentOrigin],
+            attributes: [NSAttributedString.Key.font: font,
+                         .paragraphStyle: paragraphStyle],
+            context: nil
+         )
+      }
 
       contentSize.height = ceil(newSize.size.height) + insetsHeight
       contentSize.width = ceil(newSize.size.width) + insetsWidth

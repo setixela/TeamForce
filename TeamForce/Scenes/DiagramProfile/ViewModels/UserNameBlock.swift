@@ -9,30 +9,28 @@ import ReactiveWorks
 
 // MARK: - UserNameBlock
 
-final class UserNameBlock<Design: DSP>: M<LabelModel>.R<LabelModel>.LD<LabelModel>.Combo,
+final class UserNameBlock<Design: DSP>: M<LabelModel>.R<LabelModel>.R2<LabelModel>.R3<Spacer>.Combo,
                                         Designable
 {
    required init() {
       super.init()
 
-      setAll { name, surname, nickname in
+      setAll { name, surname, nickname, _ in
          name
             .set(Design.state.label.headline4)
          surname
             .set(Design.state.label.headline4)
             .textColor(Design.color.textBrand)
          nickname
-            .set(Design.state.label.subtitle)
+            .set(Design.state.label.headline4)
       }
-
-      alignment(.leading)
    }
 }
 
 extension UserNameBlock: StateMachine {
-   func setState(_ state: (name: String, surname: String, nickname: String)) {
-      models.main.text(state.name)
-      models.right.text(" " + state.surname)
-      models.leftDown.text("@" + state.nickname)
+   func setState(_ state: String) {
+      models.main.text("Привет, ")
+      models.right.text(state)
+      models.right2.text("!")
    }
 }

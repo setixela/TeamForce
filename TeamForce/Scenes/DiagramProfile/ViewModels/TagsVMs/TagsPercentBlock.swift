@@ -6,6 +6,7 @@
 //
 
 import ReactiveWorks
+import Foundation
 
 // MARK: - TagsPercentBlock
 
@@ -17,6 +18,7 @@ final class TagsPercentBlock<Design: DSP>: ProfileStackModel<Design> {
    override func start() {
       super.start()
 
+      spacing(16)
       arrangedModels(
          diagram,
          tagsCloud
@@ -28,15 +30,20 @@ extension TagsPercentBlock: StateMachine {
    func setState(_ state: [TagPercent]) {
       let circleColors = Design.color.iconBrand.colorsCircle(
          state.count,
-         saturate: 0.55,
+         saturate: 0.3,
          bright: 0.8
       )
       let graphs = state.enumerated().map {
-         GraphData(percent: $1.percent, color: circleColors[$0])
+         let percent = self.percentToInt($1.percent)
+         return GraphData(
+            percent: $1.percent,
+            text: "\(percent)%",
+            color: circleColors[$0]
+         )
       }
 
       let tags = state.enumerated().map {
-         let percent = Int(($1.percent * 100).rounded(.toNearestOrAwayFromZero))
+         let percent = self.percentToInt($1.percent)
          return TagPercentCloudData(
             text: "\($1.name) \(percent)%",
             color: circleColors[$0]
@@ -45,5 +52,9 @@ extension TagsPercentBlock: StateMachine {
 
       diagram.setState(graphs)
       tagsCloud.setState(tags)
+   }
+
+   private func percentToInt(_ percent: CGFloat) -> Int {
+      Int((percent * 100).rounded(.toNearestOrAwayFromZero))
    }
 }

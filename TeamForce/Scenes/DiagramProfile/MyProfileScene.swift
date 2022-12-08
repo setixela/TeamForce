@@ -53,7 +53,7 @@ final class MyProfileScene<Asset: ASP>: BaseSceneModel<
 
 enum MyProfileSceneState {
    case initial
-   case userName(name: String, surname: String, nickname: String)
+   case userName(String)
    case userStatus(UserStatus)
    case tagsPercents([TagPercent])
    case userContacts(UserContactData)
@@ -67,8 +67,8 @@ extension MyProfileScene: StateMachine {
       switch state {
       case .initial:
          break
-      case .userName(let name, let surname, let nickname):
-         profileVM.userNameBlock.setState((name, surname, nickname))
+      case .userName(let name):
+         profileVM.userNameBlock.setState(name)
       case .userStatus(let status):
          profileVM.userStatusBlock.setState(status)
       case .tagsPercents(let tagsData):

@@ -1126,9 +1126,9 @@
 		19342183294149A300F113D7 /* TagsVMs */ = {
 			isa = PBXGroup;
 			children = (
+				1934218829414A0700F113D7 /* TagsPercentBlock.swift */,
 				19342184294149B800F113D7 /* DiagramVM.swift */,
 				19342186294149D100F113D7 /* GraphView.swift */,
-				1934218829414A0700F113D7 /* TagsPercentBlock.swift */,
 				1934218A29414A2D00F113D7 /* TagsPercentCloud.swift */,
 			);
 			path = TagsVMs;
