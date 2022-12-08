@@ -11,7 +11,7 @@ import UIKit
 class ChallContendersPresenters<Design: DesignProtocol>: Designable {
    var events: EventsStore = .init()
    
-   var isVoting: Bool = false
+   var showButtons: Bool = false
 
    var contendersCellPresenter: Presenter<Contender, WrappedX<StackModel>> {
       Presenter { work in
@@ -133,7 +133,7 @@ class ChallContendersPresenters<Design: DesignProtocol>: Designable {
                acceptButton
             ])
          
-         if self.isVoting == true {
+         if self.showButtons == false {
             buttonsStack.hidden(true)
             rejectButton.view.isUserInteractionEnabled = false
             acceptButton.view.isUserInteractionEnabled = false

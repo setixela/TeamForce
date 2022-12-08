@@ -294,10 +294,7 @@ extension ChallengeDetailsScene: StateMachine {
          filterButtons.button2.hidden(false)
 
       case .enableContenders:
-         print("hello")
          filterButtons.button3.hidden(false)
-         //challDetails.models.down.sendButton.hidden(true)
-         //filterButtons.button2.hidden(true)
 
       case .presentMyResults(let results):
          myResultBlock.setup(results)
@@ -407,10 +404,11 @@ extension ChallengeDetailsScene: StateMachine {
          contendersBlock.contendersTableModel.updateItemAtIndex(value, index: index)
       case .votingChallenge:
          filterButtons.button3.hidden(false)
-         contendersBlock.presenter.isVoting = true
+         contendersBlock.presenter.showButtons = false
       case .iAmOwner:
          filterButtons.button3.hidden(false)
          challDetails.models.down.sendButton.hidden(true)
+         contendersBlock.presenter.showButtons = true
          
       }
    }

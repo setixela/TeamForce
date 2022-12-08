@@ -74,6 +74,12 @@ final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<Challen
             print("fail")
          }
          .doRecover()
+         .doVoidNext(works.checkShowCandidates)
+         .onSuccess(setState, .enableContenders)
+         .onFail {
+            print("fail")
+         }
+         .doRecover()
          .doVoidNext(works.getChallengeResult)
          .onSuccess { [weak self] in
             self?.setState(.enableMyResult($0))

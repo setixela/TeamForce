@@ -76,7 +76,7 @@ extension ChallengeCreateWorks: ChallengeCreateWorksProtocol {
    // MARK: - Create chall
 
    var createChallenge: Work<Void, Void> { .init { [weak self] work in
-      let showParticipants = Self.store.selectedChallengeType == "voting" ? nil : "default"
+      let showParticipants = Self.store.selectedChallengeType == "voting" ? nil : Self.store.showCandidates
       let body = ChallengeRequestBody(
          name: Self.store.title,
          description: Self.store.desription,
