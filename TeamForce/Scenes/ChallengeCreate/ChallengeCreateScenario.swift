@@ -23,6 +23,7 @@ struct ChallengeCreateScenarioEvents {
    let showCandidatesTurnOn: WorkVoid<Void>
    let showCandidatesTurnOff: WorkVoid<Void>
    
+   let didPrizePlaceInputChanged: WorkVoid<String>
 }
 
 final class ChallengeCreateScenario<Asset: AssetProtocol>: BaseScenario<ChallengeCreateScenarioEvents, ChallengeCreateSceneState, ChallengeCreateWorks<Asset>> {
@@ -47,6 +48,11 @@ final class ChallengeCreateScenario<Asset: AssetProtocol>: BaseScenario<Challeng
 
       events.didPrizeFundChanged
          .doNext(works.setPrizeFund)
+         .doNext(works.checkAllReady)
+         .onSuccess(setState) { .setReady($0) }
+      
+      events.didPrizePlaceInputChanged
+         .doNext(works.setPrizePlace)
          .doNext(works.checkAllReady)
          .onSuccess(setState) { .setReady($0) }
 

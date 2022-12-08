@@ -51,7 +51,8 @@ final class ChallengeCreateScene<Asset: AssetProtocol>: BaseSceneModel<
          severalReportsTurnOn: severalReportsSwitcher.switcher.on(\.turnedOn),
          severalReportsTurnOff: severalReportsSwitcher.switcher.on(\.turnedOff),
          showCandidatesTurnOn: candidatesSwitcher.switcher.on(\.turnedOn),
-         showCandidatesTurnOff: candidatesSwitcher.switcher.on(\.turnedOff)
+         showCandidatesTurnOff: candidatesSwitcher.switcher.on(\.turnedOff),
+         didPrizePlaceInputChanged: prizePlacesInput.on(\.didEditingChanged)
       )
    )
 

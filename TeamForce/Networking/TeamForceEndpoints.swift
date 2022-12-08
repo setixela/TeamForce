@@ -737,4 +737,18 @@ enum TeamForceEndpoints {
 
       let jsonData: Data?
    }
+   
+   struct CloseChallenge: EndpointProtocol {
+      //
+      let method = HTTPMethod.get
+      
+      var endPoint: String = urlBase + "/close-challenge/"
+      
+      var headers: [String: String]
+
+      init(id: String, headers: [String : String]) {
+         endPoint = endPoint + id + "/"
+         self.headers = headers
+      }
+   }
 }

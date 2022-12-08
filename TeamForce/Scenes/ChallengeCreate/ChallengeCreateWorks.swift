@@ -32,6 +32,10 @@ final class ChallengeCreateWorksStore: InitProtocol, ImageStorage {
    
    var showCandidates = "no"
    var severalReports = "no"
+   
+   var parameterId = 2
+   var parameterValue = 0
+   var prizePlace: String = ""
 
 //   func clear() {
 //      title = ""
@@ -72,6 +76,11 @@ extension ChallengeCreateWorks: ChallengeCreateWorksProtocol {
       Self.store.finishDate = work.unsafeInput
       work.success(work.unsafeInput)
    }.retainBy(retainer) }
+   
+   var setPrizePlace: Work<String, Void> { .init { work in
+      Self.store.prizePlace = work.unsafeInput
+      work.success()
+   }.retainBy(retainer) }
 
    // MARK: - Create chall
 
@@ -83,8 +92,8 @@ extension ChallengeCreateWorks: ChallengeCreateWorksProtocol {
          endAt: Self.store.finishDate.convertToString(.yearMonthDayDigits),
          startBalance: Int(Self.store.prizeFund).int,
          photo: Self.store.images.first?.resized(to: Config.imageSendSize),
-         parameterId: nil,
-         parameterValue: nil,
+         parameterId: Self.store.parameterId,
+         parameterValue: Int(Self.store.prizePlace),
          challengeType: Self.store.selectedChallengeType,
          showParticipants: showParticipants,
          severalReports: Self.store.severalReports
