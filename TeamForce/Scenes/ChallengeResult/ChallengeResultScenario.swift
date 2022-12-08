@@ -25,6 +25,7 @@ final class ChallengeResultScenario<Asset: AssetProtocol>: BaseScenario<Challeng
          .doNext(works.saveId)
       
       events.sendResult
+         .onSuccess(setState, .sendingDisabled)
          .doNext(works.createChallengeReport)
          .onSuccess(setState) { .finish }
          .onFail {

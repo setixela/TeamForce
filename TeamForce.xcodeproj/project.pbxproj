@@ -275,6 +275,8 @@
 		63352DE7289AA69A00489F5F /* SendCoinUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63352DE6289AA69A00489F5F /* SendCoinUseCase.swift */; };
 		63386116293F6D0C00BC0436 /* CreateChallengeGetApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63386115293F6D0C00BC0436 /* CreateChallengeGetApiWorker.swift */; };
 		63386118293F6F7B00BC0436 /* CreateChallengeGetUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63386117293F6F7B00BC0436 /* CreateChallengeGetUseCase.swift */; };
+		6338611A294230D100BC0436 /* CloseChallengeApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63386119294230D100BC0436 /* CloseChallengeApiWorker.swift */; };
+		6338611C2942313300BC0436 /* CloseChallengeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6338611B2942313300BC0436 /* CloseChallengeUseCase.swift */; };
 		633FBC8428E535600071FF8C /* TransactDetailsWorks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633FBC8328E535600071FF8C /* TransactDetailsWorks.swift */; };
 		633FBC8628E542540071FF8C /* FeedDetailViewModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633FBC8528E542540071FF8C /* FeedDetailViewModels.swift */; };
 		634F4333288F4EE9003B2256 /* LogoutApiWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634F4332288F4EE9003B2256 /* LogoutApiWorker.swift */; };
@@ -684,6 +686,8 @@
 		63352DE6289AA69A00489F5F /* SendCoinUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendCoinUseCase.swift; sourceTree = "<group>"; };
 		63386115293F6D0C00BC0436 /* CreateChallengeGetApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateChallengeGetApiWorker.swift; sourceTree = "<group>"; };
 		63386117293F6F7B00BC0436 /* CreateChallengeGetUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateChallengeGetUseCase.swift; sourceTree = "<group>"; };
+		63386119294230D100BC0436 /* CloseChallengeApiWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloseChallengeApiWorker.swift; sourceTree = "<group>"; };
+		6338611B2942313300BC0436 /* CloseChallengeUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloseChallengeUseCase.swift; sourceTree = "<group>"; };
 		633FBC8328E535600071FF8C /* TransactDetailsWorks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactDetailsWorks.swift; sourceTree = "<group>"; };
 		633FBC8528E542540071FF8C /* FeedDetailViewModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedDetailViewModels.swift; sourceTree = "<group>"; };
 		634F4332288F4EE9003B2256 /* LogoutApiWorker.swift */ = {isa = PBXFileReference; indentWidth = 3; lastKnownFileType = sourcecode.swift; path = LogoutApiWorker.swift; sourceTree = "<group>"; tabWidth = 3; };
@@ -1804,6 +1808,7 @@
 				636A458A2900A20A003E412D /* GetChallengeWinnersReportsApiWorker.swift */,
 				636A458E2900CF1D003E412D /* GetChallengeReportApiWorker.swift */,
 				63386115293F6D0C00BC0436 /* CreateChallengeGetApiWorker.swift */,
+				63386119294230D100BC0436 /* CloseChallengeApiWorker.swift */,
 			);
 			path = Challenge;
 			sourceTree = "<group>";
@@ -1822,6 +1827,7 @@
 				636A458C2900A429003E412D /* GetChallengeWinnersReportsUseCase.swift */,
 				636A45902900D15D003E412D /* GetChallengeReportUseCase.swift */,
 				63386117293F6F7B00BC0436 /* CreateChallengeGetUseCase.swift */,
+				6338611B2942313300BC0436 /* CloseChallengeUseCase.swift */,
 			);
 			path = Challenge;
 			sourceTree = "<group>";
@@ -2339,6 +2345,7 @@
 				19A9BE7C28C2E9790099F8EA /* SendCoinRecipentCell.swift in Sources */,
 				190E18722901C11300838038 /* ManyResults.swift in Sources */,
 				19017B8228A6A3FB00B06345 /* GetUsersListApiWorker.swift in Sources */,
+				6338611C2942313300BC0436 /* CloseChallengeUseCase.swift in Sources */,
 				19CAB9C528B41C1F00A0A3B1 /* Switcher.swift in Sources */,
 				19607B512937A55D00CFBA18 /* TransactDetailsScenario.swift in Sources */,
 				19A9232A28B2A8200080D491 /* SpacerPresenter.swift in Sources */,
@@ -2393,6 +2400,7 @@
 				19A9BE7628C283270099F8EA /* CommonModelBuilder.swift in Sources */,
 				1953CF0028E8A19A00C670A6 /* FeedReactionsBlock.swift in Sources */,
 				19564268292ACBA8007BE9D4 /* ChallengeDetailsInfoCell.swift in Sources */,
+				6338611A294230D100BC0436 /* CloseChallengeApiWorker.swift in Sources */,
 				19D7BE9928B3E55F00C95053 /* ScrollViewModels.swift in Sources */,
 				197A360628BADC83006E44C1 /* FeedViewModels.swift in Sources */,
 				1963398D2921644300B66A7D /* Converter.swift in Sources */,

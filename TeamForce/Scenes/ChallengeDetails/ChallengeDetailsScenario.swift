@@ -195,6 +195,15 @@ final class ChallengeDetailsScenario<Asset: AssetProtocol>: BaseScenario<Challen
          .onFail(setState) { .failedToReact(alreadySelected: $0) }
          .doVoidNext(works.getLikesAmount)
          .onSuccess(setState) { .updateLikesAmount($0) }
+      
+      //this is to close the current challenge 
+//         .doVoidNext(works.closeChallenge)
+//         .onSuccess {
+//            print("success")
+//         }
+//         .onFail {
+//            print("fail")
+//         }
 
       events.presentChallengeAuthor
          .doNext(works.getCreatorId)

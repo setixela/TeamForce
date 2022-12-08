@@ -145,4 +145,16 @@ final class ChallengeDetailsWorks<Asset: AssetProtocol>: BaseSceneWorks<Challeng
          }
    }.retainBy(retainer) }
    
+   var closeChallenge: Work<Void, Void> { .init { [weak self] work in
+      guard let challengeId = Self.store.challengeId else { work.fail(); return }
+      self?.apiUseCase.closeChallenge
+         .doAsync(challengeId)
+         .onSuccess {
+            work.success()
+         }
+         .onFail {
+            work.fail()
+         }
+   }.retainBy(retainer) }
+   
 }
